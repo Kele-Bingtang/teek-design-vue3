@@ -28,49 +28,12 @@ const emits = defineEmits<
 
 const ns = useNamespace("pro-table-column-data");
 
-const useEdit = computed(() => !isBoolean(props.editable) && ["click", "dblclick"].includes(props.editable));
-
-const formatTableColumn = (column: TableColumn) => {
-  column.filter = toValue(column.filter);
-  column.editable = toValue(column.editable);
-  column.hide = toValue(column.hide);
-  column.disabledHide = toValue(column.disabledHide);
-  column.disabledFilter = toValue(column.disabledFilter);
-  column.disabledSortable = toValue(column.disabledSortable);
-  column.isFilterOptions = toValue(column.isFilterOptions);
-
-  // 使用解构并排除 children 属性
-  // eslint-disable-next-line no-unused-vars
-  const { children, ...rest } = toRaw(column);
-
-  return rest as unknown as TableColumnCtx<any>;
-};
-
-const formatValue = (row: TableRow, column: TableColumn) => {
-  return formatCellValue(getProp(row._label?.[column.prop!] ?? row, column.prop!));
-};
-
-const toValueColumn = (column: Partial<TableColumn>) => {
-  return {
-    width: toValue(column.width),
-    label: toValue(column.label),
-  };
-};
-
-// 获取 ProFormItem 的实例
-const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Recordable, prop: string) => {
-  if (!el) return;
-
-  emits("registerProFormInstance", scope.$index, prop, el.proFormInstance);
-
-  scope.row._proFormInstance ??= {};
-  if (!scope.row._proFormInstance[prop]?.elFormInstance) scope.row._proFormInstance[prop] = el.proFormInstance;
-};
+const useEditable = computed(() => !isBoolean(props.editable) && ["click", "dblclick"].includes(props.editable));
 
 /**
  * 初始化表格的 row，添加编辑态开关的方法
  */
-const initRowEditApi = (row: TableRow) => {
+const initRowEditableApi = (row: TableRow) => {
   // 初始化 _editableCol
   row._editableCol ??= {};
 
@@ -78,7 +41,6 @@ const initRowEditApi = (row: TableRow) => {
   row._openCellEdit ??= prop => {
     if (prop) {
       row._editableCol![prop] = true;
-
       nextTick(() => {
         // 焦点聚焦
         (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus();
@@ -90,11 +52,13 @@ const initRowEditApi = (row: TableRow) => {
     if (prop) row._editableCol![prop] = false;
     else row._editable = false;
   };
+
   // 判断当前单元格是否处于编辑状态
   row._isCellEdit ??= prop => {
     if (prop) return row._editableCol![prop] ?? false;
     else return row._editable ?? false;
   };
+
   // 编辑态行/单元格校验
   row._validateCellEdit ??= async (callback, prop) => {
     if (!row._proFormInstance) return true;
@@ -112,7 +76,6 @@ const initRowEditApi = (row: TableRow) => {
       }
 
       callback?.(true, undefined);
-
       return true;
     } catch (error) {
       // 如果校验失败且没有自定义 callback，则弹出内置错误信息
@@ -122,7 +85,6 @@ const initRowEditApi = (row: TableRow) => {
       }
 
       callback?.(false, error as any);
-
       return false;
     }
   };
@@ -133,17 +95,71 @@ const initRowEditApi = (row: TableRow) => {
 };
 
 /**
+ * 获取 ProFormItem 的实例
+ */
+const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Recordable, prop: string) => {
+  if (!el) return;
+
+  handleRegisterProFormInstance(scope.$index, prop, el.proFormInstance);
+
+  scope.row._proFormInstance ??= {};
+  if (!scope.row._proFormInstance[prop]?.elFormInstance) scope.row._proFormInstance[prop] = el.proFormInstance;
+};
+
+const formatTableColumn = (column: TableColumn) => {
+  column.filter = toValue(column.filter);
+  column.editable = toValue(column.editable);
+  column.hide = toValue(column.hide);
+  column.disabledHide = toValue(column.disabledHide);
+  column.disabledFilter = toValue(column.disabledFilter);
+  column.disabledSortable = toValue(column.disabledSortable);
+  column.isFilterOptions = toValue(column.isFilterOptions);
+
+  // 使用解构并排除 children 属性
+  // eslint-disable-next-line no-unused-vars
+  const { children, ...rest } = toRaw(column);
+
+  return rest as unknown as TableColumnCtx<any>;
+};
+
+/**
+ * 格式化单元格值（如果存在字典枚举，则根据 value 找 label）
+ */
+const formatValue = (row: TableRow, column: TableColumn) => {
+  return formatCellValue(getProp(row._label?.[column.prop!] ?? row, column.prop!));
+};
+
+/**
+ * 处理部分列配置项数据
+ */
+const toValueColumn = (column: Partial<TableColumn>) => {
+  return {
+    width: toValue(column.width),
+    label: toValue(column.label),
+  };
+};
+
+/**
+ * emits 事件相关逻辑
+ */
+const handleRegisterProFormInstance = (index: number, prop: string, instance: ProFormInstance | null) => {
+  emits("registerProFormInstance", index, prop, instance);
+};
+
+/**
  * 执行过滤搜索
  */
 const handleFilter = (model: ModelBaseValueType, filterValue: unknown, prop: string | undefined) => {
   emits("filter", model as Recordable, filterValue, prop);
 };
+
 /**
  * 执行过滤清除
  */
 const handleFilterClear = (prop: string | undefined) => {
   emits("filterClear", prop);
 };
+
 /**
  * 执行过滤重置
  */
@@ -162,9 +178,6 @@ const handleChange = (model: unknown, scope: Recordable, column: TableColumn) =>
   } as TableScope);
 };
 
-const handleChildRegisterProFormInstance = (index: number, prop: string, instance: ProFormInstance | null) => {
-  emits("registerProFormInstance", index, prop, instance);
-};
 /**
  * 表单值发生改变事件（多级表头调用当前组件 handleChange 事件）
  */
@@ -176,7 +189,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 <template>
   <el-table-column
     v-bind="{ ...$attrs, ...formatTableColumn(column) }"
-    :class-name="`${ns.b()}${' ' + ns.is('cell-edit', useEdit)}${column.className ? ' ' + column.className : ''}`"
+    :class-name="`${ns.b()}${' ' + ns.is('cell-edit', useEditable)}${column.className ? ' ' + column.className : ''}`"
   >
     <!-- 表头插槽 - 表头内容 -->
     <template #header="scope">
@@ -221,7 +234,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 
     <!-- 默认插槽 - 单元格内容 -->
     <template #default="scope">
-      <span v-if="!column.children" style="display: none">{{ initRowEditApi(scope.row) }}</span>
+      <span v-if="!column.children" style="display: none">{{ initRowEditableApi(scope.row) }}</span>
 
       <!-- 合并表头 -->
       <template v-if="column.children">
@@ -232,7 +245,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           v-bind="toValueColumn(column)"
           :align="column.align || 'center'"
           :editable
-          @register-pro-form-instance="handleChildRegisterProFormInstance"
+          @register-pro-form-instance="handleRegisterProFormInstance"
           @form-change="handleFormChange"
           @filter="handleFilter"
           @filter-clear="handleFilterClear"

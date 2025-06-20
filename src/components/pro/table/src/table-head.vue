@@ -32,7 +32,6 @@ const emits = defineEmits<ProTableHeadNamespace.Emits>();
 
 const ns = useNamespace("pro-table-head");
 
-const columnSettingVisible = ref(false);
 // 密度值
 const tableSize = ref<TableSizeEnum>((props.size as TableSizeEnum) || TableSizeEnum.Default);
 
@@ -77,10 +76,78 @@ const settingColumns = computed(() => {
     });
 });
 
-onMounted(() => {
-  // 初始化尺寸
-  handleSizeCommand(tableSize.value);
-});
+const { columnSettingVisible, toggleColumnSetting } = useColumnSetting();
+const { handleRefresh, handleSizeCommand, handleExport, handleDragSortEnd } = useButtonEvent();
+
+/**
+ * 列配置抽屉
+ */
+function useColumnSetting() {
+  // 列配置抽屉状态
+  const columnSettingVisible = ref(false);
+
+  /**
+   * 切换列配置抽屉的显示状态
+   */
+  const toggleColumnSetting = (show = !columnSettingVisible.value) => (columnSettingVisible.value = show);
+
+  return { columnSettingVisible, toggleColumnSetting };
+}
+
+/**
+ * 按钮点击事件
+ */
+function useButtonEvent() {
+  const handleRefresh = () => {
+    emits("refresh");
+  };
+
+  /**
+   * 表格密度修改
+   */
+  const handleSizeCommand = (command: TableSizeEnum) => {
+    tableSize.value = command;
+    const tableSizeStyle = sizeStyleMap.value[command];
+
+    emits("sizeChange", tableSize.value, tableSizeStyle);
+  };
+
+  /**
+   * 表格导出
+   */
+  const handleExport = () => {
+    const { data, columns, exportProps } = props;
+
+    if (exportProps.exportFile) return exportProps.exportFile(data);
+    exportExcel(columns, data, exportProps);
+  };
+
+  /**
+   * 列配置拖拽事件
+   */
+  const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
+    const { columns } = props;
+
+    const partColumns = columns.slice(0, newIndex);
+    const specialColumnsLength = partColumns.filter(column => hasSpecialColumn(column)).length;
+
+    if (specialColumnsLength) {
+      const [removedItem] = columns.splice(oldIndex + specialColumnsLength, 1);
+      props.columns.splice(newIndex + specialColumnsLength, 0, removedItem);
+    } else {
+      const [removedItem] = columns.splice(oldIndex, 1);
+      props.columns.splice(newIndex, 0, removedItem);
+    }
+  };
+
+  return { handleRefresh, handleSizeCommand, handleExport, handleDragSortEnd };
+}
+
+/**
+ * 是否含有特殊列（多选列、单选列）
+ */
+const hasSpecialColumn = (column: TableColumn) =>
+  [TableColumnTypeEnum.Selection, TableColumnTypeEnum.Radio].includes(column.type as TableColumnTypeEnum);
 
 /**
  * 控制 ToolButton 显示
@@ -92,60 +159,13 @@ const showToolButton = (key: ToolButtonEnum) => {
   return toolButton === true || toolButton.includes(key);
 };
 
-const handleRefresh = () => {
-  emits("refresh");
-};
-
-/**
- * 表格密度修改
- */
-const handleSizeCommand = (command: TableSizeEnum) => {
-  tableSize.value = command;
-  const tableSizeStyle = sizeStyleMap.value[command];
-
-  emits("sizeChange", tableSize.value, tableSizeStyle);
-};
-
-/**
- * 表格导出
- */
-const handleExport = () => {
-  const { data, columns, exportProps } = props;
-
-  if (exportProps.exportFile) return exportProps.exportFile(data);
-  exportExcel(columns, data, exportProps);
-};
-
-/**
- * 是否含有特殊列（多选列、单选列）
- */
-const hasSpecialColumn = (column: TableColumn) =>
-  [TableColumnTypeEnum.Selection, TableColumnTypeEnum.Radio].includes(column.type as TableColumnTypeEnum);
-
-/**
- * 切换列配置抽屉的显示状态
- */
-const toggleColumnSetting = (show = !columnSettingVisible.value) => (columnSettingVisible.value = show);
-
-/**
- * 列配置拖拽事件
- */
-const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
-  const { columns } = props;
-
-  const partColumns = columns.slice(0, newIndex);
-  const specialColumnsLength = partColumns.filter(column => hasSpecialColumn(column)).length;
-
-  if (specialColumnsLength) {
-    const [removedItem] = columns.splice(oldIndex + specialColumnsLength, 1);
-    props.columns.splice(newIndex + specialColumnsLength, 0, removedItem);
-  } else {
-    const [removedItem] = columns.splice(oldIndex, 1);
-    props.columns.splice(newIndex, 0, removedItem);
-  }
-};
+onMounted(() => {
+  // 初始化尺寸
+  handleSizeCommand(tableSize.value);
+});
 
 const expose = { sizeCommand: handleSizeCommand, exportFile: handleExport, toggleColumnSetting };
+
 defineExpose(expose);
 </script>
 

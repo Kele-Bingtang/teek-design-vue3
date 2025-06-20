@@ -40,15 +40,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   editable: true,
 });
 
-const emits = defineEmits<ProFormItemEmits>();
-
 const model = defineModel<ModelBaseValueType>({ required: false });
-const enums = ref<Recordable[]>([]);
-
-// 存储每一个 ElFormItem 实例
-const elFormItemInstance = useTemplateRef<FormItemInstance>("elFormItemInstance");
-// 存储每一个表单组件实例
-const elInstance = useTemplateRef<Component>("elInstance");
 
 const formEl = computed(() => hyphenToCamelCase(toValue(props.el)) as ComponentNameEnum);
 const labelValue = computed(() => toValue(props.label));
@@ -57,6 +49,7 @@ const withValue = computed(() => addUnit(toValue(props.width)));
 const formItemPropsValue = computed(() => toValue(props.formItemProps));
 const editableValue = computed(() => toValue(props.editable));
 
+// 表单组件需要的 v-model
 const elModel = computed({
   get: () => {
     const { prop, getFormat } = props;
@@ -71,35 +64,7 @@ const elModel = computed({
   },
 });
 
-// 处理透传的 elProps
-const elPropsValue = computed<Recordable>(() => {
-  const elPropsConst = toValue(props.elProps) as any;
-  const { optionField } = props;
-  const label = optionField.label;
-  const value = optionField.value;
-  const children = optionField.children;
-  const formElConst = formEl.value;
-
-  if (formElConst === ComponentNameEnum.EL_TREE_SELECT) {
-    return { ...elPropsConst, props: { ...elPropsConst, label, children }, nodeKey: value };
-  }
-
-  if (formElConst === ComponentNameEnum.EL_CASCADER) {
-    return { ...elPropsConst, props: { ...elPropsConst, label, value, children } };
-  }
-
-  if (formElConst === ComponentNameEnum.EL_DATE_PICKER) {
-    if (elPropsConst.type === "datetime") return { valueFormat: "YYYY-MM-DD HH:mm:ss", ...elPropsConst };
-    if (elPropsConst.type === "date") return { valueFormat: "YYYY-MM-DD", ...elPropsConst };
-
-    return { valueFormat: "YYYY-MM-DD", ...elPropsConst };
-  }
-
-  if (formElConst === ComponentNameEnum.EL_TIME_PICKER) return { valueFormat: "HH:mm:ss", ...elPropsConst };
-
-  return elPropsConst;
-});
-
+// 插槽参数
 const slotParams = computed(() => ({
   ...props,
   model: model.value,
@@ -111,46 +76,6 @@ const slotParams = computed(() => ({
 
 watch(elModel, () => emits("change", elModel.value, slotParams.value));
 
-const initOptions = async () => {
-  const { options, optionField } = props;
-
-  if (!options || (isArray(options) && !options.length)) return [];
-
-  let value = await formatValue<FormItemColumnProps["options"]>(options, [model.value]);
-  if (!value) return [];
-
-  // 适配接口返回 data
-  value = value?.data || value;
-
-  if (formEl.value === ComponentNameEnum.EL_SELECT_V2) {
-    // el 为 select-v2 需单独处理
-    value = value.map((item: Recordable) => {
-      return { ...item, label: item[optionField.label!], value: item[optionField.value!] };
-    });
-  }
-
-  return value;
-};
-
-watch(
-  () => props.options,
-  async () => {
-    enums.value = await initOptions();
-  },
-  { immediate: true }
-);
-
-// 处理默认 placeholder
-const placeholder = computed(() => {
-  const { type, isRange, placeholder } = elPropsValue.value;
-  if (["datetimerange", "daterange", "monthrange"].includes(type) || isRange) {
-    return { rangeSeparator: "至", startPlaceholder: "开始时间", endPlaceholder: "结束时间" };
-  }
-  const placeholderConst = placeholder ?? (formEl.value === ComponentNameEnum.EL_INPUT ? "请输入" : "请选择");
-
-  return { placeholder: placeholderConst };
-});
-
 const childComponentMap: Record<string, Component> = {
   [ComponentNameEnum.EL_SELECT]: Select,
   [ComponentNameEnum.EL_RADIO_GROUP]: Radio,
@@ -159,7 +84,6 @@ const childComponentMap: Record<string, Component> = {
   [ComponentNameEnum.EL_CHECKBOX_GROUP]: Checkbox,
   [ComponentNameEnum.EL_CHECKBOX_BUTTON]: Checkbox,
 };
-
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
   if (labelSize === "default") return { fontSize: "16px", fontWeight: 600 };
@@ -168,6 +92,99 @@ const formatDividerTitle = (labelSize = "default") => {
 
   return {};
 };
+
+const { enums } = useFormItemOptions();
+const { elPropsValue, placeholder } = useFormItemInitProps();
+
+const emits = defineEmits<ProFormItemEmits>();
+
+/**
+ * 表单组件初始化相关参数
+ */
+function useFormItemInitProps() {
+  // 处理透传的 elProps
+  const elPropsValue = computed<Recordable>(() => {
+    const { optionField, elProps } = props;
+    const elPropsValue = toValue(elProps) as any;
+    const label = optionField.label;
+    const value = optionField.value;
+    const children = optionField.children;
+    const formElConst = formEl.value;
+
+    if (formElConst === ComponentNameEnum.EL_TREE_SELECT) {
+      return { ...elPropsValue, props: { ...elPropsValue, label, children }, nodeKey: value };
+    }
+
+    if (formElConst === ComponentNameEnum.EL_CASCADER) {
+      return { ...elPropsValue, props: { ...elPropsValue, label, value, children } };
+    }
+
+    if (formElConst === ComponentNameEnum.EL_DATE_PICKER) {
+      if (elPropsValue.type === "datetime") return { valueFormat: "YYYY-MM-DD HH:mm:ss", ...elPropsValue };
+      if (elPropsValue.type === "date") return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
+
+      return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
+    }
+
+    if (formElConst === ComponentNameEnum.EL_TIME_PICKER) return { valueFormat: "HH:mm:ss", ...elPropsValue };
+
+    return elPropsValue;
+  });
+
+  // 处理默认 placeholder
+  const placeholder = computed(() => {
+    const { type, isRange, placeholder } = elPropsValue.value;
+    if (["datetimerange", "daterange", "monthrange"].includes(type) || isRange) {
+      return { rangeSeparator: "至", startPlaceholder: "开始时间", endPlaceholder: "结束时间" };
+    }
+    const placeholderConst = placeholder ?? (formEl.value === ComponentNameEnum.EL_INPUT ? "请输入" : "请选择");
+
+    return { placeholder: placeholderConst };
+  });
+
+  return { elPropsValue, placeholder };
+}
+
+/**
+ * 表单字典枚举相关逻辑
+ */
+function useFormItemOptions() {
+  const enums = ref<Recordable[]>([]);
+
+  const initOptions = async () => {
+    const { options, optionField } = props;
+
+    if (!options || (isArray(options) && !options.length)) return [];
+
+    let value = await formatValue<FormItemColumnProps["options"]>(options, [model.value]);
+    if (!value) return [];
+
+    // 适配接口返回 data
+    value = value?.data || value;
+
+    if (formEl.value === ComponentNameEnum.EL_SELECT_V2) {
+      // el 为 select-v2 需单独处理
+      value = value.map((item: Recordable) => {
+        return { ...item, label: item[optionField.label!], value: item[optionField.value!] };
+      });
+    }
+
+    return value;
+  };
+
+  watch(
+    () => props.options,
+    async () => (enums.value = await initOptions()),
+    { immediate: true }
+  );
+
+  return { enums };
+}
+
+// 存储每一个 ElFormItem 实例
+const elFormItemInstance = useTemplateRef<FormItemInstance>("elFormItemInstance");
+// 存储每一个表单组件实例
+const elInstance = useTemplateRef<Component>("elInstance");
 
 const expose = {
   elFormItemInstance,

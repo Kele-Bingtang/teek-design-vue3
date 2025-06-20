@@ -1,4 +1,5 @@
 import type { FormInstance } from "element-plus";
+import type { RenderTypes } from "@/components/pro/form-item";
 import type { FormColumn, ProFormInstance, ProFormOnEmits, ProFormProps } from "../types";
 import type { FormSetProps } from "./use-form-api";
 import { ElConfigProvider } from "element-plus";
@@ -6,9 +7,8 @@ import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
 import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/stores";
 import { isString } from "@/utils";
-import ProForm from "../index.vue";
-import type { RenderTypes } from "@/components/pro/form-item";
 import { filterEmpty } from "../helper";
+import ProForm from "../index.vue";
 
 type ProFormPropsWithModel = ProFormProps & { modelValue?: Recordable };
 

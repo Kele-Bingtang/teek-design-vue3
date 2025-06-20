@@ -23,142 +23,167 @@ const props = withDefaults(defineProps<OperationNamespace.Props>(), {
   confirm: false,
 });
 
-const emits = defineEmits<OperationNamespace.Emits>();
-
 const ns = useNamespace("pro-table-operation");
-
-// 控制下拉不隐藏，防止气泡定位异常
-const hideOnClick = ref(true);
 
 const widthValue = computed(() => toValue(props.width));
 const labelValue = computed(() => toValue(props.label));
 
-/**
- * 获取需要渲染的按钮和隐藏的按钮信息
- */
-const getButtons = (row: TableRow, index: number) => {
-  const { buttons, showNumber } = props;
-
-  const data = buttons.filter(item => {
-    if (!isFunction(item.show)) return unref(item.show) !== false;
-    const isShow = item.show(row, index, item);
-    return unref(isShow) !== false;
-  });
-
-  const showNumberConst = isFunction(showNumber) ? showNumber(row, index) : showNumber;
-  const showMore = data.length > showNumberConst;
-
-  if (!showMore) return { showMore, showButtons: data, hideButtons: [] };
-  return { showMore, showButtons: data.slice(0, showNumberConst), hideButtons: data.slice(showNumberConst) };
-};
+const { getButtons, getText, getButtonEl, getButtonElProps } = useOperationButtonPropsGet();
+const { hideOnClick, getCallbackParams, handleButtonClick, handleConfirm, handleCancel } = useOperationButtonEvent();
+const { getConfirmEl, getConfirmProps } = useOperationConfirmPropsGet();
 
 /**
- * 获取文本
+ * 操作按钮相关信息获取
  */
-const getText = (buttonRaw: OperationNamespace.ButtonRaw, row: TableRow, index: number) => {
-  return isFunction(buttonRaw.text)
-    ? unref(buttonRaw.text(row, index, { ...buttonRaw, text: undefined }))
-    : unref(buttonRaw.text);
-};
+function useOperationButtonPropsGet() {
+  /**
+   * 获取需要渲染的按钮和隐藏的按钮信息
+   */
+  const getButtons = (row: TableRow, index: number) => {
+    const { buttons, showNumber } = props;
 
-const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) =>
-  hyphenToCamelCase(buttonRaw.el || props.el) as OperationEl;
-/**
- * 获取按钮相关组件的 Props
- */
-const getButtonElProps = (buttonRaw: OperationNamespace.ButtonRaw, row: TableRow, index: number) => {
-  return isFunction(buttonRaw.elProps)
-    ? buttonRaw.elProps(row, index, { ...buttonRaw, elProps: undefined })
-    : unref(buttonRaw.elProps);
-};
+    const data = buttons.filter(item => {
+      if (!isFunction(item.show)) return unref(item.show) !== false;
+      const isShow = item.show(row, index, item);
+      return unref(isShow) !== false;
+    });
 
-/**
- * 获取 emits 返回的参数信息
- */
-const getCallbackParams = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event?: MouseEvent) => {
-  const { row, $index } = scope;
-  const text = getText(buttonRaw, row, $index);
+    const showNumberConst = isFunction(showNumber) ? showNumber(row, index) : showNumber;
+    const showMore = data.length > showNumberConst;
 
-  return {
-    ...scope,
-    text,
-    rowIndex: $index,
-    buttonRaw,
-    event,
-  } as OperationNamespace.ButtonsCallBackParams;
-};
-
-/**
- * 获取 confirm 弹窗组件
- */
-const getConfirmEl = (buttonRaw: OperationNamespace.ButtonRaw) => {
-  const confirm = buttonRaw.confirm ?? props.confirm;
-  if (!confirm) return;
-  if (confirm === true) return OperationConfirmEl.ElPopconfirm;
-  return confirm.el;
-};
-
-/**
- * 获取 confirm 弹窗组件 props
- */
-const getConfirmProps = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable) => {
-  const confirmEl = getConfirmEl(buttonRaw);
-  const confirm = buttonRaw.confirm ?? props.confirm;
-
-  if (!confirmEl) return;
-  if (confirmEl === OperationConfirmEl.ElPopconfirm) {
-    return (confirm as OperationNamespace.Confirm<OperationConfirmEl.ElPopconfirm>).props;
-  }
-
-  const callbackParams = getCallbackParams(buttonRaw, scope);
-
-  const elMessageBoxConfirm = confirm as OperationNamespace.Confirm<OperationConfirmEl.ElMessageBox>;
-
-  const title = isFunction(elMessageBoxConfirm?.props?.title)
-    ? elMessageBoxConfirm.props.title(callbackParams)
-    : elMessageBoxConfirm?.props?.title;
-
-  const message = isFunction(elMessageBoxConfirm?.props?.message)
-    ? elMessageBoxConfirm?.props.message(callbackParams)
-    : elMessageBoxConfirm?.props?.message;
-
-  return {
-    ...elMessageBoxConfirm?.props,
-    title,
-    message,
+    if (!showMore) return { showMore, showButtons: data, hideButtons: [] };
+    return { showMore, showButtons: data.slice(0, showNumberConst), hideButtons: data.slice(showNumberConst) };
   };
-};
+
+  /**
+   * 获取文本
+   */
+  const getText = (buttonRaw: OperationNamespace.ButtonRaw, row: TableRow, index: number) => {
+    return isFunction(buttonRaw.text)
+      ? unref(buttonRaw.text(row, index, { ...buttonRaw, text: undefined }))
+      : unref(buttonRaw.text);
+  };
+
+  const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) =>
+    hyphenToCamelCase(buttonRaw.el || props.el) as OperationEl;
+  /**
+   * 获取按钮相关组件的 Props
+   */
+  const getButtonElProps = (buttonRaw: OperationNamespace.ButtonRaw, row: TableRow, index: number) => {
+    return isFunction(buttonRaw.elProps)
+      ? buttonRaw.elProps(row, index, { ...buttonRaw, elProps: undefined })
+      : unref(buttonRaw.elProps);
+  };
+
+  return { getButtons, getText, getButtonEl, getButtonElProps };
+}
 
 /**
- * 点击按钮事件
+ * 二次确认组件相关信息获取
  */
-const handleButtonClick = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
-  hideOnClick.value = true;
-  const callbackParams = getCallbackParams(buttonRaw, scope, event);
-  if (isFunction(buttonRaw.onClick)) buttonRaw.onClick(callbackParams);
+function useOperationConfirmPropsGet() {
+  /**
+   * 获取 confirm 弹窗组件
+   */
+  const getConfirmEl = (buttonRaw: OperationNamespace.ButtonRaw) => {
+    const confirm = buttonRaw.confirm ?? props.confirm;
+    if (!confirm) return;
+    if (confirm === true) return OperationConfirmEl.ElPopconfirm;
+    return confirm.el;
+  };
 
-  emits("buttonClick", callbackParams);
-};
+  /**
+   * 获取 confirm 弹窗组件 props
+   */
+  const getConfirmProps = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable) => {
+    const confirmEl = getConfirmEl(buttonRaw);
+    const confirm = buttonRaw.confirm ?? props.confirm;
+
+    if (!confirmEl) return;
+    if (confirmEl === OperationConfirmEl.ElPopconfirm) {
+      return (confirm as OperationNamespace.Confirm<OperationConfirmEl.ElPopconfirm>).props;
+    }
+
+    const callbackParams = getCallbackParams(buttonRaw, scope);
+
+    const elMessageBoxConfirm = confirm as OperationNamespace.Confirm<OperationConfirmEl.ElMessageBox>;
+
+    const title = isFunction(elMessageBoxConfirm?.props?.title)
+      ? elMessageBoxConfirm.props.title(callbackParams)
+      : elMessageBoxConfirm?.props?.title;
+
+    const message = isFunction(elMessageBoxConfirm?.props?.message)
+      ? elMessageBoxConfirm?.props.message(callbackParams)
+      : elMessageBoxConfirm?.props?.message;
+
+    return {
+      ...elMessageBoxConfirm?.props,
+      title,
+      message,
+    };
+  };
+
+  return { getConfirmEl, getConfirmProps };
+}
+
+const emits = defineEmits<OperationNamespace.Emits>();
 
 /**
- * 点击确认按钮事件
+ * 操作按钮相关事件（包含事件触发后执行 emit）
  */
-const handleConfirm = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
-  const callbackParams = getCallbackParams(buttonRaw, scope, event);
+function useOperationButtonEvent() {
+  // 控制下拉不隐藏，防止气泡定位异常
+  const hideOnClick = ref(true);
 
-  if (isFunction(buttonRaw.onConfirm)) buttonRaw.onConfirm(callbackParams);
-  emits("confirm", callbackParams);
-};
+  /**
+   * 获取 emits 返回的参数信息
+   */
+  const getCallbackParams = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event?: MouseEvent) => {
+    const { row, $index } = scope;
+    const text = getText(buttonRaw, row, $index);
 
-/**
- * 点击取消按钮事件
- */
-const handleCancel = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
-  const callbackParams = getCallbackParams(buttonRaw, scope, event);
+    return {
+      ...scope,
+      text,
+      rowIndex: $index,
+      buttonRaw,
+      event,
+    } as OperationNamespace.ButtonsCallBackParams;
+  };
 
-  if (isFunction(buttonRaw.onCancel)) buttonRaw.onCancel(callbackParams);
-  emits("cancel", callbackParams);
-};
+  /**
+   * 点击按钮事件
+   */
+  const handleButtonClick = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
+    hideOnClick.value = true;
+    const callbackParams = getCallbackParams(buttonRaw, scope, event);
+    if (isFunction(buttonRaw.onClick)) buttonRaw.onClick(callbackParams);
+
+    emits("buttonClick", callbackParams);
+  };
+
+  /**
+   * 点击确认按钮事件
+   */
+  const handleConfirm = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
+    const callbackParams = getCallbackParams(buttonRaw, scope, event);
+
+    if (isFunction(buttonRaw.onConfirm)) buttonRaw.onConfirm(callbackParams);
+    emits("confirm", callbackParams);
+  };
+
+  /**
+   * 点击取消按钮事件
+   */
+  const handleCancel = (buttonRaw: OperationNamespace.ButtonRaw, scope: Recordable, event: MouseEvent) => {
+    const callbackParams = getCallbackParams(buttonRaw, scope, event);
+
+    if (isFunction(buttonRaw.onCancel)) buttonRaw.onCancel(callbackParams);
+    emits("cancel", callbackParams);
+  };
+
+  return { hideOnClick, getCallbackParams, handleButtonClick, handleConfirm, handleCancel };
+}
 </script>
 
 <template>

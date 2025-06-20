@@ -1,6 +1,7 @@
+import type { BaseValueType } from "@/components";
 import type { FormColumn, ProFormProps } from "../types";
 import { isString } from "@/utils";
-import { setProp, type BaseValueType } from "@/components";
+import { setProp } from "@/components";
 
 /**
  * setColumn 函数的参数类型

@@ -32,6 +32,9 @@ const props = withDefaults(defineProps<ProPageProps>(), {
   requestImmediate: true,
   toolButton: true,
   tooltipProps: () => ({ placement: "top", effect: "light" }),
+  headerBackground: true,
+  highlightCurrentRow: true,
+  showHeader: true,
 });
 
 const emits = defineEmits<ProPageEmits>();
@@ -295,6 +298,8 @@ defineExpose(expose);
             @click="initShowSearch = !initShowSearch"
           />
         </el-tooltip>
+
+        <slot name="head-right-after" />
       </template>
 
       <template v-for="slot in Object.keys($slots).filter(key => !key.includes('head-right-after'))" #[slot]="scope">

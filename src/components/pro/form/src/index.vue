@@ -35,17 +35,14 @@ const props = withDefaults(defineProps<ProFormProps>(), {
   width: "100%",
 });
 
+// 定义 emit 事件
+const emits = defineEmits<ProFormEmits>();
+
 const ns = useNamespace("pro-form");
 
 const model = defineModel<Recordable>({ default: () => ({}) });
-
 // 存储 ElForm 实例
 const elFormInstance = useTemplateRef<FormInstance>("elFormInstance");
-// 存储表单组件实例
-const proFormItemInstances = shallowRef<Record<string, InstanceType<typeof ProFormItem>>>({});
-
-const showLabelValue = computed(() => toValue(props.showLabel));
-const withValue = computed(() => addUnit(toValue(props.width)));
 
 // 最终的 props
 const finalProps = computed(() => {
@@ -60,185 +57,234 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
-const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useFormApi(model, finalProps);
-
-// 计算属性：过滤掉需要销毁的表单项
-const filteredColumn = computed(() => finalProps.value.columns.filter(item => !destroyOrInit(item)));
-
+const showLabelValue = computed(() => toValue(finalProps.value.showLabel));
+const withValue = computed(() => addUnit(toValue(finalProps.value.width)));
 const footerStyle = computed(() => ({
   display: "flex",
-  justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
+  justifyContent:
+    finalProps.value.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
 }));
 
-// 定义 optionsMap 存储枚举值
-const optionsMap = inject(proFormOptionsMapKey, ref(new Map<string, MaybeRef<ElOption[]>>()));
-
-const initOptionsMap = async (column: FormColumn) => {
-  const { options, prop = "" } = column;
-  if (!options) return;
-
-  const optionsMapConst = optionsMap.value;
-
-  // 如果当前 enumMap 存在相同的值则 return
-  if (optionsMapConst.has(prop!) && (isFunction(options) || optionsMapConst.get(prop!) === options)) return;
-
-  // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
-  optionsMapConst.set(prop!, []);
-
-  // 处理 options 并存储到 optionsMap
-  const value = await formatValue<FormItemColumnProps["options"]>(options, [model.value, optionsMapConst], false);
-
-  optionsMapConst.set(prop, (value as any)?.data || value);
-};
+const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useFormApi(model, finalProps);
+const { optionsMap, initOptionsMap } = useFormOptions();
+const { availableColumns, destroyOrInit } = useFormInit();
+const { submitForm, resetForm } = useFormFooter();
+const { handleChange, handleValidate } = useFormEmits();
+const { setProFormItemInstance, getElFormItemInstance, getElInstance } = useFormGetInstance();
 
 /**
- * 是否销毁表单项 & 是否初始化表单项默认值
+ * 表单字典枚举相关逻辑
  */
-const destroyOrInit = (item: FormColumn) => {
-  let destroy = unref(item.destroy) ?? false;
-  if (isFunction(item.destroy)) destroy = unref(item.destroy(model.value)) ?? false;
+function useFormOptions() {
+  // 定义 optionsMap 存储枚举值
+  const optionsMap = inject(proFormOptionsMapKey, ref(new Map<string, MaybeRef<ElOption[]>>()));
 
-  // 如果不销毁，则初始化表单默认值，反之则重置为空
-  if (!destroy) initDefaultValue(item);
-  else deleteProp(model.value, item.prop);
+  const initOptionsMap = async (column: FormColumn) => {
+    const { options, prop = "" } = column;
+    if (!options) return;
 
-  return destroy;
-};
+    const optionsMapConst = optionsMap.value;
 
-// 初始化默认值
-const initDefaultValue = async ({ defaultValue, optionField, prop }: FormColumn) => {
-  const modelConst = model.value;
-  const value = getProp(modelConst, prop);
+    // 如果当前 enumMap 存在相同的值则 return
+    if (optionsMapConst.has(prop!) && (isFunction(options) || optionsMapConst.get(prop!) === options)) return;
 
-  // 如果有值，则不需要赋默认值
-  if (!isEmpty(value)) return;
+    // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
+    optionsMapConst.set(prop!, []);
 
-  const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, [modelConst, optionsMap.value]);
+    // 处理 options 并存储到 optionsMap
+    const value = await formatValue<FormItemColumnProps["options"]>(options, [model.value, optionsMapConst], false);
 
-  if (defaultValueConst) return setProp(modelConst, prop, defaultValueConst);
+    optionsMapConst.set(prop, (value as any)?.data || value);
+  };
 
-  // 如果没有设置默认值，则判断字典里是否有 isDefault 为 Y 的枚举
-  const enumData = unref(optionsMap.value.get(prop));
-  if (enumData?.length) {
-    // 找出 isDefault 为 Y 的 value
-    const data = enumData.find(item => item.isDefault === "Y");
+  return { optionsMap, initOptionsMap };
+}
 
-    return data && setProp(modelConst, prop, data[optionField?.value ?? "value"]);
-  }
-};
+/**
+ * 表单数据初始化相关逻辑
+ */
+function useFormInit() {
+  let timer: ReturnType<typeof setTimeout> | null = null;
 
-let timer: ReturnType<typeof setTimeout> | null = null;
+  // 计算属性：过滤掉需要销毁的表单项
+  const availableColumns = computed(() => finalProps.value.columns.filter(item => !destroyOrInit(item)));
 
-// 监听表单结构化数组，重新组装 column
-watch(
-  filteredColumn,
-  (column = []) => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
+  // 初始化默认值
+  const initDefaultValue = async (column: FormColumn) => {
+    const { defaultValue, optionField, prop } = column;
+    const modelConst = model.value;
+    const value = getProp(modelConst, prop);
+
+    // 如果有值，则不需要赋默认值
+    if (!isEmpty(value)) return;
+
+    const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, [
+      modelConst,
+      optionsMap.value,
+    ]);
+
+    if (defaultValueConst) return setProp(modelConst, prop, defaultValueConst);
+
+    // 如果没有设置默认值，则判断字典里是否有 isDefault 为 Y 的枚举
+    const enumData = unref(optionsMap.value.get(prop));
+    if (enumData?.length) {
+      // 找出 isDefault 为 Y 的 value
+      const data = enumData.find(item => item.isDefault === "Y");
+
+      return data && setProp(modelConst, prop, data[optionField?.value ?? "value"]);
+    }
+  };
+
+  /**
+   * 是否销毁表单项 & 是否初始化表单项默认值
+   */
+  const destroyOrInit = (item: FormColumn) => {
+    let destroy = unref(item.destroy) ?? false;
+    if (isFunction(item.destroy)) destroy = unref(item.destroy(model.value)) ?? false;
+
+    // 如果不销毁，则初始化表单默认值，反之则重置为空
+    if (!destroy) initDefaultValue(item);
+    else deleteProp(model.value, item.prop);
+
+    return destroy;
+  };
+
+  // 监听表单结构化数组，重新组装 column
+  watch(
+    availableColumns,
+    (column = []) => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+
+      // 防抖：防止初始化时连续执行
+      timer = setTimeout(() => {
+        const { dynamicModel, includeModelKeys } = finalProps.value;
+
+        column.forEach((item, index) => {
+          // 初始化枚举数据
+          initOptionsMap(item);
+
+          // 设置表单排序默认值
+          item && (item.order = item.order ?? index + 5);
+          // 初始化值
+          initDefaultValue(item);
+        });
+
+        // 排序表单项
+        column.sort((a, b) => a.order! - b.order!);
+
+        if (!dynamicModel) return;
+
+        // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
+        getObjectKeys(model.value).forEach(key => {
+          const isExist = column.some(item => item.prop === key || includeModelKeys?.includes(key));
+          if (!isExist) deleteProp(model.value, key);
+        });
+      }, 10);
+    },
+    {
+      immediate: true,
+      deep: true,
+    }
+  );
+
+  return { availableColumns, destroyOrInit };
+}
+
+/**
+ * 表单 Footer 按钮相关逻辑
+ */
+function useFormFooter() {
+  const submitForm = async () => {
+    if (props.preventNativeSubmit) {
+      emits("submit", model.value);
+      return true;
     }
 
-    // 防抖：防止初始化时连续执行
-    timer = setTimeout(() => {
-      const { dynamicModel, includeModelKeys } = finalProps.value;
+    return await elFormInstance.value?.validate((isValid, invalidFields) => {
+      if (isValid) return emits("submit", model.value);
 
-      column.forEach((item, index) => {
-        // 初始化枚举数据
-        initOptionsMap(item);
+      if (props.showErrorTip) {
+        ElMessage.closeAll();
+        ElMessage.warning(Object.values(invalidFields || { message: ["请完整填写表单然后再次提交！"] })[0][0].message);
+      }
+      emits("submitError", invalidFields);
+    });
+  };
 
-        // 设置表单排序默认值
-        item && (item.order = item.order ?? index + 5);
-        // 初始化值
-        initDefaultValue(item);
-      });
+  const resetForm = () => {
+    elFormInstance.value?.resetFields();
+    emits("reset", model.value);
+  };
 
-      // 排序表单项
-      column.sort((a, b) => a.order! - b.order!);
+  return { submitForm, resetForm };
+}
 
-      if (!dynamicModel) return;
+/**
+ *表单 emits 事件相关逻辑
+ */
+function useFormEmits() {
+  const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+    emits("change", model, column);
+  };
 
-      // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
-      getObjectKeys(model.value).forEach(key => {
-        const isExist = column.some(item => item.prop === key || includeModelKeys?.includes(key));
-        if (!isExist) deleteProp(model.value, key);
-      });
-    }, 10);
-  },
-  {
-    immediate: true,
-    deep: true,
-  }
-);
+  onMounted(() => {
+    emits("register", elFormInstance.value?.$parent || null, elFormInstance.value);
+  });
+
+  const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): void => {
+    emits("validate", prop, isValid, message);
+  };
+
+  return { handleChange, handleValidate };
+}
+
+/**
+ * 表单组件实例初始化和获取
+ */
+function useFormGetInstance() {
+  // 存储表单组件实例
+  const proFormItemInstances = shallowRef<Record<string, InstanceType<typeof ProFormItem>>>({});
+
+  // 获取 ProFormItem 的实例
+  const setProFormItemInstance = (el: any, prop: string) => {
+    if (el) setProp(proFormItemInstances.value, prop, el);
+  };
+
+  // 获取 ElFormItem 实例
+  const getElFormItemInstance = (prop: FormColumn["prop"]): FormItemInstance => {
+    return getProp(proFormItemInstances.value, prop).elFormItemInstance;
+  };
+
+  // 获取表单组件实例
+  const getElInstance = (prop: FormColumn["prop"]): Component | ComponentPublicInstance => {
+    return getProp(proFormItemInstances.value, prop).elInstance;
+  };
+
+  return { setProFormItemInstance, getElFormItemInstance, getElInstance };
+}
 
 /**
  * 是否隐藏表单项
  */
-const isHidden = (item: FormColumn) => {
-  const { hidden } = item;
+const isHidden = (column: FormColumn) => {
+  const { hidden } = column;
   if (isFunction(hidden)) return unref(hidden(model.value)) ?? false;
   return unref(hidden);
 };
 
-// 获取 ElCol Props
-const getColProps = (item: FormColumn) => {
+/**
+ * 获取 ElCol Props
+ */
+const getColProps = (column: FormColumn) => {
   const { colProps } = finalProps.value;
   return {
     span: 24,
     ...colProps,
-    ...toValue(item.colProps),
+    ...toValue(column.colProps),
   };
-};
-
-// 获取 ProFormItem 的实例
-const setProFormItemInstance = (el: any, prop: string) => {
-  if (el) setProp(proFormItemInstances.value, prop, el);
-};
-
-// 定义 emit 事件
-const emits = defineEmits<ProFormEmits>();
-
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
-  emits("change", model, column);
-};
-
-onMounted(() => {
-  emits("register", elFormInstance.value?.$parent || null, elFormInstance.value);
-});
-
-const submitForm = async () => {
-  if (props.preventNativeSubmit) {
-    emits("submit", model.value);
-    return true;
-  }
-
-  return await elFormInstance.value?.validate((isValid, invalidFields) => {
-    if (isValid) return emits("submit", model.value);
-
-    if (props.showErrorTip) {
-      ElMessage.closeAll();
-      ElMessage.warning(Object.values(invalidFields || { message: ["请完整填写表单然后再次提交！"] })[0][0].message);
-    }
-    emits("submitError", invalidFields);
-  });
-};
-
-const resetForm = (): void => {
-  elFormInstance.value?.resetFields();
-  emits("reset", model.value);
-};
-
-const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): void => {
-  emits("validate", prop, isValid, message);
-};
-
-// 获取 ElFormItem 实例
-const getElFormItemInstance = (prop: FormColumn["prop"]): FormItemInstance => {
-  return getProp(proFormItemInstances.value, prop).elFormItemInstance;
-};
-
-// 获取表单组件实例
-const getElInstance = (prop: FormColumn["prop"]): Component | ComponentPublicInstance => {
-  return getProp(proFormItemInstances.value, prop).elInstance;
 };
 
 const expose = {
@@ -274,7 +320,7 @@ defineExpose(expose);
     <slot :isHidden :setProFormItemInstance :optionsMap>
       <el-row v-if="finalProps.useFlexLayout" :gutter="20" v-bind="finalProps.rowProps" style="width: 100%">
         <el-col
-          v-for="column in filteredColumn"
+          v-for="column in availableColumns"
           :key="column.prop"
           v-show="!isHidden(column)"
           v-bind="getColProps(column)"
@@ -292,7 +338,7 @@ defineExpose(expose);
         </el-col>
       </el-row>
 
-      <template v-else v-for="column in filteredColumn" :key="column.prop">
+      <template v-else v-for="column in availableColumns" :key="column.prop">
         <ProFormItem
           :ref="el => setProFormItemInstance(el, column.prop)"
           v-model="model"

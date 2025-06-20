@@ -12,7 +12,7 @@ export interface TableSetProps {
   value: BaseValueType;
 }
 
-export const useTableApi = (finalProps: ComputedRef<ProTableNamespace.Props>) => {
+export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
   const mergeProps = ref<ProTableNamespace.Props>({});
 
   /**
@@ -31,8 +31,8 @@ export const useTableApi = (finalProps: ComputedRef<ProTableNamespace.Props>) =>
    * @param children 设置合并列（合并表头）
    */
   const setColumn = (columnSet: TableSetProps[], children?: TableColumn[]) => {
-    const { columns = [] } = finalProps.value;
-    for (const column of children || columns) {
+    const columnsValue = unref(columns);
+    for (const column of children || columnsValue) {
       for (const item of columnSet) {
         if (column.prop === item.prop) setProp(column, item.field, item.value);
         else if (column.children?.length) setColumn(columnSet, column.children);
@@ -52,16 +52,16 @@ export const useTableApi = (finalProps: ComputedRef<ProTableNamespace.Props>) =>
     propOrIndex?: TableColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
-    const { columns = [] } = finalProps.value;
+    const columnsValue = unref(columns);
     if (isString(propOrIndex)) {
-      return columns.forEach((column, i) => {
+      return columnsValue.forEach((column, i) => {
         if (column.prop === propOrIndex) {
-          position === "after" ? columns.splice(i + 1, 0, column) : columns.splice(i, 0, column);
+          position === "after" ? columnsValue.splice(i + 1, 0, column) : columnsValue.splice(i, 0, column);
         }
       });
     }
-    if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
-    return columns.push(column);
+    if (propOrIndex !== undefined) return columnsValue.splice(propOrIndex, 0, column);
+    return columnsValue.push(column);
   };
 
   /**
@@ -70,9 +70,9 @@ export const useTableApi = (finalProps: ComputedRef<ProTableNamespace.Props>) =>
    * @param prop prop
    */
   const delColumn = (prop: TableColumn["prop"]) => {
-    const { columns = [] } = finalProps.value;
-    const index = columns.findIndex(item => item.prop === prop);
-    if (index > -1) columns.splice(index, 1);
+    const columnsValue = unref(columns);
+    const index = columnsValue.findIndex(item => item.prop === prop);
+    if (index > -1) columnsValue.splice(index, 1);
   };
 
   return { mergeProps, setProps, setColumn, addColumn, delColumn };
