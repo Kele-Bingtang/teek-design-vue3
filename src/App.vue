@@ -12,7 +12,7 @@ import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
 import { useLayoutStore } from "@/stores/core/layout";
-import SystemConfig, { ConfigGlobalKey, WebSocketKey } from "@/config";
+import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/config";
 import { useUserStore, useWebSocketStore } from "@/stores";
 import { isFunction } from "@/utils";
 import { LanguageEnum } from "@/enums/appEnum";
@@ -28,7 +28,7 @@ const userStore = useUserStore();
 const { layoutSize, language } = storeToRefs(layoutStore);
 
 // 自定义注入全局参数。ElConfigProvider 会自动使用 provide 全局注入它的 props 到项目里，可以通过 configProviderContextKey 来 inject 获取（先从 element-plus 引入，然后 const config = inject(configProviderContextKey)）
-provide(ConfigGlobalKey, { size: layoutSize });
+provide(GlobalConfigKey, { size: layoutSize });
 
 // 初始化主题配置
 useTheme().initTheme();

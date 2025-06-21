@@ -2,7 +2,6 @@
 import type { TableColumnCtx } from "element-plus";
 import type { TableScope, TableColumn, TableColumnDataNamespace, TableRow } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
-import type { ModelBaseValueType } from "@/components/pro/form-item";
 import { toValue } from "vue";
 import { ElMessage, ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
@@ -140,8 +139,8 @@ const handleRegisterProFormInstance = (index: number, prop: string, instance: Pr
 /**
  * 执行过滤搜索
  */
-const handleFilter = (model: ModelBaseValueType, filterValue: unknown, prop: string | undefined) => {
-  emits("filter", model as Recordable, filterValue, prop);
+const handleFilter = (model: Recordable, filterValue: unknown, prop: string | undefined) => {
+  emits("filter", model, filterValue, prop);
 };
 
 /**

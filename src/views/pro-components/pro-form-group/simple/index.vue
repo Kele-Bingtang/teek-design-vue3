@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ElFormProps, FormGroupColumn, FormItemColumnProps, ModelBaseValueType } from "@/components";
+import type { ElFormProps, FormGroupColumn, FormItemColumnProps } from "@/components";
 import { CreditCard, Calendar, Soccer } from "@element-plus/icons-vue";
 import { ProFormGroup } from "@/components";
 
@@ -7,18 +7,8 @@ const model = ref({});
 
 const elFormProps: Partial<ElFormProps> = {
   rules: {
-    name: [
-      {
-        required: true,
-        message: "请输入名称",
-      },
-    ],
-    tag: [
-      {
-        required: true,
-        message: "请输入标签",
-      },
-    ],
+    name: [{ required: true, message: "请输入名称" }],
+    tag: [{ required: true, message: "请输入标签" }],
   },
 };
 
@@ -183,7 +173,7 @@ const columns: FormGroupColumn[] = [
   },
 ];
 
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+const handleChange = (model: Recordable, column: FormItemColumnProps) => {
   console.log(model, column.prop, "change");
 };
 const handleSubmit = (model: Recordable) => {

@@ -3,7 +3,7 @@ import type { CSSProperties } from "vue";
 import { computed, ref, watch, inject, nextTick } from "vue";
 import { ElInput, ElPopover, ElScrollbar, ElTabs, ElTabPane, ElPagination } from "element-plus";
 import { useNamespace } from "@/composables";
-import { ConfigGlobalKey } from "@/config";
+import { GlobalConfigKey } from "@/config";
 import epIcons from "./data/icons.ep";
 import antIcons from "./data/icons.ant-design";
 import tIcons from "./data/icons.tdesign";
@@ -14,7 +14,7 @@ const ns = useNamespace("icon-picker");
 
 defineProps<{ tip?: boolean }>();
 
-const configGlobal = inject(ConfigGlobalKey);
+const configGlobal = inject(GlobalConfigKey);
 
 const init = async (icon?: string) => {
   if (!icon) return;

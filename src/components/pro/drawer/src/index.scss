@@ -10,6 +10,11 @@ $prefix-class: #{$admin-namespace}-pro-drawer;
     margin-bottom: 0;
     overflow: auto;
   }
+
+  @include e(footer) {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .#{$prefix-class} .#{$prefix-class}.#{$el-namespace}-drawer {

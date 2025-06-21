@@ -1,63 +1,49 @@
-import {
-  render,
-  getCurrentInstance,
-  type Component,
-  type ComponentInternalInstance,
-  type VNode,
-  type AppContext,
-  nextTick,
-  ref,
-} from "vue";
-import { ElDrawer, ElButton, type DrawerProps, ElConfigProvider } from "element-plus";
-import { Icon } from "@/components";
-import "./index.scss";
+import type { Component, ComponentInternalInstance, AppContext, ComputedRef } from "vue";
+import type { ProDrawerProps } from "./types";
+import type { DrawerProps } from "element-plus";
+import { render, getCurrentInstance, nextTick, ref } from "vue";
+import { ElDrawer, ElButton, ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
-import { ConfigGlobalKey } from "@/config";
+import { isArray } from "@/utils";
+import { GlobalConfigKey } from "@/config";
+import { Icon } from "@/components";
+
+import "./index.scss";
+
+export type ProUseDrawerProps = ProDrawerProps & Partial<DrawerProps>;
 
 const ns = useNamespace("pro-drawer");
 const blockClass = ns.b();
-
+let appContextConst: AppContext | null;
+let layoutSize: ComputedRef<"default" | "small" | "large" | undefined>;
 let id = 0;
 
-let appContextConst: AppContext | undefined;
-let layoutSize: "default" | "small" | "large" | undefined;
-
-const getFather = (): Element => {
+/**
+ * 获取上一级元素，插入 Dialog 时用到
+ */
+const getFatherDom = (): Element => {
   const fullScreen = document.querySelector(":not(:root):fullscreen");
   if (fullScreen) return fullScreen;
   return document.querySelector("body") as HTMLBodyElement;
 };
 
-export interface ProDrawerProps extends Partial<DrawerProps> {
-  render?: () => VNode; // 内容区渲染 TSX
-  headerRender?: () => VNode; // 顶部渲染 TSX
-  footerRender?: (closeDrawer: () => void) => VNode; // 顶部渲染 TSX
-  showFooter?: boolean; // 是否渲染顶部
-  onConfirm?: (closeDrawer: () => void) => any; // 确认按钮点击事件
-  onClose?: (closeDrawer: () => void) => any; // 关闭按钮点击事件
-  confirmLabel?: string; // 确认按钮文字，默认 确认
-  closeLabel?: string; // 关闭按钮文字，默认 关闭
-  fullscreen?: boolean; // 是否默认全屏，默认 false
-  fullscreenIcon?: boolean; // 是否渲染全屏图标，默认 true
-}
-
 export const closeDrawer = () => {
   const vm = document.querySelector(`#${blockClass}-${id--}`) as HTMLElement;
-  vm && getFather().removeChild(vm);
+  vm && getFatherDom().removeChild(vm);
 };
 
-const handleClose = async (drawerProps?: ProDrawerProps) => {
-  if (!drawerProps?.onClose) return closeDrawer();
+const handleConfirm = async (drawerProps: ProUseDrawerProps) => {
+  if (!drawerProps.onConfirm) return closeDrawer();
 
-  const result = await drawerProps?.onClose(closeDrawer);
-  if (result || result === 0) return closeDrawer();
+  const result = await drawerProps.onConfirm(closeDrawer);
+  if (result !== false) return closeDrawer();
 };
 
-const handleConfirm = async (drawerProps?: ProDrawerProps) => {
-  if (!drawerProps?.onConfirm) return closeDrawer();
+const handleCancel = async (drawerProps: ProUseDrawerProps) => {
+  if (!drawerProps.onCancel) return closeDrawer();
 
-  const result = await drawerProps?.onConfirm(closeDrawer);
-  if (result || result === 0) return closeDrawer();
+  const result = await drawerProps.onCancel(closeDrawer);
+  if (result !== false) return closeDrawer();
 };
 
 /**
@@ -67,28 +53,36 @@ const handleConfirm = async (drawerProps?: ProDrawerProps) => {
  *
  * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-drawer 的 header 和 footer
  */
-export const showDrawer = (drawerProps: ProDrawerProps, component?: Component, componentsProps?: any) => {
+export const showDrawer = (
+  drawerProps: ProUseDrawerProps = {},
+  component?: Component,
+  componentsProps?: { [slotName: string]: (scope?: unknown) => unknown }
+) => {
   const isFullscreen = ref(false);
 
-  const toggleFull = () => {
+  const style = computed(() => ({
+    justifyContent:
+      drawerProps.footerAlign === "left" ? "flex-start" : drawerProps.footerAlign === "center" ? "center" : "flex-end",
+  }));
+
+  const toggleFullscreen = () => {
     const elDrawerEl = document.querySelector(
       `${`#${blockClass}-${id}`} .${blockClass}.${ns.elNamespace}-drawer`
     ) as HTMLElement;
+
     if (elDrawerEl) elDrawerEl.classList.toggle("is-fullscreen");
     isFullscreen.value = !isFullscreen.value;
   };
 
   const vm = (
-    <ElConfigProvider namespace={ns.elNamespace} size={layoutSize}>
+    <ElConfigProvider namespace={ns.elNamespace} size={layoutSize.value}>
       <ElDrawer
         modelValue
-        title="弹框"
+        title="抽屉"
         size="30%"
-        before-close={() => handleClose(drawerProps)}
+        close-on-click-modal={false}
+        before-close={() => handleCancel(drawerProps)}
         {...drawerProps}
-        render
-        headerRender
-        footerRender
         class={blockClass}
       >
         {{
@@ -96,20 +90,20 @@ export const showDrawer = (drawerProps: ProDrawerProps, component?: Component, c
             if (drawerProps.render) return drawerProps.render();
             return <component is={component} {...componentsProps}></component>;
           },
-          header: () => {
-            if (drawerProps.headerRender) return drawerProps.headerRender();
+          header: (scope: unknown) => {
+            if (drawerProps.headerRender) return drawerProps.headerRender(scope);
             return (
               <>
                 <span class={`${ns.elNamespace}-drawer__title`}>{drawerProps.title}</span>
                 {drawerProps.fullscreenIcon !== false && (
                   <Icon
                     icon={isFullscreen.value ? "core-fullscreen-exit" : "core-fullscreen"}
-                    onClick={() => toggleFull()}
-                    width="18px"
-                    height="18px"
+                    size="15px"
                     color={`var(--${ns.elNamespace}-color-info)`}
+                    hover
                     hover-color={`var(--${ns.elNamespace}-color-primary)`}
-                    icon-style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", userSelect: "none", marginRight: "5px" }}
+                    {...{ onClick: () => toggleFullscreen() }}
                   />
                 )}
               </>
@@ -119,12 +113,16 @@ export const showDrawer = (drawerProps: ProDrawerProps, component?: Component, c
             if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
             if (drawerProps.showFooter === false) return;
             return (
-              <>
-                <ElButton onClick={() => handleClose(drawerProps)}>{drawerProps.closeLabel || "取 消"}</ElButton>
-                <ElButton type="primary" onClick={() => handleConfirm(drawerProps)}>
-                  {drawerProps.confirmLabel || "确 定"}
+              <div class={ns.e("footer")} style={style.value}>
+                <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
+                <ElButton
+                  type="primary"
+                  loading={drawerProps.confirmLoading}
+                  onClick={() => handleConfirm(drawerProps)}
+                >
+                  {drawerProps.confirmText || "确定"}
                 </ElButton>
-              </>
+              </div>
             );
           },
         }}
@@ -133,22 +131,24 @@ export const showDrawer = (drawerProps: ProDrawerProps, component?: Component, c
   );
 
   vm.appContext = appContextConst;
-  vm.children?.length && (vm.children[0].appContext = appContextConst);
+  if (isArray(vm.children) && vm.children.length) (vm.children[0] as any).appContext = appContextConst;
 
   const container = document.createElement("div");
   container.id = `${blockClass}-${++id}`;
-  getFather().appendChild(container);
+  getFatherDom().appendChild(container);
   render(vm, container);
 
   nextTick(() => {
-    if (drawerProps.fullscreen) toggleFull();
+    if (drawerProps.fullscreen) toggleFullscreen();
   });
 };
 
 export const initDrawer = (ctx?: ComponentInternalInstance) => {
-  const { appContext } = ctx || getCurrentInstance() || {};
+  const { appContext = null } = ctx || getCurrentInstance() || {};
   appContextConst = appContext;
-  layoutSize = inject(ConfigGlobalKey)?.size.value;
+
+  const globalConfig = inject(GlobalConfigKey);
+  layoutSize = computed(() => globalConfig?.size.value ?? "default");
 
   return { showDrawer };
 };

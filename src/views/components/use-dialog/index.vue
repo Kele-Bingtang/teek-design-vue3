@@ -11,13 +11,13 @@ const openDialog = () => {
     height: 400,
     render: () => (
       <>
-        <el-button onClick={() => aginOpenDialog()}>使用函数打开 Dialog</el-button>
+        <el-button onClick={() => againOpenDialog()}>使用函数打开 Dialog</el-button>
       </>
     ),
   });
 };
 
-const aginOpenDialog = () => {
+const againOpenDialog = () => {
   open({
     title: "useDialog 弹框",
     top: "20vh",
@@ -41,7 +41,7 @@ const aginOpenDialog = () => {
         <el-descriptions-item label="open">
           打开 Dialog 的函数，需要传入参数，详情请看「open 函数配置项 」
         </el-descriptions-item>
-        <el-descriptions-item label="close">关闭 Dialog 函数</el-descriptions-item>
+        <el-descriptions-item label="cancel">关闭 Dialog 函数</el-descriptions-item>
       </el-descriptions>
 
       <el-descriptions title="open 函数配置项 📚" :column="1" border style="margin-top: 10px">
@@ -73,8 +73,8 @@ const aginOpenDialog = () => {
           点击关闭按钮回调。`(closeDialog: () => void) => void` 类型，默认 undefined。其中 closeDialog
           为函数，触发后关闭 Dialog
         </el-descriptions-item>
-        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确 认</el-descriptions-item>
-        <el-descriptions-item label="closeLabel">关闭按钮文字。`string` 类型，默认 关 闭</el-descriptions-item>
+        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
+        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
         <el-descriptions-item label="fullscreen">
           是否以全屏进入 Dialog。`boolean` 类型，默认 `false`
         </el-descriptions-item>
@@ -106,8 +106,8 @@ const aginOpenDialog = () => {
         <el-descriptions-item label="height">
           Dialog 内容区的最大高度。`string | number` 类型，默认 undefined
         </el-descriptions-item>
-        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确 认</el-descriptions-item>
-        <el-descriptions-item label="closeLabel">关闭按钮文字。`string` 类型，默认 关 闭</el-descriptions-item>
+        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
+        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

@@ -11,7 +11,12 @@
     overflow: auto;
   }
 
+  @include e(footer) {
+    display: flex;
+    align-items: center;
+  }
+
   .tk-icon {
-    margin-top: -7px;
+    margin-top: -9px;
   }
 }

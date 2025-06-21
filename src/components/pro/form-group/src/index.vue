@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { FormItemProp, FormValidateCallback } from "element-plus";
 import type { FormColumn } from "@/components/pro/form";
-import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormGroupProps, ProFormGroupEmits } from "./types";
 import { toValue } from "vue";
 import { ProForm, ProFormMain, useProFormFn, useProFormMainFn } from "@/components/pro/form";
 import { useNamespace } from "@/composables";
 import { useFormGroupApi } from "./composables/use-form-group-api";
 
-defineOptions({ name: "FormGroup" });
+defineOptions({ name: "ProFormGroup" });
 
 const props = withDefaults(defineProps<ProFormGroupProps>(), {
   columns: () => [],
@@ -79,7 +79,7 @@ const handleReset = (model: Recordable) => {
   emits("reset", model);
 };
 
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+const handleChange = (model: Recordable, column: FormItemColumnProps) => {
   emits("change", model, column);
 };
 

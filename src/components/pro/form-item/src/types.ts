@@ -246,7 +246,7 @@ export interface FormItemColumnProps {
 }
 
 export interface ProFormItemEmits {
-  change: [model: ModelBaseValueType, column: FormItemColumnProps];
+  change: [model: Recordable, column: FormItemColumnProps];
 }
 
 /**

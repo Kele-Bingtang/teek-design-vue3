@@ -98,6 +98,24 @@ const proComponents: RouterConfigRaw = {
           name: "SimpleProFormGroup",
           meta: { title: "简单 ProFormGroup", icon: StarFilled },
         },
+        {
+          path: "simple-dialog",
+          component: () => import("@/views/pro-components/pro-form-dialog/simple/index.vue"),
+          name: "SimpleProFormDialog",
+          meta: { title: "简单 ProFormDialog", icon: StarFilled },
+        },
+        {
+          path: "simple-drawer",
+          component: () => import("@/views/pro-components/pro-form-drawer/simple/index.vue"),
+          name: "SimpleProFormDrawer",
+          meta: { title: "简单 ProFormDrawer", icon: StarFilled },
+        },
+        {
+          path: "simple-steps",
+          component: () => import("@/views/pro-components/pro-form-steps/simple/index.vue"),
+          name: "SimpleProFormSteps",
+          meta: { title: "简单 ProFormSteps", icon: StarFilled },
+        },
       ],
     },
     {

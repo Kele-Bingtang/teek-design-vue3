@@ -1,94 +1,95 @@
 <script setup lang="ts">
-import { ElDrawer, ElButton, type DrawerProps } from "element-plus";
+import type { ProDrawerEmits, ProDrawerProps } from "./types";
+import type { DrawerProps } from "element-plus";
 import { ref } from "vue";
-import { Icon } from "@/components";
+import { ElDrawer, ElButton } from "element-plus";
 import { useNamespace } from "@/composables";
+import { Icon } from "@/components";
 
 defineOptions({ name: "ProDrawer" });
 
 const ns = useNamespace("pro-drawer");
 
-interface ProDrawerProps {
-  title?: string; // 顶部标题
-  fullscreen?: boolean; // 是否默认全屏，默认 false
-  fullscreenIcon?: boolean; // 是否渲染全屏图标，默认 true
-  confirmLabel?: string; // 确认按钮文字，默认 确 认
-  closeLabel?: string; // 关闭按钮文字，默认 关 闭
-}
-
 const props = withDefaults(defineProps<ProDrawerProps>(), {
-  title: "弹框",
+  title: "抽屉",
   fullscreen: false,
   fullscreenIcon: true,
-  confirmLabel: "确认",
-  closeLabel: "关闭",
+  showFooter: true,
+  footerAlign: "right",
+  confirmLoading: false,
+  confirmText: "确认",
+  cancelText: "关闭",
 });
 
-const emits = defineEmits<{
-  close: [value: DrawerProps | null];
-  confirm: [value: DrawerProps | null];
-}>();
+const emits = defineEmits<ProDrawerEmits>();
 
 const drawerVisible = defineModel<boolean>({ required: true });
 
 const isFullscreen = ref(props.fullscreen);
-const elDrawerRef = useTemplateRef<DrawerProps>("elDrawerRef");
+const elDrawerInstance = useTemplateRef<DrawerProps>("elDrawerInstance");
 
-const toggleFull = () => {
-  isFullscreen.value = !isFullscreen.value;
+const style = computed(() => ({
+  justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
+}));
+
+const toggleFullscreen = () => (isFullscreen.value = !isFullscreen.value);
+const handleConfirm = () => emits("confirm");
+const handleCancel = () => {
+  emits("cancel");
+  close();
 };
 
-const handleClose = () => {
-  emits("close", elDrawerRef.value);
-  drawerVisible.value = false;
-};
+const open = () => (drawerVisible.value = true);
+const close = () => (drawerVisible.value = false);
 
-const handleConfirm = () => {
-  emits("confirm", elDrawerRef.value);
-  drawerVisible.value = false;
-};
-
-defineExpose({ elDrawerRef });
+defineExpose({ elDrawerInstance, handleConfirm, handleCancel, open, close });
 </script>
 
 <template>
-  <ElDrawer
-    ref="elDrawerRef"
+  <el-drawer
+    ref="elDrawerInstance"
     v-model="drawerVisible"
     :title="title"
     size="30%"
+    :close-on-click-modal="false"
     v-bind="$attrs"
     :class="[ns.b(), ns.is('fullscreen', isFullscreen)]"
   >
     <template #header="scope">
       <slot name="header" v-bind="scope">
         <div style="display: flex">
-          <slot name="title">
+          <slot name="header-title">
             <span :class="`${ns.elNamespace}-drawer__title`" style="flex: 1">{{ title }}</span>
           </slot>
-          <Icon
-            v-if="fullscreenIcon"
-            :icon="isFullscreen ? 'core-fullscreen-exit' : 'core-fullscreen'"
-            @click="toggleFull"
-            width="18px"
-            height="18px"
-            :color="`var(--${ns.elNamespace}-color-info)`"
-            :hover-color="`var(--${ns.elNamespace}-color-primary)`"
-            :icon-style="{ cursor: 'pointer' }"
-          />
+
+          <slot name="fullscreen-icon" v-bind="{ isFullscreen, toggleFullscreen }">
+            <Icon
+              v-if="fullscreenIcon"
+              :icon="isFullscreen ? 'core-fullscreen-exit' : 'core-fullscreen'"
+              @click="toggleFullscreen"
+              width="18px"
+              height="18px"
+              :color="`var(--${ns.elNamespace}-color-info)`"
+              hover
+              :hover-color="`var(--${ns.elNamespace}-color-primary)`"
+              :style="{ cursor: 'pointer', userSelect: 'none' }"
+            />
+          </slot>
         </div>
       </slot>
     </template>
 
     <slot></slot>
 
-    <template #footer>
-      <slot name="footer">
-        <ElButton @Click="handleClose()">{{ closeLabel }}</ElButton>
-        <ElButton type="primary" @click="handleConfirm()">{{ confirmLabel }}</ElButton>
-      </slot>
+    <template v-if="showFooter" #footer>
+      <div :class="ns.e('footer')" :style="style">
+        <slot name="footer" v-bind="{ handleConfirm, handleCancel }">
+          <el-button @click="handleConfirm()">{{ cancelText }}</el-button>
+          <el-button type="primary" :loading="confirmLoading" @click="handleConfirm()">{{ confirmText }}</el-button>
+        </slot>
+      </div>
     </template>
-  </ElDrawer>
+  </el-drawer>
 </template>
 
 <style lang="scss" scoped>

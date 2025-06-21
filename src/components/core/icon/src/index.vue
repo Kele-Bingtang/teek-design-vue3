@@ -84,6 +84,7 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 
 <style lang="scss">
 @use "@/styles/mixins/bem" as *;
+@use "@/styles/mixins/namespace" as *;
 
 @include b(icon) {
   position: relative;
@@ -96,6 +97,7 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
   line-height: 1em;
   color: var(--icon-color, inherit);
   fill: var(--icon-color, currentColor);
+  transition: color var(--#{$el-namespace}-transition-duration);
 
   svg {
     width: var(--icon-size, 1em);

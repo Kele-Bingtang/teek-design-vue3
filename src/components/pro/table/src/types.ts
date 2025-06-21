@@ -713,7 +713,7 @@ export namespace ProTableNamespace {
   }
 
   // 转为 onXxx: (xxx) => void
-  export type OnEmits = keyOnPrefix<Emits>;
+  export type OnEmits = Partial<keyOnPrefix<Emits>>;
 }
 
 /**

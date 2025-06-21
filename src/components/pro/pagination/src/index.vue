@@ -66,9 +66,7 @@ defineExpose({ defaultPageInfo });
 
 <template>
   <div :class="ns.b()">
-    <slot v-if="align === 'right'" name="pagination-left">
-      <span />
-    </slot>
+    <slot v-if="align === 'right'" name="pagination-left"><span /></slot>
 
     <el-pagination
       v-if="!hidden"

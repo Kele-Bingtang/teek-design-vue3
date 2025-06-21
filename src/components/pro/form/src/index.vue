@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormItemProp } from "element-plus";
-import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { FormColumn, ProFormNamespace } from "./types";
 import { unref, onMounted, computed, toValue } from "vue";
 import { ElForm, ElMessage, ElButton } from "element-plus";
@@ -118,7 +118,7 @@ const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): 
   emits("validate", prop, isValid, message);
 };
 
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+const handleChange = (model: Recordable, column: FormItemColumnProps) => {
   emits("change", model, column);
 };
 

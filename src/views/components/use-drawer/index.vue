@@ -36,7 +36,7 @@ const againOpenDrawer = () => {
         <el-descriptions-item label="open">
           打开 Drawer 的函数，需要传入参数，详情请看「open 函数配置项 」
         </el-descriptions-item>
-        <el-descriptions-item label="close">关闭 Drawer 函数</el-descriptions-item>
+        <el-descriptions-item label="cancel">关闭 Drawer 函数</el-descriptions-item>
       </el-descriptions>
 
       <el-descriptions title="open 函数配置项 📚" :column="1" border style="margin-top: 10px">
@@ -69,7 +69,7 @@ const againOpenDrawer = () => {
           为函数，触发后关闭 Drawer
         </el-descriptions-item>
         <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
-        <el-descriptions-item label="closeLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
+        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
         <el-descriptions-item label="fullscreen">
           是否以全屏进入 Drawer。`boolean` 类型，默认 `false`
         </el-descriptions-item>
@@ -90,7 +90,7 @@ const againOpenDrawer = () => {
           是否渲染全屏图标。`boolean` 类型，默认 `true`
         </el-descriptions-item>
         <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
-        <el-descriptions-item label="closeLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
+        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

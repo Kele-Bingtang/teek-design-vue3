@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormItemInstance } from "element-plus";
-import type { FormItemColumnProps, ModelBaseValueType, ProFormItemInstance } from "@/components/pro/form-item";
+import type { FormItemColumnProps, ProFormItemInstance } from "@/components/pro/form-item";
 import type { FormColumn, FormMainNamespace } from "./types";
 import { ElRow, ElCol } from "element-plus";
 import { addUnit, isEmpty, isFunction } from "@/utils";
@@ -27,7 +27,7 @@ const emits = defineEmits<FormMainNamespace.Emits>();
 const model = defineModel<Recordable>({ default: () => {} });
 const formModel = ref<Recordable>(model.value);
 
-watchEffect(() => (model.value = formModel.value));
+watch(formModel, () => (model.value = formModel.value), { deep: true });
 
 const showLabelValue = computed(() => toValue(props.showLabel));
 const withValue = computed(() => addUnit(toValue(props.width)));
@@ -149,7 +149,7 @@ function useFormGetInstance() {
   return { setProFormItemInstance, getElFormItemInstance, getElInstance };
 }
 
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+const handleChange = (model: Recordable, column: FormItemColumnProps) => {
   emits("change", model, column);
 };
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ProFormInstance } from "@/components/pro/form";
-import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
+import type { FormColumn, ProFormInstance } from "@/components/pro/form";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { TableEditProps } from "../types";
 import { getProp, setProp } from "@/components/pro/helper";
 import ProForm from "@/components/pro/form";
@@ -8,7 +8,7 @@ import ProForm from "@/components/pro/form";
 defineOptions({ name: "TableEdit" });
 
 interface TableEditEmits {
-  change: [model: ModelBaseValueType, column: FormItemColumnProps];
+  change: [model: Recordable, column: FormItemColumnProps];
 }
 
 const props = withDefaults(defineProps<TableEditProps>(), {
@@ -24,7 +24,7 @@ const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 
 const columns = computed(() => {
   const { options } = props;
-  return [{ ...props, options: options ? ref(options) : options, value: undefined, editable: true }];
+  return [{ ...props, options: options ? ref(options) : options, value: undefined, editable: true }] as FormColumn[];
 });
 
 watch(
@@ -33,7 +33,7 @@ watch(
   { immediate: true }
 );
 
-const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
+const handleChange = (model: Recordable, column: FormItemColumnProps) => {
   emits("change", getProp(model as Recordable, props.prop), column);
 };
 

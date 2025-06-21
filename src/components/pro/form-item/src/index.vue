@@ -74,13 +74,14 @@ const slotParams = computed(() => ({
 
 watch(elModel, () => emits("change", elModel.value, slotParams.value));
 
-const childComponentMap: Record<string, Component> = {
-  [ComponentNameEnum.EL_SELECT]: Select,
-  [ComponentNameEnum.EL_RADIO_GROUP]: Radio,
-  [ComponentNameEnum.EL_RADIO_BUTTON]: Radio,
-  [ComponentNameEnum.EL_CHECKBOX]: Checkbox,
-  [ComponentNameEnum.EL_CHECKBOX_GROUP]: Checkbox,
-  [ComponentNameEnum.EL_CHECKBOX_BUTTON]: Checkbox,
+const childComponentMap: Record<string, { root: Component; child?: Component }> = {
+  [ComponentNameEnum.EL_SELECT]: { root: componentMap.ElSelect, child: Select },
+  [ComponentNameEnum.EL_RADIO]: { root: componentMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_RADIO_GROUP]: { root: componentMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_RADIO_BUTTON]: { root: componentMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_CHECKBOX]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
+  [ComponentNameEnum.EL_CHECKBOX_GROUP]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
+  [ComponentNameEnum.EL_CHECKBOX_BUTTON]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
 };
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
@@ -258,14 +259,14 @@ defineExpose(expose);
 
         <component
           v-else-if="childComponentMap[formEl]"
-          :is="componentMap[formEl]"
+          :is="childComponentMap[formEl].root"
           ref="elInstance"
           v-model="elModel"
           :clearable
           v-bind="{ ...elPropsValue, ...placeholder }"
           :style="{ width: withValue }"
         >
-          <component :is="childComponentMap[formEl]" :options="enums" :optionField :el="formEl" />
+          <component :is="childComponentMap[formEl].child" :options="enums" :optionField :el="formEl" />
 
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">
             <component :is="slot" v-bind="{ ...slotParams, ...data }" />
