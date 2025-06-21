@@ -1,9 +1,9 @@
 @use "@/styles/mixins/bem" as *;
 @use "@/styles/mixins/namespace" as *;
 
-$prefix-class: #{$admin-namespace}-work-drawer;
+$prefix-class: #{$admin-namespace}-pro-drawer;
 
-@include b(work-drawer) {
+@include b(pro-drawer) {
   &.#{$el-namespace}-drawer.is-fullscreen {
     width: 100% !important;
     height: 100%;

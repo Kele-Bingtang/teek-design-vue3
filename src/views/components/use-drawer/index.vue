@@ -1,5 +1,5 @@
 <script setup lang="tsx" name="UseDrawerDemo">
-import { useDrawer, WorkDrawer } from "@/components";
+import { useDrawer, ProDrawer } from "@/components";
 
 const visible = ref(false);
 
@@ -8,11 +8,11 @@ const { open } = useDrawer();
 const openDrawer = () => {
   open({
     title: "useDrawer 弹框",
-    render: () => <el-button onClick={() => aginOpenDrawer()}>使用函数打开 Drawer</el-button>,
+    render: () => <el-button onClick={() => againOpenDrawer()}>使用函数打开 Drawer</el-button>,
   });
 };
 
-const aginOpenDrawer = () => {
+const againOpenDrawer = () => {
   open({
     title: "useDrawer 弹框",
     size: "60%",
@@ -28,7 +28,7 @@ const aginOpenDrawer = () => {
 
       <el-button @Click="visible = true">组件式打开 Drawer 组件</el-button>
 
-      <WorkDrawer v-model="visible">我是通过 modelValue 打开的 Drawer 组件</WorkDrawer>
+      <ProDrawer v-model="visible">我是通过 modelValue 打开的 Drawer 组件</ProDrawer>
     </el-card>
 
     <el-card shadow="never">
@@ -80,7 +80,7 @@ const aginOpenDrawer = () => {
     </el-card>
 
     <el-card shadow="never">
-      <el-descriptions title="WorkDrawer 组件配置项 📚" :column="1" border>
+      <el-descriptions title="ProDrawer 组件配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Drawer。`boolean` 类型，必穿</el-descriptions-item>
         <el-descriptions-item label="title">Drawer 标题。`string` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="fullscreen">

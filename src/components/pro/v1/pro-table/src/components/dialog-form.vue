@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElButton, type DialogProps, ElMessage, type FormInstance, ElMessageBox } from "element-plus";
-import { ProForm, WorkDialog, type ProFormProps, type FormColumn, type ProFormInstance } from "@/components";
+import { ProForm, ProDialog, type ProFormProps, type FormColumn, type ProFormInstance } from "@/components";
 import { ref, computed, unref } from "vue";
 import { tableEnumMapKey } from "../interface";
 import { deepClone } from "@/utils";
@@ -370,7 +370,7 @@ defineExpose({ handleAdd, handleEdit, handleRemove, handleRemoveBatch });
 </script>
 
 <template>
-  <WorkDialog v-model="dialogFormVisible" draggable v-bind="dialogProps">
+  <ProDialog v-model="dialogFormVisible" draggable v-bind="dialogProps">
     <slot name="form">
       <ProForm
         v-if="formProps?.schema"
@@ -399,5 +399,5 @@ defineExpose({ handleAdd, handleEdit, handleRemove, handleRemoveBatch });
         <slot name="footerExtraPro" v-bind="model" />
       </slot>
     </template>
-  </WorkDialog>
+  </ProDialog>
 </template>

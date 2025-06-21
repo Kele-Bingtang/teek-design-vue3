@@ -1,7 +1,7 @@
 @use "@/styles/mixins/bem" as *;
 @use "@/styles/mixins/namespace" as *;
 
-@include b(work-dialog) {
+@include b(pro-dialog) {
   &.#{$el-namespace}-dialog.is-fullscreen {
     --#{$el-namespace}-dialog-width: 100% !important;
     --#{$el-namespace}-dialog-margin-top: 0 !important;

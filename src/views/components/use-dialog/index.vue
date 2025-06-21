@@ -1,5 +1,5 @@
 <script setup lang="tsx" name="UseDialogDemo">
-import { useDialog, WorkDialog } from "@/components";
+import { useDialog, ProDialog } from "@/components";
 
 const visible = ref(false);
 
@@ -33,7 +33,7 @@ const aginOpenDialog = () => {
 
       <el-button @Click="visible = true">组件式打开 Dialog 组件</el-button>
 
-      <WorkDialog v-model="visible" height="300">我是通过 modelValue 打开的 Dialog 组件</WorkDialog>
+      <ProDialog v-model="visible" height="300">我是通过 modelValue 打开的 Dialog 组件</ProDialog>
     </el-card>
 
     <el-card shadow="never">
@@ -91,7 +91,7 @@ const aginOpenDialog = () => {
     </el-card>
 
     <el-card shadow="never">
-      <el-descriptions title="WorkDialog 组件配置项 📚" :column="1" border>
+      <el-descriptions title="ProDialog 组件配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Dialog。`boolean` 类型，必传</el-descriptions-item>
         <el-descriptions-item label="title">Dialog 标题。`string` 类型</el-descriptions-item>
         <el-descriptions-item label="fullscreen">

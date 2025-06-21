@@ -3,9 +3,9 @@ export * from "./core/image-verify-code";
 export * from "./core/permission";
 export * from "./core/switch-dark";
 export * from "./core/tooltip";
-export * from "./core/use-dialog";
-export * from "./core/use-drawer";
 
+export * from "./pro/dialog";
+export * from "./pro/drawer";
 export * from "./pro/grid";
 export * from "./pro/image-viewer";
 export * from "./pro/form";

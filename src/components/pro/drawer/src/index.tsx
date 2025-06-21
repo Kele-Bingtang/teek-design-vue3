@@ -14,7 +14,7 @@ import "./index.scss";
 import { useNamespace } from "@/composables";
 import { ConfigGlobalKey } from "@/config";
 
-const ns = useNamespace("work-drawer");
+const ns = useNamespace("pro-drawer");
 const blockClass = ns.b();
 
 let id = 0;
@@ -28,7 +28,7 @@ const getFather = (): Element => {
   return document.querySelector("body") as HTMLBodyElement;
 };
 
-export interface WorkDrawerProps extends Partial<DrawerProps> {
+export interface ProDrawerProps extends Partial<DrawerProps> {
   render?: () => VNode; // 内容区渲染 TSX
   headerRender?: () => VNode; // 顶部渲染 TSX
   footerRender?: (closeDrawer: () => void) => VNode; // 顶部渲染 TSX
@@ -46,14 +46,14 @@ export const closeDrawer = () => {
   vm && getFather().removeChild(vm);
 };
 
-const handleClose = async (drawerProps?: WorkDrawerProps) => {
+const handleClose = async (drawerProps?: ProDrawerProps) => {
   if (!drawerProps?.onClose) return closeDrawer();
 
   const result = await drawerProps?.onClose(closeDrawer);
   if (result || result === 0) return closeDrawer();
 };
 
-const handleConfirm = async (drawerProps?: WorkDrawerProps) => {
+const handleConfirm = async (drawerProps?: ProDrawerProps) => {
   if (!drawerProps?.onConfirm) return closeDrawer();
 
   const result = await drawerProps?.onConfirm(closeDrawer);
@@ -67,7 +67,7 @@ const handleConfirm = async (drawerProps?: WorkDrawerProps) => {
  *
  * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-drawer 的 header 和 footer
  */
-export const showDrawer = (drawerProps: WorkDrawerProps, component?: Component, componentsProps?: any) => {
+export const showDrawer = (drawerProps: ProDrawerProps, component?: Component, componentsProps?: any) => {
   const isFullscreen = ref(false);
 
   const toggleFull = () => {

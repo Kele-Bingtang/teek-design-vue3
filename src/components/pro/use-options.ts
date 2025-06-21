@@ -7,6 +7,9 @@ import { formatValue } from "./helper";
  */
 export const optionsMapKey: InjectionKey<Ref<Map<string, MaybeRef<ElOption[]>>>> = Symbol("optionsMap");
 
+/**
+ * 超级组件字典枚举初始化和缓存
+ */
 export const useOptions = () => {
   // 定义 optionsMap 存储枚举值
   const optionsMap = inject(optionsMapKey, ref(new Map<string, MaybeRef<ElOption[]>>()));

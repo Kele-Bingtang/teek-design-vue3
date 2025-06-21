@@ -3,6 +3,8 @@ import type { FormItemColumnProps } from "./form-item";
 import { isRef } from "vue";
 import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/utils";
 
+// 超级组件公共工具类
+
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */

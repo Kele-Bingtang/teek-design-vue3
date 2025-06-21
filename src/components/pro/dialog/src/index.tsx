@@ -16,7 +16,7 @@ import "./index.scss";
 import { useNamespace } from "@/composables";
 import { ConfigGlobalKey } from "@/config";
 
-const ns = useNamespace("work-dialog");
+const ns = useNamespace("pro-dialog");
 const blockClass = ns.b();
 
 let id = 0;
@@ -30,7 +30,7 @@ const getFather = (): Element => {
   return document.querySelector("body") as HTMLBodyElement;
 };
 
-export interface WorkDialogProps extends Partial<DialogProps> {
+export interface ProDialogProps extends Partial<DialogProps> {
   render?: () => VNode; // 内容渲染 TSX
   headerRender?: (scope: any) => VNode; // 头部渲染 TSX
   footerRender?: (closeDialog: () => void) => VNode; // 底部渲染 TSX
@@ -53,14 +53,14 @@ export const closeDialog = () => {
   vm && getFather().removeChild(vm);
 };
 
-const handleClose = async (dialogProps?: WorkDialogProps) => {
+const handleClose = async (dialogProps?: ProDialogProps) => {
   if (!dialogProps?.onClose) return closeDialog();
 
   const result = await dialogProps?.onClose(closeDialog);
   if (result || result === 0) return closeDialog();
 };
 
-const handleConfirm = async (dialogProps?: WorkDialogProps) => {
+const handleConfirm = async (dialogProps?: ProDialogProps) => {
   if (!dialogProps?.onConfirm) return closeDialog();
 
   const result = await dialogProps?.onConfirm(closeDialog);
@@ -74,7 +74,7 @@ const handleConfirm = async (dialogProps?: WorkDialogProps) => {
  *
  * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-dialog 的 header 和 footer
  */
-export const showDialog = (dialogProps: WorkDialogProps, component?: Component, componentsProps?: any) => {
+export const showDialog = (dialogProps: ProDialogProps, component?: Component, componentsProps?: any) => {
   const isFullscreen = ref(dialogProps.fullscreen || false);
 
   const toggleFull = () => {

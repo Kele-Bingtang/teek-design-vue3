@@ -5,11 +5,11 @@ import { nextTick, ref, watch, useSlots } from "vue";
 import { addUnit } from "@/utils";
 import { useNamespace } from "@/composables";
 
-defineOptions({ name: "WorkDialog" });
+defineOptions({ name: "ProDialog" });
 
-const ns = useNamespace("work-dialog");
+const ns = useNamespace("pro-dialog");
 
-interface WorkDialogProps {
+interface ProDialogProps {
   title?: string; // 顶部标题
   fullscreen?: boolean; // 是否默认全屏，默认 false
   fullscreenIcon?: boolean; // 是否渲染全屏图标，默认 true
@@ -19,7 +19,7 @@ interface WorkDialogProps {
   closeLabel?: string; // 关闭按钮文字，默认 关 闭
 }
 
-const props = withDefaults(defineProps<WorkDialogProps>(), {
+const props = withDefaults(defineProps<ProDialogProps>(), {
   title: "弹框",
   fullscreen: false,
   fullscreenIcon: true,

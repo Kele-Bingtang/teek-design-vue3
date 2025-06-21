@@ -4,11 +4,11 @@ import { ref } from "vue";
 import { Icon } from "@/components";
 import { useNamespace } from "@/composables";
 
-defineOptions({ name: "WorkDrawer" });
+defineOptions({ name: "ProDrawer" });
 
-const ns = useNamespace("work-drawer");
+const ns = useNamespace("pro-drawer");
 
-interface WorkDrawerProps {
+interface ProDrawerProps {
   title?: string; // 顶部标题
   fullscreen?: boolean; // 是否默认全屏，默认 false
   fullscreenIcon?: boolean; // 是否渲染全屏图标，默认 true
@@ -16,7 +16,7 @@ interface WorkDrawerProps {
   closeLabel?: string; // 关闭按钮文字，默认 关 闭
 }
 
-const props = withDefaults(defineProps<WorkDrawerProps>(), {
+const props = withDefaults(defineProps<ProDrawerProps>(), {
   title: "弹框",
   fullscreen: false,
   fullscreenIcon: true,
