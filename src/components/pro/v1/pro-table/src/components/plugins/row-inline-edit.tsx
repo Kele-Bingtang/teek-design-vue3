@@ -1,4 +1,4 @@
-import { ProForm, setProp, getProp } from "@/components";
+import { ProForm, setProp, getProp } from "@/components/pro/v1/pro-form";
 import { type TableColumnProps, editKey, type TableRenderScope } from "../../interface";
 import { lastProp } from "../../helper";
 import { ElMessage } from "element-plus";

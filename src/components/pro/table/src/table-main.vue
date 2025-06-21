@@ -2,20 +2,19 @@
 import type { Component } from "vue";
 import type { FormValidationResult, TableInstance } from "element-plus";
 import type { ProFormInstance } from "@/components/pro/form";
-import type { ElOption, FormItemColumnProps } from "@/components/pro/form-item";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
+import { toValue } from "vue";
 import { ElTable, ElRadio, ElTableColumn } from "element-plus";
 import { useNamespace } from "@/composables";
 import { isEmpty, isFunction } from "@/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
-import { getObjectKeys } from "@/components/pro/form";
-import { formatValue, getProp, filterOptions, filterOptionsValue, setProp } from "@/components/pro/form-item";
+import { getProp, filterOptions, filterOptionsValue, setProp, getObjectKeys } from "@/components/pro/helper";
+import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnDragSort from "./table-column/table-column-drag-sort.vue";
 import { useSelection } from "./composables";
 import { TableColumnTypeEnum, filterData, initModel, isServer } from "./helper";
-import { proTableOptionsMapKey } from "./types";
 
 defineOptions({ name: "TableMain" });
 
@@ -86,7 +85,7 @@ const columnTypes = Object.keys(tableColumnTypeMap);
 
 // 表格多选
 const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
-const { optionsMap, initOptionsMap } = useTableOptions();
+const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useTableInit();
 const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
 const { getOperationColumn, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
@@ -118,16 +117,6 @@ const tryPagination = (data: Recordable[] = []) => {
 };
 
 /**
- * 处理部分列配置项数据
- */
-const toValueColumn = (column: Partial<TableColumn>) => {
-  return {
-    width: toValue(column.width),
-    label: toValue(column.label),
-  };
-};
-
-/**
  * 获取表格行的唯一标识
  */
 const getRowKey = (row: Recordable) => {
@@ -135,37 +124,6 @@ const getRowKey = (row: Recordable) => {
   if (isFunction(rowKey)) return rowKey(row);
   return rowKey;
 };
-
-/**
- * 表格字典枚举相关逻辑
- */
-function useTableOptions() {
-  // 定义 optionsMap 存储枚举值
-  const optionsMap = inject(proTableOptionsMapKey, ref(new Map<string, MaybeRef<ElOption[]>>()));
-
-  /**
-   * 初始化枚举字典数据
-   */
-  const initOptionsMap = async (column: TableColumn) => {
-    const { options, prop = "" } = column;
-    if (!options) return;
-
-    const optionsMapConst = optionsMap.value;
-
-    // 如果当前 enumMap 存在相同的值则 return
-    if (optionsMapConst.has(prop) && (isFunction(options) || optionsMapConst.get(prop) === options)) return;
-
-    // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
-    optionsMapConst.set(prop, []);
-
-    // 处理 options 并存储到 optionsMap
-    const value = await formatValue<FormItemColumnProps["options"]>(options, [optionsMapConst, prop], false);
-
-    optionsMapConst.set(prop, (value as any)?.data || value);
-  };
-
-  return { optionsMap, initOptionsMap };
-}
 
 /**
  * 表格数据初始化相关逻辑
@@ -225,7 +183,7 @@ function useTableInit() {
       timer = setTimeout(async () => {
         const flatColumns = flatColumnsFn(newValue);
         // 异步但有序执行
-        for (const column of flatColumns) await initOptionsMap(column);
+        for (const column of flatColumns) await initOptionsMap(column.options, column.prop ?? "");
         initOptionsInData(props.data, flatColumns);
       }, 10);
     },
@@ -296,20 +254,16 @@ function useTableOperation() {
       return {
         ...column,
         ...operationProps,
-        ...toValueColumn({
-          width: column.width || operationProps.width,
-          label: column.label || operationProps.label,
-        }),
+        width: toValue(column.width || operationProps.width),
+        label: toValue(column.label || operationProps.label),
       };
     }
 
     if (operationProps && index === availableColumns.value.length - 1) {
       return {
         ...operationProps,
-        ...toValueColumn({
-          width: operationProps.width,
-          label: operationProps.label,
-        }),
+        width: toValue(column.width || operationProps.width),
+        label: toValue(column.label || operationProps.label),
       };
     }
 
@@ -559,7 +513,8 @@ defineExpose(expose);
         <TableColumnData
           v-else-if="column.prop !== operationProp"
           :column
-          v-bind="toValueColumn(column)"
+          :width="toValue(column.width)"
+          :label="toValue(column.label)"
           :align="column.align || 'center'"
           :editable
           @register-pro-form-instance="registerProFormInstance"

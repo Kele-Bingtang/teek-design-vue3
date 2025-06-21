@@ -1,6 +1,6 @@
-import type { FormSchemaProps, FormSetProps } from "@/components";
+import type { FormSchemaProps, FormSetProps } from "@/components/pro/v1/pro-form";
 import ProSearch, { type ProSearchExpose, type ProSearchOnEmits, type ProSearchProps } from "../index.vue";
-import { useDesign } from "@/hooks";
+import { useNamespace } from "@/composables";
 import { ElConfigProvider } from "element-plus";
 import {
   type Ref,
@@ -20,7 +20,7 @@ export const useProSearch = () => {
   // ProSearch 实例
   const searchRef = ref<ProSearchExpose>();
 
-  const { variables } = useDesign();
+  const ns = useNamespace();
 
   const layoutSize = computed(() => useLayoutStore().layoutSize);
 
@@ -133,7 +133,7 @@ export const useProSearch = () => {
       const proSearchInstance = createVNode(ProSearch, { ...proSearchProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: variables.elNamespace, size: unref(layoutSize) },
+        { namespace: ns.elNamespace, size: unref(layoutSize) },
         { default: () => proSearchInstance }
       );
 

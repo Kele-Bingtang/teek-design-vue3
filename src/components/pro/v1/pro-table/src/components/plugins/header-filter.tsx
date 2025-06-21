@@ -1,5 +1,5 @@
 import ProForm from "@/components/pro/v1/pro-form";
-import { hyphenToCamelCase } from "@/components/pro/form-item";
+import { hyphenToCamelCase } from "@/components/pro/v1/pro-form";
 import { ElPopover, ElIcon, ElButton } from "element-plus";
 import { filterKey, type TableColumnProps } from "../../interface";
 import { Filter } from "@element-plus/icons-vue";

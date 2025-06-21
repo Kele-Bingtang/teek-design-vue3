@@ -1,6 +1,6 @@
 import type { FormItemProp } from "element-plus";
-import type { BreakPoint, FormColumn, GridItemProps, ProFormProps } from "@/components";
-import type { ProSearchExpose } from "./index.vue";
+import type { BreakPoint, GridItemProps } from "@/components/pro/grid";
+import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
 import type ProSearch from "./index.vue";
 
 export type ActionPosition = "left" | "right" | "block-left" | "block-center" | "block-right";
@@ -9,7 +9,7 @@ export type ProSearchColumnProps = FormColumn & {
   grid?: Partial<GridItemProps>; // GridItem props
 };
 
-export interface ProSearchProps extends ProFormProps {
+export interface ProSearchProps extends ProFormNamespace.Props {
   /**
    * 搜索配置列
    */
@@ -121,7 +121,7 @@ export interface ProSearchProps extends ProFormProps {
 export type ProSearchEmits = {
   search: [model: Record<string, any>]; // 搜索方法
   reset: [model: Record<string, any>]; // 重置方法
-  register: [expose: ProSearchExpose]; // 注册方法
+  register: [proSearchInstance: any]; // 注册方法
   validate: [prop: FormItemProp, isValid: boolean, message: string]; // ElForm 触发验证事件
 };
 

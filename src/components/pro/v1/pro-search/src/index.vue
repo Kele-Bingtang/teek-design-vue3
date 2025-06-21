@@ -5,23 +5,21 @@ import {
   GridItem,
   ProForm,
   ProFormItem,
-  type FormSchemaProps,
   type BreakPoint,
   useProForm,
-  type FormSetProps,
-  setProp,
   type GridInstance,
   type GridItemProps,
 } from "@/components";
+import { type FormSchemaProps, type FormSetProps, setProp } from "@/components/pro/v1/pro-form";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
-import { useDesign } from "@/hooks";
+import { useNamespace } from "@/composables";
 import { ElFormItem, ElButton, ElIcon, type FormItemProp } from "element-plus";
 import { isEmpty, isObject, isString } from "@/utils";
 
 defineOptions({ name: "ProSearch" });
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("search-form");
+const ns = useNamespace("search-form");
+const prefixClass = ns.b();
 
 export type ProSearchExpose = typeof defaultExpose;
 

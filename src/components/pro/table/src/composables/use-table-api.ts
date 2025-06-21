@@ -1,16 +1,6 @@
-import type { BaseValueType } from "@/components/pro/form-item";
 import type { ProTableNamespace, TableColumn } from "../types";
-import { setProp } from "@/components/pro/form-item";
+import { setProp } from "@/components/pro/helper";
 import { isString } from "@/utils";
-
-/**
- * setColumn 函数的参数类型
- */
-export interface TableSetProps {
-  prop: string;
-  field: string;
-  value: BaseValueType;
-}
 
 export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
   const mergeProps = ref<ProTableNamespace.Props>({});
@@ -30,7 +20,7 @@ export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
    * @param columnSet 设置内容
    * @param children 设置合并列（合并表头）
    */
-  const setColumn = (columnSet: TableSetProps[], children?: TableColumn[]) => {
+  const setColumn = (columnSet: { prop: string; field: string; value: unknown }[], children?: TableColumn[]) => {
     const columnsValue = unref(columns);
     for (const column of children || columnsValue) {
       for (const item of columnSet) {

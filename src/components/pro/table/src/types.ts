@@ -711,6 +711,9 @@ export namespace ProTableNamespace {
      */
     register: [proTableInstance: any, elTableInstance: TableInstance | null];
   }
+
+  // 转为 onXxx: (xxx) => void
+  export type OnEmits = keyOnPrefix<Emits>;
 }
 
 /**
@@ -836,8 +839,3 @@ export type ProTableMainInstance = InstanceType<typeof ProTableMain>;
  * ProTableHead 组件实例
  */
 export type ProTableHeadInstance = InstanceType<typeof ProTableHead>;
-
-/**
- * provide optionsMap
- */
-export const proTableOptionsMapKey: InjectionKey<Ref<Map<string, MaybeRef<ElOption[]>>>> = Symbol("proTableOptionsMap");

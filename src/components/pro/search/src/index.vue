@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { BreakPoint, GridInstance } from "@/components";
+import type { BreakPoint, GridInstance } from "@/components/pro/grid";
 import type { ProSearchColumnProps, ProSearchEmits, ProSearchProps } from "./types";
 import { computed, onMounted } from "vue";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { ElButton, ElIcon } from "element-plus";
 import { useNamespace } from "@/composables";
-import { filterEmpty, ProForm } from "@/components/pro/form";
+import { filterEmpty } from "@/components/pro/helper";
+import { ProForm, useProFormFn } from "@/components/pro/form";
 import { ProFormItem } from "@/components/pro/form-item";
 import { Grid, GridItem } from "@/components/pro/grid";
 import { useSearchApi } from "./composables/use-search-api";
@@ -50,25 +51,27 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
-const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn, formRegister, formMethods, formElState } =
-  useSearchApi(model, finalProps);
+const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useSearchApi(
+  model,
+  computed(() => finalProps.value.columns)
+);
 
 const {
-  getFormModel,
-  getElFormInstance,
-  getProFormInstance,
+  proFormInstance,
+  getOptionsMap,
   submitForm,
   resetForm,
+  getProFormInstance,
+  getElFormInstance,
   getElFormItemInstance,
   getElInstance,
-} = formMethods;
+} = useProFormFn("proFormInstance");
 
 // 搜索表单的配置项
 const searchColumns = computed(() =>
   props.columns
     .filter(item => {
-      const { proFormInstance } = formElState;
-      return !(proFormInstance?.destroyOrInit(item) ?? item.destroy);
+      return !(getProFormInstance()?.destroyOrInit(item) ?? item.destroy);
     })
     .map((item, index) => {
       item._index = index;
@@ -166,14 +169,12 @@ const toggleCollapse = (isCollapse?: boolean) => {
   return setProps({ collapse: isCollapse });
 };
 
-export type ProSearchExpose = typeof defaultExpose;
+onMounted(() => {
+  emits("register", defaultExpose);
+});
 
 const defaultExpose = {
-  getFormModel,
-  getElFormInstance,
-  getProFormInstance,
-  getElFormItemInstance,
-  getElInstance,
+  model,
   toggleCollapse,
   setProps,
   setColumn,
@@ -182,19 +183,22 @@ const defaultExpose = {
   addColumn,
   search,
   reset,
-};
 
-onMounted(() => {
-  emits("register", defaultExpose);
-});
+  proFormInstance,
+  getOptionsMap,
+  getProFormInstance,
+  getElFormInstance,
+  getElFormItemInstance,
+  getElInstance,
+};
 
 defineExpose(defaultExpose);
 </script>
 
 <template>
   <div v-if="searchColumns.length" :class="[ns.b(), 'tk-card']">
-    <ProForm :columns @register="formRegister" v-bind="$attrs">
-      <template #default="{ isHidden, setProFormItemInstance, optionsMap }">
+    <ProForm ref="proFormInstance" :columns v-model="model" v-bind="$attrs" :show-footer="false">
+      <template #form-main="{ isHidden, setProFormItemInstance, optionsMap }">
         <Grid
           ref="gridInstance"
           :collapse="finalProps.showCollapse ? finalProps.collapse : false"
@@ -214,7 +218,11 @@ defineExpose(defaultExpose);
               v-bind="column"
               v-show="!isHidden(column)"
               :options="optionsMap.get(column.optionsProp || column.prop)"
-            />
+            >
+              <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                <slot :name="slot" v-bind="scope" />
+              </template>
+            </ProFormItem>
           </GridItem>
 
           <!-- 右侧按钮组 -->

@@ -1,12 +1,10 @@
 import { useInstall } from "@/utils";
 import index from "./src/index.vue";
-import FormMain from "./src/form-main.vue";
 
 export type * from "./src/types";
 
 export * from "./src/composables";
 
-export const ProForm = useInstall(index);
-export const ProFormMain = useInstall(FormMain);
+export const ProFormGroup = useInstall(index);
 
 export default index;

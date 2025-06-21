@@ -2,7 +2,6 @@
 import type { OperationNamespace, TableColumn } from "@/components/pro/table";
 import type { PageColumn } from "@/components/pro/page";
 import { ProPage } from "@/components/pro/page";
-import { setProp } from "@/components/pro/v1/pro-form";
 import { tableData } from "@/mock/pro-table";
 import { Edit, Delete } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";

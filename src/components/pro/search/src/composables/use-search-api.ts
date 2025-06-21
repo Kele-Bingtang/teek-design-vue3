@@ -1,13 +1,10 @@
-import type { FormColumn, FormSetProps } from "@/components";
+import type { FormColumn } from "@/components/pro/form";
 import type { ProSearchProps } from "../types";
-import { useProForm, setProp } from "@/components";
 import { isString } from "@/utils";
+import { setProp } from "@/components/pro/helper";
 
-export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<ProSearchProps>) => {
+export const useSearchApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[]> = []) => {
   const mergeProps = ref<ProSearchProps>({});
-
-  const { formRegister, formMethods, formElState } = useProForm();
-  const { getProFormInstance } = formMethods;
 
   /**
    * 设置 model 的值
@@ -16,8 +13,6 @@ export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<Pro
    */
   const setValues = async (modelValue: Record<string, any> = {}) => {
     model.value = Object.assign(model.value, modelValue);
-    const proFormInstance = await getProFormInstance();
-    proFormInstance?.setValues(modelValue);
   };
 
   /**
@@ -34,9 +29,9 @@ export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<Pro
    *
    * @param columnSet 设置内容
    */
-  const setColumn = (columnProps: FormSetProps[]) => {
-    const { columns = [] } = finalProps.value;
-    for (const v of columns) {
+  const setColumn = (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    const columnsValue = unref(columns);
+    for (const v of columnsValue) {
       for (const item of columnProps) {
         if (v.prop === item.prop) {
           setProp(v, item.field, item.value);
@@ -57,15 +52,14 @@ export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<Pro
     prop?: FormColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
-    const { columns = [] } = finalProps.value;
-
+    const columnsValue = unref(columns);
     if (isString(prop)) {
-      return columns.forEach((s, i) => {
+      return columnsValue.forEach((s, i) => {
         if (s.prop === prop) position === "after" ? column.splice(i + 1, 0, s) : column.splice(i, 0, s);
       });
     }
-    if (prop !== undefined) return columns.splice(prop, 0, column);
-    return columns.push(column);
+    if (prop !== undefined) return columnsValue.splice(prop, 0, column);
+    return columnsValue.push(column);
   };
 
   /**
@@ -74,10 +68,10 @@ export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<Pro
    * @param prop prop
    */
   const delColumn = (prop: FormColumn["prop"]) => {
-    const { columns = [] } = finalProps.value;
+    const columnsValue = unref(columns);
 
-    const index = columns.findIndex(item => item.prop === prop);
-    if (index > -1) columns.splice(index, 1);
+    const index = columnsValue.findIndex(item => item.prop === prop);
+    if (index > -1) columnsValue.splice(index, 1);
   };
 
   return {
@@ -87,8 +81,5 @@ export const useSearchApi = (model: Ref<Recordable>, finalProps: ComputedRef<Pro
     setColumn,
     addColumn,
     delColumn,
-    formRegister,
-    formMethods,
-    formElState,
   };
 };

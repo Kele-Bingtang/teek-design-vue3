@@ -1,7 +1,7 @@
-import type { ProTableInstance, ProTableNamespace, TableColumn } from "@/components/pro/table";
-import type { ProSearchColumnProps, ProSearchEmits, ProSearchExpose, ProSearchProps } from "@/components/pro/search";
-import type { BreakPoint, Responsive } from "@/components/pro/grid";
 import type { TableInstance } from "element-plus";
+import type { ProTableInstance, ProTableNamespace, TableColumn } from "@/components/pro/table";
+import type { ProSearchColumnProps, ProSearchEmits, ProSearchInstance, ProSearchProps } from "@/components/pro/search";
+import type { BreakPoint, Responsive } from "@/components/pro/grid";
 import type ProPage from "./index.vue";
 
 export interface PageColumn<T = any> extends TableColumn<T> {
@@ -38,7 +38,7 @@ export interface ProPageProps extends ProTableNamespace.Props {
 }
 
 export interface ProPageEmits extends Omit<ProTableNamespace.Emits, "register">, Omit<ProSearchEmits, "register"> {
-  searchRegister: [proFormRef?: ProSearchExpose];
+  searchRegister: [proFormInstance: ProSearchInstance];
   tableRegister: [proTableInstance: ProTableInstance, elTableInstance: TableInstance | null];
 }
 

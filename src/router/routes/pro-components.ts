@@ -92,6 +92,12 @@ const proComponents: RouterConfigRaw = {
           name: "DetailProForm",
           meta: { title: "详情 ProForm", icon: StarFilled },
         },
+        {
+          path: "simple-group",
+          component: () => import("@/views/pro-components/pro-form-group/simple/index.vue"),
+          name: "SimpleProFormGroup",
+          meta: { title: "简单 ProFormGroup", icon: StarFilled },
+        },
       ],
     },
     {

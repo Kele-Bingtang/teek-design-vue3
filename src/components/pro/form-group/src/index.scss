@@ -1,0 +1,15 @@
+@use "@/styles/mixins/bem" as *;
+
+@include b(pro-form-group) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include e(card) {
+    @include m(icon) {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+  }
+}

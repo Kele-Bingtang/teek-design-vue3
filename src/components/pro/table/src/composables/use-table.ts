@@ -2,7 +2,6 @@ import type { TableInstance } from "element-plus";
 import type { ProTableInstance, ProTableNamespace, TableColumn } from "../types";
 import type { PageInfo } from "@/components/pro/pagination";
 import type { RenderTypes } from "@/components/pro/form-item";
-import type { TableSetProps } from "./use-table-api";
 import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
@@ -66,7 +65,7 @@ export const useProTable = () => {
      *
      * @param columnProps 需要设置的列
      */
-    setColumn: async (columnProps: TableSetProps[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
       const table = await getTable();
       table?.setColumn(columnProps);
     },
@@ -189,11 +188,11 @@ export const useProTable = () => {
      * 返回 ProTable 组件的虚拟 DOM，直接在页面中渲染该虚拟 DOM 即可。可以理解为返回一个 Vue 组件
      */
     createTableComponent: (
-      proTableProps?: ProTableNamespace.Props & Partial<ProTableNamespace.Emits>,
+      proTableProps?: ProTableNamespace.Props & Partial<ProTableNamespace.OnEmits>,
       context: Recordable = {}
     ) => {
       const { attrs, slots } = context;
-      const instance = createVNode(ProTable, { ...attrs, ...proTableProps }, { ...slots });
+      const instance = createVNode(ProTable, { ...attrs, ...proTableProps, onRegister: register }, { ...slots });
       return instance;
     },
 
@@ -202,7 +201,7 @@ export const useProTable = () => {
      */
     createTable: async (
       el: MaybeRef<HTMLElement> | string,
-      proTableProps?: ProTableNamespace.Props & Partial<ProTableNamespace.Emits>,
+      proTableProps?: ProTableNamespace.Props & Partial<ProTableNamespace.OnEmits>,
       slots?: { [slotName: string]: (scope?: any) => RenderTypes }
     ) => {
       const proTableInstance = createVNode(ProTable, { ...proTableProps, onRegister: register }, { ...slots });

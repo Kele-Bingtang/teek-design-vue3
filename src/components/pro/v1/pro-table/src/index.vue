@@ -14,17 +14,16 @@ import {
 } from "vue";
 import { useTable, type Table } from "./hooks/use-table";
 import { useSelection } from "./hooks/use-selection";
+import { Pagination } from "@/components/pro/pagination";
+import { type BreakPoint } from "@/components/pro/grid";
+import { type ProFormInstance, setProp } from "@/components/pro/v1/pro-form";
 import {
   ProSearch,
-  Pagination,
-  type BreakPoint,
-  type ProSearchColumnProps,
   type ProSearchInstance,
-  type ProFormInstance,
   type ProSearchExpose,
   type ProSearchProps,
-  setProp,
-} from "@/components";
+  type ProSearchSchemaProps,
+} from "@/components/pro/v1/pro-search";
 import {
   type TableColumnProps,
   type DialogFormInstance,
@@ -271,7 +270,7 @@ const flatColumns = computed<TableColumnProps[]>(() => flatColumnsFunc(getProps.
 const searchColumns = computed(() => {
   const column = flatColumns.value?.filter(item => item.search?.el || item.search?.render);
 
-  const searchColumns: ProSearchColumnProps[] = [];
+  const searchColumns: ProSearchSchemaProps[] = [];
 
   column?.forEach(async item => {
     // Table 默认查询参数初始化

@@ -1,20 +1,19 @@
-import type { FormInstance } from "element-plus";
+import type { FormColumn } from "@/components/pro/form";
 import type { RenderTypes } from "@/components/pro/form-item";
-import type { FormColumn, ProFormInstance, ProFormNamespace } from "../types";
-import { ElConfigProvider } from "element-plus";
+import type { ProFormGroupInstance, ProFormGroupOnEmits, ProFormGroupProps } from "../types";
+import { ElConfigProvider, type FormInstance } from "element-plus";
 import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
 import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/stores";
 import { isString } from "@/utils";
-import { filterEmpty } from "../../../helper";
-import ProForm from "../index.vue";
+import { filterEmpty } from "@/components/pro/helper";
+import ProFormGroup from "../index.vue";
 
-type ProFormPropsWithModel = ProFormNamespace.Props & { modelValue?: Recordable };
+type ProFormGroupPropsWithModel = ProFormGroupProps & { modelValue?: Recordable };
 
-export const useProForm = () => {
-  // ProFrom 实例
-  const proFormInstance = ref<ProFormInstance | null>();
-
+export const useProFormGroup = () => {
+  // ProFromGroup 实例
+  const proFormGroupInstance = ref<ProFormGroupInstance | null>();
   // ElForm 实例
   const elFormInstance = ref<FormInstance | null>();
 
@@ -24,17 +23,17 @@ export const useProForm = () => {
   const layoutSize = computed(() => useLayoutStore().layoutSize);
 
   /**
-   * @param proForm ProForm 实例
+   * @param ProFormGroup ProFormGroup 实例
    * @param elForm ElForm 实例
    */
-  const register = (proForm: ProFormInstance | null, elForm: FormInstance | null) => {
-    proFormInstance.value = proForm;
-    elFormInstance.value = elForm;
+  const register = (proFormGroup: ProFormGroupInstance | null) => {
+    proFormGroupInstance.value = proFormGroup;
+    elFormInstance.value = proFormGroup?.getElFormInstance();
   };
 
-  const getProForm = async () => {
+  const getProFormGroup = async () => {
     await nextTick();
-    const form = proFormInstance.value;
+    const form = proFormGroupInstance.value;
     if (!form) console.error("The form is not registered. Please use the register method to register");
 
     return form;
@@ -43,15 +42,15 @@ export const useProForm = () => {
   // 一些内置的方法
   const methods = {
     /**
-     * 设置 ProForm 组件的 props
+     * 设置 ProFormGroup 组件的 props
      *
-     * @param props ProForm 组件的 props
+     * @param props ProFormGroup 组件的 props
      */
-    setProps: async (props: ProFormPropsWithModel = {}) => {
-      const form = await getProForm();
-      form?.setProps(props);
+    setProps: async (props: ProFormGroupPropsWithModel = {}) => {
+      const formGroup = await getProFormGroup();
+      formGroup?.setProps(props);
 
-      if (props.modelValue) form?.setValues(props.modelValue);
+      if (props.modelValue) formGroup?.setValues(props.modelValue);
     },
     /**
      * 设置 model 的值
@@ -59,17 +58,17 @@ export const useProForm = () => {
      * @param model 需要设置的数据
      */
     setValues: async (model: Recordable) => {
-      const form = await getProForm();
-      form?.setValues(model);
+      const formGroup = await getProFormGroup();
+      formGroup?.setValues(model);
     },
     /**
      * 设置 column
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
-      const form = await getProForm();
-      form?.setColumn(columnProps);
+    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[][]) => {
+      const formGroup = await getProFormGroup();
+      formGroup?.setColumn(columnProps);
     },
     /**
      * 新增 column
@@ -82,8 +81,8 @@ export const useProForm = () => {
       propOrIndex?: FormColumn["prop"] | number,
       position: "before" | "after" = "after"
     ) => {
-      const form = await getProForm();
-      form?.addColumn(column, propOrIndex, position);
+      const formGroup = await getProFormGroup();
+      formGroup?.addColumn(column, propOrIndex, position);
     },
     /**
      * 删除 column
@@ -91,8 +90,8 @@ export const useProForm = () => {
      * @param field 删除哪个数据
      */
     delColumn: async (prop: FormColumn["prop"]) => {
-      const form = await getProForm();
-      form?.delColumn(prop);
+      const formGroup = await getProFormGroup();
+      formGroup?.delColumn(prop);
     },
     /**
      * 获取表单数据
@@ -100,8 +99,8 @@ export const useProForm = () => {
      * @returns form model
      */
     getFormModel: async <T extends Recordable>(filterEmptyVal = true): Promise<T> => {
-      const form = await getProForm();
-      const model = (form?.model || {}) as T;
+      const formGroup = await getProFormGroup();
+      const model = (formGroup?.model || {}) as T;
 
       if (filterEmptyVal) return filterEmpty<T>(model);
       return model;
@@ -112,15 +111,15 @@ export const useProForm = () => {
      * @returns submit 结果：true | false
      */
     submitForm: async () => {
-      const form = await getProForm();
-      return form?.submitForm();
+      const formGroup = await getProFormGroup();
+      return formGroup?.submitForm();
     },
     /**
      * 重置表单
      */
     resetForm: async () => {
-      const form = await getProForm();
-      return form?.resetForm();
+      const formGroup = await getProFormGroup();
+      return formGroup?.resetForm();
     },
     /**
      * 获取字典枚举缓存 Map
@@ -128,8 +127,8 @@ export const useProForm = () => {
      * @returns optionsMap
      */
     getOptionsMap: async () => {
-      const form = await getProForm();
-      return form?.getOptionsMap();
+      const formGroup = await getProFormGroup();
+      return formGroup?.getOptionsMap();
     },
     /**
      * 获取 ElForm 组件的实例
@@ -137,26 +136,26 @@ export const useProForm = () => {
      * @returns ElForm instance
      */
     getElFormInstance: async () => {
-      await getProForm();
-      return elFormInstance.value;
+      const formGroup = await getProFormGroup();
+      return formGroup?.getElFormInstance();
     },
     /**
-     * 获取 ProForm 组件的实例
+     * 获取 ProFormGroup 组件的实例
      *
-     * @returns ProForm instance
+     * @returns ProFormGroup instance
      */
-    getProFormInstance: async () => {
-      await getProForm();
-      return proFormInstance.value;
+    getProFormGroupGroupInstance: async () => {
+      await getProFormGroup();
+      return proFormGroupInstance.value;
     },
     /**
      * 获取 ProFormMain 组件的实例
      *
-     * @returns ProForm instance
+     * @returns ProFormGroup instance
      */
     getProFormMainInstance: async () => {
-      const form = await getProForm();
-      return form?.proFormMainInstance;
+      const formGroup = await getProFormGroup();
+      return formGroup?.getProFormMainInstance();
     },
     /**
      * 获取 ElFormItem 组件的实例
@@ -165,8 +164,8 @@ export const useProForm = () => {
      * @returns formItem instance
      */
     getElFormItemInstance: async (prop: string) => {
-      const form = await getProForm();
-      return form?.getElFormItemInstance(prop);
+      const formGroup = await getProFormGroup();
+      return formGroup?.getElFormItemInstance(prop);
     },
     /**
      * 获取表单组件的实例
@@ -175,21 +174,25 @@ export const useProForm = () => {
      * @returns ElForm instance
      */
     getElInstance: async (prop: string) => {
-      const form = await getProForm();
-      return form?.getElInstance(prop);
+      const formGroup = await getProFormGroup();
+      return formGroup?.getElInstance(prop);
     },
   };
 
   const createMethods = {
     /**
-     * 返回 ProForm 组件的虚拟 DOM，直接在页面中渲染该虚拟 DOM 即可。可以理解为返回一个 Vue 组件
+     * 返回 ProFormGroup 组件的虚拟 DOM，直接在页面中渲染该虚拟 DOM 即可。可以理解为返回一个 Vue 组件
      */
-    createFormComponent: (
-      proFormProps?: ProFormPropsWithModel & Partial<ProFormNamespace.OnEmits>,
+    createFormGroupComponent: (
+      proFormGroupProps?: ProFormGroupPropsWithModel & Partial<ProFormGroupOnEmits>,
       context: Recordable = {}
     ) => {
       const { attrs, slots } = context;
-      const instance = createVNode(ProForm, { ...attrs, ...proFormProps, onRegister: register }, { ...slots });
+      const instance = createVNode(
+        ProFormGroup,
+        { ...attrs, ...proFormGroupProps, onRegister: register },
+        { ...slots }
+      );
       return instance;
     },
 
@@ -198,14 +201,18 @@ export const useProForm = () => {
      */
     createForm: async (
       el: MaybeRef<HTMLElement> | string,
-      proFormProps?: ProFormPropsWithModel & Partial<ProFormNamespace.OnEmits>,
+      proFormGroupProps?: ProFormGroupPropsWithModel & Partial<ProFormGroupOnEmits>,
       slots?: { [slotName: string]: (scope?: any) => RenderTypes }
     ) => {
-      const proFormInstance = createVNode(ProForm, { ...proFormProps, onRegister: register }, { ...slots });
+      const proFormGroupInstance = createVNode(
+        ProFormGroup,
+        { ...proFormGroupProps, onRegister: register },
+        { ...slots }
+      );
       const rootInstance = createVNode(
         ElConfigProvider,
         { namespace: ns.elNamespace, size: layoutSize.value },
-        { default: () => proFormInstance }
+        { default: () => proFormGroupInstance }
       );
       await nextTick();
 
@@ -218,7 +225,7 @@ export const useProForm = () => {
 
   return {
     formElState: {
-      proFormInstance,
+      proFormGroupInstance,
       elFormInstance,
     },
     formMethods: methods,

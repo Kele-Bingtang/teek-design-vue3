@@ -3,10 +3,11 @@ import type { TableColumnCtx } from "element-plus";
 import type { TableScope, TableColumn, TableColumnDataNamespace, TableRow } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
 import type { ModelBaseValueType } from "@/components/pro/form-item";
+import { toValue } from "vue";
 import { ElMessage, ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { getProp } from "@/components/pro/form-item";
-import { isBoolean } from "@/utils";
+import { getProp } from "@/components/pro/helper";
+import { isBoolean, isString } from "@/utils";
 import { useNamespace } from "@/composables";
 import { formatCellValue, lastProp } from "../helper";
 import TableFilter from "../plugins/table-filter.vue";
@@ -130,16 +131,6 @@ const formatValue = (row: TableRow, column: TableColumn) => {
 };
 
 /**
- * 处理部分列配置项数据
- */
-const toValueColumn = (column: Partial<TableColumn>) => {
-  return {
-    width: toValue(column.width),
-    label: toValue(column.label),
-  };
-};
-
-/**
  * emits 事件相关逻辑
  */
 const handleRegisterProFormInstance = (index: number, prop: string, instance: ProFormInstance | null) => {
@@ -199,7 +190,13 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <component v-if="column.headerRender" :is="column.headerRender(scope)" />
       <slot v-else :name="`${lastProp(column.prop!)}-header`" v-bind="scope">{{ column.label }}</slot>
 
-      <el-tooltip v-if="column.tooltip" placement="top" effect="dark" v-bind="column.tooltip">
+      <el-tooltip v-if="isString(column.tooltip)" placement="top" effect="dark" :content="column.tooltip">
+        <slot name="tooltip-icon">
+          <el-icon><QuestionFilled /></el-icon>
+        </slot>
+      </el-tooltip>
+
+      <el-tooltip v-else-if="column.tooltip" placement="top" effect="dark" v-bind="column.tooltip">
         <!-- ElToolTip 默认插槽 -->
         <component v-if="column.tooltip.render" :is="column.tooltip.render()" />
         <!-- ElToolTip content 插槽 -->
@@ -208,7 +205,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         </template>
         <!-- ElToolTip icon -->
         <slot name="tooltip-icon">
-          <el-icon :size="16"><QuestionFilled /></el-icon>
+          <el-icon><QuestionFilled /></el-icon>
         </slot>
       </el-tooltip>
 
@@ -242,7 +239,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           v-for="child in column.children"
           :key="child.prop"
           :column="child"
-          v-bind="toValueColumn(column)"
+          :width="toValue(column.width)"
+          :label="toValue(column.label)"
           :align="column.align || 'center'"
           :editable
           @register-pro-form-instance="handleRegisterProFormInstance"

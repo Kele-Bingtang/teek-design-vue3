@@ -2,7 +2,7 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
 import type { TableEditProps } from "../types";
-import { getProp, setProp } from "@/components/pro/form-item";
+import { getProp, setProp } from "@/components/pro/helper";
 import ProForm from "@/components/pro/form";
 
 defineOptions({ name: "TableEdit" });
@@ -34,7 +34,7 @@ watch(
 );
 
 const handleChange = (model: ModelBaseValueType, column: FormItemColumnProps) => {
-  emits("change", getProp(model, props.prop), column);
+  emits("change", getProp(model as Recordable, props.prop), column);
 };
 
 defineExpose({ proFormInstance });

@@ -12,7 +12,7 @@ import type {
   TableRow,
 } from "./types";
 import { defaultPageInfo } from "@/components/pro/pagination";
-import { filterEmpty } from "@/components/pro/form";
+import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { useTableApi, useTableState, type UseSelectState } from "./composables";
 import { Environment, TableSizeEnum } from "./helper";
@@ -347,12 +347,12 @@ const expose = {
   addColumn,
   delColumn,
 
+  tableHeadInstance,
+  tableMainInstance,
   getElTableInstance,
   getElFormInstance,
   getElFormItemInstance,
   getElInstance,
-  tableHeadInstance,
-  tableMainInstance,
 };
 
 defineExpose(expose);

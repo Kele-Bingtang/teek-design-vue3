@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { ProForm, ProFormItem, type FormColumn, type ElFormProps } from "@/components";
 
-const model = ref<Record<string, any>>({});
+const model = ref<Recordable>({});
 
 // 表单整体配置项
 const elFormProps: Partial<ElFormProps> = {
@@ -99,7 +99,7 @@ const editable = ref(true);
   <div>
     <div class="tk-card">
       <h4>1 个 ProForm</h4>
-      <ProForm :elFormProps="elFormProps" :columns v-model="model" />
+      <ProForm :elFormProps :columns v-model="model" />
       {{ model }}
 
       <h4>3 个 ProFormItem</h4>

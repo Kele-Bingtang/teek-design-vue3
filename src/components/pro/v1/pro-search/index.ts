@@ -8,7 +8,7 @@ export type {
   ProSearchOnEmits,
 } from "./src/index.vue";
 
-export { useProSearch } from "./src/hooks/use-search";
+export { useProSearch } from "./src/composables/use-search";
 
 export const ProSearch = useInstall(index);
 

@@ -1,25 +1,26 @@
-import type { FormColumn, ProFormNamespace } from "../types";
-import { isString } from "@/utils";
+import type { FormColumn } from "@/components/pro/form";
+import type { ProFormGroupProps } from "../types";
 import { setProp } from "@/components/pro/helper";
+import { isString } from "@/utils";
 
-export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[]> = []) => {
-  const mergeProps = ref<ProFormNamespace.Props>({});
+export const useFormGroupApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[]> = []) => {
+  const mergeProps = ref<ProFormGroupProps>({});
 
   /**
    * 设置 model 的值
    *
    * @param modelValue 设置的值
    */
-  const setValues = (modelValue: Recordable = {}) => {
+  const setValues = async (modelValue: Record<string, any> = {}) => {
     model.value = Object.assign(model.value, modelValue);
   };
 
   /**
-   * 设置 ProForm 组件的 props
+   * 设置 ProSearch 组件的 props
    *
-   * @param props 要添加的 ProForm props
+   * @param props 要添加的 ProSearch props
    */
-  const setProps = (props: ProFormNamespace.Props = {}) => {
+  const setProps = (props: ProFormGroupProps = {}) => {
     mergeProps.value = Object.assign(unref(mergeProps), props);
   };
 
@@ -28,10 +29,10 @@ export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[
    *
    * @param columnSet 设置内容
    */
-  const setColumn = (columnSet: { prop: string; field: string; value: unknown }[]) => {
+  const setColumn = (columnProps: { prop: string; field: string; value: unknown }[]) => {
     const columnsValue = unref(columns);
     for (const v of columnsValue) {
-      for (const item of columnSet) {
+      for (const item of columnProps) {
         if (v.prop === item.prop) {
           setProp(v, item.field, item.value);
         }
@@ -43,22 +44,22 @@ export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[
    * 添加 column
    *
    * @param column 添加的 column
-   * @param propOrIndex 参考对象，prop 或者 index 下标，不传则插入到最后
+   * @param propOrIndex 参考对象，prop 或者 index
    * @param position 添加的位置，before 或者 after
    */
   const addColumn = (
     column: FormColumn,
-    propOrIndex?: FormColumn["prop"] | number,
+    prop?: FormColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
     const columnsValue = unref(columns);
 
-    if (isString(propOrIndex)) {
+    if (isString(prop)) {
       return columnsValue.forEach((s, i) => {
-        if (s.prop === propOrIndex) position === "after" ? column.splice(i + 1, 0, s) : column.splice(i, 0, s);
+        if (s.prop === prop) position === "after" ? column.splice(i + 1, 0, s) : column.splice(i, 0, s);
       });
     }
-    if (propOrIndex !== undefined) return columnsValue.splice(propOrIndex, 0, column);
+    if (prop !== undefined) return columnsValue.splice(prop, 0, column);
     return columnsValue.push(column);
   };
 

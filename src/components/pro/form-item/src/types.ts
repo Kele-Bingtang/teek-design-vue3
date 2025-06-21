@@ -85,11 +85,6 @@ export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends inf
 export type ElType = PascalCaseComponentName | HyphenCaseComponentName;
 
 /**
- * 基本类型
- */
-export type BaseValueType = string | number | boolean | string[] | number[] | boolean[];
-
-/**
  * 渲染函数的返回值的类型
  */
 export type RenderTypes = string | VNode | JSX.Element | Component;
@@ -105,7 +100,7 @@ export interface ElOption {
   /**
    * 选项框值
    */
-  value?: BaseValueType;
+  value?: any;
   /**
    * 是否禁用此选项
    */
@@ -141,7 +136,7 @@ export interface FormItemColumnProps {
   /**
    * 标签，ElFormItem 的 label 属性
    */
-  label?: MaybeRefOrGetter<BaseValueType>;
+  label?: MaybeRefOrGetter<string | number>;
   /**
    * 是否显示 label
    */
@@ -223,15 +218,17 @@ export interface FormItemColumnProps {
   /**
    * Label 右侧 ElToolTip 提示
    */
-  tooltip?: Partial<ElTooltipProps> & {
-    icon?: Component; // ElTooTip 绑定的元素图标
-    render?: () => VNode | string; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
-    contentRender?: () => VNode | string; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
-  };
+  tooltip?:
+    | string
+    | ({
+        icon?: Component; // ElTooTip 绑定的元素图标
+        render?: () => VNode | string; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
+        contentRender?: () => VNode | string; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
+      } & Partial<ElTooltipProps>);
   /**
    * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 model 值是 1 导致无法匹配，可以设置为 getFormat: "string" 解决
    */
-  getFormat?: BaseValueType | ((value: BaseValueType) => BaseValueType);
+  getFormat?: unknown | ((value: unknown) => unknown);
   /**
    * 自定义 label 标题
    */

@@ -47,6 +47,7 @@ export default {
     UseProForm: "Use ProForm",
     CreateProForm: "Create ProForm",
     DetailProForm: "Detail ProForm",
+    SimpleProFormGroup: "Simple ProFormGroup",
     ProSearch: "Pro Search",
     SimpleProSearch: "Simple ProSearch",
     UseProSearch: "Use ProSearch",

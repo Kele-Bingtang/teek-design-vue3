@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { ModelBaseValueType } from "@/components/pro/form-item";
 import type { TableFilterProps } from "../types";
 import { computed } from "vue";
 import { ElPopover, ElIcon, ElButton } from "element-plus";
 import { Filter } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { isEmpty, isObject } from "@/utils";
-import ProFormItem, { getProp, setProp } from "@/components/pro/form-item";
+import { getProp, setProp } from "@/components/pro/helper";
+import ProFormItem from "@/components/pro/form-item";
 
 defineOptions({ name: "TableFilter" });
 
 interface TableFilterEmits {
   // 过滤事件，返回输入的值以及 prop
-  filter: [model: ModelBaseValueType, filterValue: unknown, prop: string | undefined];
+  filter: [model: Recordable, filterValue: unknown, prop: string | undefined];
   // 清空事件，返回输入的 prop
   clear: [prop: string | undefined];
   // 重置所有表单事件
@@ -34,7 +34,7 @@ const emits = defineEmits<TableFilterEmits>();
 
 const ns = useNamespace("pro-table-filter");
 
-const model = ref<ModelBaseValueType>({});
+const model = ref<Recordable>({});
 
 const prop = computed(() => props.prop || props.formColumn.prop);
 const elProps = computed(() => ({ ...props.formColumn.elProps, teleported: false }));
@@ -48,14 +48,14 @@ const handleFilter = () => {
 
 const handleClear = () => {
   if (isObject(model.value) && prop.value) setProp(model.value, prop.value, undefined);
-  else model.value = undefined;
+  else model.value = {};
 
   handleFilter();
   emits("clear", prop.value);
 };
 
 const handleReset = () => {
-  model.value = isObject(model.value) ? {} : undefined;
+  model.value = {};
   emits("reset");
 };
 </script>

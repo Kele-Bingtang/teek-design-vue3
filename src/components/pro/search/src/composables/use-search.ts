@@ -1,31 +1,34 @@
 import type { Ref, ShallowRef } from "vue";
-import type { FormColumn, FormSetProps } from "@/components/pro/form";
-import type { ProSearchOnEmits, ProSearchProps } from "../types";
-import type { ProSearchExpose } from "../index.vue";
+import type { FormInstance } from "element-plus";
+import type { FormColumn } from "@/components/pro/form";
+import type { RenderTypes } from "@/components/pro/form-item";
+import type { ProSearchInstance, ProSearchOnEmits, ProSearchProps } from "../types";
 import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref } from "vue";
 import { ElConfigProvider } from "element-plus";
+import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/stores";
 import ProSearch from "../index.vue";
-import type { RenderTypes } from "@/components/pro/form-item";
 
 type ProSearchPropsWithModel = ProSearchProps & { modelValue?: Recordable };
 
 export const useProSearch = () => {
   // ProSearch 实例
-  const proSearchInstance = ref<ProSearchExpose | null>(null);
+  const proSearchInstance = ref<ProSearchInstance | null>(null);
+  // ElForm 实例
+  const elFormInstance = ref<FormInstance | null>();
 
   const ns = useNamespace();
+  const currentInstance = getCurrentInstance();
 
   const layoutSize = computed(() => useLayoutStore().layoutSize);
-
-  const currentInstance = getCurrentInstance();
 
   /**
    * @param proSearch ProSearch 实例
    */
-  const register = (proSearch: ProSearchExpose | null) => {
+  const register = (proSearch: ProSearchInstance | null) => {
     proSearchInstance.value = proSearch;
+    elFormInstance.value = proSearch?.getElFormInstance();
   };
 
   const getProSearch = async () => {
@@ -45,7 +48,6 @@ export const useProSearch = () => {
       const search = await getProSearch();
       search?.toggleCollapse(isCollapsed);
     },
-
     /**
      * 设置 search 组件的 props
      *
@@ -56,7 +58,6 @@ export const useProSearch = () => {
       search?.setProps(props);
       if (props.modelValue) search?.setValues(props.modelValue);
     },
-
     /**
      * 设置 model 的值
      *
@@ -66,17 +67,15 @@ export const useProSearch = () => {
       const search = await getProSearch();
       search?.setValues(model);
     },
-
     /**
      * 设置 column
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: FormSetProps[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
       const search = await getProSearch();
       search?.setColumn(columnProps);
     },
-
     /**
      * 新增 column
      *
@@ -87,7 +86,6 @@ export const useProSearch = () => {
       const search = await getProSearch();
       search?.addColumn(formColumn, prop, position);
     },
-
     /**
      * 删除 column
      *
@@ -97,15 +95,26 @@ export const useProSearch = () => {
       const search = await getProSearch();
       search?.delColumn(prop);
     },
-
     /**
      * 获取表单数据
      *
      * @returns form model
      */
-    getFormModel: async <T = Recordable>(): Promise<T> => {
+    getFormModel: async <T extends Recordable>(filterEmptyVal = true): Promise<T> => {
+      const form = await getProSearch();
+      const model = (form?.model || {}) as T;
+
+      if (filterEmptyVal) return filterEmpty<T>(model);
+      return model;
+    },
+    /**
+     * 获取字典枚举缓存 Map
+     *
+     * @returns optionsMap
+     */
+    getOptionsMap: async () => {
       const search = await getProSearch();
-      return search?.getFormModel() as T;
+      return search?.getOptionsMap();
     },
     /**
      * 获取 ProSearch 组件的实例
@@ -117,15 +126,6 @@ export const useProSearch = () => {
       return proSearchInstance.value;
     },
     /**
-     * 获取 ElForm 组件的实例
-     *
-     * @returns ElForm instance
-     */
-    getElFormInstance: async () => {
-      const search = await getProSearch();
-      return search?.getElFormInstance;
-    },
-    /**
      * 获取 ProForm 组件的实例
      *
      * @returns ProForm instance
@@ -133,6 +133,15 @@ export const useProSearch = () => {
     getProFormInstance: async () => {
       const search = await getProSearch();
       return search?.getProFormInstance();
+    },
+    /**
+     * 获取 ElForm 组件的实例
+     *
+     * @returns ElForm instance
+     */
+    getElFormInstance: async () => {
+      const search = await getProSearch();
+      return search?.getElFormInstance;
     },
     /**
      * 获取 ElFormItem 组件的实例
@@ -195,7 +204,8 @@ export const useProSearch = () => {
 
   return {
     searchElState: {
-      proSearchInstance: proSearchInstance.value,
+      proSearchInstance,
+      elFormInstance,
     },
     searchMethods: methods,
     searchRegister: register,

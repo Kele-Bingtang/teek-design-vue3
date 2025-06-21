@@ -8,6 +8,7 @@ import {
   ElMessageBox,
   ElMessage,
 } from "element-plus";
+
 const { formRegister, formMethods } = useProForm();
 const {
   setProps,
@@ -16,7 +17,7 @@ const {
   setValues,
   setColumn,
   getElInstance,
-  getFormItemInstance,
+  getElFormItemInstance,
   getElFormInstance,
   getFormModel,
 } = formMethods;
@@ -171,7 +172,7 @@ const columns = reactive<FormColumn[]>([
 
 const changeCol = (col: boolean) => {
   setProps({
-    useFlexLayout: col,
+    flexLayout: col,
   });
 };
 
@@ -316,7 +317,7 @@ const inoutFocus = async () => {
 };
 
 const inoutValidation = async () => {
-  const formItemProps = await getFormItemInstance("input");
+  const formItemProps = await getElFormItemInstance("input");
   const inputEl = (await getElInstance("input")) as InputInstance;
   inputEl?.focus();
   formItemProps?.validate("focus", (val: boolean) => {

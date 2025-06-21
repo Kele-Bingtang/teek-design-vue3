@@ -10,6 +10,7 @@ export * from "./pro/grid";
 export * from "./pro/image-viewer";
 export * from "./pro/form";
 export * from "./pro/form-item";
+export * from "./pro/form-group";
 export * from "./pro/page";
 export * from "./pro/pagination";
 export * from "./pro/search";
@@ -46,3 +47,5 @@ export * from "./view/text-hover-effect";
 export * from "./view/excel-upload";
 export * from "./view/images-upload";
 export * from "./view/video-player";
+
+export * from "./pro/helper";

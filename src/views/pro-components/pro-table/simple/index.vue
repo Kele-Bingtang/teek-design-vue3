@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setProp } from "@/components/pro/v1/pro-form";
+import { setProp } from "@/components/pro/helper";
 import { ProTable, type OperationNamespace, type TableColumn } from "@/components/pro/table";
 import { tableData } from "@/mock/pro-table";
 import { Edit, Delete } from "@element-plus/icons-vue";

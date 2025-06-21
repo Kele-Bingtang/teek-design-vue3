@@ -46,6 +46,7 @@ export default {
     UseProForm: "使用 ProForm",
     CreateProForm: "创建 ProForm",
     DetailProForm: "详情 ProForm",
+    SimpleProFormGroup: "简单 ProFormGroup",
     ProSearch: "超级搜索",
     SimpleProSearch: "简单 ProSearch",
     UseProSearch: "使用 ProSearch",

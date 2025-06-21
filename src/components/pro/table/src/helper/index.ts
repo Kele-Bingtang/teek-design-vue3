@@ -1,7 +1,6 @@
 import type { FilterRule } from "../types";
 import { isArray, isEmpty, isFunction } from "@/utils";
-import { getProp } from "@/components/pro/form-item";
-import { getObjectKeys } from "@/components/pro/form";
+import { getProp, getObjectKeys } from "@/components/pro/helper";
 import { Environment } from "./enums";
 
 export * from "./enums";

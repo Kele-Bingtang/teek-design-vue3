@@ -3,8 +3,7 @@ import type { CheckboxGroupValueType } from "element-plus";
 import { ref, unref } from "vue";
 import { ElMessageBox, ElMessage, ElCheckboxGroup, ElCheckbox } from "element-plus";
 import { exportJsonToExcel, formatJsonToArray } from "@/utils";
-import { getObjectKeys } from "@/components/pro/form";
-import { getProp } from "@/components/pro/form-item";
+import { getProp, getObjectKeys } from "@/components/pro/helper";
 
 const defaultFileName = "export-table";
 const defaultConfirmTitle = "请选择导出列";

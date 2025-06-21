@@ -3,17 +3,16 @@ import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "./types";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isArray, isObject } from "@/utils";
+import { addUnit, isArray, isObject, isString } from "@/utils";
+import { componentMap, ComponentNameEnum } from "./helper";
 import {
   formatValue,
   getProp,
   hyphenToCamelCase,
   setProp,
-  componentMap,
-  ComponentNameEnum,
   filterOptions,
   filterOptionsValue,
-} from "./helper";
+} from "@/components/pro/helper";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";
 import Select from "./components/select.vue";
@@ -58,9 +57,8 @@ const elModel = computed({
     return model.value;
   },
   set: val => {
-    const { prop } = props;
-    if (isObject(model.value) && prop) return setProp(model.value, prop, val);
-    model.value = val;
+    if (!isObject(model.value)) return (model.value = val);
+    setProp(model.value, props.prop, val);
   },
 });
 
@@ -210,7 +208,13 @@ defineExpose(expose);
         <span v-else-if="label">{{ label }}</span>
       </slot>
 
-      <el-tooltip v-if="tooltip" placement="top" effect="dark" v-bind="tooltip">
+      <el-tooltip v-if="isString(tooltip)" placement="top" effect="dark" :content="tooltip">
+        <slot name="tooltip-icon">
+          <el-icon><QuestionFilled /></el-icon>
+        </slot>
+      </el-tooltip>
+
+      <el-tooltip v-else-if="tooltip" placement="top" effect="dark" v-bind="tooltip">
         <!-- ElToolTip 默认插槽 -->
         <component v-if="tooltip.render" :is="tooltip.render()" />
         <!-- ElToolTip content 插槽 -->
@@ -218,7 +222,7 @@ defineExpose(expose);
           <component v-if="tooltip.contentRender" :is="tooltip.contentRender()" />
         </template>
         <slot name="tooltip-icon">
-          <el-icon :size="16"><QuestionFilled /></el-icon>
+          <el-icon><QuestionFilled /></el-icon>
         </slot>
       </el-tooltip>
     </template>

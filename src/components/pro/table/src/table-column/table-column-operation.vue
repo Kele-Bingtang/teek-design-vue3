@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { OperationNamespace, TableRow } from "../types";
+import { toValue } from "vue";
 import { ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem, ElIcon } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
 import { isFunction } from "@/utils";
-import { hyphenToCamelCase } from "@/components/pro/form-item";
+import { hyphenToCamelCase } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { OperationConfirmEl, OperationEl, lastProp } from "../helper";
 import OperationButton from "../plugins/operation-button.vue";
@@ -24,9 +25,6 @@ const props = withDefaults(defineProps<OperationNamespace.Props>(), {
 });
 
 const ns = useNamespace("pro-table-operation");
-
-const widthValue = computed(() => toValue(props.width));
-const labelValue = computed(() => toValue(props.label));
 
 const { getButtons, getText, getButtonEl, getButtonElProps } = useOperationButtonPropsGet();
 const { hideOnClick, getCallbackParams, handleButtonClick, handleConfirm, handleCancel } = useOperationButtonEvent();
@@ -190,8 +188,8 @@ function useOperationButtonEvent() {
   <el-table-column
     v-bind="{ ...$attrs, ...props, buttons: undefined }"
     :fixed
-    :label="labelValue"
-    :width="widthValue"
+    :label="toValue(label)"
+    :width="toValue(width)"
     :class-name="className ? className : '' + ns.b()"
   >
     <!-- 表头插槽 - 表头内容 -->
