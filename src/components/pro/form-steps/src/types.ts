@@ -3,10 +3,25 @@ import type { ProFormNamespace } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 
 export interface FormStepColumn {
+  /**
+   * ElSteps 的 title
+   */
   title: StepProps["title"];
+  /**
+   * ElSteps 的 description
+   */
   description?: StepProps["description"];
+  /**
+   * ElSteps 的 icon
+   */
   icon?: StepProps["icon"];
+  /**
+   * ElSteps 的 status
+   */
   status?: StepProps["status"];
+  /**
+   * ProForm Props
+   */
   form?: ProFormNamespace.Props & { modelValue?: Recordable };
 }
 
@@ -36,8 +51,20 @@ export interface ProFormStepsProps {
 }
 
 export interface ProFormStepsEmits {
+  /**
+   * 上一步按钮点击事件
+   */
   pre: [currentIndex: number];
+  /**
+   * 下一步按钮点击事件
+   */
   next: [currentIndex: number, currentModel: Recordable, allModel: Recordable];
+  /**
+   * 提交按钮点击事件
+   */
   submit: [currentIndex: number, currentModel: Recordable, allModel: Recordable];
+  /**
+   * 表单数据变化事件
+   */
   change: [model: Recordable, column: FormItemColumnProps];
 }

@@ -24,7 +24,7 @@ export const lastProp = (prop: string) => {
  * @param callValue 需要处理的值
  */
 export const formatCellValue = (callValue: any) => {
-  // 如果当前值为数组，使用 / 拼接（根据需求自定义）
+  // 如果当前值为数组，使用 / 分隔符拼接（根据需求自定义分隔符）
   if (isArray(callValue)) return callValue.length ? callValue.join(" / ") : "--";
   return callValue ?? "--";
 };

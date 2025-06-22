@@ -60,6 +60,8 @@ export default {
     AdvancedProPage: "Advanced ProPage",
     UseProPage: "Use ProPage",
     ComplexProPage: "Complex ProPage",
+    ProDescriptions: "Pro Descriptions",
+    SimpleProDescriptions: "Simple ProDescriptions",
     ProSteps: "Pro Steps",
     SimpleProSteps: "Simple ProSteps",
     ProTransfer: "Pro Transfer",

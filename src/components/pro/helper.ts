@@ -97,8 +97,8 @@ export const hyphenToCamelCase = (val?: string) => {
  */
 export const formatValue = async <T = any>(
   value: T | Promise<T> | Ref<T> | Reactive<T> | ComputedRef<T> | ((...arg: any) => Promise<T>),
-  params: any[] = [],
-  processRef: boolean = true
+  params: unknown[] = [],
+  processRef = true
 ): Promise<any> => {
   if (value === undefined) return value;
 

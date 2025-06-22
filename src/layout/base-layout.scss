@@ -50,11 +50,9 @@
     }
 
     /* 子级高亮，父级也高亮 */
-    > .is-sub.is-active > {
-      @include el-joins(sub-menu__title) {
-        font-weight: cssVar(layout-aside-text-active-weight);
-        color: cssVar(main-color);
-      }
+    > .is-sub.is-active > .#{$el-namespace}-sub-menu__title {
+      font-weight: cssVar(layout-aside-text-active-weight);
+      color: cssVar(main-color);
     }
 
     :where(.#{$el-namespace}-menu-item, .#{$el-namespace}-sub-menu) {

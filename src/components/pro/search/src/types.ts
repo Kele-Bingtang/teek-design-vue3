@@ -3,10 +3,16 @@ import type { BreakPoint, GridItemProps } from "@/components/pro/grid";
 import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
 import type ProSearch from "./index.vue";
 
+/**
+ * 按钮位置
+ */
 export type ActionPosition = "left" | "right" | "block-left" | "block-center" | "block-right";
 
 export type ProSearchColumnProps = FormColumn & {
-  grid?: Partial<GridItemProps>; // GridItem props
+  /**
+   * GridItem props
+   */
+  grid?: Partial<GridItemProps>;
 };
 
 export interface ProSearchProps extends ProFormNamespace.Props {
@@ -119,10 +125,22 @@ export interface ProSearchProps extends ProFormNamespace.Props {
 }
 
 export type ProSearchEmits = {
-  search: [model: Record<string, any>]; // 搜索方法
-  reset: [model: Record<string, any>]; // 重置方法
-  register: [proSearchInstance: any]; // 注册方法
-  validate: [prop: FormItemProp, isValid: boolean, message: string]; // ElForm 触发验证事件
+  /**
+   * 搜索事件
+   */
+  search: [model: Record<string, any>];
+  /**
+   * 重置事件
+   */
+  reset: [model: Record<string, any>];
+  /**
+   * 注册事件
+   */
+  register: [proSearchInstance: any];
+  /**
+   * ElForm 验证触发事件
+   */
+  validate: [prop: FormItemProp, isValid: boolean, message: string];
 };
 
 /**

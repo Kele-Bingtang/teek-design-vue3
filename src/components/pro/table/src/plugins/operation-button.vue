@@ -1,71 +1,9 @@
 <script setup lang="ts">
-import type { AppContext } from "vue";
-import type { ElMessageBoxOptions, PopconfirmProps, ElTooltipProps } from "element-plus";
+import type { ElMessageBoxProps, OperationButtonEmits, OperationButtonProps } from "../types";
 import { ElPopconfirm, ElTooltip, ElIcon, ElButton, ElLink, ElMessageBox } from "element-plus";
 import { OperationConfirmEl, OperationEl } from "../helper";
 
 defineOptions({ name: "OperationButton" });
-
-export interface ElMessageBoxProps {
-  /**
-   * ElMessageBox.confirm 的 title
-   *
-   * @default '提示'
-   */
-  title?: string;
-  /**
-   * ElMessageBox.confirm 的 message
-   *
-   * @default '确定执行本次操作'
-   */
-  message?: string;
-  /**
-   * ElMessageBox.confirm 的 options
-   */
-  options?: ElMessageBoxOptions;
-  /**
-   * ElMessageBox.confirm 的 appContext
-   */
-  appContext?: AppContext | null;
-}
-
-export interface OperationButtonProps {
-  /**
-   * 按钮文字
-   */
-  text?: string;
-  /**
-   * 按钮类型
-   */
-  el?: OperationEl | `${OperationEl}`;
-  /**
-   * 按钮组件 props
-   */
-  elProps?: Recordable;
-  /**
-   * 按钮图标，仅当 el 为 ElIcon 时有效
-   */
-  icon?: Component;
-  /**
-   * ElTooltipProps props
-   */
-  tooltipProps?: Partial<ElTooltipProps>;
-  /**
-   * 二次确认组件
-   */
-  confirmEl?: OperationConfirmEl | `${OperationConfirmEl}`;
-  /**
-   * 二次确认组件 props
-   */
-  confirmProps?: Partial<PopconfirmProps> | ElMessageBoxProps;
-}
-
-export interface OperationButtonEmits {
-  buttonClick: [event: MouseEvent];
-  buttonConfirmClick: [event: MouseEvent];
-  confirm: [event: MouseEvent];
-  cancel: [event: MouseEvent];
-}
 
 const props = withDefaults(defineProps<OperationButtonProps>(), {
   text: "",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableInstance } from "element-plus";
+import type { TableColumnDragSortProps, TableColumnDragSortEmits } from "../types";
 import { ElTableColumn, ElIcon } from "element-plus";
 import Sortable from "sortablejs";
 import { DCaret } from "@element-plus/icons-vue";
@@ -7,21 +7,12 @@ import { useNamespace } from "@/composables";
 
 defineOptions({ name: "TableColumnDragSort" });
 
-interface TableColumnDragSortProps {
-  sortable?: boolean;
-  tableInstance?: MaybeRef<TableInstance> | null;
-}
-
-export interface ProTableEmits {
-  dragSortEnd: [newIndex: number, oldIndex: number];
-}
-
 const props = withDefaults(defineProps<TableColumnDragSortProps>(), {
   sortable: true,
   tableInstance: undefined,
 });
 
-const emits = defineEmits<ProTableEmits>();
+const emits = defineEmits<TableColumnDragSortEmits>();
 
 const ns = useNamespace("table-column-drag-sort");
 

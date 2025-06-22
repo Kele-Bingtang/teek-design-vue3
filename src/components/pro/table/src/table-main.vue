@@ -147,7 +147,7 @@ function useTableInit() {
             ? transformOption(getProp(row, prop), options, row)
             : filterOptions(getProp(row, prop), options, optionField);
 
-          const formatLabel = filterOptionsValue(option, optionField?.label ?? "label");
+          const formatLabel = filterOptionsValue(option, optionField?.label || "label");
 
           if (!row._options) row._options = {};
           if (!row._option) row._option = {};
@@ -183,7 +183,7 @@ function useTableInit() {
       timer = setTimeout(async () => {
         const flatColumns = flatColumnsFn(newValue);
         // 异步但有序执行
-        for (const column of flatColumns) await initOptionsMap(column.options, column.prop ?? "");
+        for (const column of flatColumns) await initOptionsMap(column.options, column.prop || "");
         initOptionsInData(props.data, flatColumns);
       }, 10);
     },

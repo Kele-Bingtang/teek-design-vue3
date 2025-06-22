@@ -31,7 +31,7 @@
 
     :deep(.#{$el-namespace}-tree--highlight-current) {
       @include el-joins(tree-node) {
-        &.is-current > {
+        &.is-current {
           @include el-joins(tree-node__content) {
             background-color: var(--#{$el-namespace}-color-primary);
 

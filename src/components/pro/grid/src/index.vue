@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { VNodeArrayChildren, VNode } from "vue";
+import type { GridProps, BreakPoint } from "./types";
 import {
   ref,
   watch,
@@ -10,23 +12,10 @@ import {
   onUnmounted,
   onDeactivated,
   onActivated,
-  type VNodeArrayChildren,
-  type VNode,
 } from "vue";
-import type { Responsive as responsive } from "./components/grid-item.vue";
+import { isObject } from "@/utils";
 
 defineOptions({ name: "Grid" });
-
-export type Responsive = responsive;
-
-export type BreakPoint = "xs" | "sm" | "md" | "lg" | "xl";
-
-export interface GridProps {
-  cols?: number | Record<BreakPoint, number>; // 响应式布局
-  collapse?: boolean; // 是否开启折叠功能
-  showRow?: number; // 可见的行数
-  gap?: [number, number] | number; // 行和列间距
-}
 
 const props = withDefaults(defineProps<GridProps>(), {
   cols: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
@@ -44,7 +33,7 @@ provide("breakPoint", breakPoint);
 
 // 注入 cols
 const gridCols = computed(() => {
-  if (typeof props.cols === "object") return props.cols[breakPoint.value] ?? props.cols;
+  if (isObject(props.cols)) return props.cols[breakPoint.value] ?? props.cols;
   return props.cols;
 });
 provide("cols", gridCols);

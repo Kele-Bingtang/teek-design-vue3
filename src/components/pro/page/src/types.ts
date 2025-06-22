@@ -38,7 +38,13 @@ export interface ProPageProps extends ProTableNamespace.Props {
 }
 
 export interface ProPageEmits extends Omit<ProTableNamespace.Emits, "register">, Omit<ProSearchEmits, "register"> {
+  /**
+   * ProSearch 的注册事件
+   */
   searchRegister: [proFormInstance: ProSearchInstance];
+  /**
+   * ProTable 的注册事件
+   */
   tableRegister: [proTableInstance: ProTableInstance, elTableInstance: TableInstance | null];
 }
 

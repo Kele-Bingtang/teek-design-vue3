@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableFilterProps } from "../types";
+import type { TableFilterEmits, TableFilterProps } from "../types";
 import { computed } from "vue";
 import { ElPopover, ElIcon, ElButton } from "element-plus";
 import { Filter } from "@element-plus/icons-vue";
@@ -9,15 +9,6 @@ import { getProp, setProp } from "@/components/pro/helper";
 import ProFormItem from "@/components/pro/form-item";
 
 defineOptions({ name: "TableFilter" });
-
-interface TableFilterEmits {
-  // 过滤事件，返回输入的值以及 prop
-  filter: [model: Recordable, filterValue: unknown, prop: string | undefined];
-  // 清空事件，返回输入的 prop
-  clear: [prop: string | undefined];
-  // 重置所有表单事件
-  reset: [];
-}
 
 const props = withDefaults(defineProps<TableFilterProps>(), {
   el: "ElInput",

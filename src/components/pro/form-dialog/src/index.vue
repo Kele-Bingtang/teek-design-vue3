@@ -1,24 +1,11 @@
 <script setup lang="ts">
-import type { DialogProps } from "element-plus";
-import type { ProFormInstance, ProFormNamespace } from "@/components/pro/form";
-import type { ProDialogProps } from "@/components/pro/dialog";
+import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
+import type { ProFormDialogEmits, ProFormDialogProps } from "./types";
 import { ProForm } from "@/components/pro/form";
 import { ProDialog } from "@/components/pro/dialog";
 
 defineOptions({ name: "ProFormDialog" });
-
-export interface ProFormDialogProps {
-  visible?: boolean;
-  dialog?: ProDialogProps & Partial<DialogProps>;
-  form?: ProFormNamespace.Props & ProFormNamespace.OnEmits;
-}
-
-export interface ProFormDialogEmits {
-  change: [model: Recordable, column: FormItemColumnProps];
-  confirm: [model: Recordable];
-  cancel: [];
-}
 
 withDefaults(defineProps<ProFormDialogProps>(), {
   dialog: () => ({}),

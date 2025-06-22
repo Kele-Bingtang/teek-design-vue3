@@ -1,24 +1,8 @@
 <script setup lang="ts">
+import type { GridItemProps, BreakPoint } from "../types";
 import { computed, inject, type Ref, ref, useAttrs, watch } from "vue";
-import type { BreakPoint } from "../index.vue";
 
 defineOptions({ name: "GridItem" });
-
-export type Responsive = {
-  span?: number; // 偏移量
-  offset?: number; // 占位量
-};
-
-export interface GridItemProps {
-  offset?: number; // 偏移量
-  span?: number; // 占位量
-  suffix?: boolean; // 最后的元素
-  xs?: Responsive;
-  sm?: Responsive;
-  md?: Responsive;
-  lg?: Responsive;
-  xl?: Responsive;
-}
 
 const props = withDefaults(defineProps<GridItemProps>(), {
   offset: 0,

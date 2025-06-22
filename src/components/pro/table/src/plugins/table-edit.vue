@@ -47,7 +47,7 @@ defineExpose({ proFormInstance });
     v-model="model"
     :show-label="false"
     :show-footer="false"
-    :use-flex-layout="false"
+    :flex-layout="false"
     :el-form-props="{
       hideRequiredAsterisk: true,
     }"

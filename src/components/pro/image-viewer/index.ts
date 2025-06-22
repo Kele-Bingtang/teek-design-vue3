@@ -1,34 +1,20 @@
+import type { ImageViewerProps } from "element-plus";
+import type { VNode } from "vue";
 import ImageViewer from "./src/index.vue";
-import { createVNode, render, type VNode } from "vue";
-import type { ImageViewerProps } from "./src/index.vue";
+import { createVNode, render } from "vue";
+import { isClient } from "@/utils";
 
+export type * from "./src/types";
 export { ImageViewer };
 
 let instance: VNode | null = null;
 
-export const createImageViewer = (options: ImageViewerProps & { show?: boolean }) => {
-  if (typeof window === "undefined") return;
-  const {
-    urlList,
-    initialIndex = 0,
-    infinite = true,
-    hideOnClickModal = false,
-    teleported = false,
-    zIndex = 2000,
-    show = true,
-  } = options;
+export const createImageViewer = (options: Partial<ImageViewerProps> & { show?: boolean; modelValue?: boolean }) => {
+  if (!isClient) return;
 
-  const propsData: Partial<ImageViewerProps> = {};
   const container = document.createElement("div");
-  propsData.urlList = urlList;
-  propsData.initialIndex = initialIndex;
-  propsData.infinite = infinite;
-  propsData.hideOnClickModal = hideOnClickModal;
-  propsData.teleported = teleported;
-  propsData.zIndex = zIndex;
-  propsData.modelValue = show;
 
   document.body.appendChild(container);
-  instance = createVNode(ImageViewer, propsData);
+  instance = createVNode(ImageViewer, options);
   render(instance, container);
 };

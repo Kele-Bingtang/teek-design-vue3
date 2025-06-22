@@ -186,8 +186,13 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <slot name="header-before" />
 
       <!-- 自定义表头 | 自定义插槽 -->
-      <component v-if="column.headerRender" :is="column.headerRender(scope)" />
-      <slot v-else :name="`${lastProp(column.prop!)}-header`" v-bind="scope">{{ column.label }}</slot>
+      <component v-if="column.headerRender" :is="column.headerRender" v-bind="scope" />
+      <slot
+        v-else-if="$slots[`${lastProp(column.prop || '')}-header`]"
+        :name="`${lastProp(column.prop || '')}-header`"
+        v-bind="scope"
+      />
+      <template v-else>{{ column.label }}</template>
 
       <el-tooltip v-if="isString(column.tooltip)" placement="top" effect="dark" :content="column.tooltip">
         <slot name="tooltip-icon">
@@ -278,6 +283,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           )
         "
       />
+
       <component
         v-else-if="column.renderHTML"
         :is="
@@ -288,6 +294,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           )
         "
       />
+
       <slot
         v-else-if="$slots[lastProp(column.prop!)]"
         :name="lastProp(column.prop!)"

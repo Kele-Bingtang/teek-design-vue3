@@ -1,19 +1,11 @@
 <script setup lang="ts">
 import type { TableInstance } from "element-plus";
-import type { ProTableHeadNamespace, TableColumn } from "../types";
+import type { TableHeadColumnSettingEmits, TableHeadColumnSettingProps } from "../types";
 import { ElTable, ElTableColumn, ElDrawer, ElSwitch } from "element-plus";
 import { useNamespace } from "@/composables";
 import TableColumnDragSort from "../table-column/table-column-drag-sort.vue";
 
 defineOptions({ name: "TableHeadColumnSetting" });
-
-const ns = useNamespace("pro-table-head-column-setting");
-
-export interface TableHeadColumnSettingProps {
-  columns?: TableColumn[];
-  columnSetting?: ProTableHeadNamespace.Props["columnSetting"];
-  emptyText?: string;
-}
 
 withDefaults(defineProps<TableHeadColumnSettingProps>(), {
   columns: () => [],
@@ -21,9 +13,9 @@ withDefaults(defineProps<TableHeadColumnSettingProps>(), {
   emptyText: "暂无可配置列",
 });
 
-const emits = defineEmits<{
-  dragSortEnd: [newIndex: number, oldIndex: number];
-}>();
+const emits = defineEmits<TableHeadColumnSettingEmits>();
+
+const ns = useNamespace("pro-table-head-column-setting");
 
 const visible = defineModel({ default: false });
 

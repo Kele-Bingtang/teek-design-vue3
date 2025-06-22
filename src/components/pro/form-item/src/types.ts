@@ -139,6 +139,8 @@ export interface FormItemColumnProps {
   label?: MaybeRefOrGetter<string | number>;
   /**
    * 是否显示 label
+   *
+   * @default true
    */
   showLabel?: MaybeRefOrGetter<boolean>;
   /**
@@ -193,12 +195,15 @@ export interface FormItemColumnProps {
     }) => RenderTypes;
   };
   /**
-   * 字典数据
+   * 字典枚举数据
    */
   options?:
     | MaybeRef<ElOption[]>
     | Promise<ElOption[]>
-    | ((model: Recordable, optionsMap: Map<string, Recordable>) => ElOption[] | Promise<ElOption[]> | Promise<unknown>);
+    | ((
+        model: Recordable,
+        optionsMap?: Map<string, Recordable>
+      ) => ElOption[] | Promise<ElOption[]> | Promise<unknown>);
   /**
    * 字典指定 label && value && children 的 key 值
    *
@@ -246,6 +251,9 @@ export interface FormItemColumnProps {
 }
 
 export interface ProFormItemEmits {
+  /**
+   * 表单值改变事件
+   */
   change: [model: Recordable, column: FormItemColumnProps];
 }
 

@@ -18,10 +18,8 @@
     gap: 12px;
     align-items: center;
 
-    > {
-      @include el-joins(button) {
-        margin-left: 0;
-      }
+    @include el-joins(button) {
+      margin-left: 0;
     }
 
     @include el-joins(icon) {

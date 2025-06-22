@@ -3,6 +3,6 @@ import index from "./src/index.vue";
 
 export type * from "./src/types";
 
-export const ProFormDrawer = useInstall(index);
+export const ProDescriptions = useInstall(index);
 
 export default index;

@@ -8,6 +8,7 @@ export * from "./pro/dialog";
 export * from "./pro/drawer";
 export * from "./pro/grid";
 export * from "./pro/image-viewer";
+export * from "./pro/descriptions";
 export * from "./pro/form";
 export * from "./pro/form-item";
 export * from "./pro/form-group";

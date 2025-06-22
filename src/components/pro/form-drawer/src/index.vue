@@ -1,24 +1,11 @@
 <script setup lang="ts">
-import type { DrawerProps } from "element-plus";
-import type { ProFormInstance, ProFormNamespace } from "@/components/pro/form";
-import type { ProDrawerProps } from "@/components/pro/drawer";
+import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
+import type { ProFormDrawerEmits, ProFormDrawerProps } from "./types";
 import { ProForm } from "@/components/pro/form";
 import { ProDrawer } from "@/components/pro/drawer";
 
 defineOptions({ name: "ProFormDrawer" });
-
-export interface ProFormDrawerProps {
-  visible?: boolean;
-  drawer?: ProDrawerProps & Partial<DrawerProps>;
-  form?: ProFormNamespace.Props & ProFormNamespace.OnEmits;
-}
-
-export interface ProFormDrawerEmits {
-  change: [model: Recordable, column: FormItemColumnProps];
-  confirm: [model: Recordable];
-  close: [];
-}
 
 withDefaults(defineProps<ProFormDrawerProps>(), {
   drawer: () => ({}),
@@ -43,7 +30,7 @@ const handleConfirm = async () => {
 
 const handleCancel = () => {
   close();
-  emits("close");
+  emits("cancel");
 };
 
 const open = () => (drawerVisible.value = true);

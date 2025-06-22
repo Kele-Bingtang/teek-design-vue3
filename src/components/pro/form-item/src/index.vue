@@ -3,16 +3,10 @@ import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "./types";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isArray, isObject, isString } from "@/utils";
+import { addUnit, isObject, isString } from "@/utils";
 import { componentMap, ComponentNameEnum } from "./helper";
-import {
-  formatValue,
-  getProp,
-  hyphenToCamelCase,
-  setProp,
-  filterOptions,
-  filterOptionsValue,
-} from "@/components/pro/helper";
+import { getProp, hyphenToCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
+import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";
 import Select from "./components/select.vue";
@@ -154,22 +148,20 @@ function useFormItemInitProps() {
 function useFormItemOptions() {
   const enums = ref<Recordable[]>([]);
 
-  const initOptions = async () => {
+  const { initOptions } = useOptions();
+
+  const init = async () => {
     const { options, optionField } = props;
 
-    if (!options || (isArray(options) && !options.length)) return [];
+    const value = await initOptions(options, [model.value]);
 
-    let value = await formatValue<FormItemColumnProps["options"]>(options, [model.value]);
-    if (!value) return [];
-
-    // 适配接口返回 data
-    value = value?.data || value;
-
+    // el 为 select-v2 需单独处理
     if (formEl.value === ComponentNameEnum.EL_SELECT_V2) {
-      // el 为 select-v2 需单独处理
-      value = value.map((item: Recordable) => {
-        return { ...item, label: item[optionField.label!], value: item[optionField.value!] };
-      });
+      return value.map((item: Recordable) => ({
+        ...item,
+        label: item[optionField.label!],
+        value: item[optionField.value!],
+      }));
     }
 
     return value;
@@ -177,7 +169,7 @@ function useFormItemOptions() {
 
   watch(
     () => props.options,
-    async () => (enums.value = await initOptions()),
+    async () => (enums.value = await init()),
     { immediate: true }
   );
 
@@ -206,11 +198,12 @@ defineExpose(expose);
     :label-width="showLabelValue ? formItemPropsValue?.labelWidth : '0'"
   >
     <template v-if="editableValue && showLabelValue" #label="{ label }">
+      <!-- 自定义 label（h、JSX）渲染 -->
+      <component v-if="renderLabel" :is="renderLabel(label, model, slotParams)" />
+
       <!-- 自定义 label 插槽 -->
-      <slot :name="`${prop}-label`" v-bind="slotParams">
-        <!-- 自定义 label（h、JSX）渲染 -->
-        <component v-if="renderLabel" :is="renderLabel(label, model, slotParams)" />
-        <span v-else-if="label">{{ label }}</span>
+      <slot v-else :name="`${prop}-label`" v-bind="slotParams">
+        <span v-if="label">{{ label }}</span>
       </slot>
 
       <el-tooltip v-if="isString(tooltip)" placement="top" effect="dark" :content="tooltip">
@@ -233,13 +226,14 @@ defineExpose(expose);
     </template>
 
     <template v-if="editableValue">
+      <!-- 自定义表单组件（h、JSX）渲染-->
+      <component v-if="renderEl" :is="renderEl(model, slotParams)" />
       <!-- 自定义表单组件插槽 -->
-      <slot :name="`${prop}-el`" v-bind="slotParams">
-        <!-- 自定义表单组件（h、JSX）渲染-->
-        <component v-if="renderEl" :is="renderEl(model, slotParams)" />
+      <slot v-else-if="$slots[`${prop}-el`]" :name="`${prop}-el`" v-bind="slotParams" />
 
+      <template v-else>
         <Tree
-          v-else-if="formEl === ComponentNameEnum.EL_TREE"
+          v-if="formEl === ComponentNameEnum.EL_TREE"
           :data="enums"
           v-model="elModel"
           v-bind="elPropsValue"
@@ -292,7 +286,7 @@ defineExpose(expose);
             <component :is="slot" v-bind="{ ...slotParams, ...data }" />
           </template>
         </component>
-      </slot>
+      </template>
     </template>
 
     <span v-else>

@@ -1,4 +1,4 @@
-import type { FormColumn, ProFormNamespace } from "@/components/pro/form/src/types";
+import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
 import type { CardProps } from "element-plus";
 import type ProFormGroup from "./index.vue";
 
@@ -39,7 +39,10 @@ export interface ProFormGroupProps extends Omit<ProFormNamespace.Props, "columns
 }
 
 export type ProFormGroupEmits = Omit<ProFormNamespace.Emits, "register"> & {
-  register: [proFormGroupInstance: any]; // 注册 ProFormGroup 组件实例
+  /**
+   * 注册 ProFormGroup 组件实例
+   */
+  register: [proFormGroupInstance: any];
 };
 
 export type ProFormGroupOnEmits = keyOnPrefix<ProFormGroupEmits>;

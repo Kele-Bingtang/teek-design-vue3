@@ -1,5 +1,5 @@
 import type { ElOption, FormItemColumnProps } from "./form-item";
-import { isFunction } from "@/utils";
+import { isArray, isFunction } from "@/utils";
 import { formatValue } from "./helper";
 
 /**
@@ -18,7 +18,7 @@ export const useOptions = () => {
    * 初始化枚举字典数据
    */
   const initOptionsMap = async (options: FormItemColumnProps["options"], prop: string) => {
-    if (!options) return;
+    if (!options || (isArray(options) && !options.length)) return;
 
     const optionsMapConst = optionsMap.value;
 
@@ -29,10 +29,18 @@ export const useOptions = () => {
     optionsMapConst.set(prop, []);
 
     // 处理 options 并存储到 optionsMap
-    const value = await formatValue<FormItemColumnProps["options"]>(options, [optionsMapConst, prop], false);
-
-    optionsMapConst.set(prop, (value as any)?.data || value);
+    const value = await initOptions(options, [optionsMapConst, prop], false);
+    optionsMapConst.set(prop, value);
   };
 
-  return { optionsMap, initOptionsMap };
+  const initOptions = async (options: FormItemColumnProps["options"], params: unknown[] = [], processRef = true) => {
+    if (!options || (isArray(options) && !options.length)) return [];
+
+    const value = await formatValue<FormItemColumnProps["options"]>(options, params, processRef);
+
+    // 适配接口返回 data
+    return value?.data || value || [];
+  };
+
+  return { optionsMap, initOptionsMap, initOptions };
 };

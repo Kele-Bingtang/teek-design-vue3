@@ -1,5 +1,5 @@
 import type { ColProps, FormInstance, FormItemProp, FormProps, FormValidateCallback, RowProps } from "element-plus";
-import type { FormItemColumnProps, ProFormItemEmits } from "@/components/pro/form-item/src/types";
+import type { FormItemColumnProps, ProFormItemEmits } from "@/components/pro/form-item";
 import type ProForm from "./index.vue";
 import type ProFormMain from "./form-main.vue";
 
@@ -7,6 +7,9 @@ export type ElFormProps = Partial<FormProps>;
 export type ElRowProps = Partial<RowProps>;
 export type ElColProps = Partial<ColProps>;
 
+/**
+ * ProForm 组件的命名空间类型
+ */
 export namespace ProFormNamespace {
   export interface Props extends FormMainNamespace.Props {
     /**
@@ -64,17 +67,37 @@ export namespace ProFormNamespace {
   }
 
   export interface Emits extends ProFormItemEmits {
-    register: [proFormInstance: any, elFormInstance: FormInstance | null]; // 注册 ProForm 组件实例和 elForm 实例
-    validate: [prop: FormItemProp, isValid: boolean, message: string]; // ElForm 自带的事件
-    submit: [model: Recordable]; // 提交按钮事件
-    submitError: [invalidFields: Parameters<FormValidateCallback>[1]]; // 表单提交后校验失败事件
-    reset: [model: Recordable]; // 重置按钮事件
+    /**
+     * 注册 ProForm 组件实例和 elForm 实例
+     */
+    register: [proFormInstance: any, elFormInstance: FormInstance | null];
+    /**
+     * ElForm 自带的事件
+     */
+    validate: [prop: FormItemProp, isValid: boolean, message: string];
+    /**
+     * 提交按钮事件
+     */
+    submit: [model: Recordable];
+    /**
+     * 表单提交后校验失败事件
+     */
+    submitError: [invalidFields: Parameters<FormValidateCallback>[1]];
+    /**
+     * 重置按钮事件
+     */
+    reset: [model: Recordable];
   }
 
-  // 转为 onXxx: (xxx) => void
+  /**
+   * 转为 onXxx: (xxx) => void
+   */
   export type OnEmits = Partial<keyOnPrefix<Emits>>;
 }
 
+/**
+ * FormMain 组件的命名空间类型
+ */
 export namespace FormMainNamespace {
   export interface Props {
     /**
@@ -126,7 +149,10 @@ export namespace FormMainNamespace {
   }
 
   export interface Emits extends ProFormItemEmits {
-    register: [proFormRef: any, elFormRef: FormInstance | null]; // 注册 ProForm 组件实例和 elForm 实例
+    /**
+     * 注册 ProForm 组件实例和 elForm 实例
+     */
+    register: [proFormRef: any, elFormRef: FormInstance | null];
   }
 }
 
@@ -160,6 +186,7 @@ export interface FormColumn extends FormItemColumnProps {
   destroy?: MaybeRef<boolean> | ((model: Recordable) => MaybeRef<boolean>);
   /**
    * 是否隐藏表单，true 隐藏，false 不隐藏，类似于 v-show
+   *
    * @default false
    */
   hidden?: MaybeRef<boolean> | ((model: Recordable) => MaybeRef<boolean>);

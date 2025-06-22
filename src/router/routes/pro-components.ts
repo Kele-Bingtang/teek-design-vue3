@@ -183,6 +183,24 @@ const proComponents: RouterConfigRaw = {
       ],
     },
     {
+      path: "/pro-descriptions",
+      name: "ProDescriptions",
+      meta: {
+        notClickBread: true,
+        title: "超级描述",
+        icon: Box,
+        alwaysShowRoot: true,
+      },
+      children: [
+        {
+          path: "simple",
+          name: "SimpleProDescriptions",
+          component: () => import("@/views/pro-components/pro-descriptions/simple/index.vue"),
+          meta: { title: () => "简单 ProDescriptions", icon: StarFilled },
+        },
+      ],
+    },
+    {
       path: "/pro-steps",
       name: "ProSteps",
       meta: {

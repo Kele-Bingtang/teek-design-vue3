@@ -13,14 +13,14 @@ import type {
   UseSelectState,
 } from "@/components/pro/table";
 import type { PageColumn, ProPageEmits, ProPageProps } from "./types";
-import type { PageInfo } from "../../pagination";
+import type { PageInfo } from "@/components/pro/pagination";
 import { Search } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { isEmpty, isFunction } from "@/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
-import { filterEmpty } from "../../helper";
+import { filterEmpty } from "@/components/pro/helper";
 
 defineOptions({ name: "ProPage" });
 
