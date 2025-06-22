@@ -189,7 +189,6 @@ const proComponents: RouterConfigRaw = {
         notClickBread: true,
         title: "超级描述",
         icon: Box,
-        alwaysShowRoot: true,
       },
       children: [
         {
@@ -197,6 +196,12 @@ const proComponents: RouterConfigRaw = {
           name: "SimpleProDescriptions",
           component: () => import("@/views/pro-components/pro-descriptions/simple/index.vue"),
           meta: { title: () => "简单 ProDescriptions", icon: StarFilled },
+        },
+        {
+          path: "edit",
+          name: "EditProDescriptions",
+          component: () => import("@/views/pro-components/pro-descriptions/edit/index.vue"),
+          meta: { title: () => "编辑 ProDescriptions", icon: StarFilled },
         },
       ],
     },

@@ -31,7 +31,7 @@ const dialogHeight = ref(addUnit(props.height));
 const isFullscreen = ref(false);
 const elDialogInstance = useTemplateRef<DialogProps>("elDialogInstance");
 
-const style = computed(() => ({
+const footerStyle = computed(() => ({
   justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
 }));
 
@@ -106,7 +106,7 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
     </el-scrollbar>
 
     <template v-if="showFooter" #footer>
-      <div :class="ns.e('footer')" :style="style">
+      <div :class="ns.e('footer')" :style="footerStyle">
         <slot name="footer" v-bind="{ handleConfirm, handleCancel }">
           <el-button @click="handleCancel()">{{ cancelText }}</el-button>
           <el-button type="primary" :loading="confirmLoading" @click="handleConfirm()">{{ confirmText }}</el-button>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { BreakPoint, GridInstance } from "@/components/pro/grid";
+import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
 import type { ProSearchColumnProps, ProSearchEmits, ProSearchProps } from "./types";
 import { computed, onMounted } from "vue";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
@@ -51,10 +52,7 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
-const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useSearchApi(
-  model,
-  computed(() => finalProps.value.columns)
-);
+const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useSearchApi(model, finalProps);
 
 const {
   proFormInstance,
@@ -157,6 +155,10 @@ const reset = async () => {
   emits("reset", finalProps.value.removeNoValue ? filterEmpty(model.value) : model.value);
 };
 
+const handleChange = (value: unknown, model: ModelBaseValueType, column: FormItemColumnProps) => {
+  emits("change", value, model as Recordable, column);
+};
+
 /**
  * 折叠或展开搜索项
  *
@@ -218,6 +220,7 @@ defineExpose(defaultExpose);
               v-bind="column"
               v-show="!isHidden(column)"
               :options="optionsMap.get(column.optionsProp || column.prop)"
+              @change="handleChange"
             >
               <template v-for="slot in Object.keys($slots)" #[slot]="scope">
                 <slot :name="slot" v-bind="scope" />

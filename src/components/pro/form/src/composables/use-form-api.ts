@@ -2,7 +2,7 @@ import type { FormColumn, ProFormNamespace } from "../types";
 import { isString } from "@/utils";
 import { setProp } from "@/components/pro/helper";
 
-export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[]> = []) => {
+export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {
   const mergeProps = ref<ProFormNamespace.Props>({});
 
   /**
@@ -29,8 +29,9 @@ export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[
    * @param columnSet 设置内容
    */
   const setColumn = (columnSet: { prop: string; field: string; value: unknown }[]) => {
-    const columnsValue = unref(columns);
-    for (const v of columnsValue) {
+    const { columns } = columnsProps.value;
+
+    for (const v of columns) {
       for (const item of columnSet) {
         if (v.prop === item.prop) {
           setProp(v, item.field, item.value);
@@ -51,15 +52,15 @@ export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[
     propOrIndex?: FormColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
-    const columnsValue = unref(columns);
+    const { columns } = columnsProps.value;
 
     if (isString(propOrIndex)) {
-      return columnsValue.forEach((s, i) => {
+      return columns.forEach((s, i) => {
         if (s.prop === propOrIndex) position === "after" ? column.splice(i + 1, 0, s) : column.splice(i, 0, s);
       });
     }
-    if (propOrIndex !== undefined) return columnsValue.splice(propOrIndex, 0, column);
-    return columnsValue.push(column);
+    if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
+    return columns.push(column);
   };
 
   /**
@@ -68,10 +69,10 @@ export const useFormApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[
    * @param prop prop
    */
   const delColumn = (prop: FormColumn["prop"]) => {
-    const columnsValue = unref(columns);
+    const { columns } = columnsProps.value;
 
-    const index = columnsValue.findIndex(item => item.prop === prop);
-    if (index > -1) columnsValue.splice(index, 1);
+    const index = columns.findIndex(item => item.prop === prop);
+    if (index > -1) columns.splice(index, 1);
   };
 
   return {

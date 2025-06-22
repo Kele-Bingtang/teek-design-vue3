@@ -22,7 +22,7 @@ export interface ProFormDialogEmits {
   /**
    * 表单值改变事件
    */
-  change: [model: Recordable, column: FormItemColumnProps];
+  change: [value: unknown, model: Recordable, column: FormItemColumnProps];
   /**
    * 确认按钮点击事件
    */

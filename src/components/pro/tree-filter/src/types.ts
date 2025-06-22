@@ -2,13 +2,21 @@ import TreeFilter from "./index.vue";
 
 export interface TreeFilterProps {
   /**
-   * 请求分类数据的 api
-   */
-  requestApi?: (data?: any) => Promise<any>;
-  /**
-   * 分类数据，如果有分类数据，则不会执行 api 请求
+   * 树形数据，如果传入该配置项且有数据，则不会执行 api 请求
    */
   data?: Record<string, any>[];
+  /**
+   * 请求数据的 api
+   */
+  requestApi?: (data?: Recordable) => Promise<any>;
+  /**
+   * 默认请求参数
+   */
+  defaultRequestParams?: Recordable;
+  /**
+   * 对请求成功的数据进行处理
+   */
+  transformData?: (data: Recordable[], result?: any) => any;
   /**
    * treeFilter 标题
    */

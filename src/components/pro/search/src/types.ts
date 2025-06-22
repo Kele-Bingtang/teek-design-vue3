@@ -1,6 +1,7 @@
 import type { FormItemProp } from "element-plus";
 import type { BreakPoint, GridItemProps } from "@/components/pro/grid";
 import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type ProSearch from "./index.vue";
 
 /**
@@ -141,6 +142,10 @@ export type ProSearchEmits = {
    * ElForm 验证触发事件
    */
   validate: [prop: FormItemProp, isValid: boolean, message: string];
+  /**
+   * 表单值改变事件
+   */
+  change: [value: unknown, model: Recordable, column: FormItemColumnProps];
 };
 
 /**

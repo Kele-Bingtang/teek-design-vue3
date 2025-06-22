@@ -61,6 +61,7 @@ export default {
     ComplexProPage: "复杂 ProPage",
     ProDescriptions: "超级描述",
     SimpleProDescriptions: "简单 ProDescriptions",
+    EditProDescriptions: "编辑 ProDescriptions",
     ProSteps: "超级步骤条",
     SimpleProSteps: "简单 ProSteps",
     ProTransfer: "超级穿梭框",

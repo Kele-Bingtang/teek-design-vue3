@@ -19,8 +19,8 @@ const dialogVisible = defineModel("visible", { default: false });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 
-const handleChange = (model: Recordable, column: FormItemColumnProps) => {
-  emits("change", model, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 const handleConfirm = async () => {

@@ -79,8 +79,8 @@ const handleReset = (model: Recordable) => {
   emits("reset", model);
 };
 
-const handleChange = (model: Recordable, column: FormItemColumnProps) => {
-  emits("change", model, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 onMounted(() => {

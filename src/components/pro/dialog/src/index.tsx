@@ -70,7 +70,7 @@ export const showDialog = (
   const isFullscreen = ref(dialogProps.fullscreen ?? false);
   const contentHeight = ref(addUnit(dialogProps.height ?? 400));
 
-  const style = computed(() => ({
+  const footerStyle = computed(() => ({
     justifyContent:
       dialogProps.footerAlign === "left" ? "flex-start" : dialogProps.footerAlign === "center" ? "center" : "flex-end",
   }));
@@ -153,7 +153,7 @@ export const showDialog = (
             if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
             if (dialogProps.showFooter === false) return;
             return (
-              <div class={ns.e("footer")} style={style.value}>
+              <div class={ns.e("footer")} style={footerStyle.value}>
                 <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
                 <ElButton
                   type="primary"

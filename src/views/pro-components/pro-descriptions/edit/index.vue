@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import type { DescriptionColumn } from "@/components";
 import { ref } from "vue";
-import { ProDescriptions } from "@/components";
+import { ProDescriptions, setProp } from "@/components";
+
+const descriptionsData = ref<Recordable>({});
+const model = ref({});
 
 const DataServe = {
   getList: async () => {
@@ -47,23 +50,57 @@ const columns: DescriptionColumn[] = [
       { label: "解决中", value: "2", color: "yellow" },
       { label: "失败", value: "3", color: "red" },
     ],
+    form: { el: "el-select" },
   },
   { label: "标签", width: 120, prop: "tag" },
-  { label: "执行进度", width: 200, prop: "progress" },
-  { label: "代码块", width: 250, prop: "code" },
+  { label: "执行进度", width: 200, prop: "progress", form: { formItemProps: { required: true } } },
+  {
+    label: "代码块",
+    span: editable => (editable ? 2 : 1),
+    labelWidth: 50,
+    prop: "code",
+  },
   { label: "评分", width: 200, prop: "rate" },
   { label: "开关", width: 100, prop: "switch" },
   { label: "时间", width: 190, prop: "time" },
 ];
-const descriptionsData = ref<Recordable>({});
+
 const getList = async () => {
   const { data } = await DataServe.getList();
   descriptionsData.value = data || {};
 };
 
 getList();
+
+const handleChange = (value: unknown, prop: string) => {
+  setProp(descriptionsData.value, prop, value);
+};
 </script>
 
 <template>
-  <ProDescriptions title="基础使用" :column="3" :columns :data="descriptionsData" border card />
+  <ProDescriptions
+    v-model="model"
+    :data="descriptionsData"
+    title="传入数据 & 编辑时需要手动通过 change 事件更新描述列表数据"
+    :column="3"
+    :columns
+    border
+    card
+    edit-button
+    @change="handleChange"
+  />
+
+  <ProDescriptions
+    v-model="model"
+    :request-api="DataServe.getList"
+    title="传入请求函数 & 编辑时内部自动更新描述列表数据"
+    :column="3"
+    :columns
+    border
+    card
+    edit-button
+    @change="handleChange"
+  />
+
+  {{ model }}
 </template>

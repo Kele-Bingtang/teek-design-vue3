@@ -71,6 +71,7 @@ declare module 'vue' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
     ProDescriptionsSrc: typeof import('./../components/pro/descriptions/src/index.vue')['default']
+    ProDescriptionsSrcEdit: typeof import('./../components/pro/descriptions/src/edit.vue')['default']
     ProDialogSrc: typeof import('./../components/pro/dialog/src/index.vue')['default']
     ProDrawerSrc: typeof import('./../components/pro/drawer/src/index.vue')['default']
     ProFormDialogSrc: typeof import('./../components/pro/form-dialog/src/index.vue')['default']

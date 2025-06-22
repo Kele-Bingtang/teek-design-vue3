@@ -66,7 +66,7 @@ export namespace ProFormNamespace {
     preventNativeSubmit?: boolean;
   }
 
-  export interface Emits extends ProFormItemEmits {
+  export interface Emits extends FormMainNamespace.Emits {
     /**
      * 注册 ProForm 组件实例和 elForm 实例
      */
@@ -148,11 +148,15 @@ export namespace FormMainNamespace {
     width?: FormItemColumnProps["width"];
   }
 
-  export interface Emits extends ProFormItemEmits {
+  export interface Emits extends Omit<ProFormItemEmits, "change"> {
     /**
      * 注册 ProForm 组件实例和 elForm 实例
      */
     register: [proFormRef: any, elFormRef: FormInstance | null];
+    /**
+     * 表单值改变事件
+     */
+    change: [model: unknown, model: Recordable, column: FormItemColumnProps];
   }
 }
 

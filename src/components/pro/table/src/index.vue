@@ -12,7 +12,7 @@ import type {
   TableRow,
 } from "./types";
 import { defaultPageInfo } from "@/components/pro/pagination";
-import { filterEmpty } from "@/components/pro/helper";
+import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { useTableApi, useTableState, type UseSelectState } from "./composables";
 import { Environment, TableSizeEnum } from "./helper";
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   requestImmediate: true,
   beforeSearch: undefined,
   requestError: undefined,
-  dataCallback: undefined,
+  transformData: undefined,
   hideHead: false,
   card: false,
   rowStyle: () => ({}),
@@ -89,7 +89,7 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
-const { mergeProps, setProps, setColumn, addColumn, delColumn } = useTableApi(computed(() => finalProps.value.columns));
+const { mergeProps, setProps, setColumn, addColumn, delColumn } = useTableApi(finalProps);
 
 const tableMainProps = computed(() => {
   // 过滤掉为 undefined 的配置项
@@ -131,14 +131,15 @@ const { tableData, pageInfo, searchParams, searchInitParams, getTableList, searc
     finalProps.value.pageInfo,
     isServerPage,
     finalProps.value.beforeSearch,
-    finalProps.value.dataCallback,
+    finalProps.value.transformData,
     finalProps.value.requestError
   );
 
 // 表格数据，传来的 data 大于 api 获取的数据
 const finalTableData = computed(() => {
   const { data } = finalProps.value;
-  if (data?.length) return data;
+
+  if (data.length) return data;
   return tableData.value;
 });
 
@@ -270,8 +271,12 @@ function useTableEmits() {
   /**
    * 表单值发生改变事件
    */
-  const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"], scope: TableScope) => {
-    emits("formChange", fromValue, prop || "", scope);
+  const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"] = "", scope: TableScope) => {
+    const { data, requestApi } = props;
+    // 如果是请求方式获取数据，则自动更新值
+    if (!data.length && requestApi) setProp(tableData.value[scope.$index], prop, fromValue);
+
+    emits("formChange", fromValue, prop, scope);
   };
 
   /**

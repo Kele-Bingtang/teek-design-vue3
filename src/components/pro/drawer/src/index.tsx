@@ -60,7 +60,7 @@ export const showDrawer = (
 ) => {
   const isFullscreen = ref(false);
 
-  const style = computed(() => ({
+  const footerStyle = computed(() => ({
     justifyContent:
       drawerProps.footerAlign === "left" ? "flex-start" : drawerProps.footerAlign === "center" ? "center" : "flex-end",
   }));
@@ -113,7 +113,7 @@ export const showDrawer = (
             if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
             if (drawerProps.showFooter === false) return;
             return (
-              <div class={ns.e("footer")} style={style.value}>
+              <div class={ns.e("footer")} style={footerStyle.value}>
                 <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
                 <ElButton
                   type="primary"

@@ -2,7 +2,7 @@ import type { ProTableNamespace, TableColumn } from "../types";
 import { setProp } from "@/components/pro/helper";
 import { isString } from "@/utils";
 
-export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
+export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
   const mergeProps = ref<ProTableNamespace.Props>({});
 
   /**
@@ -21,8 +21,9 @@ export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
    * @param children 设置合并列（合并表头）
    */
   const setColumn = (columnSet: { prop: string; field: string; value: unknown }[], children?: TableColumn[]) => {
-    const columnsValue = unref(columns);
-    for (const column of children || columnsValue) {
+    const { columns = [] } = columnsProps.value;
+
+    for (const column of children || columns) {
       for (const item of columnSet) {
         if (column.prop === item.prop) setProp(column, item.field, item.value);
         else if (column.children?.length) setColumn(columnSet, column.children);
@@ -42,16 +43,17 @@ export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
     propOrIndex?: TableColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
-    const columnsValue = unref(columns);
+    const { columns = [] } = columnsProps.value;
+
     if (isString(propOrIndex)) {
-      return columnsValue.forEach((column, i) => {
+      return columns.forEach((column, i) => {
         if (column.prop === propOrIndex) {
-          position === "after" ? columnsValue.splice(i + 1, 0, column) : columnsValue.splice(i, 0, column);
+          position === "after" ? columns.splice(i + 1, 0, column) : columns.splice(i, 0, column);
         }
       });
     }
-    if (propOrIndex !== undefined) return columnsValue.splice(propOrIndex, 0, column);
-    return columnsValue.push(column);
+    if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
+    return columns.push(column);
   };
 
   /**
@@ -60,9 +62,10 @@ export const useTableApi = (columns: MaybeRef<TableColumn[]> = []) => {
    * @param prop prop
    */
   const delColumn = (prop: TableColumn["prop"]) => {
-    const columnsValue = unref(columns);
-    const index = columnsValue.findIndex(item => item.prop === prop);
-    if (index > -1) columnsValue.splice(index, 1);
+    const { columns = [] } = columnsProps.value;
+    const index = columns.findIndex(item => item.prop === prop);
+
+    if (index > -1) columns.splice(index, 1);
   };
 
   return { mergeProps, setProps, setColumn, addColumn, delColumn };

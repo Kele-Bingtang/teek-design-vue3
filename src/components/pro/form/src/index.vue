@@ -78,10 +78,7 @@ const formMainProps = computed(() => {
   });
 });
 
-const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useFormApi(
-  model,
-  computed(() => finalProps.value.columns)
-);
+const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useFormApi(model, finalProps);
 const { submitForm, resetForm } = useFormFooter();
 const { proFormMainInstance, getOptionsMap, destroyOrInit, getElFormItemInstance, getElInstance } = useProFormMainFn();
 
@@ -118,8 +115,8 @@ const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): 
   emits("validate", prop, isValid, message);
 };
 
-const handleChange = (model1: Recordable, column: FormItemColumnProps) => {
-  emits("change", model1, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 onMounted(() => {

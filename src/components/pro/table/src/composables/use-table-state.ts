@@ -15,15 +15,13 @@ export interface UseTableStateData {
 /**
  * table 页面操作方法封装
  *
- * @param api 获取表格数据 api 方法 (必传)
- * @param defaultParams 获取数据初始化参数 (非必传，默认为{})
- * @param openPage 是否有分页 (非必传，默认为true)
- * @param pageConfig 分页对象
+ * @param api 获取表格数据 api 方法
+ * @param defaultRequestParams 获取数据初始化参数
+ * @param pageInfo 分页信息
+ * @param isServerPage 是否为后端分页
  * @param beforeSearch 查询前的回调函数
- * @param dataCallBack 对后台返回的数据进行处理的方法 (非必传)
+ * @param transformData 对后台返回的数据进行处理的方法
  * @param requestError 请求出错后的回调函数
- * @param columns 表格的列配置项
- * @param enumCallBack 字典设置的回调函数，ProTable 内置函数
  */
 export const useTableState = (
   api?: (params: Recordable) => Promise<any>,
@@ -31,7 +29,7 @@ export const useTableState = (
   pageInfo?: ProTableMainNamespace.Props["pageInfo"],
   isServerPage?: MaybeRef<boolean>,
   beforeSearch?: (searchParam: Recordable) => boolean | Recordable,
-  dataCallBack?: (data: Recordable[], result: Recordable | Recordable[]) => Recordable[] | undefined,
+  transformData?: (data: Recordable[], result: Recordable | Recordable[]) => Recordable[] | undefined,
   requestError?: (error: unknown) => void
 ) => {
   const state = reactive<UseTableStateData>({
@@ -75,10 +73,10 @@ export const useTableState = (
 
       // 请求数据
       const result = await api(searchParams);
-      // 兼容 { code: xx, data/list: xx, message: xxx, ... } 等场景格式
+      // 兼容 { code: xx, data/list: xx, message: xxx, ... } 等常用数据格式
       let data = result?.data || result?.list || result?.data?.list || result;
 
-      data = dataCallBack?.(data, result) || data;
+      data = transformData?.(data, result) || data;
       if (data) state.tableData = data;
 
       // 如果服务器（后端）返回分页信息，则解构获取（如果你的接口返回的不是如下格式，则进行修改）

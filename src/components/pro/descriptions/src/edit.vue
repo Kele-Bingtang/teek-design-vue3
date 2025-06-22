@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import type { FormColumn, ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
-import type { TableEditProps, TableEditEmits } from "../types";
+import type { EditProps, EditEmits } from "./types";
 import { setProp } from "@/components/pro/helper";
 import ProForm from "@/components/pro/form";
 
-defineOptions({ name: "TableEdit" });
+defineOptions({ name: "DescriptionsEdit" });
 
-const props = withDefaults(defineProps<TableEditProps>(), {
+const props = withDefaults(defineProps<EditProps>(), {
   prop: "",
   value: undefined,
 });
 
-const emits = defineEmits<TableEditEmits>();
+const emits = defineEmits<EditEmits>();
 
-const model = ref<Recordable>({});
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 

@@ -109,8 +109,8 @@ const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Reco
 const formatTableColumn = (column: TableColumn) => {
   column.filter = toValue(column.filter);
   column.editable = toValue(column.editable);
-  column.hide = toValue(column.hide);
-  column.disabledHide = toValue(column.disabledHide);
+  column.hidden = toValue(column.hidden);
+  column.disabledHidden = toValue(column.disabledHidden);
   column.disabledFilter = toValue(column.disabledFilter);
   column.disabledSortable = toValue(column.disabledSortable);
   column.isFilterOptions = toValue(column.isFilterOptions);
@@ -126,7 +126,7 @@ const formatTableColumn = (column: TableColumn) => {
  * 格式化单元格值（如果存在字典枚举，则根据 value 找 label）
  */
 const formatValue = (row: TableRow, column: TableColumn) => {
-  return formatCellValue(getProp(row._label?.[column.prop!] ?? row, column.prop!));
+  return formatCellValue(getProp(row._label?.[column.prop || ""] ?? row, column.prop || ""));
 };
 
 /**
@@ -160,8 +160,8 @@ const handleFilterReset = () => {
 /**
  * 表单值发生改变事件
  */
-const handleChange = (model: unknown, scope: Recordable, column: TableColumn) => {
-  emits("formChange", model, column.prop || "", {
+const handleChange = (value: unknown, scope: Recordable, column: TableColumn) => {
+  emits("formChange", value, column.prop || "", {
     ...scope,
     rowIndex: scope.$index,
     column: { ...scope.column, column },
@@ -261,44 +261,44 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           editable === true || // 表格整体编辑
           column.editable || // 单列整体编辑
           scope.row._editable || // 单行整体编辑
-          scope.row._editableCol?.[column.prop!] || // 单元格编辑
-          getProp(scope.row_editableCol, column.prop!) // 多级 prop 单元格编辑
+          scope.row._editableCol?.[column.prop || ''] || // 单元格编辑
+          getProp(scope.row_editableCol, column.prop || '') // 多级 prop 单元格编辑
         "
-        :ref="(el: any) => registerProFormInstance(el, scope, column.prop!)"
+        :ref="(el: any) => registerProFormInstance(el, scope, column.prop || '')"
         v-bind="column.editProps"
-        :value="getProp(scope.row._label?.[column.prop!] ?? scope.row, column.prop!)"
-        :prop="column.editProps?.prop || column.prop!"
-        :options="column.editProps?.options || scope.row._options?.[column.prop!]"
+        :value="getProp(scope.row._label?.[column.prop || ''] ?? scope.row, column.prop || '')"
+        :prop="column.editProps?.prop || column.prop || ''"
+        :options="column.editProps?.options || scope.row._options?.[column.prop || '']"
         :option-field="column.editProps?.optionField || column.optionField"
-        @change="model => handleChange(model, scope, column)"
+        @change="value => handleChange(value, scope, column)"
       />
 
       <component
         v-else-if="column.render"
         :is="
           column.render(
-            scope.row[column.prop!],
+            getProp(scope.row, column.prop || ''),
             { ...scope, rowIndex: scope.$index },
-            scope.row._options?.[column.prop!]
+            scope.row._options?.[column.prop || '']
           )
         "
       />
 
-      <component
+      <span
         v-else-if="column.renderHTML"
-        :is="
+        v-html="
           column.renderHTML(
-            scope.row[column.prop!],
+            getProp(scope.row, column.prop || ''),
             { ...scope, rowIndex: scope.$index },
-            scope.row._options?.[column.prop!]
+            scope.row._options?.[column.prop || '']
           )
         "
       />
 
       <slot
-        v-else-if="$slots[lastProp(column.prop!)]"
-        :name="lastProp(column.prop!)"
-        v-bind="{ ...scope, options: scope.row._options?.[column.prop!] }"
+        v-else-if="$slots[lastProp(column.prop || '')]"
+        :name="lastProp(column.prop || '')"
+        v-bind="{ ...scope, options: scope.row._options?.[column.prop || ''] }"
       />
 
       <template v-else>

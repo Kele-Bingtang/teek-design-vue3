@@ -70,7 +70,7 @@ const settingColumns = computed(() => {
   return props.columns
     .filter(column => !hasSpecialColumn(column))
     .map(column => {
-      column.hide ??= false;
+      column.hidden ??= false;
       column.filterProps ??= {};
       return column;
     });

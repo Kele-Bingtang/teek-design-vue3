@@ -28,8 +28,8 @@ const currentIndex = computed(() => active.value - 1);
 
 watchEffect(() => (active.value = stepIndexModel.value));
 
-const handleChange = (model: Recordable, column: FormItemColumnProps) => {
-  emits("change", model, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 // 上一步

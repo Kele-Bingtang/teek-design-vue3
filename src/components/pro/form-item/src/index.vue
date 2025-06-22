@@ -70,7 +70,7 @@ const slotParams = computed(() => ({
   formItemProps: formItemPropsValue.value,
 }));
 
-watch(elModel, () => emits("change", elModel.value, slotParams.value));
+watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
 
 const childComponentMap: Record<string, { root: Component; child?: Component }> = {
   [ComponentNameEnum.EL_SELECT]: { root: componentMap.ElSelect, child: Select },

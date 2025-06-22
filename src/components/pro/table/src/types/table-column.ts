@@ -1,6 +1,6 @@
 import type { FormValidateCallback, FormValidationResult, TableColumnCtx } from "element-plus";
 import type { ProFormInstance } from "@/components/pro/form";
-import type { ElOption, FormItemColumnProps } from "@/components/pro/form-item";
+import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
 import type { TableColumnTypeEnum } from "../helper";
@@ -50,11 +50,11 @@ export type TableRow<T extends string | number | symbol = any> = {
   [key in T]: any;
 } & {
   /**
-   * 配置项（options 下拉枚举）
+   * options 字典枚举
    */
   _options: Recordable[];
   /**
-   * 配置项（option 下拉枚举）
+   * option 字典枚举
    */
   _option: Recordable;
   /**
@@ -117,13 +117,13 @@ export interface TableColumn<T = any>
    *
    * @default false
    */
-  hide?: MaybeRefOrGetter<boolean>;
+  hidden?: MaybeRefOrGetter<boolean>;
   /**
    * 列配置中是否禁用列隐藏选择
    *
    * @default false
    */
-  disabledHide?: MaybeRefOrGetter<boolean>;
+  disabledHidden?: MaybeRefOrGetter<boolean>;
   /**
    * 字典数据
    */
@@ -151,11 +151,11 @@ export interface TableColumn<T = any>
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (scope: TableScope<T>) => VNode;
+  headerRender?: (scope: TableScope<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */
-  render?: (value: unknown, scope: TableScope<T>, options: ElOption[]) => VNode | string;
+  render?: (value: unknown, scope: TableScope<T>, options: ElOption[]) => RenderTypes;
   /**
    * 自定义单元格内容渲染（返回 HTML），优先级低于 render，高于插槽
    */

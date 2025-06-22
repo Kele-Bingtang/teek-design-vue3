@@ -25,7 +25,7 @@ export interface ColumnSetting {
    *
    * @default false
    */
-  hideHide?: boolean;
+  hideHidden?: boolean;
   /**
    * 是否禁用排序显示
    *
@@ -43,7 +43,7 @@ export interface ColumnSetting {
    *
    * @default false
    */
-  disabledHide?: boolean;
+  disabledHidden?: boolean;
   /**
    * 是否禁用排序选择
    *

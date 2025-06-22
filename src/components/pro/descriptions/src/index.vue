@@ -1,67 +1,189 @@
 <script setup lang="ts">
+import type { ProFormInstance } from "@/components/pro/form";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp } from "./types";
 import { toValue } from "vue";
-import { filterOptions, filterOptionsValue, getProp } from "@/components/pro/helper";
+import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
-import { isArray } from "@/utils";
+import { isArray, isFunction } from "@/utils";
 import { useNamespace } from "@/composables";
+import DescriptionsEdit from "./edit.vue";
 
 defineOptions({ name: "ProDescriptions" });
 
 const props = withDefaults(defineProps<ProDescriptionsProp>(), {
   data: () => ({}),
+  requestApi: undefined,
+  defaultRequestParams: () => ({}),
   columns: () => [],
   descriptionsItemProps: () => ({}),
-  formProps: () => ({}),
   card: false,
+  editable: false,
+  formProps: () => ({}),
+  editButton: false,
+  editText: () => ["编辑", "退出编辑"],
+  showReset: true,
+  submitText: "提交",
+  resetText: "重置",
+  submitLoading: false,
+  footerAlign: "left",
+  footerStyle: () => ({}),
+  validate: true,
 });
 
 const emits = defineEmits<ProDescriptionsEmits>();
 
 const ns = useNamespace("pro-descriptions");
 
+const model = defineModel<Recordable>({ default: () => reactive({}) });
+
+const editable = ref(false);
+
+watchEffect(() => (editable.value = props.editable));
+
+const footerStyle = computed(() => ({
+  marginTop: "20px",
+  ...props.footerStyle,
+  display: "flex",
+  justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
+}));
+
+const { data: descriptionsData, isRequestGetData } = useDescriptionsDataInit();
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useDescriptionsInit();
+const { proFormInstances, registerProFormInstance, getElFormInstance } = useFormInstanceGet();
 
+const isEditable = computed(() => editable.value || availableColumns.value.some(column => column.editable));
+
+/**
+ * 描述列表列配置初始化
+ */
 function useDescriptionsInit() {
   let timer: ReturnType<typeof setTimeout> | null = null;
 
-  // 计算属性：过滤掉需要销毁的表单项
+  // 过滤掉需要隐藏的配置项
   const availableColumns = computed(() => props.columns.filter(item => !item.hidden) || []);
 
-  watch(availableColumns, columns => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
+  watch(
+    availableColumns,
+    columns => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
 
-    timer = setTimeout(async () => {
-      columns.forEach((column, index) => {
-        // 初始化枚举数据
-        initOptionsMap(column.options, column.prop || "");
-        // 设置配置项排序默认值
-        column && (column.order = column.order ?? index + 5);
-      });
+      timer = setTimeout(async () => {
+        columns.forEach((column, index) => {
+          // 初始化枚举数据
+          initOptionsMap(column.options, column.prop || "");
+          // 设置配置项排序默认值
+          column && (column.order = column.order ?? index + 5);
+        });
 
-      // 排序配置项
-      columns.sort((a, b) => a.order! - b.order!);
-    }, 10);
-  });
+        // 排序配置项
+        columns.sort((a, b) => a.order! - b.order!);
+      }, 10);
+    },
+    { immediate: true, deep: true }
+  );
 
   return { availableColumns };
 }
 
-const getValue = (column: DescriptionColumn) => {
-  const { data } = props;
-  const { prop = "", label, optionsProp, optionField, transformOption } = column;
+/**
+ * 描述列表数据初始化
+ */
+function useDescriptionsDataInit() {
+  const data = ref<Recordable>({});
+  const isRequestGetData = ref(false);
 
+  /**
+   * 描述列表数据初始化
+   */
+  const initDescriptionsData = async () => {
+    const { data, requestApi, defaultRequestParams, transformData } = props;
+
+    // 如果手动传入 data，则直接使用
+    if (data && Object.keys(data).length) return data;
+    // 如果传入请求函数，则请求获取数据
+    if (requestApi) {
+      const result = await requestApi(defaultRequestParams);
+      // 兼容常用数据格式
+      const data = result?.data || result || {};
+      isRequestGetData.value = true;
+
+      return transformData?.(data, result) || data;
+    }
+
+    return {};
+  };
+
+  watch(
+    () => props.data,
+    newValue => {
+      if (!isRequestGetData.value) data.value = newValue;
+    }
+  );
+
+  onMounted(async () => {
+    data.value = await initDescriptionsData();
+  });
+
+  return { data, isRequestGetData };
+}
+
+/**
+ * ProForm 组件涉及实例获取
+ */
+function useFormInstanceGet() {
+  const proFormInstances = ref<Record<string, ProFormInstance>>({});
+
+  /**
+   * 获取 ProFormItem 的实例
+   */
+  const registerProFormInstance = (el: InstanceType<typeof DescriptionsEdit>, prop: string) => {
+    if (!el) return;
+    setProp(proFormInstances.value, prop, el.proFormInstance);
+  };
+
+  const getElFormInstance = () => Object.values(proFormInstances.value);
+
+  return { proFormInstances, registerProFormInstance, getElFormInstance };
+}
+
+const formatColumn = (column: DescriptionColumn) => {
+  const { span, rowSpan, width, minWidth, labelWidth, ...rest } = column;
+
+  const callFn = <T,>(fn: (editable: boolean) => T) => {
+    return fn(editable.value ?? column.editable ?? false);
+  };
+
+  const spanValue = isFunction(span) ? callFn(span) : unref(span);
+  const rowSpanValue = isFunction(rowSpan) ? callFn(rowSpan) : unref(rowSpan);
+  const widthValue = isFunction(width) ? callFn(width) : unref(width);
+  const minWidthValue = isFunction(minWidth) ? callFn(minWidth) : unref(minWidth);
+  const labelWidthValue = isFunction(labelWidth) ? callFn(labelWidth) : unref(labelWidth);
+
+  return {
+    ...rest,
+    span: spanValue,
+    rowSpan: rowSpanValue,
+    width: widthValue,
+    minWidth: minWidthValue,
+    labelWidth: labelWidthValue,
+  };
+};
+
+const getValue = (column: DescriptionColumn) => {
+  const dataValue = descriptionsData.value;
+  const { prop = "", optionsProp, optionField, transformOption } = column;
   const options = unref(optionsMap.value.get(optionsProp || prop));
 
-  if (!options) return toValue(label);
+  if (!options) return getProp(dataValue, prop);
 
   const option = transformOption
-    ? transformOption(getProp(data, prop), options, data)
-    : filterOptions(getProp(data, prop), options, optionField);
+    ? transformOption(getProp(dataValue, prop), options, dataValue)
+    : filterOptions(getProp(dataValue, prop), options, optionField);
 
   const labelValue = filterOptionsValue(option, optionField?.label || "label");
 
@@ -69,50 +191,169 @@ const getValue = (column: DescriptionColumn) => {
   if (isArray(labelValue)) return labelValue.length ? labelValue.join(" / ") : "--";
   return labelValue ?? "--";
 };
+
+/**
+ * 打开编辑态
+ */
+const openEdited = () => (editable.value = true);
+/**
+ * 关闭编辑态
+ */
+const closeEdited = () => (editable.value = false);
+
+/**
+ * 表单值改变事件
+ */
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  const prop = column.prop || "";
+
+  // 如果是请求方式获取数据，则自动更新值
+  if (isRequestGetData.value) setProp(descriptionsData.value, prop, value);
+
+  emits("formChange", value, prop, model, column);
+};
+
+/**
+ * 编辑按钮点击事件
+ */
+const handleEdited = () => {
+  editable.value = !editable.value;
+
+  if (editable.value) emits("edited");
+  else emits("editedCancel");
+};
+
+/**
+ * 提交按钮点击事件
+ */
+const handleSubmit = async () => {
+  if (props.validate) {
+    await Promise.all(
+      getElFormInstance().map(async proFormInstance => {
+        await proFormInstance.submitForm();
+      })
+    );
+  }
+
+  emits("submit", model.value, closeEdited);
+};
+
+/**
+ * 重置按钮点击事件
+ */
+const handleReset = () => {
+  getElFormInstance().map(proFormInstance => proFormInstance.resetForm());
+  emits("reset", model.value, closeEdited);
+};
+
+defineExpose({
+  proFormInstances,
+
+  openEdited,
+  closeEdited,
+  getElFormInstance,
+});
 </script>
 
 <template>
-  <el-descriptions v-bind="$attrs" :class="[ns.b(), { 'tk-card': card }]">
-    <slot>
-      <el-descriptions-item
-        v-for="(column, index) in availableColumns"
-        :key="index"
-        v-bind="{ ...descriptionsItemProps, ...column, formProps: undefined }"
-        :label="toValue(column.label)"
-      >
-        <!-- 描述 label 插槽 -->
-        <template #label>
+  <div :class="[ns.b(), { 'tk-card': card }]">
+    <el-descriptions v-bind="$attrs">
+      <slot>
+        <el-descriptions-item
+          v-for="(column, index) in availableColumns"
+          :key="index"
+          v-bind="{ ...descriptionsItemProps, ...formatColumn(column), formProps: undefined }"
+          :label="toValue(column.label)"
+        >
+          <!-- 描述 label 插槽 -->
+          <template #label>
+            <component
+              v-if="column.renderLabel"
+              :is="column.renderLabel"
+              :label="toValue(column.label || '')"
+              :column
+              :data="descriptionsData"
+            />
+
+            <!-- 自定义插槽 -->
+            <slot :name="`${column.prop}-label`" :label="toValue(column.label)" :column :data="descriptionsData">
+              {{ toValue(column.label) }}
+            </slot>
+          </template>
+
+          <DescriptionsEdit
+            v-if="editable || column.editable"
+            v-model="model"
+            :ref="(el: any) => registerProFormInstance(el, column.prop || '')"
+            v-bind="column.form"
+            :value="getValue(column)"
+            :prop="column.prop || ''"
+            :options="optionsMap.get(column.prop || '')"
+            :option-field="column.optionField"
+            @change="handleChange"
+          />
+
+          <!-- 描述默认插槽 -->
           <component
-            v-if="column.renderLabel"
-            :is="column.renderLabel"
-            :label="toValue(column.label || '')"
+            v-else-if="column.render"
+            :is="column.render"
+            :value="getValue(column)"
             :column
-            :data
+            :data="descriptionsData"
+          />
+
+          <span
+            v-else-if="column.renderHTML"
+            v-html="
+              column.renderHTML({
+                value: getValue(column),
+                column,
+                data: descriptionsData,
+              })
+            "
           />
 
           <!-- 自定义插槽 -->
-          <slot :name="`${column.prop}-label`" :label="toValue(column.label)" :column :data>
-            {{ toValue(column.label) }}
-          </slot>
-        </template>
+          <slot
+            v-else-if="$slots[column.prop || '']"
+            :name="column.prop || ''"
+            :value="getValue(column)"
+            :column
+            :data="descriptionsData"
+          />
+          <!-- 默认值 -->
+          <template v-else>
+            {{ getValue(column) }}
+          </template>
+        </el-descriptions-item>
+      </slot>
 
-        <!-- 描述默认插槽 -->
-        <component :is="column.render" v-if="column.render" :value="getValue(column)" :column :data />
-        <!-- 自定义插槽 -->
-        <slot v-else-if="$slots[column.prop || '']" :name="column.prop || ''" :value="getValue(column)" :column :data />
-        <!-- 默认值 -->
-        <template v-else>
-          {{ getValue(column) }}
-        </template>
-      </el-descriptions-item>
-    </slot>
+      <template #title>
+        <slot name="title" />
+      </template>
 
-    <template #title>
-      <slot name="title" />
-    </template>
+      <template #extra>
+        <slot name="extra" />
 
-    <template #extra>
-      <slot name="extra" />
-    </template>
-  </el-descriptions>
+        <slot name="edit-button" v-bind="handleEdited">
+          <el-button v-if="editButton" type="primary" @click="handleEdited">
+            {{ editable ? editText[1] : editText[0] }}
+          </el-button>
+        </slot>
+
+        <slot name="edit-button-after" />
+      </template>
+    </el-descriptions>
+
+    <div v-if="isEditable" :style="footerStyle">
+      <slot name="footer" v-bind="{ handleSubmit, handleReset }">
+        <el-button v-if="showReset" @click="handleReset">
+          {{ resetText }}
+        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
+          {{ submitText }}
+        </el-button>
+      </slot>
+    </div>
+  </div>
 </template>

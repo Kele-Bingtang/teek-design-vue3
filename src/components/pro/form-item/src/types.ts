@@ -227,8 +227,8 @@ export interface FormItemColumnProps {
     | string
     | ({
         icon?: Component; // ElTooTip 绑定的元素图标
-        render?: () => VNode | string; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
-        contentRender?: () => VNode | string; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
+        render?: () => RenderTypes; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
+        contentRender?: () => RenderTypes; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
       } & Partial<ElTooltipProps>);
   /**
    * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 model 值是 1 导致无法匹配，可以设置为 getFormat: "string" 解决
@@ -254,7 +254,7 @@ export interface ProFormItemEmits {
   /**
    * 表单值改变事件
    */
-  change: [model: Recordable, column: FormItemColumnProps];
+  change: [model: unknown, model: ModelBaseValueType, column: FormItemColumnProps];
 }
 
 /**

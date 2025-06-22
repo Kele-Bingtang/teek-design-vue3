@@ -24,6 +24,9 @@ const columns: TableColumn[] = [
         { label: "女", value: 2 },
       ];
     },
+    editProps: {
+      el: "el-select",
+    },
   },
   {
     // 多级 prop

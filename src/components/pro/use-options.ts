@@ -36,10 +36,10 @@ export const useOptions = () => {
   const initOptions = async (options: FormItemColumnProps["options"], params: unknown[] = [], processRef = true) => {
     if (!options || (isArray(options) && !options.length)) return [];
 
-    const value = await formatValue<FormItemColumnProps["options"]>(options, params, processRef);
+    const result = await formatValue<FormItemColumnProps["options"]>(options, params, processRef);
 
-    // 适配接口返回 data
-    return value?.data || value || [];
+    // 兼容常用数据格式
+    return result?.data || result?.list || result?.data?.list || result || [];
   };
 
   return { optionsMap, initOptionsMap, initOptions };

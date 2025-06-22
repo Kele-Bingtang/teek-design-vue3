@@ -55,12 +55,12 @@ defineExpose({ open, close });
 
       <el-table-column prop="label" align="center" label="列名" />
 
-      <el-table-column v-if="!columnSetting.hideHide" v-slot="{ row }" prop="hide" align="center" label="显示">
+      <el-table-column v-if="!columnSetting.hideHidden" v-slot="{ row }" prop="hidden" align="center" label="显示">
         <el-switch
-          v-model="row.hide"
+          v-model="row.hidden"
           :active-value="false"
           :inactive-value="true"
-          :disabled="row.disabledHide ?? columnSetting.disabledHide"
+          :disabled="row.disabledHidden ?? columnSetting.disabledHidden"
         />
       </el-table-column>
 

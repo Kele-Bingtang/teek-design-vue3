@@ -132,7 +132,7 @@ function useTableInit() {
   let timer: ReturnType<typeof setTimeout> | null = null;
 
   // 过滤有效的列配置项
-  const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hide)));
+  const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hidden)));
 
   // 在表格的数据的每一个 row 配置 _options 相关字典信息（如果配置了 options）
   const initOptionsInData = async (data: Recordable[], columns: TableColumn[]) => {
@@ -189,6 +189,8 @@ function useTableInit() {
     },
     { deep: true, flush: "post" }
   );
+  // 数据发生变化，重新初始化字典枚举
+  // watch(props.data, newValue => initOptionsInData(newValue, availableColumns.value), { deep: true });
 
   return { availableColumns };
 }
@@ -411,28 +413,28 @@ function useTableFiler() {
  * 表格使用的多个组件实例获取
  */
 function useTableInstanceGet() {
-  const proFormItemInstances = ref<Record<string, ProFormInstance>[]>([]);
+  const proFormInstances = ref<Record<string, ProFormInstance>[]>([]);
 
   const registerProFormInstance = (index: number, prop: string, instance: ProFormInstance | null) => {
-    proFormItemInstances.value[index] ??= {};
-    setProp(proFormItemInstances.value[index], prop, instance);
+    proFormInstances.value[index] ??= {};
+    setProp(proFormInstances.value[index], prop, instance);
   };
 
   // 获取指定行的指定 prop 的 ElForm 实例
   const getElFormInstance = (index: number, prop?: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormItemInstances.value?.[index];
+    const proFormItemInstance = proFormInstances.value?.[index];
     return proFormItemInstance?.[prop!].elFormInstance;
   };
 
   // 获取指定行的指定 prop 的 ElFormItem 实例
   const getElFormItemInstance = (index: number, prop?: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormItemInstances.value?.[index];
+    const proFormItemInstance = proFormInstances.value?.[index];
     return proFormItemInstance?.[prop!].getElFormItemInstance(prop!);
   };
 
   // 获取指定行的指定 prop 的表单组件实例
   const getElInstance = (index: number, prop: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormItemInstances.value?.[index];
+    const proFormItemInstance = proFormInstances.value?.[index];
     return proFormItemInstance?.[prop!].getElInstance(prop!);
   };
 

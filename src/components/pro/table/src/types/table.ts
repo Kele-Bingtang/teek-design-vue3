@@ -50,16 +50,12 @@ export namespace ProTableNamespace {
     beforeSearch?: (searchParams: Recordable) => boolean | Recordable;
     /**
      * 请求失败回调
-     *
-     * @param error 错误信息
      */
     requestError?: (error: unknown) => void;
     /**
-     * 请求成功回调
-     *
-     * @param data 请求返回的数据
+     * 对请求成功的数据进行处理
      */
-    dataCallback?: (data: Recordable) => any;
+    transformData?: (data: Recordable[], result?: any) => any;
     /**
      * 是否隐藏表格顶部栏
      *
