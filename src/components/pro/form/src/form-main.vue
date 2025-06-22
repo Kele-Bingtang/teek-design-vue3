@@ -24,10 +24,7 @@ const props = withDefaults(defineProps<FormMainNamespace.Props>(), {
 
 const emits = defineEmits<FormMainNamespace.Emits>();
 
-const model = defineModel<Recordable>({ default: () => {} });
-const formModel = ref<Recordable>(model.value);
-
-watch(formModel, () => (model.value = formModel.value), { deep: true });
+const model = defineModel<Recordable>({ default: () => ({}) });
 
 const showLabelValue = computed(() => toValue(props.showLabel));
 const withValue = computed(() => addUnit(toValue(props.width)));
@@ -196,7 +193,7 @@ defineExpose(expose);
         <ProFormItem
           :ref="el => setProFormItemInstance(el, column.prop)"
           v-bind="column"
-          v-model="formModel"
+          v-model="model"
           :clearable="column.clearable ?? clearable"
           :width="column.width ?? withValue"
           :show-label="column.showLabel ?? showLabelValue"
@@ -214,7 +211,7 @@ defineExpose(expose);
       <ProFormItem
         :ref="el => setProFormItemInstance(el, column.prop)"
         v-bind="column"
-        v-model="formModel"
+        v-model="model"
         :clearable="column.clearable ?? clearable"
         :width="column.width ?? withValue"
         :show-label="column.showLabel ?? showLabelValue"

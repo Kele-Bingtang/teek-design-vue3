@@ -77,7 +77,6 @@ function usePageSearchInit() {
   const searchColumns = computed(() => {
     const filterColumns = flatColumns.value.filter(item => item.search?.el || item.search?.renderEl);
     const searchColumns: ProSearchColumnProps[] = [];
-    console.log(1);
 
     filterColumns.forEach(async column => {
       // Table 默认查询参数初始化

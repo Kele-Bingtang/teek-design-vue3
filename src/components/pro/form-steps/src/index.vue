@@ -78,6 +78,12 @@ defineExpose(expose);
     ref="proFormInstance"
     footer-align="left"
     v-bind="columns[currentIndex]?.form"
+    @update:model-value="
+      value => {
+        const column = columns[currentIndex];
+        if (column?.form) column.form.modelValue = value;
+      }
+    "
     :submit-text="active === columns.length ? submitText : nextText"
     :reset-text="preText"
     @submit="next"

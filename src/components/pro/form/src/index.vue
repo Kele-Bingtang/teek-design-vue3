@@ -118,8 +118,8 @@ const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): 
   emits("validate", prop, isValid, message);
 };
 
-const handleChange = (model: Recordable, column: FormItemColumnProps) => {
-  emits("change", model, column);
+const handleChange = (model1: Recordable, column: FormItemColumnProps) => {
+  emits("change", model1, column);
 };
 
 onMounted(() => {

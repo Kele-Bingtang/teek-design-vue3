@@ -89,9 +89,9 @@ const stepForm = ref<FormStepColumn[]>([
   },
 ]);
 
-const next = (actives: number, values: any) => {
+const next = (actives: number, currentModel: Recordable, allModel: Recordable) => {
   active.value = actives;
-  console.log(active, values, stepForm.value);
+  console.log(actives, currentModel, allModel, stepForm.value);
 };
 </script>
 
