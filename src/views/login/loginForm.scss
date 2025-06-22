@@ -3,10 +3,10 @@
 @use "@/styles/variables" as *;
 
 @include b(login-form) {
-  .#{$el-namespace}-form-item {
+  @include el-joins(form-item) {
     margin-bottom: 20px;
 
-    .#{$el-namespace}-button {
+    @include el-joins(button) {
       margin-left: 0;
     }
 
@@ -42,7 +42,7 @@
       justify-content: center;
     }
 
-    .#{$el-namespace}-button {
+    @include el-joins(button) {
       width: 185px;
 
       @media (max-width: $device-phone) {

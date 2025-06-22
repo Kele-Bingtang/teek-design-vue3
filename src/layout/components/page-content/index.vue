@@ -78,11 +78,14 @@ const isFixTabNav = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.#{$el-namespace}-main {
+@use "@/styles/mixins/bem" as *;
+
+@include el-joins(main) {
   padding: 0;
   background-color: var(--#{$admin-namespace}-bg-color);
 
   .page-content {
+    flex: 1;
     max-height: calc(
       100vh - var(--#{$admin-namespace}-layout-header-height) - var(--#{$admin-namespace}-layout-tab-height) - 18px
     );
@@ -93,12 +96,18 @@ const isFixTabNav = computed(() => {
 </style>
 
 <style lang="scss">
+@use "@/styles/mixins/bem" as *;
+
 /* 当前页面最大化 */
 .page-maximize {
-  .#{$admin-namespace}-columns-layout__aside,
-  .#{$el-namespace}-aside,
-  .#{$el-namespace}-header,
-  .#{$el-namespace}-footer,
+  @include joins(columns-layout__aside) {
+    display: none !important;
+  }
+
+  @include el-joins(aside, header, footer) {
+    display: none !important;
+  }
+
   .tab-nav {
     display: none !important;
   }

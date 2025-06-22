@@ -12,7 +12,7 @@
       font-size: 14px;
     }
 
-    .#{$el-namespace}-select {
+    @include el-joins(select) {
       width: 40%;
     }
   }

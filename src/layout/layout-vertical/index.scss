@@ -3,7 +3,7 @@
 
 @include b(vertical-layout) {
   /* 折叠按钮添加左间距 */
-  .#{$el-namespace}-header {
+  @include el-joins(header) {
     padding-left: 10px !important;
   }
 

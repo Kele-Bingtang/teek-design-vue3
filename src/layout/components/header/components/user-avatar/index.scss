@@ -64,7 +64,7 @@
     }
   }
 
-  .#{$el-namespace}-divider {
+  @include el-joins(divider) {
     margin: 10px 0;
   }
 }

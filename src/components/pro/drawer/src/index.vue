@@ -72,7 +72,7 @@ defineExpose({ elDrawerInstance, handleConfirm, handleCancel, open, close });
               :color="`var(--${ns.elNamespace}-color-info)`"
               hover
               :hover-color="`var(--${ns.elNamespace}-color-primary)`"
-              :style="{ cursor: 'pointer', userSelect: 'none' }"
+              :style="{ cursor: 'pointer', userSelect: 'none', marginRight: '5px' }"
             />
           </slot>
         </div>

@@ -6,6 +6,7 @@ import "@/styles/normalize.css"; // CSS Reset
 import "@/styles/element-plus/el-ui.scss";
 import "@/styles/element-plus/el-light.scss";
 import "@/styles/element-plus/el-dark.scss";
+import "@/styles/plugin.scss";
 import directives from "@/directives";
 import I18n from "@/languages";
 import { Icon, Auth, Role } from "@/components";

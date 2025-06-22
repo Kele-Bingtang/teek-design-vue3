@@ -206,28 +206,30 @@ const handleOperate = (message: MessageItem) => {
     border-right: 1px solid #e6e6e6;
 
     // #{$el-namespace} 默认为 el，如果组件迁移到其他项目，且项目架构与此项目不同，则请修改 #{$el-namespace} 为 el
-    .#{$el-namespace}-menu {
+    @include el-joins(menu) {
       width: auto;
 
-      .#{$el-namespace}-menu-item.is-active {
-        // background-color: #f0faff;
-        &::after {
-          position: absolute;
-          top: 0;
-          right: -1px;
-          bottom: 0;
-          display: block;
-          width: 2px;
-          content: "";
-          background: var(--#{$el-namespace}-color-primary);
-        }
+      @include el-joins(menu-item) {
+        &.is-active {
+          // background-color: #f0faff;
+          &::after {
+            position: absolute;
+            top: 0;
+            right: -1px;
+            bottom: 0;
+            display: block;
+            width: 2px;
+            content: "";
+            background: var(--#{$el-namespace}-color-primary);
+          }
 
-        .list-dot {
-          background-color: var(--#{$el-namespace}-color-primary) !important;
+          .list-dot {
+            background-color: var(--#{$el-namespace}-color-primary) !important;
+          }
         }
       }
 
-      .#{$el-namespace}-badge {
+      @include el-joins(badge) {
         margin-left: 10px;
         vertical-align: middle;
 
@@ -245,7 +247,7 @@ const handleOperate = (message: MessageItem) => {
   @include e(list) {
     width: 230px;
 
-    .#{$el-namespace}-menu-item {
+    @include el-joins(menu-item) {
       display: block;
       height: auto;
       padding: 14px 20px;

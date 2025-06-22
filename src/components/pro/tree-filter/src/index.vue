@@ -109,7 +109,7 @@ defineExpose({ treeData, treeAllData, initTreeData });
 </script>
 
 <template>
-  <div :class="[ns.b(), 'card']">
+  <div :class="[ns.b(), 'tk-card']">
     <slot name="title">
       <h4 :class="`${ns.e('title')} sle`" v-if="title">{{ title }}</h4>
     </slot>

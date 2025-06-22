@@ -719,11 +719,11 @@ const defaultPhrases = {
     bottom: 5px;
     z-index: 1999;
 
-    .#{$el-namespace}-button {
+    @include el-joins(button) {
       width: 24px;
       height: 24px;
 
-      .#{$el-namespace}-icon {
+      @include el-joins(icon) {
         font-size: 16px;
       }
     }

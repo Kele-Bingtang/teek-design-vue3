@@ -301,7 +301,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         margin-right: 0;
       }
 
-      .#{$el-namespace}-form {
+      @include el-joins(form) {
         width: 100%;
       }
     }

@@ -37,13 +37,13 @@ html.dark {
       rgb(13 13 13 / 8%) 0 6px 16px 0,
       rgb(13 13 13 / 5%) 0 9px 28px 8px !important;
 
-    & .#{$el-namespace}-message__content {
+    .#{$el-namespace}-message__content {
       color: #ffffff !important;
       pointer-events: all !important;
       background-image: initial !important;
     }
 
-    & .#{$el-namespace}-message__closeBtn {
+    .#{$el-namespace}-message__closeBtn {
       &:hover {
         color: var(--#{$el-namespace}-text-color-regular);
         background-color: var(--#{$admin-namespace}-gray-400);

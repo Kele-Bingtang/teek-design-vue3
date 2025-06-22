@@ -30,17 +30,17 @@
     padding-right: 17px !important;
   }
 
-  & .#{$el-namespace}-message__content {
+  .#{$el-namespace}-message__content {
     color: #000000d9 !important;
     pointer-events: all !important;
     background-image: initial !important;
   }
 
-  & .#{$el-namespace}-message__icon {
+  .#{$el-namespace}-message__icon {
     margin-right: 8px !important;
   }
 
-  & .#{$el-namespace}-message__closeBtn {
+  .#{$el-namespace}-message__closeBtn {
     right: 9px !important;
     outline: none;
     border-radius: 4px;

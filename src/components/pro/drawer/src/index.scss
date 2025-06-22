@@ -1,8 +1,6 @@
 @use "@/styles/mixins/bem" as *;
 @use "@/styles/mixins/namespace" as *;
 
-$prefix-class: #{$admin-namespace}-pro-drawer;
-
 @include b(pro-drawer) {
   &.#{$el-namespace}-drawer.is-fullscreen {
     width: 100% !important;
@@ -14,17 +12,5 @@ $prefix-class: #{$admin-namespace}-pro-drawer;
   @include e(footer) {
     display: flex;
     align-items: center;
-  }
-}
-
-.#{$prefix-class} .#{$prefix-class}.#{$el-namespace}-drawer {
-  .#{$el-namespace}-drawer__header {
-    padding: 15px 20px 14px;
-    margin-bottom: 0;
-    border-bottom: 1px solid var(--#{$el-namespace}-border-color-lighter);
-  }
-
-  .#{$el-namespace}-drawer__footer {
-    border-top: 1px solid var(--#{$el-namespace}-border-color-lighter);
   }
 }

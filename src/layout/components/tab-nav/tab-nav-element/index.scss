@@ -12,42 +12,44 @@ $btn-width: 28px;
   @include e(content) {
     width: 100%;
 
-    .#{$el-namespace}-tabs {
+    @include el-joins(tabs) {
       width: calc(100% - $btn-width);
     }
 
-    .#{$el-namespace}-tabs--card > .#{$el-namespace}-tabs__header {
-      height: cssVar(layout-tab-height);
-      margin: 0;
-      border-bottom: none;
+    @include el-joins(tabs--card) {
+      @include el-joins(tabs__header) {
+        height: cssVar(layout-tab-height);
+        margin: 0;
+        border-bottom: none;
 
-      .#{$el-namespace}-tabs__nav-wrap {
-        position: absolute;
-        width: 100%;
-      }
-
-      .#{$el-namespace}-tabs__nav {
-        border: none;
-      }
-
-      .#{$el-namespace}-tabs__item {
-        padding: 0 10px;
-        color: cssVar(layout-tab-text-color);
-
-        // background-color: cssVar(layout-tab-item-bg-color);
-        border-left: none;
-
-        &:hover {
-          color: cssVar(main-color);
+        @include el-joins(tabs__nav-wrap) {
+          position: absolute;
+          width: 100%;
         }
 
-        &.is-active {
-          color: cssVar(main-color);
-          border-bottom: 2px solid cssVar(main-color);
+        @include el-joins(tabs__nav) {
+          border: none;
         }
 
-        .is-icon-close svg {
-          margin-top: 0.5px;
+        @include el-joins(tabs__item) {
+          padding: 0 10px;
+          color: cssVar(layout-tab-text-color);
+
+          // background-color: cssVar(layout-tab-item-bg-color);
+          border-left: none;
+
+          &:hover {
+            color: cssVar(main-color);
+          }
+
+          &.is-active {
+            color: cssVar(main-color);
+            border-bottom: 2px solid cssVar(main-color);
+          }
+
+          .is-icon-close svg {
+            margin-top: 0.5px;
+          }
         }
       }
     }

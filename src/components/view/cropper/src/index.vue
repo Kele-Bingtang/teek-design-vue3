@@ -241,7 +241,7 @@ const handleHttpRequest = (options: UploadRequestOptions): Promise<any> => {
   gap: 20px;
   margin-top: 30px;
 
-  .#{$el-namespace}-button {
+  @include el-joins(button) {
     margin-left: 0;
   }
 }

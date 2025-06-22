@@ -82,8 +82,10 @@ const lineBarData = [
 </template>
 
 <style lang="scss" scoped>
+@use "@/styles/mixins/bem" as *;
+
 .home-container {
-  .#{$el-namespace}-card {
+  @include el-joins(card) {
     width: 100%;
   }
 

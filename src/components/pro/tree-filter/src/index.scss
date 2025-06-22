@@ -15,31 +15,34 @@
     letter-spacing: 0.5px;
   }
 
-  .#{$el-namespace}-input {
+  @include el-joins(input) {
     margin: 0 0 15px;
   }
 
-  .#{$el-namespace}-scrollbar {
+  @include el-joins(scrollbar) {
     :deep(.#{$el-namespace}-tree) {
       height: 80%;
       overflow: auto;
 
-      .#{$el-namespace}-tree-node__content {
+      @include el-joins(tree-node__content) {
         height: 33px;
       }
     }
 
     :deep(.#{$el-namespace}-tree--highlight-current) {
-      .#{$el-namespace}-tree-node.is-current > .#{$el-namespace}-tree-node__content {
-        background-color: var(--#{$el-namespace}-color-primary);
+      @include el-joins(tree-node) {
+        &.is-current > {
+          @include el-joins(tree-node__content) {
+            background-color: var(--#{$el-namespace}-color-primary);
 
-        .#{$el-namespace}-tree-node__label,
-        .#{$el-namespace}-tree-node__expand-icon {
-          color: white;
-        }
+            @include el-joins(tree-node__label, tree-node__expand-icon) {
+              color: #ffffff;
+            }
 
-        .is-leaf {
-          color: transparent;
+            .is-leaf {
+              color: transparent;
+            }
+          }
         }
       }
     }

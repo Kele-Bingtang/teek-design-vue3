@@ -19,18 +19,20 @@
   --#{$el-namespace}-border-radius-small: 10px;
 
   /* 垂直菜单样式 */
-  .#{$el-namespace}-menu--vertical .is-active.is-only {
-    font-weight: cssVar(layout-aside-text-active-weight);
-    background-color: cssVar(layout-aside-bg-active-color);
+  @include el-joins(menu--vertical) {
+    .is-active.is-only {
+      font-weight: cssVar(layout-aside-text-active-weight);
+      background-color: cssVar(layout-aside-bg-active-color);
 
-    &::before {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 4px;
-      content: "";
-      background: cssVar(layout-aside-left-bg-color);
+      &::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 4px;
+        content: "";
+        background: cssVar(layout-aside-left-bg-color);
+      }
     }
   }
 
@@ -48,9 +50,11 @@
     }
 
     /* 子级高亮，父级也高亮 */
-    > .is-sub.is-active > .#{$el-namespace}-sub-menu__title {
-      font-weight: cssVar(layout-aside-text-active-weight);
-      color: cssVar(main-color);
+    > .is-sub.is-active > {
+      @include el-joins(sub-menu__title) {
+        font-weight: cssVar(layout-aside-text-active-weight);
+        color: cssVar(main-color);
+      }
     }
 
     :where(.#{$el-namespace}-menu-item, .#{$el-namespace}-sub-menu) {
@@ -61,13 +65,15 @@
       }
 
       /* 父级菜单鼠标悬停样式 */
-      .#{$el-namespace}-sub-menu__title:hover {
-        background-color: cssVar(layout-aside-bg-hover-color) !important;
+      @include el-joins(sub-menu__title) {
+        &:hover {
+          background-color: cssVar(layout-aside-bg-hover-color) !important;
+        }
       }
     }
 
     // 菜单右侧箭头
-    .#{$el-namespace}-sub-menu__icon-arrow {
+    @include el-joins(sub-menu__icon-arrow) {
       width: cssVar(layout-aside-arrow-size);
       font-size: cssVar(layout-aside-arrow-size);
     }
@@ -99,7 +105,7 @@
 
     @include joins(layout-menu) {
       /* 折叠后的图案添加背景色 */
-      .#{$el-namespace}-menu--collapse {
+      @include el-joins(menu--collapse) {
         > .is-active {
           background-color: cssVar(layout-aside-bg-active-color);
         }
@@ -146,7 +152,8 @@
 
   @include joins(layout-menu) {
     flex: 1;
-    .#{$el-namespace}-menu--horizontal {
+
+    @include el-joins(menu--horizontal) {
       /* 水平菜单减去自身的 border，避免滚动条出现 */
       height: calc(cssVar(layout-header-height) - 1px);
       background-color: cssVar(layout-header-bg-color);

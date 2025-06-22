@@ -156,19 +156,19 @@ onUnmounted(() => {
       width: 0;
       transition: width var(--#{$el-namespace}-transition-duration);
 
-      .#{$el-namespace}-input__wrapper {
+      @include el-joins(input__wrapper) {
         width: 0;
         padding: 0;
       }
 
-      .#{$el-namespace}-input__prefix {
+      @include el-joins(input__prefix) {
         display: none;
       }
     }
   }
 }
 
-.#{$el-namespace}-autocomplete__popper {
+@include el-joins(autocomplete__popper) {
   .icon {
     position: relative;
     top: 2px;

@@ -96,5 +96,8 @@ const next = (actives: number, currentModel: Recordable, allModel: Recordable) =
 </script>
 
 <template>
-  <ProFormSteps v-model="active" :columns="stepForm" @next="next" />
+  <div class="flx-column gap-10">
+    <ProFormSteps v-model="active" :columns="stepForm" @next="next" />
+    <ProFormSteps v-model="active" :columns="stepForm" direction="vertical" @next="next" style="height: 300px" />
+  </div>
 </template>

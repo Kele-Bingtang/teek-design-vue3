@@ -76,8 +76,10 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-.#{$admin-namespace}-icon {
-  width: var(--el-menu-icon-width);
+@use "@/styles/mixins/bem" as *;
+
+@include joins(icon) {
+  width: var(--#{$el-namespace}-menu-icon-width);
   margin-right: 5px;
   font-size: 18px;
   vertical-align: middle;

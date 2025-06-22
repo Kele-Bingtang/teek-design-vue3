@@ -12,26 +12,26 @@
     background-color: rgba($color: #000000, $alpha: 20%);
   }
 
-  .#{$el-namespace}-dialog__header {
-    padding: 5px 0;
-  }
-
-  .#{$el-namespace}-dialog {
+  @include el-joins(dialog) {
     padding: 0 15px;
     border-radius: calc(cssVar(radius) / 2 + 8px);
   }
 
-  .#{$el-namespace}-input {
+  @include el-joins(dialog__header) {
+    padding: 5px 0;
+  }
+
+  @include el-joins(input) {
     height: 48px;
 
-    .#{$el-namespace}-input__wrapper {
+    @include el-joins(input__wrapper) {
       background-color: rgb(cssVar(gray-200-rgb), 0.8);
       border: 1px solid cssVar(border-dashed-color);
       border-radius: calc(cssVar(radius) / 2 + 2px);
       box-shadow: none;
     }
 
-    .#{$el-namespace}-input__inner {
+    @include el-joins(input__inner) {
       color: cssVar(gray-600);
     }
 
@@ -196,8 +196,8 @@
 
 .dark {
   @include b(global-search) {
-    .#{$el-namespace}-input {
-      .#{$el-namespace}-input__wrapper {
+    @include el-joins(input) {
+      @include el-joins(input__wrapper) {
         background-color: #252526;
         border: 1px solid #4c4d50;
       }
@@ -213,7 +213,7 @@
       backdrop-filter: none;
     }
 
-    .#{$el-namespace}-dialog {
+    @include el-joins(dialog) {
       background-color: #252526;
     }
 

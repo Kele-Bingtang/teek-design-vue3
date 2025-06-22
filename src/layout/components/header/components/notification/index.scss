@@ -4,11 +4,11 @@
 @include b(notification) {
   padding-top: 0 !important;
 
-  .#{$el-namespace}-tabs__header {
+  @include el-joins(tabs__header) {
     padding: var(--#{$el-namespace}-popover-padding);
     margin-bottom: 0;
 
-    .#{$el-namespace}-tabs__item {
+    @include el-joins(tabs__item) {
       padding: 0 15px;
       font-size: 13px;
       transition: color var(--#{$el-namespace}-transition-duration);

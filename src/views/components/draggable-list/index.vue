@@ -145,7 +145,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 
 @include b(draggable-list-demo) {
   @include e(card) {
-    .#{$el-namespace}-card__body {
+    @include el-joins(card__body) {
       width: 100%;
       height: 100%;
     }

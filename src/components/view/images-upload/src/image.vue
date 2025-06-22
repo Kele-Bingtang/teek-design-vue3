@@ -117,7 +117,7 @@ const deleteImg = () => {
  * @description 编辑图片
  * */
 const editImg = () => {
-  const dom = document.querySelector(`#${uuid.value} .#{$el-namespace}-upload__input`);
+  const dom = document.querySelector(`#${uuid.value} .${ns.elNamespace}-upload__input`);
   dom && dom.dispatchEvent(new MouseEvent("click"));
 };
 

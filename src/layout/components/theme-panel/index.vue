@@ -159,14 +159,15 @@ const Divider = defineComponent({
     }
   }
 
-  .#{$el-namespace}-select__wrapper,
-  .#{$el-namespace}-input__wrapper {
+  @include el-joins(select__wrapper, input__wrapper) {
     background-color: rgb(255 255 255 / 0%);
   }
 
   // 去除滚动条
-  .#{$el-namespace}-drawer__body::-webkit-scrollbar {
-    width: 0 !important;
+  @include el-joins(drawer__body) {
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
   }
 }
 

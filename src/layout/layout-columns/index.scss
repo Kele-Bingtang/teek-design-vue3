@@ -3,14 +3,16 @@
 
 @include b(columns-layout) {
   /* 折叠按钮添加左间距 */
-  .#{$el-namespace}-header {
+  @include el-joins(header) {
     padding-left: 10px !important;
   }
 
   /* 没有二级菜单样式 */
-  .#{$el-namespace}-aside.not-aside {
-    width: 0 !important;
-    border: 0;
+  @include el-joins(aside) {
+    &.not-aside {
+      width: 0 !important;
+      border: 0;
+    }
   }
 
   /* 自定义菜单样式 */

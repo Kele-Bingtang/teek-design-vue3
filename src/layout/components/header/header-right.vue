@@ -75,7 +75,7 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
       }
     }
 
-    .#{$admin-namespace}-user-dropdown {
+    @include joins(user-dropdown) {
       margin-left: 14px;
     }
   }

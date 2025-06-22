@@ -1,7 +1,7 @@
+@use "@/styles/mixins/bem" as *;
 @use "@/styles/mixins/function" as *;
-@use "@/styles/mixins/namespace" as *;
 
-.#{$el-namespace}-button {
+@include el-joins(button) {
   color: cssVar(layout-tab-text-color);
 
   &:hover {

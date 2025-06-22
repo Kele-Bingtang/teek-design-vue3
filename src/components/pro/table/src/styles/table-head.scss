@@ -1,5 +1,4 @@
 @use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
 @use "@/styles/mixins/function" as *;
 
 @include b(pro-table-head) {
@@ -13,7 +12,7 @@
     gap: 12px;
     align-items: center;
 
-    .#{$el-namespace}-button {
+    @include el-joins(button) {
       width: 32px;
       margin-left: 0;
       color: cssVar(gray-700);

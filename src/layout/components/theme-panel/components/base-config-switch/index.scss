@@ -12,10 +12,11 @@
       font-size: 14px;
     }
 
-    .#{$el-namespace}-select {
+    @include el-joins(select) {
       width: 40%;
     }
-    .#{$el-namespace}-input-number {
+
+    @include el-joins(input-number) {
       width: 40%;
     }
   }

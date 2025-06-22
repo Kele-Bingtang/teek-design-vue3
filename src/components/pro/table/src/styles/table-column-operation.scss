@@ -1,5 +1,4 @@
 @use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
 
 @include b(pro-table-operation) {
   &.is-center {
@@ -19,11 +18,13 @@
     gap: 12px;
     align-items: center;
 
-    > .#{$el-namespace}-button {
-      margin-left: 0;
+    > {
+      @include el-joins(button) {
+        margin-left: 0;
+      }
     }
 
-    .#{$el-namespace}-icon {
+    @include el-joins(icon) {
       cursor: pointer;
     }
   }

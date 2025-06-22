@@ -133,3 +133,18 @@ $bem-e: null;
     @content;
   }
 }
+
+/* 多个 element plus 元素 */
+@mixin el-joins($element...) {
+  $b: $el-namespace + $common-separator;
+  $selector: "";
+
+  /* 拼接逗号 */
+  @each $unit in $element {
+    $selector: #{$selector + "." + $b + $unit + ","};
+  }
+
+  #{string.slice($selector, 1, -2)} {
+    @content;
+  }
+}

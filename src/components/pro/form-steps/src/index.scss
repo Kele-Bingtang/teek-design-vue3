@@ -1,0 +1,7 @@
+@use "@/styles/mixins/bem" as *;
+
+@include b(pro-form-steps) {
+  @include el-joins(steps) {
+    margin-bottom: 20px;
+  }
+}
