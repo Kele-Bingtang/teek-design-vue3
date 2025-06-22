@@ -266,7 +266,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         "
         :ref="(el: any) => registerProFormInstance(el, scope, column.prop || '')"
         v-bind="column.editProps"
-        :value="getProp(scope.row._label?.[column.prop || ''] ?? scope.row, column.prop || '')"
+        :value="getProp(scope.row, column.prop || '')"
         :prop="column.editProps?.prop || column.prop || ''"
         :options="column.editProps?.options || scope.row._options?.[column.prop || '']"
         :option-field="column.editProps?.optionField || column.optionField"

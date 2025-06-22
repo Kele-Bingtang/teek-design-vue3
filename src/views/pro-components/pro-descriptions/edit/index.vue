@@ -61,7 +61,7 @@ const columns: DescriptionColumn[] = [
     prop: "code",
   },
   { label: "评分", width: 200, prop: "rate" },
-  { label: "开关", width: 100, prop: "switch" },
+  { label: "开关", width: 100, prop: "switch", form: { el: "el-switch" } },
   { label: "时间", width: 190, prop: "time" },
 ];
 
@@ -72,7 +72,7 @@ const getList = async () => {
 
 getList();
 
-const handleChange = (value: unknown, prop: string) => {
+const handleFormChange = (value: unknown, prop: string) => {
   setProp(descriptionsData.value, prop, value);
 };
 </script>
@@ -87,7 +87,7 @@ const handleChange = (value: unknown, prop: string) => {
     border
     card
     edit-button
-    @change="handleChange"
+    @form-change="handleFormChange"
   />
 
   <ProDescriptions
@@ -99,7 +99,7 @@ const handleChange = (value: unknown, prop: string) => {
     border
     card
     edit-button
-    @change="handleChange"
+    @form-change="handleFormChange"
   />
 
   {{ model }}

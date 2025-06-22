@@ -122,7 +122,8 @@ function useDescriptionsDataInit() {
     () => props.data,
     newValue => {
       if (!isRequestGetData.value) data.value = newValue;
-    }
+    },
+    { deep: true }
   );
 
   onMounted(async () => {
@@ -286,7 +287,7 @@ defineExpose({
             v-model="model"
             :ref="(el: any) => registerProFormInstance(el, column.prop || '')"
             v-bind="column.form"
-            :value="getValue(column)"
+            :value="getProp(descriptionsData, column.prop || '')"
             :prop="column.prop || ''"
             :options="optionsMap.get(column.prop || '')"
             :option-field="column.optionField"
