@@ -6,7 +6,7 @@ export interface TableColumnDragSortProps {
    */
   sortable?: boolean;
   /**
-   * El Table 实例
+   * ElTable 实例
    */
   tableInstance?: MaybeRef<TableInstance> | null;
 }

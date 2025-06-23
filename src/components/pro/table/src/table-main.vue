@@ -1,97 +1,47 @@
 <script setup lang="ts">
-import type { Component } from "vue";
-import type { FormValidationResult, TableInstance } from "element-plus";
-import type { ProFormInstance } from "@/components/pro/form";
+import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
 import { toValue } from "vue";
-import { ElTable, ElRadio, ElTableColumn } from "element-plus";
+import { ElTable, ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
-import { isEmpty, isFunction } from "@/utils";
+import { isEmpty } from "@/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
-import { getProp, filterOptions, filterOptionsValue, setProp, getObjectKeys } from "@/components/pro/helper";
+import { getProp, filterOptions, filterOptionsValue, getObjectKeys } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
-import TableColumnDragSort from "./table-column/table-column-drag-sort.vue";
-import { useSelection } from "./composables";
-import { TableColumnTypeEnum, filterData, initModel, isServer } from "./helper";
+import TableColumnType from "./table-column/table-column-type.vue";
+import { useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
+import { filterData, initModel, isServer } from "./helper";
 
 defineOptions({ name: "TableMain" });
-
-interface TableColumnType {
-  el: Component; // 组件
-  props?: Recordable; // 组件 props
-  slots?: Recordable; // 组件插槽
-  renderDefault?: (scope: TableScope) => VNode; // 自定义 el 组件的默认插槽渲染
-}
 
 const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {
   data: () => [],
   columns: () => [],
+  rowKey: "id",
   operationProp: "operation",
   operationProps: () => ({}),
   pageInfo: () => defaultPageInfo,
   pageScope: false,
   paginationProps: () => ({}),
-  radioProps: () => ({}),
   filterScope: false,
   headerCellStyle: () => ({}),
   editable: false,
-  rowKey: "id",
   emptyText: "暂无数据",
+  selectedRadio: "",
+  radioProps: () => ({}),
 });
 
 const emits = defineEmits<ProTableMainNamespace.Emits>();
 
 const ns = useNamespace("table-main");
-const radio = ref("");
+
 const elTableInstance = useTemplateRef<TableInstance>("elTableInstance");
 
 const pageInfo = ref({ ...defaultPageInfo, ...props.pageInfo });
 
 watchEffect(() => (pageInfo.value = { ...defaultPageInfo, ...props.pageInfo }));
-
-// 功能列：多选列、单选列、序号列、展开列、拖拽排序列 等
-const tableColumnTypeMap: Record<TableColumnTypeEnum, TableColumnType> = {
-  [TableColumnTypeEnum.Selection]: { el: ElTableColumn, props: { reserveSelection: true } },
-  [TableColumnTypeEnum.Radio]: {
-    el: ElTableColumn,
-    renderDefault: ({ row, $index }) =>
-      h(ElRadio, {
-        modelValue: radio.value,
-        value: row[getRowKey(row)],
-        onChange: () => handleRadioChange(row, $index),
-        ...toValue(props.radioProps),
-      }),
-  },
-  [TableColumnTypeEnum.Index]: { el: ElTableColumn },
-  [TableColumnTypeEnum.Expand]: { el: ElTableColumn },
-  [TableColumnTypeEnum.Sort]: {
-    el: TableColumnDragSort,
-    props: {
-      tableInstance: elTableInstance,
-      // 行拖拽排序结束事件
-      onDragSortEnd: (newIndex: number, oldIndex: number) => {
-        const [removedItem] = tableData.value.splice(oldIndex, 1);
-        tableData.value.splice(newIndex, 0, removedItem);
-        emits("dragSortEnd", newIndex, oldIndex);
-      },
-    },
-    slots: ["drag-sort-icon"],
-  },
-};
-
-const columnTypes = Object.keys(tableColumnTypeMap);
-
-// 表格多选
-const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
-const { optionsMap, initOptionsMap } = useOptions();
-const { availableColumns } = useTableInit();
-const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
-const { getOperationColumn, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
-const { handleCellEdit, handleFormChange } = useTableCellEdit();
-const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
-const { registerProFormInstance, getElFormInstance, getElFormItemInstance, getElInstance } = useTableInstanceGet();
 
 // 表格实际渲染的数据
 const tableData = computed(() => tryPagination(props.data));
@@ -101,6 +51,22 @@ watch(
   () => props.data,
   () => (filterTableData.value = undefined)
 );
+
+const { optionsMap, initOptionsMap } = useOptions();
+const { availableColumns } = useTableInit();
+const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
+const { getOperationColumn, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
+const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
+
+// 表格选择
+const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
+// 表格单元格编辑
+const { handleCellEdit } = useTableCellEdit(availableColumns, props.editable, elTableInstance, {
+  preventCellEdit: column => column.prop === props.operationProp,
+  leaveCellEdit: (row, column) => emits("leaveCellEdit", row, column),
+});
+// 表格编辑态的表单相关实例注册和获取
+const { registerProFormInstance, getElFormInstance, getElFormItemInstance, getElInstance } = useTableFormInstance();
 
 /**
  * 执行分页操作
@@ -117,15 +83,6 @@ const tryPagination = (data: Recordable[] = []) => {
 };
 
 /**
- * 获取表格行的唯一标识
- */
-const getRowKey = (row: Recordable) => {
-  const { rowKey } = props;
-  if (isFunction(rowKey)) return rowKey(row);
-  return rowKey;
-};
-
-/**
  * 表格数据初始化相关逻辑
  */
 function useTableInit() {
@@ -135,31 +92,90 @@ function useTableInit() {
   const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hidden)));
 
   // 在表格的数据的每一个 row 配置 _options 相关字典信息（如果配置了 options）
-  const initOptionsInData = async (data: Recordable[], columns: TableColumn[]) => {
-    for (const column of columns) {
-      const { prop = "", isFilterOptions = true, optionField, transformOption, optionsProp } = column;
+  const initEnhanceFnInData = async (data: TableRow[], column: TableColumn) => {
+    const { prop = "", isFilterOptions = true, optionField, transformOption, optionsProp } = column;
+    const options = unref(optionsMap.value.get(optionsProp || prop));
 
-      const options = unref(optionsMap.value.get(optionsProp || prop));
-      // 如果字段有配置枚举信息，则存放到 _options[col.prop] 里
-      if (options && toValue(isFilterOptions)) {
-        data.map(row => {
-          const option = transformOption
-            ? transformOption(getProp(row, prop), options, row)
-            : filterOptions(getProp(row, prop), options, optionField);
+    // 如果字段有配置枚举信息，则存放到 _options[prop] 里
+    data.forEach(row => {
+      row._options ??= {};
+      if (options && toValue(isFilterOptions)) row._options[prop] = options;
+      /**
+       * 根据 prop 获取 value
+       */
+      row._getValue ??= (prop: string) => {
+        const options = row._options[prop];
+        const value = getProp(row, prop);
+        if (!options) return value;
 
-          const formatLabel = filterOptionsValue(option, optionField?.label || "label");
+        const option = transformOption
+          ? transformOption(value, options, row)
+          : filterOptions(value, options, optionField);
 
-          if (!row._options) row._options = {};
-          if (!row._option) row._option = {};
-          if (!row._label) row._label = {};
+        return filterOptionsValue(option, optionField?.label || "label");
+      };
 
-          row._options[prop] = options;
-          row._option[prop] = option;
-          row._label[prop] = formatLabel;
-          return row;
-        });
-      }
-    }
+      // 获取 row 的纯数据（过滤掉内置的加强方法）
+      row._getData ??= () => {
+        return Object.fromEntries(Object.entries(row).filter(([key]) => !key.startsWith("_")));
+      };
+
+      // 初始化 _editableCol
+      row._editableCol ??= {};
+
+      // 开启单元格编辑状态
+      row._openCellEdit ??= prop => {
+        if (prop) {
+          row._editableCol![prop] = true;
+          nextTick(() => {
+            // 焦点聚焦
+            (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus();
+          });
+        } else row._editable = true;
+      };
+
+      // 关闭开启单元格编辑状态
+      row._closeCellEdit ??= prop => {
+        if (prop) row._editableCol![prop] = false;
+        else row._editable = false;
+      };
+
+      // 判断当前单元格是否处于编辑状态
+      row._isCellEdit ??= prop => {
+        if (prop) return row._editableCol![prop] ?? false;
+        else return row._editable ?? false;
+      };
+
+      // 编辑态行/单元格校验
+      row._validateCellEdit ??= async (callback, prop) => {
+        if (!row._proFormInstance) return true;
+
+        try {
+          // 校验失败会走 catch
+          if (prop) await row._proFormInstance[prop].elFormInstance?.validate();
+          else {
+            const proFormInstances = Object.values(row._proFormInstance);
+            await Promise.all(
+              proFormInstances.map(async proFormInstance => {
+                await proFormInstance.elFormInstance?.validate();
+              })
+            );
+          }
+
+          callback?.(true, undefined);
+          return true;
+        } catch (error) {
+          // 如果校验失败且没有自定义 callback，则弹出内置错误信息
+          if (!callback) {
+            ElMessage.closeAll();
+            ElMessage.warning(Object.values(error || { message: ["请完整填写表单然后再次提交！"] })[0][0].message);
+          }
+
+          callback?.(false, error as any);
+          return false;
+        }
+      };
+    });
   };
 
   // 扁平化 columns，为了过滤搜索配置项
@@ -183,14 +199,14 @@ function useTableInit() {
       timer = setTimeout(async () => {
         const flatColumns = flatColumnsFn(newValue);
         // 异步但有序执行
-        for (const column of flatColumns) await initOptionsMap(column.options, column.prop || "");
-        initOptionsInData(props.data, flatColumns);
+        for (const column of flatColumns) {
+          await initOptionsMap(column.options, column.prop || "");
+          initEnhanceFnInData(props.data as TableRow[], column);
+        }
       }, 10);
     },
     { deep: true, flush: "post" }
   );
-  // 数据发生变化，重新初始化字典枚举
-  // watch(props.data, newValue => initOptionsInData(newValue, availableColumns.value), { deep: true });
 
   return { availableColumns };
 }
@@ -231,7 +247,6 @@ function useTableEvent() {
    * 单选触发事件
    */
   const handleRadioChange = (row: Recordable, index: number) => {
-    radio.value = row[getRowKey(row)];
     selectionChange([row]);
     emits(
       "selectionChange",
@@ -288,84 +303,6 @@ function useTableOperation() {
 }
 
 /**
- * 表格单元格编辑相关方法
- */
-function useTableCellEdit() {
-  // 缓存关闭当前单元格的编辑态方法
-  let closeCurrentCellEdit: (() => void) | null = null;
-  // 缓存当前单元格的校验方法
-  let validateCurrentCellEdit: (() => FormValidationResult | undefined) | null = () => Promise.resolve(true);
-  // 缓存当前的 stopCurrentEditCell 函数
-  let currentStopEditHandler: ((e: MouseEvent) => void) | null = null;
-
-  /**
-   * 点击单元格进入编辑态
-   */
-  const handleCellEdit = async (row: TableRow, column: TableColumn, type: "click" | "dblclick") => {
-    const columnIndex = column.getColumnIndex!();
-    const currentColumn = availableColumns.value[columnIndex];
-
-    // 不是可编辑行，如功能列，操作列
-    if (!currentColumn || currentColumn.type || currentColumn.prop === props.operationProp) return;
-
-    // 没有开启点击编辑功能
-    if (props.editable !== type) return;
-
-    // 原先的单元格校验失败
-    if (!(await validateCurrentCellEdit?.())) return;
-
-    // 清理之前的监听器
-    if (currentStopEditHandler) document.removeEventListener("click", currentStopEditHandler);
-
-    // 定义停止编辑的函数
-    currentStopEditHandler = (e: MouseEvent) => {
-      handleStopEditClick(e, row, { ...column, ...currentColumn });
-    };
-
-    // 添加退出单元格编辑事件监听
-    document.addEventListener("click", currentStopEditHandler);
-
-    // 停止上一个单元格的编辑状态
-    closeCurrentCellEdit?.();
-    // 缓存当前单元格的退出编辑状态函数和校验函数
-    closeCurrentCellEdit = () => row._closeCellEdit(currentColumn.prop);
-    validateCurrentCellEdit = () => row._validateCellEdit(undefined, currentColumn.prop);
-
-    // 开启当前点击的单元格的编辑
-    row._openCellEdit(currentColumn.prop);
-  };
-
-  /**
-   * 点击非表格的区域，停止当前单元格的编辑
-   */
-  const handleStopEditClick = async (e: MouseEvent, row: TableRow, column: TableColumn) => {
-    if (!(await row._validateCellEdit(undefined, column.prop))) return;
-
-    if (closeCurrentCellEdit && elTableInstance.value) {
-      const target = e?.target as HTMLElement;
-
-      if (target.classList.contains("el-icon")) return;
-
-      const contains = elTableInstance.value.$el?.contains(target);
-
-      if (!contains) {
-        closeCurrentCellEdit();
-        emits("leaveCellEdit", row, column);
-        if (currentStopEditHandler) document.removeEventListener("click", currentStopEditHandler);
-      }
-    }
-  };
-
-  /**
-   * 编辑态的表单值改变事件
-   */
-  const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"], scope: TableScope) =>
-    emits("formChange", fromValue, prop || "", scope);
-
-  return { handleCellEdit, handleFormChange };
-}
-
-/**
  * 表格列过滤相关逻辑
  */
 function useTableFiler() {
@@ -409,37 +346,17 @@ function useTableFiler() {
   return { filterTableData, handleFilter, handleFilterClear, handleFilterReset };
 }
 
+const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
+  const [removedItem] = tableData.value.splice(oldIndex, 1);
+  tableData.value.splice(newIndex, 0, removedItem);
+  emits("dragSortEnd", newIndex, oldIndex);
+};
+
 /**
- * 表格使用的多个组件实例获取
+ * 编辑态的表单值改变事件
  */
-function useTableInstanceGet() {
-  const proFormInstances = ref<Record<string, ProFormInstance>[]>([]);
-
-  const registerProFormInstance = (index: number, prop: string, instance: ProFormInstance | null) => {
-    proFormInstances.value[index] ??= {};
-    setProp(proFormInstances.value[index], prop, instance);
-  };
-
-  // 获取指定行的指定 prop 的 ElForm 实例
-  const getElFormInstance = (index: number, prop?: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormInstances.value?.[index];
-    return proFormItemInstance?.[prop!].elFormInstance;
-  };
-
-  // 获取指定行的指定 prop 的 ElFormItem 实例
-  const getElFormItemInstance = (index: number, prop?: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormInstances.value?.[index];
-    return proFormItemInstance?.[prop!].getElFormItemInstance(prop!);
-  };
-
-  // 获取指定行的指定 prop 的表单组件实例
-  const getElInstance = (index: number, prop: TableColumn["prop"]) => {
-    const proFormItemInstance = proFormInstances.value?.[index];
-    return proFormItemInstance?.[prop!].getElInstance(prop!);
-  };
-
-  return { registerProFormInstance, getElFormInstance, getElFormItemInstance, getElInstance };
-}
+const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"], scope: TableScope) =>
+  emits("formChange", fromValue, prop || "", scope);
 
 /**
  * 分页改变事件
@@ -483,33 +400,20 @@ defineExpose(expose);
     <slot name="default">
       <template v-for="(column, index) in availableColumns" :key="column">
         <!-- 功能列 -->
-        <component
-          v-if="column.type && columnTypes.includes(column.type)"
-          :is="tableColumnTypeMap[column.type].el"
-          v-bind="{ ...column, ...tableColumnTypeMap[column.type].props }"
-          :align="column.align ?? 'center'"
+        <TableColumnType
+          v-if="column.type"
+          :column
+          :row-key
+          :selected-radio
+          :radio-props
+          :el-table-instance
+          @radio-change="handleRadioChange"
+          @drag-sort-end="handleDragSortEnd"
         >
-          <!-- 功能列 - 表头插槽 -->
-          <template #header="scope">
-            <component v-if="column.headerRender" :is="column.headerRender" v-bind="scope"></component>
-            <slot v-else :name="`${column.type}-header`" v-bind="scope">{{ scope.column.label }}</slot>
-          </template>
-
-          <!-- 功能列 - 默认插槽 -->
-          <template #default="scope">
-            <component
-              v-if="tableColumnTypeMap[column.type].renderDefault"
-              :is="tableColumnTypeMap[column.type].renderDefault?.(scope)"
-            />
-            <component v-else-if="column.render" :is="column.render" v-bind="scope" />
-            <slot v-else-if="$slots[column.type]" :name="column.type" v-bind="scope" />
-          </template>
-
-          <!-- 功能列 - 自定义插槽 -->
-          <template v-for="slot in tableColumnTypeMap[column.type].slots" #[slot]="scope">
+          <template v-for="slot in Object.keys($slots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />
           </template>
-        </component>
+        </TableColumnType>
 
         <!-- 数据列 -->
         <TableColumnData

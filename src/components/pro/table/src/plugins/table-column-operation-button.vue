@@ -3,7 +3,7 @@ import type { ElMessageBoxProps, OperationButtonEmits, OperationButtonProps } fr
 import { ElPopconfirm, ElTooltip, ElIcon, ElButton, ElLink, ElMessageBox } from "element-plus";
 import { OperationConfirmEl, OperationEl } from "../helper";
 
-defineOptions({ name: "OperationButton" });
+defineOptions({ name: "TableColumnOperationButton" });
 
 const props = withDefaults(defineProps<OperationButtonProps>(), {
   text: "",

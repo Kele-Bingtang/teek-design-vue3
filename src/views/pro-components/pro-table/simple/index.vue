@@ -108,6 +108,7 @@ const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
     title="支持单行/单元格编辑"
     page-scope
     card
+    row-key="username"
     editable="click"
     :operation-props="{
       buttons: buttons,

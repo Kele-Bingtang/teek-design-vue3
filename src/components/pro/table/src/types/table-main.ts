@@ -1,4 +1,4 @@
-import type { PaginationProps, RadioProps, TableProps } from "element-plus";
+import type { PaginationProps, TableProps } from "element-plus";
 import type { UnwrapRef } from "vue";
 import type { PageInfo } from "@/components/pro/pagination";
 import type { TableColumn, TableRow } from "./table-column";
@@ -6,6 +6,7 @@ import type { TableColumnDataNamespace } from "./table-column-data";
 import type { OperationNamespace } from "./table-column-operation";
 import type { UseSelectState } from "../composables";
 import type { Environment } from "../helper";
+import type { TableColumnTypeNamespace } from "./table-column-type";
 
 /**
  * TableMain 组件的类型命名空间
@@ -58,10 +59,6 @@ export namespace ProTableMainNamespace {
      */
     paginationProps?: MaybeRef<Partial<PaginationProps>>;
     /**
-     * 单选框 props
-     */
-    radioProps?: MaybeRef<Partial<RadioProps>>;
-    /**
      * 过滤规则，可以指定客户端（前端）过滤还是服务端（后端）过滤，当为 true 时，默认为客户端（前端）过滤
      *
      * @default false
@@ -77,6 +74,14 @@ export namespace ProTableMainNamespace {
      * @default '暂无数据'
      */
     emptyText?: string;
+    /**
+     * 默认选中的 radio，传入 rowKey 对应的值
+     */
+    selectedRadio?: TableColumnTypeNamespace.Props["selectedRadio"];
+    /**
+     * 单选框 props
+     */
+    radioProps?: TableColumnTypeNamespace.Props["radioProps"];
   }
 
   export interface Emits extends TableColumnDataNamespace.Emits, OperationNamespace.Emits {

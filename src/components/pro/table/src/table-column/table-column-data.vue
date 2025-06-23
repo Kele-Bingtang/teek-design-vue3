@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { TableColumnCtx } from "element-plus";
-import type { TableScope, TableColumn, TableColumnDataNamespace, TableRow } from "../types";
+import type { TableScope, TableColumn, TableColumnDataNamespace } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
 import { toValue } from "vue";
-import { ElMessage, ElTableColumn, ElTooltip, ElIcon } from "element-plus";
+import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { getProp } from "@/components/pro/helper";
 import { isBoolean, isString } from "@/utils";
@@ -31,70 +31,6 @@ const ns = useNamespace("pro-table-column-data");
 const useEditable = computed(() => !isBoolean(props.editable) && ["click", "dblclick"].includes(props.editable));
 
 /**
- * 初始化表格的 row，添加编辑态开关的方法
- */
-const initRowEditableApi = (row: TableRow) => {
-  // 初始化 _editableCol
-  row._editableCol ??= {};
-
-  // 开启单元格编辑状态
-  row._openCellEdit ??= prop => {
-    if (prop) {
-      row._editableCol![prop] = true;
-      nextTick(() => {
-        // 焦点聚焦
-        (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus();
-      });
-    } else row._editable = true;
-  };
-  // 关闭开启单元格编辑状态
-  row._closeCellEdit ??= prop => {
-    if (prop) row._editableCol![prop] = false;
-    else row._editable = false;
-  };
-
-  // 判断当前单元格是否处于编辑状态
-  row._isCellEdit ??= prop => {
-    if (prop) return row._editableCol![prop] ?? false;
-    else return row._editable ?? false;
-  };
-
-  // 编辑态行/单元格校验
-  row._validateCellEdit ??= async (callback, prop) => {
-    if (!row._proFormInstance) return true;
-
-    try {
-      // 校验失败会走 catch
-      if (prop) await row._proFormInstance[prop].elFormInstance?.validate();
-      else {
-        const proFormInstances = Object.values(row._proFormInstance);
-        await Promise.all(
-          proFormInstances.map(async proFormInstance => {
-            await proFormInstance.elFormInstance?.validate();
-          })
-        );
-      }
-
-      callback?.(true, undefined);
-      return true;
-    } catch (error) {
-      // 如果校验失败且没有自定义 callback，则弹出内置错误信息
-      if (!callback) {
-        ElMessage.closeAll();
-        ElMessage.warning(Object.values(error || { message: ["请完整填写表单然后再次提交！"] })[0][0].message);
-      }
-
-      callback?.(false, error as any);
-      return false;
-    }
-  };
-  // 获取 row 的纯数据（过滤掉内置的方法）
-  row._getData ??= () => {
-    return Object.fromEntries(Object.entries(row).filter(([key]) => !key.startsWith("_")));
-  };
-};
-
-/**
  * 获取 ProFormItem 的实例
  */
 const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Recordable, prop: string) => {
@@ -120,13 +56,6 @@ const formatTableColumn = (column: TableColumn) => {
   const { children, ...rest } = toRaw(column);
 
   return rest as unknown as TableColumnCtx<any>;
-};
-
-/**
- * 格式化单元格值（如果存在字典枚举，则根据 value 找 label）
- */
-const formatValue = (row: TableRow, column: TableColumn) => {
-  return formatCellValue(getProp(row._label?.[column.prop || ""] ?? row, column.prop || ""));
 };
 
 /**
@@ -235,8 +164,6 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 
     <!-- 默认插槽 - 单元格内容 -->
     <template #default="scope">
-      <span v-if="!column.children" style="display: none">{{ initRowEditableApi(scope.row) }}</span>
-
       <!-- 合并表头 -->
       <template v-if="column.children">
         <TableColumnData
@@ -276,22 +203,22 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <component
         v-else-if="column.render"
         :is="
-          column.render(
-            getProp(scope.row, column.prop || ''),
-            { ...scope, rowIndex: scope.$index },
-            scope.row._options?.[column.prop || '']
-          )
+          column.render(getProp(scope.row, column.prop || ''), {
+            ...scope,
+            rowIndex: scope.$index,
+            options: scope.row._options?.[column.prop || ''],
+          })
         "
       />
 
       <span
         v-else-if="column.renderHTML"
         v-html="
-          column.renderHTML(
-            getProp(scope.row, column.prop || ''),
-            { ...scope, rowIndex: scope.$index },
-            scope.row._options?.[column.prop || '']
-          )
+          column.renderHTML(getProp(scope.row, column.prop || ''), {
+            ...scope,
+            rowIndex: scope.$index,
+            options: scope.row._options?.[column.prop || ''],
+          })
         "
       />
 
@@ -302,7 +229,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       />
 
       <template v-else>
-        {{ formatValue(scope.row, column) }}
+        {{ formatCellValue(scope.row._getValue?.(column.prop || "")) }}
       </template>
     </template>
   </el-table-column>

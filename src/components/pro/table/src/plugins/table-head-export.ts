@@ -3,7 +3,7 @@ import type { CheckboxGroupValueType } from "element-plus";
 import { ref, unref } from "vue";
 import { ElMessageBox, ElMessage, ElCheckboxGroup, ElCheckbox } from "element-plus";
 import { exportJsonToExcel, formatJsonToArray } from "@/utils";
-import { getProp, getObjectKeys } from "@/components/pro/helper";
+import { getObjectKeys } from "@/components/pro/helper";
 
 const defaultFileName = "export-table";
 const defaultConfirmTitle = "请选择导出列";
@@ -195,7 +195,7 @@ const filterFlatData = (data: Recordable[]): Recordable[] => {
   return data.reduce((pre: Recordable[], current) => {
     if (current._label) {
       const leafKeys = getObjectKeys(current._label);
-      leafKeys.forEach(key => (current[key] = unref(getProp(current._label, key))));
+      leafKeys.forEach(key => (current[key] = unref(current._getValue(key))));
     }
     let result = [...pre, current];
     if (current.children) result = [...result, ...filterFlatData(current.children)];

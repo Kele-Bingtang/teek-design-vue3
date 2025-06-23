@@ -241,7 +241,7 @@ export interface FormItemColumnProps {
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  renderEl?: (model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  render?: (model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 是否为编辑态
    *

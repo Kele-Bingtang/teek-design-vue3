@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   clearable: true,
   tooltip: undefined,
   renderLabel: undefined,
-  renderEl: undefined,
+  render: undefined,
   getFormat: undefined,
   editable: true,
 });
@@ -227,7 +227,7 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="renderEl" :is="renderEl(model, slotParams)" />
+      <component v-if="render" :is="render(model, slotParams)" />
       <!-- 自定义表单组件插槽 -->
       <slot v-else-if="$slots[`${prop}-el`]" :name="`${prop}-el`" v-bind="slotParams" />
 

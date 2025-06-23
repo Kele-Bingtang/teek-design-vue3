@@ -75,7 +75,7 @@ function usePageSearchInit() {
 
   // 组装 ProSearch 配置项
   const searchColumns = computed(() => {
-    const filterColumns = flatColumns.value.filter(item => item.search?.el || item.search?.renderEl);
+    const filterColumns = flatColumns.value.filter(item => item.search?.el || item.search?.render);
     const searchColumns: ProSearchColumnProps[] = [];
 
     filterColumns.forEach(async column => {

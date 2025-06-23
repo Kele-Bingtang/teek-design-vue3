@@ -7,7 +7,7 @@ import { isFunction } from "@/utils";
 import { hyphenToCamelCase } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { OperationConfirmEl, OperationEl, lastProp } from "../helper";
-import OperationButton from "../plugins/operation-button.vue";
+import OperationButton from "../plugins/table-column-operation-button.vue";
 
 import "../styles/table-column-operation.scss";
 

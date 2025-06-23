@@ -88,7 +88,7 @@ const columns: PageColumn<ResUserList>[] = [
     search: {
       el: "el-input-number",
       // 自定义 search 显示内容
-      renderEl: (model: any) => {
+      render: (model: any) => {
         return (
           <div class="flx-center">
             <ElInput vModel_trim={model.minAge} placeholder="最小年龄" />

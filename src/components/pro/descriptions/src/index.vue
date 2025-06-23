@@ -93,42 +93,35 @@ function useDescriptionsInit() {
 /**
  * 描述列表数据初始化
  */
-function useDescriptionsDataInit() {
-  const data = ref<Recordable>({});
+function useDescriptionsDataInit(immediate = true) {
+  const requestData = ref<Recordable>({});
   const isRequestGetData = ref(false);
+
+  const data = computed(() => {
+    const { data } = props;
+
+    if (data && Object.keys(data).length) return data;
+    return requestData.value;
+  });
 
   /**
    * 描述列表数据初始化
    */
   const initDescriptionsData = async () => {
-    const { data, requestApi, defaultRequestParams, transformData } = props;
+    const { requestApi, defaultRequestParams, transformData } = props;
 
-    // 如果手动传入 data，则直接使用
-    if (data && Object.keys(data).length) return data;
     // 如果传入请求函数，则请求获取数据
     if (requestApi) {
       const result = await requestApi(defaultRequestParams);
       // 兼容常用数据格式
       const data = result?.data || result || {};
+
+      requestData.value = transformData?.(data, result) || data;
       isRequestGetData.value = true;
-
-      return transformData?.(data, result) || data;
     }
-
-    return {};
   };
 
-  watch(
-    () => props.data,
-    newValue => {
-      if (!isRequestGetData.value) data.value = newValue;
-    },
-    { deep: true }
-  );
-
-  onMounted(async () => {
-    data.value = await initDescriptionsData();
-  });
+  if (immediate) initDescriptionsData();
 
   return { data, isRequestGetData };
 }

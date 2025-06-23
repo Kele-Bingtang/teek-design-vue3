@@ -41,6 +41,10 @@ export type TableScope<T = Recordable> = {
    * 表格  _self
    */
   _self: Recordable;
+  /**
+   * 配置项的 options，仅 column.render 相关函数时会有值
+   */
+  options?: ElOption[];
 };
 
 /**
@@ -52,15 +56,15 @@ export type TableRow<T extends string | number | symbol = any> = {
   /**
    * options 字典枚举
    */
-  _options: Recordable[];
+  _options: Recordable;
   /**
-   * option 字典枚举
+   * 获取单元格值
    */
-  _option: Recordable;
+  _getValue: (prop: string) => unknown;
   /**
-   * 单元格显示的内容
+   * 获取当前行的数据
    */
-  _label: Recordable;
+  _getData: () => Recordable;
   /**
    * 表格是否可编辑
    */
@@ -89,10 +93,6 @@ export type TableRow<T extends string | number | symbol = any> = {
    * 校验编辑态表单方法
    */
   _validateCellEdit: (callback?: FormValidateCallback, prop?: string) => FormValidationResult | undefined;
-  /**
-   * 获取当前行的数据
-   */
-  _getData: () => Recordable;
 };
 
 /**
@@ -155,11 +155,11 @@ export interface TableColumn<T = any>
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */
-  render?: (value: unknown, scope: TableScope<T>, options: ElOption[]) => RenderTypes;
+  render?: (value: unknown, scope: TableScope<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderHTML?: (value: unknown, scope: TableScope<T>, options: ElOption[]) => string;
+  renderHTML?: (value: unknown, scope: TableScope<T>) => string;
   /**
    * 多级表头
    */

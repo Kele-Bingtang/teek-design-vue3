@@ -5,7 +5,7 @@ import Sortable from "sortablejs";
 import { DCaret } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 
-defineOptions({ name: "TableColumnDragSort" });
+defineOptions({ name: "TableColumnTypeDrag" });
 
 const props = withDefaults(defineProps<TableColumnDragSortProps>(), {
   sortable: true,

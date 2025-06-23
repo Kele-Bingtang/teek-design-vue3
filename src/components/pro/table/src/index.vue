@@ -60,16 +60,17 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   selectedListIds: undefined,
 
   // TableMain 组件的 props（透传下去）
+  rowKey: "id",
   operationProp: "operation",
   operationProps: () => ({}),
   pageInfo: () => defaultPageInfo,
   pageScope: false,
   paginationProps: () => ({}),
-  radioProps: () => ({}),
   filterScope: false,
   editable: false,
-  rowKey: "id",
   emptyText: "暂无数据",
+  radioProps: () => ({}),
+  selectedRadio: "",
 });
 
 const emits = defineEmits<ProTableNamespace.Emits>();
