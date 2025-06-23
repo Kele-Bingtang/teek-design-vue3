@@ -2,7 +2,7 @@
 import { ArrowUp, ArrowDown, Back, Close } from "@element-plus/icons-vue";
 import { useMenu, useNamespace } from "@/composables";
 import { useEventListener } from "@vueuse/core";
-import { mittBus } from "@/utils";
+import { isArray, mittBus } from "@/utils";
 import { formatTitle } from "@/router/helper";
 import { useUserStore } from "@/stores";
 import { OpenSearchDialogKey } from "@/config";
@@ -241,16 +241,17 @@ const highlightOnHoverHistory = (index: number) => {
 const handleGoPage = (item: RouterConfig) => {
   showSearchDialog.value = false;
   addHistory(item);
-  router.push(item.path);
+
+  if (item.name) router.push({ name: item.name });
+  else router.push(item.meta._fullPath);
+
   searchVal.value = "";
   searchResult.value = [];
 };
 
 // 历史记录管理
 const updateHistory = () => {
-  if (Array.isArray(searchHistory.value)) {
-    userStore.setSearchHistory(searchHistory.value);
-  }
+  if (isArray(searchHistory.value)) userStore.setSearchHistory(searchHistory.value);
 };
 
 const addHistory = (item: RouterConfig) => {

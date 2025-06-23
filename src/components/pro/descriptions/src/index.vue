@@ -9,6 +9,8 @@ import { isArray, isFunction } from "@/utils";
 import { useNamespace } from "@/composables";
 import DescriptionsEdit from "./edit.vue";
 
+import "./index.scss";
+
 defineOptions({ name: "ProDescriptions" });
 
 const props = withDefaults(defineProps<ProDescriptionsProp>(), {

@@ -1,4 +1,36 @@
+import type { ComponentNameEnum } from "../helper";
 import type { TableColumn, TableScope } from "./table-column";
+
+/**
+ * el 字面量，转为 PascalCase 格式
+ */
+export type PascalCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+  ? K extends string
+    ? K extends `${infer A}_${infer B}`
+      ? K extends `${infer A}_${infer B}_${infer C}`
+        ? `${Capitalize<Lowercase<A>>}${Capitalize<Lowercase<B>>}${Capitalize<Lowercase<C>>}`
+        : `${Capitalize<Lowercase<A>>}${Capitalize<Lowercase<B>>}`
+      : Capitalize<Lowercase<K>>
+    : never
+  : never;
+
+/**
+ * el 字面量，转为 HyphenCase 格式
+ */
+export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+  ? K extends string
+    ? K extends `${infer A}_${infer B}`
+      ? K extends `${infer A}_${infer B}_${infer C}`
+        ? `${Lowercase<A>}-${Lowercase<B>}-${Lowercase<C>}`
+        : `${Lowercase<A>}-${Lowercase<B>}`
+      : Lowercase<K>
+    : never
+  : never;
+
+/**
+ * el 字面量
+ */
+export type TableElType = PascalCaseComponentName | HyphenCaseComponentName;
 
 export namespace TableColumnDataNamespace {
   export interface Props {

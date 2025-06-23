@@ -18,6 +18,7 @@ const columns: TableColumn[] = [
   {
     prop: "gender",
     label: "性别",
+    el: "el-tag",
     options: async () => {
       return [
         { label: "男", value: 1 },
@@ -32,6 +33,10 @@ const columns: TableColumn[] = [
     // 多级 prop
     prop: "user.detail.age",
     label: "年龄",
+    el: "el-progress",
+    elSlots: {
+      default: ({ value }) => "*" + value,
+    },
     filter: true,
     disabledFilter: false,
     filterProps: { formColumn: { elProps: { modelModifiers: { number: true } } } },
@@ -40,6 +45,7 @@ const columns: TableColumn[] = [
     prop: "idCard",
     label: "身份证号",
     filter: true,
+    formatValue: value => (value as string)?.replace(/\d{4}/, "****"),
     filterProps: { rule: "like" },
     editProps: {
       formItemProps: {
@@ -51,7 +57,7 @@ const columns: TableColumn[] = [
   { prop: "address", label: "居住地址" },
 ];
 
-const el = ref<OperationNamespace.Props["el"]>("ElIcon");
+const el = ref<OperationNamespace.Props["el"]>("ElLink");
 const buttons = ref<OperationNamespace.ButtonRaw[]>();
 
 buttons.value = [
@@ -62,10 +68,22 @@ buttons.value = [
       type: "primary",
     }),
     icon: Edit,
+    show: row => !row._editable,
+    onClick: async ({ row }) => {
+      row._editable = !row._editable;
+    },
+  },
+  {
+    text: "保存",
+    code: "save",
+    elProps: () => ({
+      type: "primary",
+    }),
+    show: row => !!row._editable,
+    icon: Edit,
     onClick: async ({ row }) => {
       const valid = await row._validateCellEdit();
       if (valid) row._editable = !row._editable;
-      // row._editableCol["user.detail.age"] = !row._editableCol["user.detail.age"];
     },
   },
   {
@@ -75,6 +93,9 @@ buttons.value = [
     confirm: {
       el: "ElMessageBox",
       props: { options: { draggable: true } },
+    },
+    onConfirm: ({ row }) => {
+      data.value = data.value.filter(item => !row.id.includes(item.id));
     },
     icon: Delete,
   },
@@ -108,7 +129,6 @@ const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
     title="支持单行/单元格编辑"
     page-scope
     card
-    row-key="username"
     editable="click"
     :operation-props="{
       buttons: buttons,

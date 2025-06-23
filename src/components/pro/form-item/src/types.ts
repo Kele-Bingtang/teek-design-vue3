@@ -1,3 +1,4 @@
+import type { VNode, ExtractPropTypes, UnwrapRef } from "vue";
 import type {
   FormItemProps,
   InputProps,
@@ -20,7 +21,6 @@ import type {
   TimePickerDefaultProps,
   ElTooltipProps,
 } from "element-plus";
-import type { VNode, ExtractPropTypes } from "vue";
 import type ProFormItem from "./index.vue";
 import type { TreeProps as CustomTreeProps } from "./components/tree.vue";
 import type { TreeProps } from "element-plus/es/components/tree-v2/src/types";
@@ -82,7 +82,7 @@ export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends inf
 /**
  * el 字面量
  */
-export type ElType = PascalCaseComponentName | HyphenCaseComponentName;
+export type FormElType = PascalCaseComponentName | HyphenCaseComponentName;
 
 /**
  * 渲染函数的返回值的类型
@@ -152,9 +152,9 @@ export interface FormItemColumnProps {
    *
    * @default 'ElInput'
    */
-  el?: MaybeRefOrGetter<ElType>;
+  el?: MaybeRefOrGetter<FormElType>;
   /**
-   * 根据 element plus 官方文档来传递，该属性所有值会透传到表单组件
+   * 表单组件的 Props，即会透传到表单组件
    */
   elProps?: MaybeRefOrGetter<
     | InputProps
@@ -180,19 +180,23 @@ export interface FormItemColumnProps {
     | TransferProps
     | DividerProps
     | UploadProps
-    | { labelSize?: "default" | "small" | "large" }
+    | { labelSize?: "default" | "small" | "large" } // ElDivider 字体大小
     | Recordable
   >;
   /**
    * 表单组件的插槽
    */
   elSlots?: {
-    [slotName: string]: (data: {
-      options: ElOption[];
-      optionField: ElOptionField;
-      // 其他的 FormItemColumnProps 类型
-      [key: string]: any;
-    }) => RenderTypes;
+    [slotName: string]: (
+      data: Omit<FormItemColumnProps, "options" | "label" | "elProps" | "formItemProps"> & {
+        value: unknown;
+        model: ModelBaseValueType;
+        options: ElOption[];
+        label: string;
+        elProps: UnwrapRef<FormItemColumnProps["elProps"]>;
+        formItemProps: UnwrapRef<FormItemColumnProps["formItemProps"]>;
+      }
+    ) => RenderTypes;
   };
   /**
    * 字典枚举数据
@@ -231,17 +235,17 @@ export interface FormItemColumnProps {
         contentRender?: () => RenderTypes; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
       } & Partial<ElTooltipProps>);
   /**
-   * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 model 值是 1 导致无法匹配，可以设置为 getFormat: "string" 解决
+   * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 value 值是 1 导致无法匹配，可以设置为 getFormat: "string" 解决
    */
   getFormat?: unknown | ((value: unknown) => unknown);
   /**
    * 自定义 label 标题
    */
-  renderLabel?: (label: string, model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  renderLabel?: (label: string, value: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  render?: (model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  render?: (value: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 是否为编辑态
    *
@@ -254,7 +258,7 @@ export interface ProFormItemEmits {
   /**
    * 表单值改变事件
    */
-  change: [model: unknown, model: ModelBaseValueType, column: FormItemColumnProps];
+  change: [value: unknown, model: ModelBaseValueType, column: FormItemColumnProps];
 }
 
 /**

@@ -2,26 +2,28 @@
 @use "@/styles/mixins/namespace" as *;
 
 @include b(pro-table) {
-  // 修复 safari 浏览器表格错位
-  table {
-    width: 100%;
+  @include el-joins(table) {
+    // 修复 safari 浏览器表格错位
+    table {
+      width: 100%;
 
-    thead {
-      color: var(--#{$admin-namespace}-text-gray-700);
+      thead {
+        color: var(--#{$admin-namespace}-text-gray-700);
 
-      th {
-        font-size: 15px;
+        th {
+          font-size: 15px;
 
-        //  header 文字不换行，并 ... 省略
-        .cell {
-          white-space: nowrap;
+          //  header 文字不换行，并 ... 省略
+          .cell {
+            white-space: nowrap;
+          }
         }
       }
-    }
 
-    tbody {
-      // 单元格字体颜色
-      // color: var(--#{$admin-namespace}-text-gray-800);
+      tbody {
+        // 单元格字体颜色
+        // color: var(--#{$admin-namespace}-text-gray-800);
+      }
     }
   }
 }

@@ -1,0 +1,9 @@
+@use "@/styles/mixins/bem" as *;
+@use "@/styles/mixins/namespace" as *;
+
+@include b(pro-descriptions) {
+  @include el-joins(descriptions) {
+    // label 背景色
+    --#{$el-namespace}-descriptions-item-bordered-label-background: var(--#{$admin-namespace}-gray-100) !important;
+  }
+}

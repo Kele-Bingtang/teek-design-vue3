@@ -4,6 +4,7 @@ import { getProp, getObjectKeys } from "@/components/pro/helper";
 import { Environment } from "./enums";
 
 export * from "./enums";
+export * from "./components";
 
 /**
  * 处理 prop，当 prop 为多级嵌套时，返回最后一级 prop

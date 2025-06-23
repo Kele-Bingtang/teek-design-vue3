@@ -26,6 +26,7 @@ const columns: PageColumn[] = [
     prop: "gender",
     label: "性别",
     search: { el: "el-select" },
+    el: "el-tag",
     options: async () => {
       return [
         { label: "男", value: 1 },
@@ -37,6 +38,10 @@ const columns: PageColumn[] = [
     // 多级 prop
     prop: "user.detail.age",
     label: "年龄",
+    el: "el-progress",
+    elSlots: {
+      default: ({ value }) => "*" + value,
+    },
     filter: true,
     disabledFilter: false,
     filterProps: { formColumn: { elProps: { modelModifiers: { number: true } } } },
@@ -44,6 +49,7 @@ const columns: PageColumn[] = [
   {
     prop: "idCard",
     label: "身份证号",
+    formatValue: value => (value as string)?.replace(/\d{4}/, "****"),
     filter: true,
     filterProps: { rule: "like" },
     search: { el: "el-input" },
@@ -68,10 +74,22 @@ buttons.value = [
       type: "primary",
     }),
     icon: Edit,
+    show: row => !row._editable,
+    onClick: async ({ row }) => {
+      row._editable = !row._editable;
+    },
+  },
+  {
+    text: "保存",
+    code: "save",
+    elProps: () => ({
+      type: "primary",
+    }),
+    show: row => !!row._editable,
+    icon: Edit,
     onClick: async ({ row }) => {
       const valid = await row._validateCellEdit();
       if (valid) row._editable = !row._editable;
-      // row._editableCol["user.detail.age"] = !row._editableCol["user.detail.age"];
     },
   },
   {

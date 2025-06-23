@@ -63,8 +63,10 @@ export enum ComponentNameEnum {
   ICON_PICKER = "IconPicker",
 }
 
-// 这里可以注册其他组件，先需要在 PascalCaseComponentName 里添加 el 名，再在这里进行组件映射
-const componentMap: Record<PascalCaseComponentName, Component> = {
+/**
+ * 这里可以注册其他组件，先需要在 PascalCaseComponentName 里添加 el 名，再在这里进行组件映射
+ */
+const componentsMap: Record<PascalCaseComponentName, Component> = {
   ElInput,
   ElInputNumber,
   ElSelect,
@@ -95,4 +97,4 @@ const componentMap: Record<PascalCaseComponentName, Component> = {
   IconPicker,
 };
 
-export { componentMap };
+export { componentsMap };

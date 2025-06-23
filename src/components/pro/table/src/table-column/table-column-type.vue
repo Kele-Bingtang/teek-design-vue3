@@ -25,8 +25,6 @@ watch(
   { immediate: true }
 );
 
-console.log(radio);
-
 // 功能列：多选列、单选列、序号列、展开列、拖拽排序列 等
 const tableColumnTypeMap: Record<TableColumnTypeEnum, TableColumnTypeInfo> = {
   [TableColumnTypeEnum.Selection]: { el: ElTableColumn, props: { reserveSelection: true } },

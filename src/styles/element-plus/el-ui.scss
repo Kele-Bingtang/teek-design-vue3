@@ -3,9 +3,6 @@
 // 优化 Element Plus 组件库默认样式
 
 :root {
-  --#{$el-namespace}-color-white: white !important;
-  --#{$el-namespace}-color-black: white !important;
-
   // 输入框边框颜色
   // --#{$el-namespace}-border-color: #E4E4E7 !important; // DCDFE6
   // 按钮粗度
@@ -13,7 +10,7 @@
   --#{$el-namespace}-component-custom-height: 36px !important;
   --#{$el-namespace}-component-size: var(--#{$el-namespace}-component-custom-height) !important;
 
-  // 边框、按钮圆角...
+  // 边框、按钮圆角
   --#{$el-namespace}-border-radius-base: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
   --#{$el-namespace}-card-border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
 
@@ -22,7 +19,6 @@
   }
 }
 
-// -------------------------------- 修改 el-size=default 组件默认高度 start --------------------------------
 // 修改 el-button 高度
 // .#{$el-namespace}-button--default {
 //   height: var(--#{$el-namespace}-component-custom-height) !important;
@@ -41,8 +37,6 @@
 // .#{$el-namespace}-radio-button--default .#{$el-namespace}-radio-button__inner {
 //   padding: 10px 15px !important;
 // }
-
-// -------------------------------- 修改 el-size=default 组件默认高度 end --------------------------------
 
 .#{$el-namespace}-pagination.is-background .btn-next,
 .#{$el-namespace}-pagination.is-background .btn-prev,

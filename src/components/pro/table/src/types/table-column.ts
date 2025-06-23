@@ -1,9 +1,31 @@
-import type { FormValidateCallback, FormValidationResult, TableColumnCtx } from "element-plus";
+import type {
+  AvatarProps,
+  FormValidateCallback,
+  FormValidationResult,
+  ImageProps,
+  LinkProps,
+  ProgressProps,
+  TableColumnCtx,
+  TagProps,
+} from "element-plus";
 import type { ProFormInstance } from "@/components/pro/form";
 import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
 import type { TableColumnTypeEnum } from "../helper";
+import type { TableElType } from "./table-column-data";
+
+export interface RenderParams<T = any> extends TableScope<T> {
+  value: unknown;
+  /**
+   * 字典枚举数据
+   */
+  options: ElOption[];
+  /**
+   * 其他扩展属性，如果组件自带插槽的数据
+   */
+  [key: string]: any;
+}
 
 /**
  * 表格行 Scope
@@ -41,10 +63,6 @@ export type TableScope<T = Recordable> = {
    * 表格  _self
    */
   _self: Recordable;
-  /**
-   * 配置项的 options，仅 column.render 相关函数时会有值
-   */
-  options?: ElOption[];
 };
 
 /**
@@ -125,6 +143,20 @@ export interface TableColumn<T = any>
    */
   disabledHidden?: MaybeRefOrGetter<boolean>;
   /**
+   * 指定组件进行修饰
+   */
+  el?: TableElType;
+  /**
+   * 指定 el 组件的 Props，即会透传到 el 组件
+   */
+  elProps?: MaybeRefOrGetter<LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable>;
+  /**
+   * el 组件的插槽
+   */
+  elSlots?: {
+    [slotName: string]: (data: RenderParams) => RenderTypes;
+  };
+  /**
    * 字典数据
    */
   options?: FormItemColumnProps["options"];
@@ -151,15 +183,19 @@ export interface TableColumn<T = any>
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (scope: TableScope<T>) => RenderTypes;
+  headerRender?: (scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */
-  render?: (value: unknown, scope: TableScope<T>) => RenderTypes;
+  render?: (value: unknown, scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderHTML?: (value: unknown, scope: TableScope<T>) => string;
+  renderHTML?: (value: unknown, scope: RenderParams<T>) => string;
+  /**
+   * 自定义单元格内容
+   */
+  formatValue?: (value: unknown, scope: RenderParams<T>) => string | number;
   /**
    * 多级表头
    */

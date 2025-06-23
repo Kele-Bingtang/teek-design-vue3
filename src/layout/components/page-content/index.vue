@@ -18,7 +18,7 @@ defineOptions({ name: "MainContent" });
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
-const { tabNavMode, showTabNav } = storeToRefs(settingStore);
+const { tabNavMode, showTabNav, maximize, fixTabNav, pageTransition } = storeToRefs(settingStore);
 
 const TabNavComponents: Record<string, Component> = {
   [TabNavModeEnum.Simple]: SimpleTabNav,
@@ -48,31 +48,36 @@ watchEffect(() => {
   if (urlParams.get("_maximize")) {
     if (!app?.className.includes("page-maximize")) app?.classList.add("page-maximize");
   } else {
-    if (settingStore.maximize) app?.classList.add("page-maximize");
+    if (maximize.value) app?.classList.add("page-maximize");
     else app?.classList.remove("page-maximize");
   }
 });
 
 const isFixTabNav = computed(() => {
-  if (settingStore.fixTabNav) return "auto";
+  if (fixTabNav.value) return "auto";
   return "";
 });
 </script>
 
 <template>
-  <Maximize v-if="settingStore.maximize" />
+  <Maximize v-if="maximize" />
   <el-main class="flx-column">
     <component :is="TabNavComponents[tabNavMode]" v-if="showTabNav" />
 
-    <router-view v-slot="{ Component, route }">
-      <transition :name="settingStore.pageTransition" mode="out-in" appear>
-        <div class="page-content">
+    <div class="page-content">
+      <router-view v-slot="{ Component, route }">
+        <transition
+          v-bind="route.meta.transitionProps"
+          :name="route.meta.transitionProps?.name || pageTransition"
+          mode="out-in"
+          appear
+        >
           <keep-alive :max="10" :include="layoutStore.keepAliveName">
             <component v-if="isRefreshRoute" :is="Component" :key="route.path" />
           </keep-alive>
-        </div>
-      </transition>
-    </router-view>
+        </transition>
+      </router-view>
+    </div>
     <FrameLayout />
   </el-main>
 </template>

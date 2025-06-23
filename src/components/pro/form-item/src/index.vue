@@ -4,7 +4,7 @@ import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isObject, isString } from "@/utils";
-import { componentMap, ComponentNameEnum } from "./helper";
+import { componentsMap, ComponentNameEnum } from "./helper";
 import { getProp, hyphenToCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
@@ -63,6 +63,7 @@ const elModel = computed({
 // 插槽参数
 const slotParams = computed(() => ({
   ...props,
+  value: elModel.value,
   model: model.value,
   label: labelValue.value,
   options: enums.value,
@@ -73,13 +74,13 @@ const slotParams = computed(() => ({
 watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
 
 const childComponentMap: Record<string, { root: Component; child?: Component }> = {
-  [ComponentNameEnum.EL_SELECT]: { root: componentMap.ElSelect, child: Select },
-  [ComponentNameEnum.EL_RADIO]: { root: componentMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_RADIO_GROUP]: { root: componentMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_RADIO_BUTTON]: { root: componentMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_CHECKBOX]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
-  [ComponentNameEnum.EL_CHECKBOX_GROUP]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
-  [ComponentNameEnum.EL_CHECKBOX_BUTTON]: { root: componentMap.ElCheckboxGroup, child: Checkbox },
+  [ComponentNameEnum.EL_SELECT]: { root: componentsMap.ElSelect, child: Select },
+  [ComponentNameEnum.EL_RADIO]: { root: componentsMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_RADIO_GROUP]: { root: componentsMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_RADIO_BUTTON]: { root: componentsMap.ElRadioGroup, child: Radio },
+  [ComponentNameEnum.EL_CHECKBOX]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
+  [ComponentNameEnum.EL_CHECKBOX_GROUP]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
+  [ComponentNameEnum.EL_CHECKBOX_BUTTON]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
 };
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
@@ -199,7 +200,7 @@ defineExpose(expose);
   >
     <template v-if="editableValue && showLabelValue" #label="{ label }">
       <!-- 自定义 label（h、JSX）渲染 -->
-      <component v-if="renderLabel" :is="renderLabel(label, model, slotParams)" />
+      <component v-if="renderLabel" :is="renderLabel(label, elModel, slotParams)" />
 
       <!-- 自定义 label 插槽 -->
       <slot v-else :name="`${prop}-label`" v-bind="slotParams">
@@ -214,7 +215,7 @@ defineExpose(expose);
 
       <el-tooltip v-else-if="tooltip" placement="top" effect="dark" v-bind="tooltip">
         <!-- ElToolTip 默认插槽 -->
-        <component v-if="tooltip.render" :is="tooltip.render()" />
+        <component v-if="tooltip.render" :is="tooltip.render" />
         <!-- ElToolTip content 插槽 -->
         <template v-if="tooltip.contentRender" #content>
           <component v-if="tooltip.contentRender" :is="tooltip.contentRender()" />
@@ -227,9 +228,9 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="render" :is="render(model, slotParams)" />
+      <component v-if="render" :is="render(elModel, slotParams)" />
       <!-- 自定义表单组件插槽 -->
-      <slot v-else-if="$slots[`${prop}-el`]" :name="`${prop}-el`" v-bind="slotParams" />
+      <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
 
       <template v-else>
         <Tree
@@ -273,7 +274,7 @@ defineExpose(expose);
 
         <component
           v-else-if="formEl"
-          :is="componentMap[formEl]"
+          :is="componentsMap[formEl]"
           ref="elInstance"
           v-model="elModel"
           :clearable

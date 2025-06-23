@@ -23,10 +23,7 @@
  * @param meta.iframeLoading ==> IFrame 页是否开启首次加载动画（默认 true）
  * @param meta.iframeKeepAlive ==> IFrame 页是否开启缓（默认 false）
  * @param meta.iframeOpen ==> IFrame 页是否开新标签页打开，true 以新标签页打开，false 不打开（默认 false）
- * @param meta.transition ==> 页面加载动画（有两种形式，一种直接采用 vue 内置的 transitions 动画，另一种是使用 animate.css 写进、离场动画）
- * @param meta.transition.name ==> 当前路由动画效果
- * @param meta.transition.enterTransition ==> 进场动画
- * @param meta.transition.leaveTransition ==> 离场动画
+ * @param meta.transitionProps ==> 页面加载动画，即 Transition 组件的 Props（有两种形式，一种直接采用 vue 内置的 transitions 动画，另一种是使用 animate.css 写进、离场动画）
  * @param meta.hideInTab ==> 是否不添加到标签页，默认 false
  * @param meta.dynamicLevel ==> 动态路由可打开的最大数量，默认为空
  * @param meta.useI18n ==>  是否开启 i18n。默认读取全局的 routeUseI18n（src/config/base-config.ts）
