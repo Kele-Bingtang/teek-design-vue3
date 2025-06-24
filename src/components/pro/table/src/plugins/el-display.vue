@@ -58,6 +58,7 @@ const finalElProps = computed(() => {
 </script>
 
 <template>
+  <!-- renderEl 函数渲染 -->
   <component v-if="'renderEl' in (componentInfo || {})" :is="elComponent" v-bind="finalElProps" />
 
   <!-- is 传的组件支持插槽 -->

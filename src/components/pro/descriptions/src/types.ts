@@ -5,6 +5,21 @@ import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pr
 import type ProDescriptions from "./index.vue";
 import type { ElDisplayProps } from "../../table";
 
+export interface RenderParams {
+  /**
+   * 当前值
+   */
+  value: unknown;
+  /**
+   * 当前列配置
+   */
+  column: DescriptionColumn;
+  /**
+   * 当前渲染数据
+   */
+  data: Recordable;
+}
+
 /**
  * 描述列表配置项
  */
@@ -68,17 +83,21 @@ export interface DescriptionColumn
    */
   order?: number;
   /**
+   * 自定义 label 渲染
+   */
+  renderLabel?: (label: string, scope: RenderParams) => RenderTypes;
+  /**
    * 自定义内容渲染
    */
-  render?: (scope: { value: string; column: DescriptionColumn; data: Recordable }) => RenderTypes;
+  render?: (value: unknown, scope: RenderParams) => RenderTypes;
   /**
    * 自定义内容渲染（HTML 格式）
    */
-  renderHTML?: (scope: { value: string; column: DescriptionColumn; data: Recordable }) => string;
+  renderHTML?: (value: unknown, scope: RenderParams) => string;
   /**
-   * 自定义 label 渲染
+   * 自定义内容
    */
-  renderLabel?: (scope: { label: string; column: DescriptionColumn; data: Recordable }) => RenderTypes;
+  formatValue?: (value: unknown, scope: RenderParams) => string | number;
   /**
    * 是否为编辑态
    *

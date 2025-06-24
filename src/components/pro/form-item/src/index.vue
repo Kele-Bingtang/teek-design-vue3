@@ -103,7 +103,7 @@ function useFormItemInitProps() {
   // 处理透传的 elProps
   const elPropsValue = computed<Recordable>(() => {
     const { optionField, elProps } = props;
-    const elPropsValue = toValue(elProps) as any;
+    const elPropsValue = toValue(elProps) as Recordable;
     const label = optionField.label;
     const value = optionField.value;
     const children = optionField.children;

@@ -161,7 +161,7 @@ export interface TableColumn<T = any>
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (scope: RenderParams<T>) => RenderTypes;
+  headerRender?: (label: string, scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */

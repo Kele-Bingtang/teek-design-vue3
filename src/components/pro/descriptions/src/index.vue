@@ -148,7 +148,10 @@ function useFormInstanceGet() {
   return { proFormInstances, registerProFormInstance, getElFormInstance };
 }
 
-const formatColumn = (column: DescriptionColumn) => {
+/**
+ * 初始化列配置
+ */
+const initColumn = (column: DescriptionColumn) => {
   const { span, rowSpan, width, minWidth, labelWidth, ...rest } = column;
 
   const callFn = <T,>(fn: (editable: boolean) => T) => {
@@ -171,6 +174,9 @@ const formatColumn = (column: DescriptionColumn) => {
   };
 };
 
+/**
+ * 获取当前值
+ */
 const getValue = (column: DescriptionColumn) => {
   const dataValue = descriptionsData.value;
   const { prop = "", optionsProp, optionField, transformOption } = column;
@@ -188,6 +194,24 @@ const getValue = (column: DescriptionColumn) => {
   if (isArray(labelValue)) return labelValue.length ? labelValue.join(" / ") : "--";
   return labelValue ?? "--";
 };
+
+/**
+ * 格式化值
+ */
+const formatValue = (value: unknown, column: DescriptionColumn) => {
+  const { formatValue } = column;
+
+  return formatValue?.(value, { value, column, data: descriptionsData }) ?? value ?? "--";
+};
+
+/**
+ * 获取 Render/插槽 的参数
+ */
+const getRenderParams = (column: DescriptionColumn) => ({
+  value: getValue(column),
+  column,
+  data: descriptionsData,
+});
 
 /**
  * 打开编辑态
@@ -259,25 +283,28 @@ defineExpose({
         <el-descriptions-item
           v-for="(column, index) in availableColumns"
           :key="index"
-          v-bind="{ ...descriptionsItemProps, ...formatColumn(column), formProps: undefined }"
+          v-bind="{ ...descriptionsItemProps, ...initColumn(column), formProps: undefined }"
           :label="toValue(column.label)"
         >
           <!-- 描述 label 插槽 -->
           <template #label>
+            <!-- 自定义 label 的 Render 函数 -->
             <component
               v-if="column.renderLabel"
-              :is="column.renderLabel"
-              :label="toValue(column.label || '')"
-              :column
-              :data="descriptionsData"
+              :is="column.renderLabel(toValue(column.label || ''), getRenderParams(column))"
+            />
+            <!-- 自定义 label 插槽 -->
+            <slot
+              v-else-if="$slots[`${column.prop}-label`]"
+              :name="`${column.prop}-label`"
+              v-bind="getRenderParams(column)"
+              :label="toValue(column.label)"
             />
 
-            <!-- 自定义插槽 -->
-            <slot :name="`${column.prop}-label`" :label="toValue(column.label)" :column :data="descriptionsData">
-              {{ toValue(column.label) }}
-            </slot>
+            <template v-else>{{ toValue(column.label) }}</template>
           </template>
 
+          <!-- 编辑功能 -->
           <DescriptionsEdit
             v-if="editable || column.editable"
             v-model="model"
@@ -290,40 +317,21 @@ defineExpose({
             @change="handleChange"
           />
 
-          <!-- 描述默认插槽 -->
-          <component
-            v-else-if="column.render"
-            :is="column.render"
-            :value="getValue(column)"
-            :column
-            :data="descriptionsData"
-          />
-
-          <span
-            v-else-if="column.renderHTML"
-            v-html="column.renderHTML({ value: getValue(column), column, data: descriptionsData })"
-          />
-
-          <!-- 自定义插槽 -->
-          <slot
-            v-else-if="$slots[column.prop || '']"
-            :name="column.prop || ''"
-            :value="getValue(column)"
-            :column
-            :data="descriptionsData"
-          />
-
-          <!-- el 组件 -->
+          <!-- 自定义 Render 函数渲染 -->
+          <component v-else-if="column.render" :is="column.render(getValue(column), getRenderParams(column))" />
+          <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
+          <span v-else-if="column.renderHTML" v-html="column.renderHTML(getValue(column), getRenderParams(column))" />
+          <!-- 自定义插槽，插槽名为 column.prop -->
+          <slot v-else-if="$slots[column.prop || '']" :name="column.prop || ''" v-bind="getRenderParams(column)" />
+          <!-- 自定义 el 组件 -->
           <ElDisplay v-else-if="column.el" :value="getValue(column)" :el="column.el" :el-props="column.elProps">
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
               <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
             </template>
           </ElDisplay>
 
-          <!-- 默认值 -->
-          <template v-else>
-            {{ getValue(column) }}
-          </template>
+          <!-- 默认 -->
+          <template v-else>{{ formatValue(getValue(column), column) }}</template>
         </el-descriptions-item>
       </slot>
 

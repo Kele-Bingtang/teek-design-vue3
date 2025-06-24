@@ -46,7 +46,7 @@ const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Reco
 /**
  * 初始化 column 部分配置项，并移出不需要的配置项
  */
-const formatTableColumn = (column: TableColumn) => {
+const initTableColumn = (column: TableColumn) => {
   column.filter = toValue(column.filter);
   column.editable = toValue(column.editable);
   column.hidden = toValue(column.hidden);
@@ -54,6 +54,8 @@ const formatTableColumn = (column: TableColumn) => {
   column.disabledFilter = toValue(column.disabledFilter);
   column.disabledSortable = toValue(column.disabledSortable);
   column.isFilterOptions = toValue(column.isFilterOptions);
+  column.width = toValue(column.width);
+  column.label = toValue(column.label);
 
   // 使用解构并排除 children 属性
   // eslint-disable-next-line no-unused-vars
@@ -76,7 +78,7 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
  */
 const getCellValue = (scope: TableScope, column: TableColumn) => scope.row._getValue?.(prop(column));
 /**
- * 获取 Render 参数
+ * 获取 Render/插槽 的参数
  */
 const getRenderParams = <T = RenderParams,>(scope: TableScope, column: TableColumn): T => {
   return {
@@ -144,21 +146,26 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 
 <template>
   <el-table-column
-    v-bind="{ ...$attrs, ...formatTableColumn(column) }"
+    v-bind="{ ...$attrs, ...initTableColumn(column) }"
     :class-name="`${ns.b()}${' ' + ns.is('cell-edit', useEditable)}${column.className ? ' ' + column.className : ''}`"
   >
     <!-- 表头插槽 - 表头内容 -->
     <template #header="scope">
       <slot name="header-before" />
 
-      <!-- 自定义表头 | 自定义插槽 -->
-      <component v-if="column.headerRender" :is="column.headerRender" v-bind="scope" />
+      <!-- 自定义表头的 Render 函数 -->
+      <component
+        v-if="column.headerRender"
+        :is="column.headerRender(toValue(column.label) || '', getRenderParams(scope, column))"
+      />
+      <!-- 自定义表头插槽 -->
       <slot
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
         :name="`${lastProp(prop(column))}-header`"
-        v-bind="scope"
+        v-bind="getRenderParams(scope, column)"
+        :label="toValue(column.label)"
       />
-      <template v-else>{{ column.label }}</template>
+      <template v-else>{{ toValue(column.label) }}</template>
 
       <el-tooltip v-if="isString(column.tooltip)" placement="top" effect="dark" :content="column.tooltip">
         <slot name="tooltip-icon">
@@ -253,8 +260,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :name="lastProp(prop(column))"
         v-bind="getRenderParams(scope, column)"
       />
-
-      <!-- el 组件 -->
+      <!-- 自定义 el 组件 -->
       <ElDisplay v-else-if="column.el" :value="getCellValue(scope, column)" :el="column.el" :el-props="column.elProps">
         <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
           <component :is="slot" v-bind="{ ...getRenderParams(scope, column), ...data }" />
@@ -265,10 +271,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         </template>
       </ElDisplay>
 
-      <!-- 默认值 -->
-      <template v-else>
-        {{ formatValue(getCellValue(scope, column), scope, column) }}
-      </template>
+      <!-- 默认 -->
+      <template v-else>{{ formatValue(getCellValue(scope, column), scope, column) }}</template>
     </template>
   </el-table-column>
 </template>

@@ -3,11 +3,11 @@ export * from "./core/message";
 export * from "./core/scroll-to";
 export * from "./core/color";
 export * from "./core/is";
+export * from "./core/helper";
 
 export * from "./component/install";
 export * from "./download";
 export * from "./excel";
-export * from "./helper";
 export * from "./tree";
 export * from "./id-generator";
 

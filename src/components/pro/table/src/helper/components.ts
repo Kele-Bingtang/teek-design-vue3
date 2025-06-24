@@ -5,9 +5,21 @@ import { DocumentCopy } from "@element-plus/icons-vue";
 import { isArray, isString } from "@/utils";
 
 export interface ComponentConfig {
+  /**
+   * 组件实例，与 renderEl 二选一
+   */
   is?: string | Component;
+  /**
+   * 自定义函数渲染，与 is 二选一
+   */
   renderEl?: (value: unknown, props: Recordable, formatValue: unknown) => VNode | Component;
+  /**
+   * 组件默认 Props，如果外界传入相同的配置，则会覆盖默认的配置
+   */
   props?: Recordable | ((value: unknown, formatValue: unknown) => Recordable);
+  /**
+   * 格式化单元格数据
+   */
   format?: (value: unknown, props: Recordable) => unknown;
 }
 
