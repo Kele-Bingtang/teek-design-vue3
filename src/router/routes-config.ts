@@ -123,7 +123,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
   {
     path: HOME_URL,
     name: HOME_NAME,
-    component: "/home/index",
+    component: "/dashboard/console/index",
     meta: {
       isAffix: true,
       title: "首页",

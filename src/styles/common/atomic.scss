@@ -109,6 +109,13 @@
   padding: 20px;
   overflow-x: hidden;
   background-color: var(--#{$admin-namespace}-main-bg-color);
+  border: 1px solid var(--#{$admin-namespace}-card-border);
+  border-radius: calc(var(--#{$admin-namespace}-radius) / 2 + 2px);
+}
+
+.tk-card-2 {
+  overflow-x: hidden;
+  background-color: var(--#{$admin-namespace}-main-bg-color);
   border: 1px solid rgb(var(--#{$admin-namespace}-gray-300-rgb), 0.3);
   border-radius: calc(var(--#{$admin-namespace}-radius) / 2 + 2px);
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 4%);

@@ -6,8 +6,8 @@ body {
   margin: 0;
   overflow: hidden;
   font-family:
-    -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Helvetica Neue", Helvetica, "Hiragino Sans GB",
-    "Microsoft YaHei", Arial, sans-serif;
+    Inter, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   color: var(--#{$admin-namespace}-text-gray-700);
@@ -37,4 +37,14 @@ a:hover {
 
 div:focus {
   outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  margin: 0;
+  color: cssVar(text-gray-800);
 }

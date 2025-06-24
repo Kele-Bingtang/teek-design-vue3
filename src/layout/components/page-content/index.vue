@@ -94,7 +94,7 @@ const isFixTabNav = computed(() => {
     max-height: calc(
       100vh - var(--#{$admin-namespace}-layout-header-height) - var(--#{$admin-namespace}-layout-tab-height) - 18px
     );
-    margin: 10px 12px;
+    padding: 10px 12px;
     overflow: v-bind(isFixTabNav);
   }
 }
