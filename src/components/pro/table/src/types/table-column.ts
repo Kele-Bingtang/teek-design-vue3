@@ -1,19 +1,10 @@
-import type {
-  AvatarProps,
-  FormValidateCallback,
-  FormValidationResult,
-  ImageProps,
-  LinkProps,
-  ProgressProps,
-  TableColumnCtx,
-  TagProps,
-} from "element-plus";
+import type { FormValidateCallback, FormValidationResult, TableColumnCtx } from "element-plus";
 import type { ProFormInstance } from "@/components/pro/form";
 import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
 import type { TableColumnTypeEnum } from "../helper";
-import type { TableElType } from "./table-column-data";
+import type { ElDisplayProps } from "./el-display";
 
 export interface RenderParams<T = any> extends TableScope<T> {
   value: unknown;
@@ -117,7 +108,8 @@ export type TableRow<T extends string | number | symbol = any> = {
  * 表格列配置
  */
 export interface TableColumn<T = any>
-  extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">> {
+  extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
+    Omit<ElDisplayProps, "value"> {
   /**
    * 表头宽度
    */
@@ -142,20 +134,6 @@ export interface TableColumn<T = any>
    * @default false
    */
   disabledHidden?: MaybeRefOrGetter<boolean>;
-  /**
-   * 指定组件进行修饰
-   */
-  el?: TableElType;
-  /**
-   * 指定 el 组件的 Props，即会透传到 el 组件
-   */
-  elProps?: MaybeRefOrGetter<LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable>;
-  /**
-   * el 组件的插槽
-   */
-  elSlots?: {
-    [slotName: string]: (data: RenderParams) => RenderTypes;
-  };
   /**
    * 字典数据
    */
@@ -234,6 +212,12 @@ export interface TableColumn<T = any>
    * 编辑功能配置项
    */
   editProps?: TableEditProps;
+  /**
+   * el 组件的插槽
+   */
+  elSlots?: {
+    [slotName: string]: (data: RenderParams) => RenderTypes;
+  };
   /**
    * 其他扩展
    */

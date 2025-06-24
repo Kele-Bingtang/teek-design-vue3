@@ -250,27 +250,25 @@ export const set = (form: Record<string, any>, prop: string, value: any) => {
 };
 
 /**
- * @param str 需要转下划线的驼峰字符串
- * @returns 字符串下划线
+ * 驼峰根据分隔符进行转换，如 userName 转 user-name
  */
-export const humpToUnderline = (str: string): string => {
-  return str.replace(/([A-Z])/g, "-$1").toLowerCase();
+export const camelCaseToHump = (str: string, separator: string = "-"): string => {
+  return str.replace(/([A-Z])/g, `${separator}$1`).toLowerCase();
 };
 
 /**
- * @param str 需要转驼峰的下划线字符串
- * @returns 字符串驼峰
+ * 根据分隔符转驼峰，如 user-name 转 userName
  */
-export const underlineToHump = (str: string): string => {
+export const humpToCamelCase = (str: string, separator: string = "-"): string => {
   if (!str) return "";
-  return str.replace(/\-(\w)/g, (_, letter: string) => {
-    return letter.toUpperCase();
-  });
-};
+  if (!str.includes(separator)) return str.charAt(0).toUpperCase() + str.slice(1);
 
-/**
- * 驼峰转横杠
- */
-export const humpToDash = (str: string): string => {
-  return str.replace(/([A-Z])/g, "-$1").toLowerCase();
+  return str
+    .split(separator)
+    .map((word, index) => {
+      // 第一个单词首字母小写，其余首字母大写
+      if (index === 0) return word.toLowerCase();
+      return word ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() : "";
+    })
+    .join("");
 };

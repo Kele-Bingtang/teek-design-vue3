@@ -173,8 +173,8 @@ const columns: FormGroupColumn[] = [
   },
 ];
 
-const handleChange = (model: Recordable, column: FormItemColumnProps) => {
-  console.log(model, column.prop, "change");
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  console.log(value, model, column.prop, "change");
 };
 const handleSubmit = (model: Recordable) => {
   console.log(model, "Submit");
@@ -188,15 +188,17 @@ const handleReset = (model: Recordable) => {
 </script>
 
 <template>
-  <ProFormGroup
-    v-model="model"
-    :columns
-    :el-form-props
-    @change="handleChange"
-    @submit="handleSubmit"
-    @submit-error="handleSubmitError"
-    @reset="handleReset"
-  ></ProFormGroup>
+  <div>
+    <ProFormGroup
+      v-model="model"
+      :columns
+      :el-form-props
+      @change="handleChange"
+      @submit="handleSubmit"
+      @submit-error="handleSubmitError"
+      @reset="handleReset"
+    ></ProFormGroup>
 
-  {{ model }}
+    {{ model }}
+  </div>
 </template>

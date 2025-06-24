@@ -37,7 +37,7 @@ const DataServe = {
 };
 
 const columns: DescriptionColumn[] = [
-  { label: "名称", prop: "name" },
+  { label: "名称", prop: "name", el: "Copy" },
   {
     label: "状态",
     prop: "status",
@@ -48,7 +48,7 @@ const columns: DescriptionColumn[] = [
       { label: "失败", value: "3", color: "red" },
     ],
   },
-  { label: "标签", width: 120, prop: "tag" },
+  { label: "标签", width: 120, prop: "tag", el: "el-tag" },
   { label: "执行进度", width: 200, prop: "progress" },
   { label: "代码块", width: 250, prop: "code" },
   { label: "评分", width: 200, prop: "rate" },

@@ -4,7 +4,7 @@ import { toValue } from "vue";
 import { ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem, ElIcon } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
 import { isFunction } from "@/utils";
-import { hyphenToCamelCase } from "@/components/pro/helper";
+import { toCamelCase } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { OperationConfirmEl, OperationEl, lastProp } from "../helper";
 import OperationButton from "../plugins/table-column-operation-button.vue";
@@ -62,8 +62,7 @@ function useOperationButtonPropsGet() {
       : unref(buttonRaw.text);
   };
 
-  const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) =>
-    hyphenToCamelCase(buttonRaw.el || props.el) as OperationEl;
+  const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) => toCamelCase(buttonRaw.el || props.el) as OperationEl;
   /**
    * 获取按钮相关组件的 Props
    */

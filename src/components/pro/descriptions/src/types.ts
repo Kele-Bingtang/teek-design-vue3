@@ -3,12 +3,14 @@ import type { DescriptionItemProps } from "element-plus";
 import type { ProFormNamespace } from "@/components/pro/form";
 import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";
 import type ProDescriptions from "./index.vue";
+import type { ElDisplayProps } from "../../table";
 
 /**
  * 描述列表配置项
  */
 export interface DescriptionColumn
-  extends Omit<Partial<DescriptionItemProps>, "label" | "width" | "minWidth" | "span" | "rowSpan" | "labelWidth"> {
+  extends Omit<Partial<DescriptionItemProps>, "label" | "width" | "minWidth" | "span" | "rowSpan" | "labelWidth">,
+    Omit<ElDisplayProps, "value"> {
   /**
    * 唯一键
    */
@@ -87,6 +89,12 @@ export interface DescriptionColumn
    * ProForm Props
    */
   form?: Omit<FormItemColumnProps, "prop" | "label" | "options" | "optionField">;
+  /**
+   * el 组件的插槽
+   */
+  elSlots?: {
+    [slotName: string]: (data: { value: string; column: DescriptionColumn; data: Recordable }) => RenderTypes;
+  };
 }
 
 /**

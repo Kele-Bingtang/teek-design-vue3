@@ -5,7 +5,7 @@ import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isObject, isString } from "@/utils";
 import { componentsMap, ComponentNameEnum } from "./helper";
-import { getProp, hyphenToCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
+import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
 
 const model = defineModel<ModelBaseValueType>({ required: false });
 
-const formEl = computed(() => hyphenToCamelCase(toValue(props.el)) as ComponentNameEnum);
+const formEl = computed(() => toCamelCase(toValue(props.el)) as ComponentNameEnum);
 const labelValue = computed(() => toValue(props.label));
 const showLabelValue = computed(() => toValue(props.showLabel));
 const withValue = computed(() => addUnit(toValue(props.width)));

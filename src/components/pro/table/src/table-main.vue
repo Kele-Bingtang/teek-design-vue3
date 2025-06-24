@@ -55,7 +55,7 @@ watch(
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useTableInit();
 const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
-const { getOperationColumn, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
+const { getOperationProps, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
 const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
 
 // 表格选择
@@ -178,6 +178,14 @@ function useTableInit() {
     });
   };
 
+  // 清除定时器
+  const clearTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
+
   // 扁平化 columns，为了过滤搜索配置项
   const flatColumnsFn = (columns: TableColumn[], flatArr: TableColumn[] = []) => {
     columns.forEach(col => {
@@ -190,11 +198,7 @@ function useTableInit() {
   watch(
     availableColumns,
     newValue => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-
+      clearTimer();
       // 防抖：防止初始化时连续执行
       timer = setTimeout(async () => {
         const flatColumns = flatColumnsFn(newValue);
@@ -265,7 +269,7 @@ function useTableOperation() {
   /**
    * 获取操作列的配置项
    */
-  const getOperationColumn = (column: TableColumn, index: number) => {
+  const getOperationProps = (column: TableColumn, index: number) => {
     const { operationProps, operationProp } = props;
     if (column.prop === operationProp) {
       return {
@@ -280,7 +284,7 @@ function useTableOperation() {
       return {
         ...operationProps,
         width: toValue(column.width || operationProps.width),
-        label: toValue(column.label || operationProps.label),
+        label: toValue(operationProps.label),
       };
     }
 
@@ -299,7 +303,7 @@ function useTableOperation() {
     emits("cancel", params);
   };
 
-  return { getOperationColumn, handleButtonClick, handleConfirm, handleCancel };
+  return { getOperationProps, handleButtonClick, handleConfirm, handleCancel };
 }
 
 /**
@@ -437,7 +441,7 @@ defineExpose(expose);
         <!-- 操作列 -->
         <TableColumnOperation
           v-if="column.prop === operationProp || (!isEmpty(operationProps) && index === columns.length - 1)"
-          v-bind="getOperationColumn(column, index)"
+          v-bind="getOperationProps(column, index)"
           :align="column.align || 'center'"
           :prop="operationProp"
           @button-click="handleButtonClick"

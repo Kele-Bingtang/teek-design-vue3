@@ -5,6 +5,7 @@ import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp } fro
 import { toValue } from "vue";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
+import { ElDisplay } from "@/components/pro/table";
 import { isArray, isFunction } from "@/utils";
 import { useNamespace } from "@/composables";
 import DescriptionsEdit from "./edit.vue";
@@ -300,13 +301,7 @@ defineExpose({
 
           <span
             v-else-if="column.renderHTML"
-            v-html="
-              column.renderHTML({
-                value: getValue(column),
-                column,
-                data: descriptionsData,
-              })
-            "
+            v-html="column.renderHTML({ value: getValue(column), column, data: descriptionsData })"
           />
 
           <!-- 自定义插槽 -->
@@ -317,6 +312,14 @@ defineExpose({
             :column
             :data="descriptionsData"
           />
+
+          <!-- el 组件 -->
+          <ElDisplay v-else-if="column.el" :value="getValue(column)" :el="column.el" :el-props="column.elProps">
+            <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
+              <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
+            </template>
+          </ElDisplay>
+
           <!-- 默认值 -->
           <template v-else>
             {{ getValue(column) }}

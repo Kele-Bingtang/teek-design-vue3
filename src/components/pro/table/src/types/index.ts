@@ -29,3 +29,4 @@ export * from "./table-head-column-setting";
 export * from "./table-filter";
 export * from "./table-edit";
 export * from "./table-export";
+export * from "./el-display";

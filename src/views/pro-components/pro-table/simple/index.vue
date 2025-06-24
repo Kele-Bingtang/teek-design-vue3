@@ -14,7 +14,7 @@ const columns: TableColumn[] = [
   { type: "index", label: "#", width: 60 },
   { type: "sort", label: "Sort", width: 80 },
   { type: "expand", label: "Expand", width: 80 },
-  { prop: "username", label: "用户姓名" },
+  { prop: "username", label: "用户姓名", el: "copy" },
   {
     prop: "gender",
     label: "性别",

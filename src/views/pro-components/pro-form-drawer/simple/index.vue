@@ -147,15 +147,17 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <el-button @click="drawerVisible = true">打开抽屉表单</el-button>
+  <div>
+    <el-button @click="drawerVisible = true">打开抽屉表单</el-button>
 
-  <ProFormDrawer
-    v-model:visible="drawerVisible"
-    v-model="model"
-    :drawer="{ title: '表单标题', confirmLoading }"
-    :form="{ elFormProps, columns }"
-    @confirm="handleSubmit"
-  />
+    <ProFormDrawer
+      v-model:visible="drawerVisible"
+      v-model="model"
+      :drawer="{ title: '表单标题', confirmLoading }"
+      :form="{ elFormProps, columns }"
+      @confirm="handleSubmit"
+    />
 
-  {{ model }}
+    {{ model }}
+  </div>
 </template>

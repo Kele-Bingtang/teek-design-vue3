@@ -14,12 +14,22 @@ export const useTableCellEdit = (
     leaveCellEdit?: (row: TableRow, column: TableColumn) => void; // 离开单元格编辑态回调
   } = {}
 ) => {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+
   // 缓存关闭当前单元格的编辑态方法
   let closeCurrentCellEdit: (() => void) | null = null;
   // 缓存当前单元格的校验方法
   let validateCurrentCellEdit: (() => FormValidationResult | undefined) | null = () => Promise.resolve(true);
   // 缓存当前的 closeCurrentEditCell 函数
   let currentStopEditHandler: ((e: MouseEvent) => void) | null = null;
+
+  // 清除定时器
+  const clearTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
 
   /**
    * 点击单元格进入编辑态
@@ -42,13 +52,16 @@ export const useTableCellEdit = (
     // 清理之前的监听器
     if (currentStopEditHandler) document.removeEventListener("click", currentStopEditHandler);
 
-    // 定义停止编辑的函数
-    currentStopEditHandler = (e: MouseEvent) => {
-      handleStopEditClick(e, row, { ...column, ...currentColumn });
-    };
+    clearTimer();
+    timer = setTimeout(() => {
+      // 定义停止编辑的函数
+      currentStopEditHandler = (e: MouseEvent) => {
+        handleStopEditClick(e, row, { ...column, ...currentColumn });
+      };
 
-    // 添加退出单元格编辑事件监听
-    document.addEventListener("click", currentStopEditHandler);
+      // 添加退出单元格编辑事件监听
+      document.addEventListener("click", currentStopEditHandler);
+    }, 10);
 
     // 停止上一个单元格的编辑状态
     closeCurrentCellEdit?.();
@@ -65,6 +78,8 @@ export const useTableCellEdit = (
    */
   const handleStopEditClick = async (e: MouseEvent, row: TableRow, column: TableColumn) => {
     if (!(await row._validateCellEdit(undefined, column.prop))) return;
+
+    console.log(1);
 
     if (closeCurrentCellEdit && elTableInstance.value) {
       const target = e?.target as HTMLElement;
