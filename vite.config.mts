@@ -4,7 +4,7 @@ import { wrapperEnv } from "./node/getEnv";
 import { resolve } from "path";
 import { getPluginsList } from "./node/plugins";
 import { include, exclude } from "./node/optimize";
-import { getNowDate } from "./src/utils/core/helper";
+import { getNowDate } from "./src/common/utils/core/helper";
 import pkg from "./package.json";
 
 const { dependencies, devDependencies, name, version } = pkg;
@@ -24,6 +24,19 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "@assets": fileURLToPath(new URL("./src/common/assets", import.meta.url)),
+        "@api": fileURLToPath(new URL("./src/common/api", import.meta.url)),
+        "@config": fileURLToPath(new URL("./src/common/config", import.meta.url)),
+        "@directives": fileURLToPath(new URL("./src/common/directives", import.meta.url)),
+        "@enums": fileURLToPath(new URL("./src/common/enums", import.meta.url)),
+        "@http": fileURLToPath(new URL("./src/common/http", import.meta.url)),
+        "@languages": fileURLToPath(new URL("./src/common/languages", import.meta.url)),
+        "@styles": fileURLToPath(new URL("./src/common/styles", import.meta.url)),
+        "@utils": fileURLToPath(new URL("./src/common/utils", import.meta.url)),
+        "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
+        "@composables": fileURLToPath(new URL("./src/composables", import.meta.url)),
+        "@pinia": fileURLToPath(new URL("./src/pinia", import.meta.url)),
+        "@router": fileURLToPath(new URL("./src/router", import.meta.url)),
       },
     },
     plugins: getPluginsList(command, viteEnv),
@@ -54,7 +67,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/styles/index.scss" as *;`,
+          additionalData: `@use "@styles/index.scss" as *;`,
         },
       },
     },

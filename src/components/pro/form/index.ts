@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index from "./src/index.vue";
 import FormMain from "./src/form-main.vue";
 

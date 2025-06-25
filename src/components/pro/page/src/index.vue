@@ -16,7 +16,7 @@ import type { PageColumn, ProPageEmits, ProPageProps } from "./types";
 import type { PageInfo } from "@/components/pro/pagination";
 import { Search } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { isEmpty, isFunction } from "@/utils";
+import { isEmpty, isFunction } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
@@ -249,8 +249,14 @@ defineExpose(expose);
       @reset="handleReset"
       @register="searchRegister"
     >
-      <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-        <slot :name="slot" v-bind="scope" />
+      <template
+        v-for="slot in Object.keys($slots).map(key => {
+          key = key.replace('-search', '');
+          return key;
+        })"
+        #[slot]="scope"
+      >
+        <slot :name="`${slot}-search`" v-bind="scope" />
       </template>
     </ProSearch>
 

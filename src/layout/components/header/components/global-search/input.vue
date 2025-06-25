@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { mittBus } from "@/utils";
+import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { OpenSearchDialogKey } from "@/config";
+import { OpenSearchDialogKey } from "@/common/config";
 
 import "./input.scss";
 

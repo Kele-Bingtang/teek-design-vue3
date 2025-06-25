@@ -3,10 +3,10 @@ import { useI18n } from "vue-i18n";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import defaultAvatar from "@/assets/images/default.png";
-import { useUserStore } from "@/stores";
-import { mittBus } from "@/utils";
-import { LOGIN_URL, OpenThemePanelKey } from "@/config";
+import defaultAvatar from "@/common/assets/images/default.png";
+import { useUserStore } from "@/pinia";
+import { mittBus } from "@/common/utils";
+import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
 
 import "./index.scss";
 

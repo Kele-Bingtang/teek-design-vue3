@@ -1,5 +1,5 @@
-import { useRouteStore } from "@/stores";
-import SystemConfig, { LAYOUT_NAME } from "@/config";
+import { useRouteStore } from "@/pinia";
+import SystemConfig, { LAYOUT_NAME } from "@/common/config";
 
 export const useMenu = () => {
   const menuList = ref<RouterConfig[]>([]);

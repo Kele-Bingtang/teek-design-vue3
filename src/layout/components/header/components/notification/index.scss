@@ -1,5 +1,5 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(notification) {
   padding-top: 0 !important;

@@ -1,0 +1,13 @@
+@use "../mixins/namespace" as *;
+
+body {
+  color: var(--#{$admin-namespace}-text-gray-700);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: cssVar(text-gray-800);
+}

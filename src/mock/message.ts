@@ -1,4 +1,4 @@
-import type { MessageItem } from "@/stores";
+import type { MessageItem } from "@/pinia";
 import { myHtml } from "./html";
 
 export const unreadList: Array<MessageItem> = [

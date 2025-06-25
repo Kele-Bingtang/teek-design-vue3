@@ -1,5 +1,5 @@
 import type { ElOption, FormItemColumnProps } from "./form-item";
-import { isArray, isFunction } from "@/utils";
+import { isArray, isFunction } from "@/common/utils";
 import { formatValue } from "./helper";
 
 /**

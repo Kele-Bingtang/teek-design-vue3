@@ -1,6 +1,6 @@
 import { ElMessageBox } from "element-plus";
 import { ElCheckboxGroup, ElCheckbox } from "element-plus";
-import { exportJsonToExcel, formatJsonToArray } from "@/utils";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { ref, unref } from "vue";
 
 /**

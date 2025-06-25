@@ -2,8 +2,8 @@
 import { ElSelect, ElOption } from "element-plus";
 import { useI18n } from "vue-i18n";
 import { useNamespace, useBrowserTitle } from "@/composables";
-import { useSettingStore } from "@/stores";
-import { TitleModeEnum } from "@/enums/appEnum";
+import { useSettingStore } from "@/pinia";
+import { TitleModeEnum } from "@/common/enums/appEnum";
 
 defineOptions({ name: "BrowserTitleSwitch" });
 

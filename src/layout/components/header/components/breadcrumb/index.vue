@@ -2,7 +2,7 @@
 import { ElBreadcrumb, ElBreadcrumbItem } from "element-plus";
 import { ArrowRight } from "@element-plus/icons-vue";
 import { useBreadcrumbs, useNamespace } from "@/composables";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "Breadcrumb" });
 

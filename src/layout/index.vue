@@ -8,10 +8,10 @@
 import type { Component } from "vue";
 import { storeToRefs } from "pinia";
 import { useMediaQuery } from "@vueuse/core";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useUpgrade } from "@/composables";
-import { LayoutModeEnum } from "@/enums/appEnum";
-import { mobileMaxWidthMedia } from "@/config";
+import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { mobileMaxWidthMedia } from "@/common/config";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";
 import LayoutVertical from "./layout-vertical/index.vue";

@@ -382,7 +382,7 @@ const reset = () => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(count-to-demo) {
   .count-to-row {

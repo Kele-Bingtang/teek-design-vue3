@@ -1,5 +1,5 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 
 // #{$el-namespace} 默认为 el，如果组件迁移到其他项目，且项目架构与此项目不同，则请修改 #{$el-namespace} 为 el
 @include b(pro-form) {

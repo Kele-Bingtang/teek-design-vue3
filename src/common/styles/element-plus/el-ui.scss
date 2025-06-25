@@ -1,0 +1,372 @@
+@use "../mixins/namespace" as *;
+
+// 优化 Element Plus 组件库默认样式
+
+:root {
+  // 输入框边框颜色
+  // --#{$el-namespace}-border-color: #E4E4E7 !important; // DCDFE6
+  // 按钮粗度
+  --#{$el-namespace}-font-weight-primary: 400 !important;
+  --#{$el-namespace}-component-height: 36px !important;
+  --#{$el-namespace}-component-size: var(--#{$el-namespace}-component-height) !important;
+
+  // 边框、按钮圆角
+  --#{$el-namespace}-border-radius-base: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
+  --#{$el-namespace}-card-border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
+
+  .region .#{$el-namespace}-radio-button__original-radio:checked + .#{$el-namespace}-radio-button__inner {
+    color: var(--#{$admin-namespace}-main-color);
+  }
+}
+
+// 修改 el-button 高度
+// .#{$el-namespace}-button--default {
+//   height: var(--#{$el-namespace}-component-custom-height) !important;
+// }
+
+// 修改 el-select 高度
+.#{$el-namespace}-select--default {
+  .#{$el-namespace}-select__wrapper {
+    min-height: var(--#{$el-namespace}-component-height) !important;
+  }
+}
+
+// 修改 el-checkbox-button 和 el-radio-button 高度
+.#{$el-namespace}-checkbox-button--default .#{$el-namespace}-checkbox-button__inner,
+.#{$el-namespace}-radio-button--default .#{$el-namespace}-radio-button__inner {
+  padding: 10px 15px !important;
+}
+
+.#{$el-namespace}-pagination.is-background .btn-next,
+.#{$el-namespace}-pagination.is-background .btn-prev,
+.#{$el-namespace}-pagination.is-background .#{$el-namespace}-pager li {
+  border-radius: 6px;
+}
+
+.#{$el-namespace}-popover {
+  min-width: 80px;
+}
+
+.#{$el-namespace}-popper {
+  border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
+}
+
+.#{$el-namespace}-popper.clear-radius {
+  border-radius: var(--#{$el-namespace}-border-radius-base) !important;
+}
+
+/* el-drawer 样式 */
+.#{$el-namespace}-drawer {
+  .#{$el-namespace}-drawer__header {
+    padding: 15px 20px 14px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--#{$el-namespace}-border-color-lighter);
+  }
+
+  .#{$el-namespace}-drawer__footer {
+    border-top: 1px solid var(--#{$el-namespace}-border-color-lighter);
+  }
+
+  /* drawer select 样式 */
+  .#{$el-namespace}-select {
+    width: 100%;
+  }
+
+  /* drawer-form 中存在两列 form-item */
+  .drawer-multiColumn-form {
+    display: flex;
+    flex-wrap: wrap;
+
+    .#{$el-namespace}-form-item {
+      width: 47%;
+
+      &:nth-child(2n-1) {
+        margin-right: 5%;
+      }
+    }
+  }
+}
+
+.#{$el-namespace}-dialog__header {
+  padding: 7px;
+}
+
+.#{$el-namespace}-dialog__body {
+  padding: 25px 10px !important;
+}
+
+.#{$el-namespace}-dialog__footer {
+  padding: 10px;
+}
+
+// el-message 样式优化
+// .#{$el-namespace}-message {
+//   background-color: cssVar(main-bg-color) !important;
+//   border: 0 !important;
+//   box-shadow:
+//     0 6px 16px 0 rgb(0 0 0 / 8%),
+//     0 3px 6px -4px rgb(0 0 0 / 12%),
+//     0 9px 28px 8px rgb(0 0 0 / 5%) !important;
+
+//   p {
+//     font-size: 13px;
+//     color: #515a6e !important;
+//   }
+// }
+
+// 修改 el-dropdown 样式
+.#{$el-namespace}-dropdown-menu {
+  padding: 6px !important;
+  .#{$el-namespace}-dropdown-menu__item {
+    border-radius: 6px;
+  }
+}
+
+// 隐藏 select、dropdown 的三角
+// .#{$el-namespace}-select__popper,
+// .#{$el-namespace}-dropdown__popper {
+//   margin-top: -6px !important;
+
+//   .#{$el-namespace}-popper__arrow {
+//     display: none;
+//   }
+// }
+
+.#{$el-namespace}-dropdown-selfdefine:focus {
+  outline: none !important;
+}
+
+// 处理移动端组件兼容性
+@media screen and (max-width: $device-phone) {
+  .#{$el-namespace}-message-box,
+  .#{$el-namespace}-message,
+  .#{$el-namespace}-dialog {
+    width: calc(100% - 24px) !important;
+  }
+
+  .#{$el-namespace}-date-picker.has-sidebar.has-time {
+    left: 12px !important;
+    width: calc(100% - 24px);
+  }
+
+  .#{$el-namespace}-picker-panel *[slot="sidebar"],
+  .#{$el-namespace}-picker-panel__sidebar {
+    display: none;
+  }
+
+  .#{$el-namespace}-picker-panel *[slot="sidebar"] + .#{$el-namespace}-picker-panel__body,
+  .#{$el-namespace}-picker-panel__sidebar + .#{$el-namespace}-picker-panel__body {
+    margin-left: 0;
+  }
+}
+
+// 修改 el-button 样式
+.#{$el-namespace}-button {
+  &.#{$el-namespace}-button--text {
+    padding: 0 !important;
+    background-color: transparent !important;
+
+    span {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+// 修改 el-tag 样式
+.#{$el-namespace}-tag {
+  font-weight: bold;
+  border: 0 !important;
+  border-radius: 6px !important;
+
+  &--default {
+    height: 26px !important;
+    line-height: 26px !important;
+  }
+}
+
+.#{$el-namespace}-checkbox-group {
+  &.#{$el-namespace}-table-filter__checkbox-group label.#{$el-namespace}-checkbox {
+    height: 17px !important;
+
+    .#{$el-namespace}-checkbox__label {
+      font-weight: 400 !important;
+    }
+  }
+}
+
+.#{$el-namespace}-checkbox {
+  .#{$el-namespace}-checkbox__inner {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 4px !important;
+
+    &::before {
+      top: 6px !important;
+      height: 3px !important;
+      content: "";
+      background-color: #ffffff !important;
+      transform: scale(0.6) !important;
+    }
+
+    &::after {
+      inset: 0 0 4px;
+      width: 4px;
+      height: 8px;
+      margin: auto;
+      border: 2px solid var(--#{$el-namespace}-checkbox-checked-icon-color);
+      border-top: 0;
+      border-left: 0;
+    }
+  }
+}
+
+// .#{$el-namespace}-notification .#{$el-namespace}-notification__icon {
+//   font-size: 22px !important;
+// }
+
+// 修改 el-message-box 样式
+// .#{$el-namespace}-message-box__headerbtn .#{$el-namespace}-message-box__close,
+// .#{$el-namespace}-dialog__headerbtn .#{$el-namespace}-dialog__close {
+//   top: 7px !important;
+//   right: 7px !important;
+//   padding: 7px !important;
+//   color: cssVar(gray-500) !important;
+//   border-radius: 5px !important;
+//   transition: all 0.3s !important;
+
+//   &:hover {
+//     color: cssVar(gray-800) !important;
+//     background-color: cssVar(gray-200) !important;
+//   }
+// }
+
+// .#{$el-namespace}-message-box {
+//   padding: 25px 20px !important;
+// }
+
+// .#{$el-namespace}-message-box__title {
+//   font-weight: 500 !important;
+// }
+
+// .#{$el-namespace}-table__column-filter-trigger i {
+//   margin: -3px 0 0 2px;
+//   color: var(--#{$admin-namespace}-main-color) !important;
+// }
+
+// 去除 el-dropdown 鼠标放上去出现的边框
+.#{$el-namespace}-tooltip__trigger:focus-visible {
+  outline: unset;
+}
+
+// ipad 表单右侧按钮优化
+@media screen and (max-width: $device-ipad-pro) {
+  .#{$el-namespace}-table-fixed-column--right {
+    padding-right: 0 !important;
+
+    .#{$el-namespace}-button {
+      margin: 5px 10px 5px 0 !important;
+    }
+  }
+}
+
+// 修改 dialog 动画
+.dialog-fade-enter-active {
+  .#{$el-namespace}-dialog {
+    animation: dialog-open 0.3s cubic-bezier(0.32, 0.14, 0.15, 0.86);
+
+    // 修复 el-dialog 动画后宽度不自适应问题
+    .#{$el-namespace}-select__selected-item {
+      display: inline-block;
+    }
+  }
+}
+
+.dialog-fade-leave-active {
+  animation: fade-out 0.2s linear;
+
+  .#{$el-namespace}-dialog {
+    animation: dialog-close 0.2s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  }
+}
+
+@keyframes dialog-open {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dialog-close {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+// 遮罩层动画
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+// 修改 el-select 样式
+.#{$el-namespace}-select__popper:not(.#{$el-namespace}-tree-select__popper) {
+  .#{$el-namespace}-select-dropdown__list {
+    padding: 5px !important;
+
+    .#{$el-namespace}-select-dropdown__item {
+      height: 34px !important;
+      line-height: 34px !important;
+      border-radius: 6px !important;
+
+      &.is-selected {
+        margin-bottom: 4px !important;
+        font-weight: 400 !important;
+        color: cssVar(gray-900) !important;
+        background-color: cssVar(gray-200) !important;
+      }
+
+      &:hover {
+        background-color: cssVar(gray-200) !important;
+      }
+    }
+
+    .#{$el-namespace}-select-dropdown__item:hover ~ .is-selected,
+    .#{$el-namespace}-select-dropdown__item.is-selected:has(~ .#{$el-namespace}-select-dropdown__item:hover) {
+      background-color: transparent !important;
+    }
+  }
+}
+
+// 修改 el-tree-select 样式
+.#{$el-namespace}-tree-select__popper {
+  .#{$el-namespace}-select-dropdown__list {
+    padding: 5px !important;
+
+    .#{$el-namespace}-tree-node {
+      .#{$el-namespace}-tree-node__content {
+        height: 36px !important;
+        border-radius: 6px !important;
+
+        &:hover {
+          background-color: cssVar(gray-200) !important;
+        }
+      }
+    }
+  }
+}

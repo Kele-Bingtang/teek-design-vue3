@@ -1,4 +1,4 @@
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(pro-search) {
   padding: 18px 18px 0 !important;

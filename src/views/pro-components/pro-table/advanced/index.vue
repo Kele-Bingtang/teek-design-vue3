@@ -4,7 +4,7 @@ import { useConfirm, usePermission } from "@/composables";
 import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
 import { tableData } from "@/mock/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
-import { exportJsonToExcel, formatJsonToArray } from "@/utils";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { withModifiers } from "vue";
 
 export interface ResUserList {
@@ -36,7 +36,7 @@ const columns: TableColumn<ResUserList>[] = [
   {
     prop: "username",
     label: "用户姓名",
-    render: value => {
+    render: ({ value }) => {
       return (
         <ElButton
           type="primary"
@@ -107,7 +107,7 @@ const columns: TableColumn<ResUserList>[] = [
       { userLabel: "禁用", userStatus: 0 },
     ],
     optionField: { label: "userLabel", value: "userStatus" },
-    render: (value, { row }) => {
+    render: ({ value, row }) => {
       return (
         <>
           {hasAuth("edit") ? (
@@ -231,7 +231,7 @@ const confirmEdit = (row: TableRow) => {
       {{ scope.row }}
     </template>
 
-    <template #usernameHeader="scope">
+    <template #username-header="scope">
       <el-button type="primary" @click="ElMessage.success('我是通过作用域插槽渲染的表头')">
         {{ scope.column.label }}
       </el-button>

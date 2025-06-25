@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import ClassicTabNav from "../tab-nav-classic/index.vue";
 
 defineOptions({ name: "SimpleTabNav" });

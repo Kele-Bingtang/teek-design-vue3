@@ -5,8 +5,8 @@ import type { RenderTypes } from "@/components/pro/form-item";
 import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
-import { isString } from "@/utils";
+import { useLayoutStore } from "@/pinia";
+import { isString } from "@/common/utils";
 import ProTable from "../index.vue";
 
 export const useProTable = () => {

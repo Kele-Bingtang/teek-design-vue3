@@ -3,7 +3,7 @@ import type { OperationNamespace, TableRow } from "../types";
 import { toValue } from "vue";
 import { ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem, ElIcon } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
-import { isFunction } from "@/utils";
+import { isFunction } from "@/common/utils";
 import { toCamelCase } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { OperationConfirmEl, OperationEl, lastProp } from "../helper";

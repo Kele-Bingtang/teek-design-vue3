@@ -1,7 +1,7 @@
 import { useRoute } from "vue-router";
 import router from "@/router";
-import { useUserStore } from "@/stores";
-import { isIncludeAll, isIncludeSome, isString } from "@/utils";
+import { useUserStore } from "@/pinia";
+import { isIncludeAll, isIncludeSome, isString } from "@/common/utils";
 
 export const usePermission = () => {
   const userStore = useUserStore();

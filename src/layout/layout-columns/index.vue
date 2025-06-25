@@ -3,11 +3,11 @@ import { watch, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { ElContainer, ElAside, ElHeader, ElScrollbar } from "element-plus";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useMenu } from "@/composables";
 import { Tooltip } from "@/components";
 import { useNamespace } from "@/composables";
-import SystemConfig, { HOME_URL } from "@/config";
+import SystemConfig, { HOME_URL } from "@/common/config";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";
@@ -58,7 +58,7 @@ const changeMenuItem = (item: RouterConfig) => {
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
     <div :class="[ns.e('aside'), 'flx-column']">
       <div :class="[ns.e('logo'), ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
-        <img src="@/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
+        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
       </div>
 
       <el-scrollbar>
@@ -99,7 +99,7 @@ const changeMenuItem = (item: RouterConfig) => {
     </el-aside>
 
     <el-container>
-      <el-header :class="[ns.join('layout-header'), 'flx-justify-between']">
+      <el-header :class="[ns.join('layout-header'), 'flx-align-center-between']">
         <Header />
       </el-header>
       <PageContent />

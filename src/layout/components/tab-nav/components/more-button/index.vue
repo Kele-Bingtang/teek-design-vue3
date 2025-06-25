@@ -13,7 +13,7 @@ import {
   FolderDelete,
 } from "@element-plus/icons-vue";
 import { useDebounceFn } from "@vueuse/core";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../../use-tab-nav";
 
 defineOptions({ name: "TabNavButton" });

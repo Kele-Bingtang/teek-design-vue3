@@ -1,6 +1,6 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
-@use "@/styles/variables" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
+@use "@styles/variables" as *;
 
 @include b(login-form) {
   @include el-joins(form-item) {

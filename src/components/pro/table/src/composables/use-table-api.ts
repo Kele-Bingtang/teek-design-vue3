@@ -1,6 +1,6 @@
 import type { ProTableNamespace, TableColumn } from "../types";
 import { setProp } from "@/components/pro/helper";
-import { isString } from "@/utils";
+import { isString } from "@/common/utils";
 
 export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
   const mergeProps = ref<ProTableNamespace.Props>({});

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="SwitchPermission">
-import { useUserStore } from "@/stores";
+import { useUserStore } from "@/pinia";
 import { usePermission } from "@/composables";
-import { RefreshPageKey } from "@/config";
+import { RefreshPageKey } from "@/common/config";
 
 const userStore = useUserStore();
 const { getRoleList, getAuthList, hasRole, hasAuth } = usePermission();

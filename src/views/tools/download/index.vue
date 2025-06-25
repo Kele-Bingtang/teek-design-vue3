@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Download">
-import { downloadByOnlineUrl, downloadByBase64, downloadByData, downloadByUrl } from "@/utils";
+import { downloadByOnlineUrl, downloadByBase64, downloadByData, downloadByUrl } from "@/common/utils";
 import axios from "axios";
 
 const imgUrl = "https://cdn.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png";

@@ -28,28 +28,29 @@ export * from "./pro/tree-filter";
 export * from "./pro/v1/pro-steps";
 export * from "./pro/v1/pro-transfer";
 
-export * from "./pro/form";
-
 export * from "./editor/code-mirror";
 export * from "./editor/tinymce";
 export * from "./editor/wang-editor";
 
-export * from "./view/count-to";
-export * from "./view/cropper";
-export * from "./view/drag-drawer";
-export * from "./view/draggable-item";
-export * from "./view/draggable-list";
-export * from "./view/flicker";
-export * from "./view/highlight";
-export * from "./view/icon-picker";
-export * from "./view/material-input";
-export * from "./view/qr-code";
-export * from "./view/seamless-scroll";
-export * from "./view/split-pane";
-export * from "./view/table-sort";
-export * from "./view/text-hover-effect";
-export * from "./view/excel-upload";
-export * from "./view/images-upload";
-export * from "./view/video-player";
+export * from "./chart";
+export * from "./card";
+
+export * from "./page/count-to";
+export * from "./page/cropper";
+export * from "./page/drag-drawer";
+export * from "./page/draggable-item";
+export * from "./page/draggable-list";
+export * from "./page/flicker";
+export * from "./page/highlight";
+export * from "./page/icon-picker";
+export * from "./page/material-input";
+export * from "./page/qr-code";
+export * from "./page/seamless-scroll";
+export * from "./page/split-pane";
+export * from "./page/table-sort";
+export * from "./page/text-hover-effect";
+export * from "./page/excel-upload";
+export * from "./page/images-upload";
+export * from "./page/video-player";
 
 export * from "./pro/helper";

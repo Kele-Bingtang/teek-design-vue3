@@ -5,7 +5,7 @@
     </div>
  -->
 <script setup lang="ts">
-import { isArray } from "@/utils";
+import { isArray } from "@/common/utils";
 import { useSlots, ref, computed, onMounted, onUpdated, onBeforeMount } from "vue";
 import { ElTooltip } from "element-plus";
 

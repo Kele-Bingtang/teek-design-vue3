@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { switchThemeWithAnimation } from "./animation";
 

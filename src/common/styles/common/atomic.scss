@@ -1,0 +1,128 @@
+@use "../mixins/namespace" as *;
+
+/* flex */
+.flx {
+  display: flex;
+}
+
+.flx-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flx-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flx-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flx-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.flx-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flx-justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flx-align-center-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flx-justify-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flx-align-center-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.flx-1 {
+  flex: 1;
+}
+
+.flx-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-15 {
+  gap: 15px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+/* 文字单行省略号 */
+.sle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 文字多行省略号 */
+.mle {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.clearfix {
+  &::after {
+    clear: both;
+    display: table;
+    content: "";
+  }
+}
+
+/* 自定义 card 卡片样式 */
+.#{$admin-namespace}-card-primary {
+  padding: 20px;
+  background-color: var(--#{$admin-namespace}-main-bg-color);
+  border: 1px solid var(--#{$admin-namespace}-card-border-color-primary);
+  border-radius: calc(var(--#{$admin-namespace}-radius) / 2 + 2px);
+}
+
+.#{$admin-namespace}-card-regular {
+  padding: 10px;
+  background-color: var(--#{$admin-namespace}-main-bg-color);
+  border: 1px solid var(--#{$admin-namespace}-card-border-color-regular);
+  border-radius: calc(var(--#{$admin-namespace}-radius));
+}
+
+.#{$admin-namespace}-card-secondary {
+  background-color: var(--#{$admin-namespace}-main-bg-color);
+  border: 1px solid var(--#{$admin-namespace}-card-border-color-secondary);
+  border-radius: calc(var(--#{$admin-namespace}-radius) + 4px);
+  box-shadow: var(--#{$admin-namespace}-card-shadow);
+}

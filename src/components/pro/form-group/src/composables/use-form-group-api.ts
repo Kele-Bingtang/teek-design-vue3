@@ -1,7 +1,7 @@
 import type { FormColumn } from "@/components/pro/form";
 import type { ProFormGroupProps } from "../types";
 import { setProp } from "@/components/pro/helper";
-import { isString } from "@/utils";
+import { isString } from "@/common/utils";
 
 export const useFormGroupApi = (model: Ref<Recordable>, columns: MaybeRef<FormColumn[]> = []) => {
   const mergeProps = ref<ProFormGroupProps>({});

@@ -55,7 +55,7 @@ const uploadImage = (imgData: FormData) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(cropper-demo) {
   width: 1000px;

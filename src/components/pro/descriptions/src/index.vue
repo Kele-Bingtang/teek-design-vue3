@@ -6,7 +6,7 @@ import { toValue } from "vue";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import { ElDisplay } from "@/components/pro/table";
-import { isArray, isFunction } from "@/utils";
+import { isArray, isFunction } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import DescriptionsEdit from "./edit.vue";
 
@@ -277,7 +277,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="[ns.b(), { 'tk-card': card }]">
+  <div :class="[ns.b(), { [ns.join('card-primary')]: card }]">
     <el-descriptions v-bind="$attrs">
       <slot>
         <el-descriptions-item
@@ -318,9 +318,9 @@ defineExpose({
           />
 
           <!-- 自定义 Render 函数渲染 -->
-          <component v-else-if="column.render" :is="column.render(getValue(column), getRenderParams(column))" />
+          <component v-else-if="column.render" :is="column.render(getRenderParams(column))" />
           <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
-          <span v-else-if="column.renderHTML" v-html="column.renderHTML(getValue(column), getRenderParams(column))" />
+          <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(column))" />
           <!-- 自定义插槽，插槽名为 column.prop -->
           <slot v-else-if="$slots[column.prop || '']" :name="column.prop || ''" v-bind="getRenderParams(column)" />
           <!-- 自定义 el 组件 -->

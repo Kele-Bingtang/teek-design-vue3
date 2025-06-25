@@ -1,7 +1,7 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import SystemConfig from "@/config";
-import { t } from "@/languages";
-import { isFunction } from "@/utils";
+import SystemConfig from "@/common/config";
+import { t } from "@/common/languages";
+import { isFunction } from "@/common/utils";
 
 type Route = RouteLocationNormalizedLoaded | RouterConfigRaw;
 

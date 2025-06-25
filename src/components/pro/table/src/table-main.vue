@@ -4,7 +4,7 @@ import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn
 import { toValue } from "vue";
 import { ElTable, ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
-import { isEmpty } from "@/utils";
+import { isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
 import { getProp, filterOptions, filterOptionsValue, getObjectKeys } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
@@ -462,7 +462,7 @@ defineExpose(expose);
     <template #empty>
       <div :class="ns.e('empty')">
         <slot name="empty">
-          <img src="@/assets/images/notData.png" alt="notData" />
+          <img src="@/common/assets/images/notData.png" alt="notData" />
           <div>{{ emptyText }}</div>
         </slot>
       </div>

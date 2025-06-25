@@ -145,6 +145,7 @@
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-url-copy": "^1.1.4",
+    "vite-plugin-vue-devtools": "^7.7.7",
     "vue-eslint-parser": "^10.1.1",
     "vue-tsc": "^2.2.10"
   },

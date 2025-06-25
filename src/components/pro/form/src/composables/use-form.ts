@@ -4,8 +4,8 @@ import type { FormColumn, ProFormInstance, ProFormNamespace } from "../types";
 import { ElConfigProvider } from "element-plus";
 import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
-import { isString } from "@/utils";
+import { useLayoutStore } from "@/pinia";
+import { isString } from "@/common/utils";
 import { filterEmpty } from "../../../helper";
 import ProForm from "../index.vue";
 

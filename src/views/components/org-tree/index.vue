@@ -199,7 +199,7 @@ const onNodeClick = (e: MouseEvent, data: any) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(org-tree-demo) {
   .tree-org-node__text {

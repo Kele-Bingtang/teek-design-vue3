@@ -1,6 +1,6 @@
 import type { ProTableMainNamespace } from "../types";
 import { ref } from "vue";
-import { isFunction } from "@/utils";
+import { isFunction } from "@/common/utils";
 
 /**
  * 表格多选数据操作

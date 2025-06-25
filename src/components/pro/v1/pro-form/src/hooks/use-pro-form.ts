@@ -14,8 +14,8 @@ import {
   type ShallowRef,
 } from "vue";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
-import { isObject } from "@/utils";
+import { useLayoutStore } from "@/pinia";
+import { isObject } from "@/common/utils";
 
 export const useProForm = () => {
   // ProFrom 实例

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="RolePermission">
-import { useRouteStore, useUserStore } from "@/stores";
+import { useRouteStore, useUserStore } from "@/pinia";
 import { useMenu, useRouteFn } from "@/composables";
 import { ElMessage, ElMessageBox, ElNotification, ElTree } from "element-plus";
 import type { TreeKey } from "element-plus/es/components/tree/src/tree.type";

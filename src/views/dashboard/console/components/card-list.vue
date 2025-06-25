@@ -39,9 +39,9 @@ const dataList = reactive([
 </script>
 
 <template>
-  <el-row :gutter="20" class="card-list">
+  <el-row :gutter="20" class="card-list flx-wrap">
     <el-col v-for="(item, index) in dataList" :key="index" :sm="12" :md="6" :lg="6">
-      <div class="card tk-card-2">
+      <div class="card tk-card-secondary">
         <span class="des subtitle">{{ item.des }}</span>
 
         <CountTo class="number box-title" :end-val="item.num" :duration="1000" separator="" />
@@ -52,24 +52,20 @@ const dataList = reactive([
             {{ item.change }}
           </span>
         </div>
-        <Icon class="sys" :icon="item.icon"></Icon>
+        <Icon class="icon-sys" :icon="item.icon"></Icon>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/function" as *;
 
 .card-list {
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
   background-color: transparent !important;
 
-  .tk-card-2 {
+  .tk-card-secondary {
     position: relative;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -81,7 +77,7 @@ const dataList = reactive([
 
     $icon-size: 52px;
 
-    .sys {
+    .icon-sys {
       position: absolute;
       top: 0;
       right: 20px;
@@ -143,8 +139,8 @@ const dataList = reactive([
 
 .dark {
   .card-list {
-    .tk-card {
-      .iconfont-sys {
+    .tk-card-secondary {
+      .icon-sys {
         background-color: #232323 !important;
       }
     }

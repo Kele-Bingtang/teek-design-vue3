@@ -202,7 +202,7 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 /* 富文本组件校验失败样式 */
 .is-error {

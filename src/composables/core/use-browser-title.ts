@@ -1,7 +1,7 @@
 import { tryOnScopeDispose } from "@vueuse/core";
-import { useSettingStore, useUserStore } from "@/stores";
-import SystemConfig from "@/config";
-import { TitleModeEnum } from "@/enums/appEnum";
+import { useSettingStore, useUserStore } from "@/pinia";
+import SystemConfig from "@/common/config";
+import { TitleModeEnum } from "@/common/enums/appEnum";
 import { formatTitle } from "@/router/helper";
 
 export const useBrowserTitle = () => {

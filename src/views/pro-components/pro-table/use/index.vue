@@ -133,7 +133,7 @@ const columns = reactive<TableColumn<ResUserList>[]>([
   {
     prop: "username",
     label: "用户姓名",
-    render: value => {
+    render: ({ value }) => {
       return (
         <ElButton type="primary" link onClick={() => ElMessage.success("我是通过 tsx 语法渲染的内容")}>
           {value}

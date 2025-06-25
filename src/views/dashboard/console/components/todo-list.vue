@@ -34,7 +34,7 @@ const list = reactive([
 </script>
 
 <template>
-  <div class="card tk-card-2">
+  <div class="card tk-card-secondary">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">代办事项</h4>
@@ -56,10 +56,9 @@ const list = reactive([
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/function" as *;
 
 .card {
-  box-sizing: border-box;
   width: 100%;
   height: 510px;
   padding: 0 25px;

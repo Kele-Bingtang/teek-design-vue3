@@ -1,19 +1,21 @@
 import { createApp } from "vue";
-import pinia from "@/stores";
-import App from "./App.vue";
-import router from "./router";
-import "@/styles/normalize.css"; // CSS Reset
-import "@/styles/element-plus/el-ui.scss";
-import "@/styles/element-plus/el-light.scss";
-import "@/styles/element-plus/el-dark.scss";
-import "@/styles/plugin.scss";
-import directives from "@/directives";
-import I18n from "@/languages";
+import pinia from "@/pinia";
+import router from "@/router";
+import directives from "@/common/directives";
+import I18n from "@/common/languages";
+import { errorHandler, checkNeed, log } from "@/common/utils";
 import { Icon, Auth, Role } from "@/components";
-import { errorHandler, checkNeed, log } from "@/utils";
+import App from "./App.vue";
 import Vue3TreeOrg from "vue3-tree-org";
 import "virtual:svg-icons-register";
 import "vue3-tree-org/lib/vue3-tree-org.css";
+
+import "@styles/common/normalize.css"; // CSS Reset
+import "@styles/common/base.css";
+import "@styles/element-plus/el-ui.scss";
+import "@styles/element-plus/el-light.scss";
+import "@styles/element-plus/el-dark.scss";
+import "@styles/plugin.scss";
 
 const app = createApp(App);
 

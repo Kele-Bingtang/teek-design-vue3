@@ -15,7 +15,7 @@ import {
   type ShallowRef,
 } from "vue";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 
 export const useProTable = () => {
   // ProTable 实例

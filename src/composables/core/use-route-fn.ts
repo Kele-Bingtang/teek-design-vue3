@@ -4,10 +4,10 @@ import { ElNotification } from "element-plus";
 import router from "@/router";
 import { notFoundRouter, rolesRoutes } from "@/router/routes-config";
 import { translateTitle } from "@/router/helper";
-import { useRouteStore, useUserStore } from "@/stores";
-import { isValidURL, isType, isFunction } from "@/utils";
+import { useRouteStore, useUserStore } from "@/pinia";
+import { isValidURL, isType, isFunction } from "@/common/utils";
 import { useCache } from "@/composables";
-import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/config";
+import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
 
 type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
 

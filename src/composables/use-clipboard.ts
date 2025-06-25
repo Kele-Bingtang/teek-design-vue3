@@ -1,4 +1,4 @@
-import { isClient } from "@/utils";
+import { isClient } from "@/common/utils";
 import { ref } from "vue";
 
 /**

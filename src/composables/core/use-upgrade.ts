@@ -1,6 +1,6 @@
 import { ElNotification } from "element-plus";
-import SystemConfig, { LOGIN_NAME } from "@/config";
-import { useUserStore } from "@/stores";
+import SystemConfig, { LOGIN_NAME } from "@/common/config";
+import { useUserStore } from "@/pinia";
 import { useNamespace } from "./use-namespace";
 import { useStorage } from "./use-storage";
 

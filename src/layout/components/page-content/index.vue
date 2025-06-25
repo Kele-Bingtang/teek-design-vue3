@@ -3,10 +3,10 @@ import type { Component } from "vue";
 import { computed, ref, nextTick, provide, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { ElMain } from "element-plus";
-import { RefreshPageKey } from "@/config";
-import { getUrlParams, mittBus } from "@/utils";
-import { useLayoutStore, useSettingStore } from "@/stores";
-import { TabNavModeEnum } from "@/enums/appEnum";
+import { RefreshPageKey } from "@/common/config";
+import { getUrlParams, mittBus } from "@/common/utils";
+import { useLayoutStore, useSettingStore } from "@/pinia";
+import { TabNavModeEnum } from "@/common/enums/appEnum";
 import SimpleTabNav from "../tab-nav/tab-nav-simple/index.vue";
 import ClassicTabNav from "../tab-nav/tab-nav-classic/index.vue";
 import ElTabNav from "../tab-nav/tab-nav-element/index.vue";
@@ -83,7 +83,7 @@ const isFixTabNav = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include el-joins(main) {
   padding: 0;
@@ -91,17 +91,18 @@ const isFixTabNav = computed(() => {
 
   .page-content {
     flex: 1;
-    max-height: calc(
-      100vh - var(--#{$admin-namespace}-layout-header-height) - var(--#{$admin-namespace}-layout-tab-height) - 18px
-    );
     padding: 10px 12px;
     overflow: v-bind(isFixTabNav);
+
+    // max-height: calc(
+    //   100vh - var(--#{$admin-namespace}-layout-header-height) - var(--#{$admin-namespace}-layout-tab-height)
+    // );
   }
 }
 </style>
 
 <style lang="scss">
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 /* 当前页面最大化 */
 .page-maximize {

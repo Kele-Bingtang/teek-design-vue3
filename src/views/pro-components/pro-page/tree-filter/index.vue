@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ProTable, TreeFilter, type TableColumn, type ProTableInstance } from "@/components";
-import { useConfirm } from "@/composables";
+import { useConfirm } from "@composables";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { genderType, tableData, userStatus, department } from "@/mock/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
-import { exportJsonToExcel, formatJsonToArray } from "@/utils";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import type { ResUserList } from "../advanced/index.vue";
 
 const proTableRef = useTemplateRef<ProTableInstance>("proTableRef");

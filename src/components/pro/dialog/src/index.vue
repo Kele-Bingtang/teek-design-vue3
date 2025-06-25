@@ -3,7 +3,7 @@ import type { DialogProps } from "element-plus";
 import type { ProDialogEmits, ProDialogProps } from "./types";
 import { nextTick, ref, watch } from "vue";
 import { ElDialog, ElScrollbar, ElButton } from "element-plus";
-import { addUnit } from "@/utils";
+import { addUnit } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { Icon } from "@/components/core/icon";
 

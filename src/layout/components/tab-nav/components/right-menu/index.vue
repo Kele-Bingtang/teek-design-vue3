@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TabProp } from "@/stores";
+import type { TabProp } from "@/pinia";
 import { useTabNav, type ContextMenuCondition } from "../../use-tab-nav";
 import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, FolderDelete } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";

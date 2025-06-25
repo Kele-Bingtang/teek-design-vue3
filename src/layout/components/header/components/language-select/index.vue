@@ -3,8 +3,8 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from "element-plus";
 import { useBrowserTitle } from "@/composables";
-import { useLayoutStore } from "@/stores";
-import type { LanguageEnum } from "@/enums/appEnum";
+import { useLayoutStore } from "@/pinia";
+import type { LanguageEnum } from "@/common/enums/appEnum";
 
 const localList = [
   { label: "中文简体", value: "zh-CN" },

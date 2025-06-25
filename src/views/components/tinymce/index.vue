@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TinymceDemo">
 import { Tinymce, type UITheme } from "@/components";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 import { tinymceHtml } from "@/mock/tinymce";
 import { ElMessage } from "element-plus";
 

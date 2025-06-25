@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Close } from "@element-plus/icons-vue";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "CustomTransition" });
@@ -21,8 +21,8 @@ const exitMaximize = () => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(maximize) {
   position: fixed;

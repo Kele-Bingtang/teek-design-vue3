@@ -14,7 +14,7 @@ import { type FormSchemaProps, type FormSetProps, setProp } from "@/components/p
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { ElFormItem, ElButton, ElIcon, type FormItemProp } from "element-plus";
-import { isEmpty, isObject, isString } from "@/utils";
+import { isEmpty, isObject, isString } from "@/common/utils";
 
 defineOptions({ name: "ProSearch" });
 

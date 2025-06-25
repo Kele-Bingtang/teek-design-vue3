@@ -4,8 +4,8 @@ import type { DrawerProps } from "element-plus";
 import { render, getCurrentInstance, nextTick, ref } from "vue";
 import { ElDrawer, ElButton, ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
-import { isArray } from "@/utils";
-import { GlobalConfigKey } from "@/config";
+import { isArray } from "@/common/utils";
+import { GlobalConfigKey } from "@/common/config";
 import { Icon } from "@/components";
 
 import "./index.scss";

@@ -1,6 +1,6 @@
-import { useSettingStore } from "@/stores";
-import { addUnit, removeStyleVar, setCssVar } from "@/utils";
-import { HeaderStyleEnum } from "@/enums/appEnum";
+import { useSettingStore } from "@/pinia";
+import { addUnit, removeCssVar, setCssVar } from "@/common/utils";
+import { HeaderStyleEnum } from "@/common/enums/appEnum";
 import { useNamespace } from "./use-namespace";
 
 export const useWatchCssVar = () => {
@@ -25,19 +25,19 @@ export const useWatchCssVar = () => {
 
     const headerLine = ns.cssVarName("layout-header-line");
     const tabLine = ns.cssVarName("layout-tab-line");
-    const borderStyle = `1px solid var(--${ns.namespace}-card-border)`;
+    const borderStyle = `1px solid var(--${ns.namespace}-card-border-color-primary)`;
 
-    if (headerStyle.value === HeaderStyleEnum.Page) return removeStyleVar([headerBg, tabBg, headerLine, tabLine]);
+    if (headerStyle.value === HeaderStyleEnum.Page) return removeCssVar([headerBg, tabBg, headerLine, tabLine]);
 
     if (headerStyle.value === HeaderStyleEnum.Bg) {
-      removeStyleVar([headerLine, tabLine]);
+      removeCssVar([headerLine, tabLine]);
 
       setCssVar(headerBg, bgStyle);
       setCssVar(tabBg, bgStyle);
     }
 
     if (headerStyle.value === HeaderStyleEnum.Line) {
-      removeStyleVar([headerBg, tabBg]);
+      removeCssVar([headerBg, tabBg]);
 
       setCssVar(headerLine, borderStyle);
       setCssVar(tabLine, borderStyle);

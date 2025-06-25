@@ -1,5 +1,5 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 
 @include b(error-badge) {
   :deep(.#{$el-namespace}-badge__content.is-fixed) {

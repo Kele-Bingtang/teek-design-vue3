@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index from "./src/index.vue";
 import tableMain from "./src/table-main.vue";
 import ElDisplay from "./src/plugins/el-display.vue";

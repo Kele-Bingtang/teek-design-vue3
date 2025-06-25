@@ -11,12 +11,14 @@ import progress from "vite-plugin-progress";
 import { createStyleImportPlugin, ElementPlusResolve } from "vite-plugin-style-import";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import vueDevTools from "vite-plugin-vue-devtools";
 
 export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
     vueJsx(),
+    vueDevTools(),
     eslintPlugin({ cache: false }), // EsLint 报错信息显示在浏览器界面上
     ServerUrlCopy({
       qrcode: {
@@ -57,7 +59,7 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
       : undefined,
     // 使用 svg 图标
     createSvgIconsPlugin({
-      iconDirs: [resolve(process.cwd(), "src/assets/icons")],
+      iconDirs: [resolve(process.cwd(), "src/common/assets/icons")],
       symbolId: "icon-[dir]-[name]",
     }),
     viteEnv.VITE_BUILD_GZIP && configCompressPlugin(viteEnv.VITE_COMPRESSION),

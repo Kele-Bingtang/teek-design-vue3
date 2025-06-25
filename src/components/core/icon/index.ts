@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index from "./src/index.vue";
 import SvgIcon from "./src/components/svg-icon.vue";
 import FontIcon from "./src/components/font-icon.vue";

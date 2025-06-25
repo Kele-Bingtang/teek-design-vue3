@@ -13,7 +13,7 @@ import {
   onDeactivated,
   onActivated,
 } from "vue";
-import { isObject } from "@/utils";
+import { isObject } from "@/common/utils";
 
 defineOptions({ name: "Grid" });
 

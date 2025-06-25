@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import avatar1 from "@/assets/images/default.png";
-import avatar2 from "@/assets/images/default.png";
-import avatar3 from "@/assets/images/default.png";
-import avatar4 from "@/assets/images/default.png";
-import avatar5 from "@/assets/images/default.png";
-import avatar6 from "@/assets/images/default.png";
+import avatar1 from "@/common/assets/images/default.png";
+import avatar2 from "@/common/assets/images/default.png";
+import avatar3 from "@/common/assets/images/default.png";
+import avatar4 from "@/common/assets/images/default.png";
+import avatar5 from "@/common/assets/images/default.png";
+import avatar6 from "@/common/assets/images/default.png";
 
 const radio2 = ref("本月");
 
@@ -86,7 +86,7 @@ const addAnimation = () => {
 </script>
 
 <template>
-  <div class="card tk-card-2">
+  <div class="card tk-card-secondary">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">新用户</h4>

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Print">
-import { Print } from "@/utils";
+import { Print } from "@/common/utils";
 import ChartLine from "@/views/home/components/chart-line.vue";
 import { simpleData } from "@/mock/table";
 

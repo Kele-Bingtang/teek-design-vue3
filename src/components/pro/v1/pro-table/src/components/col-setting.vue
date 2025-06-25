@@ -42,7 +42,7 @@ defineExpose({
         </el-table-column>
         <template #empty>
           <div :class="`${prefixClass}__empty`">
-            <img src="@/assets/images/notData.png" alt="notData" />
+            <img src="@/common/assets/images/notData.png" alt="notData" />
             <div>暂无可配置列</div>
           </div>
         </template>

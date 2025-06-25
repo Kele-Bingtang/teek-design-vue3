@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Login">
 import { SwitchDark } from "@/components";
 import LoginForm from "./loginForm.vue";
-import SystemConfig from "@/config";
+import SystemConfig from "@/common/config";
 import Phone from "./components/phone.vue";
 import QrCode from "./components/qrCode.vue";
 import Register from "./components/register.vue";
@@ -32,12 +32,12 @@ provide("switchLoginMode", switchLoginMode);
     <SwitchDark :class="ns.e('dark')" />
     <div :class="ns.e('wrapper')">
       <div :class="ns.e('left')">
-        <img src="@/assets/images/login/login_left.png" alt="login" />
+        <img src="@/common/assets/images/login/login_left.png" alt="login" />
       </div>
 
       <div :class="ns.e('right')">
         <div :class="[ns.e('right__header'), 'flx-center']">
-          <img src="@/assets/images/logo.png" alt="" />
+          <img src="@/common/assets/images/logo.png" alt="" />
           <h2 class="title">{{ SystemConfig.systemInfo.name }}</h2>
         </div>
 

@@ -99,7 +99,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(draggable-list-demo) {
   width: 100%;
@@ -141,7 +141,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 </style>
 
 <style lang="scss">
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(draggable-list-demo) {
   @include e(card) {

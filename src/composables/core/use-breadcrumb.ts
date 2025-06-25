@@ -1,11 +1,11 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
-import { useRouteStore } from "@/stores";
+import { useRouteStore } from "@/pinia";
 import { useRouteFn } from "./use-route-fn";
 import { tryOnScopeDispose } from "@vueuse/core";
 import { formatTitle } from "@/router/helper";
-import { LAYOUT_NAME } from "@/config";
+import { LAYOUT_NAME } from "@/common/config";
 
 export const useBreadcrumbs = () => {
   const breadcrumbList = ref<RouteLocationNormalizedLoaded[]>([]);

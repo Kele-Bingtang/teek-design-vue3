@@ -7,7 +7,7 @@ import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, rende
 import { ElConfigProvider } from "element-plus";
 import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 import ProSearch from "../index.vue";
 
 type ProSearchPropsWithModel = ProSearchProps & { modelValue?: Recordable };

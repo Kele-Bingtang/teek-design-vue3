@@ -3,7 +3,7 @@ import { ref, onMounted, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
-import { useLayoutStore, useSettingStore } from "@/stores";
+import { useLayoutStore, useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 import { useTabNav } from "../use-tab-nav";
 import MoreButton from "../components/more-button/index.vue";

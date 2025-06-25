@@ -2,8 +2,8 @@
 import { IconPicker } from "@/components";
 import Upload from "@iconify-icons/ant-design/upload";
 
-import "@/assets/iconfont/iconfont.js";
-import "@/assets/iconfont/iconfont.css";
+import "@/common/assets/iconfont/iconfont.js";
+import "@/common/assets/iconfont/iconfont.css";
 
 const currentIcon = ref("");
 </script>

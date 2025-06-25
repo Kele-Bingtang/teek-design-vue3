@@ -4,7 +4,7 @@ import Account from "./components/account/index.vue";
 import UserInfo from "./components/user-info/index.vue";
 import UserAvatar from "./components/user-avatar/index.vue";
 import Timeline from "./components/timeline/index.vue";
-import { useUserStore } from "@/stores";
+import { useUserStore } from "@/pinia";
 
 const userStore = useUserStore();
 const activeTab = ref("timeline");

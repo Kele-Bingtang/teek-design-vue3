@@ -170,7 +170,7 @@ Admin 对 axios 进行了一些处理，可以在 params 下添加了一个关�
 如果发送请求时，需要显示全局 loading 加载，在 api 服务中通过指定: { headers: { loading: true } } 来控制显示 loading
 
 ```typescript
-import http from "@/request";
+import http from "@/common/http";
 
 export const api = () => {
   http.request({
@@ -188,7 +188,7 @@ export const api = () => {
 当项目变得复杂时，那么获取资源的 `https://ip:port` 必然有很多个，可以在接口的 header 使用 mapping 来开启多个 baseURL 功能：
 
 ```typescript
-import http from "@/request";
+import http from "@/common/http";
 
 export const api = () => {
   http.request({
@@ -215,7 +215,7 @@ default 是默认的 baseURL，**请不要删除或者更改**，当不开启 ma
 当配置了一个键值对，如上面的 test，则在请求的时候，url 前缀携带 test，如（第五行）：
 
 ```typescript
-import http from "@/request";
+import http from "@/common/http";
 
 export const api = () => {
   http.request({
@@ -398,8 +398,8 @@ Admin 使用了 mittBus 实现事件总栈。
 ThemePanel.vue
 
 ```typescript
-import mittBus from "@/utils/layout/mittBus";
-import { RefreshPageKey } from "@/config";
+import mittBus from "@/common/utils";
+import { RefreshPageKey } from "@/common/config";
 
 const drawerVisible = ref(false);
 mittBus.on(RefreshPageKey, () => (drawerVisible.value = true));
@@ -410,8 +410,8 @@ mittBus.on(RefreshPageKey, () => (drawerVisible.value = true));
 User.vue
 
 ```typescript
-import mittBus from "@/utils/layout/mittBus";
-import { RefreshPageKey } from "@/config";
+import mittBus from "@/common/utils";
+import { RefreshPageKey } from "@/common/config";
 
 const openSettingDrawer = () => {
   mittBus.emit(RefreshPageKey);
@@ -448,7 +448,7 @@ provide(RefreshPageKey, refreshCurrentPage);
 接收的是一个函数，如果您调用该函数时，可以传入参数，参数类型为 boolean 值
 
 ```typescript
-import { RefreshPageKey } from "@/config/symbols";
+import { RefreshPageKey } from "@/common/config";
 
 const refreshCurrentPage = inject(RefreshPageKey);
 refreshCurrentPage(false);
@@ -464,7 +464,7 @@ nextTick(() => {
 您可以直接调用该函数，如果不传入参数，则函数内部自动实现刷新功能
 
 ```typescript
-import { RefreshPageKey } from "@/config/symbols";
+import { RefreshPageKey } from "@/common/config";
 
 const refreshCurrentPage = inject(RefreshPageKey);
 refreshCurrentPage();

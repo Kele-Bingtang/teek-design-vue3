@@ -74,7 +74,7 @@ defineExpose({ open, close });
 
       <template #empty>
         <div :class="ns.e('empty')">
-          <img src="@/assets/images/notData.png" alt="notData" />
+          <img src="@/common/assets/images/notData.png" alt="notData" />
           <div>{{ emptyText }}</div>
         </div>
       </template>

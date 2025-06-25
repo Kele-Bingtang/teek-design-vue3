@@ -1,9 +1,9 @@
 <script setup lang="ts" name="Tabs">
-import { appendFieldById, deleteChildren, getNodeById } from "@/utils";
+import { appendFieldById, deleteChildren, getNodeById } from "@/common/utils";
 import { useDetail } from "./hooks";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 import { useMenu } from "@/composables";
-import { copyObj } from "@/utils";
+import { copyObj } from "@/common/utils";
 import { formatTitle } from "@/router/helper";
 
 const layoutStore = useLayoutStore();

@@ -3,8 +3,8 @@ import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "./types";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isObject, isString } from "@/utils";
-import { componentsMap, ComponentNameEnum } from "./helper";
+import { addUnit, isObject, isString } from "@/common/utils";
+import { formELComponentsMap, FormElComponentEnum } from "./helper";
 import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
 
 const model = defineModel<ModelBaseValueType>({ required: false });
 
-const formEl = computed(() => toCamelCase(toValue(props.el)) as ComponentNameEnum);
+const formEl = computed(() => toCamelCase(toValue(props.el)) as FormElComponentEnum);
 const labelValue = computed(() => toValue(props.label));
 const showLabelValue = computed(() => toValue(props.showLabel));
 const withValue = computed(() => addUnit(toValue(props.width)));
@@ -74,13 +74,13 @@ const slotParams = computed(() => ({
 watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
 
 const childComponentMap: Record<string, { root: Component; child?: Component }> = {
-  [ComponentNameEnum.EL_SELECT]: { root: componentsMap.ElSelect, child: Select },
-  [ComponentNameEnum.EL_RADIO]: { root: componentsMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_RADIO_GROUP]: { root: componentsMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_RADIO_BUTTON]: { root: componentsMap.ElRadioGroup, child: Radio },
-  [ComponentNameEnum.EL_CHECKBOX]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
-  [ComponentNameEnum.EL_CHECKBOX_GROUP]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
-  [ComponentNameEnum.EL_CHECKBOX_BUTTON]: { root: componentsMap.ElCheckboxGroup, child: Checkbox },
+  [FormElComponentEnum.EL_SELECT]: { root: formELComponentsMap.ElSelect, child: Select },
+  [FormElComponentEnum.EL_RADIO]: { root: formELComponentsMap.ElRadioGroup, child: Radio },
+  [FormElComponentEnum.EL_RADIO_GROUP]: { root: formELComponentsMap.ElRadioGroup, child: Radio },
+  [FormElComponentEnum.EL_RADIO_BUTTON]: { root: formELComponentsMap.ElRadioGroup, child: Radio },
+  [FormElComponentEnum.EL_CHECKBOX]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
+  [FormElComponentEnum.EL_CHECKBOX_GROUP]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
+  [FormElComponentEnum.EL_CHECKBOX_BUTTON]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
 };
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
@@ -109,22 +109,22 @@ function useFormItemInitProps() {
     const children = optionField.children;
     const formElConst = formEl.value;
 
-    if (formElConst === ComponentNameEnum.EL_TREE_SELECT) {
+    if (formElConst === FormElComponentEnum.EL_TREE_SELECT) {
       return { ...elPropsValue, props: { ...elPropsValue, label, children }, nodeKey: value };
     }
 
-    if (formElConst === ComponentNameEnum.EL_CASCADER) {
+    if (formElConst === FormElComponentEnum.EL_CASCADER) {
       return { ...elPropsValue, props: { ...elPropsValue, label, value, children } };
     }
 
-    if (formElConst === ComponentNameEnum.EL_DATE_PICKER) {
+    if (formElConst === FormElComponentEnum.EL_DATE_PICKER) {
       if (elPropsValue.type === "datetime") return { valueFormat: "YYYY-MM-DD HH:mm:ss", ...elPropsValue };
       if (elPropsValue.type === "date") return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
 
       return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
     }
 
-    if (formElConst === ComponentNameEnum.EL_TIME_PICKER) return { valueFormat: "HH:mm:ss", ...elPropsValue };
+    if (formElConst === FormElComponentEnum.EL_TIME_PICKER) return { valueFormat: "HH:mm:ss", ...elPropsValue };
 
     return elPropsValue;
   });
@@ -135,7 +135,7 @@ function useFormItemInitProps() {
     if (["datetimerange", "daterange", "monthrange"].includes(type) || isRange) {
       return { rangeSeparator: "至", startPlaceholder: "开始时间", endPlaceholder: "结束时间" };
     }
-    const placeholderConst = placeholder ?? (formEl.value === ComponentNameEnum.EL_INPUT ? "请输入" : "请选择");
+    const placeholderConst = placeholder ?? (formEl.value === FormElComponentEnum.EL_INPUT ? "请输入" : "请选择");
 
     return { placeholder: placeholderConst };
   });
@@ -157,7 +157,7 @@ function useFormItemOptions() {
     const value = await initOptions(options, [model.value]);
 
     // el 为 select-v2 需单独处理
-    if (formEl.value === ComponentNameEnum.EL_SELECT_V2) {
+    if (formEl.value === FormElComponentEnum.EL_SELECT_V2) {
       return value.map((item: Recordable) => ({
         ...item,
         label: item[optionField.label!],
@@ -200,12 +200,11 @@ defineExpose(expose);
   >
     <template v-if="editableValue && showLabelValue" #label="{ label }">
       <!-- 自定义 label（h、JSX）渲染 -->
-      <component v-if="renderLabel" :is="renderLabel(label, elModel, slotParams)" />
-
+      <component v-if="renderLabel" :is="renderLabel(label, slotParams)" />
       <!-- 自定义 label 插槽 -->
-      <slot v-else :name="`${prop}-label`" v-bind="slotParams">
-        <span v-if="label">{{ label }}</span>
-      </slot>
+      <slot v-else-if="$slots[`${prop}-label`]" :name="`${prop}-label`" v-bind="slotParams" />
+      <!-- 默认 Label -->
+      <template v-else-if="label">{{ label }}</template>
 
       <el-tooltip v-if="isString(tooltip)" placement="top" effect="dark" :content="tooltip">
         <slot name="tooltip-icon">
@@ -228,27 +227,27 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="render" :is="render(elModel, slotParams)" />
+      <component v-if="render" :is="render(model, slotParams)" />
       <!-- 自定义表单组件插槽 -->
       <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
 
       <template v-else>
         <Tree
-          v-if="formEl === ComponentNameEnum.EL_TREE"
+          v-if="formEl === FormElComponentEnum.EL_TREE"
           :data="enums"
           v-model="elModel"
           v-bind="elPropsValue"
           :style="{ width: withValue }"
         />
 
-        <el-divider v-else-if="formEl === ComponentNameEnum.EL_DIVIDER" v-bind="elPropsValue">
+        <el-divider v-else-if="formEl === FormElComponentEnum.EL_DIVIDER" v-bind="elPropsValue">
           <span :style="formatDividerTitle(elPropsValue.labelSize)">
             {{ labelValue }}
           </span>
         </el-divider>
 
         <el-upload
-          v-else-if="formEl === ComponentNameEnum.EL_UPLOAD"
+          v-else-if="formEl === FormElComponentEnum.EL_UPLOAD"
           ref="elInstance"
           v-model:file-list="elModel"
           :clearable
@@ -274,13 +273,13 @@ defineExpose(expose);
 
         <component
           v-else-if="formEl"
-          :is="componentsMap[formEl]"
+          :is="formELComponentsMap[formEl]"
           ref="elInstance"
           v-model="elModel"
           :clearable
           v-bind="{ ...elPropsValue, ...placeholder }"
-          :data="formEl === ComponentNameEnum.EL_TREE_SELECT ? enums : []"
-          :options="[ComponentNameEnum.EL_CASCADER, ComponentNameEnum.EL_SELECT_V2].includes(formEl) ? enums : []"
+          :data="formEl === FormElComponentEnum.EL_TREE_SELECT ? enums : []"
+          :options="[FormElComponentEnum.EL_CASCADER, FormElComponentEnum.EL_SELECT_V2].includes(formEl) ? enums : []"
           :style="{ width: withValue }"
         >
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">

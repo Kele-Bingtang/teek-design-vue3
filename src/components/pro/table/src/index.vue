@@ -365,7 +365,7 @@ defineExpose(expose);
 </script>
 
 <template>
-  <div :class="[ns.b(), { 'tk-card': card }]">
+  <div :class="[ns.b(), { [ns.join('card-primary')]: card }]">
     <!-- 表格头部 -->
     <TableHead
       v-if="!hideHead"

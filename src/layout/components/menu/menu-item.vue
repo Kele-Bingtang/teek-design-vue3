@@ -2,11 +2,11 @@
 import { ref, watch, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { ElMenuItem, ElSubMenu } from "element-plus";
-import { isValidURL } from "@/utils";
+import { isValidURL } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { Tooltip } from "@/components";
-import { useLayoutStore } from "@/stores";
-import SystemConfig from "@/config";
+import { useLayoutStore } from "@/pinia";
+import SystemConfig from "@/common/config";
 import { formatTitle } from "@/router/helper";
 
 defineOptions({ name: "AsideMenuItem" });
@@ -76,7 +76,7 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include joins(icon) {
   width: var(--#{$el-namespace}-menu-icon-width);

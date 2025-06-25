@@ -108,7 +108,7 @@ const data: Tree[] = [
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(tree-filter-demo) {
   display: flex;

@@ -1,5 +1,5 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 
 @include b(pro-dialog) {
   &.#{$el-namespace}-dialog.is-fullscreen {

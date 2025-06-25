@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { Expand, Fold } from "@element-plus/icons-vue";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "CollapseTrigger" });

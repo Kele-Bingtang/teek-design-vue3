@@ -26,7 +26,7 @@ import { EditorView, keymap, placeholder as placeholderFun, type ViewUpdate } fr
 import { MergeView } from "@codemirror/merge";
 import { basicSetup, minimalSetup } from "codemirror";
 import { useNamespace } from "@/composables";
-import { addUnit } from "@/utils";
+import { addUnit } from "@/common/utils";
 import { ref, shallowRef, computed, type Ref, type ComputedRef, watch, onMounted, nextTick, onUnmounted } from "vue";
 import { FullScreen } from "@element-plus/icons-vue";
 
@@ -635,8 +635,8 @@ const defaultPhrases = {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 
 @include b(code-mirror) {
   position: relative;

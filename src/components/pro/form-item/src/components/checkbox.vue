@@ -2,17 +2,17 @@
 import type { ElOptionField } from "../types";
 import { computed } from "vue";
 import { ElCheckbox, ElCheckboxButton } from "element-plus";
-import { ComponentNameEnum } from "../helper";
+import { FormElComponentEnum } from "../helper";
 
 const props = defineProps<{
   options: Recordable[];
   optionField: Required<ElOptionField>;
-  el: ComponentNameEnum;
+  el: FormElComponentEnum;
 }>();
 
 // 计算要渲染的组件类型
 const checkboxComponent = computed(() =>
-  props.el === ComponentNameEnum.EL_CHECKBOX_BUTTON ? ElCheckboxButton : ElCheckbox
+  props.el === FormElComponentEnum.EL_CHECKBOX_BUTTON ? ElCheckboxButton : ElCheckbox
 );
 </script>
 

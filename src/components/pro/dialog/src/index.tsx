@@ -3,9 +3,9 @@ import type { DialogProps } from "element-plus";
 import type { ProDialogProps } from "./types";
 import { render, getCurrentInstance, nextTick, ref } from "vue";
 import { ElDialog, ElButton, ElScrollbar, ElConfigProvider } from "element-plus";
-import { addUnit, isArray } from "@/utils";
+import { addUnit, isArray } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { GlobalConfigKey } from "@/config";
+import { GlobalConfigKey } from "@/common/config";
 import { Icon } from "@/components/core/icon";
 
 import "./index.scss";

@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index from "./src/index.vue";
 import gridItem from "./src/components/grid-item.vue";
 

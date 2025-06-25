@@ -3,7 +3,7 @@ import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ModelBaseValueType, ProFormItemInstance } from "@/components/pro/form-item";
 import type { FormColumn, FormMainNamespace } from "./types";
 import { ElRow, ElCol } from "element-plus";
-import { addUnit, isEmpty, isFunction } from "@/utils";
+import { addUnit, isEmpty, isFunction } from "@/common/utils";
 import { useOptions } from "@/components/pro/use-options";
 import { formatValue, getProp, setProp, deleteProp, getObjectKeys } from "@/components/pro/helper";
 import { ProFormItem } from "@/components/pro/form-item";

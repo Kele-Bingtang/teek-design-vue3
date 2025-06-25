@@ -1,5 +1,5 @@
 import type { FormColumn, ProFormNamespace } from "../types";
-import { isString } from "@/utils";
+import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
 export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {

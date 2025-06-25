@@ -3,7 +3,7 @@ import type { ImageViewerProps } from "element-plus";
 import { ElImageViewer, ElConfigProvider } from "element-plus";
 import { computed } from "vue";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 
 defineOptions({ name: "ImageViewer" });
 

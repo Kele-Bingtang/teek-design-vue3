@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { BarChart } from "@/components";
+
 const list = [
   { name: "总用户量", num: "32k" },
   { name: "总访问量", num: "128k" },
@@ -8,15 +10,15 @@ const list = [
 </script>
 
 <template>
-  <div class="card tk-card-2">
-    <!-- <ArtBarChart
+  <div class="card tk-card-secondary">
+    <BarChart
       class="chart"
       barWidth="50%"
       height="13.7rem"
       :showAxisLine="false"
       :data="[160, 100, 150, 80, 190, 100, 175, 120, 160]"
       :xAxisData="['1', '2', '3', '4', '5', '6', '7', '8', '9']"
-    /> -->
+    />
     <div class="text">
       <h3 class="box-title">用户概述</h3>
       <p class="subtitle">
@@ -25,7 +27,7 @@ const list = [
       </p>
       <p class="subtitle">我们为您创建了多个选项，可将它们组合在一起并定制为像素完美的页面</p>
     </div>
-    <div class="list">
+    <div class="list flx-align-center-between">
       <div v-for="(item, index) in list" :key="index">
         <p>{{ item.num }}</p>
         <p class="subtitle">{{ item.name }}</p>
@@ -35,16 +37,14 @@ const list = [
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/function" as *;
 
 .card {
-  box-sizing: border-box;
   width: 100%;
   height: 420px;
   padding: 16px;
 
   .chart {
-    box-sizing: border-box;
     width: 100%;
     height: 220px;
     padding: 10px;
@@ -72,8 +72,6 @@ const list = [
   }
 
   .list {
-    display: flex;
-    justify-content: space-between;
     margin-left: 3px;
 
     > div {

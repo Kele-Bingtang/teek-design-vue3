@@ -6,7 +6,7 @@ import { toValue } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { getProp } from "@/components/pro/helper";
-import { isBoolean, isString } from "@/utils";
+import { isBoolean, isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { formatCellValue, lastProp } from "../helper";
 import TableFilter from "../plugins/table-filter.vue";
@@ -85,7 +85,7 @@ const getRenderParams = <T = RenderParams,>(scope: TableScope, column: TableColu
     ...scope,
     rowIndex: scope.$index,
     value: getOriginValue(scope, column),
-    options: scope.row._options?.[prop(column)],
+    options: scope.row?._options?.[prop(column)],
   } as T;
 };
 /**
@@ -154,10 +154,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <slot name="header-before" />
 
       <!-- 自定义表头的 Render 函数 -->
-      <component
-        v-if="column.headerRender"
-        :is="column.headerRender(toValue(column.label) || '', getRenderParams(scope, column))"
-      />
+      <component v-if="column.headerRender" :is="column.headerRender(getRenderParams(scope, column))" />
       <!-- 自定义表头插槽 -->
       <slot
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
@@ -245,15 +242,9 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       />
 
       <!-- 自定义 Render 函数渲染 -->
-      <component
-        v-else-if="column.render"
-        :is="column.render(getOriginValue(scope, column), getRenderParams(scope, column))"
-      />
+      <component v-else-if="column.render" :is="column.render(getRenderParams(scope, column))" />
       <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
-      <span
-        v-else-if="column.renderHTML"
-        v-html="column.renderHTML(getOriginValue(scope, column), getRenderParams(scope, column))"
-      />
+      <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(scope, column))" />
       <!-- 自定义插槽，插槽名为 column.prop -->
       <slot
         v-else-if="$slots[lastProp(prop(column))]"

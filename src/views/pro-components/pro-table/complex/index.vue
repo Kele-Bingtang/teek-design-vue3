@@ -140,7 +140,7 @@ const resetPass = async (params: ResUserList) => {
     @row-click="rowClick"
   >
     <!-- 表格 header 按钮 -->
-    <template #tableHeader="scope">
+    <template #head-left="scope">
       <el-button type="primary" :icon="CirclePlus" @click="proTableInstance?.getElTableInstance()?.toggleAllSelection">
         全选 / 全不选
       </el-button>

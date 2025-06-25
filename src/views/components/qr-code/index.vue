@@ -1,6 +1,6 @@
 <script setup lang="ts" name="QrCodeDemo">
 import { ref } from "vue";
-import { message } from "@/utils";
+import { message } from "@/common/utils";
 import { QrCode } from "@/components";
 
 const qrCodeText = "teek-design-vue3";

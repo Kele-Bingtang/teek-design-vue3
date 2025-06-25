@@ -1,0 +1,74 @@
+@use "@styles/mixins/function" as *;
+
+.e-commerce {
+  :deep(.card) {
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: cssVar(main-bg-color);
+    border-radius: cssVar(radius);
+
+    .card-header {
+      padding-bottom: 15px;
+
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+        color: cssVar(gray-900);
+
+        i {
+          margin-left: 10px;
+        }
+      }
+
+      .subtitle {
+        font-size: 14px;
+        color: cssVar(gray-500);
+      }
+    }
+  }
+
+  :deep(.icon-text-widget) {
+    display: flex;
+    justify-content: space-around;
+
+    .item {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        margin-right: 10px;
+        line-height: 42px;
+        color: cssVar(main-color);
+        background-color: var(--el-color-primary-light-9);
+        border-radius: 8px;
+
+        i {
+          font-size: 20px;
+        }
+      }
+
+      .content {
+        p {
+          font-size: 18px;
+        }
+
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0 !important;
+  }
+
+  .el-col {
+    margin-bottom: 20px;
+  }
+}

@@ -1,7 +1,7 @@
-import { getLightColor, getDarkColor, setCssVar, colorBlend } from "@/utils";
-import { useSettingStore } from "@/stores";
+import { getLightColor, getDarkColor, setCssVar, colorBlend } from "@/common/utils";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
-import { SystemThemeEnum } from "@/enums/appEnum";
+import { SystemThemeEnum } from "@/common/enums/appEnum";
 
 /**
  * @description 切换主题

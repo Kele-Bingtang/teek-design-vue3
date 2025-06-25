@@ -1,5 +1,5 @@
 import type { FilterRule } from "../types";
-import { isArray, isEmpty, isFunction } from "@/utils";
+import { isArray, isEmpty, isFunction } from "@/common/utils";
 import { getProp, getObjectKeys } from "@/components/pro/helper";
 import { Environment } from "./enums";
 

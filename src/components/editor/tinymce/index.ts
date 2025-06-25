@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index, { type UITheme } from "./src/index.vue";
 
 export { type UITheme };

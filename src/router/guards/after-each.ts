@@ -1,5 +1,5 @@
 import type { Router } from "vue-router";
-import { NProgress } from "@/utils";
+import { NProgress } from "@/common/utils";
 
 /**
  * 路由跳转结束

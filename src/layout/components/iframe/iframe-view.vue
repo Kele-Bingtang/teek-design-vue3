@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
-import { mittBus } from "@/utils";
+import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useEventListener } from "@vueuse/core";
-import { RefreshIFrameKey } from "@/config";
+import { RefreshIFrameKey } from "@/common/config";
 
 defineOptions({ name: "IFrameView" });
 

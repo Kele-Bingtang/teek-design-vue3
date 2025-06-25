@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { ElScrollbar, ElMenu } from "element-plus";
 import { useMenu } from "@/composables";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import MenuItem from "./menu-item.vue";
 
 defineOptions({ name: "AsideMenu" });

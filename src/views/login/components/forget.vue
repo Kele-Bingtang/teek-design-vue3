@@ -104,7 +104,7 @@ const onBack = () => {
     </el-form-item>
 
     <el-form-item>
-      <div :class="[ns.e('btn'), 'flx-justify-between']">
+      <div :class="[ns.e('btn'), 'flx-align-center-between']">
         <el-button icon="UserFilled" round size="large" type="primary" :loading="loading" @click="login">
           登录
         </el-button>

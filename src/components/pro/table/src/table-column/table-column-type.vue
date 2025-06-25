@@ -3,7 +3,7 @@ import type { TableColumnTypeInfo, TableColumnTypeNamespace } from "../types/tab
 import { ElRadio, ElTableColumn } from "element-plus";
 import { TableColumnTypeEnum } from "../helper";
 import TableColumnDragSort from "./table-column-drag-sort.vue";
-import { isFunction } from "@/utils";
+import { isFunction } from "@/common/utils";
 
 defineOptions({ name: "TableColumnType" });
 

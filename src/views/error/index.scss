@@ -1,7 +1,7 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
-@use "@/styles/mixins/function" as *;
-@use "@/styles/variables" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/variables" as *;
 
 @include b(error-page) {
   gap: 120px;

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="UserAvatar">
-import type { UserInfo } from "@/stores";
+import type { UserInfo } from "@/pinia";
 import { Cropper } from "@/components";
-import defaultAvatar from "@/assets/images/default.png";
+import defaultAvatar from "@/common/assets/images/default.png";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("user-avatar");

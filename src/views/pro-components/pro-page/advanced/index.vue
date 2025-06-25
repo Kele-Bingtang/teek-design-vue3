@@ -4,7 +4,7 @@ import { useConfirm, usePermission } from "@/composables";
 import { ElButton, ElInput, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
 import { tableData } from "@/mock/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
-import { exportJsonToExcel, formatJsonToArray } from "@/utils";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { withModifiers } from "vue";
 
 export interface ResUserList {
@@ -38,7 +38,7 @@ const columns: PageColumn<ResUserList>[] = [
     prop: "username",
     label: "用户姓名",
     search: { el: "el-input" },
-    render: value => {
+    render: ({ value }) => {
       return (
         <ElButton
           type="primary"
@@ -126,7 +126,7 @@ const columns: PageColumn<ResUserList>[] = [
     ],
     search: { el: "el-select", props: { filterable: true } },
     optionField: { label: "userLabel", value: "userStatus" },
-    render: (value, scope) => {
+    render: ({ value, row }) => {
       return (
         <>
           {hasAuth("edit") ? (
@@ -135,7 +135,7 @@ const columns: PageColumn<ResUserList>[] = [
               active-text={value ? "启用" : "禁用"}
               active-value={1}
               inactive-value={0}
-              onChange={() => changeStatus(scope.row)}
+              onChange={() => changeStatus(row)}
             />
           ) : (
             <ElTag type={value ? "success" : "danger"}>{value ? "启用" : "禁用"}</ElTag>
@@ -256,7 +256,7 @@ const confirmEdit = (row: TableRow) => {
       {{ scope.row }}
     </template>
 
-    <template #usernameHeader="scope">
+    <template #username-header="scope">
       <el-button type="primary" @click="ElMessage.success('我是通过作用域插槽渲染的表头')">
         {{ scope.column.label }}
       </el-button>
@@ -264,7 +264,7 @@ const confirmEdit = (row: TableRow) => {
 
     <template #createTime="scope">
       <el-button type="primary" link @click="ElMessage.success('我是通过作用域插槽渲染的内容')">
-        {{ scope.row.createTime }}
+        {{ scope.row?.createTime }}
       </el-button>
     </template>
 

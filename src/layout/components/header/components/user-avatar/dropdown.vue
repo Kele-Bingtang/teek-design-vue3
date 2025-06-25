@@ -4,12 +4,12 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { ArrowDownBold, User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
-import { useUserStore } from "@/stores";
-import { mittBus } from "@/utils";
+import { useUserStore } from "@/pinia";
+import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useRoute, useRouter } from "vue-router";
-import defaultAvatar from "@/assets/images/default.png";
-import { LOGIN_URL, OpenThemePanelKey } from "@/config";
+import defaultAvatar from "@/common/assets/images/default.png";
+import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
 
 defineOptions({ name: "UserAvatarDropdown" });
 
@@ -91,7 +91,7 @@ const logout = async () => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(user-avatar-dropdown) {
   @include e(avatar) {

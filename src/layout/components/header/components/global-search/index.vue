@@ -2,10 +2,10 @@
 import { ArrowUp, ArrowDown, Back, Close } from "@element-plus/icons-vue";
 import { useMenu, useNamespace } from "@/composables";
 import { useEventListener } from "@vueuse/core";
-import { isArray, mittBus } from "@/utils";
+import { isArray, mittBus } from "@/common/utils";
 import { formatTitle } from "@/router/helper";
-import { useUserStore } from "@/stores";
-import { OpenSearchDialogKey } from "@/config";
+import { useUserStore } from "@/pinia";
+import { OpenSearchDialogKey } from "@/common/config";
 
 import "./index.scss";
 

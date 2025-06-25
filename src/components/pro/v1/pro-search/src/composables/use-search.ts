@@ -14,7 +14,7 @@ import {
   unref,
   type ShallowRef,
 } from "vue";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 
 export const useProSearch = () => {
   // ProSearch 实例

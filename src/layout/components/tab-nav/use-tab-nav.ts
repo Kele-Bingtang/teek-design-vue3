@@ -1,9 +1,9 @@
 import { useBoolean } from "@/composables";
 import beforeClose from "@/router/before-close";
-import { useLayoutStore, useRouteStore, type TabProp } from "@/stores";
-import { getUrlParams, mittBus } from "@/utils";
+import { useLayoutStore, useRouteStore, type TabProp } from "@/pinia";
+import { getUrlParams, mittBus } from "@/common/utils";
 import Sortable from "sortablejs";
-import SystemConfig, { HOME_URL, RefreshIFrameKey, RefreshPageKey } from "@/config";
+import SystemConfig, { HOME_URL, RefreshIFrameKey, RefreshPageKey } from "@/common/config";
 import { useRoute, useRouter, type RouteLocationNormalizedLoaded } from "vue-router";
 import { inject, ref, reactive, nextTick, watchEffect } from "vue";
 import { formatTitle } from "@/router/helper";

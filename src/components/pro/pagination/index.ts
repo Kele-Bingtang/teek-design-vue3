@@ -1,4 +1,4 @@
-import { useInstall } from "@/utils";
+import { useInstall } from "@/common/utils";
 import index, { defaultPageInfo } from "./src/index.vue";
 
 export { defaultPageInfo };

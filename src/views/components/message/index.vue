@@ -1,6 +1,6 @@
 <script setup lang="ts" name="MessageDemo">
 import { h } from "vue";
-import { message, closeAllMessage } from "@/utils";
+import { message, closeAllMessage } from "@/common/utils";
 
 onMounted(() => {
   message.success("欢迎回来：message.success('欢迎回来')");

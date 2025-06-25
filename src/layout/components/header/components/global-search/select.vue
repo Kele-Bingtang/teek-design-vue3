@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, onUnmounted, nextTick } from "vue";
 import { ElAutocomplete, ElTooltip } from "element-plus";
-import { useRouteStore } from "@/stores";
+import { useRouteStore } from "@/pinia";
 import { useDebounceFn } from "@vueuse/core";
-import { isFunction } from "@/utils";
+import { isFunction } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useRouter, type RouteLocationNormalizedLoaded } from "vue-router";
 import { formatTitle } from "@/router/helper";
@@ -142,8 +142,8 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(menu-search) {
   @include is(show) {

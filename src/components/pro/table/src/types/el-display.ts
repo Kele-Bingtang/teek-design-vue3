@@ -1,10 +1,10 @@
 import type { AvatarProps, ImageProps, LinkProps, ProgressProps, TagProps } from "element-plus";
-import type { ComponentNameEnum } from "../helper";
+import type { TableComponentEnum } from "../helper";
 
 /**
  * el 字面量，转为 PascalCase 格式
  */
-export type PascalCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+export type TablePascalCaseComponentName = keyof typeof TableComponentEnum extends infer K
   ? K extends string
     ? K extends `${infer A}_${infer B}`
       ? K extends `${infer A}_${infer B}_${infer C}`
@@ -17,7 +17,7 @@ export type PascalCaseComponentName = keyof typeof ComponentNameEnum extends inf
 /**
  * el 字面量，转为 HyphenCase 格式
  */
-export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+export type TableHyphenCaseComponentName = keyof typeof TableComponentEnum extends infer K
   ? K extends string
     ? K extends `${infer A}_${infer B}`
       ? K extends `${infer A}_${infer B}_${infer C}`
@@ -30,7 +30,7 @@ export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends inf
 /**
  * el 字面量
  */
-export type TableElType = PascalCaseComponentName | HyphenCaseComponentName;
+export type TableElType = TablePascalCaseComponentName | TableHyphenCaseComponentName;
 
 export interface ElDisplayProps {
   /**

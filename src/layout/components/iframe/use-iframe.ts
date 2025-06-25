@@ -1,7 +1,7 @@
 import { useRouter } from "vue-router";
-import { useLayoutStore } from "@/stores";
+import { useLayoutStore } from "@/pinia";
 import { useTabNav } from "../tab-nav/use-tab-nav";
-import { isObject, isString } from "@/utils";
+import { isObject, isString } from "@/common/utils";
 import { useEventListener } from "@vueuse/core";
 
 const IFrameView = () => import("./iframe-view.vue");

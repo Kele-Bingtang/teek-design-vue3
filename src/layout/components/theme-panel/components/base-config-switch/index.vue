@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useMediaQuery } from "@vueuse/core";
 import { useNamespace } from "@/composables";
-import { useSettingStore } from "@/stores";
-import { mobileMaxWidthMedia } from "@/config";
+import { useSettingStore } from "@/pinia";
+import { mobileMaxWidthMedia } from "@/common/config";
 import { useI18n } from "vue-i18n";
-import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/enums/appEnum";
+import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/common/enums/appEnum";
 
 defineOptions({ name: "BaseConfigSwitch" });
 

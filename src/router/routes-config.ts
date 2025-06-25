@@ -1,5 +1,6 @@
 /**
- * @description 动态路由参数配置简介 📚
+ * 动态路由参数配置简介 📚
+ *
  * @param path ==> 路由的地址，这是必须设置的，如果是个有效的 http 或者 https 链接，则点击该菜单跳转到新窗口
  * @param name ==> 路由的名字，这是必须设置的，如果开启了 I18n，某些路由又不想使用 I18n，则 name 以 _noUseI18n- 开头
  * @param redirect ==> 重定向到某个路由下，可选，function 使用方式请看官网：https://router.vuejs.org/zh/api/index.html#redirect
@@ -28,7 +29,7 @@
  * @param meta.dynamicLevel ==> 动态路由可打开的最大数量，默认为空
  * @param meta.useI18n ==>  是否开启 i18n。默认读取全局的 routeUseI18n（src/config/base-config.ts）
  * @param meta.useTooltip ==> 菜单的文字超出后，是否使用 el-toolTip 提示，仅针二级路由及以上生效。默认读取全局的 routeUseTooltip（src/config/base-config.ts）
- * @param render ==> 自定义 Render 菜单元素（TSX 语法）
+ * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
  */
 
 import componentRoutes from "./routes/components";
@@ -44,7 +45,7 @@ import tableRoutes from "./routes/table";
 import proComponentsRoutes from "./routes/pro-components";
 import toolsRoutes from "./routes/tool";
 import { User, Bell, HomeFilled, StarFilled, Document } from "@element-plus/icons-vue";
-import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/config";
+import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
 export const staticRoutes: RouterConfigRaw[] = [
   // 建议把 LAYOUT_NAME 路由放在第一位
@@ -123,21 +124,46 @@ export const rolesRoutes: RouterConfigRaw[] = [
   {
     path: HOME_URL,
     name: HOME_NAME,
-    component: "/dashboard/console/index",
     meta: {
-      isAffix: true,
-      title: "首页",
+      title: "仪表盘",
       icon: HomeFilled,
     },
+    children: [
+      {
+        path: "console",
+        name: "Console",
+        component: "/dashboard/console/index",
+        meta: {
+          title: "工作台",
+          isAffix: true,
+        },
+      },
+      {
+        path: "analysis",
+        name: "Analysis",
+        component: "/dashboard/analysis/index",
+        meta: {
+          title: "分析页",
+        },
+      },
+      {
+        path: "e-commerce",
+        name: "ECommerce",
+        component: "/dashboard/e-commerce/index",
+        meta: {
+          title: "电子商务",
+        },
+      },
+    ],
   },
   {
-    path: "/home-full",
+    path: "console-full",
     name: "HomeFull",
-    component: "/home/index-full",
+    component: "/dashboard/console/index",
     meta: {
-      isAffix: true,
-      title: "全屏首页",
+      title: "全屏工作台",
       icon: HomeFilled,
+      isAffix: true,
       isFull: true,
       useI18n: false,
     },

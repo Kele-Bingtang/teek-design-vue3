@@ -28,7 +28,7 @@ import type { SelectProps } from "element-plus/es/components/select/src/select";
 import type { SelectProps as SelectV2Props } from "element-plus/es/components/select-v2/src/defaults";
 import type { TimeSelectProps } from "element-plus/es/components/time-select/src/time-select";
 import type { JSX } from "vue/jsx-runtime";
-import type { ComponentNameEnum } from "./helper";
+import type { FormElComponentEnum } from "./helper";
 
 export type ElFormItemProps = Partial<FormItemProps>;
 
@@ -56,7 +56,7 @@ export type ModelBaseValueType =
 /**
  * el 字面量，转为 PascalCase 格式
  */
-export type PascalCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+export type FormPascalCaseComponentName = keyof typeof FormElComponentEnum extends infer K
   ? K extends string
     ? K extends `${infer A}_${infer B}`
       ? K extends `${infer A}_${infer B}_${infer C}`
@@ -69,7 +69,7 @@ export type PascalCaseComponentName = keyof typeof ComponentNameEnum extends inf
 /**
  * el 字面量，转为 HyphenCase 格式
  */
-export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends infer K
+export type FormHyphenCaseComponentName = keyof typeof FormElComponentEnum extends infer K
   ? K extends string
     ? K extends `${infer A}_${infer B}`
       ? K extends `${infer A}_${infer B}_${infer C}`
@@ -82,7 +82,7 @@ export type HyphenCaseComponentName = keyof typeof ComponentNameEnum extends inf
 /**
  * el 字面量
  */
-export type FormElType = PascalCaseComponentName | HyphenCaseComponentName;
+export type FormElType = FormPascalCaseComponentName | FormHyphenCaseComponentName;
 
 /**
  * 渲染函数的返回值的类型
@@ -241,11 +241,11 @@ export interface FormItemColumnProps {
   /**
    * 自定义 label 标题
    */
-  renderLabel?: (label: string, value: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  renderLabel?: (label: string, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  render?: (value: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  render?: (model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 是否为编辑态
    *

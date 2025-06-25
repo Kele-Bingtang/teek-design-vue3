@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { ElDisplayProps } from "../types";
-import type { ComponentNameEnum } from "../helper";
+import type { TableComponentEnum } from "../helper";
 import { toValue } from "vue";
 import { toCamelCase } from "@/components/pro/helper";
-import { isFunction } from "@/utils";
-import { componentsMap } from "../helper";
+import { isFunction } from "@/common/utils";
+import { tableElComponentsMap } from "../helper";
 
 import "../styles/el-display.scss";
 
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<ElDisplayProps>(), {
 });
 
 // 获取 EL 组件信息
-const componentInfo = computed(() => componentsMap[toCamelCase(props.el) as ComponentNameEnum]);
+const componentInfo = computed(() => tableElComponentsMap[toCamelCase(props.el) as TableComponentEnum]);
 
 // 解析传来的 elProps
 const elPropsValue = computed(() => toValue(props.elProps));

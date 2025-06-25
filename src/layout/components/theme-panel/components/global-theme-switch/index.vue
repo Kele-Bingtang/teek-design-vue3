@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useNamespace, useTheme } from "@/composables";
-import { useLayoutStore, useSettingStore } from "@/stores";
-import SystemConfig from "@/config";
+import { useLayoutStore, useSettingStore } from "@/pinia";
+import SystemConfig from "@/common/config";
 
 defineOptions({ name: "GlobalThemeSwitch" });
 

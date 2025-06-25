@@ -1,9 +1,9 @@
 <script setup lang="ts" name="HeaderLeft">
 import { storeToRefs } from "pinia";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 import { useMediaQuery } from "@vueuse/core";
-import { mobileMaxWidthMedia } from "@/config";
+import { mobileMaxWidthMedia } from "@/common/config";
 import Breadcrumb from "./components/breadcrumb/index.vue";
 import CollapseTrigger from "./components/collapse-trigger/index.vue";
 
@@ -24,7 +24,7 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(header-left) {
   height: 100%;

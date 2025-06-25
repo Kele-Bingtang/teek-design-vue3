@@ -1,7 +1,7 @@
 import type { Reactive } from "vue";
 import type { FormItemColumnProps } from "./form-item";
 import { isRef } from "vue";
-import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/utils";
+import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/common/utils";
 
 // 超级组件公共工具类
 

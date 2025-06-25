@@ -5,7 +5,7 @@ import { filterKey, type TableColumnProps } from "../../interface";
 import { Filter } from "@element-plus/icons-vue";
 import { lastProp } from "../../helper";
 import { computed, inject, withModifiers } from "vue";
-import { isEmpty } from "@/utils";
+import { isEmpty } from "@/common/utils";
 import { useNamespace } from "@/composables";
 
 export const useHeaderFilter = (column: TableColumnProps) => {

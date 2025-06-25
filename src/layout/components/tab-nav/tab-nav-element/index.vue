@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext } from "element-plus";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 import { useTabNav } from "../use-tab-nav";
 import RightMenu from "../components/right-menu/index.vue";

@@ -140,7 +140,7 @@ defineExpose({ table: tableRef });
     <template #empty>
       <div :class="`${prefixClass}__empty`">
         <slot name="empty">
-          <img src="@/assets/images/notData.png" alt="notData" />
+          <img src="@/common/assets/images/notData.png" alt="notData" />
           <div>暂无数据</div>
         </slot>
       </div>

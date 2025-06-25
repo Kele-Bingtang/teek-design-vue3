@@ -2,7 +2,7 @@
 import type { FormInstance } from "element-plus";
 import { ImageUpload, ImagesUpload } from "@/components";
 import type { SuccessFun } from "@/components/view/images-upload/src/images.vue";
-import { uploadLocal } from "@/utils";
+import { uploadLocal } from "@/common/utils";
 import { Avatar, Picture } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 
@@ -252,7 +252,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(images-upload-demo) {
   height: auto;

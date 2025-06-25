@@ -68,7 +68,7 @@ const handleMoving = (e: any) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(split-pane-demo) {
   height: 100%;

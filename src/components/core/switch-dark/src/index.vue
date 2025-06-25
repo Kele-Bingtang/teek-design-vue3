@@ -2,8 +2,8 @@
 import { ElSwitch } from "element-plus";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/composables";
-import { SystemThemeEnum } from "@/enums/appEnum";
-import { useSettingStore } from "@/stores";
+import { SystemThemeEnum } from "@/common/enums/appEnum";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "SwitchDark" });
 

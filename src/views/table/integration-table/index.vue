@@ -3,7 +3,7 @@ import { Pagination, TableSort, defaultPageInfo, type PageInfo } from "@/compone
 import { largeData } from "@/mock/table";
 import Sortable from "sortablejs";
 import { ElMessage, ElMessageBox, ElNotification, type FormInstance } from "element-plus";
-import { tableStatusFilter } from "@/config";
+import { tableStatusFilter } from "@/common/config";
 import { Search, Refresh, Plus, Check, EditPen, Delete } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 

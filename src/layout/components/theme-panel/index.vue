@@ -4,10 +4,10 @@ import { useI18n } from "vue-i18n";
 import { useMediaQuery } from "@vueuse/core";
 import { ElButton, ElDivider, ElDrawer, ElMessage } from "element-plus";
 import { Notification, Menu, ColdDrink, Setting, Box, Refresh, Loading } from "@element-plus/icons-vue";
-import { useSettingStore } from "@/stores";
-import { mittBus } from "@/utils";
+import { useSettingStore } from "@/pinia";
+import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { mobileMaxWidthMedia, OpenThemePanelKey } from "@/config";
+import { mobileMaxWidthMedia, OpenThemePanelKey } from "@/common/config";
 import {
   LayoutModeSwitch,
   MenuThemeSwitch,
@@ -130,7 +130,7 @@ const Divider = defineComponent({
 </template>
 
 <style lang="scss">
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(theme-panel-modal) {
   background-color: transparent;

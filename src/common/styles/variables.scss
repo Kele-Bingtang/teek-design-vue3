@@ -1,0 +1,317 @@
+/* stylelint-disable no-duplicate-selectors */
+@use "mixins/mixins" as *;
+@use "mixins/namespace" as *;
+@use "mixins/function" as *;
+
+// 基础变量
+:root {
+  // 卡片边框颜色
+  --#{$admin-namespace}-card-border-color-primary: rgb(var(--#{$admin-namespace}-gray-300-rgb), 0.6);
+  --#{$admin-namespace}-card-border-color-regular: rgb(var(--#{$admin-namespace}-gray-300-rgb), 0.3);
+  --#{$admin-namespace}-card-border-color-secondary: rgb(var(--#{$admin-namespace}-gray-200-rgb));
+
+  // 卡片阴影
+  --#{$admin-namespace}-card-shadow: 0px 0px 4px 0px rgb(0 0 0 / 4%);
+}
+
+// 布局变量
+:root {
+  // 顶部栏
+  @include set-css-var(layout-header-bg-color, var(--#{$admin-namespace}-bg-color));
+  @include set-css-var(layout-header-text-color, var(--#{$admin-namespace}-text-gray-600));
+  @include set-css-var(layout-header-icon-size, 22px);
+  @include set-css-var(layout-header-line, none);
+
+  // 顶部左侧面包屑
+  @include set-css-var(layout-header-breadcrumb-link-color, var(--#{$admin-namespace}-text-gray-500));
+  @include set-css-var(layout-header-breadcrumb-text-color, var(--#{$admin-namespace}-text-gray-700));
+
+  @include set-css-var(layout-logo-title-color, var(--#{$admin-namespace}-text-gray-800));
+
+  // 页签栏
+  @include set-css-var(layout-tab-bg-color, var(--#{$admin-namespace}-bg-color));
+  @include set-css-var(layout-tab-item-bg-color, var(--#{$admin-namespace}-main-bg-color));
+  @include set-css-var(layout-tab-height, 38px);
+  @include set-css-var(layout-tab-text-color, var(--#{$admin-namespace}-text-gray-600));
+  @include set-css-var(layout-tab-line, none);
+  @include set-css-var(layout-tab-text-size, 13px);
+  @include set-css-var(layout-tab-icon-size, 14px);
+  @include set-css-var(layout-tab-dot-size, 11px);
+
+  // 侧边栏
+  @include set-css-var(layout-aside-bg-color, var(--#{$admin-namespace}-main-bg-color));
+  @include set-css-var(layout-aside-bg-active-color, var(--#{$el-namespace}-color-primary-light-9));
+  @include set-css-var(layout-aside-bg-hover-color, var(--#{$el-namespace}-color-primary-light-9));
+  @include set-css-var(layout-aside-left-bg-color, var(--#{$admin-namespace}-main-color));
+  @include set-css-var(layout-aside-text-color, var(--#{$admin-namespace}-text-gray-700));
+  @include set-css-var(layout-aside-text-active-color, var(--#{$admin-namespace}-main-color));
+  @include set-css-var(layout-aside-text-hover-color, var(--#{$admin-namespace}-main-color));
+  @include set-css-var(layout-aside-icon-color, var(--#{$admin-namespace}-text-gray-700));
+  @include set-css-var(layout-aside-icon-active-color, var(--#{$admin-namespace}-main-color));
+  @include set-css-var(layout-aside-line, 1px solid var(--#{$admin-namespace}-card-border-color-primary));
+  @include set-css-var(layout-aside-text-active-weight, 700);
+  @include set-css-var(layout-aside-text-size, 14px);
+  @include set-css-var(layout-aside-icon-size, 20px);
+  @include set-css-var(layout-aside-arrow-size, 13px);
+  @include set-css-var(layout-aside-item-height, 46px);
+  @include set-css-var(layout-aside-sub-item-height, 40px);
+
+  // columns 布局侧边栏
+  @include set-css-var(columns-layout-aside-width, 72px);
+  @include set-css-var(columns-layout-aside-item-height, 72px);
+}
+
+:root.dark {
+  @include set-css-var(layout-aside-text-color, var(--#{$el-namespace}-text-color-regular));
+  @include set-css-var(layout-aside-icon-color, var(--#{$el-namespace}-text-color-regular));
+
+  @include set-css-var(layout-aside-text-active-weight, 400);
+}
+
+// Light 主题变量
+:root {
+  --#{$admin-namespace}-main-color: var(--#{$el-namespace}-color-primary);
+
+  // Theme color
+  --#{$admin-namespace}-primary: 93, 135, 255;
+  --#{$admin-namespace}-secondary: 73, 190, 255;
+  --#{$admin-namespace}-error: 250, 137, 107;
+  --#{$admin-namespace}-info: 83, 155, 255;
+  --#{$admin-namespace}-success: 19, 222, 185;
+  --#{$admin-namespace}-warning: 255, 174, 31;
+  --#{$admin-namespace}-danger: 255, 77, 79;
+
+  // Theme background color
+  --#{$admin-namespace}-bg-primary: 236, 242, 255;
+  --#{$admin-namespace}-bg-secondary: 232, 247, 255;
+  --#{$admin-namespace}-bg-success: 230, 255, 250;
+  --#{$admin-namespace}-bg-error: 253, 237, 232;
+  --#{$admin-namespace}-bg-info: 235, 243, 254;
+  --#{$admin-namespace}-bg-warning: 254, 245, 229;
+  --#{$admin-namespace}-bg-danger: 253, 237, 232;
+  --#{$admin-namespace}-hoverColor: 246, 249, 252;
+  --#{$admin-namespace}-grey100: 242, 246, 250;
+  --#{$admin-namespace}-grey200: 234, 239, 244;
+  --#{$admin-namespace}-color: #ffffff;
+  --#{$admin-namespace}-light: #f9f9f9;
+  --#{$admin-namespace}-dark: #1e2129;
+
+  // Background color | Hover color
+  --#{$admin-namespace}-text-muted: #99a1b7;
+  --#{$admin-namespace}-gray-100: #f9f9f9;
+  --#{$admin-namespace}-gray-100-rgb: 249, 249, 249;
+  --#{$admin-namespace}-gray-200: #f1f1f4;
+  --#{$admin-namespace}-gray-200-rgb: 241, 241, 244;
+  --#{$admin-namespace}-gray-300: #dbdfe9;
+  --#{$admin-namespace}-gray-300-rgb: 219, 223, 233;
+  --#{$admin-namespace}-gray-400: #c4cada;
+  --#{$admin-namespace}-gray-400-rgb: 196, 202, 218;
+  --#{$admin-namespace}-gray-500: #99a1b7;
+  --#{$admin-namespace}-gray-500-rgb: 153, 161, 183;
+  --#{$admin-namespace}-gray-600: #78829d;
+  --#{$admin-namespace}-gray-600-rgb: 120, 130, 157;
+  --#{$admin-namespace}-gray-700: #4b5675;
+  --#{$admin-namespace}-gray-700-rgb: 75, 86, 117;
+  --#{$admin-namespace}-gray-800: #252f4a;
+  --#{$admin-namespace}-gray-800-rgb: 37, 47, 74;
+  --#{$admin-namespace}-gray-900: #071437;
+  --#{$admin-namespace}-gray-900-rgb: 7, 20, 55;
+
+  // Text color
+  --#{$admin-namespace}-text-muted: #99a1b7;
+  --#{$admin-namespace}-text-gray-100: #f9f9f9;
+  --#{$admin-namespace}-text-gray-200: #f1f1f4;
+  --#{$admin-namespace}-text-gray-300: #dbdfe9;
+  --#{$admin-namespace}-text-gray-400: #c4cada;
+  --#{$admin-namespace}-text-gray-500: #99a1b7;
+  --#{$admin-namespace}-text-gray-600: #78829d;
+  --#{$admin-namespace}-text-gray-700: #4b5675;
+  --#{$admin-namespace}-text-gray-800: #252f4a;
+  --#{$admin-namespace}-text-gray-900: #071437;
+
+  // Border
+  --#{$admin-namespace}-border-color: #eaebf1;
+  --#{$admin-namespace}-border-dashed-color: #dbdfe9;
+
+  // Shadow
+  --#{$admin-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$admin-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$admin-namespace}-box-shadow: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 7.5%);
+  --#{$admin-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 10%);
+
+  // Root card box、shadow
+  --#{$admin-namespace}-root-card-box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 3%);
+  --#{$admin-namespace}-root-card-border-color: #f1f1f4;
+
+  // Theme background color
+  --#{$admin-namespace}-bg-color: #fafbfc; // 最底部背景颜色
+  --#{$admin-namespace}-main-bg-color: #ffffff;
+}
+
+// Dark 主题变量
+:root.dark {
+  // Theme color
+  --#{$admin-namespace}-primary: 93, 135, 255;
+  --#{$admin-namespace}-secondary: 73, 190, 255;
+  --#{$admin-namespace}-error: 250, 137, 107;
+  --#{$admin-namespace}-info: 83, 155, 255;
+  --#{$admin-namespace}-success: 19, 222, 185;
+  --#{$admin-namespace}-warning: 255, 174, 31;
+  --#{$admin-namespace}-danger: 255, 77, 79;
+
+  // Theme background color
+  --#{$admin-namespace}-bg-primary: 37, 54, 98;
+  --#{$admin-namespace}-bg-secondary: 28, 69, 93;
+  --#{$admin-namespace}-bg-success: 27, 60, 72;
+  --#{$admin-namespace}-bg-error: 75, 49, 61;
+  --#{$admin-namespace}-bg-info: 34, 54, 98;
+  --#{$admin-namespace}-bg-warning: 77, 58, 42;
+  --#{$admin-namespace}-bg-danger: 100, 49, 61;
+  --#{$admin-namespace}-hoverColor: 51, 63, 85;
+  --#{$admin-namespace}-grey100: 51, 63, 85;
+  --#{$admin-namespace}-grey200: 70, 86, 112;
+  --#{$admin-namespace}-color: #000000;
+  --#{$admin-namespace}-light: #1b1c22;
+  --#{$admin-namespace}-dark: #272a34;
+
+  // Background color | Hover color
+  --#{$admin-namespace}-text-muted: #636674;
+  --#{$admin-namespace}-gray-100: #1b1c22;
+  --#{$admin-namespace}-gray-100-rgb: 27, 28, 34;
+  --#{$admin-namespace}-gray-200: #26272f;
+  --#{$admin-namespace}-gray-200-rgb: 38, 39, 47;
+  --#{$admin-namespace}-gray-300: #363843;
+  --#{$admin-namespace}-gray-300-rgb: 54, 56, 67;
+  --#{$admin-namespace}-gray-400: #464852;
+  --#{$admin-namespace}-gray-400-rgb: 70, 72, 82;
+  --#{$admin-namespace}-gray-500: #636674;
+  --#{$admin-namespace}-gray-500-rgb: 99, 102, 116;
+  --#{$admin-namespace}-gray-600: #808290;
+  --#{$admin-namespace}-gray-600-rgb: 128, 130, 144;
+  --#{$admin-namespace}-gray-700: #9a9cae;
+  --#{$admin-namespace}-gray-700-rgb: 154, 156, 174;
+  --#{$admin-namespace}-gray-800: #b5b7c8;
+  --#{$admin-namespace}-gray-800-rgb: 181, 183, 200;
+  --#{$admin-namespace}-gray-900: #f5f5f5;
+  --#{$admin-namespace}-gray-900-rgb: 245, 245, 245;
+
+  // Text color
+  --#{$admin-namespace}-text-muted: #636674;
+  --#{$admin-namespace}-text-gray-100: #1b1c22;
+  --#{$admin-namespace}-text-gray-200: #26272f;
+  --#{$admin-namespace}-text-gray-300: #363843;
+  --#{$admin-namespace}-text-gray-400: #464852;
+  --#{$admin-namespace}-text-gray-500: #636674;
+  --#{$admin-namespace}-text-gray-600: #808290;
+  --#{$admin-namespace}-text-gray-700: #9a9cae;
+  --#{$admin-namespace}-text-gray-800: #b5b7c8;
+  --#{$admin-namespace}-text-gray-900: #f5f5f5;
+
+  // Border
+  --#{$admin-namespace}-border-color: #26272f;
+  --#{$admin-namespace}-border-dashed-color: #363843;
+
+  // Shadow
+  --#{$admin-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$admin-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$admin-namespace}-box-shadow: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 7.5%);
+  --#{$admin-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 10%);
+
+  // Root card box & Root card shadow
+  --#{$admin-namespace}-root-card-border-color: #1e2027;
+  --#{$admin-namespace}-root-card-box-shadow: none;
+
+  // border radius
+  --#{$admin-namespace}-radius: 12px;
+
+  // Theme background color
+  --#{$admin-namespace}-bg-color: #070707;
+  --#{$admin-namespace}-main-bg-color: #161618;
+}
+
+// 媒体查询-设备尺寸
+// notebook
+$device-notebook: 1600px;
+
+// ipad pro
+$device-ipad-pro: 1180px;
+
+// ipad
+$device-ipad: 768px;
+
+// ipad-竖屏
+$device-ipad-vertical: 900px;
+
+// mobile
+$device-phone: 640px;
+
+.bg-primary {
+  color: rgb(var(--#{$admin-namespace}-primary)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-primary)) !important;
+}
+
+.bg-secondary {
+  color: rgb(var(--#{$admin-namespace}-secondary)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-secondary)) !important;
+  border: 1px solid var(--#{$admin-namespace}-secondary);
+}
+
+.bg-warning {
+  color: rgb(var(--#{$admin-namespace}-warning)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-warning)) !important;
+}
+
+.bg-error {
+  color: rgb(var(--#{$admin-namespace}-error)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-error)) !important;
+}
+
+.bg-success {
+  color: rgb(var(--#{$admin-namespace}-success)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-success)) !important;
+}
+
+.bg-danger {
+  color: rgb(var(--#{$admin-namespace}-danger)) !important;
+  background-color: rgb(var(--#{$admin-namespace}-bg-danger)) !important;
+}
+
+.bg-grey100 {
+  background-color: rgb(var(--#{$admin-namespace}-grey100)) !important;
+}
+
+.bg-grey200 {
+  background-color: rgb(var(--#{$admin-namespace}-grey200)) !important;
+}
+
+.bg-hoverColor {
+  background-color: rgb(var(--#{$admin-namespace}-hoverColor)) !important;
+}
+
+.text-primary {
+  color: rgb(var(--#{$admin-namespace}-primary)) !important;
+}
+
+.text-secondary {
+  color: rgb(var(--#{$admin-namespace}-secondary)) !important;
+}
+
+.text-error {
+  color: rgb(var(--#{$admin-namespace}-error)) !important;
+}
+
+.text-danger {
+  color: rgb(var(--#{$admin-namespace}-danger)) !important;
+}
+
+.text-info {
+  color: rgb(var(--#{$admin-namespace}-info)) !important;
+}
+
+.text-success {
+  color: rgb(var(--#{$admin-namespace}-success)) !important;
+}
+
+.text-warning {
+  color: rgb(var(--#{$admin-namespace}-warning)) !important;
+}

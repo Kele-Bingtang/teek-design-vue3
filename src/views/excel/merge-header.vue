@@ -1,7 +1,7 @@
 <script setup lang="ts" name="MergeHeader">
-import { exportJsonToExcel, formatJsonToArray } from "@/utils";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { largeData } from "@/mock/table";
-import { tableStatusFilter } from "@/config";
+import { tableStatusFilter } from "@/common/config";
 import { Top } from "@element-plus/icons-vue";
 
 const tableData = ref(largeData);

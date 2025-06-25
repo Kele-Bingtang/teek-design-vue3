@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useMediaQuery } from "@vueuse/core";
-import { useErrorLogStore } from "@/stores";
+import { useErrorLogStore } from "@/pinia";
 import { useNamespace } from "@/composables";
-import SystemConfig, { mobileMaxWidthMedia } from "@/config";
+import SystemConfig, { mobileMaxWidthMedia } from "@/common/config";
 import Fullscreen from "./components/fullscreen/index.vue";
 import LanguageSelect from "./components/language-select/index.vue";
 import Notification from "./components/notification/index.vue";
@@ -49,8 +49,8 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/function" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(header-right) {
   height: 100%;

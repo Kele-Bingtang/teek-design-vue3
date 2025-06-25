@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { Bell } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import SystemConfig from "@/config";
+import SystemConfig from "@/common/config";
 import { Tooltip } from "@/components";
-import { useMessageStore } from "@/stores";
-import msg1 from "@/assets/images/msg/msg01.png";
-import msg2 from "@/assets/images/msg/msg02.png";
-import msg3 from "@/assets/images/msg/msg03.png";
-import msg4 from "@/assets/images/msg/msg04.png";
-import msg5 from "@/assets/images/msg/msg05.png";
+import { useMessageStore } from "@/pinia";
+import msg1 from "@/common/assets/images/msg/msg01.png";
+import msg2 from "@/common/assets/images/msg/msg02.png";
+import msg3 from "@/common/assets/images/msg/msg03.png";
+import msg4 from "@/common/assets/images/msg/msg04.png";
+import msg5 from "@/common/assets/images/msg/msg05.png";
 import "./index.scss";
 
 defineOptions({ name: "Notification" });
@@ -144,7 +144,7 @@ const toDetail = () => {
                   <img v-if="data.avatar" :src="data.avatar" alt="" :class="ns.m('avatar')" />
 
                   <div :class="[ns.e('info'), 'flx-1']">
-                    <div class="flx-justify-between">
+                    <div class="flx-align-center-between">
                       <Tooltip :effect="tooltipEffect" :line="1" :try="1">
                         <span class="title">{{ data.title }}</span>
                       </Tooltip>
@@ -169,7 +169,7 @@ const toDetail = () => {
           </template>
 
           <div :class="ns.e('empty')" v-else>
-            <img src="@/assets/images/notData.png" alt="notData" />
+            <img src="@/common/assets/images/notData.png" alt="notData" />
             <div>暂无内容</div>
           </div>
         </el-tab-pane>

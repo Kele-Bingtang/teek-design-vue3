@@ -1,8 +1,8 @@
-import type { PascalCaseComponentName } from "../types";
+import type { TablePascalCaseComponentName } from "../types";
 import { withModifiers } from "vue";
 import { ElLink, ElTag, ElProgress, ElImage, ElAvatar, dayjs, ElIcon, ElMessage } from "element-plus";
 import { DocumentCopy } from "@element-plus/icons-vue";
-import { isArray, isString } from "@/utils";
+import { isArray, isString } from "@/common/utils";
 
 export interface ComponentConfig {
   /**
@@ -26,7 +26,7 @@ export interface ComponentConfig {
 /**
  * 组件名枚举，key 要求是大写和 PascalCase 格式（自动与 componentMap 映射），value 则是 el 的字面量（使用配置项的 el 时用到）
  */
-export enum ComponentNameEnum {
+export enum TableComponentEnum {
   EL_LINK = "ElLink",
   EL_TAG = "ElTag",
   EL_PROGRESS = "ElProgress",
@@ -38,9 +38,12 @@ export enum ComponentNameEnum {
 }
 
 /**
- * 这里可以注册其他组件，先需要在 PascalCaseComponentName 里添加 el 名，再在这里进行组件映射
+ * 这里可以注册其他组件，先需要在 TablePascalCaseComponentName 里添加 el 名，再在这里进行组件映射
  */
-const componentsMap: Record<PascalCaseComponentName, Omit<Component, keyof ComponentConfig> | ComponentConfig> = {
+const tableElComponentsMap: Record<
+  TablePascalCaseComponentName,
+  Omit<Component, keyof ComponentConfig> | ComponentConfig
+> = {
   // 标签
   ElTag,
   // Link
@@ -117,4 +120,4 @@ const copy = async (str: string) => {
   ElMessage.success("复制成功");
 };
 
-export { componentsMap };
+export { tableElComponentsMap };

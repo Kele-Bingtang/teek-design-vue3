@@ -1,6 +1,6 @@
 import type { FormColumn } from "@/components/pro/form";
 import type { ProSearchProps } from "../types";
-import { isString } from "@/utils";
+import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
 export const useSearchApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {

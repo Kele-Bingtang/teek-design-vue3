@@ -161,15 +161,15 @@ export interface TableColumn<T = any>
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (label: string, scope: RenderParams<T>) => RenderTypes;
+  headerRender?: (scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */
-  render?: (value: unknown, scope: RenderParams<T>) => RenderTypes;
+  render?: (scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义单元格内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderHTML?: (value: unknown, scope: RenderParams<T>) => string;
+  renderHTML?: (scope: RenderParams<T>) => string;
   /**
    * 自定义单元格内容
    */

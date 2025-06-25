@@ -38,7 +38,7 @@ import { useNamespace } from "@/composables";
 import { componentMap } from "./helper/component-map";
 import { Icon } from "@/components";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isString } from "@/utils";
+import { addUnit, isString } from "@/common/utils";
 
 defineOptions({ name: "ProForm" });
 

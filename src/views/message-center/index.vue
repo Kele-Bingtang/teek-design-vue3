@@ -1,5 +1,5 @@
 <script setup lang="ts" name="MessageCenter">
-import { useMessageStore, type MessageItem } from "@/stores";
+import { useMessageStore, type MessageItem } from "@/pinia";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Delete, RefreshLeft } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
@@ -183,7 +183,7 @@ const handleOperate = (message: MessageItem) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 @include b(message-center) {
   height: 100%;

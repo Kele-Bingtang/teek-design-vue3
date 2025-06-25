@@ -1,7 +1,7 @@
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
-@use "@/styles/mixins/function" as *;
-@use "@/styles/variables" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/variables" as *;
 
 @include b(login) {
   position: relative;
@@ -9,7 +9,7 @@
   min-height: 550px;
   padding: 30px;
   background-color: #eeeeee;
-  background-image: url("@/assets/images/login/login_bg.svg");
+  background-image: url("@/common/assets/images/login/login_bg.svg");
   background-size: cover;
 
   @include e(dark) {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SystemConfig from "@/config";
+import SystemConfig from "@/common/config";
 import { useNamespace } from "@/composables";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 
 import "./index.scss";
 

@@ -2,7 +2,7 @@ import type { PageInfo } from "@/components";
 import type { ProTableMainNamespace } from "../types";
 import { defaultPageInfo } from "@/components/pro/pagination";
 import { reactive, computed, toRefs } from "vue";
-import { isEmpty } from "@/utils";
+import { isEmpty } from "@/common/utils";
 
 export interface UseTableStateData {
   tableData: Recordable[];

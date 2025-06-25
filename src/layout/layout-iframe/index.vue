@@ -2,9 +2,9 @@
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { ElContainer, ElAside } from "element-plus";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
-import SystemConfig, { HOME_URL } from "@/config";
+import SystemConfig, { HOME_URL } from "@/common/config";
 import PageContent from "../components/page-content/index.vue";
 import Menu from "../components/menu/index.vue";
 
@@ -23,7 +23,7 @@ const { isCollapse } = storeToRefs(settingStore);
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
     <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme), 'flx-column']">
       <div :class="[ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
-        <img src="@/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
+        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
         <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
       </div>
       <Menu

@@ -1,4 +1,4 @@
-import SystemConfig from "@/config";
+import SystemConfig from "@config";
 
 // 获取传入的值的类型
 const getValueType = (value: any) => {

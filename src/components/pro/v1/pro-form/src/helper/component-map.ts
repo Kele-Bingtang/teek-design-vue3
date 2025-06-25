@@ -27,7 +27,7 @@ import Tree from "../components/tree.vue";
 import CheckBoxSelect from "../components/checkbox-select.vue";
 import WangEditor from "@/components/editor/wang-editor/index";
 import Tinymce from "@/components/editor/tinymce/index";
-import IconPicker from "@/components/view/icon-picker/index";
+import IconPicker from "@/components/page/icon-picker/index";
 
 const componentMap: Record<PascalCaseComponentName, Component> = {
   ElInput,

@@ -2,7 +2,7 @@
 import type { IconProps } from "./icon";
 import { useSlots, computed, toRaw } from "vue";
 import { useNamespace } from "@/composables";
-import { addUnit, isString } from "@/utils";
+import { addUnit, isString } from "@/common/utils";
 import SvgIcon from "./components/svg-icon.vue";
 import FontIcon from "./components/font-icon.vue";
 import IconifyOffline from "./components/iconify-offline.vue";
@@ -83,8 +83,8 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 </template>
 
 <style lang="scss">
-@use "@/styles/mixins/bem" as *;
-@use "@/styles/mixins/namespace" as *;
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 
 @include b(icon) {
   position: relative;

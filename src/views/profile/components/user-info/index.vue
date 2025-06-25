@@ -1,6 +1,6 @@
 <script setup lang="ts" name="UserCard">
-import type { UserInfo } from "@/stores";
-import defaultAvatar from "@/assets/images/default.png";
+import type { UserInfo } from "@/pinia";
+import defaultAvatar from "@/common/assets/images/default.png";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("user-info");
@@ -39,7 +39,7 @@ const hobby = ["躺平", "专注开发", "热爱学习", "旅游"];
 
     <div :class="ns.e('info')">
       <ul class="flx-column gap-10">
-        <li v-for="item in userInfo" :key="item.label" class="flx-justify-between">
+        <li v-for="item in userInfo" :key="item.label" class="flx-align-center-between">
           <span>{{ item.label }}</span>
           <span>{{ item.value }}</span>
         </li>

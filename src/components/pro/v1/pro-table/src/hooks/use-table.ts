@@ -1,7 +1,7 @@
 import type { PageInfo } from "@/components";
 import type { TableColumnProps } from "../interface";
 import { reactive, computed, toRefs } from "vue";
-import { isEmpty } from "@/utils";
+import { isEmpty } from "@/common/utils";
 
 export namespace Table {
   export interface PageInfo {

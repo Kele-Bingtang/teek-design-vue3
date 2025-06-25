@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { LayoutModeEnum } from "@/enums/appEnum";
+import { LayoutModeEnum } from "@/common/enums/appEnum";
 import { useNamespace } from "@/composables";
-import { useSettingStore } from "@/stores";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "LayoutModeSwitch" });
 
@@ -52,7 +52,7 @@ const switchLayoutMode = (layoutMode: LayoutModeEnum) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx', 'flx-wrap', 'gap-15']">
+  <div :class="[ns.b(), 'flx-wrap', 'gap-15']">
     <div v-for="item in layoutModeList" :key="item.mode" :class="ns.e('item')" @click="switchLayoutMode(item.mode)">
       <div
         :class="[ns.e('box'), ns.join(item.mode), ns.is('active', item.mode === layoutMode)]"

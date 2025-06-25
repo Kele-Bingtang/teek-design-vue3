@@ -3,7 +3,7 @@ import { ElButton, type DialogProps, ElMessage, type FormInstance, ElMessageBox 
 import { ProForm, ProDialog, type ProFormProps, type FormColumn, type ProFormInstance } from "@/components";
 import { ref, computed, unref } from "vue";
 import { tableEnumMapKey } from "../interface";
-import { deepClone } from "@/utils";
+import { deepClone } from "@/common/utils";
 
 defineOptions({ name: "DialogForm" });
 

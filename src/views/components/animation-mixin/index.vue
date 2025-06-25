@@ -104,7 +104,7 @@ const demoRules = {
 </template>
 
 <style lang="scss" scoped>
-@use "@/styles/mixins/bem" as *;
+@use "@styles/mixins/bem" as *;
 
 $blue: #007bff;
 $light-blue: #409eff;

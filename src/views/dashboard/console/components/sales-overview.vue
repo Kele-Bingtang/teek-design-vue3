@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { LineChart } from "@/components";
+
 const data = [50, 25, 40, 20, 70, 35, 65, 30, 35, 20, 40, 44];
 const xAxisData = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
 </script>
 
 <template>
-  <div class="card tk-card-2">
+  <div class="card tk-card-secondary">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">访问量</h4>
@@ -14,20 +16,19 @@ const xAxisData = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月
         </p>
       </div>
     </div>
-    <!-- <ArtLineChart
+    <LineChart
       class="chart"
       height="calc(100% - 40px)"
       :data="data"
       :xAxisData="xAxisData"
       :showAreaColor="true"
       :showAxisLine="false"
-    /> -->
+    />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .card {
-  box-sizing: border-box;
   width: 100%;
   height: 420px;
   padding: 20px 0 30px;
@@ -37,7 +38,6 @@ const xAxisData = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月
   }
 
   .chart {
-    box-sizing: border-box;
     width: 100%;
     padding: 20px 20px 0;
   }

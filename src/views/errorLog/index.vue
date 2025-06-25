@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ErrorLog">
-import { useErrorLogStore, type ErrorLog } from "@/stores";
+import { useErrorLogStore, type ErrorLog } from "@/pinia";
 import { computed, onActivated, onMounted, reactive, ref } from "vue";
 
 const errorStore = useErrorLogStore();

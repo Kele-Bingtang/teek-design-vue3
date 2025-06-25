@@ -1,5 +1,5 @@
 <template>
-  <div class="console">
+  <div class="console" :class="route.meta.isFull ? 'full' : ''">
     <CardList></CardList>
 
     <el-row :gutter="20">
@@ -35,11 +35,13 @@ import TodoList from "./components/todo-list.vue";
 
 defineOptions({ name: "Console" });
 
+const route = useRoute();
+
 onMounted(() => {
   window.scrollTo({ top: 0 });
 });
 </script>
 
 <style lang="scss" scoped>
-@use "./style";
+@use "./index";
 </style>
