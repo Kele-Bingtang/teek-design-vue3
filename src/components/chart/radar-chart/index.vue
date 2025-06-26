@@ -26,7 +26,8 @@ const props = withDefaults(defineProps<RadarChartProps>(), {
 });
 
 // 使用新的图表组件抽象
-const { chartRef, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = useChartComponent({
+const { chartInstance, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     return !props.data?.length || props.data.every(item => item.value.every(val => val === 0));
@@ -39,19 +40,12 @@ const { chartRef, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = useCh
         indicator: props.indicator,
         center: ["50%", "50%"],
         radius: "70%",
-        axisName: {
-          color: isDark.value ? "#ccc" : "#666",
-          fontSize: 12,
-        },
+        axisName: { color: isDark.value ? "#ccc" : "#666", fontSize: 12 },
         splitLine: {
-          lineStyle: {
-            color: isDark.value ? "#444" : "#e6e6e6",
-          },
+          lineStyle: { color: isDark.value ? "#444" : "#e6e6e6" },
         },
         axisLine: {
-          lineStyle: {
-            color: isDark.value ? "#444" : "#e6e6e6",
-          },
+          lineStyle: { color: isDark.value ? "#444" : "#e6e6e6" },
         },
         splitArea: {
           show: true,
@@ -69,25 +63,10 @@ const { chartRef, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = useCh
             name: item.name,
             value: item.value,
             symbolSize: 4,
-            lineStyle: {
-              width: 2,
-              color: props.colors[index % props.colors.length],
-            },
-            itemStyle: {
-              color: props.colors[index % props.colors.length],
-            },
-            areaStyle: {
-              color: props.colors[index % props.colors.length],
-              opacity: 0.1,
-            },
-            emphasis: {
-              areaStyle: {
-                opacity: 0.25,
-              },
-              lineStyle: {
-                width: 3,
-              },
-            },
+            lineStyle: { width: 2, color: props.colors[index % props.colors.length] },
+            itemStyle: { color: props.colors[index % props.colors.length] },
+            areaStyle: { color: props.colors[index % props.colors.length], opacity: 0.1 },
+            emphasis: { areaStyle: { opacity: 0.25 }, lineStyle: { width: 3 } },
           })),
           ...getAnimationConfig(200, 1800),
         },
@@ -98,7 +77,7 @@ const { chartRef, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = useCh
 </script>
 
 <template>
-  <div ref="chartRef" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>

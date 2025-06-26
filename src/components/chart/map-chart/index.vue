@@ -4,7 +4,7 @@ import type { MapChartProps } from "../types";
 import * as echarts from "echarts";
 import { useSettingStore } from "@/pinia";
 import chinaMapJson from "./default-data.json";
-import { ElEmpty } from "element-plus";
+import ChartEmpty from "../chart-empty/index.vue";
 
 defineOptions({ name: "MapChart" });
 
@@ -280,9 +280,7 @@ watch(
 
 <template>
   <div class="map-chart" :style="{ height: 'calc(100vh - 120px)' }">
-    <div v-if="isEmpty" class="chart-empty-state">
-      <ElEmpty description="暂无地图数据" />
-    </div>
+    <ChartEmpty v-if="isEmpty" description="暂无地图数据" />
 
     <div v-else id="china-map" ref="chinaMapRef" class="china-map" />
   </div>
@@ -292,13 +290,6 @@ watch(
 .map-chart {
   position: relative;
   width: 100%;
-
-  .chart-empty-state {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
 
   .china-map {
     width: 100%;

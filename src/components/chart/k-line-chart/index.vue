@@ -34,7 +34,7 @@ const getActualColors = () => {
 
 // 使用新的图表组件抽象
 const {
-  chartRef,
+  chartInstance,
   getAxisLineStyle,
   getAxisLabelStyle,
   getAxisTickStyle,
@@ -43,6 +43,7 @@ const {
   getTooltipStyle,
   isEmpty,
 } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     return (
@@ -61,13 +62,7 @@ const {
     const { upColor, downColor } = getActualColors();
 
     return {
-      grid: {
-        top: 20,
-        right: 20,
-        bottom: props.showDataZoom ? 80 : 20,
-        left: 20,
-        containLabel: true,
-      },
+      grid: { top: 20, right: 20, bottom: props.showDataZoom ? 80 : 20, left: 20, containLabel: true },
       tooltip: getTooltipStyle("axis", {
         axisPointer: {
           type: "cross",
@@ -112,29 +107,15 @@ const {
             borderWidth: 1,
           },
           emphasis: {
-            itemStyle: {
-              borderWidth: 2,
-              shadowBlur: 10,
-              shadowColor: "rgba(0, 0, 0, 0.3)",
-            },
+            itemStyle: { borderWidth: 2, shadowBlur: 10, shadowColor: "rgba(0, 0, 0, 0.3)" },
           },
           ...getAnimationConfig(),
         },
       ],
       dataZoom: props.showDataZoom
         ? [
-            {
-              type: "inside",
-              start: props.dataZoomStart,
-              end: props.dataZoomEnd,
-            },
-            {
-              show: true,
-              type: "slider",
-              top: "90%",
-              start: props.dataZoomStart,
-              end: props.dataZoomEnd,
-            },
+            { type: "inside", start: props.dataZoomStart, end: props.dataZoomEnd },
+            { show: true, type: "slider", top: "90%", start: props.dataZoomStart, end: props.dataZoomEnd },
           ]
         : undefined,
     };
@@ -143,7 +124,7 @@ const {
 </script>
 
 <template>
-  <div ref="chartRef" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>

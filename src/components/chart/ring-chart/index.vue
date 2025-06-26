@@ -28,7 +28,8 @@ const props = withDefaults(defineProps<RingChartProps>(), {
 });
 
 // 使用新的图表组件抽象
-const { chartRef, isDark, getAnimationConfig, getTooltipStyle, getLegendStyle, isEmpty } = useChartComponent({
+const { chartInstance, isDark, getAnimationConfig, getTooltipStyle, getLegendStyle, isEmpty } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     return !props.data?.length || props.data.every(item => item.value === 0);
@@ -123,14 +124,7 @@ const { chartRef, isDark, getAnimationConfig, getTooltipStyle, getLegendStyle, i
 </script>
 
 <template>
-  <div ref="chartRef" class="ring-chart" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.ring-chart {
-  position: relative;
-  width: 100%;
-}
-</style>

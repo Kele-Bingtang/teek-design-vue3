@@ -76,7 +76,7 @@ const createSeriesConfig = (config: {
 
 // 使用图表组件抽象
 const {
-  chartRef,
+  chartInstance,
   getAxisLineStyle,
   getAxisLabelStyle,
   getAxisTickStyle,
@@ -87,6 +87,7 @@ const {
   getGridWithLegend,
   isEmpty,
 } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     return (
@@ -184,7 +185,7 @@ const {
 </script>
 
 <template>
-  <div ref="chartRef" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>

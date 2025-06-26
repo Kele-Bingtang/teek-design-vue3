@@ -22,7 +22,7 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
   const { props, generateOptions, checkEmpty, watchSources = [], onVisible, chartOptions = {} } = options;
 
   const chart = useChart(chartOptions);
-  const { chartRef, initChart, isDark } = chart;
+  const { chartInstance, initChart, isDark } = chart;
 
   // 检查是否为空数据
   const isEmpty = computed(() => {
@@ -64,15 +64,15 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
       updateChart();
 
       // 监听图表可见事件
-      if (chartRef.value) {
-        chartRef.value.addEventListener("chartVisible", handleChartVisible);
+      if (chartInstance.value) {
+        chartInstance.value.addEventListener("chartVisible", handleChartVisible);
       }
     });
 
     onBeforeUnmount(() => {
       // 清理事件监听器
-      if (chartRef.value) {
-        chartRef.value.removeEventListener("chartVisible", handleChartVisible);
+      if (chartInstance.value) {
+        chartInstance.value.removeEventListener("chartVisible", handleChartVisible);
       }
     });
   };

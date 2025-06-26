@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<ScatterChartProps>(), {
 
 // 使用新的图表组件抽象
 const {
-  chartRef,
+  chartInstance,
   isDark,
   getAxisLineStyle,
   getAxisLabelStyle,
@@ -42,6 +42,7 @@ const {
   getTooltipStyle,
   isEmpty,
 } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     return !props.data?.length || props.data.every(item => item.value.every(val => val === 0));
@@ -51,13 +52,7 @@ const {
     const computedColor = props.colors[0] || getCssVar("--el-color-primary");
 
     return {
-      grid: {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20,
-        containLabel: true,
-      },
+      grid: { top: 20, right: 20, bottom: 20, left: 20, containLabel: true },
       tooltip: props.showTooltip
         ? getTooltipStyle("item", {
             formatter: (params: any) => {
@@ -107,7 +102,7 @@ const {
 </script>
 
 <template>
-  <div ref="chartRef" class="scatter-chart" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" class="scatter-chart" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>

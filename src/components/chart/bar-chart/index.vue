@@ -35,44 +35,29 @@ const props = withDefaults(defineProps<BarChartProps>(), {
 });
 
 // 判断是否为多数据
-const isMultipleData = computed(() => {
-  return (
+const isMultipleData = computed(
+  () =>
     Array.isArray(props.data) && props.data.length > 0 && typeof props.data[0] === "object" && "name" in props.data[0]
-  );
-});
+);
 
 // 获取颜色配置
 const getColor = (customColor?: string, index?: number) => {
   if (customColor) return customColor;
 
-  if (index !== undefined) {
-    return props.colors![index % props.colors!.length];
-  }
+  if (index !== undefined) return props.colors![index % props.colors!.length];
 
   // 默认渐变色
   return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-    {
-      offset: 0,
-      color: getCssVar("--el-color-primary-light-4"),
-    },
-    {
-      offset: 1,
-      color: getCssVar("--el-color-primary"),
-    },
+    { offset: 0, color: getCssVar("--el-color-primary-light-4") },
+    { offset: 1, color: getCssVar("--el-color-primary") },
   ]);
 };
 
 // 创建渐变色
 const createGradientColor = (color: string) => {
   return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-    {
-      offset: 0,
-      color: color,
-    },
-    {
-      offset: 1,
-      color: color,
-    },
+    { offset: 0, color: color },
+    { offset: 1, color: color },
   ]);
 };
 
@@ -105,7 +90,7 @@ const createSeriesItem = (config: {
 
 // 使用新的图表组件抽象
 const {
-  chartRef,
+  chartInstance,
   getAxisLineStyle,
   getAxisLabelStyle,
   getAxisTickStyle,
@@ -116,6 +101,7 @@ const {
   getGridWithLegend,
   isEmpty,
 } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props,
   checkEmpty: () => {
     // 检查单数据情况
@@ -194,7 +180,7 @@ const {
 </script>
 
 <template>
-  <div ref="chartRef" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>

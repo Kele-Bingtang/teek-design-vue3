@@ -46,9 +46,7 @@ const animateProgress = () => {
 
     currentPercentage.value = startValue + (endValue - startValue) * progress;
 
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
+    if (progress < 1) requestAnimationFrame(animate);
   };
 
   requestAnimationFrame(animate);

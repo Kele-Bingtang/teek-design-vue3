@@ -169,6 +169,7 @@ const useDelay = (cb: () => unknown, seconds = 1) => {
   let startTime: number;
   function count(timestamp: number) {
     if (!startTime) startTime = timestamp;
+
     const diff = timestamp - startTime;
     if (diff < seconds * 1000) {
       delayRafId = requestAnimationFrame(count);

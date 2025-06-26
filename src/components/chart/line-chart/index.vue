@@ -4,6 +4,7 @@
 import * as echarts from "echarts";
 import type { EChartsOption } from "echarts";
 import { getCssVar, hexToRgba } from "@/common/utils";
+import { useNamespace } from "@/composables";
 import { useChartOps, useChart } from "../composables";
 import type { LineChartProps, LineDataItem } from "../types";
 import ChartEmpty from "../chart-empty/index.vue";
@@ -38,9 +39,11 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   legendPosition: "bottom",
 });
 
+const ns = useNamespace("line-chart");
+
 // 使用基础的 useChart hook
 const {
-  chartRef,
+  chartInstance,
   isDark,
   initChart,
   getAxisLineStyle,
@@ -50,7 +53,7 @@ const {
   getTooltipStyle,
   getLegendStyle,
   getGridWithLegend,
-} = useChart();
+} = useChart({ instanceName: "chartInstance" });
 
 // 动画状态和定时器管理
 const isAnimating = ref(false);
@@ -85,11 +88,10 @@ const isEmpty = computed(() => {
 });
 
 // 判断是否为多数据
-const isMultipleData = computed(() => {
-  return (
+const isMultipleData = computed(
+  () =>
     Array.isArray(props.data) && props.data.length > 0 && typeof props.data[0] === "object" && "name" in props.data[0]
-  );
-});
+);
 
 // 缓存计算的最大值，避免重复计算
 const maxValue = computed(() => {
@@ -123,17 +125,12 @@ const initAnimationData = () => {
 };
 
 // 复制真实数据
-const copyRealData = () => {
-  return isMultipleData.value ? [...(props.data as LineDataItem[])] : [...(props.data as number[])];
-};
+const copyRealData = () => (isMultipleData.value ? [...(props.data as LineDataItem[])] : [...(props.data as number[])]);
 
 // 获取颜色配置
 const getColor = (customColor?: string, index?: number) => {
   if (customColor) return customColor;
-
-  if (index !== undefined) {
-    return props.colors![index % props.colors!.length];
-  }
+  if (index !== undefined) return props.colors![index % props.colors!.length];
 
   return getCssVar("--el-color-primary");
 };
@@ -148,14 +145,8 @@ const generateAreaStyle = (item: LineDataItem, color: string) => {
 
   return {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      {
-        offset: 0,
-        color: hexToRgba(color, areaConfig.startOpacity || 0.2).rgba,
-      },
-      {
-        offset: 1,
-        color: hexToRgba(color, areaConfig.endOpacity || 0.02).rgba,
-      },
+      { offset: 0, color: hexToRgba(color, areaConfig.startOpacity || 0.2).rgba },
+      { offset: 1, color: hexToRgba(color, areaConfig.endOpacity || 0.02).rgba },
     ]),
   };
 };
@@ -167,14 +158,8 @@ const generateSingleAreaStyle = () => {
   const color = getColor(props.colors[0]);
   return {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      {
-        offset: 0,
-        color: hexToRgba(color, 0.2).rgba,
-      },
-      {
-        offset: 1,
-        color: hexToRgba(color, 0.02).rgba,
-      },
+      { offset: 0, color: hexToRgba(color, 0.2).rgba },
+      { offset: 1, color: hexToRgba(color, 0.02).rgba },
     ]),
   };
 };
@@ -198,16 +183,11 @@ const createSeriesItem = (config: {
     smooth: config.smooth ?? props.smooth,
     symbol: config.symbol ?? props.symbol,
     symbolSize: config.symbolSize ?? props.symbolSize,
-    lineStyle: {
-      width: config.lineWidth ?? props.lineWidth,
-      color: config.color,
-    },
+    lineStyle: { width: config.lineWidth ?? props.lineWidth, color: config.color },
     areaStyle: config.areaStyle,
     emphasis: {
       focus: "series" as const,
-      lineStyle: {
-        width: (config.lineWidth ?? props.lineWidth) + 1,
-      },
+      lineStyle: { width: (config.lineWidth ?? props.lineWidth) + 1 },
     },
   };
 };
@@ -270,13 +250,7 @@ const generateChartOptions = (isInitial = false): EChartsOption => {
     const computedColor = getColor(props.colors[0]);
     const areaStyle = generateSingleAreaStyle();
 
-    options.series = [
-      createSeriesItem({
-        data: singleData,
-        color: computedColor,
-        areaStyle,
-      }),
-    ];
+    options.series = [createSeriesItem({ data: singleData, color: computedColor, areaStyle })];
   }
 
   return options;
@@ -365,12 +339,13 @@ watch(
 // 监听主题变化 - 使用setOption更新而不是重新渲染
 watch(isDark, () => {
   // 获取图表实例
-  const chartInstance = (chartRef.value as any)?.__echart__ || echarts.getInstanceByDom(chartRef.value as HTMLElement);
+  const chart =
+    (chartInstance.value as any)?.__echart__ || echarts.getInstanceByDom(chartInstance.value as HTMLElement);
 
-  if (chartInstance && !isEmpty.value) {
+  if (chart && !isEmpty.value) {
     // 重新生成配置并更新图表，避免重新渲染
     const newOptions = generateChartOptions(false);
-    chartInstance.setOption(newOptions);
+    chart.setOption(newOptions);
   }
 });
 
@@ -379,8 +354,8 @@ onMounted(() => {
   renderChart();
 
   // 监听图表可见事件
-  if (chartRef.value) {
-    chartRef.value.addEventListener("chartVisible", handleChartVisible);
+  if (chartInstance.value) {
+    chartInstance.value.addEventListener("chartVisible", handleChartVisible);
   }
 });
 
@@ -388,21 +363,14 @@ onBeforeUnmount(() => {
   clearAnimationTimer();
 
   // 清理事件监听器
-  if (chartRef.value) {
-    chartRef.value.removeEventListener("chartVisible", handleChartVisible);
+  if (chartInstance.value) {
+    chartInstance.value.removeEventListener("chartVisible", handleChartVisible);
   }
 });
 </script>
 
 <template>
-  <div ref="chartRef" class="line-chart" :style="{ height: props.height }" v-loading="props.loading">
+  <div ref="chartInstance" :style="{ height: props.height }" v-loading="props.loading">
     <ChartEmpty v-if="isEmpty" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.line-chart {
-  position: relative;
-  width: calc(100% + 10px);
-}
-</style>
