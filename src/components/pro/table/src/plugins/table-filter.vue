@@ -70,7 +70,7 @@ const handleReset = () => {
               : `var(--${ns.elNamespace}-color-primary)`,
           }"
         >
-          <ElIcon><Filter /></ElIcon>
+          <el-icon><Filter /></el-icon>
         </span>
       </slot>
     </template>

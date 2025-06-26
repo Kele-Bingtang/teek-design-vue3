@@ -32,7 +32,7 @@
  * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
  */
 
-import componentRoutes from "./routes/page";
+import pageRoutes from "./routes/page";
 import detailsRoutes from "./routes/details";
 import directiveRoutes from "./routes/directive";
 import errorRoutes from "./routes/error";
@@ -45,6 +45,7 @@ import tableRoutes from "./routes/table";
 import proComponentsRoutes from "./routes/pro-components";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
+import templateRoutes from "./routes/template";
 import { User, Bell, HomeFilled, StarFilled, Document } from "@element-plus/icons-vue";
 import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
@@ -170,8 +171,9 @@ export const rolesRoutes: RouterConfigRaw[] = [
     },
   },
   { ...proComponentsRoutes },
-  { ...componentRoutes },
+  { ...pageRoutes },
   { ...editorRoutes },
+  { ...templateRoutes },
   { ...tableRoutes },
   { ...excelRoutes },
   { ...permissionRoutes },

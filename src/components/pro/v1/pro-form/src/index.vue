@@ -320,9 +320,9 @@ const RenderForm = () => {
   // 如果需要栅格，需要包裹 ElCol
   return useCol ? (
     // 默认 gutter 20，可以被传来的 rowProps 替换
-    <ElRow gutter={20} {...rowProps} style="width: 100%">
+    <el-row gutter={20} {...rowProps} style="width: 100%">
       {renderFormItemWrap()}
-    </ElRow>
+    </el-row>
   ) : (
     renderFormItemWrap()
   );
@@ -349,9 +349,9 @@ const renderFormItemWrap = () => {
         </>
       ) : useCol ? (
         // 如果需要栅格，需要包裹 ElCol
-        <ElCol {...setGridProp({ ...col, ...rowProps?.col, ...item.col })} v-show={!isHidden(item)}>
+        <el-col {...setGridProp({ ...col, ...rowProps?.col, ...item.col })} v-show={!isHidden(item)}>
           {renderFormItem(item)}
-        </ElCol>
+        </el-col>
       ) : (
         renderFormItem(item)
       );

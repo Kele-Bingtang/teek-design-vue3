@@ -17,6 +17,9 @@ import "@styles/element-plus/el-light.scss";
 import "@styles/element-plus/el-dark.scss";
 import "@styles/plugin.scss";
 
+import "@/common/assets/iconfont/system/iconfont.js"; // 系统彩色图标
+import "@/common/assets/iconfont/system/iconfont.css"; // 系统图标
+
 const app = createApp(App);
 
 window.log = log;

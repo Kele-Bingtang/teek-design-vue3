@@ -5,6 +5,7 @@ import type { ScatterChartProps } from "../types";
 import { getCssVar } from "@/common/utils";
 import { useChartOps, useChartComponent } from "../composables";
 import ChartEmpty from "../chart-empty/index.vue";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ScatterChart" });
 
@@ -30,6 +31,8 @@ const props = withDefaults(defineProps<ScatterChartProps>(), {
   legendPosition: "bottom",
 });
 
+const ns = useNamespace();
+
 // 使用新的图表组件抽象
 const {
   chartInstance,
@@ -49,7 +52,7 @@ const {
   },
   watchSources: [() => props.data, () => props.colors, () => props.symbolSize],
   generateOptions: (): EChartsOption => {
-    const computedColor = props.colors[0] || getCssVar("--el-color-primary");
+    const computedColor = props.colors[0] || getCssVar(`--${ns.elNamespace}-color-primary`);
 
     return {
       grid: { top: 20, right: 20, bottom: 20, left: 20, containLabel: true },

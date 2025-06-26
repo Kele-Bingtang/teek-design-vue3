@@ -49,6 +49,8 @@ const getFontIconType = () => {
   if (icon.toLowerCase().startsWith("if-")) return "iconfont";
   if (icon.toLowerCase().startsWith("uni-")) return "unicode";
   if (icon.toLowerCase().startsWith("sym-")) return "symbol";
+
+  if (icon.startsWith("&#xe")) return "unicode";
 };
 
 const isSvgIcon = () =>

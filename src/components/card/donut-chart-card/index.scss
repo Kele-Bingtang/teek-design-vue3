@@ -1,0 +1,105 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(donut-chart-card) {
+  overflow: hidden;
+  color: #303133;
+  background-color: cssVar(main-bg-color);
+  border-radius: cssVar(radius);
+  transition: 0.3s;
+
+  @include e(body) {
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    padding: 20px;
+  }
+
+  @include e(content) {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  @include e(data-section) {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    .title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: cssVar(text-gray-900);
+    }
+
+    .value {
+      margin: 0;
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: cssVar(text-gray-900);
+    }
+
+    .percentage {
+      margin-top: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #f56c6c;
+
+      &.is-increase {
+        color: #67c23a;
+      }
+    }
+  }
+
+  @include e(chart-section) {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    max-width: 200px;
+    height: 100%;
+
+    .chart-container {
+      width: 100%;
+      height: 120px;
+    }
+  }
+
+  @include e(legend) {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #909399;
+
+    .legend-item {
+      position: relative;
+      padding-left: 16px;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        content: "";
+        border-radius: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.current::before {
+        background-color: cssVar(main-color);
+      }
+
+      &.previous::before {
+        background-color: #e6e8f7;
+      }
+    }
+  }
+}

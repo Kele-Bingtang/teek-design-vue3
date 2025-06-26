@@ -1,144 +1,52 @@
 <!-- 数据列表卡片 -->
-
 <script setup lang="ts">
+import { useNamespace } from "@/composables";
+import type { DataListCardEmits, DataListCardProps } from "./types";
+
 defineOptions({ name: "DataListCard" });
-
-interface Props {
-  /** 数据列表 */
-  list: Activity[];
-  /** 标题 */
-  title: string;
-  /** 副标题 */
-  subtitle?: string;
-  /** 最大显示数量 */
-  maxCount?: number;
-  /** 是否显示更多按钮 */
-  showMoreButton?: boolean;
-}
-
-interface Activity {
-  /** 标题 */
-  title: string;
-  /** 状态 */
-  status: string;
-  /** 时间 */
-  time: string;
-  /** 样式类名 */
-  class: string;
-  /** 图标 */
-  icon: string;
-}
 
 const ITEM_HEIGHT = 66;
 const DEFAULT_MAX_COUNT = 5;
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<DataListCardProps>(), {
   maxCount: DEFAULT_MAX_COUNT,
 });
 
+const ns = useNamespace("data-list-card");
+
 const maxHeight = computed(() => `${ITEM_HEIGHT * props.maxCount}px`);
 
-const emit = defineEmits<{
-  more: [];
-}>();
+const emit = defineEmits<DataListCardEmits>();
 
 const handleMore = () => emit("more");
 </script>
 
 <template>
-  <div class="basic-list-card">
-    <div class="card tk-card-secondary">
-      <div class="card-header">
-        <p class="card-title">{{ title }}</p>
-        <p class="card-subtitle">{{ subtitle }}</p>
-      </div>
-      <ElScrollbar :style="{ height: maxHeight }">
-        <div v-for="(item, index) in list" :key="index" class="list-item">
-          <div class="item-icon" :class="item.class" v-if="item.icon">
-            <i class="iconfont-sys" v-html="item.icon"></i>
-          </div>
-          <div class="item-content">
-            <div class="item-title">{{ item.title }}</div>
-            <div class="item-status">{{ item.status }}</div>
-          </div>
-          <div class="item-time">{{ item.time }}</div>
-        </div>
-      </ElScrollbar>
-      <ElButton class="more-btn" v-if="showMoreButton" v-ripple @click="handleMore">查看更多</ElButton>
+  <div :class="[ns.b(), ns.join('card-secondary')]">
+    <div :class="ns.e('header')">
+      <p :class="ns.em('header', 'title')">{{ title }}</p>
+      <p :class="ns.em('header', 'subtitle')">{{ subtitle }}</p>
     </div>
+
+    <el-scrollbar :style="{ height: maxHeight }">
+      <div v-for="(item, index) in list" :key="index" :class="ns.e('item')">
+        <div v-if="item.icon" :class="[ns.em('item', 'icon'), item.class]">
+          <Icon :icon="item.icon" :size="20" class="icon-sys" />
+        </div>
+
+        <div :class="ns.e('item-content')">
+          <div :class="ns.em('item-content', 'title')">{{ item.title }}</div>
+          <div :class="ns.em('item-content', 'status')">{{ item.status }}</div>
+        </div>
+
+        <div :class="ns.em('item', 'time')">{{ item.time }}</div>
+      </div>
+    </el-scrollbar>
+
+    <el-button :class="ns.e('more-btn')" v-if="showMoreButton" v-waves @click="handleMore">查看更多</el-button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function" as *;
-
-.basic-list-card {
-  .card {
-    padding: 30px;
-    background-color: cssVar(main-bg-color);
-    border-radius: cssVar(radius);
-
-    .card-header {
-      padding-bottom: 15px;
-
-      .card-title {
-        font-size: 18px;
-        font-weight: 500;
-        color: cssVar(gray-900);
-      }
-
-      .card-subtitle {
-        font-size: 14px;
-        color: cssVar(gray-500);
-      }
-    }
-  }
-
-  .list-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 0;
-
-    .item-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin-right: 12px;
-      border-radius: 8px;
-
-      i {
-        font-size: 20px;
-      }
-    }
-
-    .item-content {
-      flex: 1;
-
-      .item-title {
-        margin-bottom: 4px;
-        font-size: 15px;
-        color: cssVar(gray-900);
-      }
-
-      .item-status {
-        font-size: 12px;
-        color: cssVar(gray-600);
-      }
-    }
-
-    .item-time {
-      margin-left: 12px;
-      font-size: 12px;
-      color: cssVar(gray-500);
-    }
-  }
-
-  .more-btn {
-    width: 100%;
-    margin-top: 25px;
-    text-align: center;
-  }
-}
+@use "./index";
 </style>

@@ -1,45 +1,27 @@
 <!-- 环型图卡片 -->
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
+import type { DonutChartCardProps } from "./types";
 import { useChartOps, useChartComponent } from "@/components";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "DonutChartCard" });
 
-interface Props {
-  /** 数值 */
-  value: number;
-  /** 标题 */
-  title: string;
-  /** 百分比 */
-  percentage: number;
-  /** 百分比标签 */
-  percentageLabel?: string;
-  /** 当前年份 */
-  currentValue?: string;
-  /** 去年年份 */
-  previousValue?: string;
-  /** 高度 */
-  height?: number;
-  /** 颜色 */
-  color?: string;
-  /** 半径 */
-  radius?: [string, string];
-  /** 数据 */
-  data?: [number, number];
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<DonutChartCardProps>(), {
   height: 9,
   radius: () => ["70%", "90%"],
   data: () => [0, 0],
 });
+
+const ns = useNamespace("donut-chart-card");
 
 const formatNumber = (num: number) => {
   return num.toLocaleString();
 };
 
 // 使用新的图表组件抽象
-const { chartRef } = useChartComponent({
+const { chartInstance } = useChartComponent({
+  chartOptions: { instanceName: "chartInstance" },
   props: {
     height: `${props.height}rem`,
     loading: false,
@@ -85,25 +67,28 @@ const { chartRef } = useChartComponent({
 </script>
 
 <template>
-  <div class="donut-chart-card tk-card-secondary" :style="{ height: `${height}rem` }">
-    <div class="card-body">
-      <div class="card-content">
-        <div class="data-section">
+  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: `${height}rem` }">
+    <div :class="ns.e('body')">
+      <div :class="ns.e('content')">
+        <div :class="ns.e('data-section')">
           <p class="title">{{ title }}</p>
+
           <div>
             <p class="value">{{ formatNumber(value) }}</p>
-            <div class="percentage" :class="{ 'is-increase': percentage > 0 }">
+            <div class="percentage" :class="ns.is('increase', percentage > 0)">
               {{ percentage > 0 ? "+" : "" }}{{ percentage }}%
               <span v-if="percentageLabel">{{ percentageLabel }}</span>
             </div>
           </div>
-          <div class="chart-legend">
+
+          <div :class="ns.e('chart-legend')">
             <span class="legend-item current" v-if="currentValue">{{ currentValue }}</span>
             <span class="legend-item previous" v-if="previousValue">{{ previousValue }}</span>
           </div>
         </div>
-        <div class="chart-section">
-          <div ref="chartRef" class="chart-container"></div>
+
+        <div :class="ns.e('chart-section')">
+          <div ref="chartInstance" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -111,108 +96,5 @@ const { chartRef } = useChartComponent({
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function" as *;
-
-.donut-chart-card {
-  overflow: hidden;
-  color: #303133;
-  background-color: cssVar(main-bg-color);
-  border-radius: cssVar(radius);
-  transition: 0.3s;
-
-  .card-body {
-    box-sizing: border-box;
-    display: flex;
-    height: 100%;
-    padding: 20px;
-  }
-
-  .card-content {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .data-section {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .chart-section {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    max-width: 200px;
-    height: 100%;
-  }
-
-  .title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.2;
-    color: cssVar(text-gray-900);
-  }
-
-  .value {
-    margin: 0;
-    margin-top: 10px;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.2;
-    color: cssVar(text-gray-900);
-  }
-
-  .percentage {
-    margin-top: 5px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #f56c6c;
-
-    &.is-increase {
-      color: #67c23a;
-    }
-  }
-
-  .chart-container {
-    width: 100%;
-    height: 120px;
-  }
-
-  .chart-legend {
-    display: flex;
-    gap: 16px;
-    margin-top: 8px;
-    font-size: 12px;
-    color: #909399;
-
-    .legend-item {
-      position: relative;
-      padding-left: 16px;
-
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 8px;
-        height: 8px;
-        content: "";
-        border-radius: 50%;
-        transform: translateY(-50%);
-      }
-
-      &.current::before {
-        background-color: cssVar(main-color);
-      }
-
-      &.previous::before {
-        background-color: #e6e8f7;
-      }
-    }
-  }
-}
+@use "./index";
 </style>

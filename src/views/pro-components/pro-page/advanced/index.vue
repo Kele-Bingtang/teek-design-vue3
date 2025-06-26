@@ -91,9 +91,9 @@ const columns: PageColumn<ResUserList>[] = [
       render: (model: any) => {
         return (
           <div class="flx-center">
-            <ElInput vModel_trim={model.minAge} placeholder="最小年龄" />
+            <el-input vModel_trim={model.minAge} placeholder="最小年龄" />
             <span style="margin: 0 10px">-</span>
-            <ElInput vModel_trim={model.maxAge} placeholder="最大年龄" />
+            <el-input vModel_trim={model.maxAge} placeholder="最大年龄" />
           </div>
         );
       },

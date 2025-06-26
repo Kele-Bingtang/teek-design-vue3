@@ -4,20 +4,33 @@ import type { ChartThemeConfig, UseChartOptions } from "../types";
 import * as echarts from "echarts";
 import { useSettingStore } from "@/pinia";
 import { getCssVar } from "@/common/utils";
+import { useNamespace } from "@/composables";
 
 // 图表默认配置
-export const useChartOps = (): ChartThemeConfig => ({
-  /** 高度 */
-  chartHeight: "16rem",
-  /** 字体大小 */
-  fontSize: 13,
-  /** 字体颜色 */
-  fontColor: "#999",
-  /** 主题颜色 */
-  themeColor: getCssVar("--el-color-primary-light-1"),
-  /** 颜色组 */
-  colors: [getCssVar("--el-color-primary-light-1"), "#4ABEFF", "#EDF2FF", "#14DEBA", "#FFAF20", "#FA8A6C", "#FFAF20"],
-});
+export const useChartOps = (): ChartThemeConfig => {
+  const ns = useNamespace();
+
+  return {
+    /** 高度 */
+    chartHeight: "16rem",
+    /** 字体大小 */
+    fontSize: 13,
+    /** 字体颜色 */
+    fontColor: "#999",
+    /** 主题颜色 */
+    themeColor: getCssVar(`--${ns.elNamespace}-color-primary-light-1`),
+    /** 颜色组 */
+    colors: [
+      getCssVar(`--${ns.elNamespace}-color-primary-light-1`),
+      "#4ABEFF",
+      "#EDF2FF",
+      "#14DEBA",
+      "#FFAF20",
+      "#FA8A6C",
+      "#FFAF20",
+    ],
+  };
+};
 
 // 常量定义
 const RESIZE_DELAYS = [50, 100, 200, 350] as const;

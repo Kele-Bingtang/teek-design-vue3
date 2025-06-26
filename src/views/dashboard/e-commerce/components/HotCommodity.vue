@@ -75,7 +75,7 @@ const weeklyList = [
         height: 42px;
         line-height: 42px;
         text-align: center;
-        background-color: var(--el-color-primary-light-9);
+        background-color: var(--#{$el-namespace}-color-primary-light-9);
         border-radius: 8px;
 
         i {
@@ -103,7 +103,7 @@ const weeklyList = [
         margin-left: auto;
         font-size: 14px;
         text-align: center;
-        background-color: var(--el-color-primary-light-9);
+        background-color: var(--#{$el-namespace}-color-primary-light-9);
         border-radius: 4px;
       }
     }

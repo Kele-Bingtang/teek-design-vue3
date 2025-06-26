@@ -6,7 +6,7 @@ import LineChart from "./line-chart/index.vue";
 import MapChart from "./map-chart/index.vue";
 import RadarChart from "./radar-chart/index.vue";
 import RingChart from "./ring-chart/index.vue";
-import scatterChart from "./scatter-chart/index.vue";
+import ScatterChart from "./scatter-chart/index.vue";
 
 export {
   BarChart,
@@ -17,7 +17,7 @@ export {
   MapChart,
   RadarChart,
   RingChart,
-  scatterChart,
+  ScatterChart,
 };
 
 export * from "./types";

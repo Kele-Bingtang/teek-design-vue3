@@ -9,6 +9,7 @@
 - 登录页适配暗黑模式
 - 可以打开的最大动态路由 tab 优化
 - 系统升级公告版本升级后强制登录改为选择登录
+- useNamespace 添加 el cssVar 的支持，@include 同时也支持
 
 ## Bug
 

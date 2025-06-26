@@ -6,6 +6,7 @@ import * as echarts from "echarts";
 import { getCssVar } from "@/common/utils";
 import { useChartOps, useChartComponent } from "../composables";
 import ChartEmpty from "../chart-empty/index.vue";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "HBarChart" });
 
@@ -33,6 +34,8 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   legendPosition: "bottom",
 });
 
+const ns = useNamespace();
+
 // 判断是否为多数据
 const isMultipleData = computed(
   () =>
@@ -49,8 +52,8 @@ const getColor = (customColor?: string, index?: number) => {
 
   // 默认渐变色
   return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-    { offset: 0, color: getCssVar("--el-color-primary") },
-    { offset: 1, color: getCssVar("--el-color-primary-light-4") },
+    { offset: 0, color: getCssVar(`--${ns.elNamespace}-color-primary`) },
+    { offset: 1, color: getCssVar(`--${ns.elNamespace}-color-primary-light-4`) },
   ]);
 };
 

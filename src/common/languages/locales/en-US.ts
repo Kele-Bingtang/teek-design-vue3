@@ -143,6 +143,14 @@ export default {
     Vue2AdminOpen: "Vue2 Admin Open",
     Notes: "My Blog",
 
+    Template: "Template Components",
+    BasicCardTemplate: "Basic Card",
+    BannerCardTemplate: "Banner Card",
+    ChartTemplate: "Chart",
+    MapTemplate: "Map",
+    ChatTemplate: "Chat",
+    PricingTemplate: "Pricing",
+
     Document: "Document",
   },
   _tabNav: {

@@ -116,7 +116,7 @@ const inputClear = () => {
 
 <template>
   <div :class="ns.b()">
-    <ElInput disabled v-model="modelValue" clearable v-bind="$attrs" />
+    <el-input disabled v-model="modelValue" clearable v-bind="$attrs" />
     <ElPopover
       :popper-class="ns.b()"
       placement="bottom"
@@ -130,8 +130,8 @@ const inputClear = () => {
           <Icon v-if="modelValue" :icon="modelValue" />
         </div>
       </template>
-      <ElScrollbar style="height: calc(100% - 50px)">
-        <ElInput v-model="search" clearable placeholder="搜索图标" @clear="inputClear" style="margin-bottom: 20px" />
+      <el-scrollbar style="height: calc(100% - 50px)">
+        <el-input v-model="search" clearable placeholder="搜索图标" @clear="inputClear" style="margin-bottom: 20px" />
         <ElTabs tab-position="left" v-model="iconName" @tab-change="tabChange">
           <ElTabPane v-for="item in icons" :key="item.name" :label="item.name" :name="item.prefix">
             <div :class="ns.e('icons')">
@@ -155,9 +155,9 @@ const inputClear = () => {
             </div>
           </ElTabPane>
         </ElTabs>
-      </ElScrollbar>
+      </el-scrollbar>
       <div :class="ns.e('pagination')">
-        <ElPagination
+        <el-pagination
           v-model:current-page="currentPage"
           v-model:page-size="pageSize"
           :pager-count="5"

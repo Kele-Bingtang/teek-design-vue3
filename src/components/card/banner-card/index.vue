@@ -1,87 +1,21 @@
 <!-- 基础横幅组件 -->
 <script setup lang="ts">
+import type { BannerCardEmits, BannerCardProps, Meteor } from "./types";
 import { onMounted, ref, computed } from "vue";
 import { useSettingStore } from "@/pinia";
+import { useNamespace } from "@/composables";
+
+defineOptions({ name: "BannerCard" });
 
 const settingStore = useSettingStore();
 const { isDark } = storeToRefs(settingStore);
 
-defineOptions({ name: "BasicBanner" });
-
-// 流星对象接口定义
-interface Meteor {
-  /** 流星的水平位置(百分比) */
-  x: number;
-  /** 流星划过的速度 */
-  speed: number;
-  /** 流星出现的延迟时间 */
-  delay: number;
-}
-
-// 按钮配置接口定义
-interface ButtonConfig {
-  /** 是否启用按钮 */
-  show: boolean;
-  /** 按钮文本 */
-  text: string;
-  /** 按钮背景色 */
-  color?: string;
-  /** 按钮文字颜色 */
-  textColor?: string;
-  /** 按钮圆角大小 */
-  radius?: string;
-}
-
-// 流星效果配置接口定义
-interface MeteorConfig {
-  /** 是否启用流星效果 */
-  enabled: boolean;
-  /** 流星数量 */
-  count?: number;
-}
-
-// 背景图片配置接口定义
-interface ImageConfig {
-  /** 图片源地址 */
-  src: string;
-  /** 图片宽度 */
-  width?: string;
-  /** 距底部距离 */
-  bottom?: string;
-  /** 距右侧距离 */
-  right?: string; // 距右侧距离
-}
-
-// 组件属性接口定义
-interface Props {
-  /** 横幅高度 */
-  height?: string;
-  /** 标题文本 */
-  title?: string;
-  /** 副标题文本 */
-  subtitle?: string;
-  /** 背景颜色 */
-  backgroundColor?: string;
-  /** 是否显示装饰效果 */
-  decoration?: boolean;
-  /** 按钮配置 */
-  buttonConfig?: ButtonConfig;
-  /** 流星配置 */
-  meteorConfig?: MeteorConfig;
-  /** 图片配置 */
-  imageConfig?: ImageConfig;
-  /** 标题颜色 */
-  titleColor?: string;
-  /** 副标题颜色 */
-  subtitleColor?: string;
-}
-
 // 组件属性默认值设置
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BannerCardProps>(), {
   height: "11rem",
   titleColor: "white",
   subtitleColor: "white",
-  backgroundColor: "var(--el-color-primary-light-3)",
+  backgroundColor: `var(--${useNamespace().elNamespace}-color-primary-light-3)`,
   decoration: true,
   buttonConfig: () => ({
     show: true,
@@ -94,11 +28,10 @@ const props = withDefaults(defineProps<Props>(), {
   imageConfig: () => ({ src: "", width: "12rem", bottom: "-3rem", right: "0" }),
 });
 
+const ns = useNamespace("banner-card");
+
 // 定义组件事件
-const emit = defineEmits<{
-  click: []; // 整体点击事件
-  buttonClick: []; // 按钮点击事件
-}>();
+const emit = defineEmits<BannerCardEmits>();
 
 // 计算按钮样式属性
 const buttonColor = computed(() => props.buttonConfig?.color ?? "#fff");
@@ -139,13 +72,12 @@ function generateMeteors(count: number): Meteor[] {
 
 <template>
   <div
-    class="basic-banner tk-card-secondary"
-    :class="{ 'has-decoration': decoration }"
+    :class="[ns.b(), ns.join('card-secondary'), ns.has('decoration')]"
     :style="{ backgroundColor: backgroundColor, height: height }"
     @click="emit('click')"
   >
     <!-- 流星效果 -->
-    <div v-if="meteorConfig?.enabled && isDark" class="basic-banner__meteors">
+    <div v-if="meteorConfig?.enabled && isDark" :class="ns.e('meteors')">
       <span
         v-for="(meteor, index) in meteors"
         :key="index"
@@ -159,22 +91,22 @@ function generateMeteors(count: number): Meteor[] {
       ></span>
     </div>
 
-    <div class="basic-banner__content">
+    <div :class="ns.e('content')">
       <!-- title slot -->
       <slot name="title">
-        <p v-if="title" class="basic-banner__title" :style="{ color: titleColor }">{{ title }}</p>
+        <p v-if="title" :class="ns.e('title')" :style="{ color: titleColor }">{{ title }}</p>
       </slot>
 
       <!-- subtitle slot -->
       <slot name="subtitle">
-        <p v-if="subtitle" class="basic-banner__subtitle" :style="{ color: subtitleColor }">{{ subtitle }}</p>
+        <p v-if="subtitle" :class="ns.e('subtitle')" :style="{ color: subtitleColor }">{{ subtitle }}</p>
       </slot>
 
       <!-- button slot -->
       <slot name="button">
         <div
           v-if="buttonConfig?.show"
-          class="basic-banner__button"
+          :class="ns.e('button')"
           :style="{
             backgroundColor: buttonColor,
             color: buttonTextColor,
@@ -192,7 +124,7 @@ function generateMeteors(count: number): Meteor[] {
       <!-- background image -->
       <img
         v-if="imageConfig.src"
-        class="basic-banner__background-image"
+        :class="ns.e('background-image')"
         :src="imageConfig.src"
         :style="{ width: imageConfig.width, bottom: imageConfig.bottom, right: imageConfig.right }"
         loading="lazy"
@@ -203,137 +135,5 @@ function generateMeteors(count: number): Meteor[] {
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function" as *;
-
-.basic-banner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 2rem;
-  overflow: hidden;
-  color: white;
-  border-radius: calc(cssVar(radius) + 2px) !important;
-
-  &__content {
-    position: relative;
-    z-index: 1;
-  }
-
-  &__title {
-    margin: 0 0 0.5rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  &__subtitle {
-    position: relative;
-    z-index: 10;
-    margin: 0 0 1.5rem;
-    font-size: 0.9rem;
-    opacity: 0.9;
-  }
-
-  &__button {
-    box-sizing: border-box;
-    display: inline-block;
-    min-width: 80px;
-    height: var(--el-component-custom-height);
-    padding: 0 12px;
-    font-size: 14px;
-    line-height: var(--el-component-custom-height);
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.3s;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  &__background-image {
-    position: absolute;
-    right: 0;
-    bottom: -3rem;
-    z-index: 0;
-    width: 12rem;
-  }
-
-  &.has-decoration::after {
-    position: absolute;
-    right: -10%;
-    bottom: -20%;
-    width: 60%;
-    height: 140%;
-    content: "";
-    background: rgb(255 255 255 / 10%);
-    border-radius: 30%;
-    transform: rotate(-20deg);
-  }
-
-  &__meteors {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-
-    .meteor {
-      position: absolute;
-      width: 2px;
-      height: 60px;
-      background: linear-gradient(to top, rgb(255 255 255 / 40%), rgb(255 255 255 / 10%), transparent);
-      opacity: 0;
-      transform-origin: top left;
-      animation-name: meteor-fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-
-      &::before {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 2px;
-        height: 2px;
-        content: "";
-        background: rgb(255 255 255 / 50%);
-      }
-    }
-  }
-}
-
-@keyframes meteor-fall {
-  0% {
-    opacity: 1;
-    transform: translate(0, -60px) rotate(-45deg);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(400px, 340px) rotate(-45deg);
-  }
-}
-
-@media (max-width: $device-phone) {
-  .basic-banner {
-    box-sizing: border-box;
-    justify-content: flex-start;
-    padding: 16px;
-
-    &__title {
-      font-size: 1.4rem;
-    }
-
-    &__background-image {
-      display: none;
-    }
-
-    &.has-decoration::after {
-      display: none;
-    }
-  }
-}
+@use "./index";
 </style>

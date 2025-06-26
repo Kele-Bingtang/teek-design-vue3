@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Medal, Ticket, Avatar, TrendCharts, Download } from "@element-plus/icons-vue";
+import { Download } from "@element-plus/icons-vue";
 import { CountTo } from "@/components";
 
 const salesData = ref([
@@ -7,28 +7,28 @@ const salesData = ref([
     label: "总销售额",
     value: 999,
     change: "+10%",
-    icon: Medal,
+    icon: "&#xe7d9",
     class: "bg-primary",
   },
   {
     label: "总订单量",
     value: 300,
     change: "+15%",
-    icon: Ticket,
+    icon: "&#xe70f",
     class: "bg-warning",
   },
   {
     label: "产品销售量",
     value: 56,
     change: "-5%",
-    icon: TrendCharts,
+    icon: "&#xe712",
     class: "bg-error",
   },
   {
     label: "新客户数",
     value: 68,
     change: "+8%",
-    icon: Avatar,
+    icon: "&#xe77f",
     class: "bg-success",
   },
 ]);
@@ -50,7 +50,7 @@ const salesData = ref([
           <div :class="['sales-card']">
             <Icon class="icon-sys" :icon="item.icon"></Icon>
             <h2>
-              <CountTo class="number box-title" :endVal="item.value" :duration="1000" separator=""></CountTo>
+              <CountTo class="number box-title" :endVal="item.value" :duration="1" separator=""></CountTo>
             </h2>
             <p class="sle">{{ item.label }}</p>
             <small>
@@ -117,9 +117,9 @@ const salesData = ref([
         height: 48px;
         font-size: 20px;
         line-height: 48px;
-        color: var(--el-color-primary);
+        color: var(--#{$el-namespace}-color-primary);
         text-align: center;
-        background-color: var(--el-color-primary-light-9);
+        background-color: var(--#{$el-namespace}-color-primary-light-9);
         border-radius: 10px;
       }
 

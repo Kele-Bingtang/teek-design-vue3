@@ -1,0 +1,59 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(stats-card) {
+  display: flex;
+  align-items: center;
+  height: 8rem;
+  padding: 0 20px;
+  cursor: pointer;
+  background-color: cssVar(main-bg-color);
+  border-radius: calc(cssVar(radius) + 4px) !important;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  @include e(icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-right: 16px;
+    border-radius: 50%;
+  }
+
+  @include e(content) {
+    flex: 1;
+  }
+
+  @include e(title) {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: cssVar(gray-900);
+  }
+
+  @include e(count) {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+    color: cssVar(gray-900);
+  }
+
+  @include e(description) {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: cssVar(gray-600);
+    opacity: 0.9;
+  }
+
+  @include e(arrow) {
+    i {
+      font-size: 18px;
+      color: cssVar(gray-600);
+    }
+  }
+}

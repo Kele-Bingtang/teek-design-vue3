@@ -1,31 +1,15 @@
 <!-- 图片卡片 -->
 <script setup lang="ts">
+import { useNamespace } from "@/composables";
+import type { ImageCardEmits, ImageCardProps } from "./types";
 import { Picture, View, ChatLineRound } from "@element-plus/icons-vue";
 
 defineOptions({ name: "ImageCard" });
 
-interface Props {
-  /** 图片地址 */
-  imageUrl: string;
-  /** 标题 */
-  title: string;
-  /** 分类 */
-  category?: string;
-  /** 阅读时间 */
-  readTime?: string;
-  /** 浏览量 */
-  views?: number;
-  /** 评论数 */
-  comments?: number;
-  /** 日期 */
-  date?: string;
-}
+const props = defineProps<ImageCardProps>();
+const emit = defineEmits<ImageCardEmits>();
 
-const props = defineProps<Props>();
-
-const emit = defineEmits<{
-  click: [card: Props];
-}>();
+const ns = useNamespace("image-card");
 
 const handleClick = () => {
   emit("click", props);
@@ -33,125 +17,44 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div class="image-card" @click="handleClick">
-    <ElCard :body-style="{ padding: '0px' }" shadow="hover" class="tk-card-secondary">
-      <div class="image-wrapper">
-        <ElImage :src="props.imageUrl" fit="cover" loading="lazy">
+  <div :class="ns.b()" @click="handleClick">
+    <el-card :body-style="{ padding: '0px' }" shadow="hover" :class="ns.join('card-secondary')">
+      <div :class="ns.e('wrapper')">
+        <el-image :src="props.imageUrl" fit="cover" loading="lazy">
           <template #placeholder>
-            <div class="image-placeholder">
-              <ElIcon><Picture /></ElIcon>
+            <div :class="ns.e('placeholder')">
+              <el-icon><Picture /></el-icon>
             </div>
           </template>
-        </ElImage>
+        </el-image>
+
         <div class="read-time" v-if="props.readTime">{{ props.readTime }} 阅读</div>
       </div>
 
-      <div class="content">
-        <div class="category" v-if="props.category">
+      <div :class="ns.e('content')">
+        <div :class="ns.em('content', 'category')" v-if="props.category">
           {{ props.category }}
         </div>
-        <p class="title">{{ props.title }}</p>
-        <div class="stats">
+        <p :class="ns.em('content', 'title')">{{ props.title }}</p>
+
+        <div :class="ns.em('content', 'stats')">
           <span class="views" v-if="props.views">
-            <ElIcon><View /></ElIcon>
+            <el-icon><View /></el-icon>
             {{ props.views }}
           </span>
+
           <span class="comments" v-if="props.comments">
-            <ElIcon><ChatLineRound /></ElIcon>
+            <el-icon><ChatLineRound /></el-icon>
             {{ props.comments }}
           </span>
+
           <span class="date">{{ props.date }}</span>
         </div>
       </div>
-    </ElCard>
+    </el-card>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function" as *;
-
-.image-card {
-  width: 100%;
-  cursor: pointer;
-
-  .tk-card-secondary {
-    border-radius: calc(cssVar(radius) + 2px) !important;
-  }
-
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/10; // 图片宽高比 16:10
-    overflow: hidden;
-
-    .el-image {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.3s ease-in-out;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-
-    .read-time {
-      position: absolute;
-      right: 15px;
-      bottom: 15px;
-      padding: 4px 8px;
-      font-size: 12px;
-      background: cssVar(gray-200);
-      border-radius: 4px;
-    }
-
-    .image-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      background: #f5f7fa;
-    }
-  }
-
-  .content {
-    padding: 16px;
-
-    .category {
-      display: inline-block;
-      padding: 2px 8px;
-      margin-bottom: 8px;
-      font-size: 12px;
-      background: cssVar(gray-200);
-      border-radius: 4px;
-    }
-
-    .title {
-      margin: 0 0 12px;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.4;
-      color: cssVar(text-gray-900);
-    }
-
-    .stats {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      font-size: 13px;
-      color: cssVar(text-gray-600);
-
-      .views,
-      .comments {
-        display: flex;
-        gap: 4px;
-        align-items: center;
-      }
-
-      .el-icon {
-        font-size: 16px;
-      }
-    }
-  }
-}
+@use "./index";
 </style>

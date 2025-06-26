@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { Avatar, UserFilled, Share, Comment } from "@element-plus/icons-vue";
 import { CountTo } from "@/components";
 
 const dataList = reactive([
   {
     des: "总访问次数",
-    icon: Comment,
+    icon: "&#xe721;",
     startVal: 0,
     duration: 1000,
     num: 9120,
@@ -13,7 +12,7 @@ const dataList = reactive([
   },
   {
     des: "在线访客数",
-    icon: Avatar,
+    icon: "&#xe724;",
     startVal: 0,
     duration: 1000,
     num: 182,
@@ -21,7 +20,7 @@ const dataList = reactive([
   },
   {
     des: "点击量",
-    icon: Share,
+    icon: "&#xe7aa;",
     startVal: 0,
     duration: 1000,
     num: 9520,
@@ -29,7 +28,7 @@ const dataList = reactive([
   },
   {
     des: "新用户",
-    icon: UserFilled,
+    icon: "&#xe82a;",
     startVal: 0,
     duration: 1000,
     num: 156,
@@ -44,7 +43,7 @@ const dataList = reactive([
       <div class="card tk-card-secondary">
         <span class="des subtitle">{{ item.des }}</span>
 
-        <CountTo class="number box-title" :end-val="item.num" :duration="1000" separator="" />
+        <CountTo class="number box-title" :end-val="item.num" :duration="1" separator="" />
 
         <div class="change-box">
           <span class="change-text">较上周</span>
@@ -88,9 +87,9 @@ const dataList = reactive([
       overflow: hidden;
       font-size: 22px;
       line-height: $icon-size;
-      color: var(--el-color-primary) !important;
+      color: var(--#{$el-namespace}-color-primary) !important;
       text-align: center;
-      background-color: var(--el-color-primary-light-9);
+      background-color: var(--#{$el-namespace}-color-primary-light-9);
       border-radius: 12px;
     }
 
@@ -126,11 +125,11 @@ const dataList = reactive([
         font-weight: bold;
 
         &.text-success {
-          color: var(--el-color-success);
+          color: var(--#{$el-namespace}-color-success);
         }
 
         &.text-danger {
-          color: var(--el-color-danger);
+          color: var(--#{$el-namespace}-color-danger);
         }
       }
     }

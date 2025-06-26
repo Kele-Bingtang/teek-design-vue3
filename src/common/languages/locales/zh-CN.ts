@@ -144,6 +144,14 @@ export default {
     Vue2AdminOpen: "Kbt Vue2 Admin（新标签打开）",
     Notes: "我的博客",
 
+    Template: "模板组件",
+    BasicCardTemplate: "基础卡片",
+    BannerCardTemplate: "横幅卡片",
+    ChartTemplate: "图表",
+    MapTemplate: "地图",
+    ChatTemplate: "聊天",
+    PricingTemplate: "定价",
+
     Document: "使用文档",
   },
   _tabNav: {

@@ -1,43 +1,10 @@
 <!-- 卡片横幅组件 -->
 <script setup lang="ts">
-// 导入默认图标
-import defaultIcon from "@/common/assets/images/3d/icon1.webp";
+import type { CardBannerProps } from "./types";
+import { useNamespace } from "@/composables";
+import defaultIcon from "@/common/assets/images/3d/icon1.webp"; // 导入默认图标
 
-defineOptions({ name: "CardBanner" });
-
-// 定义卡片横幅组件的属性接口
-interface CardBannerProps {
-  /** 高度 */
-  height?: string;
-  /** 图片路径 */
-  image?: string;
-  /** 标题文本 */
-  title?: string;
-  /** 描述文本 */
-  description?: string;
-  /** 主按钮配置 */
-  button?: {
-    /** 是否显示 */
-    show?: boolean;
-    /** 按钮文本 */
-    text?: string;
-    /** 背景颜色 */
-    color?: string;
-    /** 文字颜色 */
-    textColor?: string;
-  };
-  /** 取消按钮配置 */
-  cancelButton?: {
-    /** 是否显示 */
-    show?: boolean;
-    /** 按钮文本 */
-    text?: string;
-    /** 背景颜色 */
-    color?: string;
-    /** 文字颜色 */
-    textColor?: string;
-  };
-}
+defineOptions({ name: "BannerImageCard" });
 
 // 定义组件属性默认值
 const props = withDefaults(defineProps<CardBannerProps>(), {
@@ -67,6 +34,8 @@ const emit = defineEmits<{
   cancel: []; // 取消按钮点击事件
 }>();
 
+const ns = useNamespace("banner-image-card");
+
 // 主按钮点击处理函数
 const handleClick = () => {
   emit("click");
@@ -79,19 +48,19 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="card-banner tk-card-secondary" :style="{ height: props.height }">
-    <div class="banner-content">
-      <div class="banner-icon">
+  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: props.height }">
+    <div :class="ns.e('content')">
+      <div :class="ns.e('icon')">
         <img :src="props.image" :alt="props.title" />
       </div>
-      <div class="banner-text">
-        <p class="banner-title">{{ props.title }}</p>
-        <p class="banner-description">{{ props.description }}</p>
+      <div :class="ns.e('text')">
+        <p :class="ns.em('text', 'title')">{{ props.title }}</p>
+        <p :class="ns.em('text', 'description')">{{ props.description }}</p>
       </div>
-      <div class="banner-buttons">
+      <div :class="ns.e('buttons')">
         <div
           v-if="props.cancelButton?.show"
-          class="banner-button cancel-button"
+          :class="[ns.em('buttons', 'button'), ns.is('cancel')]"
           :style="{
             backgroundColor: props.cancelButton?.color,
             color: props.cancelButton?.textColor,
@@ -102,7 +71,7 @@ const handleCancel = () => {
         </div>
         <div
           v-if="props.button?.show"
-          class="banner-button"
+          :class="ns.em('buttons', 'button')"
           :style="{ backgroundColor: props.button?.color, color: props.button?.textColor }"
           @click="handleClick"
         >
@@ -114,76 +83,5 @@ const handleCancel = () => {
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function" as *;
-
-.card-banner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-bottom: 1.5rem;
-  background-color: cssVar(main-bg-color);
-  border-radius: calc(cssVar(radius) + 2px) !important;
-
-  .banner-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .banner-icon {
-    width: 180px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  }
-
-  .banner-text {
-    box-sizing: border-box;
-    padding: 0 16px;
-
-    .banner-title {
-      margin-bottom: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      color: cssVar(text-gray-800);
-    }
-
-    .banner-description {
-      margin: 0;
-      font-size: 14px;
-      color: cssVar(text-gray-600);
-    }
-  }
-
-  .banner-buttons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .banner-button {
-    display: inline-block;
-    height: var(--el-component-custom-height);
-    padding: 0 12px;
-    font-size: 14px;
-    line-height: var(--el-component-custom-height);
-    cursor: pointer;
-    user-select: none;
-    border-radius: 6px;
-    transition: opacity 0.3s;
-
-    &:hover {
-      opacity: 0.9;
-    }
-
-    &.cancel-button {
-      border: 1px solid #dcdfe6;
-    }
-  }
-}
+@use "./index";
 </style>

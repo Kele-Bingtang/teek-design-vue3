@@ -1,0 +1,75 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(bar-chart-card) {
+  position: relative;
+  overflow: hidden;
+  color: #303133;
+  background-color: cssVar(main-bg-color);
+  border-radius: cssVar(radius);
+  transition: 0.3s;
+
+  @include e(header) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 20px 0;
+    margin-bottom: 20px;
+
+    @include m(metric) {
+      .value {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: cssVar(text-gray-900);
+      }
+
+      .label {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: cssVar(text-gray-600);
+      }
+    }
+
+    @include m(percentage) {
+      font-size: 14px;
+      font-weight: 500;
+      color: #f56c6c;
+
+      @include is(increase) {
+        color: #67c23a;
+      }
+
+      @include is(mini-chart) {
+        position: absolute;
+        bottom: 20px;
+      }
+    }
+
+    @include m(date) {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      font-size: 12px;
+      color: cssVar(text-gray-600);
+    }
+  }
+
+  @include e(content) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 22px);
+    height: 100px;
+    margin: auto;
+
+    @include is(mini-chart) {
+      position: absolute;
+      inset: 25px 20px auto auto;
+      width: 40%;
+      height: 60px !important;
+    }
+  }
+}
