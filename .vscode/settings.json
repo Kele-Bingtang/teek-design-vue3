@@ -67,6 +67,7 @@
     "xlink",
     "qrcode",
     "cascader",
-    "popconfirm"
+    "popconfirm",
+    "teek"
   ]
 }

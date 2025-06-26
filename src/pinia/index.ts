@@ -1,6 +1,6 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
-import SystemConfig from "@config";
+import SystemConfig from "@/common/config";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";

@@ -20,8 +20,7 @@ export const formatTitle = (route: Route, reTranslate = false) => {
 
   if (reTranslate && !isFunction(title)) title = translateTitle(title + "", name, useI18n);
   if (title && !isFunction(title)) return title + "";
-
-  if (isFunction(title)) title = title({ ...route } as RouteLocationNormalizedLoaded);
+  if (isFunction(title)) title = title(route as RouteLocationNormalizedLoaded);
 
   return translateTitle(title + "", name, useI18n);
 };
@@ -42,7 +41,7 @@ export const translateTitle = (title: string, name?: string, useI18n = false) =>
   // 处理 {{ }}，如 title 为 "{{ _route.Home }}"，则说明 _route.Home 需要 i18n 转化
   if (finalTitle.includes("{{") && finalTitle.includes("}}")) {
     return finalTitle.replace(/({{[\s\S]+?}})/, (_: any, str: string) =>
-      str.replace(/{{([\s\S]*)}}/, (_: any) => t(_.trim()))
+      str.replace(/{{([\s\S]*)}}/, (_: any, subStr: string) => t(subStr.trim()))
     );
   }
 

@@ -20,9 +20,9 @@
 }
 
 // 修改 el-button 高度
-// .#{$el-namespace}-button--default {
-//   height: var(--#{$el-namespace}-component-custom-height) !important;
-// }
+.#{$el-namespace}-button--default {
+  height: var(--#{$el-namespace}-component-height) !important;
+}
 
 // 修改 el-select 高度
 .#{$el-namespace}-select--default {

@@ -32,7 +32,7 @@
  * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
  */
 
-import componentRoutes from "./routes/components";
+import componentRoutes from "./routes/page";
 import detailsRoutes from "./routes/details";
 import directiveRoutes from "./routes/directive";
 import errorRoutes from "./routes/error";
@@ -44,6 +44,7 @@ import permissionRoutes from "./routes/permission";
 import tableRoutes from "./routes/table";
 import proComponentsRoutes from "./routes/pro-components";
 import toolsRoutes from "./routes/tool";
+import editorRoutes from "./routes/editor";
 import { User, Bell, HomeFilled, StarFilled, Document } from "@element-plus/icons-vue";
 import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
@@ -58,7 +59,7 @@ export const staticRoutes: RouterConfigRaw[] = [
       {
         path: "/error-log",
         name: "ErrorLog",
-        component: () => import("@/views/errorLog/index.vue"),
+        component: () => import("@/views/core/errorLog/index.vue"),
         meta: { title: "错误日志", isKeepAlive: false },
       },
       {
@@ -68,9 +69,9 @@ export const staticRoutes: RouterConfigRaw[] = [
         meta: { title: "我的主页", icon: User },
       },
       {
-        path: "/message-center",
-        name: "MessageCenter",
-        component: () => import("@/views/message-center/index.vue"),
+        path: "/message",
+        name: "Message",
+        component: () => import("@/views/message/index.vue"),
         meta: { title: "我的消息", icon: Bell },
       },
     ],
@@ -78,7 +79,7 @@ export const staticRoutes: RouterConfigRaw[] = [
   {
     path: LOGIN_URL,
     name: LOGIN_NAME,
-    component: () => import("@/views/login/index.vue"),
+    component: () => import("@/views/core/login/index.vue"),
     meta: { title: "登录", hideInMenu: true, hideInBread: true, isFull: true },
   },
   {
@@ -93,19 +94,19 @@ export const errorRouter: RouterConfigRaw[] = [
   {
     path: "/403",
     name: "403",
-    component: () => import("@/views/error/403.vue"),
+    component: () => import("@/views/core/error/403.vue"),
     meta: { title: "403 页面", hideInMenu: true, hideInBread: true, isFull: true },
   },
   {
     path: "/404",
     name: "404",
-    component: () => import("@/views/error/404.vue"),
+    component: () => import("@/views/core/error/404.vue"),
     meta: { title: "404 页面", hideInMenu: true, hideInBread: true, isFull: true },
   },
   {
     path: "/500",
     name: "500",
-    component: () => import("@/views/error/500.vue"),
+    component: () => import("@/views/core/error/500.vue"),
     meta: { title: "500 页面", hideInMenu: true, hideInBread: true, isFull: true },
   },
 ];
@@ -158,7 +159,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
   },
   {
     path: "console-full",
-    name: "HomeFull",
+    name: "ConsoleFull",
     component: "/dashboard/console/index",
     meta: {
       title: "全屏工作台",
@@ -168,8 +169,9 @@ export const rolesRoutes: RouterConfigRaw[] = [
       useI18n: false,
     },
   },
-  { ...componentRoutes },
   { ...proComponentsRoutes },
+  { ...componentRoutes },
+  { ...editorRoutes },
   { ...tableRoutes },
   { ...excelRoutes },
   { ...permissionRoutes },
@@ -177,6 +179,9 @@ export const rolesRoutes: RouterConfigRaw[] = [
   { ...nestedRoutes },
   { ...directiveRoutes },
   { ...errorRoutes },
+  { ...frameRoutes },
+  { ...outerChainRoutes },
+  { ...detailsRoutes },
   {
     path: "/tabs",
     name: "Tabs",
@@ -186,9 +191,6 @@ export const rolesRoutes: RouterConfigRaw[] = [
       icon: StarFilled,
     },
   },
-  { ...frameRoutes },
-  { ...outerChainRoutes },
-  { ...detailsRoutes },
   {
     path: "https://vue3-docs.youngkbt.cn/",
     name: "Document",

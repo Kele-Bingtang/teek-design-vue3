@@ -4,7 +4,7 @@ const tableRoutes: RouterConfigRaw = {
   path: "/table",
   name: "Table",
   meta: {
-    title: "表格",
+    title: "表格基础使用",
     icon: Grid,
   },
   children: [

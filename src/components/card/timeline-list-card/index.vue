@@ -47,9 +47,9 @@ const maxHeight = computed(() => `${ITEM_HEIGHT * props.maxCount}px`);
         <p class="card-title">{{ title }}</p>
         <p class="card-subtitle">{{ subtitle }}</p>
       </div>
-      <ElScrollbar :style="{ height: maxHeight }">
-        <ElTimeline>
-          <ElTimelineItem
+      <el-scrollbar :style="{ height: maxHeight }">
+        <el-timeline>
+          <el-timelineItem
             v-for="item in list"
             :key="item.time"
             :timestamp="item.time"
@@ -63,9 +63,9 @@ const maxHeight = computed(() => `${ITEM_HEIGHT * props.maxCount}px`);
                 <span v-if="item.code" class="timeline-code">#{{ item.code }}</span>
               </div>
             </div>
-          </ElTimelineItem>
-        </ElTimeline>
-      </ElScrollbar>
+          </el-timelineItem>
+        </el-timeline>
+      </el-scrollbar>
     </div>
   </div>
 </template>

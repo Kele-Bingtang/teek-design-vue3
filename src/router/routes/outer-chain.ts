@@ -6,7 +6,6 @@ const outerChainRoutes: RouterConfigRaw = {
   meta: {
     title: "外部链接",
     icon: Link,
-    rank: 100,
   },
   children: [
     {

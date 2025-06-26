@@ -68,7 +68,7 @@ function onCloseTags() {
           <span>{{ formatTitle(data) }}</span>
         </template>
       </el-tree-select>
-      <el-button @click="onCloseTags">关闭标签</el-button>
+      <el-button @click="onCloseTags" style="margin-left: 10px">关闭标签</el-button>
     </el-card>
 
     <el-card shadow="never" header="路由跳转">
@@ -101,7 +101,7 @@ function onCloseTags() {
         携参跳转页内菜单（传path对象）
       </el-button>
 
-      <el-button @click="$router.push('/home-full')">跳转无 Layout 的全屏页</el-button>
+      <el-button @click="$router.push('/console-full')">跳转无 Layout 的全屏页</el-button>
     </el-card>
     <el-card shadow="never">
       <el-link

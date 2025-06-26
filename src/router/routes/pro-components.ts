@@ -46,10 +46,10 @@ const proComponents: RouterConfigRaw = {
           meta: { title: "创建 ProTable", icon: StarFilled },
         },
         {
-          path: "tree",
+          path: "tree-filter",
           component: () => import("@/views/pro-components/pro-table/tree-filter/index.vue"),
-          name: "TreeProTable",
-          meta: { title: "使用 TreeProTable", icon: StarFilled },
+          name: "ProTreeTable",
+          meta: { title: "使用 ProTreeTable", icon: StarFilled },
         },
         {
           path: "complex",
@@ -169,8 +169,8 @@ const proComponents: RouterConfigRaw = {
           meta: { title: () => "进阶 ProPage", icon: StarFilled },
         },
         {
-          path: "use",
-          name: "UseProPage",
+          path: "tree-filter",
+          name: "ProTreePage",
           component: () => import("@/views/pro-components/pro-page/tree-filter/index.vue"),
           meta: { title: () => "使用 ProPage", icon: StarFilled },
         },
@@ -204,6 +204,24 @@ const proComponents: RouterConfigRaw = {
           meta: { title: () => "编辑 ProDescriptions", icon: StarFilled },
         },
       ],
+    },
+    {
+      path: "pro-dialog",
+      name: "ProDialog",
+      component: () => import("@/views/pro-components/pro-dialog/index.vue"),
+      meta: { title: "Pro Dialog", icon: StarFilled },
+    },
+    {
+      path: "pro-drawer",
+      name: "ProDrawer",
+      component: () => import("@/views/pro-components/pro-drawer/index.vue"),
+      meta: { title: "Pro Drawer", icon: StarFilled },
+    },
+    {
+      path: "pro-tree-filter",
+      name: "ProTreeFilter",
+      component: () => import("@/views/pro-components/pro-tree-filter/index.vue"),
+      meta: { title: "树形筛选", icon: StarFilled },
     },
     {
       path: "/pro-steps",

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="InlineTable">
 import { simpleData } from "@/mock/table";
 import { ElMessage } from "element-plus";
-import { tableStatusFilter } from "@config";
+import { tableStatusFilter } from "@/common/config";
 import { Refresh, Check, EditPen } from "@element-plus/icons-vue";
 
 const tableData = ref(simpleData);

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="Print">
 import { Print } from "@/common/utils";
-import ChartLine from "@/views/home/components/chart-line.vue";
+import ChartLine from "@/views/dashboard/console/index.vue";
 import { simpleData } from "@/mock/table";
 
 const value = ref("1");

@@ -19,35 +19,20 @@ const switchRole = computed({
     });
   },
 });
-
-const authList = ref(getAuthList());
-// const options = [
-//   {
-//     value: "btn_add",
-//     label: "添加权限",
-//   },
-//   {
-//     value: "btn_edit",
-//     label: "编辑权限",
-//   },
-//   {
-//     value: "btn_delete",
-//     label: "删除权限",
-//   },
-// ];
 </script>
 
 <template>
   <el-card class="switch-permission-container">
     <div shadow="never" class="left-container">
-      <el-tag size="large" effect="dark" style="margin-bottom: 20px">当前拥有的角色列表： {{ roleList }}</el-tag>
       <el-card shadow="never">
         <template #header>角色切换</template>
         <el-radio-group v-model="switchRole">
-          <el-radio-button value="admin" />
-          <el-radio-button value="visitor" />
+          <el-radio-button label="admin" />
+          <el-radio-button label="visitor" />
         </el-radio-group>
       </el-card>
+
+      <el-tag size="large" effect="dark">当前拥有的角色列表： {{ roleList }}</el-tag>
 
       <Role :value="['admin']">
         <el-card shadow="never">
@@ -86,7 +71,7 @@ const authList = ref(getAuthList());
 
       <el-card shadow="never">
         <template #header>函数方式判断权限</template>
-        <el-tabs type="border-card" style="width: 550px">
+        <el-tabs type="border-card">
           <el-tab-pane v-if="hasRole(['admin'])" label="admin">
             只有 admin 有权限看
             <el-tag class="permission-sourceCode" type="info">v-if="hasRole(['admin'])"</el-tag>
@@ -104,22 +89,21 @@ const authList = ref(getAuthList());
         </el-tabs>
       </el-card>
     </div>
-    <div class="right-container">
-      <el-tag size="large" effect="dark" style="margin-bottom: 20px">当前拥有的 Auth 列表：{{ authList }}</el-tag>
 
-      <!-- <div style="width: 100%">
-        <p>Auth 切换：</p>
-        <el-select v-model="authList" multiple>
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div> -->
+    <div class="right-container">
+      <el-card shadow="never">
+        <template #header>Auth 切换</template>
+        请修改当前路由的 meta.auths 来切换权限。
+      </el-card>
+
+      <el-tag size="large" effect="dark">当前拥有的 Auth 列表：{{ authList }}</el-tag>
 
       <el-card shadow="never">
         <template #header>
           <div class="card-header">组件方式判断权限</div>
         </template>
         <Auth value="btn_add">
-          <el-button type="success">拥有 'btn_add' 权限可见</el-button>
+          <el-button type="success">拥有 ['btn_add'] 权限可见</el-button>
         </Auth>
         <Auth :value="['btn_edit']">
           <el-button type="primary">拥有 ['btn_edit'] 权限可见</el-button>
@@ -156,13 +140,25 @@ const authList = ref(getAuthList());
 
 <style lang="scss" scoped>
 .switch-permission-container {
-  margin: 10px 12px;
+  .switch-info {
+    display: flex;
+    justify-content: space-around;
+  }
 
   .left-container,
   .right-container {
     display: inline-flex;
     flex-direction: column;
-    width: 50%;
+    gap: 10px;
+
+    > div {
+      min-height: 140px;
+    }
+  }
+
+  .right-container {
+    width: 60%;
+    margin-left: 10px;
   }
 
   .permission-alert {

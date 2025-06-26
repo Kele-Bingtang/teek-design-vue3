@@ -78,29 +78,31 @@ const handleFormChange = (value: unknown, prop: string) => {
 </script>
 
 <template>
-  <ProDescriptions
-    v-model="model"
-    :data="descriptionsData"
-    title="传入数据 & 编辑时需要手动通过 change 事件更新描述列表数据"
-    :column="3"
-    :columns
-    border
-    card
-    edit-button
-    @form-change="handleFormChange"
-  />
+  <div>
+    <ProDescriptions
+      v-model="model"
+      :data="descriptionsData"
+      title="传入数据 & 编辑时需要手动通过 change 事件更新描述列表数据"
+      :column="3"
+      :columns
+      border
+      card
+      edit-button
+      @form-change="handleFormChange"
+    />
 
-  <ProDescriptions
-    v-model="model"
-    :request-api="DataServe.getList"
-    title="传入请求函数 & 编辑时内部自动更新描述列表数据"
-    :column="3"
-    :columns
-    border
-    card
-    edit-button
-    @form-change="handleFormChange"
-  />
+    <ProDescriptions
+      v-model="model"
+      :request-api="DataServe.getList"
+      title="传入请求函数 & 编辑时内部自动更新描述列表数据"
+      :column="3"
+      :columns
+      border
+      card
+      edit-button
+      @form-change="handleFormChange"
+    />
 
-  {{ model }}
+    {{ model }}
+  </div>
 </template>

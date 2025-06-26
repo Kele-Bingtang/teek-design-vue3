@@ -243,8 +243,8 @@ const handleSizeChange = (pagingParam: PageInfo) => {
         :rules="rules"
         :model="tempTableDate"
         label-position="left"
-        label-width="80px"
-        style="width: 400px; margin-left: 50px"
+        label-width="60px"
+        style="width: 400px"
         :disabled="dialogStatus === 'look'"
       >
         <el-form-item label="姓名" prop="name">

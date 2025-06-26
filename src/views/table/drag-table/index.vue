@@ -12,28 +12,11 @@ interface ColItem {
 }
 
 const col: Array<ColItem> = [
-  {
-    label: "ID",
-    prop: "id",
-    width: "50",
-  },
-  {
-    label: "姓名",
-    prop: "name",
-  },
-  {
-    label: "日期",
-    prop: "date",
-  },
-
-  {
-    label: "地址",
-    prop: "address",
-  },
-  {
-    label: "状态",
-    prop: "status",
-  },
+  { label: "ID", prop: "id", width: "50" },
+  { label: "姓名", prop: "name" },
+  { label: "日期", prop: "date" },
+  { label: "地址", prop: "address" },
+  { label: "状态", prop: "status" },
 ];
 
 const ns = useNamespace();
@@ -153,7 +136,7 @@ const rowDrop2 = () => {
 
   :deep(.sortable-ghost) {
     color: #ffffff !important;
-    background: #42b983 !important;
+    background: var(--#{$el-namespace}-color-primary) !important;
     opacity: 0.8;
   }
 }
