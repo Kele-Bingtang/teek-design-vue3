@@ -1,6 +1,6 @@
 # KBT Vue3 Admin
 
-基于 Vue3.4、TypeScript5、Vite5、Pinia2、Element-Plus2.7 搭建的 Admin Template 模板。
+基于 Vue3、TypeScript、Vite、Pinia、Element-Plus 搭建的现代 Template 管理系统模板。
 
 这是完整版，有完整的使用实例代码。纯净版请看 [kbt-vue3-template](https://github.com/Kele-Bingtang/kbt-vue3-template)。
 

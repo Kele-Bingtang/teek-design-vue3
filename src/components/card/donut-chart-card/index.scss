@@ -2,18 +2,15 @@
 @use "@styles/mixins/function" as *;
 
 @include b(donut-chart-card) {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  padding: 20px;
   overflow: hidden;
   color: #303133;
   background-color: cssVar(main-bg-color);
   border-radius: cssVar(radius);
   transition: 0.3s;
-
-  @include e(body) {
-    box-sizing: border-box;
-    display: flex;
-    height: 100%;
-    padding: 20px;
-  }
 
   @include e(content) {
     display: flex;
@@ -50,15 +47,15 @@
       margin-top: 5px;
       font-size: 12px;
       font-weight: 500;
-      color: #f56c6c;
+      color: cssVarEl(color-danger);
 
       &.is-increase {
-        color: #67c23a;
+        color: cssVarEl(color-success);
       }
     }
   }
 
-  @include e(chart-section) {
+  @include e(section) {
     display: flex;
     flex: 1;
     align-items: center;
@@ -94,11 +91,11 @@
       }
 
       &.current::before {
-        background-color: cssVar(main-color);
+        background-color: var(--text-color-primary);
       }
 
       &.previous::before {
-        background-color: #e6e8f7;
+        background-color: var(--text-color-secondary);
       }
     }
   }

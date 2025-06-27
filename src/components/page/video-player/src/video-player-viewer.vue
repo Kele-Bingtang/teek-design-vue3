@@ -1,14 +1,14 @@
 <template>
-  <ElConfigProvider :namespace="ns.elNamespace" :size="layoutSize">
-    <ElOverlay v-show="visible" @click="close">
+  <el-configProvider :namespace="ns.elNamespace" :size="layoutSize">
+    <el-overlay v-show="visible" @click="close">
       <div class="video-player-viewer" @click="close">
         <div class="video-player-viewer-close" @click="close">
           <Icon :icon="Close" :size="24" />
         </div>
         <VideoPlayer :url="url" :poster="poster" />
       </div>
-    </ElOverlay>
-  </ElConfigProvider>
+    </el-overlay>
+  </el-configProvider>
 </template>
 
 <script setup lang="ts">

@@ -1,12 +1,12 @@
 <!-- 折线图，支持多组数据，支持阶梯式动画效果 -->
 
 <script setup lang="ts">
-import * as echarts from "echarts";
 import type { EChartsOption } from "echarts";
+import type { LineChartProps, LineDataItem } from "../types";
+import * as echarts from "echarts";
 import { getCssVar, hexToRgba } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useChartOps, useChart } from "../composables";
-import type { LineChartProps, LineDataItem } from "../types";
 import ChartEmpty from "../chart-empty/index.vue";
 
 defineOptions({ name: "LineChart" });

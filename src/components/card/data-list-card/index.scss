@@ -2,9 +2,16 @@
 @use "@styles/mixins/function" as *;
 
 @include b(data-list-card) {
-  padding: 30px;
+  $card-padding: 20px;
+
+  padding: $card-padding;
   background-color: cssVar(main-bg-color);
   border-radius: cssVar(radius);
+
+  @include el-joins(scrollbar) {
+    padding: 0 $card-padding;
+    margin: 0 calc(-1 * $card-padding);
+  }
 
   @include e(header) {
     padding-bottom: 15px;
@@ -12,24 +19,19 @@
     @include m(title) {
       font-size: 18px;
       font-weight: 500;
-      color: cssVar(gray-900);
+      color: cssVar(text-gray-900);
     }
 
     @include m(subtitle) {
       font-size: 14px;
-      color: cssVar(gray-500);
+      color: cssVar(text-gray-500);
     }
   }
 
   @include e(item) {
-    display: flex;
-    align-items: center;
     padding: 12px 0;
 
     @include m(icon) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 40px;
       height: 40px;
       margin-right: 12px;
@@ -39,22 +41,20 @@
     @include e(time) {
       margin-left: 12px;
       font-size: 12px;
-      color: cssVar(gray-500);
+      color: cssVar(text-gray-500);
     }
   }
 
   @include e(item-content) {
-    flex: 1;
-
     @include m(title) {
       margin-bottom: 4px;
       font-size: 15px;
-      color: cssVar(gray-900);
+      color: cssVar(text-gray-900);
     }
 
     @include m(status) {
       font-size: 12px;
-      color: cssVar(gray-600);
+      color: cssVar(text-gray-600);
     }
   }
 

@@ -1,3 +1,5 @@
+import type { TimelineItemProps } from "element-plus";
+
 export interface TimelineProps {
   /** 时间轴列表数据 */
   list: TimelineItem[];
@@ -7,6 +9,8 @@ export interface TimelineProps {
   subtitle?: string;
   /** 最大显示数量 */
   maxCount?: number;
+  /** ElTimelineItem Props */
+  timelineItemProps?: Partial<TimelineItemProps>;
 }
 
 interface TimelineItem {

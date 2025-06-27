@@ -3,7 +3,7 @@ import { markRaw } from "vue";
 import { useFlicker } from "@/components";
 
 const { lastBuildTime } = __APP_INFO__;
-const activities = [
+const activities: Recordable[] = [
   {
     content: "支持圆点闪动",
     timestamp: lastBuildTime,
@@ -65,7 +65,7 @@ const activities = [
             :type="activity.type"
           >
             <div class="message">
-              teek-design-vue3 是基于 Vue3.x、TypeScript、Vite6、Pinia、Element-Plus 编写的一套后台管理系统
+              Teek Design Vue3 基于 Vue3、TypeScript、Vite、Pinia、Element-Plus 搭建的现代 Template 管理系统模板。
             </div>
           </el-timeline-item>
         </el-timeline>

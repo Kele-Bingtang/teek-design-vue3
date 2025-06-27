@@ -1,0 +1,58 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/mixins/namespace" as *;
+
+@include b(timeline-list-card) {
+  $card-padding: 20px;
+
+  padding: $card-padding;
+  background-color: cssVar(main-bg-color);
+  border-radius: cssVar(radius);
+
+  @include el-joins(scrollbar) {
+    padding: 0 $card-padding;
+    margin: 0 calc(-1 * $card-padding);
+  }
+
+  @include e(header) {
+    padding-bottom: 15px;
+
+    @include m(title) {
+      font-size: 18px;
+      font-weight: 500;
+      color: cssVar(gray-900);
+    }
+
+    @include m(subtitle) {
+      font-size: 14px;
+      color: cssVar(gray-500);
+    }
+  }
+
+  :deep(.#{$el-namespace}-timeline-item__tail) {
+    left: 5px;
+  }
+
+  :deep(.#{$el-namespace}-timeline-item__node--normal) {
+    left: 0;
+  }
+
+  @include e(item) {
+    gap: 12px;
+  }
+
+  @include e(content) {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    @include m(text) {
+      font-size: 14px;
+    }
+
+    @include m(code) {
+      font-size: 0.9em;
+      color: var(--#{$el-namespace}-color-primary);
+    }
+  }
+}

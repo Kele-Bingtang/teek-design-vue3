@@ -1,15 +1,21 @@
 <!-- 进度条卡片 -->
 <script setup lang="ts">
-import { useNamespace } from "@/composables";
 import type { ProgressCardProps } from "./types";
+import { useNamespace } from "@/composables";
 import { CountTo } from "@/components";
+import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "ProgressCard" });
 
 const props = withDefaults(defineProps<ProgressCardProps>(), {
-  strokeWidth: 5,
+  title: "",
+  color: "",
+  icon: "",
+  iconColor: "",
+  iconBgColor: "",
   iconBgRadius: 8,
-  color: "#67C23A",
+  iconSize: "",
+  strokeWidth: 5,
 });
 
 const ns = useNamespace("progress-card");
@@ -47,17 +53,17 @@ watch(
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]">
+  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-column-justify-center']">
     <div :class="ns.e('info')" :style="{ justifyContent: icon ? 'space-between' : 'flex-start' }">
       <div :class="ns.em('info', 'left')">
         <Icon
           v-if="icon"
           :icon="icon"
+          :color="iconColor"
+          :size="iconSize"
           :style="{
-            color: iconColor,
             backgroundColor: iconBgColor,
-            fontSize: iconSize + 'px',
-            borderRadius: iconBgRadius + 'px',
+            borderRadius: addUnit(iconBgRadius),
           }"
         />
       </div>
@@ -66,12 +72,14 @@ watch(
         <CountTo
           :key="percentage"
           class="percentage"
-          :style="{ textAlign: icon ? 'right' : 'left' }"
-          :endVal="percentage"
+          :is="{ textAlign: icon ? 'right' : 'left' }"
+          :end-val="percentage"
           :duration="2"
           suffix="%"
         />
-        <p class="title">{{ title }}</p>
+        <p class="title">
+          <slot name="title">{{ title }}</slot>
+        </p>
       </div>
     </div>
     <el-progress :percentage="currentPercentage" :stroke-width="strokeWidth" :show-text="false" :color="color" />

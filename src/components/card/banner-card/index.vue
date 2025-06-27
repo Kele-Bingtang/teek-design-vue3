@@ -2,25 +2,22 @@
 <script setup lang="ts">
 import type { BannerCardEmits, BannerCardProps, Meteor } from "./types";
 import { onMounted, ref, computed } from "vue";
-import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "BannerCard" });
 
-const settingStore = useSettingStore();
-const { isDark } = storeToRefs(settingStore);
-
-// 组件属性默认值设置
 const props = withDefaults(defineProps<BannerCardProps>(), {
   height: "11rem",
-  titleColor: "white",
-  subtitleColor: "white",
+  title: "",
+  subtitle: "",
+  titleColor: "#ffffff",
+  subtitleColor: "#ffffff",
   backgroundColor: `var(--${useNamespace().elNamespace}-color-primary-light-3)`,
   decoration: true,
   buttonConfig: () => ({
     show: true,
     text: "查看",
-    color: "#fff",
+    color: "#ffffff",
     textColor: "#333",
     radius: "6px",
   }),
@@ -34,20 +31,19 @@ const ns = useNamespace("banner-card");
 const emit = defineEmits<BannerCardEmits>();
 
 // 计算按钮样式属性
-const buttonColor = computed(() => props.buttonConfig?.color ?? "#fff");
-const buttonTextColor = computed(() => props.buttonConfig?.textColor ?? "#333");
-const buttonRadius = computed(() => props.buttonConfig?.radius ?? "6px");
+const buttonColor = computed(() => props.buttonConfig.color ?? "#fff");
+const buttonTextColor = computed(() => props.buttonConfig.textColor ?? "#333");
+const buttonRadius = computed(() => props.buttonConfig.radius ?? "6px");
 
 // 流星数据初始化
 const meteors = ref<Meteor[]>([]);
 onMounted(() => {
-  if (props.meteorConfig?.enabled) {
-    meteors.value = generateMeteors(props.meteorConfig?.count ?? 10);
-  }
+  if (props.meteorConfig.enabled) meteors.value = generateMeteors(props.meteorConfig?.count ?? 10);
 });
 
 /**
  * 生成流星数据数组
+ *
  * @param count 流星数量
  * @returns 流星数据数组
  */
@@ -72,12 +68,12 @@ function generateMeteors(count: number): Meteor[] {
 
 <template>
   <div
-    :class="[ns.b(), ns.join('card-secondary'), ns.has('decoration')]"
+    :class="[ns.b(), ns.join('card-secondary'), ns.has('decoration'), 'flx-column-justify-center']"
     :style="{ backgroundColor: backgroundColor, height: height }"
     @click="emit('click')"
   >
     <!-- 流星效果 -->
-    <div v-if="meteorConfig?.enabled && isDark" :class="ns.e('meteors')">
+    <div v-if="meteorConfig?.enabled" :class="ns.e('meteors')">
       <span
         v-for="(meteor, index) in meteors"
         :key="index"
@@ -92,17 +88,17 @@ function generateMeteors(count: number): Meteor[] {
     </div>
 
     <div :class="ns.e('content')">
-      <!-- title slot -->
+      <!-- title 插槽 -->
       <slot name="title">
         <p v-if="title" :class="ns.e('title')" :style="{ color: titleColor }">{{ title }}</p>
       </slot>
 
-      <!-- subtitle slot -->
+      <!-- subtitle 插槽 -->
       <slot name="subtitle">
         <p v-if="subtitle" :class="ns.e('subtitle')" :style="{ color: subtitleColor }">{{ subtitle }}</p>
       </slot>
 
-      <!-- button slot -->
+      <!-- button 插槽 -->
       <slot name="button">
         <div
           v-if="buttonConfig?.show"
@@ -118,10 +114,10 @@ function generateMeteors(count: number): Meteor[] {
         </div>
       </slot>
 
-      <!-- default slot -->
+      <!-- default 插槽 -->
       <slot></slot>
 
-      <!-- background image -->
+      <!-- 背景图片 -->
       <img
         v-if="imageConfig.src"
         :class="ns.e('background-image')"

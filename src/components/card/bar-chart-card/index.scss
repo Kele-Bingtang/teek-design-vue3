@@ -35,10 +35,10 @@
     @include m(percentage) {
       font-size: 14px;
       font-weight: 500;
-      color: #f56c6c;
+      color: cssVarEl(color-danger);
 
       @include is(increase) {
-        color: #67c23a;
+        color: cssVarEl(color-success);
       }
 
       @include is(mini-chart) {

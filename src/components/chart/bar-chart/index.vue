@@ -3,10 +3,10 @@
 import type { EChartsOption } from "echarts";
 import type { BarChartProps, BarDataItem } from "../types";
 import * as echarts from "echarts";
-import { useChartOps, useChartComponent } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
 import { getCssVar } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { useChartOps, useChartComponent } from "../composables";
+import ChartEmpty from "../chart-empty/index.vue";
 
 defineOptions({ name: "BarChart" });
 

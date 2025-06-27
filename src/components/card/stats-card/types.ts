@@ -3,7 +3,7 @@ export interface StatsCardProps {
   icon?: string;
   /** 标题 */
   title?: string;
-  /** 数值 */
+  /** 数值，默认 0 */
   count?: number;
   /** 描述 */
   description: string;
@@ -11,10 +11,10 @@ export interface StatsCardProps {
   iconColor?: string;
   /** 图标背景颜色 */
   iconBgColor?: string;
-  /** 图标圆角大小 */
-  iconBgRadius?: number;
-  /** 图标大小 */
-  iconSize?: number;
+  /** 图标圆角大小，默认 50 */
+  iconBgRadius?: string | number;
+  /** 图标大小，默认 30 */
+  iconSize?: string | number;
   /** 文本颜色 */
   textColor?: string;
   /** 背景颜色 */

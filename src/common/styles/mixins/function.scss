@@ -94,3 +94,26 @@
 
   @return $name;
 }
+
+/* 合并变量名：joinVar(('button', 'text-color')) => '--el-button-text-color' */
+@function joinVarEl($list) {
+  $name: "--" + $el-namespace;
+
+  @each $item in $list {
+    @if $item != "" {
+      $name: $name + "-" + $item;
+    }
+  }
+
+  @return $name;
+}
+
+/* cssVarName('button', 'text-color') => '--el-button-text-color' */
+@function cssVarElName($args...) {
+  @return joinVarEl($args);
+}
+
+/* cssVar('button', 'text-color') => var(--el-button-text-color) */
+@function cssVarEl($args...) {
+  @return var(#{joinVarEl($args)});
+}

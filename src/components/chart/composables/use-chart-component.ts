@@ -33,26 +33,19 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
 
   // 更新图表
   const updateChart = () => {
-    if (!isEmpty.value) {
-      initChart(generateOptions());
-    }
+    if (!isEmpty.value) initChart(generateOptions());
   };
 
   // 处理图表进入可视区域时的逻辑
   const handleChartVisible = () => {
-    if (onVisible) {
-      onVisible();
-    } else {
-      updateChart();
-    }
+    if (onVisible) onVisible();
+    else updateChart();
   };
 
   // 设置数据监听
   const setupWatchers = () => {
     // 监听自定义数据源
-    if (watchSources.length > 0) {
-      watch(watchSources, updateChart, { deep: true });
-    }
+    if (watchSources.length > 0) watch(watchSources, updateChart, { deep: true });
 
     // 监听主题变化
     watch(isDark, updateChart);
@@ -64,16 +57,12 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
       updateChart();
 
       // 监听图表可见事件
-      if (chartInstance.value) {
-        chartInstance.value.addEventListener("chartVisible", handleChartVisible);
-      }
+      if (chartInstance.value) chartInstance.value.addEventListener("chartVisible", handleChartVisible);
     });
 
     onBeforeUnmount(() => {
       // 清理事件监听器
-      if (chartInstance.value) {
-        chartInstance.value.removeEventListener("chartVisible", handleChartVisible);
-      }
+      if (chartInstance.value) chartInstance.value.removeEventListener("chartVisible", handleChartVisible);
     });
   };
 

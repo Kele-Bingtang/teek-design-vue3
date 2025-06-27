@@ -92,6 +92,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           <BarChart :data="singleBarData" :xAxisData="xAxisData" :showLegend="true" legendPosition="right" />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -100,6 +101,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           <BarChart :data="multiBarData" :xAxisData="xAxisData" :showLegend="true" barWidth="26%" />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -108,6 +110,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           <BarChart :data="stackBarData" :xAxisData="stackXAxisData" :showLegend="true" :stack="true" barWidth="26%" />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -121,6 +124,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -133,6 +137,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -150,6 +155,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           <HBarChart :data="[50, 80, 120, 90, 60]" :xAxisData="['产品A', '产品B', '产品C', '产品D', '产品E']" />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -167,6 +173,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -224,6 +231,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -241,6 +249,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -291,6 +300,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -308,6 +318,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
           />
         </div>
       </el-col>
+
       <el-col :xs="24" :md="12" :lg="8">
         <div class="card tk-card-secondary">
           <div class="card-header">
@@ -359,6 +370,10 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
 
   .el-col {
     margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

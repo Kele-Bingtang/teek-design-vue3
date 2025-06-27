@@ -4,36 +4,47 @@ import type { StatsCardProps } from "./types";
 import { ArrowRight } from "@element-plus/icons-vue";
 import { CountTo } from "@/components";
 import { useNamespace } from "@/composables";
+import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "StatsCard" });
 
 withDefaults(defineProps<StatsCardProps>(), {
-  iconSize: 30,
+  icon: "",
+  title: "",
+  count: 0,
+  description: "",
+  iconColor: "",
+  iconBgColor: "",
   iconBgRadius: 50,
+  iconSize: 30,
+  textColor: "",
+  backgroundColor: "",
+  showArrow: false,
 });
 
 const ns = useNamespace("stats-card");
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ backgroundColor: backgroundColor }">
-    <div v-if="icon" :class="ns.e('icon')" :style="{ backgroundColor: iconBgColor, borderRadius: iconBgRadius + 'px' }">
-      <Icon
-        :icon="icon"
-        :size="30"
-        :style="{
-          color: iconColor,
-          fontSize: iconSize + 'px',
-        }"
-      />
+  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-align-center']" :style="{ backgroundColor: backgroundColor }">
+    <div
+      v-if="icon"
+      :class="[ns.e('icon'), 'flx-center']"
+      :style="{ backgroundColor: iconBgColor, borderRadius: addUnit(iconBgRadius) }"
+    >
+      <Icon :icon="icon" :size="iconSize" :color="iconColor" />
     </div>
 
     <div :class="ns.e('content')">
-      <p v-if="title" :class="ns.e('title')" :style="{ color: textColor }">
-        {{ title }}
+      <p v-if="title || $slots['title']" :class="ns.e('title')" :style="{ color: textColor }">
+        <slot name="title">{{ title }}</slot>
       </p>
-      <CountTo v-if="count" :class="ns.e('count')" :endVal="count" :duration="1"></CountTo>
-      <p v-if="description" :class="ns.e('description')" :style="{ color: textColor }">{{ description }}</p>
+
+      <CountTo v-if="count" :class="ns.e('count')" :end-val="count" :duration="1" />
+
+      <p v-if="description || $slots['description']" :class="ns.e('description')" :style="{ color: textColor }">
+        <slot name="description">{{ description }}</slot>
+      </p>
     </div>
     <div v-if="showArrow" :class="ns.e('arrow')">
       <Icon :icon="ArrowRight" />

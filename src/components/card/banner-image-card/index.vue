@@ -6,8 +6,7 @@ import defaultIcon from "@/common/assets/images/3d/icon1.webp"; // 导入默认�
 
 defineOptions({ name: "BannerImageCard" });
 
-// 定义组件属性默认值
-const props = withDefaults(defineProps<CardBannerProps>(), {
+withDefaults(defineProps<CardBannerProps>(), {
   height: "24rem",
   image: defaultIcon,
   title: "",
@@ -16,7 +15,7 @@ const props = withDefaults(defineProps<CardBannerProps>(), {
   button: () => ({
     show: true,
     text: "查看详情",
-    color: "var(--main-color)",
+    color: useNamespace().cssVar("main-color"),
     textColor: "#fff",
   }),
   // 取消按钮默认配置
@@ -30,8 +29,10 @@ const props = withDefaults(defineProps<CardBannerProps>(), {
 
 // 定义组件事件
 const emit = defineEmits<{
-  click: []; // 主按钮点击事件
-  cancel: []; // 取消按钮点击事件
+  // 主按钮点击事件
+  click: [];
+  // 取消按钮点击事件
+  cancel: [];
 }>();
 
 const ns = useNamespace("banner-image-card");
@@ -48,34 +49,34 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: props.height }">
-    <div :class="ns.e('content')">
+  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-column-justify-center']" :style="{ height: height }">
+    <div :class="[ns.e('content'), 'flx-column-align-center']">
       <div :class="ns.e('icon')">
-        <img :src="props.image" :alt="props.title" />
+        <img :src="image" :alt="title" />
       </div>
       <div :class="ns.e('text')">
-        <p :class="ns.em('text', 'title')">{{ props.title }}</p>
-        <p :class="ns.em('text', 'description')">{{ props.description }}</p>
+        <p :class="ns.em('text', 'title')">{{ title }}</p>
+        <p :class="ns.em('text', 'description')">{{ description }}</p>
       </div>
       <div :class="ns.e('buttons')">
         <div
-          v-if="props.cancelButton?.show"
+          v-if="cancelButton.show"
           :class="[ns.em('buttons', 'button'), ns.is('cancel')]"
           :style="{
-            backgroundColor: props.cancelButton?.color,
-            color: props.cancelButton?.textColor,
+            backgroundColor: cancelButton.color,
+            color: cancelButton.textColor,
           }"
           @click="handleCancel"
         >
-          {{ props.cancelButton?.text }}
+          {{ cancelButton.text }}
         </div>
         <div
-          v-if="props.button?.show"
+          v-if="button.show"
           :class="ns.em('buttons', 'button')"
-          :style="{ backgroundColor: props.button?.color, color: props.button?.textColor }"
+          :style="{ backgroundColor: button.color, color: button.textColor }"
           @click="handleClick"
         >
-          {{ props.button?.text }}
+          {{ button.text }}
         </div>
       </div>
     </div>

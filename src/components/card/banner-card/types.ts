@@ -1,14 +1,18 @@
 // 组件属性接口定义
 export interface BannerCardProps {
-  /** 横幅高度 */
+  /** 横幅高度，默认 11rem */
   height?: string;
   /** 标题文本 */
   title?: string;
   /** 副标题文本 */
   subtitle?: string;
-  /** 背景颜色 */
+  /** 标题颜色，默认 #ffffff */
+  titleColor?: string;
+  /** 副标题颜色，默认 #ffffff */
+  subtitleColor?: string;
+  /** 背景颜色，默认 var(--${useNamespace().elNamespace}-color-primary-light-3) */
   backgroundColor?: string;
-  /** 是否显示装饰效果 */
+  /** 是否显示装饰效果，默认 true */
   decoration?: boolean;
   /** 按钮配置 */
   buttonConfig?: ButtonConfig;
@@ -16,10 +20,6 @@ export interface BannerCardProps {
   meteorConfig?: MeteorConfig;
   /** 图片配置 */
   imageConfig?: ImageConfig;
-  /** 标题颜色 */
-  titleColor?: string;
-  /** 副标题颜色 */
-  subtitleColor?: string;
 }
 
 export interface BannerCardEmits {

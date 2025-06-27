@@ -18,8 +18,8 @@ const currentIcon = ref("");
         <el-descriptions-item label="本地 Icon 图标，需引入 Upload 再传入：<Icon :icon='Upload'></Icon>" width="300">
           <Icon :icon="Upload"></Icon>
         </el-descriptions-item>
-        <el-descriptions-item label="本地 FontIcon 图标：<Icon icon='IF-icon-dagouyouquan'></Icon>" width="300">
-          <Icon hover-color="red" icon="IF-icon-dagouyouquan"></Icon>
+        <el-descriptions-item label="本地 FontIcon 图标：<Icon icon='iconfont-sys-github'></Icon>" width="300">
+          <Icon hover hover-color="red" icon="&#xe8d6;"></Icon>
         </el-descriptions-item>
         <el-descriptions-item label="本地 SVG 图标：<Icon icon='svg-core-bug'></Icon>" width="300">
           <Icon icon="SVG-core-bug"></Icon>

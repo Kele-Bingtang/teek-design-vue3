@@ -4,9 +4,9 @@ import type { EChartsOption } from "echarts";
 import type { BarChartProps, BarDataItem } from "../types";
 import * as echarts from "echarts";
 import { getCssVar } from "@/common/utils";
+import { useNamespace } from "@/composables";
 import { useChartOps, useChartComponent } from "../composables";
 import ChartEmpty from "../chart-empty/index.vue";
-import { useNamespace } from "@/composables";
 
 defineOptions({ name: "HBarChart" });
 

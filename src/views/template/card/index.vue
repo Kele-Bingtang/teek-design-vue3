@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import cover1 from "@/common/assets/images/cover/img1.webp";
-import cover2 from "@/common/assets/images/cover/img2.webp";
-import cover3 from "@/common/assets/images/cover/img3.webp";
-import cover4 from "@/common/assets/images/cover/img4.webp";
 import {
   StatsCard,
   ProgressCard,
@@ -11,7 +7,6 @@ import {
   BarChartCard,
   DataListCard,
   TimelineListCard,
-  ImageCard,
 } from "@/components";
 import { useNamespace } from "@/composables";
 
@@ -115,49 +110,6 @@ const progressCards = [
   },
 ];
 
-const imageCards = [
-  {
-    id: 1,
-    imageUrl: cover1,
-    title: "AI技术在医疗领域的创新应用与发展前景",
-    category: "社交",
-    readTime: "2分钟",
-    views: 9125,
-    comments: 3,
-    date: "12月19日 周一",
-  },
-  {
-    id: 2,
-    imageUrl: cover2,
-    title: "大数据分析助力企业决策的实践案例",
-    category: "技术",
-    readTime: "3分钟",
-    views: 7234,
-    comments: 5,
-    date: "12月20日 周二",
-  },
-  {
-    id: 3,
-    imageUrl: cover3,
-    title: "区块链技术在供应链管理中的应用",
-    category: "科技",
-    readTime: "4分钟",
-    views: 5678,
-    comments: 8,
-    date: "12月21日 周三",
-  },
-  {
-    id: 4,
-    imageUrl: cover4,
-    title: "云计算技术发展趋势与未来展望",
-    category: "云技术",
-    readTime: "5分钟",
-    views: 4321,
-    comments: 6,
-    date: "12月22日 周四",
-  },
-];
-
 const dataList = [
   {
     title: "新加坡之行",
@@ -233,221 +185,213 @@ const timelineData = [
 ];
 
 const handleMore = () => {};
-
-const handleImageCardClick = (card: any) => {
-  console.log(card);
-};
 </script>
 
 <template>
-  <div class="cards">
-    <h1 class="page-title">统计卡片（文字）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
-        <StatsCard
-          :icon="card.icon"
-          :title="card.title"
-          :description="card.description"
-          :iconSize="card.iconSize"
-          :iconBgRadius="8"
-          iconColor="#fff"
-          :iconBgColor="card.iconBgColor"
-          :showArrow="card.showArrow"
-        />
-      </el-col>
-    </el-row>
+  <el-space fill :size="30" class="card">
+    <div>
+      <h1 class="page-title">统计卡片（文字）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
+          <StatsCard
+            :icon="card.icon"
+            :title="card.title"
+            :description="card.description"
+            :iconSize="card.iconSize"
+            :iconBgRadius="8"
+            iconColor="#fff"
+            :iconBgColor="card.iconBgColor"
+            :showArrow="card.showArrow"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">统计卡片（数字滚动）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
-        <StatsCard
-          :icon="card.icon"
-          :count="card.count"
-          :description="card.description"
-          :iconSize="card.iconSize"
-          iconColor="#fff"
-          :iconBgColor="card.iconBgColor"
-          :showArrow="card.showArrow"
-        />
-      </el-col>
-    </el-row>
+    <div>
+      <h1 class="page-title">统计卡片（数字滚动）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
+          <StatsCard
+            :icon="card.icon"
+            :count="card.count"
+            :description="card.description"
+            :iconSize="card.iconSize"
+            iconColor="#fff"
+            :iconBgColor="card.iconBgColor"
+            :showArrow="card.showArrow"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">统计卡片（自定义样式）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
-        <StatsCard
-          :icon="card.icon"
-          :title="card.title"
-          :description="card.description"
-          :iconColor="card.iconColor"
-          :textColor="card.textColor"
-          :backgroundColor="card.backgroundColor"
-          :showArrow="card.showArrow"
-        />
-      </el-col>
-    </el-row>
+    <div>
+      <h1 class="page-title">统计卡片（自定义样式）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6" v-for="card in statsCards" :key="card.id">
+          <StatsCard
+            :icon="card.icon"
+            :title="card.title"
+            :description="card.description"
+            :iconColor="card.iconColor"
+            :textColor="card.textColor"
+            :backgroundColor="card.backgroundColor"
+            :showArrow="card.showArrow"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">进度卡片</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in progressCards" :key="card.id">
-        <ProgressCard :percentage="card.percentage" :title="card.title" :color="card.color" />
-      </el-col>
-    </el-row>
+    <div>
+      <h1 class="page-title">进度卡片</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6" v-for="card in progressCards" :key="card.id">
+          <ProgressCard :percentage="card.percentage" :title="card.title" :color="card.color" />
+        </el-col>
+      </el-row>
 
-    <h1 class="page-title">进度卡片（icon）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in progressCards" :key="card.id">
-        <ProgressCard
-          :percentage="card.percentage"
-          :title="card.title"
-          :color="card.color"
-          :icon="card.icon"
-          :iconColor="card.iconColor"
-          :iconBgColor="card.iconBgColor"
-          :iconSize="card.iconSize"
-          :iconBgRadius="8"
-        />
-      </el-col>
-    </el-row>
+      <h1 class="page-title">进度卡片（icon）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6" v-for="card in progressCards" :key="card.id">
+          <ProgressCard
+            :percentage="card.percentage"
+            :title="card.title"
+            :color="card.color"
+            :icon="card.icon"
+            :iconColor="card.iconColor"
+            :iconBgColor="card.iconBgColor"
+            :iconSize="card.iconSize"
+            :iconBgRadius="8"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">图表卡片（小图表）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6">
-        <LineChartCard
-          :isMiniChart="true"
-          :value="2545"
-          label="新用户"
-          date="过去7天"
-          :percentage="1.2"
-          :height="9.5"
-          :chartData="[120, 132, 101, 134, 90, 230, 210]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <BarChartCard
-          :isMiniChart="true"
-          :value="15480"
-          label="浏览量"
-          date="过去 14 天"
-          :percentage="-4.15"
-          :height="9.5"
-          :barWidth="'45%'"
-          :chartData="[120, 100, 150, 140, 90, 120, 130]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <LineChartCard
-          :isMiniChart="true"
-          :value="2545"
-          label="粉丝数"
-          date="过去 30 天"
-          :percentage="1.2"
-          :height="9.5"
-          :showAreaColor="true"
-          :chartData="[150, 180, 160, 200, 180, 220, 240]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <DonutChartCard
-          :value="36358"
-          title="粉丝量"
-          :percentage="18"
-          percentageLabel="较去年"
-          :data="[50, 40]"
-          :height="9.5"
-          currentValue="2022"
-          previousValue="2021"
-          :radius="['50%', '70%']"
-        />
-      </el-col>
-    </el-row>
+    <div>
+      <h1 class="page-title">图表卡片（小图表）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6">
+          <LineChartCard
+            :isMiniChart="true"
+            :value="2545"
+            label="新用户"
+            date="过去7天"
+            :percentage="1.2"
+            :height="9.5"
+            :chartData="[120, 132, 101, 134, 90, 230, 210]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <BarChartCard
+            :isMiniChart="true"
+            :value="15480"
+            label="浏览量"
+            date="过去 14 天"
+            :percentage="-4.15"
+            :height="9.5"
+            :barWidth="'45%'"
+            :chartData="[120, 100, 150, 140, 90, 120, 130]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <LineChartCard
+            :isMiniChart="true"
+            :value="2545"
+            label="粉丝数"
+            date="过去 30 天"
+            :percentage="1.2"
+            :height="9.5"
+            :showAreaColor="true"
+            :chartData="[150, 180, 160, 200, 180, 220, 240]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <DonutChartCard
+            :value="36358"
+            title="粉丝量"
+            :percentage="18"
+            percentageLabel="较去年"
+            :data="[50, 40]"
+            :height="9.5"
+            currentValue="2022"
+            previousValue="2021"
+            :radius="['50%', '70%']"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">图表卡片（大图表）</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6">
-        <LineChartCard
-          :value="2545"
-          label="新用户"
-          :percentage="1.2"
-          :height="11"
-          :chartData="[120, 132, 101, 134, 90, 230, 210]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <BarChartCard
-          :value="15480"
-          label="浏览量"
-          :percentage="-4.15"
-          :height="11"
-          :chartData="[120, 100, 150, 140, 90, 120, 130, 110]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <LineChartCard
-          :value="2545"
-          label="粉丝数"
-          :percentage="1.2"
-          :height="11"
-          :showAreaColor="true"
-          :chartData="[150, 180, 160, 200, 180, 220, 240]"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6">
-        <DonutChartCard
-          :value="36358"
-          title="粉丝量"
-          :percentage="-18"
-          percentageLabel="较2021年"
-          :data="[70, 30]"
-          :height="11"
-          currentValue="12月"
-          previousValue="11月"
-        />
-      </el-col>
-    </el-row>
+    <div>
+      <h1 class="page-title">图表卡片（大图表）</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="6">
+          <LineChartCard
+            :value="2545"
+            label="新用户"
+            :percentage="1.2"
+            :height="11"
+            :chartData="[120, 132, 101, 134, 90, 230, 210]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <BarChartCard
+            :value="15480"
+            label="浏览量"
+            :percentage="-4.15"
+            :height="11"
+            :chartData="[120, 100, 150, 140, 90, 120, 130, 110]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <LineChartCard
+            :value="2545"
+            label="粉丝数"
+            :percentage="1.2"
+            :height="11"
+            :showAreaColor="true"
+            :chartData="[150, 180, 160, 200, 180, 220, 240]"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="6">
+          <DonutChartCard
+            :value="36358"
+            title="粉丝量"
+            :percentage="-18"
+            percentageLabel="较2021年"
+            :data="[70, 30]"
+            :height="11"
+            currentValue="12月"
+            previousValue="11月"
+          />
+        </el-col>
+      </el-row>
+    </div>
 
-    <h1 class="page-title">数据列表卡片</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :lg="8">
-        <DataListCard :list="dataList" title="待办事项" subtitle="今日待处理任务" />
-      </el-col>
-      <el-col :xs="24" :sm="12" :lg="8">
-        <DataListCard
-          :maxCount="4"
-          :list="dataList"
-          title="最近活动"
-          subtitle="近期活动列表"
-          :showMoreButton="true"
-          @more="handleMore"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="12" :lg="8">
-        <TimelineListCard :list="timelineData" title="最近交易" subtitle="2024年12月20日" />
-      </el-col>
-    </el-row>
-
-    <h1 class="page-title">图片卡片</h1>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="6" v-for="card in imageCards" :key="card.id">
-        <ImageCard
-          :imageUrl="card.imageUrl"
-          :title="card.title"
-          :category="card.category"
-          :readTime="card.readTime"
-          :views="card.views"
-          :comments="card.comments"
-          :date="card.date"
-          @click="handleImageCardClick(card)"
-        />
-      </el-col>
-    </el-row>
-  </div>
+    <div>
+      <h1 class="page-title">数据列表卡片</h1>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :lg="8">
+          <DataListCard :list="dataList" title="待办事项" subtitle="今日待处理任务" />
+        </el-col>
+        <el-col :xs="24" :sm="12" :lg="8">
+          <DataListCard
+            :maxCount="4"
+            :list="dataList"
+            title="最近活动"
+            subtitle="近期活动列表"
+            :showMoreButton="true"
+            @more="handleMore"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="12" :lg="8">
+          <TimelineListCard :list="timelineData" title="最近交易" subtitle="2024年12月20日" />
+        </el-col>
+      </el-row>
+    </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>
-.cards {
-  padding: 20px 0;
-
+.card {
   .page-title {
     margin: 20px 0 15px;
     font-size: 22px;
@@ -456,10 +400,6 @@ const handleImageCardClick = (card: any) => {
     &:first-child {
       margin-top: 0;
     }
-  }
-
-  .el-col {
-    margin-bottom: 20px;
   }
 }
 </style>

@@ -5,12 +5,9 @@
 
 @include b(banner-card) {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 0 2rem;
   overflow: hidden;
-  color: white;
+  color: #ffffff;
   border-radius: calc(cssVar(radius) + 2px) !important;
 
   @include e(content) {
@@ -64,10 +61,10 @@
       right: -10%;
       bottom: -20%;
       width: 60%;
-      height: 140%;
+      height: 150%;
       content: "";
       background: rgb(255 255 255 / 10%);
-      border-radius: 30%;
+      border-radius: 40%;
       transform: rotate(-20deg);
     }
   }

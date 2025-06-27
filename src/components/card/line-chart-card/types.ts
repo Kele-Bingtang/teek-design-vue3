@@ -8,13 +8,13 @@ export interface LineChartProps {
   /** 日期 */
   date?: string;
   /** 高度 */
-  height?: number;
+  height?: string | number;
   /** 颜色 */
   color?: string;
   /** 是否显示区域颜色 */
   showAreaColor?: boolean;
   /** 图表数据 */
-  chartData: number[];
+  chartData?: number[];
   /** 是否为迷你图表 */
   isMiniChart?: boolean;
 }

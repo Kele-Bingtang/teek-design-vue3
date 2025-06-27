@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import * as echarts from "echarts";
-import { getCssVar, hexToRgba } from "@/common/utils";
+import { addUnit, getCssVar, hexToRgba } from "@/common/utils";
 import { useChartOps, useChartComponent } from "@/components/chart";
 import type { LineChartProps } from "./types";
 import { useNamespace } from "@/composables";
@@ -10,7 +10,12 @@ import { useNamespace } from "@/composables";
 defineOptions({ name: "LineChartCard" });
 
 const props = withDefaults(defineProps<LineChartProps>(), {
+  date: "",
   height: 11,
+  color: "",
+  showAreaColor: false,
+  chartData: () => [],
+  isMiniChart: false,
 });
 
 const ns = useNamespace("line-chart-card");
@@ -19,11 +24,11 @@ const ns = useNamespace("line-chart-card");
 const { chartInstance } = useChartComponent({
   chartOptions: { instanceName: "chartInstance" },
   props: {
-    height: `${props.height}rem`,
+    height: addUnit(props.height, "rem"),
     loading: false,
-    isEmpty: !props.chartData?.length || props.chartData.every(val => val === 0),
+    isEmpty: !props.chartData.length || props.chartData.every(val => val === 0),
   },
-  checkEmpty: () => !props.chartData?.length || props.chartData.every(val => val === 0),
+  checkEmpty: () => !props.chartData.length || props.chartData.every(val => val === 0),
   watchSources: [() => props.chartData, () => props.color, () => props.showAreaColor],
   generateOptions: (): EChartsOption => {
     const computedColor = props.color || useChartOps().themeColor;
@@ -65,12 +70,13 @@ const { chartInstance } = useChartComponent({
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: `${height}rem` }">
+  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: addUnit(height, 'rem') }">
     <div :class="ns.e('header')">
       <div :class="ns.em('header', 'metric')">
         <p class="value">{{ value }}</p>
         <p class="label">{{ label }}</p>
       </div>
+
       <div
         :class="[ns.em('header', 'percentage'), ns.is('increase', percentage > 0), ns.is('mini-chart', isMiniChart)]"
       >
@@ -84,7 +90,7 @@ const { chartInstance } = useChartComponent({
     <div
       ref="chartInstance"
       :class="[ns.e('content'), ns.is('mini-chart', isMiniChart)]"
-      :style="{ height: `calc(${height}rem - 5rem)` }"
+      :style="{ height: `calc(${addUnit(height, 'rem')} - 5rem)` }"
     ></div>
   </div>
 </template>

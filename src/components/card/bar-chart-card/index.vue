@@ -4,12 +4,17 @@ import type { EChartsOption } from "echarts";
 import type { BarChartCard } from "./types";
 import { useChartOps, useChartComponent } from "@/components/chart";
 import { useNamespace } from "@/composables";
+import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "BarChartCard" });
 
 const props = withDefaults(defineProps<BarChartCard>(), {
+  date: "",
   height: 11,
+  color: "",
+  chartData: () => [],
   barWidth: "26%",
+  isMiniChart: false,
 });
 
 const ns = useNamespace("bar-chart-card");
@@ -18,7 +23,7 @@ const ns = useNamespace("bar-chart-card");
 const { chartInstance } = useChartComponent({
   chartOptions: { instanceName: "chartInstance" },
   props: {
-    height: `${props.height}rem`,
+    height: addUnit(props.height, "rem"),
     loading: false,
     isEmpty: !props.chartData?.length || props.chartData.every(val => val === 0),
   },
@@ -50,7 +55,7 @@ const { chartInstance } = useChartComponent({
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: `${height}rem` }">
+  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: addUnit(props.height, 'rem') }">
     <div :class="ns.e('header')">
       <div :class="ns.em('header', 'metric')">
         <p class="value">{{ value }}</p>
@@ -69,7 +74,7 @@ const { chartInstance } = useChartComponent({
     <div
       ref="chartInstance"
       :class="[ns.e('content'), ns.is('mini-chart', isMiniChart)]"
-      :style="{ height: `calc(${height}rem - 5rem)` }"
+      :style="{ height: `calc(${addUnit(props.height, 'rem')} - 5rem)` }"
     ></div>
   </div>
 </template>
