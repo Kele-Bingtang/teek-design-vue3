@@ -93,8 +93,8 @@ const tabRemove = async (fullPath: TabPaneName) => {
 
     <transition :name="`${ns.elNamespace}-zoom-in-top`">
       <RightMenu
+        v-model="rightMenuVisible"
         :selected-tab="selectedTab"
-        :visible="rightMenuVisible"
         :left="rightMenuLeft"
         :top="rightMenuTop"
         :condition="contextMenuCondition"

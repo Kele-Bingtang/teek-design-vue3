@@ -155,6 +155,8 @@ export default {
   },
   _tabNav: {
     refresh: "Refresh Page",
+    fixed: "Fixed Current Tab",
+    unfixed: "Unfixed Current Tab",
     closeCurrent: "Close Current Tab",
     closeLeft: "Close Left Tab",
     closeRight: "Close Right Tab",

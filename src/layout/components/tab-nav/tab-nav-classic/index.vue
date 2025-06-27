@@ -37,6 +37,7 @@ const {
   isActive,
   tabsDrop,
   initAffixTabs,
+  getTabByPath,
   getTabByRoute,
   addTabByRoute,
   openRightMenu,
@@ -62,7 +63,7 @@ const findTargetTab = async () => {
       moveToTargetTab(tab.$el);
       // 当 query 不一样
       if (tab.to.path !== route.fullPath) {
-        const tabParam = getTabByRoute(route);
+        const tabParam = getTabByPath(route.meta._fullPath || route.path) || getTabByRoute(route);
         layoutStore.updateTab(tabParam);
       }
     }
@@ -170,7 +171,11 @@ const handleScroll = (offset: number) => {
           />
           <span class="dot" v-else-if="settingStore.showTabNavDot || !tab.meta.icon" />
           <span>{{ tab.title }}</span>
-          <Icon class="icon-close" v-if="tab.close" @click.prevent.stop="closeCurrentTab(tab)">
+          <Icon
+            class="icon-close"
+            v-if="tab.close && tabNavList.length !== 1"
+            @click.prevent.stop="closeCurrentTab(tab)"
+          >
             <Close />
           </Icon>
         </router-link>
@@ -187,8 +192,8 @@ const handleScroll = (offset: number) => {
 
     <transition :name="`${ns.elNamespace}-zoom-in-top`">
       <RightMenu
+        v-model="rightMenuVisible"
         :selected-tab="selectedTab"
-        :visible="rightMenuVisible"
         :left="rightMenuLeft"
         :top="rightMenuTop"
         :condition="contextMenuCondition"

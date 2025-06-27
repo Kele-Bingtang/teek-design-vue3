@@ -27,6 +27,9 @@ export const useLayoutStore = defineStore(
     const language = ref(SystemConfig.layoutConfig.language);
     const iframeList = ref<IFrame[]>([]);
 
+    const getTab = (path: string) => tabNavList.value.find(item => item.path === path);
+    const findTabIndex = (path: string) => tabNavList.value.findIndex(item => item.path === path);
+
     const addTab = async (tab: TabProp) => {
       const path = tab.path;
 
@@ -41,6 +44,37 @@ export const useLayoutStore = defineStore(
         index !== -1 && tabNavList.value.splice(index, 1);
       }
       tabNavList.value.push(tab);
+    };
+
+    const updateTab = (tab: TabProp) => {
+      for (let v of tabNavList.value) {
+        if (v.path === tab.path) {
+          v = Object.assign(v, tab);
+          break;
+        }
+      }
+    };
+
+    const toggleCloseTab = (path: string) => {
+      const targetTabIndex = findTabIndex(path);
+      if (targetTabIndex === undefined) return;
+
+      const tab = { ...tabNavList.value[targetTabIndex] };
+      tab.close = !tab.close;
+
+      // 移除原位置
+      tabNavList.value.splice(targetTabIndex, 1);
+
+      if (!tab.close) {
+        // 固定标签插入到所有固定标签的末尾
+        const firstNonFixedIndex = tabNavList.value.findIndex(t => t.close);
+        const insertIndex = firstNonFixedIndex === -1 ? tabNavList.value.length : firstNonFixedIndex;
+        tabNavList.value.splice(insertIndex, 0, tab);
+      } else {
+        // 非固定标签插入到所有固定标签后
+        const fixedCount = tabNavList.value.filter(t => !t.close).length;
+        tabNavList.value.splice(fixedCount, 0, tab);
+      }
     };
 
     const removeCurrentTab = async (tab: TabProp) => {
@@ -101,15 +135,6 @@ export const useLayoutStore = defineStore(
       iframeList.value = [];
     };
 
-    const updateTab = (tab: TabProp) => {
-      for (let v of tabNavList.value) {
-        if (v.path === tab.path) {
-          v = Object.assign(v, tab);
-          break;
-        }
-      }
-    };
-
     const addKeepAliveName = async (name: string) => {
       !keepAliveName.value.includes(name) && keepAliveName.value?.push(name);
     };
@@ -163,14 +188,16 @@ export const useLayoutStore = defineStore(
       language,
       iframeList,
 
+      getTab,
       addTab,
+      updateTab,
+      toggleCloseTab,
       removeCurrentTab,
       removeBatchTab,
       removeLeftTab,
       removeRightTab,
       removeOtherTabs,
       removeAllTabs,
-      updateTab,
       addKeepAliveName,
       removeKeepAliveName,
       setKeepAliveName,

@@ -1,57 +1,126 @@
 <script setup lang="ts">
 import type { TabProp } from "@/pinia";
-import { useTabNav, type ContextMenuCondition } from "../../use-tab-nav";
-import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, FolderDelete } from "@element-plus/icons-vue";
+import type { ContextMenuCondition } from "../../use-tab-nav";
+import { unref } from "vue";
+import { useI18n } from "vue-i18n";
+import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, CircleClose, Lock, Unlock } from "@element-plus/icons-vue";
+import { useEventListener } from "@vueuse/core";
 import { useNamespace } from "@/composables";
+import { useTabNav } from "../../use-tab-nav";
 
 defineOptions({ name: "RightMenu" });
 
 const ns = useNamespace("right-menu");
 
-const { refreshSelectedTab, closeCurrentTab, closeLeftTab, closeRightTab, closeOthersTabs, closeAllTabs } = useTabNav();
+const {
+  refreshSelectedTab,
+  toggleFixedTab,
+  closeCurrentTab,
+  closeLeftTab,
+  closeRightTab,
+  closeOthersTabs,
+  closeAllTabs,
+} = useTabNav();
 
 interface RightMenuProps {
   selectedTab: TabProp;
-  visible?: boolean;
   left?: number;
   top?: number;
-  condition?: ContextMenuCondition;
+  condition?: Partial<ContextMenuCondition>;
 }
 
-withDefaults(defineProps<RightMenuProps>(), {
-  visible: false,
+const props = withDefaults(defineProps<RightMenuProps>(), {
   left: 0,
   right: 0,
-  condition: () => ({ refresh: false, current: false, left: false, right: false, other: false, all: false }),
+  condition: () => ({}),
 });
+
+const visible = defineModel({ default: false });
+
+const { t } = useI18n();
+
+const rightMenuItem = [
+  {
+    label: t("_tabNav.refresh"),
+    icon: Refresh,
+    disabled: computed(() => !props.condition.refresh),
+    click: () => refreshSelectedTab(props.selectedTab),
+  },
+  {
+    label: computed(() => (props.selectedTab.close ? t("_tabNav.fixed") : t("_tabNav.unfixed"))),
+    icon: computed(() => (props.selectedTab.close ? Lock : Unlock)),
+    click: () => toggleFixedTab(props.selectedTab.path),
+  },
+  {
+    label: t("_tabNav.closeCurrent"),
+    icon: Close,
+    disabled: computed(() => !props.condition.current),
+    click: () => closeCurrentTab(props.selectedTab),
+    divided: true,
+  },
+  {
+    label: t("_tabNav.closeLeft"),
+    icon: ArrowLeft,
+    disabled: computed(() => !props.condition.left),
+    click: () => closeLeftTab(props.selectedTab),
+  },
+  {
+    label: t("_tabNav.closeRight"),
+    icon: ArrowRight,
+    disabled: computed(() => !props.condition.right),
+    click: () => closeRightTab(props.selectedTab),
+  },
+  {
+    label: t("_tabNav.closeOthers"),
+    icon: SemiSelect,
+    disabled: computed(() => !props.condition.other),
+    click: () => closeOthersTabs(props.selectedTab),
+  },
+  {
+    label: t("_tabNav.closeAll"),
+    icon: CircleClose,
+    disabled: computed(() => !props.condition.all),
+    click: () => closeAllTabs(),
+  },
+];
+
+const close = () => (visible.value = false);
+
+const handleClick = (item: (typeof rightMenuItem)[0]) => {
+  if (unref(item.disabled) ?? false) return;
+  item.click();
+  close();
+};
+
+const handleOutsideClick = (e: Event) => {
+  // 检查点击是否在菜单内部
+  const target = e.target as Element;
+  const menuElement = document.querySelector(`.${ns.b()}`);
+
+  if (menuElement && menuElement.contains(target)) return;
+
+  close();
+};
+
+// Escape 关闭右键菜单
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === "Escape") close();
+};
+
+useEventListener("click", handleOutsideClick);
+useEventListener("keydown", handleKeydown);
 </script>
 
 <template>
   <ul v-show="visible" :style="{ left: `${left}px`, top: `${top}px` }" :class="ns.b()">
-    <li v-if="condition.refresh" @click="refreshSelectedTab(selectedTab)">
-      <Icon class="right-menu-icon"><Refresh /></Icon>
-      {{ $t("_tabNav.refresh") }}
-    </li>
-    <li v-if="condition.current" @click="closeCurrentTab(selectedTab)">
-      <Icon class="right-menu-icon"><Close /></Icon>
-      {{ $t("_tabNav.closeCurrent") }}
-    </li>
-    <li v-if="condition.left" @click="closeLeftTab(selectedTab)">
-      <Icon class="right-menu-icon"><ArrowLeft /></Icon>
-      {{ $t("_tabNav.closeLeft") }}
-    </li>
-    <li v-if="condition.right" @click="closeRightTab(selectedTab)">
-      <Icon class="right-menu-icon"><ArrowRight /></Icon>
-      {{ $t("_tabNav.closeRight") }}
-    </li>
-    <li v-if="condition.other" @click="closeOthersTabs(selectedTab)">
-      <Icon class="right-menu-icon"><SemiSelect /></Icon>
-      {{ $t("_tabNav.closeOthers") }}
-    </li>
-    <li v-if="condition.all" @click="closeAllTabs()">
-      <Icon class="right-menu-icon"><FolderDelete /></Icon>
-      {{ $t("_tabNav.closeAll") }}
-    </li>
+    <template v-for="item in rightMenuItem" :key="unref(item.label)">
+      <li v-if="item.divided" class="divided" />
+
+      <li :class="[ns.e('item'), ns.is('disabled', unref(item.disabled) ?? false)]" @click="handleClick(item)">
+        <Icon class="right-menu-icon" :icon="unref(item.icon)" />
+        {{ item.label }}
+      </li>
+    </template>
   </ul>
 </template>
 

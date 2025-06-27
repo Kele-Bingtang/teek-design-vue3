@@ -156,6 +156,8 @@ export default {
   },
   _tabNav: {
     refresh: "刷新当前标签页",
+    fixed: "固定当前标签页",
+    unfixed: "取消固定标签页",
     closeCurrent: "关闭当前标签页",
     closeLeft: "关闭左侧标签页",
     closeRight: "关闭右侧标签页",

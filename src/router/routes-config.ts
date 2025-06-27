@@ -165,7 +165,6 @@ export const rolesRoutes: RouterConfigRaw[] = [
     meta: {
       title: "全屏工作台",
       icon: HomeFilled,
-      isAffix: true,
       isFull: true,
       useI18n: false,
     },

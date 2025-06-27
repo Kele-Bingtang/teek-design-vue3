@@ -3,31 +3,47 @@
 
 @include b(right-menu) {
   position: absolute;
-  z-index: 4000;
-  padding: 5px 0;
+  z-index: 9999;
+  padding: 5px;
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
-  color: #333333;
+  color: cssVar(text-gray-800);
   list-style-type: none;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 30%);
+  background: cssVar(main-bg-color);
+  border: 1px solid cssVarEl(border-color-light);
+  border-radius: 9px;
+  box-shadow: cssVar(box-shadow-xs);
 
-  li {
+  @include e(item) {
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    height: 32px;
+    padding: 0 7px;
     margin: 0;
-    line-height: 31px;
     cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    transition: background-color cssVarEl(transition-duration-fast);
 
-    &:hover {
-      color: cssVar(main-color);
+    &:hover:not(.is-disabled) {
+      color: cssVarEl(color-primary);
+      background-color: cssVarEl(color-primary-light-9);
+    }
+
+    @include is(disabled) {
+      color: cssVarEl(text-color-disabled);
+      cursor: not-allowed;
     }
 
     .right-menu-icon {
       margin-right: 8px;
+      font-size: 14px;
     }
+  }
+
+  .divided {
+    margin: 5px 0;
+    border-top: 1px solid var(--el-border-color-lighter);
   }
 }

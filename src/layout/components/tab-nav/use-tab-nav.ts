@@ -1,11 +1,10 @@
-import { useBoolean } from "@/composables";
 import beforeClose from "@/router/before-close";
 import { useLayoutStore, useRouteStore, type TabProp } from "@/pinia";
 import { getUrlParams, mittBus } from "@/common/utils";
 import Sortable from "sortablejs";
 import SystemConfig, { HOME_URL, RefreshIFrameKey, RefreshPageKey } from "@/common/config";
 import { useRoute, useRouter, type RouteLocationNormalizedLoaded } from "vue-router";
-import { inject, ref, reactive, nextTick, watchEffect } from "vue";
+import { inject, ref, reactive, nextTick } from "vue";
 import { formatTitle } from "@/router/helper";
 
 type ContextMenu = "refresh" | "current" | "left" | "right" | "other" | "all";
@@ -25,8 +24,7 @@ export const useTabNav = () => {
   const layoutStore = useLayoutStore();
   const routeStore = useRouteStore();
   const refreshCurrentPage = inject(RefreshPageKey, (value?: boolean) => value);
-
-  const { bool: rightMenuVisible, setFalse } = useBoolean(); // 右键菜单显示
+  const rightMenuVisible = ref(false);
 
   // 激活的 tab
   const selectedTab = ref<TabProp>({
@@ -84,7 +82,12 @@ export const useTabNav = () => {
   };
 
   /**
-   * 获取指定 route 的 tab
+   * 根据路径获取 tab
+   */
+  const getTabByPath = (path: string) => layoutStore.getTab(path);
+  const toggleFixedTab = (path: string) => layoutStore.toggleCloseTab(path);
+  /**
+   * 根据 route 获取 tab
    */
   const getTabByRoute = (route: RouteLocationNormalizedLoaded) => {
     return {
@@ -308,12 +311,6 @@ export const useTabNav = () => {
     path && router.push(path).catch(err => console.warn(err));
   };
 
-  watchEffect(() => {
-    // 关闭右侧菜单
-    if (rightMenuVisible.value) document.body.addEventListener("click", setFalse);
-    else document.body.removeEventListener("click", setFalse);
-  });
-
   return {
     tabNavList,
     selectedTab,
@@ -325,8 +322,10 @@ export const useTabNav = () => {
     isActive,
     tabsDrop,
     initAffixTabs,
+    getTabByPath,
     getTabByRoute,
     addTabByRoute,
+    toggleFixedTab,
     getRouteFullPath,
     openRightMenu,
     initContextMenu,
