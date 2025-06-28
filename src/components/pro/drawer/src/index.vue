@@ -69,9 +69,9 @@ defineExpose({ elDrawerInstance, handleConfirm, handleCancel, open, close });
               @click="toggleFullscreen"
               width="18px"
               height="18px"
-              :color="`var(--${ns.elNamespace}-color-info)`"
+              :color="ns.cssVarEl('color-info')"
               hover
-              :hover-color="`var(--${ns.elNamespace}-color-primary)`"
+              :hover-color="ns.cssVarEl('color-primary')"
               :style="{ cursor: 'pointer', userSelect: 'none', marginRight: '5px' }"
             />
           </slot>

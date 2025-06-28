@@ -13,7 +13,7 @@
       padding: 6px;
       border-radius: 8px;
       box-shadow: 0 2px 8px 0 cssVar(gray-400);
-      transition: box-shadow var(--#{$el-namespace}-transition-duration-fast);
+      transition: box-shadow cssVarEl(transition-duration-fast);
 
       &:hover {
         box-shadow: 0 2px 8px 0 cssVar(gray-600);
@@ -29,12 +29,12 @@
       }
 
       .light {
-        background-color: var(--#{$el-namespace}-color-primary-light-5);
+        background-color: cssVarEl(color-primary-light-5);
         border-radius: 3px;
       }
 
       .content {
-        background-color: var(--#{$el-namespace}-color-primary-light-8);
+        background-color: cssVarEl(color-primary-light-8);
         border: 1px dashed cssVar(main-color);
         border-radius: 3px;
       }
@@ -46,7 +46,7 @@
     top: 30px;
     right: 10px;
     color: cssVar(main-color);
-    transition: all var(--#{$el-namespace}-transition-duration-fast);
+    transition: all cssVarEl(transition-duration-fast);
   }
 
   @include m(name) {

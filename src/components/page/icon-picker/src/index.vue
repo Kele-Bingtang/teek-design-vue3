@@ -34,23 +34,21 @@ const modelValue = defineModel<string>();
 const size = computed(() => configGlobal?.size.value || "default");
 
 const iconSize = computed(() => {
-  const { elNamespace } = ns;
   return size.value === "small"
-    ? `var(--${elNamespace}-component-size-small)`
+    ? ns.cssVarEl("component-size-small")
     : size.value === "large"
-      ? `var(--${elNamespace}-component-size-large)`
-      : `var(--${elNamespace}-component-size)`;
+      ? ns.cssVarEl("component-size-large")
+      : ns.cssVarEl("component-size");
 });
 
 const iconWrapStyle = computed((): CSSProperties => {
-  const { elNamespace } = ns;
   return {
     width: iconSize.value,
     height: iconSize.value,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: `0 0 0 1px var(--${elNamespace}-input-border-color,var(--${elNamespace}-border-color)) inset`,
+    boxShadow: `0 0 0 1px var(${ns.cssVarNameEl("input-border-color")},${ns.cssVarEl("border-color")}) inset`,
     position: "relative",
     left: "-1px",
     cursor: "pointer",
@@ -141,16 +139,13 @@ const inputClear = () => {
                 :style="{
                   width: iconSize,
                   height: iconSize,
-                  border: `1px solid ${icon === modelValue ? `var(--${ns.elNamespace}-color-primary)` : `var(--${ns.elNamespace}-border-color)`}`,
+                  border: `1px solid ${icon === modelValue ? ns.cssVarEl('color-primary') : ns.cssVarEl('border-color')}`,
                 }"
                 :class="ns.e('icon')"
                 @click="iconSelect(icon)"
                 v-copy="tip ? modelValue : undefined"
               >
-                <Icon
-                  :icon="icon"
-                  :color="icon === modelValue ? `var(--${ns.elNamespace}-color-primary)` : 'inherit'"
-                />
+                <Icon :icon="icon" :color="icon === modelValue ? ns.cssVarEl('color-primary') : 'inherit'" />
               </div>
             </div>
           </ElTabPane>

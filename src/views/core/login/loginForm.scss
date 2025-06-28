@@ -24,7 +24,7 @@
       cursor: pointer;
 
       .svg-icon:hover {
-        color: var(--#{$el-namespace}-color-primary);
+        color: cssVarEl(color-primary);
       }
     }
 

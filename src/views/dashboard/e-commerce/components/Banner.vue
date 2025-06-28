@@ -18,7 +18,7 @@ const handleBannerClick = () => {};
     class="banner"
     height="13.3rem"
     :title="`欢迎回来 ${userInfo.username}`"
-    :backgroundColor="`var(--${ns.elNamespace}-color-primary-light-9)`"
+    :backgroundColor="ns.cssVarEl('color-primary-light-9')"
     :titleColor="ns.cssVar('gray-900')"
     :decoration="false"
     :meteorConfig="{

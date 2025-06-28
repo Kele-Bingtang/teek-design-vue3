@@ -5,13 +5,13 @@
   padding-top: 0 !important;
 
   @include el-joins(tabs__header) {
-    padding: var(--#{$el-namespace}-popover-padding);
+    padding: cssVarEl(popover-padding);
     margin-bottom: 0;
 
     @include el-joins(tabs__item) {
       padding: 0 15px;
       font-size: 13px;
-      transition: color var(--#{$el-namespace}-transition-duration);
+      transition: color cssVarEl(transition-duration);
 
       &:hover {
         color: cssVar(gray-900);
@@ -28,10 +28,10 @@
     margin: 0;
 
     li {
-      padding: var(--#{$el-namespace}-popover-padding);
+      padding: cssVarEl(popover-padding);
       cursor: pointer;
       border-radius: 6px;
-      transition: background-color var(--#{$el-namespace}-transition-duration);
+      transition: background-color cssVarEl(transition-duration);
 
       &:hover {
         background-color: rgb(cssVar(gray-200-rgb), 0.7);

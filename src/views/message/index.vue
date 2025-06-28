@@ -220,11 +220,11 @@ const handleOperate = (message: MessageItem) => {
             display: block;
             width: 2px;
             content: "";
-            background: var(--#{$el-namespace}-color-primary);
+            background: cssVarEl(color-primary);
           }
 
           .list-dot {
-            background-color: var(--#{$el-namespace}-color-primary) !important;
+            background-color: cssVarEl(color-primary) !important;
           }
         }
       }
@@ -294,7 +294,7 @@ const handleOperate = (message: MessageItem) => {
         color: #909399;
 
         &:hover {
-          color: var(--#{$el-namespace}-color-primary);
+          color: cssVarEl(color-primary);
         }
       }
 

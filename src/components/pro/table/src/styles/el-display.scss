@@ -4,9 +4,9 @@
   text-decoration: none;
   cursor: pointer;
   outline: none;
-  transition: color var(--#{$el-namespace}-transition-duration-fast);
+  transition: color cssVarEl(transition-duration-fast);
 
   &:hover {
-    color: var(--#{$el-namespace}-color-primary);
+    color: cssVarEl(color-primary);
   }
 }

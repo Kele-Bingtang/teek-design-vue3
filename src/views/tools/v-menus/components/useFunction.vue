@@ -20,8 +20,8 @@ const rightClick = (event: MouseEvent) => {
   justify-content: center;
   width: 300px;
   height: 200px;
-  background-color: var(--#{$el-namespace}-color-primary-light-9);
-  border: 3px dashed var(--#{$el-namespace}-color-primary);
+  background-color: cssVarEl(color-primary-light-9);
+  border: 3px dashed cssVarEl(color-primary);
   border-radius: 8px;
 }
 </style>

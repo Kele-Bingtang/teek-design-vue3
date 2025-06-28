@@ -145,7 +145,7 @@ const addAnimation = () => {
   }
 
   .el-radio-button__original-radio:checked + .el-radio-button__inner {
-    color: var(--#{$el-namespace}-color-primary) !important;
+    color: cssVarEl(color-primary) !important;
     background: transparent !important;
   }
 }

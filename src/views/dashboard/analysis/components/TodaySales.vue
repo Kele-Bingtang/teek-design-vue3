@@ -117,9 +117,9 @@ const salesData = ref([
         height: 48px;
         font-size: 20px;
         line-height: 48px;
-        color: var(--#{$el-namespace}-color-primary);
+        color: cssVarEl(color-primary);
         text-align: center;
-        background-color: var(--#{$el-namespace}-color-primary-light-9);
+        background-color: cssVarEl(color-primary-light-9);
         border-radius: 10px;
       }
 

@@ -21,11 +21,11 @@ export const useWatchCssVar = () => {
   watchEffect(() => {
     const headerBg = ns.cssVarName("layout-header-bg-color");
     const tabBg = ns.cssVarName("layout-tab-bg-color");
-    const bgStyle = `var(--${ns.namespace}-main-bg-color)`;
+    const bgStyle = ns.cssVar("main-bg-color");
 
     const headerLine = ns.cssVarName("layout-header-line");
     const tabLine = ns.cssVarName("layout-tab-line");
-    const borderStyle = `1px solid var(--${ns.namespace}-card-border-color-primary)`;
+    const borderStyle = `1px solid ${ns.cssVar("card-border-color-primary")}`;
 
     if (headerStyle.value === HeaderStyleEnum.Page) return removeCssVar([headerBg, tabBg, headerLine, tabLine]);
 

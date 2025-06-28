@@ -11,7 +11,7 @@
     margin: 0 0 15px;
     font-size: 18px;
     font-weight: bold;
-    color: var(--#{$el-namespace}-color-info-dark-2);
+    color: cssVarEl(color-info-dark-2);
     letter-spacing: 0.5px;
   }
 
@@ -33,7 +33,7 @@
       @include el-joins(tree-node) {
         &.is-current {
           @include el-joins(tree-node__content) {
-            background-color: var(--#{$el-namespace}-color-primary);
+            background-color: cssVarEl(color-primary);
 
             @include el-joins(tree-node__label, tree-node__expand-icon) {
               color: #ffffff;

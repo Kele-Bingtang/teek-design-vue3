@@ -66,8 +66,8 @@ const { isMobile } = useCommon();
       height: 100%;
       cursor: pointer;
       transition:
-        width var(--#{$el-namespace}-transition-duration),
-        background-color var(--#{$el-namespace}-transition-duration);
+        width cssVarEl(transition-duration),
+        background-color cssVarEl(transition-duration);
 
       &:hover {
         background-color: cssVar(gray-200);

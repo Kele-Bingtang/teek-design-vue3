@@ -7,7 +7,7 @@ tbody {
     @include is(cell-edit) {
       .cell:not(:has(.el-form-item)) {
         cursor: pointer;
-        transition: box-shadow var(--#{$el-namespace}-transition-duration-fast);
+        transition: box-shadow cssVarEl(transition-duration-fast);
 
         &:hover {
           margin-right: 0.6px;

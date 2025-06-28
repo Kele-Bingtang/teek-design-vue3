@@ -33,10 +33,10 @@
     box-sizing: border-box;
     display: inline-block;
     min-width: 80px;
-    height: var(--#{$el-namespace}-component-height);
+    height: cssVarEl(component-height);
     padding: 0 12px;
     font-size: 14px;
-    line-height: var(--#{$el-namespace}-component-height);
+    line-height: cssVarEl(component-height);
     text-align: center;
     cursor: pointer;
     user-select: none;

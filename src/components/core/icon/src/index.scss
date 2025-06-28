@@ -12,7 +12,7 @@
   line-height: 1em;
   color: var(--icon-color, inherit);
   fill: var(--icon-color, currentColor);
-  transition: color var(--#{$el-namespace}-transition-duration);
+  transition: color cssVarEl(transition-duration);
 
   svg {
     width: var(--icon-size, 1em);

@@ -132,7 +132,7 @@ const getColor = (customColor?: string, index?: number) => {
   if (customColor) return customColor;
   if (index !== undefined) return props.colors![index % props.colors!.length];
 
-  return getCssVar(`--${ns.elNamespace}-color-primary`);
+  return getCssVar(ns.cssVarNameEl("color-primary"));
 };
 
 // 生成区域样式

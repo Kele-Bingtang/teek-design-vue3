@@ -83,8 +83,8 @@ const activities: Recordable[] = [
   line-height: 18px;
   color: #ffffff;
   word-break: break-all;
-  background-color: var(--#{$el-namespace}-color-primary);
-  border-color: var(--#{$el-namespace}-color-primary);
+  background-color: cssVarEl(color-primary);
+  border-color: cssVarEl(color-primary);
   border-radius: 6px;
 }
 
@@ -96,7 +96,7 @@ const activities: Recordable[] = [
   height: 0;
   overflow: hidden;
   content: "";
-  border-color: var(--#{$el-namespace}-color-primary) transparent transparent;
+  border-color: cssVarEl(color-primary) transparent transparent;
   border-style: solid dashed dashed;
   border-width: 10px;
 }

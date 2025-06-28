@@ -172,7 +172,7 @@ const resetPass = async (params: ResUserList) => {
       <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)">删除</el-button>
     </template>
     <template #append>
-      <span :style="`color: var(--${ns.elNamespace}-color-primary)`">
+      <span :style="{ color: ns.cssVarEl('color-primary') }">
         我是插入在表格最后的内容。若表格有合计行，该内容会位于合计行之上。
       </span>
     </template>
@@ -183,12 +183,12 @@ const resetPass = async (params: ResUserList) => {
 .#{$el-namespace}-table .warning-row,
 .#{$el-namespace}-table .warning-row .#{$el-namespace}-table-fixed-column--right,
 .#{$el-namespace}-table .warning-row .#{$el-namespace}-table-fixed-column--left {
-  background-color: var(--#{$el-namespace}-color-warning-light-9);
+  background-color: cssVarEl(color-warning-light-9);
 }
 
 .#{$el-namespace}-table .success-row,
 .#{$el-namespace}-table .success-row .#{$el-namespace}-table-fixed-column--right,
 .#{$el-namespace}-table .success-row .#{$el-namespace}-table-fixed-column--left {
-  background-color: var(--#{$el-namespace}-color-success-light-9);
+  background-color: cssVarEl(color-success-light-9);
 }
 </style>

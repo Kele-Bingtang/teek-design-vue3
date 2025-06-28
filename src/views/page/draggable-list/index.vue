@@ -38,7 +38,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
             </el-card>
           </template>
           <template #leftIcon>
-            <el-icon :style="`color: var(--${ns.elNamespace}-color-primary)`"><ArrowRight /></el-icon>
+            <el-icon :style="{ color: ns.cssVarEl('color-primary') }"><ArrowRight /></el-icon>
           </template>
 
           <template #rightTitle>
@@ -50,7 +50,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
             </el-card>
           </template>
           <template #rightIcon>
-            <el-icon :style="`color: var(--${ns.elNamespace}-color-primary)`"><ArrowLeft /></el-icon>
+            <el-icon :style="{ color: ns.cssVarEl('color-primary') }"><ArrowLeft /></el-icon>
           </template>
         </DraggableList>
       </div>

@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<BannerCardProps>(), {
   subtitle: "",
   titleColor: "#ffffff",
   subtitleColor: "#ffffff",
-  backgroundColor: `var(--${useNamespace().elNamespace}-color-primary-light-3)`,
+  backgroundColor: useNamespace().cssVarEl("color-primary-light-3"),
   decoration: true,
   buttonConfig: () => ({
     show: true,

@@ -26,7 +26,7 @@ export const useFlicker = (attrs?: attrsType): Component => {
           style: {
             "--point-width": attrs?.width ?? "12px",
             "--point-height": attrs?.height ?? "12px",
-            "--point-background": attrs?.background ?? `var(--${ns.elNamespace}-color-primary)`,
+            "--point-background": attrs?.background ?? ns.cssVarEl("color-primary"),
             "--point-border-radius": attrs?.borderRadius ?? "50%",
             "--point-scale": attrs?.scale ?? "2",
           },

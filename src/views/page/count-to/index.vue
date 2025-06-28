@@ -398,14 +398,14 @@ const reset = () => {
     margin-bottom: 20px;
     font-size: 80px;
     font-weight: 500;
-    color: var(--#{$el-namespace}-color-primary);
+    color: cssVarEl(color-primary);
     text-align: center;
   }
 
   :deep(.count-text),
   :deep(.unit-class) {
     font-size: 50px;
-    color: var(--#{$el-namespace}-color-primary);
+    color: cssVarEl(color-primary);
   }
 }
 </style>

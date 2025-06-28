@@ -47,10 +47,10 @@
 
     @include m(button) {
       display: inline-block;
-      height: var(--#{$el-namespace}-component-height);
+      height: cssVarEl(component-height);
       padding: 0 12px;
       font-size: 14px;
-      line-height: var(--#{$el-namespace}-component-height);
+      line-height: cssVarEl(component-height);
       cursor: pointer;
       user-select: none;
       border-radius: 6px;

@@ -191,7 +191,7 @@ const langOptions = [
 
         <el-alert :closable="false">
           如果需要开启编辑功能，则传入 `
-          <span :style="`color: var(--${ns.elNamespace}-color-primary)`">enabled: ['a', 'b']</span>
+          <span :style="{ color: ns.cssVarEl('color-primary') }">enabled: ['a', 'b']</span>
           ，代表 a、b 编辑器开启编辑功能，传入 a 则 a 开启编辑功能
         </el-alert>
       </el-space>

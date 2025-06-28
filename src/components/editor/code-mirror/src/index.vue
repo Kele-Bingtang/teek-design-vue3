@@ -663,7 +663,7 @@ const defaultPhrases = {
 
   :deep(.cm-editor.cm-focused) {
     outline: none;
-    box-shadow: 0 0 0 1px var(--#{$el-namespace}-color-primary);
+    box-shadow: 0 0 0 1px cssVarEl(color-primary);
   }
 
   /* a 编辑器高亮行背景色 */

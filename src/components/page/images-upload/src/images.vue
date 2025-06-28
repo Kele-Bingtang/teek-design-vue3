@@ -209,10 +209,10 @@ $prefix-class: #{$admin-namespace}-images-upload;
   .upload {
     :deep(.#{$el-namespace}-upload--picture-card),
     :deep(.#{$el-namespace}-upload-dragger) {
-      border: 1px dashed var(--#{$el-namespace}-color-danger) !important;
+      border: 1px dashed cssVarEl(color-danger) !important;
 
       &:hover {
-        border-color: var(--#{$el-namespace}-color-primary) !important;
+        border-color: cssVarEl(color-primary) !important;
       }
     }
   }
@@ -222,11 +222,11 @@ $prefix-class: #{$admin-namespace}-images-upload;
   .#{$el-namespace}-upload--picture-card,
   .#{$el-namespace}-upload-dragger {
     cursor: not-allowed;
-    background: var(--#{$el-namespace}-disabled-bg-color) !important;
-    border: 1px dashed var(--#{$el-namespace}-border-color-darker);
+    background: cssVarEl(disabled-bg-color) !important;
+    border: 1px dashed cssVarEl(border-color-darker);
 
     &:hover {
-      border-color: var(--#{$el-namespace}-border-color-darker) !important;
+      border-color: cssVarEl(border-color-darker) !important;
     }
   }
 }
@@ -247,17 +247,17 @@ $prefix-class: #{$admin-namespace}-images-upload;
       height: 100%;
       padding: 0;
       overflow: hidden;
-      border: 1px dashed var(--#{$el-namespace}-border-color-darker);
+      border: 1px dashed cssVarEl(border-color-darker);
       border-radius: v-bind(borderRadius);
 
       &:hover {
-        border: 1px dashed var(--#{$el-namespace}-color-primary);
+        border: 1px dashed cssVarEl(color-primary);
       }
     }
 
     .#{$el-namespace}-upload-dragger.is-dragover {
-      background-color: var(--#{$el-namespace}-color-primary-light-9);
-      border: 2px dashed var(--#{$el-namespace}-color-primary) !important;
+      background-color: cssVarEl(color-primary-light-9);
+      border: 2px dashed cssVarEl(color-primary) !important;
     }
 
     .#{$el-namespace}-upload-list__item,
@@ -287,7 +287,7 @@ $prefix-class: #{$admin-namespace}-images-upload;
       cursor: pointer;
       background: rgb(0 0 0 / 60%);
       opacity: 0;
-      transition: var(--#{$el-namespace}-transition-duration-fast);
+      transition: cssVarEl(transition-duration-fast);
 
       &--icon {
         display: flex;
@@ -322,11 +322,11 @@ $prefix-class: #{$admin-namespace}-images-upload;
       align-items: center;
       font-size: 12px;
       line-height: 30px;
-      color: var(--#{$el-namespace}-color-info);
+      color: cssVarEl(color-info);
 
       .#{$el-namespace}-icon {
         font-size: 28px;
-        color: var(--#{$el-namespace}-text-color-secondary);
+        color: cssVarEl(text-color-secondary);
       }
     }
   }

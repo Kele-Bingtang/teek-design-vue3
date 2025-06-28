@@ -49,7 +49,7 @@ $prefix-class: #{$admin-namespace}-pro-table;
         height: 45px;
         font-size: 15px;
         font-weight: bold;
-        color: var(--#{$el-namespace}-text-color-primary);
+        color: cssVarEl(text-color-primary);
 
         // 表头背景色
         background: #e6eaef;

@@ -85,7 +85,7 @@ export const useHeaderFilter = (column: TableColumnProps) => {
             <ElIcon
               style="vertical-align: -2px; margin-left: 2px; cursor: pointer;"
               class="theme-color-hover"
-              color={!propIsEmpty() ? `var(--${ns.elNamespace}-color-primary)` : "inherit"}
+              color={!propIsEmpty() ? ns.cssVarEl("color-primary") : "inherit"}
               onClick={withModifiers(() => {}, ["stop"])}
             >
               <Filter />

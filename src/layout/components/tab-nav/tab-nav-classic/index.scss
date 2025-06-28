@@ -24,7 +24,7 @@ $btn-width: 28px;
         color: cssVar(main-color);
 
         .dot {
-          background-color: var(--#{$el-namespace}-color-primary-light-3);
+          background-color: cssVarEl(color-primary-light-3);
         }
       }
     }
@@ -61,7 +61,7 @@ $btn-width: 28px;
     left: $btn-width;
     padding-top: $tab-padding-top;
     white-space: nowrap;
-    transition: left var(--#{$el-namespace}-transition-duration) ease;
+    transition: left cssVarEl(transition-duration) ease;
   }
 
   @include e(tab) {
@@ -82,7 +82,7 @@ $btn-width: 28px;
       color: cssVar(main-color);
 
       .dot {
-        background-color: var(--#{$el-namespace}-color-primary-light-3);
+        background-color: cssVarEl(color-primary-light-3);
       }
     }
 
@@ -92,7 +92,7 @@ $btn-width: 28px;
       margin-right: 7px;
       background-color: cssVar(gray-300);
       border-radius: 50%;
-      transition: background var(--#{$el-namespace}-transition-duration) ease;
+      transition: background cssVarEl(transition-duration) ease;
     }
 
     .icon-close {
@@ -101,7 +101,7 @@ $btn-width: 28px;
       margin-left: 5px;
       cursor: pointer;
       border-radius: 50%;
-      transition: all var(--#{$el-namespace}-transition-duration) cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: all cssVarEl(transition-duration) cubic-bezier(0.645, 0.045, 0.355, 1);
     }
 
     @include m(icon) {

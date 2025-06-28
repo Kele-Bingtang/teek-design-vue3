@@ -166,7 +166,7 @@ const switchRole = computed({
     padding: 8px 16px;
     margin-top: 15px;
     color: #ecf5ff;
-    background-color: var(--#{$el-namespace}-color-primary);
+    background-color: cssVarEl(color-primary);
     border-radius: 4px;
   }
 

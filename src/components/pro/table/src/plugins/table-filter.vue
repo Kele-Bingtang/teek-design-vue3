@@ -67,7 +67,7 @@ const handleReset = () => {
           :style="{
             [ns.cssVarName('pro-table-filter-icon-color')]: isEmpty(getProp(model, prop))
               ? 'inherit'
-              : `var(--${ns.elNamespace}-color-primary)`,
+              : ns.cssVarEl('color-primary'),
           }"
         >
           <el-icon><Filter /></el-icon>

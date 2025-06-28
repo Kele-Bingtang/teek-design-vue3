@@ -90,7 +90,7 @@
 
       @include is(highlighted) {
         color: #ffffff;
-        background-color: var(--#{$el-namespace}-color-primary-light-3);
+        background-color: cssVarEl(color-primary-light-3);
       }
 
       .selected-icon {
@@ -128,7 +128,7 @@
 
     @include is(highlighted) {
       color: #ffffff;
-      background-color: var(--#{$el-namespace}-color-primary-light-3);
+      background-color: cssVarEl(color-primary-light-3);
 
       .selected-icon {
         color: #ffffff;

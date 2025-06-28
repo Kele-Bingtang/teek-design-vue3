@@ -91,11 +91,7 @@ const demoRules = {
             <span>悬停文本</span>
           </template>
           <div class="component-item">
-            <TextHoverEffect
-              init-color="#4dd9d5"
-              :hover-color="`var(--${ns.elNamespace}-color-primary)`"
-              text="Teek Design Pro"
-            />
+            <TextHoverEffect init-color="#4dd9d5" :hover-color="ns.cssVarEl('color-primary')" text="Teek Design Pro" />
           </div>
         </el-card>
       </el-col>

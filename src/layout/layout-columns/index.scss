@@ -40,7 +40,7 @@
       flex-direction: column;
       height: cssVar(columns-layout-aside-item-height);
       cursor: pointer;
-      transition: all var(--#{$el-namespace}-transition-duration) ease;
+      transition: all cssVarEl(transition-duration) ease;
 
       &:hover {
         background-color: cssVar(layout-aside-bg-hover-color);
@@ -63,10 +63,10 @@
         background-color: cssVar(layout-aside-bg-active-color);
 
         .title {
-          color: var(--#{$el-namespace}-menu-active-color);
+          color: cssVarEl(menu-active-color);
         }
         :where(.#{$el-namespace}-icon, .svg-icon) {
-          color: var(--#{$el-namespace}-menu-active-color);
+          color: cssVarEl(menu-active-color);
         }
       }
     }

@@ -139,9 +139,9 @@ export const showDialog = (
                   <Icon
                     icon={isFullscreen.value ? "core-fullscreen-exit" : "core-fullscreen"}
                     size="15px"
-                    color={`var(--${ns.elNamespace}-color-info)`}
+                    color={ns.cssVarEl("color-info")}
                     hover
-                    hover-color={`var(--${ns.elNamespace}-color-primary)`}
+                    hover-color={ns.cssVarEl("color-primary")}
                     style={{ cursor: "pointer", userSelect: "none" }}
                     {...{ onClick: () => toggleFullscreen() }}
                   />

@@ -87,9 +87,9 @@ const dataList = reactive([
       overflow: hidden;
       font-size: 22px;
       line-height: $icon-size;
-      color: var(--#{$el-namespace}-color-primary) !important;
+      color: cssVarEl(color-primary) !important;
       text-align: center;
-      background-color: var(--#{$el-namespace}-color-primary-light-9);
+      background-color: cssVarEl(color-primary-light-9);
       border-radius: 12px;
     }
 
@@ -125,11 +125,11 @@ const dataList = reactive([
         font-weight: bold;
 
         &.text-success {
-          color: var(--#{$el-namespace}-color-success);
+          color: cssVarEl(color-success);
         }
 
         &.text-danger {
-          color: var(--#{$el-namespace}-color-danger);
+          color: cssVarEl(color-danger);
         }
       }
     }

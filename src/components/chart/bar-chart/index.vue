@@ -51,8 +51,8 @@ const getColor = (customColor?: string, index?: number) => {
 
   // 默认渐变色
   return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-    { offset: 0, color: getCssVar(`--${ns.elNamespace}-color-primary-light-9`) },
-    { offset: 1, color: getCssVar(`--${ns.elNamespace}-color-primary`) },
+    { offset: 0, color: getCssVar(ns.cssVarNameEl("color-primary-light-9")) },
+    { offset: 1, color: getCssVar(ns.cssVarNameEl("color-primary")) },
   ]);
 };
 

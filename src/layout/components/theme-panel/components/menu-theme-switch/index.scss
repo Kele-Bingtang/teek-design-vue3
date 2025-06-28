@@ -12,7 +12,7 @@
     height: 55px;
     border-radius: 8px;
     box-shadow: 0 2px 8px 0 cssVar(gray-400);
-    transition: box-shadow var(--#{$el-namespace}-transition-duration-fast);
+    transition: box-shadow cssVarEl(transition-duration-fast);
 
     &:hover {
       box-shadow: 0 2px 8px 0 cssVar(gray-600);
@@ -34,7 +34,7 @@
     top: 30px;
     right: 10px;
     color: cssVar(main-color);
-    transition: all var(--#{$el-namespace}-transition-duration-fast);
+    transition: all cssVarEl(transition-duration-fast);
   }
 
   @include m(name) {

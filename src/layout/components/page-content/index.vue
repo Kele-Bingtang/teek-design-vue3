@@ -83,10 +83,11 @@ const isFixTabNav = computed(() => {
 
 <style lang="scss" scoped>
 @use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include el-joins(main) {
   padding: 0;
-  background-color: var(--#{$admin-namespace}-bg-color);
+  background-color: cssVar(bg-color);
 
   .page-content {
     flex: 1;
@@ -94,7 +95,7 @@ const isFixTabNav = computed(() => {
     overflow: v-bind(isFixTabNav);
 
     // max-height: calc(
-    //   100vh - var(--#{$admin-namespace}-layout-header-height) - var(--#{$admin-namespace}-layout-tab-height)
+    //   100vh - cssVar(layout-header-height) - cssVar(layout-tab-height)
     // );
   }
 }

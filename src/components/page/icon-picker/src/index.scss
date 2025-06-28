@@ -23,7 +23,7 @@
       transition: all 0.3s ease 0s;
 
       &:hover {
-        border-color: var(--#{$el-namespace}-color-primary) !important;
+        border-color: cssVarEl(color-primary) !important;
       }
     }
   }
@@ -35,7 +35,7 @@
     display: flex;
     align-items: center;
     height: 50px;
-    padding-right: var(--#{$el-namespace}-popover-padding);
-    padding-left: var(--#{$el-namespace}-popover-padding);
+    padding-right: cssVarEl(popover-padding);
+    padding-left: cssVarEl(popover-padding);
   }
 }

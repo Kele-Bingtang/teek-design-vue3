@@ -203,11 +203,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
               @click="confirmEdit(row)"
             ></el-button>
           </template>
-          <span
-            v-else
-            :style="`color: var(--${ns.elNamespace}-color-primary); cursor: pointer`"
-            @click="handleEdit(row)"
-          >
+          <span v-else :style="{ color: ns.cssVarEl('color-primary'), cursor: 'pointer' }" @click="handleEdit(row)">
             {{ row.title }}
           </span>
         </template>

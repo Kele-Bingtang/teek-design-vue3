@@ -154,7 +154,7 @@ onUnmounted(() => {
   @include is(show, false) {
     :deep(.#{$el-namespace}-autocomplete) {
       width: 0;
-      transition: width var(--#{$el-namespace}-transition-duration);
+      transition: width cssVarEl(transition-duration);
 
       @include el-joins(input__wrapper) {
         width: 0;

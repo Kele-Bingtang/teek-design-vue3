@@ -18,7 +18,7 @@ const handleClick = (key: string) => {
         <el-descriptions-item label="tag">文本标签。`string` 类型，默认为 `span`</el-descriptions-item>
         <el-descriptions-item label="keys">高亮的关键词。`string[]` 类型，默认为 `[]`</el-descriptions-item>
         <el-descriptions-item label="color">
-          高亮关键词的颜色。`string` 类型，默认 `var(--#{$el-namespace}-color-primary)`
+          高亮关键词的颜色。`string` 类型，默认 `cssVarEl(color-primary)`
         </el-descriptions-item>
       </el-descriptions>
     </el-card>

@@ -207,7 +207,7 @@ defineExpose({
 /* 富文本组件校验失败样式 */
 .is-error {
   @include b(wang-editor) {
-    border-color: var(--#{$el-namespace}-color-danger);
+    border-color: cssVarEl(color-danger);
   }
 }
 

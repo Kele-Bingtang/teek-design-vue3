@@ -45,7 +45,7 @@ const printEvent = (e: Event) => {
         </el-link>
         <el-alert :closable="false">
           可以去代码编辑器（该菜单上方），它是利用 CodeMirror 实现代码对比功能，比 `v-code-diff` 多了
-          <span :style="`color: var(--${ns.elNamespace}-color-primary)`">代码替换功能</span>
+          <span :style="{ color: ns.cssVarEl('color-primary') }">代码替换功能</span>
           ，但是少了部分功能，如统计信息、更细节对比、空格去除等功能
         </el-alert>
       </template>

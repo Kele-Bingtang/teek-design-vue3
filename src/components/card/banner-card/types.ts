@@ -10,7 +10,7 @@ export interface BannerCardProps {
   titleColor?: string;
   /** 副标题颜色，默认 #ffffff */
   subtitleColor?: string;
-  /** 背景颜色，默认 var(--${useNamespace().elNamespace}-color-primary-light-3) */
+  /** 背景颜色，默认 var("el-color-primary-light-3") */
   backgroundColor?: string;
   /** 是否显示装饰效果，默认 true */
   decoration?: boolean;

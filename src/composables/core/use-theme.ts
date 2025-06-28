@@ -52,7 +52,7 @@ export const useTheme = () => {
     // 颜色加深或变浅
     for (let i = 1; i <= 9; i++) {
       setCssVar(
-        `--${ns.elNamespace}-color-primary-light-${i}`,
+        ns.cssVarNameEl(`color-primary-light-${i}`),
         isDark.value
           ? `${getDarkColor(settingStore.primaryColor, i / 10)}`
           : `${getLightColor(settingStore.primaryColor, i / 10)}`
@@ -74,23 +74,23 @@ export const useTheme = () => {
     if (color !== settingStore.primaryColor) settingStore.$patch({ primaryColor: color });
 
     // 兼容暗黑模式，自动计算主题颜色由深到浅的其他颜色
-    setCssVar(`--${ns.elNamespace}-color-primary`, color);
+    setCssVar(ns.cssVarNameEl(`color-primary`), color);
 
     // 颜色加深或变浅
     for (let i = 1; i <= 9; i++) {
       setCssVar(
-        `--${ns.elNamespace}-color-primary-light-${i}`,
+        ns.cssVarNameEl(`color-primary-light-${i}`),
         settingStore.isDark ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`
       );
     }
     for (let i = 1; i <= 9; i++) {
-      setCssVar(`--${ns.elNamespace}-color-primary-dark-${i}`, `${getDarkColor(color, i / 10)}`);
+      setCssVar(ns.cssVarNameEl(`color-primary-dark-${i}`), `${getDarkColor(color, i / 10)}`);
     }
 
     // 生成更淡的颜色
     for (let i = 1; i < 16; i++) {
       const itemColor = colorBlend(color, "#ffffff", i / 16);
-      setCssVar(`--${ns.elNamespace}-color-primary-lighter-${i}`, itemColor);
+      setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor);
     }
   };
 

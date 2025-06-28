@@ -98,8 +98,8 @@ const handleResize = (event: any) => {
     position: relative;
     width: 500px;
     height: 400px;
-    background: var(--#{$el-namespace}-color-primary);
-    border: 1px solid var(--#{$el-namespace}-color-primary);
+    background: cssVarEl(color-primary);
+    border: 1px solid cssVarEl(color-primary);
 
     :deep(.#{$el-namespace}-overlay) {
       position: absolute;

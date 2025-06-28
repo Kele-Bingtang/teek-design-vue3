@@ -52,7 +52,7 @@
 
     @include m(code) {
       font-size: 0.9em;
-      color: var(--#{$el-namespace}-color-primary);
+      color: cssVarEl(color-primary);
     }
   }
 }

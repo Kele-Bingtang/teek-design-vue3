@@ -479,7 +479,7 @@ onMounted(() => {
 
       &:hover,
       &.active {
-        background-color: var(--#{$el-namespace}-fill-color-light);
+        background-color: cssVarEl(fill-color-light);
       }
 
       .avatar-wrapper {
@@ -492,11 +492,11 @@ onMounted(() => {
           bottom: 1px;
           width: 9px;
           height: 9px;
-          background-color: var(--#{$el-namespace}-color-error);
+          background-color: cssVarEl(color-error);
           border-radius: 50%;
 
           &.online {
-            background-color: var(--#{$el-namespace}-color-success);
+            background-color: cssVarEl(color-success);
           }
         }
       }
@@ -514,12 +514,12 @@ onMounted(() => {
           .person-name {
             font-size: 14px;
             font-weight: 500;
-            color: var(--#{$el-namespace}-text-color-primary);
+            color: cssVarEl(text-color-primary);
           }
 
           .last-time {
             font-size: 12px;
-            color: var(--#{$el-namespace}-text-color-secondary);
+            color: cssVarEl(text-color-secondary);
           }
         }
 
@@ -532,7 +532,7 @@ onMounted(() => {
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 12px;
-            color: var(--#{$el-namespace}-text-color-secondary);
+            color: cssVarEl(text-color-secondary);
             white-space: nowrap;
           }
 
@@ -577,11 +577,11 @@ onMounted(() => {
           border-radius: 50%;
 
           &.online {
-            background-color: var(--#{$el-namespace}-color-success);
+            background-color: cssVarEl(color-success);
           }
 
           &.offline {
-            background-color: var(--#{$el-namespace}-color-danger);
+            background-color: cssVarEl(color-danger);
           }
         }
 
@@ -627,7 +627,7 @@ onMounted(() => {
       flex: 1;
       padding: 30px 16px;
       overflow-y: auto;
-      border-top: 1px solid var(--#{$el-namespace}-border-color-lighter);
+      border-top: 1px solid cssVarEl(border-color-lighter);
 
       &::-webkit-scrollbar {
         width: 5px !important;
@@ -696,7 +696,7 @@ onMounted(() => {
             font-size: 12px;
 
             .message-time {
-              color: var(--#{$el-namespace}-text-color-secondary);
+              color: cssVarEl(text-color-secondary);
             }
 
             .sender-name {

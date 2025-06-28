@@ -229,7 +229,7 @@ const disabledClick = () => {
     <canvas v-if="props.tag === 'canvas'" ref="ImgInstance" @click="clickCode"></canvas>
     <img v-else ref="ImgInstance" @click="clickCode" />
     <div v-if="props.disabled" :class="ns.m('disabled')" @click="disabledClick">
-      <div :class="ns.e('icon')" :color="`var(--${ns.elNamespace}-color-primary)`">
+      <div :class="ns.e('icon')" :color="ns.cssVarEl('color-primary')">
         <el-icon style="cursor: pointer" :size="30"><RefreshRight /></el-icon>
         <div>{{ props.disabledText }}</div>
       </div>

@@ -18,10 +18,10 @@ export const useChartOps = (): ChartThemeConfig => {
     /** 字体颜色 */
     fontColor: "#999",
     /** 主题颜色 */
-    themeColor: getCssVar(`--${ns.elNamespace}-color-primary-light-1`),
+    themeColor: getCssVar(ns.cssVarNameEl("color-primary-light-1")),
     /** 颜色组 */
     colors: [
-      getCssVar(`--${ns.elNamespace}-color-primary-light-1`),
+      getCssVar(ns.cssVarNameEl("color-primary-light-1")),
       "#4ABEFF",
       "#EDF2FF",
       "#14DEBA",

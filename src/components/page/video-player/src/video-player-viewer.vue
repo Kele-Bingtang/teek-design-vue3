@@ -71,7 +71,7 @@ const close = async () => {
     height: 44px;
     color: #ffffff;
     cursor: pointer;
-    background: var(--#{$el-namespace}-text-color-regular);
+    background: cssVarEl(text-color-regular);
     border: #ffffff;
     border-radius: 9999px;
   }

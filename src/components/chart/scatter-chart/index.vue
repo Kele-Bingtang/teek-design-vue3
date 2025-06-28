@@ -52,7 +52,7 @@ const {
   },
   watchSources: [() => props.data, () => props.colors, () => props.symbolSize],
   generateOptions: (): EChartsOption => {
-    const computedColor = props.colors[0] || getCssVar(`--${ns.elNamespace}-color-primary`);
+    const computedColor = props.colors[0] || getCssVar(ns.cssVarNameEl("color-primary"));
 
     return {
       grid: { top: 20, right: 20, bottom: 20, left: 20, containLabel: true },

@@ -136,7 +136,7 @@ const rowDrop2 = () => {
 
   :deep(.sortable-ghost) {
     color: #ffffff !important;
-    background: var(--#{$el-namespace}-color-primary) !important;
+    background: cssVarEl(color-primary) !important;
     opacity: 0.8;
   }
 }
