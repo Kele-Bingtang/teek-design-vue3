@@ -8,6 +8,7 @@ import namespaceModule from "./css-module/namespace.module.scss";
  */
 export const useNamespace = (block: string = "", namespaceOverrides?: string) => {
   const finalNamespace = namespaceOverrides || namespaceModule.namespace;
+  const elNamespace = namespaceModule.elNamespace;
 
   /**
    * 创建 BEM 元素
@@ -76,15 +77,20 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
    * CSS 变量名称当 name = color，返回 --tk-color
    */
   const cssVarName = (name: string) => `--${finalNamespace}-${name}`;
+
   /**
-   * 获取缓存的 key
+   * CSS 变量，当 name = color，返回 var(--tk-color)
    */
-  const storageKey = (...key: string[]) => `${finalNamespace}:${key.join(":")}`;
+  const cssVarEl = (name: string) => `var(--${elNamespace}-${name})`;
+  /**
+   * CSS 变量名称当 name = color，返回 --tk-color
+   */
+  const cssVarNameEl = (name: string) => `--${elNamespace}-${name}`;
 
   return {
     namespaceModule,
     namespace: namespaceModule.namespace,
-    elNamespace: namespaceModule.elNamespace,
+    elNamespace: elNamespace,
     b,
     e,
     m,
@@ -99,7 +105,8 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
     join,
     cssVar,
     cssVarName,
-    storageKey,
+    cssVarEl,
+    cssVarNameEl,
   };
 };
 

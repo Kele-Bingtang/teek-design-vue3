@@ -1,77 +1,65 @@
-<script lang="tsx">
-import { defineComponent, type PropType, computed, h } from "vue";
+<script setup lang="ts">
+import type { HighlightEmits, HighlightProps } from "./types";
+import { computed, useSlots } from "vue";
 import { useNamespace } from "@/composables";
 
-const ns = useNamespace();
+const props = withDefaults(defineProps<HighlightProps>(), {
+  tag: "span",
+  keys: () => [],
+  color: useNamespace().cssVarEl("color-primary"),
+});
 
-export default defineComponent({
-  name: "Highlight",
-  props: {
-    tag: {
-      type: String,
-      default: "span",
-    },
-    keys: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-    color: {
-      type: String,
-      default: `var(--${ns.elNamespace}-color-primary)`,
-    },
-  },
+const emit = defineEmits<HighlightEmits>();
 
-  emits: ["click"],
+const slots = useSlots();
 
-  setup(props, { emit, slots }) {
-    const keyNodes = computed(() => {
-      return props.keys.map(key => {
-        return h(
-          "span",
-          {
-            onClick: () => {
-              emit("click", key);
-            },
-            style: {
-              color: props.color,
-              cursor: "pointer",
-            },
-          },
-          key
-        );
-      });
-    });
+/**
+ * 匹配高亮的文本，将其置为特殊字符，方便后续进行替换
+ */
+const parseText = (text: string) => {
+  let result = text;
+  props.keys.forEach((key, index) => {
+    const regex = new RegExp(key, "g");
+    result = result.replace(regex, `{{${index}}}`);
+  });
+  return result.split(/{{|}}/);
+};
 
-    /**
-     * @description 匹配高亮的文本，将其置为特殊字符，方便后续进行替换
-     */
-    const parseText = (text: string) => {
-      props.keys.forEach((key, index) => {
-        const regexp = new RegExp(key, "g");
-        text = text.replace(regexp, `{{${index}}}`);
-      });
-      return text.split(/{{|}}/);
-    };
+// 5. 生成高亮节点数组
+const highlightNodes = computed(() => {
+  if (!slots.default?.()?.[0]?.children) return [];
 
-    /**
-     * @description 渲染文本
-     */
-    const renderText = () => {
-      if (!slots?.default) return null;
-      const node = slots?.default()[0].children;
+  const text = slots.default()[0].children as string;
+  const segments = parseText(text);
 
-      if (!node) return slots?.default()[0];
-
-      const textArray = parseText(node as string);
-      const regexp = /^[0-9]*$/;
-      const nodes = textArray.map(t => {
-        if (regexp.test(t)) return keyNodes.value[t as any] || t;
-        return t;
-      });
-      return h(props.tag, nodes);
-    };
-
-    return () => renderText();
-  },
+  return segments.map(segment => {
+    const index = parseInt(segment);
+    return isNaN(index)
+      ? { type: "text", content: segment }
+      : {
+          type: "highlight",
+          key: props.keys?.[index] || "",
+          index,
+        };
+  });
 });
 </script>
+
+<template>
+  <component :is="props.tag">
+    <template v-for="(node, index) in highlightNodes" :key="index">
+      <template v-if="node.type === 'text'">
+        {{ node.content }}
+      </template>
+
+      <!-- 高亮关键词 -->
+      <span
+        v-else-if="node.type === 'highlight'"
+        @click="emit('click', node.key!)"
+        :style="{ color: props.color, cursor: 'pointer' }"
+      >
+        {{ node.key }}
+      </span>
+    </template>
+  </component>
+</template>

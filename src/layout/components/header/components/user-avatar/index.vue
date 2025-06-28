@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
@@ -49,28 +49,27 @@ const logout = async () => {
     ElMessage.success(t("_headerBar.logout.success"));
   });
 };
-
-const Avatar = () => {
-  return (
-    <ElImage src={userInfo.value.avatar} class={ns.e("avatar")}>
-      {{
-        error: () => <ElImage src={defaultAvatar} />,
-      }}
-    </ElImage>
-  );
-};
 </script>
 
 <template>
   <div :class="ns.b()">
     <el-popover placement="bottom-end" trigger="hover" :width="240" :hide-after="0" :offset="10" :popper-class="ns.b()">
       <template #reference>
-        <Avatar />
+        <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
+          <template #error>
+            <el-image :src="defaultAvatar" />
+          </template>
+        </el-image>
       </template>
 
       <div :class="ns.e('wrapper')">
         <div :class="[ns.e('head'), 'flx-align-center']">
-          <Avatar />
+          <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
+            <template #error>
+              <el-image :src="defaultAvatar" />
+            </template>
+          </el-image>
+
           <div :class="ns.e('info')">
             <span class="name sle">{{ userInfo.username }}</span>
             <span class="email sle">{{ userInfo.email }}</span>
