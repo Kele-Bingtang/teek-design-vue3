@@ -74,7 +74,7 @@ const options = reactive({
   mode: "contain", // 图片默认渲染方式
 });
 
-const cropperRef = useTemplateRef("cropperRef");
+const cropperInstance = useTemplateRef("cropperInstance");
 
 onMounted(() => {
   options.autoCropWidth = cropWidth.value || 200;
@@ -106,13 +106,13 @@ const imgLoad = (res: "success" | "error") => {
 const uploadImage = () => {
   const formData = new FormData();
   if (imageType.value === "blob") {
-    cropperRef.value.getCropBlob((data: Blob) => {
+    cropperInstance.value.getCropBlob((data: Blob) => {
       const timer = new Date().getTime();
       formData.append("file", data, timer + ".png");
       emits("uploadImage", formData);
     });
   } else if (imageType.value === "base64") {
-    cropperRef.value.getCropData((data: string) => {
+    cropperInstance.value.getCropData((data: string) => {
       formData.append("images", data);
       emits("uploadImage", formData);
     });
@@ -127,28 +127,28 @@ const downloadImg = (type?: string) => {
   aLink.download = timer + ""; // 文件名
   if (type === "blob") {
     // 获取截图的 blob 数据
-    cropperRef.value.getCropBlob((data: Blob) => {
+    cropperInstance.value.getCropBlob((data: Blob) => {
       aLink.href = window.URL.createObjectURL(data); // 生成 blob 格式图片路径
       aLink.click();
     });
   } else {
     // 获取截图的 base64 数据
-    cropperRef.value.getCropData((data: string) => {
+    cropperInstance.value.getCropData((data: string) => {
       aLink.href = data;
     });
   }
 };
 
 const rotateLeft = () => {
-  cropperRef.value.rotateLeft();
+  cropperInstance.value.rotateLeft();
 };
 
 const rotateRight = () => {
-  cropperRef.value.rotateRight();
+  cropperInstance.value.rotateRight();
 };
 
 const changeScale = (num: number) => {
-  cropperRef.value.changeScale(num);
+  cropperInstance.value.changeScale(num);
 };
 
 // 手动上传的回调，目前为了取消自动上传
@@ -163,7 +163,7 @@ const handleHttpRequest = (options: UploadRequestOptions): Promise<any> => {
   <div :class="ns.b()" :style="{ height: cropContainerHeight + 'px' }">
     <div :class="ns.e('box')">
       <VueCropper
-        ref="cropperRef"
+        ref="cropperInstance"
         :img="options.img"
         :output-size="options.outputSize"
         :output-type="options.outputType"

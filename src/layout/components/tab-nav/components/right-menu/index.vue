@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TabProp } from "@/pinia";
+import type { TabProps } from "@/pinia";
 import type { ContextMenuCondition } from "../../use-tab-nav";
 import { unref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -13,9 +13,10 @@ defineOptions({ name: "RightMenu" });
 const ns = useNamespace("right-menu");
 
 const {
+  tabNavList,
   refreshSelectedTab,
-  toggleFixedTab,
-  closeCurrentTab,
+  toggleFixed,
+  closeTab,
   closeLeftTab,
   closeRightTab,
   closeOthersTabs,
@@ -23,7 +24,7 @@ const {
 } = useTabNav();
 
 interface RightMenuProps {
-  selectedTab: TabProp;
+  selectedTab: TabProps;
   left?: number;
   top?: number;
   condition?: Partial<ContextMenuCondition>;
@@ -49,13 +50,14 @@ const rightMenuItem = [
   {
     label: computed(() => (props.selectedTab.close ? t("_tabNav.fixed") : t("_tabNav.unfixed"))),
     icon: computed(() => (props.selectedTab.close ? Lock : Unlock)),
-    click: () => toggleFixedTab(props.selectedTab.path),
+    disabled: computed(() => tabNavList.value.length <= 1),
+    click: () => toggleFixed(props.selectedTab.path),
   },
   {
     label: t("_tabNav.closeCurrent"),
     icon: Close,
     disabled: computed(() => !props.condition.current),
-    click: () => closeCurrentTab(props.selectedTab),
+    click: () => closeTab(props.selectedTab),
     divided: true,
   },
   {

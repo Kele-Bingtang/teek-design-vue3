@@ -33,12 +33,8 @@ export const useErrorLogStore = defineStore("errorLogStore", () => {
   };
 
   const deleteOneErrorLog = (errorLog: ErrorLog) => {
-    for (const [i, e] of errorLogs.value.entries()) {
-      if (e.time === errorLog.time) {
-        errorLogs.value.splice(i, 1);
-        break;
-      }
-    }
+    const index = errorLogs.value.findIndex(e => e.time === errorLog.time);
+    index !== -1 && errorLogs.value.splice(index, 1);
   };
 
   const clearErrorLog = () => {

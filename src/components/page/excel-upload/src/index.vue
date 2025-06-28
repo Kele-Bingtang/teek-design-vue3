@@ -22,7 +22,7 @@ const excelData = reactive({
   header: [],
   results: null,
 });
-const excelUploadInputRef = useTemplateRef("excelUploadInputRef");
+const excelUploadInputInstance = useTemplateRef("excelUploadInputInstance");
 
 const generateData = (header: any, results: any) => {
   excelData.header = header;
@@ -60,7 +60,7 @@ const handleDragover = (e: DragEvent) => {
 };
 
 const handleUpload = () => {
-  excelUploadInputRef.value?.click();
+  excelUploadInputInstance.value?.click();
 };
 
 const handleClick = (e: Event) => {
@@ -72,7 +72,7 @@ const handleClick = (e: Event) => {
 };
 
 const upload = (rawFile: File) => {
-  if (excelUploadInputRef.value) excelUploadInputRef.value.value = ""; // 上传新的 excel 前，清空当前表格的数据，如果追加数据，则可以去掉
+  if (excelUploadInputInstance.value) excelUploadInputInstance.value.value = ""; // 上传新的 excel 前，清空当前表格的数据，如果追加数据，则可以去掉
   if (!props.beforeUpload) {
     readerData(rawFile);
     return;
@@ -125,7 +125,13 @@ const isExcel = (file: File) => {
 
 <template>
   <div :class="ns.b()">
-    <input ref="excelUploadInputRef" :class="ns.e('input')" type="file" accept=".xlsx, .xls" @change="handleClick" />
+    <input
+      ref="excelUploadInputInstance"
+      :class="ns.e('input')"
+      type="file"
+      accept=".xlsx, .xls"
+      @change="handleClick"
+    />
     <div :class="ns.e('drop')" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       上传 Excel 文件
       <el-button :loading="loading" style="margin-left: 16px" type="primary" @click="handleUpload">浏览</el-button>

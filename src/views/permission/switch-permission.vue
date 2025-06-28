@@ -1,11 +1,10 @@
 <script setup lang="ts" name="SwitchPermission">
 import { useUserStore } from "@/pinia";
-import { usePermission } from "@/composables";
-import { RefreshPageKey } from "@/common/config";
+import { useCommon, usePermission } from "@/composables";
 
 const userStore = useUserStore();
-const { getRoleList, getAuthList, hasRole, hasAuth } = usePermission();
-const refreshCurrentPage = inject(RefreshPageKey, (value?: boolean) => value);
+const { getRoleList, hasRole, hasAuth } = usePermission();
+const { refreshPage } = useCommon();
 
 const roleList = computed(() => getRoleList());
 const switchRole = computed({
@@ -15,7 +14,7 @@ const switchRole = computed({
   set(value: string) {
     const roles = [value];
     userStore.changeRoles(roles).then(() => {
-      refreshCurrentPage();
+      refreshPage();
     });
   },
 });

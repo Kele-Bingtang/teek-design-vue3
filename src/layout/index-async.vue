@@ -16,11 +16,9 @@
 import type { Component } from "vue";
 import { defineAsyncComponent } from "vue";
 import { storeToRefs } from "pinia";
-import { useMediaQuery } from "@vueuse/core";
 import { useSettingStore } from "@/pinia";
-import { useUpgrade } from "@/composables";
+import { useCommon, useUpgrade } from "@/composables";
 import { LayoutModeEnum } from "@/common/enums/appEnum";
-import { mobileMaxWidthMedia } from "@/common/config";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";
 import Loading from "./components/loading/index.vue";
@@ -44,7 +42,7 @@ const { layoutMode } = storeToRefs(settingStore);
 // 系统版本升级
 useUpgrade();
 
-const isMobile = useMediaQuery(mobileMaxWidthMedia);
+const { isMobile } = useCommon();
 
 // 移动端默认为 Vertical 布局
 watch(isMobile, () => {

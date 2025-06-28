@@ -1,13 +1,12 @@
 <script setup lang="tsx">
 import { ref, defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
-import { useMediaQuery } from "@vueuse/core";
 import { ElButton, ElDivider, ElDrawer, ElMessage } from "element-plus";
 import { Notification, Menu, ColdDrink, Setting, Box, Refresh, Loading } from "@element-plus/icons-vue";
 import { useSettingStore } from "@/pinia";
 import { mittBus } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { mobileMaxWidthMedia, OpenThemePanelKey } from "@/common/config";
+import { useCommon, useNamespace } from "@/composables";
+import { OpenThemePanelKey } from "@/common/config";
 import {
   LayoutModeSwitch,
   MenuThemeSwitch,
@@ -17,6 +16,8 @@ import {
   SystemThemeSwitch,
 } from "./components";
 
+import "./index.scss";
+
 defineOptions({ name: "ThemePanel" });
 
 const ns = useNamespace("theme-panel");
@@ -24,7 +25,7 @@ const ns = useNamespace("theme-panel");
 const { t } = useI18n();
 const settingStore = useSettingStore();
 
-const isMobile = useMediaQuery(mobileMaxWidthMedia);
+const { isMobile } = useCommon();
 
 // 重置缓存
 const resetSetting = () => {
@@ -128,52 +129,3 @@ const Divider = defineComponent({
     </el-button>
   </el-drawer>
 </template>
-
-<style lang="scss">
-@use "@styles/mixins/bem" as *;
-
-@include b(theme-panel-modal) {
-  background-color: transparent;
-}
-
-@include b(theme-panel) {
-  // 背景滤镜
-  background-color: rgb(255 255 255 / 0%);
-  box-shadow: 0 0 30px rgb(0 0 0 / 10%);
-  backdrop-filter: blur(25px);
-
-  @include e(divider) {
-    margin-top: 20px;
-
-    > div {
-      width: 100%;
-      text-align: center;
-      background-color: transparent;
-    }
-
-    .icon {
-      position: relative;
-      top: 2px;
-      right: 5px;
-      font-size: 15px;
-    }
-  }
-
-  @include el-joins(select__wrapper, input__wrapper) {
-    background-color: rgb(255 255 255 / 0%);
-  }
-
-  // 去除滚动条
-  @include el-joins(drawer__body) {
-    &::-webkit-scrollbar {
-      width: 0 !important;
-    }
-  }
-}
-
-.dark {
-  @include b(theme-panel) {
-    background: rgba($color: #000000, $alpha: 50%) !important;
-  }
-}
-</style>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { useMediaQuery } from "@vueuse/core";
-import { useNamespace } from "@/composables";
-import { useSettingStore } from "@/pinia";
-import { mobileMaxWidthMedia } from "@/common/config";
 import { useI18n } from "vue-i18n";
+import { useSettingStore } from "@/pinia";
+import { useCommon, useNamespace } from "@/composables";
 import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/common/enums/appEnum";
 
 defineOptions({ name: "BaseConfigSwitch" });
@@ -11,7 +9,7 @@ defineOptions({ name: "BaseConfigSwitch" });
 const ns = useNamespace("base-config-switch");
 
 const settingStore = useSettingStore();
-const isMobile = useMediaQuery(mobileMaxWidthMedia);
+const { isMobile } = useCommon();
 const { t } = useI18n();
 
 const tabNavModeOptions = computed(() => [

@@ -65,7 +65,7 @@ export interface DialogFormProps<T = any> {
 }
 
 const props = defineProps<DialogFormProps>();
-const proFormRef = useTemplateRef<ProFormInstance>("proFormRef");
+const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 const dialogFormVisible = ref(false);
 
 // 表单
@@ -124,7 +124,7 @@ const handleAdd = async (row?: any) => {
   const { cache, id = "id", clickAdd } = props;
 
   status.value = "add";
-  proFormRef.value?.form?.resetFields();
+  proFormInstance.value?.form?.resetFields();
   // 过滤掉 Event 类型
   if (row && !(row instanceof Event)) model.value = deepClone(row);
   else if (!cache) model.value = {};
@@ -147,7 +147,7 @@ const handleEdit = async (row: any) => {
   const { clickEdit } = props;
 
   status.value = "edit";
-  proFormRef.value?.form?.resetFields();
+  proFormInstance.value?.form?.resetFields();
   if (!(row instanceof Event)) model.value = deepClone(row);
   clickEdit && (model.value = (await clickEdit(model.value)) ?? model.value);
   dialogFormVisible.value = true;
@@ -172,7 +172,7 @@ const handleFormConfirm = (data: any, status: DialogStatus) => {
  * 执行新增事件
  */
 const handleDoAdd = (data: any) => {
-  const formRef = proFormRef.value?.form as FormInstance;
+  const formRef = proFormInstance.value?.form as FormInstance;
 
   formRef.validate(async valid => {
     if (valid) {
@@ -216,7 +216,7 @@ const handleDoAdd = (data: any) => {
  * 执行编辑事件
  */
 const handleDoEdit = (data: any) => {
-  const formRef = proFormRef.value?.form as FormInstance;
+  const formRef = proFormInstance.value?.form as FormInstance;
 
   formRef.validate(async valid => {
     if (valid) {
@@ -374,7 +374,7 @@ defineExpose({ handleAdd, handleEdit, handleRemove, handleRemoveBatch });
     <slot name="form">
       <ProForm
         v-if="formProps?.schema"
-        ref="proFormRef"
+        ref="proFormInstance"
         v-bind="{ ...$attrs, ...formProps }"
         v-model="model"
         :schema="newSchema"

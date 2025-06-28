@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<IFrameViewProps>(), {
 
 const ns = useNamespace("iframe-view");
 const route = useRoute();
-const iframeRef = useTemplateRef("iframeRef");
+const iframeInstance = useTemplateRef("iframeInstance");
 
 const loading = ref(true);
 
@@ -41,7 +41,7 @@ mittBus.on(RefreshIFrameKey, async () => {
 });
 
 onMounted(() => {
-  if (route.meta?.iframeLoading !== false) useEventListener(iframeRef, "load", hideLoading);
+  if (route.meta?.iframeLoading !== false) useEventListener(iframeInstance, "load", hideLoading);
   else hideLoading();
 });
 </script>
@@ -50,7 +50,7 @@ onMounted(() => {
   <div :class="ns.b()" v-loading="loading" element-loading-text="Loading ...">
     <iframe
       v-if="isRefresh"
-      ref="iframeRef"
+      ref="iframeInstance"
       :src="iframeSrc"
       width="100%"
       height="100%"

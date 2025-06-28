@@ -130,7 +130,7 @@ type CodeMirror6Emits = {
 const emits = defineEmits<CodeMirror6Emits>();
 
 // 编辑器 DOM 元素引用
-const editorRef = useTemplateRef<HTMLElement | undefined>("editorRef");
+const editorInstance = useTemplateRef<HTMLElement | undefined>("editorInstance");
 
 // v-model
 const doc = defineModel<string | Text>({ default: "" });
@@ -301,14 +301,14 @@ watch(
 onMounted(async () => {
   /** 初始化 Value */
   let value: string | Text = doc.value;
-  if (!editorRef.value) return;
-  if (editorRef.value.children[0] && !props.mergeConfig && !props.fullScreen) {
+  if (!editorInstance.value) return;
+  if (editorInstance.value.children[0] && !props.mergeConfig && !props.fullScreen) {
     if (doc.value !== "") {
       console.warn(
         "[CodeMirror.vue] The <code-mirror> tag contains child elements that overwrite the `v-model` values."
       );
     }
-    value = (editorRef.value.childNodes[0] as HTMLElement).innerText?.trim();
+    value = (editorInstance.value.childNodes[0] as HTMLElement).innerText?.trim();
   }
 
   // 如果开启代码对比编辑器
@@ -332,7 +332,7 @@ onMounted(async () => {
           ...extensions.value,
         ].filter((extension): extension is Extension => !!extension),
       },
-      parent: editorRef.value,
+      parent: editorInstance.value,
       collapseUnchanged: {
         margin: mergeConfig.margin || 3,
         minSize: mergeConfig.minSize || 4,
@@ -353,13 +353,13 @@ onMounted(async () => {
     return emits("ready", {
       view: mergeView.value,
       state: { a: mergeView.value.a.state, b: mergeView.value.b.state },
-      container: editorRef.value,
+      container: editorInstance.value,
     });
   }
 
   // 注册 Codemirror
   view.value = new EditorView({
-    parent: editorRef.value,
+    parent: editorInstance.value,
     state: EditorState.create({ doc: value, extensions: extensions.value }),
     dispatch: (tr: Transaction) => {
       view.value.update([tr]);
@@ -375,7 +375,7 @@ onMounted(async () => {
   emits("ready", {
     view: view.value,
     state: view.value.state,
-    container: editorRef.value,
+    container: editorInstance.value,
   });
 });
 
@@ -512,7 +512,7 @@ const extendSelectionsBy = (f: any): void =>
   });
 
 defineExpose({
-  editor: editorRef,
+  editor: editorInstance,
   view,
   cursor,
   selection,
@@ -606,7 +606,7 @@ const defaultPhrases = {
 </script>
 
 <template>
-  <component :is="tag" ref="editorRef" :class="[ns.b(), ns.is('fullscreen', isFullscreen)]">
+  <component :is="tag" ref="editorInstance" :class="[ns.b(), ns.is('fullscreen', isFullscreen)]">
     <template v-if="mergeConfig && mergeConfig.header">
       <slot name="header">
         <div :class="ns.e('header')">

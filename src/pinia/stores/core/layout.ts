@@ -8,56 +8,91 @@ import { useCache } from "@/composables";
 import SystemConfig from "@/common/config";
 import { useSettingStore } from "./setting";
 
-// LayoutState
-export interface TabProp {
-  path: string; // 路由的 path
-  name: string; // 路由的 name
-  title: string; // 展示的描述
-  icon: string | IconifyIcon | Component; // 图标
-  close: boolean; // 是否允许关闭
+export interface TabProps {
+  /** 路由的 path */
+  path: string;
+  /** 路由的 name */
+  name: string;
+  /** 展示的描述 */
+  title: string;
+  /** 图标 */
+  icon: string | IconifyIcon | Component;
+  /** 是否允许关闭 */
+  close: boolean;
+  /** 路由 meta 信息 */
   meta: MetaProp;
 }
 
 export const useLayoutStore = defineStore(
   "layoutStore",
   () => {
-    const tabNavList = ref<TabProp[]>(useCache().getCacheTabNavList() || []);
+    const cache = useCache();
+
+    const tabNavList = ref<TabProps[]>(cache.getCacheTabNavList() || []);
     const keepAliveName = ref<string[]>([]);
     const layoutSize = ref(SystemConfig.layoutConfig.layoutSize);
     const language = ref(SystemConfig.layoutConfig.language);
     const iframeList = ref<IFrame[]>([]);
 
+    /**
+     * 根据路由路径找到 tab 信息
+     * @param path 路径
+     */
     const getTab = (path: string) => tabNavList.value.find(item => item.path === path);
+    /**
+     * 根据路由路径找到 tab 信息
+     * @param path 路径
+     */
     const findTabIndex = (path: string) => tabNavList.value.findIndex(item => item.path === path);
 
-    const addTab = async (tab: TabProp) => {
-      const path = tab.path;
+    /**
+     * 获取第一个可关闭 tab 的下标
+     */
+    const findCloseTabIndex = () => tabNavList.value.findIndex(item => item.close);
+    /**
+     * 新增 tab
+     */
+    const addTab = async (tab: TabProps, updateIfExist = false) => {
+      const tabNavListValue = tabNavList.value;
 
       if (tab.meta.hideInTab) return;
-      if (tabNavList.value.some(v => v.path === path || v.path + "/" === path)) return;
+      // 如果关闭 updateIfExist，则已存在的 tab 不做更新
+      if (!updateIfExist && tabNavListValue.some(v => [v.path, v.path + "/"].includes(tab.path))) return;
+
+      const tabIndex = findTabIndex(tab.path);
       // 判断动态路由的可打开最大数量
       const dynamicLevel = tab.meta.dynamicLevel ?? -1;
 
-      if (dynamicLevel > 0 && tabNavList.value.filter(t => t.name === tab.name).length >= dynamicLevel) {
+      if (dynamicLevel > 0 && tabNavListValue.filter(t => t.path === tab.path).length >= dynamicLevel) {
         // 如果当前已打开的动态路由数大于 dynamicLevel，替换第一个动态路由标签
-        const index = tabNavList.value.findIndex(t => t.name === tab.name);
-        index !== -1 && tabNavList.value.splice(index, 1);
+        tabIndex !== -1 && tabNavListValue.splice(tabIndex, 1);
       }
-      tabNavList.value.push(tab);
+
+      // tabIndex 为 -1 表示当前标签页不存在，需要新增
+      if (tabIndex === -1) {
+        if (!tab.close) {
+          const closeTabIndex = findCloseTabIndex();
+          // 插入到可关闭的标签首部，如果没有可关闭的 tab（closeTabIndex = -1），则代表全是不可关闭的 tab，则添加到末尾
+          if (closeTabIndex === -1) tabNavList.value.push(tab);
+          else tabNavList.value.splice(closeTabIndex, 0, tab);
+        } else tabNavListValue.push(tab);
+      } else updateTab(tab);
     };
 
-    const updateTab = (tab: TabProp) => {
-      for (let v of tabNavList.value) {
-        if (v.path === tab.path) {
-          v = Object.assign(v, tab);
-          break;
-        }
-      }
+    /**
+     * 更新 tab 信息
+     */
+    const updateTab = (tab: TabProps) => {
+      const index = findTabIndex(tab.path);
+      if (index !== -1) tabNavList.value[index] = { ...tabNavList.value[index], ...tab };
     };
 
-    const toggleCloseTab = (path: string) => {
+    /**
+     * 切换 tab 的关闭与未关闭状态，如果切换为未关闭，则移动到未关闭的 tab 列表末尾
+     */
+    const toggleClose = (path: string) => {
       const targetTabIndex = findTabIndex(path);
-      if (targetTabIndex === undefined) return;
+      if (targetTabIndex === -1) return;
 
       const tab = { ...tabNavList.value[targetTabIndex] };
       tab.close = !tab.close;
@@ -65,120 +100,146 @@ export const useLayoutStore = defineStore(
       // 移除原位置
       tabNavList.value.splice(targetTabIndex, 1);
 
-      if (!tab.close) {
-        // 固定标签插入到所有固定标签的末尾
-        const firstNonFixedIndex = tabNavList.value.findIndex(t => t.close);
-        const insertIndex = firstNonFixedIndex === -1 ? tabNavList.value.length : firstNonFixedIndex;
-        tabNavList.value.splice(insertIndex, 0, tab);
-      } else {
-        // 非固定标签插入到所有固定标签后
-        const fixedCount = tabNavList.value.filter(t => !t.close).length;
-        tabNavList.value.splice(fixedCount, 0, tab);
-      }
+      const closeTabIndex = findCloseTabIndex();
+      // 插入到可关闭的标签首部，如果没有可关闭的 tab，则代表全是不可关闭的 tab，则添加到末尾
+      if (closeTabIndex === -1) tabNavList.value.push(tab);
+      else tabNavList.value.splice(closeTabIndex, 0, tab);
     };
 
-    const removeCurrentTab = async (tab: TabProp) => {
-      for (const [i, v] of tabNavList.value.entries()) {
-        if (v.path === tab.path) {
-          tabNavList.value.splice(i, 1);
-          removeIFrame(tab);
-          break;
-        }
-      }
+    /**
+     * 删除指定的 tab
+     */
+    const removeTab = async (path: string) => {
+      const index = findTabIndex(path);
+      if (index === -1) return;
+
+      const v = tabNavList.value[index];
+      tabNavList.value.splice(index, 1);
+
+      v.meta.iframeSrc && removeIFrame(v.name);
+      v.meta.isKeepAlive && removeKeepAliveName(v.name);
     };
 
+    /**
+     * 批量删除 tab
+     */
     const removeBatchTab = async (pathList: string[]) => {
-      pathList.forEach(path => {
-        removeCurrentTab({ path } as TabProp);
-      });
+      pathList.forEach(path => removeTab(path));
     };
 
-    const removeLeftTab = async (tab: TabProp) => {
-      const index = tabNavList.value.findIndex(v => v.path === tab.path);
+    /**
+     * 删除左侧 tab
+     */
+    const removeLeftTab = async (tab: TabProps) => {
+      const index = findTabIndex(tab.path);
       if (index === -1) return;
 
-      const iframeNameList = iframeList.value.map(e => e.name);
       tabNavList.value = tabNavList.value.filter((item, i) => {
-        if (iframeNameList.includes(item.name)) removeIFrame(item);
-        if (i >= index || (item.meta && item.meta.isAffix)) return true;
-        if (tab.meta.isKeepAlive) removeKeepAliveName(tab.name);
+        if (i >= index || item.meta?.isAffix) return true;
+        item.meta?.isKeepAlive && removeKeepAliveName(item.name);
+        item.meta?.iframeSrc && removeIFrame(item.name);
+
         return false;
       });
     };
 
-    const removeRightTab = async (tab: TabProp) => {
-      const index = tabNavList.value.findIndex(v => v.path === tab.path);
+    /**
+     * 关闭右侧 tab
+     */
+    const removeRightTab = async (tab: TabProps) => {
+      const index = findTabIndex(tab.path);
       if (index === -1) return;
 
-      const iframeNameList = iframeList.value.map(e => e.name);
       tabNavList.value = tabNavList.value.filter((item, i) => {
-        if (iframeNameList.includes(item.name)) removeIFrame(item);
-        if (i <= index || (item.meta && item.meta.isAffix)) return true;
-        if (tab.meta.isKeepAlive) removeKeepAliveName(tab.name);
+        if (i <= index || item.meta?.isAffix) return true;
+        item.meta?.isKeepAlive && removeKeepAliveName(item.name);
+        item.meta?.iframeSrc && removeIFrame(item.name);
+
         return false;
       });
     };
 
-    const removeOtherTabs = async (tab: TabProp) => {
-      tabNavList.value = tabNavList.value.filter(v => {
-        return !v.close || v.path === tab.path;
-      });
+    /**
+     * 关闭其他 tab
+     */
+    const removeOtherTabs = async (tab: TabProps) => {
+      tabNavList.value = tabNavList.value.filter(v => !v.close || v.path === tab.path);
 
-      iframeList.value = iframeList.value.filter(v => {
-        return v.name === tab.name;
-      });
+      if (tab.meta.isKeepAlive) setKeepAliveName([tab.name]);
+      else setKeepAliveName([]);
+
+      if (tab.meta.iframeSrc) setIFame(iframeList.value.filter(v => v.name === tab.name));
     };
 
+    /**
+     * 关闭所有 tab
+     */
     const removeAllTabs = async () => {
       const fixedTabs = tabNavList.value.filter(tab => !tab.close);
       tabNavList.value = fixedTabs;
-      iframeList.value = [];
+      setKeepAliveName([]);
+      setIFame([]);
     };
 
+    /**
+     * 添加指定的路由缓存
+     */
     const addKeepAliveName = async (name: string) => {
-      !keepAliveName.value.includes(name) && keepAliveName.value?.push(name);
+      !keepAliveName.value.includes(name) && keepAliveName.value.push(name);
     };
 
+    /**
+     * 删除指定的路由缓存
+     */
     const removeKeepAliveName = async (name: string) => {
       keepAliveName.value = keepAliveName.value.filter(item => item !== name);
     };
 
+    /**
+     * 设置指定的路由缓存
+     */
     const setKeepAliveName = async (keepAliveNameList: string[] = []) => {
       keepAliveName.value = keepAliveNameList;
     };
 
-    const addIFrame = (obj: IFrame) => {
-      iframeList.value.push(obj);
+    /**
+     * 添加 IFrame 缓存
+     */
+    const addIFrame = (iframe: IFrame) => {
+      const isExist = iframeList.value.findIndex(item => item.name === iframe.name) > -1;
+      !isExist && iframeList.value.push(iframe);
     };
 
-    const removeIFrame = (tab: TabProp) => {
-      for (const [i, v] of iframeList.value.entries()) {
-        if (v.name === tab.name) {
-          iframeList.value.splice(i, 1);
-          break;
-        }
-      }
+    /**
+     * 删除指定的 IFrame
+     */
+    const removeIFrame = (name: string) => {
+      const index = iframeList.value.findIndex(item => item.name === name);
+      if (index === -1) return;
+
+      iframeList.value.splice(index, 1);
+    };
+
+    const setIFame = (iFameList: IFrame[] = []) => {
+      iframeList.value = iFameList;
     };
 
     const settingStore = useSettingStore();
 
     watch(
       () => settingStore.recordTabNav,
-      () => {
-        handleRecordTabNav(settingStore.recordTabNav);
-      }
+      newValue => handleRecordTabNav(newValue)
     );
+
     watch(
       () => tabNavList.value,
-      () => {
-        handleRecordTabNav(settingStore.recordTabNav);
-      },
+      () => handleRecordTabNav(settingStore.recordTabNav),
       { deep: true }
     );
 
-    const handleRecordTabNav = (value: boolean) => {
-      if (value) useCache().setCacheTabNavList(tabNavList.value);
-      else useCache().removeCacheTabNavList();
+    const handleRecordTabNav = (needRecord: boolean) => {
+      if (needRecord) cache.setCacheTabNavList(tabNavList.value);
+      else cache.removeCacheTabNavList();
     };
 
     return {
@@ -191,8 +252,8 @@ export const useLayoutStore = defineStore(
       getTab,
       addTab,
       updateTab,
-      toggleCloseTab,
-      removeCurrentTab,
+      toggleClose,
+      removeTab,
       removeBatchTab,
       removeLeftTab,
       removeRightTab,

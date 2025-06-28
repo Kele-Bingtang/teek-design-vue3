@@ -32,7 +32,7 @@ const emits = defineEmits<DragDrawerEmits>();
 
 const drawerVisible = defineModel<boolean>({ required: true });
 const drawerWidth = defineModel<number>("width", { default: 200 });
-const drawerRef = useTemplateRef("drawerRef");
+const drawerInstance = useTemplateRef("drawerInstance");
 const canMove = ref(false);
 const wrapperWidth = ref(0);
 const wrapperLeft = ref(0);
@@ -124,7 +124,7 @@ const handleMouseup = () => {
 };
 
 const setWrapperWidth = () => {
-  const { width, left } = drawerRef.value && drawerRef.value.$el.nextElementSibling.getBoundingClientRect();
+  const { width, left } = drawerInstance.value && drawerInstance.value.$el.nextElementSibling.getBoundingClientRect();
   wrapperWidth.value = width;
   wrapperLeft.value = left;
 };
@@ -133,7 +133,7 @@ const setWrapperWidth = () => {
 <template>
   <div :class="ns.b()">
     <el-drawer
-      ref="drawerRef"
+      ref="drawerInstance"
       v-model="drawerVisible"
       :size="width"
       :direction="direction"

@@ -1,14 +1,17 @@
-import type { TabProp } from "@/pinia";
+import type { TabProps } from "@/pinia";
 import SystemConfig from "@/common/config";
 import { useStorage } from "@/composables";
 
+/**
+ * 系统缓存操作
+ */
 export const useCache = () => {
   const { getStorage, setStorage, removeStorage, removeStorages } = useStorage();
 
   // 标签页的 tabNav 缓存
   const tabNavKey = SystemConfig.keyConfig.tabNavCacheKey;
   const getCacheTabNavList = () => getStorage(tabNavKey);
-  const setCacheTabNavList = (tabNavList: TabProp[]) => setStorage(tabNavKey, tabNavList);
+  const setCacheTabNavList = (tabNavList: TabProps[]) => setStorage(tabNavKey, tabNavList);
   const removeCacheTabNavList = () => removeStorage(tabNavKey);
 
   // 标签页的 tabNav 缓存

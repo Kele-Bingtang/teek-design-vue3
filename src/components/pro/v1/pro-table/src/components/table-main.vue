@@ -34,7 +34,7 @@ const emits = defineEmits<TableMainEmits>();
 
 const dialogFormRef = inject(dialogFormInstanceKey, undefined);
 
-const tableRef = useTemplateRef<InstanceType<typeof ElTable>>("tableRef");
+const tableInstance = useTemplateRef<InstanceType<typeof ElTable>>("tableInstance");
 
 // 编辑回调
 const handleEdit = (scope: any, item: TableColumnProps) => {
@@ -54,11 +54,11 @@ const handleRowClick = (row: any) => {
   if (props.rowClickEdit) row._edit = !row._edit;
 };
 
-defineExpose({ table: tableRef });
+defineExpose({ table: tableInstance });
 </script>
 
 <template>
-  <el-table ref="tableRef" v-bind="$attrs" @row-click="handleRowClick">
+  <el-table ref="tableInstance" v-bind="$attrs" @row-click="handleRowClick">
     <!-- 默认插槽 -->
     <slot />
 

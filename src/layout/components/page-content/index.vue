@@ -28,17 +28,16 @@ const TabNavComponents: Record<string, Component> = {
 
 // 刷新当前页面
 const isRefreshRoute = ref(true);
-const refreshCurrentPage = (value?: boolean) => {
-  if (value !== undefined) isRefreshRoute.value = value;
+const refreshPage = (value?: boolean) => {
+  if (value !== undefined) return (isRefreshRoute.value = value);
   isRefreshRoute.value = false;
 
-  nextTick(() => {
-    isRefreshRoute.value = true;
-  });
+  nextTick(() => (isRefreshRoute.value = true));
 };
-provide(RefreshPageKey, refreshCurrentPage);
+provide(RefreshPageKey, refreshPage);
 
-mittBus.on(RefreshPageKey, () => refreshCurrentPage());
+// 添加类型断言修复报错
+mittBus.on(RefreshPageKey as any, refreshPage as any);
 
 // 监听当前页是否最大化，动态添加 class
 watchEffect(() => {

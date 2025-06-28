@@ -64,7 +64,7 @@ type CountToEmits = {
 
 const emits = defineEmits<CountToEmits>();
 
-const countRef = useTemplateRef("countRef");
+const countInstance = useTemplateRef("countInstance");
 const counter = ref<any>();
 const unitText = ref("");
 
@@ -93,11 +93,11 @@ onUnmounted(() => {
 });
 
 const initCountUp = () => {
-  const countRefConst = countRef.value;
+  const countInstanceConst = countInstance.value;
 
-  if (!countRefConst) return;
+  if (!countInstanceConst) return;
   const endVal = getValue(props.endVal);
-  counter.value = new (CountUp as any)(countRefConst, props.startVal, endVal, props.decimals, props.duration, {
+  counter.value = new (CountUp as any)(countInstanceConst, props.startVal, endVal, props.decimals, props.duration, {
     useEasing: props.useEasing,
     useGrouping: props.useGroup,
     separator: props.separator,
@@ -215,7 +215,7 @@ defineExpose({
       <span v-if="prefix">{{ prefix }}</span>
     </slot>
     <p :class="ns.e('outer')">
-      <span ref="countRef" :class="[countClass]">{{ init }}</span>
+      <span ref="countInstance" :class="[countClass]">{{ init }}</span>
       <span :class="[unitClass]">{{ unitText }}</span>
     </p>
     <slot name="suffix">

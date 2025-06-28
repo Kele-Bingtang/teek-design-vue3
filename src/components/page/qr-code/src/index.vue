@@ -48,7 +48,7 @@ const emits = defineEmits<QrCodeEmits>();
 
 const { toCanvas, toDataURL } = QRCode;
 const loading = ref(true);
-const wrapRef = useTemplateRef("wrapRef");
+const ImgInstance = useTemplateRef("ImgInstance");
 const renderText = computed(() => String(props.text));
 const wrapStyle = computed(() => {
   return {
@@ -65,7 +65,7 @@ const initQrCode = async () => {
     options.errorCorrectionLevel = options.errorCorrectionLevel || getErrorCorrectionLevel(renderText.value);
     const _width: number = await getOriginWidth(renderText.value, options);
     options.scale = props.width === 0 ? undefined : (props.width / _width) * 4;
-    const canvasRef: any = await toCanvas(wrapRef.value, renderText.value, options);
+    const canvasRef: any = await toCanvas(ImgInstance.value, renderText.value, options);
 
     if (props.logo) {
       const url = (await createLogoCode(canvasRef)) as string;
@@ -82,7 +82,7 @@ const initQrCode = async () => {
       ...options,
     });
 
-    (wrapRef.value as any).src = url;
+    (ImgInstance.value as any).src = url;
     emits("done", url as unknown as string);
     loading.value = false;
   }
@@ -226,8 +226,8 @@ const disabledClick = () => {
 
 <template>
   <div v-loading="loading" :class="ns.b()" :style="wrapStyle">
-    <canvas ref="wrapRef" @click="clickCode" v-if="props.tag === 'canvas'"></canvas>
-    <img v-else ref="wrapRef" @click="clickCode" />
+    <canvas v-if="props.tag === 'canvas'" ref="ImgInstance" @click="clickCode"></canvas>
+    <img v-else ref="ImgInstance" @click="clickCode" />
     <div v-if="props.disabled" :class="ns.m('disabled')" @click="disabledClick">
       <div :class="ns.e('icon')" :color="`var(--${ns.elNamespace}-color-primary)`">
         <el-icon style="cursor: pointer" :size="30"><RefreshRight /></el-icon>

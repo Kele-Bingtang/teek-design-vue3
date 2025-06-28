@@ -22,8 +22,6 @@ import {
 } from "./interface";
 import ProFormItem from "./components/pro-form-item.vue";
 import {
-  ElRow,
-  ElCol,
   ElForm,
   ElFormItem,
   ElTooltip,

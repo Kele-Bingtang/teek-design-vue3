@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useImageVerify } from "./hooks";
 import { watch } from "vue";
+import { useImageVerify } from "./use-image-verify";
 
 defineOptions({ name: "ImageVerifyCode" });
 
-const { domRef, imgCode, setImgCode, getImgCode } = useImageVerify();
+const { domInstance, imgCode, setImgCode, getImgCode } = useImageVerify();
 
 const code = defineModel<string>({ required: true });
 
@@ -20,5 +20,5 @@ defineExpose({ getImgCode });
 </script>
 
 <template>
-  <canvas ref="domRef" width="120" height="40" class="cursor-pointer" @click="getImgCode" />
+  <canvas ref="domInstance" width="120" height="40" class="cursor-pointer" @click="getImgCode" />
 </template>

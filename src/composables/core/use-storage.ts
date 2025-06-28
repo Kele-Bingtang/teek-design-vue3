@@ -1,11 +1,18 @@
 import SystemConfig from "@/common/config";
 
-// 获取传入的值的类型
+/**
+ *
+ * @param value 获取传入的值的类型
+ * @returns
+ */
 const getValueType = (value: any) => {
   const type = Object.prototype.toString.call(value);
   return type.slice(8, -1);
 };
 
+/**
+ * storage 相关 API 封装
+ */
 export const useStorage = <T = any>(type: "sessionStorage" | "localStorage" = "localStorage") => {
   const { version } = __APP_INFO__.pkg;
   const cacheKeyPrefix = SystemConfig.keyConfig.cacheKeyPrefix;

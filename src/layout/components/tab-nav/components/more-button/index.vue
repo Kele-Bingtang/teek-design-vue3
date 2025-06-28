@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, unref } from "vue";
-import { useRoute } from "vue-router";
+import { unref } from "vue";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton } from "element-plus";
 import {
   ArrowDown,
@@ -22,28 +21,24 @@ import { useTabNav } from "../../use-tab-nav";
 defineOptions({ name: "TabNavButton" });
 
 const {
+  activeTab,
   contextMenuCondition: condition,
-  getTabByPath,
-  getTabByRoute,
   initContextMenu,
   refreshSelectedTab,
-  toggleFixedTab,
-  closeCurrentTab,
+  toggleFixed,
+  closeTab,
   closeLeftTab,
   closeRightTab,
   closeOthersTabs,
   closeAllTabs,
 } = useTabNav();
 
-const route = useRoute();
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
-const selectedTab = ref(getTabByPath(route.meta._fullPath || route.path) || getTabByRoute(route));
-
 const expandDropdown = () => {
   useDebounceFn(() => {
-    initContextMenu(selectedTab.value);
+    initContextMenu(activeTab.value);
   }, 100)();
 };
 
@@ -56,12 +51,12 @@ const dropdownMenuItem = [
     label: t("_tabNav.refresh"),
     icon: Refresh,
     disabled: computed(() => !condition.refresh),
-    click: () => refreshSelectedTab(selectedTab.value),
+    click: () => refreshSelectedTab(activeTab.value),
   },
   {
-    label: computed(() => (selectedTab.value.close ? t("_tabNav.fixed") : t("_tabNav.unfixed"))),
-    icon: computed(() => (selectedTab.value.close ? Lock : Unlock)),
-    click: () => toggleFixedTab(selectedTab.value.path),
+    label: computed(() => (activeTab.value.close ? t("_tabNav.fixed") : t("_tabNav.unfixed"))),
+    icon: computed(() => (activeTab.value.close ? Lock : Unlock)),
+    click: () => toggleFixed(activeTab.value.path),
   },
   {
     label: t("_tabNav.maximize"),
@@ -72,26 +67,26 @@ const dropdownMenuItem = [
     label: t("_tabNav.closeCurrent"),
     icon: Close,
     disabled: computed(() => !condition.current),
-    click: () => closeCurrentTab(selectedTab.value),
+    click: () => closeTab(activeTab.value),
     divided: true,
   },
   {
     label: t("_tabNav.closeLeft"),
     icon: ArrowLeft,
     disabled: computed(() => !condition.left),
-    click: () => closeLeftTab(selectedTab.value),
+    click: () => closeLeftTab(activeTab.value),
   },
   {
     label: t("_tabNav.closeRight"),
     icon: ArrowRight,
     disabled: computed(() => !condition.right),
-    click: () => closeRightTab(selectedTab.value),
+    click: () => closeRightTab(activeTab.value),
   },
   {
     label: t("_tabNav.closeOthers"),
     icon: SemiSelect,
     disabled: computed(() => !condition.other),
-    click: () => closeOthersTabs(selectedTab.value),
+    click: () => closeOthersTabs(activeTab.value),
   },
   {
     label: t("_tabNav.closeAll"),
@@ -100,11 +95,6 @@ const dropdownMenuItem = [
     click: () => closeAllTabs(),
   },
 ];
-
-watch(
-  () => route.fullPath,
-  () => (selectedTab.value = getTabByPath(route.meta._fullPath || route.path) || getTabByRoute(route))
-);
 </script>
 
 <template>

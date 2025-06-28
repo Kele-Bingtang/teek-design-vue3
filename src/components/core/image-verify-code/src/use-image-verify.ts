@@ -6,7 +6,7 @@ import { ref, onMounted } from "vue";
  * @param height - 图形高度
  */
 export const useImageVerify = (width = 120, height = 40) => {
-  const domRef = useTemplateRef<HTMLCanvasElement>("domRef");
+  const domInstance = useTemplateRef<HTMLCanvasElement>("domInstance");
   const imgCode = ref("");
 
   function setImgCode(code: string) {
@@ -14,8 +14,8 @@ export const useImageVerify = (width = 120, height = 40) => {
   }
 
   function getImgCode() {
-    if (!domRef.value) return;
-    imgCode.value = draw(domRef.value, width, height);
+    if (!domInstance.value) return;
+    imgCode.value = draw(domInstance.value, width, height);
   }
 
   onMounted(() => {
@@ -23,7 +23,7 @@ export const useImageVerify = (width = 120, height = 40) => {
   });
 
   return {
-    domRef,
+    domInstance,
     imgCode,
     setImgCode,
     getImgCode,

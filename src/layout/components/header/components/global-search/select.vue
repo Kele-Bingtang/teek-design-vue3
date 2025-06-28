@@ -27,14 +27,14 @@ const handleSearchMenuList = (queryString: string, callback: (result: any) => vo
 };
 
 const isShowSearch = ref(false);
-const autocompleteRef = useTemplateRef("autocompleteRef");
+const autocompleteInstance = useTemplateRef("autocompleteInstance");
 const searchMenu = ref("");
 
 // 关闭搜索菜单
 const handleCloseSearch = () => {
   isShowSearch.value = false;
   document.body.removeEventListener("click", handleCloseSearch);
-  autocompleteRef.value && autocompleteRef.value.blur();
+  autocompleteInstance.value && autocompleteInstance.value.blur();
 };
 
 // 打开搜索菜单
@@ -43,18 +43,18 @@ const handleStartSearch = () => {
   searchMenu.value = "";
   // 工具实现防抖
   useDebounceFn(() => {
-    autocompleteRef.value && autocompleteRef.value.focus();
+    autocompleteInstance.value && autocompleteInstance.value.focus();
     document.body.addEventListener("click", handleCloseSearch);
   }, 250)();
 };
 
 const handleSwitchMode = () => {
   nestMode.value = !nestMode.value;
-  if (autocompleteRef.value) {
-    autocompleteRef.value.close();
+  if (autocompleteInstance.value) {
+    autocompleteInstance.value.close();
     nextTick(() => {
       setTimeout(() => {
-        autocompleteRef.value?.focus();
+        autocompleteInstance.value?.focus();
       }, 800);
     });
   }
@@ -112,7 +112,7 @@ onUnmounted(() => {
 
     <el-autocomplete
       v-model="searchMenu"
-      ref="autocompleteRef"
+      ref="autocompleteInstance"
       placeholder="支持菜单名称、路径"
       :fetch-suggestions="handleSearchMenuList"
       @select="handleClickMenu"

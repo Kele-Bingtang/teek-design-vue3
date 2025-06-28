@@ -17,11 +17,7 @@ const { iframeList } = storeToRefs(layoutStore);
 /**
  * frame 是否已经缓存
  */
-const isFrameCache = (name: string) => {
-  for (const item of iframeList.value) if (item.name === name) return true;
-  return false;
-};
-
+const isFrameCache = (name: string) => iframeList.value.some(item => item.name === name);
 watch(
   () => route.fullPath,
   () => {

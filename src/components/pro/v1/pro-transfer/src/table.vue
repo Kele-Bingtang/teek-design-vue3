@@ -61,8 +61,8 @@ const props = withDefaults(defineProps<TableTransferProps>(), {
 });
 
 // 行点击的时候也设置选中
-const leftTableRef = useTemplateRef<InstanceType<typeof TableMain>>("leftTableRef");
-const rightTableRef = useTemplateRef<InstanceType<typeof TableMain>>("rightTableRef");
+const leftTableInstance = useTemplateRef<InstanceType<typeof TableMain>>("leftTableInstance");
+const rightTableInstance = useTemplateRef<InstanceType<typeof TableMain>>("rightTableInstance");
 // 已选行
 const selectValueLeft = ref<Option[]>([]);
 const selectValueRight = ref<Option[]>([]);
@@ -74,11 +74,11 @@ const leftCheckAll = ref(false);
 const rightCheckAll = ref(false);
 
 const checkTopAllLeft = () => {
-  leftTableRef.value?.table?.toggleAllSelection();
+  leftTableInstance.value?.table?.toggleAllSelection();
 };
 
 const checkTopAllRight = () => {
-  rightTableRef.value?.table?.toggleAllSelection();
+  rightTableInstance.value?.table?.toggleAllSelection();
 };
 
 const tableDataLeft = ref<object[]>([]);
@@ -215,11 +215,11 @@ watch(
 );
 
 const handleRowClickLeft = (row: any) => {
-  leftTableRef.value?.$el.toggleRowSelection(row, undefined);
+  leftTableInstance.value?.$el.toggleRowSelection(row, undefined);
 };
 
 const handleRowClickRight = (row: any) => {
-  if (!props.isAutoSelect) rightTableRef.value?.$el.toggleRowSelection(row, undefined);
+  if (!props.isAutoSelect) rightTableInstance.value?.$el.toggleRowSelection(row, undefined);
 };
 
 // 为选中项添加行背景色;
@@ -369,7 +369,7 @@ const handleCancelSelect = (row?: any) => {
           </slot>
           <TableMain
             stripe
-            ref="leftTableRef"
+            ref="leftTableInstance"
             v-bind="tableAttrs"
             :row-key="rowKey"
             :height="tableHeight"
@@ -454,7 +454,7 @@ const handleCancelSelect = (row?: any) => {
           </slot>
           <TableMain
             stripe
-            ref="rightTableRef"
+            ref="rightTableInstance"
             v-bind="tableAttrs"
             :row-key="rowKey"
             :height="tableHeight"

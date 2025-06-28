@@ -16,14 +16,14 @@ const props = withDefaults(defineProps<PlayerProps>(), {
 
 const playerRef = ref<Player>();
 
-const videoRef = useTemplateRef("videoRef");
+const videoInstance = useTemplateRef("videoInstance");
 
 const intiPlayer = () => {
-  if (!videoRef.value) return;
+  if (!videoInstance.value) return;
   new Player({
     autoplay: false,
     ...props,
-    el: videoRef.value,
+    el: videoInstance.value,
   });
 };
 
@@ -54,5 +54,5 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="videoRef"></div>
+  <div ref="videoInstance"></div>
 </template>

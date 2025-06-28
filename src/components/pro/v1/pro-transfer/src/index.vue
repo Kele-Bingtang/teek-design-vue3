@@ -4,16 +4,16 @@ import { computed } from "vue";
 
 defineOptions({ name: "ProTransfer" });
 
-const transferRef = useTemplateRef("transferRef");
+const transferInstance = useTemplateRef("transferInstance");
 
-const clearQuery = computed(() => transferRef.value?.clearQuery);
+const clearQuery = computed(() => transferInstance.value?.clearQuery);
 
 // 抛出实例
-defineExpose({ el: transferRef, clearQuery });
+defineExpose({ el: transferInstance, clearQuery });
 </script>
 
 <template>
-  <el-transfer ref="transferRef" v-bind="$attrs">
+  <el-transfer ref="transferInstance" v-bind="$attrs">
     <template v-for="(_value, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData || {}"></slot>
     </template>

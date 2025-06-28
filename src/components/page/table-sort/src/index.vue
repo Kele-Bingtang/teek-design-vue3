@@ -122,19 +122,19 @@ const singleSort = (data: any, sortProp: string, sortOrder: string, sortSameArr:
   }
 };
 
-const elTableRef = useTemplateRef<TableInstance>("elTableRef");
+const elTableInstance = useTemplateRef<TableInstance>("elTableInstance");
 
 defineExpose({
   handleHeaderCellClassName,
   handleSort,
-  el: elTableRef,
+  el: elTableInstance,
 });
 </script>
 
 <template>
   <el-table
     v-if="!slots.custom"
-    ref="elTableRef"
+    ref="elTableInstance"
     :data="tableData"
     :header-cell-class-name="handleHeaderCellClassName"
     @sort-change="handleSort"

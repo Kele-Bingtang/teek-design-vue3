@@ -26,8 +26,8 @@ const historyMaxLength = 10;
 const searchResult = ref<RouterConfig[]>([]);
 const { searchHistory } = storeToRefs(userStore);
 
-const searchInputRef = useTemplateRef("searchInputRef");
-const searchResultScrollbarRef = useTemplateRef("searchResultScrollbarRef");
+const searchInputInstance = useTemplateRef("searchInputInstance");
+const searchResultScrollbarInstance = useTemplateRef("searchResultScrollbarInstance");
 
 onMounted(() => {
   mittBus.on(OpenSearchDialogKey, openSearchDialog);
@@ -89,7 +89,7 @@ useEventListener("keydown", handleKeydown);
  */
 const focusInput = () => {
   setTimeout(() => {
-    searchInputRef.value?.focus();
+    searchInputInstance.value?.focus();
   }, 100);
 };
 
@@ -161,9 +161,9 @@ const highlightNext = () => {
 const scrollToHighlightedItem = async () => {
   await nextTick();
 
-  if (!searchResultScrollbarRef.value || !searchResult.value.length) return;
+  if (!searchResultScrollbarInstance.value || !searchResult.value.length) return;
 
-  const scrollWrapper = searchResultScrollbarRef.value.wrapRef;
+  const scrollWrapper = searchResultScrollbarInstance.value.wrapRef;
   if (!scrollWrapper) return;
 
   const highlightedElements = scrollWrapper.querySelectorAll(`.${ns.e("search-item")}`);
@@ -176,18 +176,18 @@ const scrollToHighlightedItem = async () => {
   const itemTop = highlightedElement.offsetTop;
   const itemBottom = itemTop + itemHeight;
 
-  if (itemTop < scrollTop) searchResultScrollbarRef.value.setScrollTop(itemTop);
+  if (itemTop < scrollTop) searchResultScrollbarInstance.value.setScrollTop(itemTop);
   else if (itemBottom > scrollTop + containerHeight) {
-    searchResultScrollbarRef.value.setScrollTop(itemBottom - containerHeight);
+    searchResultScrollbarInstance.value.setScrollTop(itemBottom - containerHeight);
   }
 };
 
 const scrollToHighlightedHistoryItem = async () => {
   await nextTick();
 
-  if (!searchResultScrollbarRef.value || !searchHistory.value.length) return;
+  if (!searchResultScrollbarInstance.value || !searchHistory.value.length) return;
 
-  const scrollWrapper = searchResultScrollbarRef.value.wrapRef;
+  const scrollWrapper = searchResultScrollbarInstance.value.wrapRef;
   if (!scrollWrapper) return;
 
   const historyItems = scrollWrapper.querySelectorAll(`.${ns.e("history-item")}`);
@@ -201,9 +201,9 @@ const scrollToHighlightedHistoryItem = async () => {
   const itemBottom = itemTop + itemHeight;
 
   if (itemTop < scrollTop) {
-    searchResultScrollbarRef.value.setScrollTop(itemTop);
+    searchResultScrollbarInstance.value.setScrollTop(itemTop);
   } else if (itemBottom > scrollTop + containerHeight) {
-    searchResultScrollbarRef.value.setScrollTop(itemBottom - containerHeight);
+    searchResultScrollbarInstance.value.setScrollTop(itemBottom - containerHeight);
   }
 };
 
@@ -287,7 +287,7 @@ const deleteHistory = (index: number) => {
       @close="closeSearchDialog"
     >
       <el-input
-        ref="searchInputRef"
+        ref="searchInputInstance"
         v-model="searchVal"
         :placeholder="$t('_search.placeholder')"
         @input="handleSearch"
@@ -303,7 +303,7 @@ const deleteHistory = (index: number) => {
         </template>
       </el-input>
 
-      <el-scrollbar ref="searchResultScrollbarRef" :class="ns.e('search-scrollbar')" :max-height="380">
+      <el-scrollbar ref="searchResultScrollbarInstance" :class="ns.e('search-scrollbar')" :max-height="380">
         <ul :class="ns.e('search-list')" v-show="searchResult.length">
           <li :class="ns.e('search-item')" v-for="(item, index) in searchResult" :key="index">
             <div

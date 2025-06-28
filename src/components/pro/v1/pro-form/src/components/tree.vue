@@ -31,10 +31,10 @@ const indeterminate = ref(false); // 处于全选和全不选期间的状态
 const checkStrictly = ref(true); // 父子联动
 const defaultExpandedKeys = ref<string[]>([]); // 默认展开的节点 nodeKey
 const filterText = ref(""); // 搜索的文本
-const treeRef = useTemplateRef<InstanceType<typeof ElTree>>("treeRef");
+const treeInstance = useTemplateRef<InstanceType<typeof ElTree>>("treeInstance");
 
 watch(defaultExpandAll, val => {
-  const nodes = treeRef.value?.store._getAllNodes();
+  const nodes = treeInstance.value?.store._getAllNodes();
   // true 全展开，false 全折叠
   if (val) nodes?.forEach(item => (item.expanded = true));
   else nodes?.forEach(item => (item.expanded = false));
@@ -42,14 +42,14 @@ watch(defaultExpandAll, val => {
 
 watch(isSelectAll, val => {
   // true 全选，false 全不选
-  if (val) treeRef.value?.setCheckedNodes(props.data);
-  else treeRef.value?.setCheckedNodes([]);
+  if (val) treeInstance.value?.setCheckedNodes(props.data);
+  else treeInstance.value?.setCheckedNodes([]);
   // 关闭处于全选和全不选期间的状态
   indeterminate.value = false;
 });
 
 watch(filterText, val => {
-  treeRef.value!.filter(val);
+  treeInstance.value!.filter(val);
 });
 
 // 过滤搜索条件
@@ -66,7 +66,7 @@ const handleCheck = (_: any, selected: { checkedKeys: string[]; checkedNodes: Re
   if (!selected.checkedKeys?.length) {
     isSelectAll.value = false;
     indeterminate.value = false;
-  } else if (selected.checkedKeys?.length === treeRef.value?.store._getAllNodes().length) {
+  } else if (selected.checkedKeys?.length === treeInstance.value?.store._getAllNodes().length) {
     // 如果选择的节点等于节点数量，则代表全选
     isSelectAll.value = true;
     indeterminate.value = false;
@@ -74,14 +74,14 @@ const handleCheck = (_: any, selected: { checkedKeys: string[]; checkedNodes: Re
 };
 
 const setChecked = (val: any[]) => {
-  // 不用 nextTick 导致获取不到 treeRef 实例
+  // 不用 nextTick 导致获取不到 treeInstance 实例
   nextTick(() => {
     const { checkValueType, expandSelected, nodeKey } = props;
     if (checkValueType === "nodes") {
-      treeRef.value?.setCheckedNodes(val);
+      treeInstance.value?.setCheckedNodes(val);
       if (expandSelected) defaultExpandedKeys.value = val?.map(item => item[nodeKey]);
     } else {
-      treeRef.value?.setCheckedKeys(val, false);
+      treeInstance.value?.setCheckedKeys(val, false);
       if (expandSelected) defaultExpandedKeys.value = val;
     }
   });
@@ -103,7 +103,7 @@ watch(checkedList, val => val?.length && setChecked(val), { immediate: true });
     :placeholder="($attrs.searchPlaceholder as string) || '请输入关键词进行筛选'"
   />
   <el-tree
-    ref="treeRef"
+    ref="treeInstance"
     :show-checkbox="select"
     @check="handleCheck"
     :filter-node-method="filterNode"

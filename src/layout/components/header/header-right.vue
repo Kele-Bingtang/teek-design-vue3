@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useMediaQuery } from "@vueuse/core";
 import { useErrorLogStore } from "@/pinia";
-import { useNamespace } from "@/composables";
-import SystemConfig, { mobileMaxWidthMedia } from "@/common/config";
+import { useCommon, useNamespace } from "@/composables";
+import SystemConfig from "@/common/config";
 import Fullscreen from "./components/fullscreen/index.vue";
 import LanguageSelect from "./components/language-select/index.vue";
 import Notification from "./components/notification/index.vue";
@@ -25,7 +24,7 @@ const errorCount = computed(() => {
   return noReadErrorLogs.length;
 });
 
-const isMobile = useMediaQuery(mobileMaxWidthMedia);
+const { isMobile } = useCommon();
 </script>
 
 <template>

@@ -8,6 +8,7 @@ export * from "./core/use-namespace";
 export * from "./core/use-storage";
 export * from "./core/use-cache";
 export * from "./core/use-watch-css-var";
+export * from "./core/use-common";
 export * from "./core/use-upgrade";
 
 export * from "./use-boolean";

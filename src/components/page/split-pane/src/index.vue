@@ -31,7 +31,7 @@ const emits = defineEmits<SplitPaneEmits>();
 
 const modelValue = defineModel<NumOrStr>({ default: 0.5 });
 
-const splitPaneRef = useTemplateRef("splitPaneRef");
+const splitPaneInstance = useTemplateRef("splitPaneInstance");
 const offset = ref(0);
 const initOffset = ref(0);
 const oldOffset = ref<unknown>(0);
@@ -54,7 +54,7 @@ onMounted(() => {
 
 const init = () => {
   const value = valueIsString.value
-    ? px2percent(modelValue.value as string, splitPaneRef.value?.[offsetSize.value] + "")
+    ? px2percent(modelValue.value as string, splitPaneInstance.value?.[offsetSize.value] + "")
     : modelValue.value;
   offset.value = ((value as number) * 10000) / 100;
 };
@@ -67,7 +67,7 @@ const getComputedThresholdValue = (type: string) => {
   let value: NumOrStr = "";
   if (type === "min") value = props.min;
   else if (type === "max") value = props.max;
-  const size = splitPaneRef.value?.[offsetSize.value] || 0;
+  const size = splitPaneInstance.value?.[offsetSize.value] || 0;
   if (valueIsString.value) return typeof value === "string" ? value : size * value;
   else return typeof value === "string" ? px2percent(value, size + "") : value;
 };
@@ -85,7 +85,8 @@ const getMax = (value1: NumOrStr, value2: NumOrStr) => {
 
 const getAnotherOffset = (value: NumOrStr) => {
   let res: NumOrStr = "0";
-  if (valueIsString.value) res = `${(splitPaneRef.value?.[offsetSize.value] || 0) - parseFloat(value as string)}px`;
+  if (valueIsString.value)
+    res = `${(splitPaneInstance.value?.[offsetSize.value] || 0) - parseFloat(value as string)}px`;
   else res = 1 - (value as number);
   return res;
 };
@@ -93,7 +94,7 @@ const getAnotherOffset = (value: NumOrStr) => {
 const handleMove = (e: MouseEvent) => {
   const pageOffset = isHorizontal.value ? e.pageY : e.pageX;
   const offset = pageOffset - initOffset.value;
-  const outerWidth = splitPaneRef.value?.[offsetSize.value] || 0;
+  const outerWidth = splitPaneInstance.value?.[offsetSize.value] || 0;
   let value = valueIsString.value
     ? `${parseFloat(oldOffset.value + "") + offset}px`
     : px2percent(outerWidth * (oldOffset.value as number) + offset + "", outerWidth + "");
@@ -129,7 +130,7 @@ const handleMousedown = (e: MouseEvent) => {
 </script>
 
 <template>
-  <div ref="splitPaneRef" :class="[ns.b(), { 'no-select': isMoving }]">
+  <div ref="splitPaneInstance" :class="[ns.b(), { 'no-select': isMoving }]">
     <div v-if="isHorizontal" :class="ns.e('horizontal')">
       <div :style="{ bottom: `${anotherOffset}%` }" :class="`${ns.e('item')} top-pane`">
         <slot name="top" />

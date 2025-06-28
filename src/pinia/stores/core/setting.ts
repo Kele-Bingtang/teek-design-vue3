@@ -14,7 +14,7 @@ import SystemConfig from "@/common/config";
 export const useSettingStore = defineStore(
   "settingStore",
   () => {
-    const { themeConfig, keyConfig } = SystemConfig;
+    const { themeConfig } = SystemConfig;
 
     const primaryColor = ref(themeConfig.primaryColor);
     const titleMode = ref(themeConfig.titleMode);
@@ -59,10 +59,12 @@ export const useSettingStore = defineStore(
       isCollapse.value = !isCollapse.value;
     };
 
-    const resetSetting = () => {
+    const resetSetting = async () => {
       const { removeStorage } = useStorage();
-      removeStorage(`${keyConfig.cacheKeyPrefix}:settingStore`);
-      if (!recordTabNav.value) useCache().removeCacheTabNavList();
+      const cache = useCache();
+
+      removeStorage("settingStore");
+      if (!themeConfig.recordTabNav) cache.removeCacheTabNavList();
     };
 
     return {

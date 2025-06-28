@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext } from "element-plus";
+import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext, type TabsInstance } from "element-plus";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
+import { addUnit, removeUnit } from "@/common/utils";
 import { useTabNav } from "../use-tab-nav";
 import RightMenu from "../components/right-menu/index.vue";
 import MoreButton from "../components/more-button/index.vue";
@@ -18,65 +19,123 @@ const router = useRouter();
 const settingStore = useSettingStore();
 
 const {
-  selectedTab,
+  activeTab,
+  rightMenuActiveTab,
   tabNavList,
   rightMenuVisible,
   contextMenuCondition,
   rightMenuLeft,
   rightMenuTop,
-  tabsDrop,
+  tabsDragSort,
   initAffixTabs,
   addTabByRoute,
-  getRouteFullPath,
-  closeCurrentTab,
+  closeTab,
   openRightMenu,
 } = useTabNav();
 
-const tabNavValue = ref(getRouteFullPath(route));
-const tabNavRef = useTemplateRef("tabNavRef"); // 导航栏标签
-
-onMounted(() => {
-  tabsDrop(`.${ns.elNamespace}-tabs__nav`, `.${ns.elNamespace}-tabs__item`);
-  initAffixTabs();
-  addTabByRoute();
-});
+const tabNavInstance = useTemplateRef("tabNavInstance"); // 导航栏标签
+const elTabsInstance = useTemplateRef<TabsInstance>("elTabsInstance"); // 导航栏标签
 
 // 监听路由的变化
 watch(
   () => route.fullPath,
   () => {
     if (route.meta.isFull) return;
-    tabNavValue.value = getRouteFullPath(route);
     addTabByRoute();
   }
 );
 
 // Tab 点击回调
 const tabClick = (tabItem: TabsPaneContext) => {
-  const fullPath = tabItem.props.name as string;
-  router.push(fullPath);
+  const path = tabItem.paneName as string;
+  router.push(path);
 };
 
 // 删除一个 Tab
-const tabRemove = async (fullPath: TabPaneName) => {
-  const tab = tabNavList.value.find(item => item.path === fullPath);
-  if (tab) closeCurrentTab(tab);
+const tabRemove = async (path: TabPaneName) => {
+  const tab = tabNavList.value.find(item => item.path === path);
+  if (tab) closeTab(tab);
 };
+
+// 鼠标中键滚动回调
+const handleScrollOnDom = (e: MouseEvent & { wheelDelta: number }) => {
+  const type = e.type;
+  let delta = 0;
+  if (["DOMMouseScroll", "mousewheel"].includes(type)) {
+    delta = e.wheelDelta ?? -(e.detail || 0) * 40;
+  }
+  handleScroll(delta);
+};
+
+const handleScroll = (offset: number) => {
+  const navContainerDom = elTabsInstance.value?.$el.querySelector(".el-tabs__nav-scroll");
+  const tabListDom = elTabsInstance.value?.tabNavRef?.tabListRef;
+  if (!navContainerDom || !tabListDom) return;
+
+  const tabNavWidth = navContainerDom.offsetWidth;
+  const canScrollWidth = tabListDom?.offsetWidth;
+
+  // 没有超出标签栏宽度则不需要滚动
+  if (tabNavWidth >= canScrollWidth) {
+    tabListDom.style.transform = `translateX(0px)`;
+    return;
+  }
+
+  // 获取当前偏移量
+  const currentOffset = removeUnit(tabListDom?.style.transform.match(/translateX\((.+)\)/)?.[1]) || 0;
+  // 偏移量最大值为 0，从 0 开始，向右移动时偏移量越来越小（负数），等于 标签栏宽度 - 可以滚动的宽度（负数所以反着减） 到达最有边界，向左移动时偏移量越接近 0，等于 0 则到达最左边界
+  const newOffset = Math.max(Math.min(currentOffset + offset, 0), tabNavWidth - canScrollWidth);
+
+  tabListDom.style.transform = `translateX(${addUnit(newOffset)})`;
+};
+
+// ---------- 移动端触屏滚动 ----------
+let startX = 0;
+
+const handleTouchStart = (event: TouchEvent) => {
+  const touch = event.touches[0];
+  startX = touch.clientX;
+};
+
+const handleTouchMove = (event: TouchEvent) => {
+  const touch = event.touches[0];
+  const deltaX = touch.clientX - startX;
+
+  handleScroll(deltaX);
+
+  startX = touch.clientX;
+};
+
+onMounted(() => {
+  tabsDragSort(`.${ns.elNamespace}-tabs__nav`, `.${ns.elNamespace}-tabs__item`);
+  initAffixTabs();
+  addTabByRoute();
+});
 </script>
 
 <template>
-  <div ref="tabNavRef" :class="[ns.b(), 'tab-nav']">
+  <div ref="tabNavInstance" :class="[ns.b(), 'tab-nav']">
     <div :class="[ns.e('content'), 'flx-align-center']">
-      <el-tabs v-model="tabNavValue" type="card" @tab-click="tabClick" @tab-remove="tabRemove">
+      <el-tabs
+        ref="elTabsInstance"
+        :model-value="activeTab.path"
+        type="card"
+        @tab-click="tabClick"
+        @tab-remove="tabRemove"
+        @DOMMouseScroll="handleScrollOnDom"
+        @mousewheel="handleScrollOnDom"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+      >
         <el-tab-pane
-          v-for="tab in tabNavList"
-          :key="tab.path"
+          v-for="(tab, index) in tabNavList"
+          :key="index"
           :label="tab.title"
           :name="tab.path"
           :closable="tab.close"
         >
           <template #label>
-            <div @contextmenu.prevent="openRightMenu($event, tab, tabNavRef)">
+            <div @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)">
               <Icon
                 v-if="tab.meta.icon && settingStore.showTabNavIcon"
                 :icon="tab.meta.icon"
@@ -94,7 +153,7 @@ const tabRemove = async (fullPath: TabPaneName) => {
     <transition :name="`${ns.elNamespace}-zoom-in-top`">
       <RightMenu
         v-model="rightMenuVisible"
-        :selected-tab="selectedTab"
+        :selected-tab="rightMenuActiveTab"
         :left="rightMenuLeft"
         :top="rightMenuTop"
         :condition="contextMenuCondition"

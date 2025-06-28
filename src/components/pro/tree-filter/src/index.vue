@@ -30,7 +30,7 @@ const defaultProps = {
 };
 
 const filterText = ref<string>("");
-const treeRef = useTemplateRef<InstanceType<typeof ElTree>>("treeRef");
+const treeInstance = useTemplateRef<InstanceType<typeof ElTree>>("treeInstance");
 const treeData = ref<Recordable[]>([]);
 const treeAllData = ref<Recordable[]>([]);
 // 选中的值
@@ -69,14 +69,14 @@ const initTreeData = async () => {
   if (defaultFirst && treeAllData.value?.length) {
     nextTick(() => {
       const firstData = treeAllData.value[0];
-      treeRef.value?.setCurrentKey(firstData[id]);
+      treeInstance.value?.setCurrentKey(firstData[id]);
       emit("change", firstData[id], firstData);
     });
   }
 };
 
 watch(filterText, val => {
-  treeRef.value!.filter(val);
+  treeInstance.value!.filter(val);
 });
 
 // 过滤
@@ -102,7 +102,7 @@ const handleNodeClick = (data: Recordable) => {
 
 // 多选
 const handleCheckChange = () => {
-  emit("change", treeRef.value?.getCheckedKeys());
+  emit("change", treeInstance.value?.getCheckedKeys());
 };
 
 defineExpose({ treeData, treeAllData, initTreeData });
@@ -116,7 +116,7 @@ defineExpose({ treeData, treeAllData, initTreeData });
     <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
     <el-scrollbar :style="{ height: title ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
       <el-tree
-        ref="treeRef"
+        ref="treeInstance"
         default-expand-all
         :node-key="id"
         :data="multiple ? treeData : treeAllData"

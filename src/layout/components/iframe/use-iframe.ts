@@ -48,7 +48,7 @@ export const useIFrame = (immediate = true) => {
 
     if (isString(message)) message = JSON.parse(data);
     else if (isObject(message)) message = data;
-    else throw new Error("Message data is not a object string or object");
+    else return;
 
     const { name, iframeSrc, closeName, refreshName } = message;
 
@@ -74,12 +74,8 @@ export const useIFrame = (immediate = true) => {
   };
 
   const closeFrame = (name: string) => {
-    for (const tab of layoutStore.tabNavList) {
-      if (tab.name === name) {
-        closeSelectedTab(tab);
-        break;
-      }
-    }
+    const tab = layoutStore.tabNavList.find(tab => tab.name === name);
+    tab && closeSelectedTab(tab);
   };
 
   const start = () => {

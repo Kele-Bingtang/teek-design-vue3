@@ -109,8 +109,8 @@ const props = withDefaults(defineProps<ProTableProps>(), {
 });
 
 // 表格 DOM 元素
-const tableMainRef = useTemplateRef<InstanceType<typeof TableMain>>("tableMainRef");
-const proSearchRef = useTemplateRef<ProSearchInstance>("proSearchRef");
+const tableMainInstance = useTemplateRef<InstanceType<typeof TableMain>>("tableMainInstance");
+const proSearchInstance = useTemplateRef<ProSearchInstance>("proSearchInstance");
 
 // column 列类型
 const columnTypes: TypeProps[] = ["selection", "radio", "index", "expand", "sort"];
@@ -422,25 +422,25 @@ const handleExport = () => {
 };
 
 // ------- 按钮点击事件 -------
-const dialogFormRef = useTemplateRef<DialogFormInstance>("dialogFormRef");
-provide(dialogFormInstanceKey, dialogFormRef);
+const dialogFormInstance = useTemplateRef<DialogFormInstance>("dialogFormInstance");
+provide(dialogFormInstanceKey, dialogFormInstance);
 
 // 编辑事件
 const handleEdit = (scope: any, item: TableColumnProps) => {
   if (item.handleEdit) return item.handleEdit(scope, expose);
 
-  dialogFormRef.value?.handleEdit(scope.row);
+  dialogFormInstance.value?.handleEdit(scope.row);
 };
 
 // 删除事件
 const handleRemove = (scope: any, item: TableColumnProps) => {
   if (item.handleRemove) item.handleRemove(scope, expose);
-  dialogFormRef.value?.handleRemove(scope.row);
+  dialogFormInstance.value?.handleRemove(scope.row);
 };
 
 // 批量删除事件
 const handleRemoveBatch = () => {
-  dialogFormRef.value?.handleRemoveBatch(selectedListIds.value, selectedList.value, () => {
+  dialogFormInstance.value?.handleRemoveBatch(selectedListIds.value, selectedList.value, () => {
     clearSelection();
     getTableList();
   });
@@ -487,7 +487,7 @@ const getHeaderCellStyle = (tableInfo: any) => {
 };
 
 // 清空选中数据列表
-const clearSelection = () => tableMainRef.value?.table?.clearSelection();
+const clearSelection = () => tableMainInstance.value?.table?.clearSelection();
 
 // ------- Emits 事件 -------
 type ProTableEmits = {
@@ -522,7 +522,7 @@ const searchRegister = (ref?: ProSearchExpose) => {
 
 onMounted(() => {
   // 注册实例
-  emits("register", tableMainRef.value?.$parent, tableMainRef.value?.table || null, proSearchRef.value);
+  emits("register", tableMainInstance.value?.$parent, tableMainInstance.value?.table || null, proSearchInstance.value);
 });
 
 const _search = (model: Record<string, any>) => {
@@ -594,9 +594,9 @@ const delColumn = (prop: string) => {
 
 // 暴露给父组件的参数和方法(外部需要什么，都可以从这里暴露出去)
 const expose = {
-  element: tableMainRef.value?.table,
-  searchEl: proSearchRef,
-  dialogFormEl: dialogFormRef,
+  element: tableMainInstance.value?.table,
+  searchEl: proSearchInstance,
+  dialogFormEl: dialogFormInstance,
   tableData,
   paging,
   searchParam,
@@ -631,7 +631,7 @@ defineExpose(expose);
   <div :class="prefixClass">
     <!-- 查询表单 card -->
     <ProSearch
-      ref="proSearchRef"
+      ref="proSearchInstance"
       v-if="['search', 'all', 'allAndUseFilter'].includes(getProps.searchModel!)"
       v-show="getProps.initShowSearch"
       v-model="searchParam"
@@ -656,7 +656,7 @@ defineExpose(expose);
         :selectedListIds="selectedListIds"
         :isSelected="isSelected"
         :dialogForm="getProps.dialogForm"
-        @add="dialogFormRef?.handleAdd"
+        @add="dialogFormInstance?.handleAdd"
         @removeBatch="handleRemoveBatch"
         @refresh="getTableList"
         @size="handleSizeCommand"
@@ -671,7 +671,7 @@ defineExpose(expose);
 
       <!-- 表格主体 -->
       <TableMain
-        ref="tableMainRef"
+        ref="tableMainInstance"
         v-bind="$attrs"
         :data="filterTableData ? filterTableData : currentTableData"
         :size="elTableSize"
@@ -695,7 +695,7 @@ defineExpose(expose);
 
       <!-- Dialog 表单 -->
       <DialogFormComponent
-        ref="dialogFormRef"
+        ref="dialogFormInstance"
         v-if="getProps.dialogForm"
         v-bind="{
           ...(getProps.dialogForm || { formProps: {}, dialog: {} }),

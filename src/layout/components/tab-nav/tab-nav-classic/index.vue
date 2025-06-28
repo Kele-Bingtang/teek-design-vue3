@@ -3,7 +3,7 @@ import { ref, onMounted, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
-import { useLayoutStore, useSettingStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 import { useTabNav } from "../use-tab-nav";
 import MoreButton from "../components/more-button/index.vue";
@@ -17,58 +17,29 @@ const { type = "classic" } = defineProps<{ type?: "simple" | "classic" }>();
 
 const ns = useNamespace("classic-tabs-nav");
 const route = useRoute();
-const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
 const tabBodyLeft = ref(0); // tabNav 滚动
-const tabNavRef = useTemplateRef("tabNavRef"); // 导航栏标签
-const scrollContainerRef = useTemplateRef("scrollContainerRef"); // 滚动栏标签
-const scrollBodyRef = useTemplateRef("scrollBodyRef"); // tabNav 滚动栏
-const tabsRef = useTemplateRef<any>("tabsRef"); // tab 标签
+const tabNavInstance = useTemplateRef("tabNavInstance"); // 导航栏标签
+const scrollContainerInstance = useTemplateRef("scrollContainerInstance"); // 滚动栏标签
+const scrollBodyInstance = useTemplateRef("scrollBodyInstance"); // tabNav 滚动栏
+const tabsInstance = useTemplateRef<any>("tabsInstance"); // tab 标签
 const hasScroll = ref(false); // 是否出现滚动条
 
 const {
-  selectedTab,
+  rightMenuActiveTab,
   tabNavList,
   rightMenuVisible,
   contextMenuCondition,
   rightMenuLeft,
   rightMenuTop,
   isActive,
-  tabsDrop,
+  tabsDragSort,
   initAffixTabs,
-  getTabByPath,
-  getTabByRoute,
   addTabByRoute,
   openRightMenu,
-  closeCurrentTab,
+  closeTab,
 } = useTabNav();
-
-onMounted(() => {
-  tabsDrop(`.${ns.e("scroll-body")}`, `.${ns.e("tab")}`);
-  initAffixTabs();
-  addTabByRoute();
-});
-
-/**
- * 找出访问的目标 tab
- */
-const findTargetTab = async () => {
-  await nextTick();
-
-  if (!tabsRef.value || !tabsRef.value.length) return;
-
-  for (const tab of tabsRef.value) {
-    if (route.path === tab?.to) {
-      moveToTargetTab(tab.$el);
-      // 当 query 不一样
-      if (tab.to.path !== route.fullPath) {
-        const tabParam = getTabByPath(route.meta._fullPath || route.path) || getTabByRoute(route);
-        layoutStore.updateTab(tabParam);
-      }
-    }
-  }
-};
 
 // 监听路由的变化
 watch(
@@ -81,11 +52,23 @@ watch(
 );
 
 /**
+ * 找出访问的目标 tab
+ */
+const findTargetTab = async () => {
+  await nextTick();
+
+  if (!tabsInstance.value || !tabsInstance.value.length) return;
+  const targetTab = tabsInstance.value.find((tab: any) => route.path === tab?.to);
+
+  moveToTargetTab(targetTab.$el);
+};
+
+/**
  * 移动到目标 tab，如果目标 tab 在 TabNav 可视区域外面，则有滚动的动画效果
  */
 const moveToTargetTab = (tabElement: HTMLElement) => {
-  const outerWidth = scrollContainerRef.value?.offsetWidth || 0;
-  const bodyWidth = scrollBodyRef.value?.offsetWidth || 0;
+  const outerWidth = scrollContainerInstance.value?.offsetWidth || 0;
+  const bodyWidth = scrollBodyInstance.value?.offsetWidth || 0;
   hasScroll.value = bodyWidth > outerWidth;
 
   if (bodyWidth <= outerWidth) {
@@ -106,9 +89,7 @@ const moveToTargetTab = (tabElement: HTMLElement) => {
   // 如果 Tab 完全在可视区域内，无需滚动
   if (tabOffsetLeft >= currentScrollLeft && tabRightEdge <= visibleRightEdge) return;
   // Tab 在左侧不可见
-  if (tabOffsetLeft < currentScrollLeft) {
-    tabBodyLeft.value = -tabOffsetLeft + outerPadding;
-  }
+  if (tabOffsetLeft < currentScrollLeft) tabBodyLeft.value = -tabOffsetLeft + outerPadding;
   // Tab 在右侧不可见
   else if (tabRightEdge > visibleRightEdge) {
     const newScrollLeft = tabRightEdge - outerWidth + outerPadding;
@@ -120,49 +101,77 @@ const moveToTargetTab = (tabElement: HTMLElement) => {
 const handleScrollOnDom = (e: MouseEvent & { wheelDelta: number }) => {
   const type = e.type;
   let delta = 0;
-  if (type === "DOMMouseScroll" || type === "mousewheel") {
-    delta = e.wheelDelta ? e.wheelDelta : -(e.detail || 0) * 40;
+  if (["DOMMouseScroll", "mousewheel"].includes(type)) {
+    delta = e.wheelDelta ?? -(e.detail || 0) * 40;
   }
   handleScroll(delta);
 };
 
 // TagsNav 滚动回调
 const handleScroll = (offset: number) => {
-  const outerWidth = scrollContainerRef.value?.offsetWidth as number;
-  const bodyWidth = scrollBodyRef.value?.offsetWidth as number;
+  const tabNavWidth = scrollContainerInstance.value?.offsetWidth as number;
+  const canScrollWidth = scrollBodyInstance.value?.offsetWidth as number;
 
-  if (offset > 0) tabBodyLeft.value = Math.min(0, tabBodyLeft.value + offset);
-  else if (outerWidth < bodyWidth) {
-    if (tabBodyLeft.value >= -(bodyWidth - outerWidth)) {
-      tabBodyLeft.value = Math.max(tabBodyLeft.value + offset, outerWidth - bodyWidth);
-    }
-  } else tabBodyLeft.value = 0;
+  // 没有超出标签栏宽度则不需要滚动
+  if (tabNavWidth >= canScrollWidth) {
+    tabBodyLeft.value = 0;
+    return;
+  }
+
+  // 偏移量最大值为 0，从 0 开始，向右移动时偏移量越来越小（负数），等于 标签栏宽度 - 可以滚动的宽度（负数所以反着减） 到达最有边界，向左移动时偏移量越接近 0，等于 0 则到达最左边界
+  const newLeft = tabBodyLeft.value + offset;
+  tabBodyLeft.value = Math.max(Math.min(newLeft, 0), tabNavWidth - canScrollWidth);
 };
+
+// ---------- 移动端触屏滚动 ----------
+let startX = 0;
+
+const handleTouchStart = (event: TouchEvent) => {
+  const touch = event.touches[0];
+  startX = touch.clientX;
+};
+
+const handleTouchMove = (event: TouchEvent) => {
+  const touch = event.touches[0];
+  const deltaX = touch.clientX - startX;
+
+  handleScroll(deltaX);
+
+  startX = touch.clientX;
+};
+
+onMounted(() => {
+  tabsDragSort(`.${ns.e("scroll-body")}`, `.${ns.e("tab")}`);
+  initAffixTabs();
+  addTabByRoute();
+});
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.is(type), 'flx-align-center', 'tab-nav']" ref="tabNavRef">
+  <div ref="tabNavInstance" :class="[ns.b(), ns.is(type), 'flx-align-center', 'tab-nav']">
     <div v-show="hasScroll" :class="[ns.e('btn'), ns.is('left')]">
       <el-button plain @click="handleScroll(240)">
         <Icon><ArrowLeft /></Icon>
       </el-button>
     </div>
 
-    <div :class="ns.e('scroll')" ref="scrollContainerRef">
+    <div :class="ns.e('scroll')" ref="scrollContainerInstance">
       <div
-        ref="scrollBodyRef"
+        ref="scrollBodyInstance"
         :class="ns.e('scroll-body')"
         :style="{ left: tabBodyLeft + 'px' }"
         @DOMMouseScroll="handleScrollOnDom"
         @mousewheel="handleScrollOnDom"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
       >
         <router-link
-          ref="tabsRef"
-          v-for="tab in tabNavList"
-          :key="tab.path"
+          ref="tabsInstance"
+          v-for="(tab, index) in tabNavList"
+          :key="index"
           :to="tab.path"
           :class="[ns.e('tab'), ns.is('active', isActive(tab))]"
-          @contextmenu.prevent="openRightMenu($event, tab, tabNavRef)"
+          @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)"
         >
           <Icon
             v-if="tab.meta.icon && settingStore.showTabNavIcon"
@@ -171,11 +180,7 @@ const handleScroll = (offset: number) => {
           />
           <span class="dot" v-else-if="settingStore.showTabNavDot || !tab.meta.icon" />
           <span>{{ tab.title }}</span>
-          <Icon
-            class="icon-close"
-            v-if="tab.close && tabNavList.length !== 1"
-            @click.prevent.stop="closeCurrentTab(tab)"
-          >
+          <Icon class="icon-close" v-if="tab.close && tabNavList.length !== 1" @click.prevent.stop="closeTab(tab)">
             <Close />
           </Icon>
         </router-link>
@@ -193,7 +198,7 @@ const handleScroll = (offset: number) => {
     <transition :name="`${ns.elNamespace}-zoom-in-top`">
       <RightMenu
         v-model="rightMenuVisible"
-        :selected-tab="selectedTab"
+        :selected-tab="rightMenuActiveTab"
         :left="rightMenuLeft"
         :top="rightMenuTop"
         :condition="contextMenuCondition"

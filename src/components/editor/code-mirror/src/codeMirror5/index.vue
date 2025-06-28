@@ -1,6 +1,6 @@
 <template>
   <Codemirror
-    ref="codemirrorRef"
+    ref="codemirrorInstance"
     v-model:value="code"
     :options="cmOptions"
     @blur="onCmBlur"
@@ -47,7 +47,7 @@ type CodeMirrorEmits = {
 
 const emits = defineEmits<CodeMirrorEmits>();
 
-const codemirrorRef = useTemplateRef("codemirrorRef");
+const codemirrorInstance = useTemplateRef("codemirrorInstance");
 const code = computed({
   get() {
     return props.modelValue || "";
@@ -57,7 +57,7 @@ const code = computed({
   },
 });
 
-// const cm = computed(() => codemirrorRef.value.codemirror);
+// const cm = computed(() => codemirrorInstance.value.codemirror);
 
 const cmOptions = computed(() => ({
   theme: props.cmTheme, // 主题

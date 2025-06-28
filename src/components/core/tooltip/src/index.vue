@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 let tryNumber = -1;
 const slots = useSlots() as any;
 let slotDom = slots.default();
-const slotRef = useTemplateRef("slotRef");
+const slotInstance = useTemplateRef("slotInstance");
 const showTip = ref<boolean>(false);
 const content = ref<any>([]);
 const isFirstMounted = ref(false);
@@ -67,9 +67,9 @@ const compareWidth = () => {
   content.value = [];
 
   if (line.value === 1) {
-    const parentW = slotRef.value?.offsetWidth ?? 0;
+    const parentW = slotInstance.value?.offsetWidth ?? 0;
     if (parentW === 0) return;
-    const childW = (slotRef.value?.firstElementChild as any).offsetWidth ?? 0;
+    const childW = (slotInstance.value?.firstElementChild as any).offsetWidth ?? 0;
     childW > parentW ? (showTip.value = true) : (showTip.value = false);
     if (showTip.value) getContent();
   } else {
@@ -79,11 +79,11 @@ const compareWidth = () => {
     tempTag.innerText = content.value.join("") ?? "";
     tempTag.className = "tooltip-slot";
     tempTag.style.whiteSpace = "nowrap";
-    slotRef.value?.appendChild(tempTag);
-    const tooTipSlot = slotRef.value?.querySelector(".tooltip-slot");
+    slotInstance.value?.appendChild(tempTag);
+    const tooTipSlot = slotInstance.value?.querySelector(".tooltip-slot");
     const childW = (tooTipSlot && (tooTipSlot as HTMLSpanElement).offsetWidth) || 0;
     tooTipSlot && tooTipSlot.remove();
-    const parentW = slotRef.value?.offsetWidth ?? 0;
+    const parentW = slotInstance.value?.offsetWidth ?? 0;
     if (parentW === 0) return;
     // 当文本宽度大于容器宽度两倍时，代表文本显示超过两行
     childW > parentW ? (showTip.value = true) : (showTip.value = false);
@@ -93,8 +93,8 @@ const compareWidth = () => {
 onMounted(() => {
   isFirstMounted.value = true;
   compareWidth();
-  if (props.try > 0) slotRef.value?.addEventListener("mouseover", compareWidth);
-  else slotRef.value?.removeEventListener("mouseout", compareWidth);
+  if (props.try > 0) slotInstance.value?.addEventListener("mouseover", compareWidth);
+  else slotInstance.value?.removeEventListener("mouseout", compareWidth);
 });
 
 onUpdated(() => {
@@ -107,7 +107,7 @@ onUpdated(() => {
 });
 
 onBeforeMount(() => {
-  slotRef.value?.removeEventListener("mouseout", compareWidth);
+  slotInstance.value?.removeEventListener("mouseout", compareWidth);
 });
 </script>
 
@@ -115,13 +115,13 @@ onBeforeMount(() => {
   <template v-if="showTip">
     <el-tooltip placement="top" v-bind="$attrs">
       <template #content>{{ content.join("") }}</template>
-      <div ref="slotRef" :class="className">
+      <div ref="slotInstance" :class="className">
         <slot></slot>
       </div>
     </el-tooltip>
   </template>
   <template v-else>
-    <div ref="slotRef" :class="className">
+    <div ref="slotInstance" :class="className">
       <slot></slot>
     </div>
   </template>
