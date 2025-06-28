@@ -82,7 +82,7 @@ const list = [
 
         &:first-of-type {
           font-size: 24px;
-          color: cssVar(gray-900);
+          color: cssVar(text-gray-900);
         }
 
         &:last-of-type {

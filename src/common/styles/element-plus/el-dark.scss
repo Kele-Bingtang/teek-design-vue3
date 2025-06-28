@@ -1,16 +1,17 @@
 @use "../mixins/namespace" as *;
 
 // 自定义 ElementPlus 暗黑主题
-@forward "element-plus/theme-chalk/src/dark/var.scss" //
-  with (
+@forward "element-plus/theme-chalk/src/dark/var.scss" with (
   $colors: (
     //
     "white": #ffffff,
     "black": #000000,
-    "success": ("base": #13deb9),
-    "warning": ("base": #ffae1f),
-    "danger": ("base": #ff4d4f),
-    "error": ("base": #fa896b),
+    "primary": ("base": #395ae3),
+    "success": ("base": #0bb449),
+    "warning": ("base": #fa9014),
+    "danger": ("base": #ef4a38),
+    "error": ("base": #f26e59),
+    "info": ("base": #909399),
   )
 );
 

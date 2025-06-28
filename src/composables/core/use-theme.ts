@@ -113,13 +113,6 @@ export const useTheme = () => {
 
     if (settingStore.isGrey) changeGreyOrWeak(true, "grey");
     if (settingStore.isWeak) changeGreyOrWeak(true, "weak");
-
-    // 修改 EP 默认色调
-    // setCssVar(`--${ns.elNamespace}-color-success`, "#0bb449");
-    // setCssVar(`--${ns.elNamespace}-color-warning`, "#fa9014");
-    // setCssVar(`--${ns.elNamespace}-color-danger`, "#ef4a38");
-    // setCssVar(`--${ns.elNamespace}-color-error`, "#ef4a38");
-    // setCssVar(`--${ns.elNamespace}-color-info`, "#909399");
   };
 
   return {

@@ -138,6 +138,8 @@ const addAnimation = () => {
 </template>
 
 <style lang="scss">
+@use "@styles/mixins/function" as *;
+
 .card {
   // 进度动画
   .el-progress-bar__inner {

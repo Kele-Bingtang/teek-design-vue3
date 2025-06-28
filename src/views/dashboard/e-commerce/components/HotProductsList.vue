@@ -21,7 +21,7 @@ const tableData = reactive([
     sales: 423,
     percentage: 75,
     pro: 0,
-    color: `rgb(${ns.cssVar("primary")}) !important`,
+    color: `${ns.cssVar("primary")} !important`,
     image: product1,
   },
   {
@@ -32,7 +32,7 @@ const tableData = reactive([
     sales: 652,
     percentage: 85,
     pro: 0,
-    color: `rgb(${ns.cssVar("success")}) !important`,
+    color: `${ns.cssVar("success")} !important`,
     image: product2,
   },
   {
@@ -43,7 +43,7 @@ const tableData = reactive([
     sales: 238,
     percentage: 45,
     pro: 0,
-    color: `rgb(var(${ns.cssVar("warning")})) !important`,
+    color: `${ns.cssVar("warning")} !important`,
     image: product3,
   },
   {
@@ -54,7 +54,7 @@ const tableData = reactive([
     sales: 126,
     percentage: 30,
     pro: 0,
-    color: `rgb(var(${ns.cssVar("error")})) !important`,
+    color: `${ns.cssVar("error")} !important`,
     image: product4,
   },
   {
@@ -65,7 +65,7 @@ const tableData = reactive([
     sales: 321,
     percentage: 60,
     pro: 0,
-    color: `rgb(var(${ns.cssVar("info")})) !important`,
+    color: `${ns.cssVar("info")} !important`,
     image: product5,
   },
   {
@@ -76,7 +76,7 @@ const tableData = reactive([
     sales: 489,
     percentage: 70,
     pro: 0,
-    color: `rgb(var(${ns.cssVar("secondary")})) !important`,
+    color: `${ns.cssVar("secondary")} !important`,
     image: product6,
   },
 ]);

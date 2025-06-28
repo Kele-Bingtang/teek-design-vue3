@@ -9,5 +9,5 @@ h2,
 h3,
 h4,
 h5 {
-  color: cssVar(text-gray-800);
+  color: var(--#{$admin-namespace}-text-gray-800);
 }
