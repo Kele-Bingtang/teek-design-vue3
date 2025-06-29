@@ -63,7 +63,6 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
 
   /**
    * 拼接命名空间
-   * @param scope
    */
   const join = (scope?: string) => {
     return `${finalNamespace}-${scope}`;
@@ -77,6 +76,13 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
    * CSS 变量名称当 name = color，返回 --tk-color
    */
   const cssVarName = (name: string) => `--${finalNamespace}-${name}`;
+
+  /**
+   * 拼接 element plus 命名空间
+   */
+  const joinEl = (scope?: string) => {
+    return `${elNamespace}-${scope}`;
+  };
 
   /**
    * CSS 变量，当 name = color，返回 var(--el-color)
@@ -105,6 +111,7 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
     join,
     cssVar,
     cssVarName,
+    joinEl,
     cssVarEl,
     cssVarNameEl,
   };

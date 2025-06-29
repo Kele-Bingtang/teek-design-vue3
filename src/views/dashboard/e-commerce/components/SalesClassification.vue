@@ -4,7 +4,7 @@ import { RingChart } from "@/components";
 </script>
 
 <template>
-  <div class="card tk-card-secondary sales-card" style="height: 26rem">
+  <div class="tk-card-minimal card">
     <div class="card-header">
       <p class="title">销售分类</p>
       <p class="subtitle">按产品类别</p>

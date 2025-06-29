@@ -2,13 +2,16 @@
 import { Print } from "@/common/utils";
 import ChartLine from "@/views/dashboard/console/index.vue";
 import { simpleData } from "@/mock/table";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const value = ref("1");
 
 const options = [
   {
     value: "1",
-    el: ".el-table",
+    el: `.${ns.joinEl("table")}`,
     label: "Table",
   },
   {

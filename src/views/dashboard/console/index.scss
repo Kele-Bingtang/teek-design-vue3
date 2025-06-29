@@ -1,6 +1,6 @@
-@use "@styles/variables" as *;
 @use "@styles/mixins/function" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/common/var" as *;
 
 .console {
   --card-spacing: 20px;
@@ -21,7 +21,6 @@
   :deep(.card-header) {
     display: flex;
     justify-content: space-between;
-    padding: 20px 25px 5px 0;
 
     .title {
       h4 {
@@ -41,13 +40,6 @@
         }
       }
     }
-  }
-
-  // 设置卡片背景色、圆角、间隙
-  :deep(.card-list .card),
-  .card {
-    background: cssVar(main-bg-color);
-    border-radius: calc(cssVar(radius) + 4px) !important;
   }
 
   @media screen and (max-width: $device-phone) {

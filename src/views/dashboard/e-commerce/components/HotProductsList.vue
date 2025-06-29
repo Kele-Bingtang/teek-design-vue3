@@ -112,55 +112,45 @@ const addAnimation = () => {
 </script>
 
 <template>
-  <div class="card tk-card-secondary" style="height: 27.8rem">
+  <div class="card tk-card-minimal">
     <div class="card-header">
       <p class="title">热销产品</p>
       <p class="subtitle">本月销售情况</p>
     </div>
     <div class="table">
-      <el-scrollbar style="height: 21.55rem">
-        <el-table
-          :data="tableData"
-          :pagination="false"
-          style="margin-top: 0 !important"
-          size="large"
-          :border="false"
-          :stripe="false"
-          :show-header-background="false"
-        >
-          <template #default>
-            <el-table-column label="产品" prop="product" width="220px">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <img class="product-image" :src="scope.row.image" />
-                  <div class="product-info">
-                    <div class="product-name">{{ scope.row.name }}</div>
-                    <div class="product-category">{{ scope.row.category }}</div>
-                  </div>
+      <el-table :data="tableData" size="large" height="300px">
+        <template #default>
+          <el-table-column label="产品" prop="product" width="220px">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <img class="product-image" :src="scope.row.image" />
+                <div class="product-info">
+                  <div class="product-name">{{ scope.row.name }}</div>
+                  <div class="product-category">{{ scope.row.category }}</div>
                 </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="价格" prop="price">
-              <template #default="scope">
-                <span class="price">¥{{ scope.row.price.toLocaleString() }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="库存" prop="stock">
-              <template #default="scope">
-                <div class="stock-badge" :class="getStockClass(scope.row.stock)">
-                  {{ getStockStatus(scope.row.stock) }}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="销量" prop="sales" />
-            <el-table-column label="销售趋势" width="240">
-              <template #default="scope">
-                <el-progress :percentage="scope.row.pro" :color="scope.row.color" :stroke-width="4" />
-              </template>
-            </el-table-column>
-          </template>
-        </el-table>
-      </el-scrollbar>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="价格" prop="price">
+            <template #default="scope">
+              <span class="price">¥{{ scope.row.price.toLocaleString() }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="库存" prop="stock">
+            <template #default="scope">
+              <div class="stock-badge" :class="getStockClass(scope.row.stock)">
+                {{ getStockStatus(scope.row.stock) }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="销量" prop="sales" />
+          <el-table-column label="销售趋势" width="240">
+            <template #default="scope">
+              <el-progress :percentage="scope.row.pro" :color="scope.row.color" :stroke-width="4" />
+            </template>
+          </el-table-column>
+        </template>
+      </el-table>
     </div>
   </div>
 </template>
@@ -168,12 +158,12 @@ const addAnimation = () => {
 <style lang="scss" scoped>
 @use "@styles/mixins/function" as *;
 
+.card {
+  height: calc(100% - 20px) !important;
+}
+
 .table {
   width: 100%;
-
-  .card-header {
-    padding-left: 25px !important;
-  }
 
   .product-image {
     width: 50px;

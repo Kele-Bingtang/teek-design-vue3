@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { BarChart } from "@/components";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const list = [
   { name: "总用户量", num: "32k" },
@@ -10,7 +13,7 @@ const list = [
 </script>
 
 <template>
-  <div class="card tk-card-secondary">
+  <div class="tk-card-minimal active-user-card">
     <BarChart
       class="chart"
       barWidth="50%"
@@ -23,7 +26,7 @@ const list = [
       <h3 class="box-title">用户概述</h3>
       <p class="subtitle">
         比上周
-        <span class="text-success">+23%</span>
+        <span :class="ns.join('text-success')">+23%</span>
       </p>
       <p class="subtitle">我们为您创建了多个选项，可将它们组合在一起并定制为像素完美的页面</p>
     </div>
@@ -39,10 +42,9 @@ const list = [
 <style lang="scss" scoped>
 @use "@styles/mixins/function" as *;
 
-.card {
+.active-user-card {
   width: 100%;
   height: 420px;
-  padding: 16px;
 
   .chart {
     width: 100%;

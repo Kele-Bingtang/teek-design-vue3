@@ -5,18 +5,18 @@
 tbody {
   @include b(pro-table-column-data) {
     @include is(cell-edit) {
-      .cell:not(:has(.el-form-item)) {
+      .cell:not(:has(.#{$el-namespace}-form-item)) {
         cursor: pointer;
         transition: box-shadow cssVarEl(transition-duration-fast);
 
         &:hover {
           margin-right: 0.6px;
-          box-shadow: 0 0 0 1px cssVar(gray-400);
+          box-shadow: 0 0 0 1px cssVar(gray-300);
         }
       }
     }
 
-    .el-form-item {
+    .#{$el-namespace}-form-item {
       margin-bottom: 0;
     }
   }

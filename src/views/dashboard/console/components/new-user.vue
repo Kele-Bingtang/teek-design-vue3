@@ -5,6 +5,9 @@ import avatar3 from "@/common/assets/images/default.png";
 import avatar4 from "@/common/assets/images/default.png";
 import avatar5 from "@/common/assets/images/default.png";
 import avatar6 from "@/common/assets/images/default.png";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const radio2 = ref("本月");
 
@@ -16,7 +19,7 @@ const tableData = reactive([
     age: 22,
     percentage: 60,
     pro: 0,
-    color: "rgb(var(--tk-primary)) !important",
+    color: `${ns.cssVar("primary")} !important`,
     avatar: avatar1,
   },
   {
@@ -26,7 +29,7 @@ const tableData = reactive([
     age: 21,
     percentage: 20,
     pro: 0,
-    color: "rgb(var(--tk-secondary)) !important",
+    color: `${ns.cssVar("secondary")} !important`,
     avatar: avatar2,
   },
   {
@@ -36,7 +39,7 @@ const tableData = reactive([
     age: 23,
     percentage: 60,
     pro: 0,
-    color: "rgb(var(--tk-warning)) !important",
+    color: `${ns.cssVar("warning")} !important`,
     avatar: avatar3,
   },
   {
@@ -46,7 +49,7 @@ const tableData = reactive([
     age: 28,
     percentage: 50,
     pro: 0,
-    color: "rgb(var(--tk-info)) !important",
+    color: `${ns.cssVar("info")} !important`,
     avatar: avatar4,
   },
   {
@@ -56,7 +59,7 @@ const tableData = reactive([
     age: 26,
     percentage: 70,
     pro: 0,
-    color: "rgb(var(--tk-error)) !important",
+    color: `${ns.cssVar("error")} !important`,
     avatar: avatar5,
   },
   {
@@ -66,7 +69,7 @@ const tableData = reactive([
     age: 25,
     percentage: 90,
     pro: 0,
-    color: "rgb(var(--tk-success)) !important",
+    color: `${ns.cssVar("success")} !important`,
     avatar: avatar6,
   },
 ]);
@@ -86,13 +89,13 @@ const addAnimation = () => {
 </script>
 
 <template>
-  <div class="card tk-card-secondary">
+  <div class="tk-card-minimal new-user-card border-base">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">新用户</h4>
         <p class="subtitle">
           这个月增长
-          <span class="text-success">+20%</span>
+          <span :class="ns.join('text-success')">+20%</span>
         </p>
       </div>
       <el-radio-group v-model="radio2">
@@ -101,15 +104,7 @@ const addAnimation = () => {
         <el-radio-button value="今年" label="今年"></el-radio-button>
       </el-radio-group>
     </div>
-    <el-table
-      class="table"
-      :data="tableData"
-      :pagination="false"
-      size="large"
-      :border="false"
-      :stripe="false"
-      :show-header-background="false"
-    >
+    <el-table class="table" :data="tableData" size="large">
       <template #default>
         <el-table-column label="头像" prop="avatar" width="150px">
           <template #default="scope">
@@ -140,13 +135,13 @@ const addAnimation = () => {
 <style lang="scss">
 @use "@styles/mixins/function" as *;
 
-.card {
+.new-user-card {
   // 进度动画
-  .el-progress-bar__inner {
+  .#{$el-namespace}-progress-bar__inner {
     transition: all 1s !important;
   }
 
-  .el-radio-button__original-radio:checked + .el-radio-button__inner {
+  .#{$el-namespace}-radio-button__original-radio:checked + .#{$el-namespace}-radio-button__inner {
     color: cssVarEl(color-primary) !important;
     background: transparent !important;
   }
@@ -154,16 +149,12 @@ const addAnimation = () => {
 </style>
 
 <style lang="scss" scoped>
-.card {
+.new-user-card {
   width: 100%;
   height: 510px;
   overflow: hidden;
 
-  .card-header {
-    padding-left: 25px !important;
-  }
-
-  :deep(.el-table__body tr:last-child td) {
+  :deep(.#{$el-namespace}-table__body tr:last-child td) {
     border-bottom: none !important;
   }
 

@@ -13,7 +13,7 @@ const revenueData = ref([
 </script>
 
 <template>
-  <div class="card tk-card-secondary target-vs-reality">
+  <div class="tk-card-minimal card height-large target-vs-reality">
     <div class="card-header">
       <span class="title">目标与实际</span>
     </div>
@@ -49,18 +49,8 @@ const revenueData = ref([
 <style lang="scss" scoped>
 @use "@styles/mixins/function" as *;
 
-.card {
-  height: 400px;
-
-  &-body {
-    padding: 20px;
-  }
-
-  &-footer {
-    box-sizing: border-box;
-    padding: 0 20px;
-    margin-top: 15px;
-
+.target-vs-reality {
+  .card-footer {
     .total-item {
       display: flex;
       margin-bottom: 20px;
@@ -132,8 +122,8 @@ const revenueData = ref([
 }
 
 .dark {
-  .card {
-    &-footer {
+  .target-vs-reality {
+    .card-footer {
       .total-item {
         &:first-of-type .label .icon-sys {
           background-color: #222222 !important;

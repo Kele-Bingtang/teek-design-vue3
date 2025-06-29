@@ -440,7 +440,7 @@ const getStepLineStyle = (item: Step, index: number): StyleValue => {
   }
 
   .sub-step {
-    .el-icon {
+    .#{$el-namespace}-icon {
       width: 7px;
       height: 3px;
     }

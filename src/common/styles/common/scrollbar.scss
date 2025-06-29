@@ -1,40 +1,51 @@
 @use "../mixins/namespace" as *;
 @use "../mixins/function" as *;
 
-/* 滚动条 */
+/* ===== 滚动条主题 ===== */
+:root {
+  // 亮色主题滚动条变量
+  --#{$admin-namespace}-scrollbar-width: 8px;
+  --#{$admin-namespace}-scrollbar-track-color: var(--#{$admin-namespace}-gray-100);
+  --#{$admin-namespace}-scrollbar-thumb-color: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.4);
+  --#{$admin-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.8);
+  --#{$admin-namespace}-scrollbar-border-radius: 4px;
+  --#{$admin-namespace}-transition-duration: 0.3s;
+  --#{$admin-namespace}-scrollbar-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+:root.dark {
+  // 暗色主题滚动条变量
+  --#{$admin-namespace}-scrollbar-track-color: var(--#{$admin-namespace}-gray-800);
+  --#{$admin-namespace}-scrollbar-thumb-color: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.5);
+  --#{$admin-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.8);
+}
+
+/* ===== 统一滚动条样式 ===== */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 0;
+  width: var(--#{$admin-namespace}-scrollbar-width);
+  height: var(--#{$admin-namespace}-scrollbar-width);
 }
 
-/* 滚动条的轨道 */
+// 滚动条的轨道
 ::-webkit-scrollbar-track {
-  background-color: cssVar(text-gray-100);
+  background-color: var(--#{$admin-namespace}-scrollbar-track-color);
+  border-radius: var(--#{$admin-namespace}-scrollbar-border-radius);
 }
 
-/* 滚动条的滑块按钮 */
+// 滚动条的滑块按钮
 ::-webkit-scrollbar-thumb {
-  background-color: #cccccc;
-  border-radius: 5px;
-  transition: all 0.2s;
+  background-color: var(--#{$admin-namespace}-scrollbar-thumb-color);
+  border-radius: var(--#{$admin-namespace}-scrollbar-border-radius);
+  transition: all var(--#{$admin-namespace}-transition-duration) var(--#{$admin-namespace}-scrollbar-easing);
+
+  &:hover {
+    background-color: var(--#{$admin-namespace}-scrollbar-thumb-hover-color);
+  }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #b0abab;
-}
-
-/* 滚动条的上下两端的按钮 */
+// 移除滚动条的上下两端的按钮
 ::-webkit-scrollbar-button {
+  display: none;
   width: 0;
   height: 0;
-}
-
-.dark {
-  ::-webkit-scrollbar-track {
-    background-color: cssVar(bg-color);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: rgb(var(--#{$admin-namespace}-gray-300-rgb), 0.8);
-  }
 }

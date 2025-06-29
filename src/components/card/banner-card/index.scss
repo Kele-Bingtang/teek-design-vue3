@@ -1,7 +1,7 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/function" as *;
 @use "@styles/mixins/namespace" as *;
-@use "@styles/variables" as *;
+@use "@styles/common/var" as *;
 
 @include b(banner-card) {
   position: relative;
@@ -13,6 +13,11 @@
   @include e(content) {
     position: relative;
     z-index: 1;
+  }
+
+  @include e(header) {
+    display: flex;
+    flex-direction: column;
   }
 
   @include e(title) {
@@ -49,10 +54,11 @@
 
   @include e(background-image) {
     position: absolute;
+    top: 50%;
     right: 0;
-    bottom: -3rem;
     z-index: 0;
     width: 12rem;
+    transform: translateY(-50%);
   }
 
   @include has(decoration) {
@@ -115,16 +121,16 @@
 }
 
 @media (max-width: $device-phone) {
-  .basic-banner {
+  @include b(banner-card) {
     box-sizing: border-box;
     justify-content: flex-start;
     padding: 16px;
 
-    &__title {
+    @include e(title) {
       font-size: 1.4rem;
     }
 
-    &__background-image {
+    @include e(background-image) {
       display: none;
     }
 

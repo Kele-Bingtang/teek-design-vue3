@@ -1,5 +1,7 @@
-@forward "variables";
+// 主题变量
+@forward "var/index";
 
+// 公共样式
 @forward "common/base";
 @forward "common/dark";
 @forward "common/atomic";
@@ -7,46 +9,7 @@
 @forward "common/transition";
 @forward "common/theme-animation";
 @forward "common/menu-theme";
+@forward "common/var";
 
+// 命名空间
 @forward "mixins/namespace";
-
-/* 自定义原子类 */
-@for $i from 1 through 6 {
-  .m-#{$i * 5} {
-    margin: ($i * 5) + px;
-  }
-  .mt-#{$i * 5} {
-    margin-top: ($i * 5) + px;
-  }
-  .mb-#{$i * 5} {
-    margin-bottom: ($i * 5) + px;
-  }
-  .ml-#{$i * 5} {
-    margin-left: ($i * 5) + px;
-  }
-  .mr-#{$i * 5} {
-    margin-right: ($i * 5) + px;
-  }
-
-  .p-#{$i * 5} {
-    padding: ($i * 5) + px;
-  }
-  .pt-#{$i * 5} {
-    padding-top: ($i * 5) + px;
-  }
-  .pb-#{$i * 5} {
-    padding-bottom: ($i * 5) + px;
-  }
-  .pl-#{$i * 5} {
-    padding-left: ($i * 5) + px;
-  }
-  .pr-#{$i * 5} {
-    padding-right: ($i * 5) + px;
-  }
-}
-
-@for $i from 14 through 24 {
-  .fz-#{$i} {
-    font-size: ($i) + px;
-  }
-}

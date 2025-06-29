@@ -4,7 +4,7 @@ import { BarChart } from "@/components";
 </script>
 
 <template>
-  <div class="card tk-card-secondary yearly-card">
+  <div class="tk-card-minimal card yearly-card">
     <div class="card-header">
       <p class="title">年度销售额</p>
       <p class="subtitle">按季度统计</p>
@@ -16,7 +16,6 @@ import { BarChart } from "@/components";
       :showSplitLine="false"
       :data="[50, 80, 50, 90, 60, 70, 50]"
       barWidth="26px"
-      height="calc(100% - 155px)"
     />
     <div class="icon-text-widget">
       <div class="item">
@@ -42,17 +41,9 @@ import { BarChart } from "@/components";
 </template>
 
 <style lang="scss" scoped>
-.card {
-  height: 28.2rem;
-
+.yearly-card {
   .icon-text-widget {
     margin-top: 2.5rem;
-  }
-}
-
-@media screen and (max-width: $device-phone) {
-  .card {
-    height: 20rem;
   }
 }
 </style>

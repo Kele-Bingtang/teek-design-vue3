@@ -5,7 +5,7 @@ $text-color: #babbbd;
 
 /* 菜单主题样式 */
 .#{$admin-namespace}-layout {
-  /* dark 模式 */
+  // dark 模式
   &-aside.is-dark {
     @include set-css-var(layout-aside-bg-color, #191a23);
     @include set-css-var(layout-aside-bg-active-color, var(--#{$el-namespace}-color-primary-light-2));
@@ -19,7 +19,7 @@ $text-color: #babbbd;
     @include set-css-var(layout-aside-text-active-weight, 400);
   }
 
-  /* dark 模式下修改 logo 样式（经典布局不修改） */
+  // dark 模式下修改 logo 样式（经典布局不修改）
   &:has(&-aside.is-dark):not(.#{$admin-namespace}-classic-layout) {
     .#{$admin-namespace}-layout-logo {
       background-color: #191a23;

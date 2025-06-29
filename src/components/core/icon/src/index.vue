@@ -52,7 +52,7 @@ const fontIconType = computed(() => {
   if (caseIconName.startsWith("if-") || caseIconName.startsWith("iconfont")) return "iconfont";
   if (
     caseIconName.startsWith("uni-") ||
-    /^&#x[\da-f]+;$/i.test(caseIconName) ||
+    /^&#x[\da-f]+/i.test(icon) ||
     (icon.length === 1 && icon.charCodeAt(0) >= 0xe000 && icon.charCodeAt(0) <= 0xf8ff)
   ) {
     return "unicode";

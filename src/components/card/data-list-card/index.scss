@@ -10,7 +10,7 @@
 
   @include el-joins(scrollbar) {
     padding: 0 $card-padding;
-    margin: 0 calc(-1 * $card-padding);
+    margin: 0 calc(-1 * ($card-padding - 4px));
   }
 
   @include e(header) {

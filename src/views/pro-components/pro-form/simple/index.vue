@@ -97,7 +97,7 @@ const editable = ref(true);
 
 <template>
   <div>
-    <div class="tk-card-primary">
+    <div class="tk-card-minimal">
       <h4>1 个 ProForm</h4>
       <ProForm :elFormProps :columns v-model="model" />
       {{ model }}

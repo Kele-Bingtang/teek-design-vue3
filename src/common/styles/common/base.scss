@@ -11,3 +11,8 @@ h4,
 h5 {
   color: var(--#{$admin-namespace}-text-gray-800);
 }
+
+// 主题色悬停样式
+.theme-color-hover:hover {
+  color: var(--#{$el-namespace}-color-primary);
+}

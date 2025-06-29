@@ -6,19 +6,24 @@
     //
     "white": #ffffff,
     "black": #000000,
-    "primary": ("base": #395ae3),
-    "success": ("base": #0bb449),
-    "warning": ("base": #fa9014),
-    "danger": ("base": #ef4a38),
-    "error": ("base": #f26e59),
+    "primary": ("base": #5f81ff),
+    "success": ("base": #32c060),
+    "warning": ("base": #ffb332),
+    "danger": ("base": #ff6a6a),
+    "error": ("base": #ff7a38),
     "info": ("base": #909399),
   )
 );
 
 @use "element-plus/theme-chalk/src/dark/css-vars.scss" as *;
 
-$text-size: rgb(255 255 255 / 70%);
-
-html.dark {
-  --#{$el-namespace}-text-color-regular: #{$text-size};
+:root.dark {
+  --#{$el-namespace}-text-color-primary: var(--#{$admin-namespace}-text-gray-900);
+  --#{$el-namespace}-text-color-regular: var(--#{$admin-namespace}-text-gray-800);
+  --#{$el-namespace}-text-color-secondary: var(--#{$admin-namespace}-text-gray-700);
+  --#{$el-namespace}-text-color-placeholder: var(--#{$admin-namespace}-text-gray-600);
+  --#{$el-namespace}-text-color-disabled: var(--#{$admin-namespace}-text-gray-500);
+  --#{$el-namespace}-bg-color: var(--#{$admin-namespace}-main-bg-color);
+  --#{$el-namespace}-bg-color-overlay: var(--#{$admin-namespace}-main-bg-color);
+  --#{$el-namespace}-bg-color-page: var(--#{$admin-namespace}-bg-color);
 }

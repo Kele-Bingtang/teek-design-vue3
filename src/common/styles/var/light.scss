@@ -1,0 +1,109 @@
+@use "../mixins/namespace" as *;
+
+// 浅色主题变量
+:root {
+  // 主要色
+  --#{$admin-namespace}-main-color: var(--#{$admin-namespace}-primary);
+  --#{$admin-namespace}-bg-color: #f6f8fc; // 页面背景颜色
+  --#{$admin-namespace}-main-bg-color: #ffffff;
+
+  // 主色系
+  --#{$admin-namespace}-primary-rgb: 57, 90, 227;
+  --#{$admin-namespace}-primary: #395ae3;
+  --#{$admin-namespace}-primary-hover: #577ae8;
+  --#{$admin-namespace}-primary-muted: #a4bffc;
+
+  // 功能色
+  --#{$admin-namespace}-success-rgb: 11, 158, 64;
+  --#{$admin-namespace}-success: #0b9e40;
+  --#{$admin-namespace}-success-hover: #078538;
+  --#{$admin-namespace}-success-muted: #80e19a;
+  --#{$admin-namespace}-warning-rgb: 230, 138, 0;
+  --#{$admin-namespace}-warning: #e68a00;
+  --#{$admin-namespace}-warning-hover: #c47200;
+  --#{$admin-namespace}-warning-muted: #fdd692;
+  --#{$admin-namespace}-danger-rgb: 217, 49, 38;
+  --#{$admin-namespace}-danger: #d93126;
+  --#{$admin-namespace}-danger-hover: #b52a20;
+  --#{$admin-namespace}-danger-muted: #f9b19f;
+  --#{$admin-namespace}-error-rgb: 221, 92, 39;
+  --#{$admin-namespace}-error: #dd5c27;
+  --#{$admin-namespace}-error-hover: #b8491e;
+
+  // 次级色
+  --#{$admin-namespace}-secondary-rgb: 66, 170, 255;
+  --#{$admin-namespace}-secondary: #42aaff;
+  --#{$admin-namespace}-info: #1890ff;
+  --#{$admin-namespace}-info-rgb: 24, 144, 255;
+
+  // 基本色
+  --#{$admin-namespace}-color: #ffffff;
+  --#{$admin-namespace}-light: #f9f9f9;
+  --#{$admin-namespace}-dark: #1e2129;
+
+  // 背景色
+  --#{$admin-namespace}-bg-primary: #f2f5ff;
+  --#{$admin-namespace}-bg-primary-rgb: 242, 245, 255;
+  --#{$admin-namespace}-bg-secondary: #e8f8ff;
+  --#{$admin-namespace}-bg-secondary-rgb: 232, 248, 255;
+  --#{$admin-namespace}-bg-success: #f0f9eb;
+  --#{$admin-namespace}-bg-success-rgb: 240, 249, 235;
+  --#{$admin-namespace}-bg-info: #f0f5ff;
+  --#{$admin-namespace}-bg-info-rgb: 240, 245, 255;
+  --#{$admin-namespace}-bg-warning: #fff7ef;
+  --#{$admin-namespace}-bg-warning-rgb: 255, 245, 230;
+  --#{$admin-namespace}-bg-danger: #ffede8;
+  --#{$admin-namespace}-bg-danger-rgb: 255, 238, 232;
+  --#{$admin-namespace}-bg-error: #fff2e8;
+  --#{$admin-namespace}-bg-error-rgb: 255, 242, 232;
+
+  // 灰度色，适用于背景色 | 悬停色
+  --#{$admin-namespace}-text-muted: #99a1b7;
+  --#{$admin-namespace}-gray-100: #f0f0f2;
+  --#{$admin-namespace}-gray-100-rgb: 240, 240, 242;
+  --#{$admin-namespace}-gray-200: #e4e5eb;
+  --#{$admin-namespace}-gray-200-rgb: 228, 229, 235;
+  --#{$admin-namespace}-gray-300: #d7d9e0;
+  --#{$admin-namespace}-gray-300-rgb: 215, 217, 224;
+  --#{$admin-namespace}-gray-400: #bfc1cc;
+  --#{$admin-namespace}-gray-400-rgb: 191, 193, 204;
+  --#{$admin-namespace}-gray-500: #b1b3c1;
+  --#{$admin-namespace}-gray-500-rgb: 177, 179, 193;
+  --#{$admin-namespace}-gray-600: #7d7f8d;
+  --#{$admin-namespace}-gray-600-rgb: 125, 127, 141;
+  --#{$admin-namespace}-gray-700: #4d505e;
+  --#{$admin-namespace}-gray-700-rgb: 77, 80, 94;
+  --#{$admin-namespace}-gray-800: #20222b;
+  --#{$admin-namespace}-gray-800-rgb: 32, 34, 43;
+  --#{$admin-namespace}-gray-900: #141721;
+  --#{$admin-namespace}-gray-900-rgb: 20, 23, 33;
+
+  // 文本色
+  --#{$admin-namespace}-text-muted: #99a1b7;
+  --#{$admin-namespace}-text-gray-100: #f0f0f2;
+  --#{$admin-namespace}-text-gray-200: #e4e5eb;
+  --#{$admin-namespace}-text-gray-300: #d7d9e0;
+  --#{$admin-namespace}-text-gray-400: #bfc1cc;
+  --#{$admin-namespace}-text-gray-500: #b1b3c1;
+  --#{$admin-namespace}-text-gray-600: #7d7f8d;
+  --#{$admin-namespace}-text-gray-700: #4d505e;
+  --#{$admin-namespace}-text-gray-800: #20222b;
+  --#{$admin-namespace}-text-gray-900: #141721;
+
+  // 边框色
+  --#{$admin-namespace}-border-color: #eaebf1;
+  --#{$admin-namespace}-border-dashed-color: #dbdfe9;
+
+  // 阴影效果
+  --#{$admin-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 4%);
+  --#{$admin-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$admin-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 7.5%);
+  --#{$admin-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 10%);
+
+  // 卡片效果
+  --#{$admin-namespace}-root-card-box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%);
+  --#{$admin-namespace}-root-card-border-color: #f1f1f4;
+
+  // 动画效果
+  --#{$admin-namespace}-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

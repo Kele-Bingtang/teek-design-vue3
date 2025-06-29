@@ -44,6 +44,6 @@
 
   .divided {
     margin: 5px 0;
-    border-top: 1px solid var(--el-border-color-lighter);
+    border-top: 1px solid cssVarEl(border-color-lighter);
   }
 }

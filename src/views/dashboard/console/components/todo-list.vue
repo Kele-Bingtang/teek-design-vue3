@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
+
 const list = reactive([
   {
     username: "查看今天工作内容",
@@ -34,13 +38,13 @@ const list = reactive([
 </script>
 
 <template>
-  <div class="card tk-card-secondary">
+  <div class="tk-card-minimal todo-list-card">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">代办事项</h4>
         <p class="subtitle">
           待处理
-          <span class="text-danger">3</span>
+          <span :class="ns.join('text-danger')">{{ list.filter(item => !item.complete).length }}</span>
         </p>
       </div>
     </div>
@@ -58,15 +62,12 @@ const list = reactive([
 <style lang="scss" scoped>
 @use "@styles/mixins/function" as *;
 
-.card {
+.todo-list-card {
   width: 100%;
   height: 510px;
-  padding: 0 25px;
 
   .list {
-    height: calc(100% - 90px);
     margin-top: 10px;
-    overflow: hidden;
 
     > div {
       position: relative;
@@ -91,7 +92,7 @@ const list = reactive([
         font-weight: 400;
       }
 
-      .el-checkbox {
+      .#{$el-namespace}-checkbox {
         position: absolute;
         top: 0;
         right: 10px;

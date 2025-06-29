@@ -16,7 +16,7 @@ const revenueData = ref([
 </script>
 
 <template>
-  <div class="card total-revenue-card tk-card-secondary">
+  <div class="tk-card-minimal card height-large">
     <div class="card-header">
       <span class="title">总收入</span>
     </div>
@@ -32,20 +32,3 @@ const revenueData = ref([
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.total-revenue-card {
-  height: 400px;
-
-  .card-body {
-    height: calc(100% - 108px);
-    padding: 20px;
-  }
-}
-
-@media screen and (max-width: $device-phone) {
-  .total-revenue-card {
-    height: 300px;
-  }
-}
-</style>

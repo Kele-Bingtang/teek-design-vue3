@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { Money } from "@element-plus/icons-vue";
 import { LineChart } from "@/components";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const weeklyList = [
   {
@@ -8,27 +11,27 @@ const weeklyList = [
     title: "智能手表Pro",
     subtitle: "电子产品",
     value: "1,286件",
-    color: "bg-primary",
+    color: ns.join("bg-primary"),
   },
   {
     icon: "&#xe70c;",
     title: "时尚连衣裙",
     subtitle: "女装服饰",
     value: "892件",
-    color: "bg-success",
+    color: ns.join("bg-success"),
   },
   {
     icon: "&#xe813;",
     title: "厨房小家电",
     subtitle: "家居用品",
     value: "756件",
-    color: "bg-error",
+    color: ns.join("bg-error"),
   },
 ];
 </script>
 
 <template>
-  <div class="card tk-card-secondary weekly-card" style="height: 28.2rem">
+  <div class="card tk-card-minimal weekly-card">
     <div class="card-header">
       <p class="title">热销商品</p>
       <p class="subtitle">本周销售排行</p>

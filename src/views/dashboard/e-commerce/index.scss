@@ -3,10 +3,9 @@
 
 .e-commerce {
   :deep(.card) {
-    box-sizing: border-box;
-    padding: 20px;
-    background-color: cssVar(main-bg-color);
-    border-radius: cssVar(radius);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     .card-header {
       padding-bottom: 15px;
@@ -69,7 +68,7 @@
     margin-bottom: 0 !important;
   }
 
-  .el-col {
+  .#{$el-namespace}-col {
     margin-bottom: 20px;
   }
 }

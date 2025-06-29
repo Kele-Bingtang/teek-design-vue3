@@ -3,7 +3,7 @@ import { DualBarCompareChart } from "@/components";
 </script>
 
 <template>
-  <div class="card tk-card-secondary" style="height: 26rem">
+  <div class="tk-card-minimal card">
     <div class="card-header">
       <p class="title">销售趋势</p>
       <p class="subtitle">月度销售对比</p>

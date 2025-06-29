@@ -40,14 +40,14 @@ const handleBannerClick = () => {};
       <div class="item">
         <p class="title">
           ¥2,340
-          <Icon :icon="TopRight" class="icon-sys text-success" />
+          <Icon :icon="TopRight" class="icon-sys" :class="ns.join('text-success')" />
         </p>
         <p class="subtitle">今日销售额</p>
       </div>
       <div class="item">
         <p class="title">
           35%
-          <Icon :icon="TopRight" class="icon-sys text-success" />
+          <Icon :icon="TopRight" class="icon-sys" :class="ns.join('text-success')" />
         </p>
         <p class="subtitle">较昨日</p>
       </div>

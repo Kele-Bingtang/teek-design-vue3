@@ -10,8 +10,8 @@ import Vue3TreeOrg from "vue3-tree-org";
 import "virtual:svg-icons-register";
 import "vue3-tree-org/lib/vue3-tree-org.css";
 
-import "@styles/common/normalize.css"; // CSS Reset
-import "@styles/common/base.css";
+import "@styles/normalize.css";
+import "@styles/reset.css";
 import "@styles/element-plus/el-ui.scss";
 import "@styles/element-plus/el-light.scss";
 import "@styles/element-plus/el-dark.scss";

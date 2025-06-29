@@ -15,6 +15,9 @@ import { showFullScreenLoading, tryHideFullScreenLoading } from "./service-loadi
 import { ContentTypeEnum, ResultEnum } from "./http-enum";
 import { AxiosCanceler } from "./axios-cancel";
 import { checkStatus } from "./check-status";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 export interface PlusAxiosRequestConfig extends InternalAxiosRequestConfig {
   loading?: boolean;
@@ -284,7 +287,7 @@ export const noPermission = () => {
         h(
           "span",
           {
-            style: { marginRight: "10px", cursor: "pointer", border: "var(--el-border)", padding: "2px 8px" },
+            style: { marginRight: "10px", cursor: "pointer", border: ns.cssVarEl("border"), padding: "2px 8px" },
             onClick: () => closeNotify(),
           },
           ["取消"]
@@ -292,7 +295,7 @@ export const noPermission = () => {
         h(
           "span",
           {
-            style: { cursor: "pointer", border: "var(--el-border)", padding: "2px 8px" },
+            style: { cursor: "pointer", border: ns.cssVarEl("border"), padding: "2px 8px" },
             onClick: () => confirmRefresh(),
           },
           ["确定"]

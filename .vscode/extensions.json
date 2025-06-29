@@ -1,9 +1,3 @@
 {
-  "recommendations": [
-    "Vue.volar",
-    "stylelint.vscode-stylelint",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "syler.sass-indented"
-  ]
+  "recommendations": ["Vue.volar", "stylelint.vscode-stylelint", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

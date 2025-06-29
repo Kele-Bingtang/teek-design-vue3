@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { CountTo } from "@/components";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const dataList = reactive([
   {
@@ -40,14 +43,17 @@ const dataList = reactive([
 <template>
   <el-row :gutter="20" class="card-list flx-wrap">
     <el-col v-for="(item, index) in dataList" :key="index" :sm="12" :md="6" :lg="6">
-      <div class="card tk-card-secondary">
+      <div class="tk-card-minimal hover">
         <span class="des subtitle">{{ item.des }}</span>
 
         <CountTo class="number box-title" :end-val="item.num" :duration="1" separator="" />
 
         <div class="change-box">
           <span class="change-text">较上周</span>
-          <span class="change" :class="[item.change.indexOf('+') === -1 ? 'text-danger' : 'text-success']">
+          <span
+            class="change"
+            :class="[item.change.indexOf('+') === -1 ? ns.join('text-danger') : ns.join('text-success')]"
+          >
             {{ item.change }}
           </span>
         </div>
@@ -63,7 +69,7 @@ const dataList = reactive([
 .card-list {
   background-color: transparent !important;
 
-  .tk-card-secondary {
+  .tk-card-minimal {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -123,14 +129,6 @@ const dataList = reactive([
         margin-left: 5px;
         font-size: 13px;
         font-weight: bold;
-
-        &.text-success {
-          color: cssVarEl(color-success);
-        }
-
-        &.text-danger {
-          color: cssVarEl(color-danger);
-        }
       }
     }
   }
@@ -138,7 +136,7 @@ const dataList = reactive([
 
 .dark {
   .card-list {
-    .tk-card-secondary {
+    .tk-card-minimal {
       .icon-sys {
         background-color: #232323 !important;
       }

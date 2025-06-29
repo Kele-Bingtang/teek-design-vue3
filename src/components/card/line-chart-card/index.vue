@@ -51,13 +51,13 @@ const { chartInstance } = useChartComponent({
                     offset: 0,
                     color: props.color
                       ? hexToRgba(props.color, 0.2).rgba
-                      : hexToRgba(getCssVar("--el-color-primary"), 0.2).rgba,
+                      : hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.2).rgba,
                   },
                   {
                     offset: 1,
                     color: props.color
                       ? hexToRgba(props.color, 0.01).rgba
-                      : hexToRgba(getCssVar("--el-color-primary"), 0.01).rgba,
+                      : hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.01).rgba,
                   },
                 ]),
               }

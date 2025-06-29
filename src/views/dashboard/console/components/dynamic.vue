@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
+
 const list = reactive([
   {
     username: "中小鱼",
@@ -34,13 +38,13 @@ const list = reactive([
 </script>
 
 <template>
-  <div class="card tk-card-secondary">
+  <div class="tk-card-minimal dynamic-card">
     <div class="card-header">
       <div class="title">
         <h4 class="box-title">动态</h4>
         <p class="subtitle">
           新增
-          <span class="text-success">+6</span>
+          <span :class="ns.join('text-success')">+6</span>
         </p>
       </div>
     </div>
@@ -58,19 +62,14 @@ const list = reactive([
 <style lang="scss" scoped>
 @use "@styles/mixins/function" as *;
 
-.card {
+.dynamic-card {
   width: 100%;
   height: 510px;
-  padding: 0 25px;
-
-  .card-header {
-    padding: 20px 0 0;
-  }
+  overflow: auto;
 
   .list {
     height: calc(100% - 100px);
     margin-top: 10px;
-    overflow: hidden;
 
     > div {
       height: 70px;

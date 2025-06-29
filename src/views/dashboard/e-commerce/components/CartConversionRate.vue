@@ -4,7 +4,7 @@ import { LineChartCard } from "@/components";
 
 <template>
   <LineChartCard
-    class="margin-bottom-0"
+    class="tk-card-minimal card"
     :value="2545"
     label="购物车转化率"
     :percentage="1.2"

@@ -1,0 +1,284 @@
+@use "../mixins/namespace" as *;
+
+/* ===== 卡片主题变量 ===== */
+:root {
+  // 卡片边框（primary > accent > regular > base）
+  --#{$admin-namespace}-card-border-color-primary: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.9);
+  --#{$admin-namespace}-card-border-color-accent: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.7);
+  --#{$admin-namespace}-card-border-color-regular: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.5);
+  --#{$admin-namespace}-card-border-color-base: var(--#{$admin-namespace}-border-color);
+  --#{$admin-namespace}-card-border-color-dashed: var(--#{$admin-namespace}-border-dashed-color);
+
+  // 阴影与悬停（hover > select > base > root > mini）
+  --#{$admin-namespace}-card-shadow-hover: var(--#{$admin-namespace}-box-shadow-lg);
+  --#{$admin-namespace}-card-shadow-select: var(--#{$admin-namespace}-box-shadow-md);
+  --#{$admin-namespace}-card-shadow-base: var(--#{$admin-namespace}-card-box-shadow-md);
+  --#{$admin-namespace}-card-shadow-root: var(--#{$admin-namespace}-root-card-box-shadow);
+  --#{$admin-namespace}-card-shadow-mini: 0px 0px 4px 0px rgb(0 0 0 / 4%);
+
+  // 悬停增强效果
+  --#{$admin-namespace}-card-transform-hover: translateY(-4px);
+  --#{$admin-namespace}-card-transition-duration: var(--#{$el-namespace}-transition-duration, 0.3s);
+  --#{$admin-namespace}-card-easing: var(--#{$admin-namespace}-easing);
+}
+
+:root.dark {
+  // 卡片边框
+  --#{$admin-namespace}-card-border-color-primary: rgb(var(--#{$admin-namespace}-gray-700-rgb), 0.85);
+  --#{$admin-namespace}-card-border-color-accent: rgb(var(--#{$admin-namespace}-gray-600-rgb), 0.75);
+  --#{$admin-namespace}-card-border-color-regular: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.6);
+
+  // 阴影与悬停
+  --#{$admin-namespace}-card-shadow-mini: 0px 0px 6px 0px rgb(0 0 0 / 15%);
+}
+
+/* ===== 卡片组件系统 ===== */
+
+// 边框混合宏
+@mixin card-border($type: "base") {
+  @if $type == "base" {
+    border: 1px solid var(--#{$admin-namespace}-card-border-color-base);
+  } @else if $type == "dashed" {
+    border: 1px dashed var(--#{$admin-namespace}-card-border-color-dashed);
+  } @else if $type == "primary" {
+    border: 1px solid var(--#{$admin-namespace}-card-border-color-primary);
+  } @else if $type == "regular" {
+    border: 1px solid var(--#{$admin-namespace}-card-border-color-regular);
+  } @else if $type == "accent" {
+    border: 1px solid var(--#{$admin-namespace}-card-border-color-accent);
+  } @else if $type == "none" {
+    border: none;
+  }
+}
+
+// 阴影混合宏
+@mixin card-shadow($type: "base") {
+  @if $type == "base" {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-base);
+  } @else if $type == "xs" {
+    box-shadow: var(--#{$admin-namespace}-box-shadow-xs);
+  } @else if $type == "sm" {
+    box-shadow: var(--#{$admin-namespace}-box-shadow-sm);
+  } @else if $type == "md" {
+    box-shadow: var(--#{$admin-namespace}-box-shadow-md);
+  } @else if $type == "lg" {
+    box-shadow: var(--#{$admin-namespace}-box-shadow-lg);
+  } @else if $type == "hover" {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-hover);
+  } @else if $type == "root" {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-root);
+  } @else if $type == "mini" {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-mini);
+  } @else if $type == "select" {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-select);
+  } @else if $type == "none" {
+    box-shadow: none;
+  }
+}
+
+// 卡片基础效果占位符
+%card-base {
+  box-sizing: border-box;
+  background-color: var(--#{$admin-namespace}-main-bg-color);
+
+  // 添加响应式圆角，最小为 2px，最大为 12px
+  border-radius: clamp(2px, calc(var(--#{$admin-namespace}-radius) * 0.5 + 2px), 12px);
+  transition: all var(--#{$admin-namespace}-card-transition-duration) ease;
+
+  // 悬停效果整合
+  &.hover {
+    @extend %card-hover;
+  }
+
+  // 添加 Tab 键聚焦效果
+  &:focus-visible {
+    z-index: 5;
+    outline: none;
+    box-shadow: var(--#{$admin-namespace}-card-shadow-select);
+  }
+
+  // 原子类系统
+  @extend %card-atomic;
+
+  // 滚动条扩展
+  @extend %card-scrollbar;
+
+  // 可访问性扩展
+  @extend %card-accessibility;
+}
+
+// ===== 悬停效果占位符 =====
+%card-hover {
+  cursor: pointer;
+  transition:
+    transform var(--#{$admin-namespace}-card-transition-duration) var(--#{$admin-namespace}-card-easing),
+    box-shadow var(--#{$admin-namespace}-card-transition-duration) var(--#{$admin-namespace}-card-easing);
+
+  &:hover {
+    box-shadow: var(--#{$admin-namespace}-card-shadow-hover);
+    transform: var(--#{$admin-namespace}-card-transform-hover);
+  }
+}
+
+// ===== 卡片原子类系统占位符 =====
+%card-atomic {
+  // 内边距原子类
+  @each $size in (0, 4, 8, 12, 16, 24, 32) {
+    &.pd-#{$size} {
+      padding: #{$size * 0.0625}rem !important; // 除以 16 得到 rem
+    }
+  }
+
+  // 边框原子类
+  @each $type in (base, dashed, primary, regular, accent, none) {
+    &.border-#{$type} {
+      @include card-border($type);
+    }
+  }
+
+  // 阴影原子类
+  @each $type in (default, xs, sm, md, lg, root, mini, hover, select, none) {
+    &.shadow-#{$type} {
+      @include card-shadow($type);
+    }
+  }
+}
+
+// ===== 卡片滚动条占位符，在默认主题滚动条下进行部分修改 =====
+%card-scrollbar {
+  // Webkit 滚动条默认隐藏
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  // 滚动条轨道样式
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  // 悬停时显示滚动条
+  &:hover::-webkit-scrollbar-thumb {
+    display: block;
+  }
+}
+
+// ===== 卡片可访问性占位符 =====
+%card-accessibility {
+  // 减少动画模式适配
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    animation: none !important;
+
+    &.hover {
+      transform: none !important;
+    }
+  }
+
+  // 高对比度模式适配
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+    color: white !important;
+    background-color: black !important;
+  }
+
+  @media (prefers-contrast: more) and (prefers-color-scheme: light) {
+    color: black !important;
+    background-color: white !important;
+  }
+
+  @media (prefers-contrast: more) {
+    border: 2px solid currentcolor !important;
+    transition: outline 0.2s ease;
+
+    &:focus-within {
+      outline: auto !important;
+    }
+
+    &.border-none {
+      outline: 2px solid currentcolor;
+      outline-offset: -1px;
+      border: none !important;
+    }
+
+    &:hover {
+      outline: 2px dashed currentcolor;
+    }
+
+    &:focus-within {
+      outline: 3px double currentcolor !important;
+      outline-offset: 2px;
+      box-shadow: none !important;
+    }
+  }
+}
+
+/* ===== 预设卡片类型 ===== */
+
+// 标准卡片
+.#{$admin-namespace}-card-standard {
+  @extend %card-base;
+  @include card-border("regular");
+  @include card-shadow("root");
+
+  // 默认值
+  padding: 20px;
+  overflow: auto;
+}
+
+// 突出卡片
+.#{$admin-namespace}-card-elevated {
+  @extend %card-base;
+  @include card-border("none"); // 无边框突出阴影效果
+  @include card-shadow("default");
+
+  // 默认值
+  padding: 24px;
+  overflow: visible; // 允许特殊效果溢出
+}
+
+// 极简卡片
+.#{$admin-namespace}-card-minimal {
+  @extend %card-base;
+  @include card-border("base");
+  @include card-shadow("mini");
+
+  // 默认值
+  padding: 16px;
+  overflow: auto;
+}
+
+// 紧凑卡片
+.#{$admin-namespace}-card-compact {
+  @extend %card-base;
+  @include card-border("none");
+  @include card-shadow("mini");
+
+  // 默认值
+  min-height: 40px;
+  padding: 8px;
+  overflow: auto;
+}
+
+// 禁用卡片
+.#{$admin-namespace}-card-disabled {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.5;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: repeating-linear-gradient(
+      45deg,
+      rgb(0 0 0 / 5%),
+      rgb(0 0 0 / 5%) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+}

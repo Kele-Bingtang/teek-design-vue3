@@ -150,7 +150,7 @@ const pricingPlans = ref<PricingPlan[]>([
   .pricing-cards {
     margin-top: 80px;
 
-    .el-col {
+    .#{$el-namespace}-col {
       margin-bottom: 20px;
     }
 
@@ -162,7 +162,7 @@ const pricingPlans = ref<PricingPlan[]>([
 
       &.popular {
         position: relative;
-        border: 2px solid var(--el-color-primary);
+        border: 2px solid cssVarEl(color-primary);
 
         &::after {
           position: absolute;
@@ -170,9 +170,9 @@ const pricingPlans = ref<PricingPlan[]>([
           right: 10px;
           padding: 2px 8px;
           font-size: 12px;
-          color: var(--el-color-primary);
+          color: cssVarEl(color-primary);
           content: "热门";
-          background-color: var(--el-color-primary-light-9);
+          background-color: cssVarEl(color-primary-light-9);
           border-radius: 12px;
         }
       }
@@ -225,15 +225,15 @@ const pricingPlans = ref<PricingPlan[]>([
           margin-bottom: 10px;
           font-size: 14px;
 
-          .el-icon {
+          .#{$el-namespace}-icon {
             margin-right: 10px;
 
             &.available {
-              color: var(--el-color-primary);
+              color: cssVarEl(color-primary);
             }
 
             &.unavailable {
-              color: var(--el-color-danger);
+              color: cssVarEl(color-danger);
             }
           }
         }
@@ -274,7 +274,7 @@ const pricingPlans = ref<PricingPlan[]>([
       }
     }
 
-    .el-col {
+    .#{$el-namespace}-col {
       margin-bottom: 20px;
     }
   }

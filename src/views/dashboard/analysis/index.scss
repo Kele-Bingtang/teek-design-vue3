@@ -1,44 +1,74 @@
+@use "@styles/mixins/namespace" as *;
 @use "@styles/mixins/function" as *;
+@use "@styles/common/var" as *;
 
 .analysis-dashboard {
   padding-bottom: 20px;
 
   :deep(.card) {
-    background: cssVar(main-bg-color);
-    border-radius: calc(cssVar(radius) + 4px) !important;
-  }
-
-  // 卡片头部
-  :deep(.card-header) {
-    position: relative;
-    box-sizing: border-box;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 20px;
+    flex-direction: column;
+    height: 330px;
 
-    .title {
-      font-size: 20px;
-      font-weight: 400;
-      color: cssVar(text-gray-900);
+    &.height-large {
+      height: 400px;
     }
 
-    .subtitle {
-      position: absolute;
-      bottom: 2px;
-      left: 21px;
-      font-size: 13px;
-      color: cssVar(gray-600);
+    // 卡片头部
+    .card-header {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      margin-bottom: 10px;
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .title {
+        font-size: 20px;
+        font-weight: 400;
+        color: cssVar(text-gray-900);
+      }
+
+      .subtitle {
+        font-size: 13px;
+        color: cssVar(gray-600);
+      }
+    }
+
+    .card-body {
+      flex: 1;
+      padding: 10px;
+
+      &.no-padding {
+        padding: 0;
+      }
+    }
+
+    .card-footer {
+      box-sizing: border-box;
+      padding: 0 20px;
+      margin-top: 15px;
     }
   }
 
-  .el-card {
+  .#{$el-namespace}-card {
     border: 1px solid #e8ebf1;
     box-shadow: none;
   }
 
   .mt-20 {
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: $device-phone) {
+  :deep(.card) {
+    height: 300px;
   }
 }
 

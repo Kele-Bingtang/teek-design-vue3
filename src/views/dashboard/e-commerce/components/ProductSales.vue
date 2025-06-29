@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { TopRight } from "@element-plus/icons-vue";
 import { BarChart } from "@/components";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 </script>
 
 <template>
-  <div class="card tk-card-secondary" style="height: 11rem">
+  <div class="tk-card-minimal card">
     <div class="card-header">
       <p class="title" style="font-size: 24px">
         14.5k
-        <Icon :icon="TopRight" class="icon-sys text-success" />
+        <Icon :icon="TopRight" class="icon-sys" :class="ns.join('text-success')" />
       </p>
       <p class="subtitle">销售量</p>
     </div>

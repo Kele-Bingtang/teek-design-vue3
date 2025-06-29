@@ -277,7 +277,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="[ns.b(), { [ns.join('card-primary')]: card }]">
+  <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
     <el-descriptions v-bind="$attrs">
       <slot>
         <el-descriptions-item

@@ -39,5 +39,5 @@ const timelineData = [
 </script>
 
 <template>
-  <TimelineListCard :list="timelineData" title="最近交易" subtitle="今日订单动态" />
+  <TimelineListCard class="tk-card-minimal card" :list="timelineData" title="最近交易" subtitle="今日订单动态" />
 </template>

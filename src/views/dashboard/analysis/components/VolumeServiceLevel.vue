@@ -22,7 +22,7 @@ const volumeServiceData = ref([
 </script>
 
 <template>
-  <div class="card tk-card-secondary volume-service-level">
+  <div class="tk-card-minimal card volume-service-level">
     <div class="card-header">
       <span class="title">业务量与服务水平</span>
     </div>
@@ -39,13 +39,3 @@ const volumeServiceData = ref([
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.volume-service-level {
-  height: 330px;
-
-  .card-body {
-    padding: 20px;
-  }
-}
-</style>

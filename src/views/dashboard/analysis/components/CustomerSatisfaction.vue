@@ -27,7 +27,7 @@ const xAxisData = ["1", "2", "3", "4", "5", "6", "7"];
 </script>
 
 <template>
-  <div class="card tk-card-secondary satisfaction">
+  <div class="tk-card-minimal card height-large">
     <div class="card-header">
       <span class="title">客户满意度</span>
     </div>
@@ -44,25 +44,3 @@ const xAxisData = ["1", "2", "3", "4", "5", "6", "7"];
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.satisfaction {
-  height: 400px;
-
-  .card-body {
-    height: calc(100% - 145px);
-    padding: 60px 20px 10px;
-  }
-}
-
-@media screen and (max-width: $device-phone) {
-  .satisfaction {
-    height: 300px;
-
-    .card-body {
-      height: calc(100% - 100px);
-      padding-top: 20px;
-    }
-  }
-}
-</style>

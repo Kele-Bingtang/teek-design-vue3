@@ -43,20 +43,12 @@ const getColor = (percentage: number) => {
 </script>
 
 <template>
-  <div class="card tk-card-secondary top-products">
+  <div class="tk-card-minimal card top-products">
     <div class="card-header">
       <span class="title">热门产品</span>
     </div>
-    <div class="card-body">
-      <el-table
-        :data="products"
-        style="width: 100%"
-        :pagination="false"
-        size="large"
-        :border="false"
-        :stripe="false"
-        :show-header-background="false"
-      >
+    <div class="card-body no-padding">
+      <el-table :data="products" style="width: 100%" size="large">
         <el-table-column prop="name" label="产品名称" width="200" />
         <el-table-column prop="popularity" label="销量">
           <template #default="scope">
@@ -88,25 +80,3 @@ const getColor = (percentage: number) => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.card {
-  height: 330px;
-  overflow-y: scroll;
-
-  // 隐藏滚动条
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &-body {
-    padding: 0 6px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .card {
-    height: auto;
-  }
-}
-</style>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { Download } from "@element-plus/icons-vue";
 import { CountTo } from "@/components";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 const salesData = ref([
   {
@@ -8,43 +11,45 @@ const salesData = ref([
     value: 999,
     change: "+10%",
     icon: "&#xe7d9",
-    class: "bg-primary",
+    class: ns.join("bg-primary"),
   },
   {
     label: "总订单量",
     value: 300,
     change: "+15%",
     icon: "&#xe70f",
-    class: "bg-warning",
+    class: ns.join("bg-warning"),
   },
   {
     label: "产品销售量",
     value: 56,
     change: "-5%",
     icon: "&#xe712",
-    class: "bg-error",
+    class: ns.join("bg-error"),
   },
   {
     label: "新客户数",
     value: 68,
     change: "+8%",
     icon: "&#xe77f",
-    class: "bg-success",
+    class: ns.join("bg-success"),
   },
 ]);
 </script>
 
 <template>
-  <div class="card tk-card-secondary today-sales">
+  <div class="tk-card-minimal card today-sales">
     <div class="card-header">
-      <span class="title">今日销售</span>
-      <span class="subtitle">销售总结</span>
+      <div class="header-title">
+        <span class="title">今日销售</span>
+        <span class="subtitle">销售总结</span>
+      </div>
       <div class="export-btn">
         <Icon :icon="Download" class="icon-sys" />
         <span>导出</span>
       </div>
     </div>
-    <div class="sales-summary">
+    <div class="card-body no-padding sales-summary">
       <el-row :gutter="20">
         <el-col :span="6" :xs="24" v-for="(item, index) in salesData" :key="index">
           <div :class="['sales-card']">
@@ -55,7 +60,9 @@ const salesData = ref([
             <p class="sle">{{ item.label }}</p>
             <small>
               较昨天
-              <span :class="[item.change.indexOf('+') === -1 ? 'text-danger' : 'text-success', 'sle']">
+              <span
+                :class="[item.change.indexOf('+') === -1 ? ns.join('text-danger') : ns.join('text-success'), 'sle']"
+              >
                 {{ item.change }}
               </span>
             </small>
@@ -70,8 +77,6 @@ const salesData = ref([
 @use "@styles/mixins/function" as *;
 
 .today-sales {
-  height: 330px;
-
   .export-btn {
     display: flex;
     align-items: center;
@@ -100,7 +105,7 @@ const salesData = ref([
   }
 
   .sales-summary {
-    padding: 20px;
+    padding-top: 16px !important;
 
     .sales-card {
       display: flex;

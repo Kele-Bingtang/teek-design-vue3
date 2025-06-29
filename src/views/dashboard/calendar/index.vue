@@ -277,20 +277,20 @@ const handleAddSchedule = () => {
   }
 }
 
-:deep(.el-calendar) {
-  --el-calendar-border: none;
+:deep(.#{$el-namespace}-calendar) {
+  --#{$el-namespace}-calendar-border: none;
 
   margin: 15px 0;
   border: 1px solid #eeeeee;
   border-radius: 10px;
 
-  .el-calendar__body {
+  .#{$el-namespace}-calendar__body {
     padding: 0;
     border-top: 1px solid #eeeeee;
   }
 }
 
-:deep(.el-calendar-table) {
+:deep(.#{$el-namespace}-calendar-table) {
   td {
     border-right: none;
     border-bottom: none;
@@ -312,7 +312,7 @@ const handleAddSchedule = () => {
   }
 }
 
-:deep(.el-calendar__header) {
+:deep(.#{$el-namespace}-calendar__header) {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,12 +329,12 @@ const handleAddSchedule = () => {
   }
 }
 
-:deep(.el-calendar-day) {
+:deep(.#{$el-namespace}-calendar-day) {
   height: 40px;
   min-height: 40px;
 }
 
-:deep(.el-calendar-day:hover) {
+:deep(.#{$el-namespace}-calendar-day:hover) {
   background-color: #ffffff;
 }
 

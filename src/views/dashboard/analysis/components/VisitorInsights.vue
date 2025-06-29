@@ -21,7 +21,7 @@ const xAxisData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
 </script>
 
 <template>
-  <div class="card tk-card-secondary visitor-insights">
+  <div class="tk-card-minimal card">
     <div class="card-header">
       <span class="title">访客洞察</span>
     </div>
@@ -40,11 +40,7 @@ const xAxisData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
 </template>
 
 <style lang="scss" scoped>
-.visitor-insights {
-  height: 330px;
-
-  .card-body {
-    padding: 10px 20px;
-  }
+.card-body {
+  padding-right: 16px;
 }
 </style>

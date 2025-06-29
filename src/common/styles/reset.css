@@ -1,0 +1,141 @@
+/*
+font-family 字体说明：
+
+  ​​Inter​​ (首选字体)
+  ​​-apple-system​​ (macOS/iOS 系统字体)
+  ​​BlinkMacSystemFont​​ (Chrome/Safari 优化)
+  ​​Segoe UI​​ (Windows 现代界面字体)
+  ​​Roboto​​ (Android 和 Google 生态系统)
+  ​​Helvetica Neue​​ (传统 macOS)
+  ​​Helvetica​​ (通用西文字体)
+  ​​PingFang SC​​ (苹果简体中文)
+  ​​Hiragino Sans GB​​ (苹果日文字体，支持中文)
+  ​​Microsoft YaHei​​ (微软雅黑)
+  ​​微软雅黑​​ (中文系统回退)
+  ​​Arial​​ (最广泛支持的西文字体)
+  ​​sans-serif​​ (通用无衬线字体回退)
+*/
+
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Helvetica,
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "微软雅黑",
+    Arial,
+    sans-serif;
+
+  /* 渲染优化 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+
+  /* 中文优化 */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  hanging-punctuation: first allow-end last allow-end;
+
+  /* 性能优化 */
+  will-change: scroll-position;
+  contain: layout style;
+  backface-visibility: hidden;
+}
+
+html {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+pre,
+form,
+fieldset,
+input,
+p,
+blockquote,
+th,
+td {
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+figure {
+  margin: 0;
+}
+
+q::before,
+q::after,
+blockquote::before,
+blockquote::after {
+  content: "";
+}

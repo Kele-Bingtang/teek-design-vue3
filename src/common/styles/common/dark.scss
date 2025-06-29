@@ -27,28 +27,4 @@ html.dark {
       }
     }
   }
-
-  /* 克隆并自定义 ElMessage 样式，不会影响 ElMessage 原本样式，在 src/utils/message.ts 中调用自定义样式 ElMessage 方法即可，非暗黑模式在 src/style/element-plus.scss 文件进行了适配 */
-  .antd-message {
-    background-color: var(--#{$admin-namespace}-gray-200) !important;
-    background-image: initial !important;
-    box-shadow:
-      rgb(13 13 13 / 12%) 0 3px 6px -4px,
-      rgb(13 13 13 / 8%) 0 6px 16px 0,
-      rgb(13 13 13 / 5%) 0 9px 28px 8px !important;
-
-    .#{$el-namespace}-message__content {
-      color: #ffffff !important;
-      pointer-events: all !important;
-      background-image: initial !important;
-    }
-
-    .#{$el-namespace}-message__closeBtn {
-      &:hover {
-        color: var(--#{$el-namespace}-text-color-regular);
-        background-color: var(--#{$admin-namespace}-gray-400);
-        border-radius: 50%;
-      }
-    }
-  }
 }

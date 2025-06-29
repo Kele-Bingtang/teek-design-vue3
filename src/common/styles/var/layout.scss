@@ -1,0 +1,55 @@
+@use "../mixins/namespace" as *;
+
+// 布局主题变量
+:root {
+  // 顶部栏
+  --#{$admin-namespace}-layout-header-bg-color: var(--#{$admin-namespace}-bg-color);
+  --#{$admin-namespace}-layout-header-text-color: var(--#{$admin-namespace}-text-gray-600);
+  --#{$admin-namespace}-layout-header-icon-size: 22px;
+  --#{$admin-namespace}-layout-header-line: none;
+
+  // 顶部左侧面包屑
+  --#{$admin-namespace}-layout-header-breadcrumb-link-color: var(--#{$admin-namespace}-text-gray-500);
+  --#{$admin-namespace}-layout-header-breadcrumb-text-color: var(--#{$admin-namespace}-text-gray-700);
+  --#{$admin-namespace}-layout-logo-title-color: var(--#{$admin-namespace}-text-gray-800);
+
+  // 页签栏
+  --#{$admin-namespace}-layout-tab-bg-color: var(--#{$admin-namespace}-bg-color);
+  --#{$admin-namespace}-layout-tab-item-bg-color: var(--#{$admin-namespace}-main-bg-color);
+  --#{$admin-namespace}-layout-tab-item-border-color: var(--#{$admin-namespace}-border-color);
+  --#{$admin-namespace}-layout-tab-height: 38px;
+  --#{$admin-namespace}-layout-tab-text-color: var(--#{$admin-namespace}-text-gray-600);
+  --#{$admin-namespace}-layout-tab-line: none;
+  --#{$admin-namespace}-layout-tab-text-size: 13px;
+  --#{$admin-namespace}-layout-tab-icon-size: 14px;
+  --#{$admin-namespace}-layout-tab-dot-size: 11px;
+
+  // 侧边栏
+  --#{$admin-namespace}-layout-aside-bg-color: var(--#{$admin-namespace}-main-bg-color);
+  --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
+  --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);
+  --#{$admin-namespace}-layout-aside-left-bg-color: var(--#{$admin-namespace}-main-color);
+  --#{$admin-namespace}-layout-aside-text-color: var(--#{$admin-namespace}-text-gray-700);
+  --#{$admin-namespace}-layout-aside-text-active-color: var(--#{$admin-namespace}-main-color);
+  --#{$admin-namespace}-layout-aside-text-hover-color: var(--#{$admin-namespace}-main-color);
+  --#{$admin-namespace}-layout-aside-icon-color: var(--#{$admin-namespace}-text-gray-700);
+  --#{$admin-namespace}-layout-aside-icon-active-color: var(--#{$admin-namespace}-main-color);
+  --#{$admin-namespace}-layout-aside-line: 1px solid var(--#{$admin-namespace}-border-color);
+  --#{$admin-namespace}-layout-aside-text-active-weight: 700;
+  --#{$admin-namespace}-layout-aside-text-size: 14px;
+  --#{$admin-namespace}-layout-aside-icon-size: 20px;
+  --#{$admin-namespace}-layout-aside-arrow-size: 13px;
+  --#{$admin-namespace}-layout-aside-item-height: 46px;
+  --#{$admin-namespace}-layout-aside-sub-item-height: 40px;
+
+  // columns 布局侧边栏
+  --#{$admin-namespace}-columns-layout-aside-width: 72px;
+  --#{$admin-namespace}-columns-layout-aside-item-height: 72px;
+}
+
+// 深色布局主题变量
+:root.dark {
+  --#{$admin-namespace}-layout-aside-text-color: var(--#{$el-namespace}-text-color-regular);
+  --#{$admin-namespace}-layout-aside-icon-color: var(--#{$el-namespace}-text-color-regular);
+  --#{$admin-namespace}-layout-aside-text-active-weight: 400;
+}

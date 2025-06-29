@@ -68,7 +68,7 @@ const handleScrollOnDom = (e: MouseEvent & { wheelDelta: number }) => {
 };
 
 const handleScroll = (offset: number) => {
-  const navContainerDom = elTabsInstance.value?.$el.querySelector(".el-tabs__nav-scroll");
+  const navContainerDom = elTabsInstance.value?.$el.querySelector(ns.joinEl("tabs__nav-scroll"));
   const tabListDom = elTabsInstance.value?.tabNavRef?.tabListRef;
   if (!navContainerDom || !tabListDom) return;
 

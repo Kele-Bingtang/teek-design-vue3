@@ -85,7 +85,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
 
     <el-row :gutter="20">
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（单数据）</span>
           </div>
@@ -94,7 +94,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（多组数据）</span>
           </div>
@@ -103,7 +103,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（堆叠）</span>
           </div>
@@ -112,7 +112,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>折线图</span>
           </div>
@@ -126,7 +126,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>折线图（渐变背景）</span>
           </div>
@@ -139,7 +139,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>折线图（多组数据）</span>
           </div>
@@ -148,7 +148,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（水平）</span>
           </div>
@@ -157,7 +157,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（水平）</span>
           </div>
@@ -175,7 +175,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>柱状图（水平堆叠）</span>
           </div>
@@ -193,7 +193,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>环形图</span>
           </div>
@@ -210,7 +210,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>环形图</span>
           </div>
@@ -233,7 +233,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>饼图</span>
           </div>
@@ -251,7 +251,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>散点图</span>
           </div>
@@ -275,7 +275,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>雷达图</span>
           </div>
@@ -302,7 +302,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>k线图</span>
           </div>
@@ -320,7 +320,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
       </el-col>
 
       <el-col :xs="24" :md="12" :lg="8">
-        <div class="card tk-card-secondary">
+        <div class="card tk-card-minimal">
           <div class="card-header">
             <span>双向堆叠柱状图</span>
           </div>
@@ -368,7 +368,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
     }
   }
 
-  .el-col {
+  .#{$el-namespace}-col {
     margin-bottom: 20px;
 
     &:last-child {
