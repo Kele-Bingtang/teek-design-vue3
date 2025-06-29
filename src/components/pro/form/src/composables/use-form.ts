@@ -11,6 +11,9 @@ import ProForm from "../index.vue";
 
 type ProFormPropsWithModel = ProFormNamespace.Props & { modelValue?: Recordable };
 
+/**
+ * 通过函数动态修改 ProForm 相关数据
+ */
 export const useProForm = () => {
   // ProFrom 实例
   const proFormInstance = ref<ProFormInstance | null>();

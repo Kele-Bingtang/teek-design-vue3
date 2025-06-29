@@ -5,13 +5,20 @@ import { nextTick, ref, watch } from "vue";
 defineOptions({ name: "Tree" });
 
 export interface TreeProps {
-  data: any[]; // 树数据
-  nodeKey?: string; // 每一个树节点 id
-  checkBaseValueType?: "keys" | "nodes"; // v-model 返回的格式，keys 返回选中的节点 nodeKey，nodes 为返回选中的节点
-  expandSelected?: boolean; // 初始化就有默认选中的节点时，是否展开选中节点的所有父节点
-  checkbox?: boolean; // 开启工具栏
-  search?: boolean; // 开启搜索功能
-  select?: boolean; // 开启全选/全不选功能
+  /** 树数据 */
+  data: any[];
+  /** 每一个树节点 id，默认 id */
+  nodeKey?: string;
+  /** v-model 返回的格式，keys 返回选中的节点 nodeKey，nodes 为返回选中的节点，默认 keys */
+  checkBaseValueType?: "keys" | "nodes";
+  /** 初始化就有默认选中的节点时，是否展开选中节点的所有父节点，默认 false */
+  expandSelected?: boolean;
+  /** 是否开启工具栏，默认 false */
+  checkbox?: boolean;
+  /** 是否开启搜索功能，默认 false */
+  search?: boolean;
+  /** 是否开启全选/全不选功能，默认 false */
+  select?: boolean;
 }
 
 const props = withDefaults(defineProps<TreeProps>(), {

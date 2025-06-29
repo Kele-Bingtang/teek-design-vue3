@@ -36,6 +36,7 @@ watch(
 const gap = inject("gap", 0);
 const cols = inject("cols", ref(4));
 
+// 计算 grid 布局样式
 const style = computed(() => {
   const span = props[breakPoint.value]?.span ?? props.span;
   const offset = props[breakPoint.value]?.offset ?? props.offset;

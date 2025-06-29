@@ -63,6 +63,7 @@ const footerStyle = computed(() => ({
     finalProps.value.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
 }));
 
+// ProFormItem Props
 const formMainProps = computed(() => {
   return filterEmpty({
     ...finalProps.value,
@@ -111,15 +112,22 @@ function useFormFooter() {
   return { submitForm, resetForm };
 }
 
+/**
+ * 表单校验事件
+ */
 const handleValidate = (prop: FormItemProp, isValid: boolean, message: string): void => {
   emits("validate", prop, isValid, message);
 };
 
+/**
+ * 表单值改变事件
+ */
 const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
   emits("change", value, model, column);
 };
 
 onMounted(() => {
+  // 往父类注册表单实例
   emits("register", elFormInstance.value?.$parent || null, elFormInstance.value);
 });
 

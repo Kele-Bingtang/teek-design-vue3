@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext, type TabsInstance } from "element-plus";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
-import { addUnit, removeUnit } from "@/common/utils";
+import { addUnit, removeUnit, isString } from "@/common/utils";
 import { useTabNav } from "../use-tab-nav";
 import RightMenu from "../components/right-menu/index.vue";
 import MoreButton from "../components/more-button/index.vue";
@@ -137,7 +137,11 @@ onMounted(() => {
           <template #label>
             <div @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)">
               <Icon
-                v-if="tab.meta.icon && settingStore.showTabNavIcon"
+                v-if="
+                  tab.meta.icon &&
+                  settingStore.showTabNavIcon &&
+                  (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
+                "
                 :icon="tab.meta.icon"
                 :class="ns.em('content', 'icon')"
               />

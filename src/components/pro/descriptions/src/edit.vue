@@ -18,17 +18,22 @@ const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 
+// 计算 ProForm 需要的配置项
 const columns = computed(() => {
   const { options } = props;
   return [{ ...props, options: options ? ref(options) : options, value: undefined, editable: true }] as FormColumn[];
 });
 
+// 父级数据改变后触发子级数据改变
 watch(
   () => props.value,
   val => setProp(model.value, props.prop, val),
   { immediate: true }
 );
 
+/**
+ * 表单值改变事件
+ */
 const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
   emits("change", value, model, column);
 };

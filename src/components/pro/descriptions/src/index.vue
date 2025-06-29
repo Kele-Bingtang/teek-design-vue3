@@ -158,6 +158,7 @@ const initColumn = (column: DescriptionColumn) => {
     return fn(editable.value ?? column.editable ?? false);
   };
 
+  // 如果是函数，则传参调用获取函数返回值，否则等于本身
   const spanValue = isFunction(span) ? callFn(span) : unref(span);
   const rowSpanValue = isFunction(rowSpan) ? callFn(rowSpan) : unref(rowSpan);
   const widthValue = isFunction(width) ? callFn(width) : unref(width);
@@ -184,6 +185,7 @@ const getValue = (column: DescriptionColumn) => {
 
   if (!options) return getProp(dataValue, prop);
 
+  // 获取字典数据
   const option = transformOption
     ? transformOption(getProp(dataValue, prop), options, dataValue)
     : filterOptions(getProp(dataValue, prop), options, optionField);

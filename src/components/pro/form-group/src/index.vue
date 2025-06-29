@@ -39,12 +39,14 @@ const ns = useNamespace("pro-form-group");
 
 const model = defineModel<Recordable>({ default: () => ({}) });
 
+// 最终的 Props
 const finalProps = computed(() => {
   const propsObj = { ...props };
   Object.assign(propsObj, mergeProps.value);
   return propsObj;
 });
 
+// ProForm 的列配置项
 const proFormColumns = computed(() => {
   const proFormColumns: FormColumn[] = [];
   finalProps.value.columns.forEach(item => {
@@ -66,24 +68,42 @@ const { proFormMainInstance, getOptionsMap, getElFormItemInstance, getElInstance
 
 // ---------- 代理 ProForm 事件 ----------
 
+/**
+ * 表单验证事件
+ */
 const handleValidate = (prop: FormItemProp, isValid: boolean, message: string) => {
   emits("validate", prop, isValid, message);
 };
+
+/**
+ * 表单提交事件
+ */
 const handleSubmit = (model: Recordable) => {
   emits("submit", model);
 };
+
+/**
+ * 表单校验错误事件
+ */
 const handleSubmitError = (invalidFields: Parameters<FormValidateCallback>[1]) => {
   emits("submitError", invalidFields);
 };
+
+/**
+ * 表单重置事件
+ */
 const handleReset = (model: Recordable) => {
   emits("reset", model);
 };
-
+/**
+ * 表单值改变事件
+ */
 const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
   emits("change", value, model, column);
 };
 
 onMounted(() => {
+  // 往父类注册 ProForm 组件实例
   emits("register", getProFormInstance()?.$parent || null);
 });
 

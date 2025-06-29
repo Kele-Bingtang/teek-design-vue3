@@ -32,14 +32,29 @@ const footerStyle = computed(() => ({
   justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
 }));
 
+/**
+ * 切换全屏
+ */
 const toggleFullscreen = () => (isFullscreen.value = !isFullscreen.value);
+/**
+ * 确认按钮点击事件
+ */
 const handleConfirm = () => emits("confirm");
+/**
+ * 关闭按钮点击事件
+ */
 const handleCancel = () => {
   emits("cancel");
   close();
 };
 
+/**
+ * 打开抽屉
+ */
 const open = () => (drawerVisible.value = true);
+/**
+ * 关闭抽屉
+ */
 const close = () => (drawerVisible.value = false);
 
 defineExpose({ elDrawerInstance, handleConfirm, handleCancel, open, close });

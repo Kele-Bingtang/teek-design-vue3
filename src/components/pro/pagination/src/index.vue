@@ -35,6 +35,9 @@ watch(
   { deep: true }
 );
 
+/**
+ * 改变分页大小事件
+ */
 const handleSizeChange = (pageSize: number) => {
   if (props.reset) handleCurrentChange(1);
   pageModel.value.pageSize = pageSize;
@@ -42,12 +45,18 @@ const handleSizeChange = (pageSize: number) => {
   emits("sizeChange", pageSize);
 };
 
+/**
+ * 改变分页页码事件
+ */
 const handleCurrentChange = (pageNum: number) => {
   pageModel.value.pageNum = pageNum;
   afterChange();
   emits("currentChange", pageNum);
 };
 
+/**
+ * 分页改变后续操作
+ */
 const afterChange = async () => {
   emits("change", pageInfo.value);
   if (props.autoScroll) {

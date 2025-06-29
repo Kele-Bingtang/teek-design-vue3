@@ -32,7 +32,9 @@ const handleChange = (value: unknown, model: Recordable, column: FormItemColumnP
   emits("change", value, model, column);
 };
 
-// 上一步
+/**
+ * 点击上一步事件
+ */
 const pre = () => {
   if (active.value-- > props.columns.length + 1) active.value = 1;
   stepIndexModel.value = active.value;
@@ -40,7 +42,9 @@ const pre = () => {
   emits("pre", active.value);
 };
 
-// 下一步
+/**
+ * 点击下一步事件
+ */
 const next = (model: Recordable) => {
   const currentActive = active.value;
 

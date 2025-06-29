@@ -19,21 +19,37 @@ const drawerVisible = defineModel("visible", { default: false });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 
+/**
+ * 表单值改变事件
+ */
 const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
   emits("change", value, model, column);
 };
 
+/**
+ * 确认按钮点击事件
+ */
 const handleConfirm = async () => {
   const isValid = await proFormInstance.value?.submitForm();
   if (isValid) emits("confirm", model.value);
 };
 
+/**
+ * 取消按钮点击事件
+ */
 const handleCancel = () => {
   close();
   emits("cancel");
 };
 
+/**
+ * 打开抽屉
+ */
 const open = () => (drawerVisible.value = true);
+/**
+ * 关闭抽屉
+
+ */
 const close = () => (drawerVisible.value = false);
 
 const expose = { proFormInstance, handleConfirm, handleCancel, open, close };

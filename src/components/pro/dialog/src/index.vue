@@ -35,6 +35,9 @@ const footerStyle = computed(() => ({
   justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
 }));
 
+/**
+ * 切换全屏
+ */
 const toggleFullscreen = () => (isFullscreen.value = !isFullscreen.value);
 
 watch(
@@ -45,20 +48,31 @@ watch(
       const windowHeight = document.documentElement.offsetHeight;
       // 弹框整体 padding 上下各 16，头部高度 47，内容区整体 padding 上下各 25，底部存在时高度 58
       dialogHeight.value = `${windowHeight - 32 - 47 - 50 - (props.showFooter ? 58 : 0)}px`;
-    } else {
-      dialogHeight.value = addUnit(props.height);
-    }
+    } else dialogHeight.value = addUnit(props.height);
   },
   { immediate: true }
 );
 
+/**
+ * 确认按钮点击事件
+ */
 const handleConfirm = () => emits("confirm");
+
+/**
+ * 关闭按钮点击事件
+ */
 const handleCancel = () => {
   emits("cancel");
   close();
 };
 
+/**
+ * 打开弹窗
+ */
 const open = () => (dialogVisible.value = true);
+/**
+ * 关闭弹窗
+ */
 const close = () => (dialogVisible.value = false);
 
 defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
@@ -85,6 +99,7 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
           </slot>
 
           <slot name="fullscreen-icon" v-bind="{ isFullscreen, toggleFullscreen }">
+            <!-- 全屏图标 -->
             <Icon
               v-if="fullscreenIcon"
               :icon="isFullscreen ? 'core-fullscreen-exit' : 'core-fullscreen'"

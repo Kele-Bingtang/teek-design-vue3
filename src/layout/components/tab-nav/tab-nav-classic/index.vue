@@ -10,6 +10,7 @@ import MoreButton from "../components/more-button/index.vue";
 import RightMenu from "../components/right-menu/index.vue";
 
 import "./index.scss";
+import { isString } from "@/common/utils";
 
 defineOptions({ name: "ClassicTabNav" });
 
@@ -174,7 +175,11 @@ onMounted(() => {
           @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)"
         >
           <Icon
-            v-if="tab.meta.icon && settingStore.showTabNavIcon"
+            v-if="
+              tab.meta.icon &&
+              settingStore.showTabNavIcon &&
+              (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
+            "
             :icon="tab.meta.icon"
             :class="ns.em('tab', 'icon')"
           />

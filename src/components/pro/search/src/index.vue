@@ -129,7 +129,9 @@ const actionStyle = computed(() => {
   return style;
 });
 
-// 获取响应式设置
+/**
+ * 获取响应式设置
+ */
 const getResponsive = (item: ProSearchColumnProps) => {
   const { grid = {} } = item;
   return {
@@ -143,6 +145,9 @@ const getResponsive = (item: ProSearchColumnProps) => {
   };
 };
 
+/**
+ * 点击搜索按钮事件
+ */
 const search = async () => {
   const isValid = await submitForm();
   if (isValid) {
@@ -150,6 +155,9 @@ const search = async () => {
   }
 };
 
+/**
+ * 点击重置按钮事件
+ */
 const reset = async () => {
   await resetForm();
   emits("reset", finalProps.value.removeNoValue ? filterEmpty(model.value) : model.value);
@@ -172,7 +180,8 @@ const toggleCollapse = (isCollapse?: boolean) => {
 };
 
 onMounted(() => {
-  emits("register", defaultExpose);
+  // 注册实例
+  emits("register", proFormInstance.value?.$parent);
 });
 
 const defaultExpose = {

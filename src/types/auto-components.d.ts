@@ -13,7 +13,6 @@ declare module 'vue' {
     CardBarChartCard: typeof import('./../components/card/bar-chart-card/index.vue')['default']
     CardDataListCard: typeof import('./../components/card/data-list-card/index.vue')['default']
     CardDonutChartCard: typeof import('./../components/card/donut-chart-card/index.vue')['default']
-    CardImageCard: typeof import('./../components/card/image-card/index.vue')['default']
     CardLineChartCard: typeof import('./../components/card/line-chart-card/index.vue')['default']
     CardProgressCard: typeof import('./../components/card/progress-card/index.vue')['default']
     CardStatsCard: typeof import('./../components/card/stats-card/index.vue')['default']

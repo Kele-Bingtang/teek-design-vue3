@@ -66,7 +66,7 @@ export const useProFormGroup = () => {
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[][]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
       const formGroup = await getProFormGroup();
       formGroup?.setColumn(columnProps);
     },

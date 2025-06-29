@@ -1,7 +1,7 @@
 import type { FormColumn, ProFormInstance } from "../types";
 
 /**
- * ProForm 相关方法获取
+ * ProForm 相关方法获取（调用 defineExpose 暴露的数据）
  */
 export const useProFormFn = (refName: string = "proFormInstance") => {
   const proFormInstance = useTemplateRef<ProFormInstance>(refName);
