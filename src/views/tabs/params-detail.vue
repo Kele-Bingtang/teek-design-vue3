@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ParamsDetail">
-import { useDetail } from "./hooks";
+import { useDetail } from "./use-tabs";
 
 const { id } = useDetail();
 </script>

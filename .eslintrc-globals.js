@@ -88,7 +88,7 @@ export default {
   watchEffect: true,
   watchPostEffect: true,
   watchSyncEffect: true,
-  MetaProp: "readonly",
+  MetaProps: "readonly",
   RouterConfig: "readonly",
   RouterConfigRaw: "readonly",
   process: "readonly",

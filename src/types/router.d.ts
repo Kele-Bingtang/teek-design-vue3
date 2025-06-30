@@ -8,7 +8,7 @@ type MetaNeedKey = "_fullPath" | "_dynamic";
 
 declare module "vue-router" {
   // 扩展路由 Meta 类型
-  interface RouteMeta extends RequiredKey<MetaProp, MetaNeedKey> {
+  interface RouteMeta extends RequiredKey<MetaProps, MetaNeedKey> {
     [key: string]: unknown;
   }
 }
@@ -17,19 +17,19 @@ declare module "vue-router" {
 declare global {
   // 路由表配置类型
   type RouterConfigRaw = Omit<RouteRecordRaw, "meta" | "component" | "children"> & {
-    meta?: MetaProp;
+    meta?: MetaProps;
     component?: string | RouteComponent | (() => Promise<RouteComponent>);
     children?: RouterConfigRaw[];
   };
 
   // 路由表加工后的类型
   type RouterConfig = Omit<RouterConfigRaw, "meta" | "children"> & {
-    meta: RequiredKey<MetaProp, MetaNeedKey>;
+    meta: RequiredKey<MetaProps, MetaNeedKey>;
     children?: RouterConfig[];
   };
 
   // 路由 Meta 类型
-  interface MetaProp {
+  interface MetaProps {
     /**
      * 路由的完整路径，在编译阶段自动生成
      */
@@ -99,11 +99,15 @@ declare global {
      */
     activeMenu?: string;
     /**
-     * 关闭路由前的回调，如果设置该字段，则在关闭当前 tab 页时会去 @/router/before-close.js 里寻找该字段名「对应」的方法，作为关闭前的钩子函数，无默认值
+     * 关闭路由前的回调，如果返回 false 则不关闭当前标签页
+     */
+    beforeClose?: (route: RouteLocationNormalizedLoaded) => Promise<boolean>;
+    /**
+     * 关闭路由前的回调，如果设置该字段，则在关闭标签页前会去 @/router/before-close.js 里寻找该字段名「对应」的方法，作为关闭前的钩子函数
      */
     beforeCloseName?: string;
     /**
-     * 路由在左侧菜单的排序，rank 值越高越靠后，当 rank 不存在时，根据顺序自动创建，首页路由永远在第一位，当 rank 存在时，可以插入指定的菜单位置，默认不存在
+     * 路由在左侧菜单的排序，rank 值越高越靠后，当 rank 不存在时，根据顺序自动创建，首页路由永远在第一位，当 rank 存在时，可以插入指定的菜单位置
      */
     rank?: number;
     /**

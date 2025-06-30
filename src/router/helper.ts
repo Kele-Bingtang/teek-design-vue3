@@ -13,7 +13,7 @@ type Route = RouteLocationNormalizedLoaded | RouterConfigRaw;
  */
 export const formatTitle = (route: Route, reTranslate = false) => {
   // 取消 meta 响应式
-  const meta: MetaProp = { ...route.meta };
+  const meta: MetaProps = { ...route.meta };
   const { title: routeTitle, useI18n } = meta;
   const name = route.name as string;
   let title = routeTitle;

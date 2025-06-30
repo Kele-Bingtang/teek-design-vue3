@@ -5,7 +5,7 @@ import { useRoute, useRouter } from "vue-router";
 import Sortable from "sortablejs";
 import { useLayoutStore, useRouteStore } from "@/pinia";
 import beforeClose from "@/router/before-close";
-import { getUrlParams, mittBus } from "@/common/utils";
+import { getUrlParams, isFunction, mittBus } from "@/common/utils";
 import SystemConfig, { HOME_URL, RefreshIFrameKey } from "@/common/config";
 import { formatTitle } from "@/router/helper";
 import { useCommon } from "@/composables";
@@ -257,10 +257,12 @@ export const useTabNav = () => {
    * 关闭 tab，并尝试激活到上一个 tab
    */
   const closeTab = async (tab: TabProps) => {
-    if (tab.meta && tab.meta.beforeCloseName && tab.meta.beforeCloseName in beforeClose) {
-      const isClose = await new Promise(resolve => {
-        beforeClose[tab.meta.beforeCloseName as string](resolve, route);
-      });
+    if (tab.meta.beforeClose && isFunction(tab.meta.beforeClose)) {
+      const isClose = await tab.meta.beforeClose(route);
+
+      if (isClose) closeSelectedTab(tab);
+    } else if (tab.meta.beforeCloseName && tab.meta.beforeCloseName in beforeClose) {
+      const isClose = await beforeClose[tab.meta.beforeCloseName](route);
 
       if (isClose) closeSelectedTab(tab);
     } else closeSelectedTab(tab);

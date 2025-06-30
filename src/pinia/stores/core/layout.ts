@@ -20,7 +20,7 @@ export interface TabProps {
   /** 是否允许关闭 */
   close: boolean;
   /** 路由 meta 信息 */
-  meta: MetaProp;
+  meta: MetaProps;
 }
 
 export const useLayoutStore = defineStore(
@@ -59,14 +59,20 @@ export const useLayoutStore = defineStore(
       // 如果关闭 updateIfExist，则已存在的 tab 不做更新
       if (!updateIfExist && tabNavListValue.some(v => [v.path, v.path + "/"].includes(tab.path))) return;
 
-      const tabIndex = findTabIndex(tab.path);
       // 判断动态路由的可打开最大数量
       const dynamicLevel = tab.meta.dynamicLevel ?? -1;
 
-      if (dynamicLevel > 0 && tabNavListValue.filter(t => t.path === tab.path).length >= dynamicLevel) {
-        // 如果当前已打开的动态路由数大于 dynamicLevel，替换第一个动态路由标签
-        tabIndex !== -1 && tabNavListValue.splice(tabIndex, 1);
+      if (
+        dynamicLevel > 0 &&
+        tabNavListValue.filter(t => t.path === tab.path || t.name === tab.name).length >= dynamicLevel
+      ) {
+        const dynamicTabIndex = tabNavListValue.findIndex(t => t.path === tab.path || t.name === tab.name);
+
+        // 如果当前已打开的动态路由数大于 dynamicLevel，则删除第一个动态路由 tab
+        dynamicTabIndex !== -1 && tabNavListValue.splice(dynamicTabIndex, 1);
       }
+
+      const tabIndex = findTabIndex(tab.path);
 
       // tabIndex 为 -1 表示当前标签页不存在，需要新增
       if (tabIndex === -1) {

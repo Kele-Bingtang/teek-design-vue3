@@ -1,13 +1,13 @@
 <script setup lang="ts" name="Tabs">
 import { appendFieldById, deleteChildren, getNodeById } from "@/common/utils";
-import { useDetail } from "./hooks";
 import { useLayoutStore } from "@/pinia";
 import { useMenu } from "@/composables";
 import { copyObj } from "@/common/utils";
 import { formatTitle } from "@/router/helper";
+import { useDetail } from "./use-tabs";
 
-const layoutStore = useLayoutStore();
 const { toDetail, router } = useDetail();
+const layoutStore = useLayoutStore();
 const { menuList } = useMenu();
 const routesTreeData = copyObj(menuList.value);
 
@@ -28,7 +28,7 @@ function onCloseTags() {
       getNodeById(treeData.value, id).redirect ??
       getNodeById(treeData.value, id).meta?._fullPath ??
       getNodeById(treeData.value, id).path;
-    layoutStore.removeCurrentTab({ path: currentPath } as any);
+    layoutStore.removeTab({ path: currentPath } as any);
     if (currentPath === "/tabs") router.push(tabNavList.value[(tabNavList as any).value.length - 1].path);
   });
 }

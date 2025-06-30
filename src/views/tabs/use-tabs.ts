@@ -8,19 +8,19 @@ export function useDetail() {
   function toDetail(
     index: number | string | string[] | number[] | LocationQueryValue[],
     model: string,
-    noBeforeClose = false
+    allowClose = false
   ) {
     if (model === "query") {
       // 路由跳转
       router.push({
         name: "Query",
-        query: noBeforeClose ? { id: String(index) } : { id: String(index), noBeforeClose: "true" },
+        query: allowClose ? { id: String(index) } : { id: String(index), _close: "true" },
       });
     } else {
       router.push({
         name: "Params",
         params: { id: String(index) },
-        query: noBeforeClose ? {} : { noBeforeClose: "true" },
+        query: allowClose ? {} : { _close: "true" },
       });
     }
   }

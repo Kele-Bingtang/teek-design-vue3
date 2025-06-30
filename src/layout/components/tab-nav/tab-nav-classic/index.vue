@@ -61,7 +61,7 @@ const findTargetTab = async () => {
   if (!tabsInstance.value || !tabsInstance.value.length) return;
   const targetTab = tabsInstance.value.find((tab: any) => route.path === tab?.to);
 
-  moveToTargetTab(targetTab.$el);
+  moveToTargetTab(targetTab?.$el);
 };
 
 /**

@@ -53,15 +53,15 @@ watchEffect(() => {
 });
 
 const isFixTabNav = computed(() => {
-  if (fixTabNav.value) return "auto";
+  if (fixTabNav.value) return "hidden auto";
   return "";
 });
 </script>
 
 <template>
   <Maximize v-if="maximize" />
-  <el-main class="flx-column">
-    <component :is="TabNavComponents[tabNavMode]" v-if="showTabNav" />
+  <el-main>
+    <component v-if="showTabNav" :is="TabNavComponents[tabNavMode]" />
 
     <div class="page-content">
       <router-view v-slot="{ Component, route }">
@@ -90,13 +90,9 @@ const isFixTabNav = computed(() => {
   background-color: cssVar(layout-page-bg-color);
 
   .page-content {
-    flex: 1;
+    max-height: calc(100vh - cssVar(layout-header-height) - cssVar(layout-tab-height));
     padding: 10px 12px;
     overflow: v-bind(isFixTabNav);
-
-    // max-height: calc(
-    //   100vh - cssVar(layout-header-height) - cssVar(layout-tab-height)
-    // );
   }
 }
 </style>
