@@ -3,9 +3,9 @@
 // 深色模式主题变量
 :root.dark {
   // 主要色
-  --#{$admin-namespace}-main-color: var(--#{$admin-namespace}-primary);
-  --#{$admin-namespace}-bg-color: #121520;
-  --#{$admin-namespace}-main-bg-color: #1a1d26;
+  --#{$admin-namespace}-color-primary: var(--#{$admin-namespace}-primary);
+  --#{$admin-namespace}-bg-color: #1a1d26;
+  --#{$admin-namespace}-bg-color-page: #121520;
 
   // 主色系
   --#{$admin-namespace}-primary-rgb: 95, 129, 255;
@@ -42,20 +42,24 @@
   --#{$admin-namespace}-dark: #eef1f7;
 
   // 背景色
-  --#{$admin-namespace}-bg-primary: #141b2d;
-  --#{$admin-namespace}-bg-primary-rgb: 20, 27, 45;
+  --#{$admin-namespace}-bg-primary: #12182f;
+  --#{$admin-namespace}-bg-primary-rgb: 18, 24, 47;
   --#{$admin-namespace}-bg-secondary: #1a2638;
   --#{$admin-namespace}-bg-secondary-rgb: 26, 38, 56;
-  --#{$admin-namespace}-bg-success: #1d2e1f;
-  --#{$admin-namespace}-bg-success-rgb: 29, 46, 31;
+  --#{$admin-namespace}-bg-success: #1e3a23;
+  --#{$admin-namespace}-bg-success-rgb: 30, 58, 35;
   --#{$admin-namespace}-bg-info: #17223a;
   --#{$admin-namespace}-bg-info-rgb: 23, 34, 58;
-  --#{$admin-namespace}-bg-warning: #2c271d;
-  --#{$admin-namespace}-bg-warning-rgb: 44, 39, 29;
-  --#{$admin-namespace}-bg-danger: #2d1a1c;
-  --#{$admin-namespace}-bg-danger-rgb: 45, 26, 28;
-  --#{$admin-namespace}-bg-error: #2e201d;
-  --#{$admin-namespace}-bg-error-rgb: 46, 32, 29;
+  --#{$admin-namespace}-bg-warning: #373119;
+  --#{$admin-namespace}-bg-warning-rgb: 55, 49, 25;
+  --#{$admin-namespace}-bg-danger: #351b1e;
+  --#{$admin-namespace}-bg-danger-rgb: 53, 27, 30;
+  --#{$admin-namespace}-bg-error: #3a221d;
+  --#{$admin-namespace}-bg-error-rgb: 58, 34, 29;
+  --#{$admin-namespace}-bg-neutral: #1e2129;
+  --#{$admin-namespace}-bg-neutral-rgb: 30, 33, 41;
+  --#{$admin-namespace}-bg-neutral-light: #252835;
+  --#{$admin-namespace}-bg-neutral-dark: #161920;
 
   // 灰度色，适用于背景色 | 悬停色
   --#{$admin-namespace}-text-muted: #7e85a0;

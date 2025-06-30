@@ -9,22 +9,17 @@ defineOptions({ name: "SwitchDark" });
 
 const settingStore = useSettingStore();
 
-const { Dark, Light } = SystemThemeEnum;
+const { isDark } = storeToRefs(settingStore);
 
-const onAddDarkChange = () => {
+const dark = ref(isDark.value);
+
+const onAddDarkChange = (val: string | number | boolean) => {
   const { changeSystemTheme } = useTheme();
-  const { isDark } = useSettingStore();
 
-  changeSystemTheme(isDark ? Dark : Light);
+  changeSystemTheme(val ? SystemThemeEnum.Dark : SystemThemeEnum.Light);
 };
 </script>
 
 <template>
-  <el-switch
-    v-model="settingStore.isDark"
-    @change="onAddDarkChange"
-    inline-prompt
-    :active-icon="Sunny"
-    :inactive-icon="Moon"
-  />
+  <el-switch v-model="dark" @change="onAddDarkChange" inline-prompt :active-icon="Sunny" :inactive-icon="Moon" />
 </template>

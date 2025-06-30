@@ -79,7 +79,7 @@
 // 卡片基础效果占位符
 %card-base {
   box-sizing: border-box;
-  background-color: var(--#{$admin-namespace}-main-bg-color);
+  background-color: var(--#{$admin-namespace}-bg-color);
 
   // 添加响应式圆角，最小为 2px，最大为 12px
   border-radius: clamp(2px, calc(var(--#{$admin-namespace}-radius) * 0.5 + 2px), 12px);

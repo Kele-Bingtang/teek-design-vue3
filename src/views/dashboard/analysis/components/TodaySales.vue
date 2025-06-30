@@ -90,8 +90,8 @@ const salesData = ref([
     transition: all 0.3s;
 
     &:hover {
-      color: cssVar(main-color);
-      border-color: cssVar(main-color);
+      color: cssVar(color-primary);
+      border-color: cssVar(color-primary);
     }
 
     .icon-sys {

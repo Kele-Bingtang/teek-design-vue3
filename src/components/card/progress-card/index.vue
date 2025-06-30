@@ -53,7 +53,7 @@ watch(
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-column-justify-center']">
+  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-column-justify-center']">
     <div :class="ns.e('info')" :style="{ justifyContent: icon ? 'space-between' : 'flex-start' }">
       <div :class="ns.em('info', 'left')">
         <Icon

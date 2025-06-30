@@ -23,7 +23,7 @@ const handleMore = () => emit("more");
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]">
+  <div :class="[ns.b(), ns.join('card-minimal')]">
     <div :class="ns.e('header')">
       <p :class="ns.em('header', 'title')">{{ title }}</p>
       <p :class="ns.em('header', 'subtitle')">{{ subtitle }}</p>

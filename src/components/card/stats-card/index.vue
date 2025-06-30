@@ -26,7 +26,7 @@ const ns = useNamespace("stats-card");
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-align-center']" :style="{ backgroundColor: backgroundColor }">
+  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-align-center']" :style="{ backgroundColor: backgroundColor }">
     <div
       v-if="icon"
       :class="[ns.e('icon'), 'flx-center']"

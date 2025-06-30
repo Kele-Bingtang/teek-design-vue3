@@ -6,7 +6,7 @@
   $card-padding: 20px;
 
   padding: $card-padding;
-  background-color: cssVar(main-bg-color);
+  background-color: cssVar(bg-color);
   border-radius: cssVar(radius);
 
   @include el-joins(scrollbar) {

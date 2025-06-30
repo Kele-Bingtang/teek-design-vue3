@@ -65,7 +65,7 @@ const { chartInstance } = useChartComponent({
 
 <template>
   <div
-    :class="[ns.b(), ns.join('card-secondary')]"
+    :class="[ns.b(), ns.join('card-minimal')]"
     :style="{
       height: addUnit(props.height, 'rem'),
       '--text-color-primary': colorPrimary,

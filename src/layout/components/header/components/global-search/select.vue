@@ -125,7 +125,7 @@ onUnmounted(() => {
             icon="search"
             pointer
             hover
-            :hover-color="ns.cssVar('main-color')"
+            :hover-color="ns.cssVar('color-primary')"
             @click.stop="handleSwitchMode"
           />
         </el-tooltip>

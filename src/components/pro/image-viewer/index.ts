@@ -9,12 +9,12 @@ export { ImageViewer };
 
 let instance: VNode | null = null;
 
-export const createImageViewer = (options: Partial<ImageViewerProps> & { show?: boolean; modelValue?: boolean }) => {
+export const createImageViewer = (options: Partial<ImageViewerProps>) => {
   if (!isClient) return;
 
   const container = document.createElement("div");
 
   document.body.appendChild(container);
-  instance = createVNode(ImageViewer, options);
+  instance = createVNode(ImageViewer, { ...options, modelValue: true });
   render(instance, container);
 };

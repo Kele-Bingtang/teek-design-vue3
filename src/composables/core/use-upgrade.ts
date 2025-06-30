@@ -52,7 +52,7 @@ export const useUpgrade = async () => {
     `</p>`,
     content,
     reLogin
-      ? `<p style="color: ${ns.cssVar("main-color")}; padding-top: 5px;">升级完成，请重新登录后继续使用。</p>`
+      ? `<p style="color: ${ns.cssVar("color-primary")}; padding-top: 5px;">升级完成，请重新登录后继续使用。</p>`
       : "",
   ].join("");
 

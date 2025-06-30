@@ -25,7 +25,7 @@
     }
 
     @include is(active) {
-      box-shadow: 0 0 0 2px cssVar(main-color) !important;
+      box-shadow: 0 0 0 2px cssVar(color-primary) !important;
     }
   }
 
@@ -33,7 +33,7 @@
     position: absolute;
     top: 30px;
     right: 10px;
-    color: cssVar(main-color);
+    color: cssVar(color-primary);
     transition: all cssVarEl(transition-duration-fast);
   }
 

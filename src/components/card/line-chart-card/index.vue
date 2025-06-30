@@ -70,7 +70,7 @@ const { chartInstance } = useChartComponent({
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary')]" :style="{ height: addUnit(height, 'rem') }">
+  <div :class="[ns.b(), ns.join('card-minimal')]" :style="{ height: addUnit(height, 'rem') }">
     <div :class="ns.e('header')">
       <div :class="ns.em('header', 'metric')">
         <p class="value">{{ value }}</p>

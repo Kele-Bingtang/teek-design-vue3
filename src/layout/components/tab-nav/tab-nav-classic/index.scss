@@ -21,7 +21,7 @@ $btn-width: 28px;
       }
 
       @include is(active) {
-        color: cssVar(main-color);
+        color: cssVar(color-primary);
 
         .dot {
           background-color: cssVarEl(color-primary-light-3);
@@ -39,8 +39,8 @@ $btn-width: 28px;
 
       @include is(active) {
         color: #ffffff;
-        background-color: cssVar(main-color);
-        border-color: cssVar(main-color);
+        background-color: cssVar(color-primary);
+        border-color: cssVar(color-primary);
 
         .dot {
           background-color: #ffffff;
@@ -79,7 +79,7 @@ $btn-width: 28px;
     border-radius: calc(cssVar(radius) / 2.5 + 2px);
 
     &:hover {
-      color: cssVar(main-color);
+      color: cssVar(color-primary);
 
       .dot {
         background-color: cssVarEl(color-primary-light-3);

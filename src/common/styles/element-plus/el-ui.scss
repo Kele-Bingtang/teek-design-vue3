@@ -15,7 +15,7 @@
   --#{$el-namespace}-card-border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
 
   .region .#{$el-namespace}-radio-button__original-radio:checked + .#{$el-namespace}-radio-button__inner {
-    color: var(--#{$admin-namespace}-main-color);
+    color: var(--#{$admin-namespace}-color-main);
   }
 }
 
@@ -101,7 +101,7 @@
 
 // el-message 样式优化
 // .#{$el-namespace}-message {
-//   background-color: cssVar(main-bg-color) !important;
+//   background-color: cssVar(bg-color) !important;
 //   border: 0 !important;
 //   box-shadow:
 //     0 6px 16px 0 rgb(0 0 0 / 8%),
@@ -250,7 +250,7 @@
 
 // .#{$el-namespace}-table__column-filter-trigger i {
 //   margin: -3px 0 0 2px;
-//   color: var(--#{$admin-namespace}-main-color) !important;
+//   color: var(--#{$admin-namespace}-color-primary) !important;
 // }
 
 // 去除 el-dropdown 鼠标放上去出现的边框

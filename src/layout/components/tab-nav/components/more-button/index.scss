@@ -5,7 +5,7 @@
   color: cssVar(layout-tab-text-color);
 
   &:hover {
-    color: cssVar(main-color);
+    color: cssVar(color-primary);
     background-color: cssVar(gray-200) !important;
   }
 }

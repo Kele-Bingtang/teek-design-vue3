@@ -7,12 +7,11 @@ import { SystemThemeEnum } from "@/common/enums/appEnum";
  * @description 切换主题
  * */
 export const useTheme = () => {
-  const settingStore = useSettingStore();
   const ns = useNamespace();
+  const settingStore = useSettingStore();
 
+  const { isDark, isGrey, isWeak, systemThemeMode, primaryColor } = storeToRefs(settingStore);
   const { Light, Dark } = SystemThemeEnum;
-
-  const { isDark } = storeToRefs(settingStore);
 
   const systemThemeStyle = {
     [Light]: { className: "" },
@@ -40,11 +39,11 @@ export const useTheme = () => {
   /**
    * 修改系统主题
    */
-  const changeSystemTheme = (theme = settingStore.systemThemeMode) => {
+  const changeSystemTheme = (theme = systemThemeMode.value) => {
     // 临时禁用过渡效果
     disableTransitions();
 
-    if (theme !== settingStore.systemThemeMode) settingStore.$patch({ systemThemeMode: theme });
+    if (theme !== systemThemeMode.value) settingStore.$patch({ systemThemeMode: theme });
 
     const currentTheme = systemThemeStyle[isDark.value ? Dark : Light];
     if (currentTheme) document.documentElement.setAttribute("class", currentTheme.className);
@@ -53,9 +52,7 @@ export const useTheme = () => {
     for (let i = 1; i <= 9; i++) {
       setCssVar(
         ns.cssVarNameEl(`color-primary-light-${i}`),
-        isDark.value
-          ? `${getDarkColor(settingStore.primaryColor, i / 10)}`
-          : `${getLightColor(settingStore.primaryColor, i / 10)}`
+        isDark.value ? `${getDarkColor(primaryColor.value, i / 10)}` : `${getLightColor(primaryColor.value, i / 10)}`
       );
     }
 
@@ -70,8 +67,8 @@ export const useTheme = () => {
   /**
    * 修改主题颜色
    */
-  const changePrimaryColor = (color = settingStore.primaryColor) => {
-    if (color !== settingStore.primaryColor) settingStore.$patch({ primaryColor: color });
+  const changePrimaryColor = (color = primaryColor.value) => {
+    if (color !== primaryColor.value) settingStore.$patch({ primaryColor: color });
 
     // 兼容暗黑模式，自动计算主题颜色由深到浅的其他颜色
     setCssVar(ns.cssVarNameEl(`color-primary`), color);
@@ -80,7 +77,7 @@ export const useTheme = () => {
     for (let i = 1; i <= 9; i++) {
       setCssVar(
         ns.cssVarNameEl(`color-primary-light-${i}`),
-        settingStore.isDark ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`
+        isDark.value ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`
       );
     }
     for (let i = 1; i <= 9; i++) {
@@ -111,8 +108,8 @@ export const useTheme = () => {
     changePrimaryColor();
     changeSystemTheme();
 
-    if (settingStore.isGrey) changeGreyOrWeak(true, "grey");
-    if (settingStore.isWeak) changeGreyOrWeak(true, "weak");
+    if (isGrey.value) changeGreyOrWeak(true, "grey");
+    if (isWeak.value) changeGreyOrWeak(true, "weak");
   };
 
   return {

@@ -91,7 +91,7 @@ const list = reactive([
       }
 
       .target {
-        color: cssVar(main-color);
+        color: cssVar(color-primary);
       }
     }
   }

@@ -355,7 +355,7 @@ const stackXAxisData = ref(["产品A", "产品B", "产品C", "产品D", "产品E
 
   .card {
     padding: 20px;
-    background-color: cssVar(main-bg-color);
+    background-color: cssVar(bg-color);
     border-radius: cssVar(radius);
 
     .card-header {

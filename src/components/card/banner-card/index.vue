@@ -68,7 +68,7 @@ function generateMeteors(count: number): Meteor[] {
 
 <template>
   <div
-    :class="[ns.b(), ns.join('card-secondary'), ns.has('decoration'), 'flx-column-justify-center']"
+    :class="[ns.b(), ns.join('card-minimal'), ns.has('decoration'), 'flx-column-justify-center']"
     :style="{ backgroundColor: backgroundColor, height: height }"
     @click="emit('click')"
   >

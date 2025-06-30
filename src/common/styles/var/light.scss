@@ -3,9 +3,9 @@
 // 浅色主题变量
 :root {
   // 主要色
-  --#{$admin-namespace}-main-color: var(--#{$admin-namespace}-primary);
-  --#{$admin-namespace}-bg-color: #f6f8fc; // 页面背景颜色
-  --#{$admin-namespace}-main-bg-color: #ffffff;
+  --#{$admin-namespace}-color-primary: var(--#{$admin-namespace}-primary);
+  --#{$admin-namespace}-bg-color: #ffffff; // 元素级别背景色
+  --#{$admin-namespace}-bg-color-page: #f6f8fc; // 页面级别背景颜色
 
   // 主色系
   --#{$admin-namespace}-primary-rgb: 57, 90, 227;
@@ -42,20 +42,24 @@
   --#{$admin-namespace}-dark: #1e2129;
 
   // 背景色
-  --#{$admin-namespace}-bg-primary: #f2f5ff;
-  --#{$admin-namespace}-bg-primary-rgb: 242, 245, 255;
-  --#{$admin-namespace}-bg-secondary: #e8f8ff;
-  --#{$admin-namespace}-bg-secondary-rgb: 232, 248, 255;
-  --#{$admin-namespace}-bg-success: #f0f9eb;
-  --#{$admin-namespace}-bg-success-rgb: 240, 249, 235;
-  --#{$admin-namespace}-bg-info: #f0f5ff;
-  --#{$admin-namespace}-bg-info-rgb: 240, 245, 255;
-  --#{$admin-namespace}-bg-warning: #fff7ef;
-  --#{$admin-namespace}-bg-warning-rgb: 255, 245, 230;
-  --#{$admin-namespace}-bg-danger: #ffede8;
-  --#{$admin-namespace}-bg-danger-rgb: 255, 238, 232;
-  --#{$admin-namespace}-bg-error: #fff2e8;
-  --#{$admin-namespace}-bg-error-rgb: 255, 242, 232;
+  --#{$admin-namespace}-bg-primary: #e6ecff;
+  --#{$admin-namespace}-bg-primary-rgb: 230, 236, 255;
+  --#{$admin-namespace}-bg-secondary: #d5edfa;
+  --#{$admin-namespace}-bg-secondary-rgb: 213, 237, 250;
+  --#{$admin-namespace}-bg-success: #e0f5d6;
+  --#{$admin-namespace}-bg-success-rgb: 224, 245, 214;
+  --#{$admin-namespace}-bg-info: #e4ebff;
+  --#{$admin-namespace}-bg-info-rgb: 228, 235, 255;
+  --#{$admin-namespace}-bg-warning: #fff2e0;
+  --#{$admin-namespace}-bg-warning-rgb: 255, 242, 224;
+  --#{$admin-namespace}-bg-danger: #ffe0d9;
+  --#{$admin-namespace}-bg-danger-rgb: 255, 224, 217;
+  --#{$admin-namespace}-bg-error: #ffe5d9;
+  --#{$admin-namespace}-bg-error-rgb: 255, 229, 217;
+  --#{$admin-namespace}-bg-neutral: #f5f7fa;
+  --#{$admin-namespace}-bg-neutral-rgb: 245, 247, 250;
+  --#{$admin-namespace}-bg-neutral-light: #f9fafc;
+  --#{$admin-namespace}-bg-neutral-dark: #eef0f5;
 
   // 灰度色，适用于背景色 | 悬停色
   --#{$admin-namespace}-text-muted: #99a1b7;

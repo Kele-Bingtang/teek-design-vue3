@@ -41,7 +41,7 @@
       height: 20px;
       padding: 0 4px;
       color: cssVar(gray-500);
-      background-color: cssVar(bg-color);
+      background-color: cssVar(bg-color-page);
       border-radius: 4px;
 
       i {
@@ -61,7 +61,7 @@
 
   @include e(search-list) {
     width: 100%;
-    background: cssVar(main-bg-color);
+    background: cssVar(bg-color);
   }
 
   @include e(search-item) {
@@ -109,7 +109,7 @@
   @include e(history-list) {
     width: 100%;
     margin-top: 5px;
-    background: cssVar(main-bg-color);
+    background: cssVar(bg-color);
   }
 
   @include e(history-item) {
@@ -176,7 +176,7 @@
         margin-right: 8px;
         font-size: 14px;
         color: cssVar(gray-500);
-        background: cssVar(bg-color);
+        background: cssVar(bg-color-page);
         border: 1px solid cssVar(border-dashed-color);
         border-radius: 3px;
         box-shadow: 0 2px 0 cssVar(border-dashed-color);

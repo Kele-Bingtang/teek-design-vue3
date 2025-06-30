@@ -8,7 +8,7 @@
   height: 100vh;
   min-height: 550px;
   padding: 30px;
-  background-color: #eeeeee;
+  background-color: cssVarEl(bg-color);
   background-image: url("@/common/assets/images/login/login_bg.svg");
   background-size: cover;
 
@@ -25,7 +25,7 @@
     width: 100%;
     height: 100%;
     padding: 0 50px;
-    background-color: #ffffffcc;
+    background-color: cssVarEl(mask-color);
     border-radius: 10px;
 
     @media (max-width: $device-ipad) {
@@ -47,9 +47,9 @@
       max-height: 100%;
       padding: 50px 40px 45px;
       overflow: auto;
-      background-color: cssVar("main-bg-color");
+      background-color: cssVarEl(bg-color);
       border-radius: 10px;
-      box-shadow: 2px 3px 7px rgb(0 0 0 / 20%);
+      box-shadow: 5px 5px 15px rgb(161 161 161 / 20%);
 
       @media (max-width: $device-phone) {
         min-width: 100%;
@@ -69,7 +69,7 @@
           font-size: 42px;
           font-weight: 700;
           line-height: 1;
-          color: cssVar(text-gray-700);
+          color: cssVarEl(text-color-primary);
           white-space: wrap;
 
           @media (max-width: 640px) {
@@ -77,6 +77,22 @@
             text-align: center;
           }
         }
+      }
+    }
+  }
+}
+
+html.dark {
+  @include b(login) {
+    @include e(wrapper) {
+      background-color: cssVarEl(mask-color);
+
+      img {
+        filter: brightness(0.92) saturate(1.25);
+      }
+
+      @include e(right) {
+        box-shadow: 5px 5px 15px rgb(161 161 161 / 30%);
       }
     }
   }

@@ -1,5 +1,6 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 @use "@styles/common/var" as *;
 
 @include b(login-form) {
@@ -23,7 +24,7 @@
       width: 100%;
       cursor: pointer;
 
-      .svg-icon:hover {
+      .tk-icon:hover {
         color: cssVarEl(color-primary);
       }
     }

@@ -39,12 +39,12 @@ $btn-width: 28px;
           border-left: none;
 
           &:hover {
-            color: cssVar(main-color);
+            color: cssVar(color-primary);
           }
 
           &.is-active {
-            color: cssVar(main-color);
-            border-bottom: 2px solid cssVar(main-color);
+            color: cssVar(color-primary);
+            border-bottom: 2px solid cssVar(color-primary);
           }
 
           .is-icon-close svg {

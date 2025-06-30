@@ -21,7 +21,7 @@ export const useWatchCssVar = () => {
   watchEffect(() => {
     const headerBg = ns.cssVarName("layout-header-bg-color");
     const tabBg = ns.cssVarName("layout-tab-bg-color");
-    const bgStyle = ns.cssVar("main-bg-color");
+    const bgStyle = ns.cssVar("bg-color");
 
     const headerLine = ns.cssVarName("layout-header-line");
     const tabLine = ns.cssVarName("layout-tab-line");

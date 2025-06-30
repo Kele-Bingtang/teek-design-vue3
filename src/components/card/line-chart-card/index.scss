@@ -4,7 +4,7 @@
 @include b(line-chart-card) {
   position: relative;
   overflow: hidden;
-  background-color: cssVar(main-bg-color);
+  background-color: cssVar(bg-color);
   border-radius: cssVar(radius);
 
   @include e(header) {

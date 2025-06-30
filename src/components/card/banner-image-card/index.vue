@@ -15,7 +15,7 @@ withDefaults(defineProps<CardBannerProps>(), {
   button: () => ({
     show: true,
     text: "查看详情",
-    color: useNamespace().cssVar("main-color"),
+    color: useNamespace().cssVar("color-primary"),
     textColor: "#fff",
   }),
   // 取消按钮默认配置
@@ -49,7 +49,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-secondary'), 'flx-column-justify-center']" :style="{ height: height }">
+  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-column-justify-center']" :style="{ height: height }">
     <div :class="[ns.e('content'), 'flx-column-align-center']">
       <div :class="ns.e('icon')">
         <img :src="image" :alt="title" />

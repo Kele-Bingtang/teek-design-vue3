@@ -12,6 +12,15 @@ import "vue3-tree-org/lib/vue3-tree-org.css";
 
 import "@styles/normalize.css";
 import "@styles/reset.css";
+
+import "@styles/var/index.scss"; // 主题变量
+import "@styles/common/base.scss";
+import "@styles/common/atomic.scss";
+import "@styles/common/scrollbar.scss";
+import "@styles/common/transition.scss";
+import "@styles/common/theme-animation.scss";
+import "@styles/common/menu-theme.scss";
+
 import "@styles/element-plus/el-ui.scss";
 import "@styles/element-plus/el-light.scss";
 import "@styles/element-plus/el-dark.scss";

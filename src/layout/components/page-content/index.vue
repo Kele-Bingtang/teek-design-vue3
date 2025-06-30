@@ -87,7 +87,7 @@ const isFixTabNav = computed(() => {
 
 @include el-joins(main) {
   padding: 0;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(layout-page-bg-color);
 
   .page-content {
     flex: 1;

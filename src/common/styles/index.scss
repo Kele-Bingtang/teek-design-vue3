@@ -1,15 +1,20 @@
-// 主题变量
-@forward "var/index";
-
-// 公共样式
-@forward "common/base";
-@forward "common/dark";
-@forward "common/atomic";
-@forward "common/scrollbar";
-@forward "common/transition";
-@forward "common/theme-animation";
-@forward "common/menu-theme";
+// 公共变量
 @forward "common/var";
 
-// 命名空间
+// 命名空间变量
 @forward "mixins/namespace";
+
+/*
+  ! 使用该文件前阅读 !
+
+  不建议将样式类的文件（含有 .xx {} 或 root {}）在这里 forward（暴露）出去，应该只 forward 部分全局样式变量（$xx: xx）或者部分全局样式函数（@mixin xx {}）
+
+  原因：
+    该文件在 vite.config.ts 中通过 additionalData 全局注入到项目的每个组件里，因此每个组件的 style 都会加载该文件 forward 的内容，导致重复加载（additionalData 特性）
+    因此在开发者工具的 HTML 样式表里看到很多带有删除线的样式
+  举例：如果项目一次性加载了 10 个组件，那么 additionalData 的样式类会在样式表里重复加载 10 次，然而有 9 次加载的样式类被最后加载的样式类覆盖，且会导致开发者工具使用起来卡顿
+  解决方案：因此请将含有样式的文件在 main.ts 里引入，这样样式类只会被加载一次，可提升 80% 的性能
+
+  说明：该文件适合放入全局变量/函数，这样在组件中无需引入就可以直接使用这些全局变量/函数
+    值得一提的是，additionalData 仅注入到每个 Vue 组件的 style 里，如果单建 SCSS 文件，则需要手动引入使用全局变量的文件，如 @styles/common/var.scss
+*/

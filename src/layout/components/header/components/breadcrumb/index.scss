@@ -11,7 +11,7 @@
     color: cssVar(layout-header-breadcrumb-link-color);
 
     &:not(.no-click):hover {
-      color: cssVar(main-color);
+      color: cssVar(color-primary);
     }
 
     @include no(click) {

@@ -425,7 +425,7 @@ onMounted(() => {
 .chat {
   display: flex;
   overflow: hidden;
-  background-color: cssVar(main-bg-color);
+  background-color: cssVar(bg-color);
   border: 1px solid cssVar(border-color);
   border-radius: 10px;
 

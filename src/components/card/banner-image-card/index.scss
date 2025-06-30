@@ -4,7 +4,7 @@
 
 @include b(banner-image-card) {
   padding-bottom: 1.5rem;
-  background-color: cssVar(main-bg-color);
+  background-color: cssVar(bg-color);
   border-radius: calc(cssVar(radius) + 2px) !important;
 
   @include e(content) {

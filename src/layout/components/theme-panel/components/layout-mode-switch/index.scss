@@ -20,11 +20,11 @@
       }
 
       @include is(active) {
-        box-shadow: 0 0 0 2px cssVar(main-color) !important;
+        box-shadow: 0 0 0 2px cssVar(color-primary) !important;
       }
 
       .dark {
-        background-color: cssVar(main-color);
+        background-color: cssVar(color-primary);
         border-radius: 3px;
       }
 
@@ -35,7 +35,7 @@
 
       .content {
         background-color: cssVarEl(color-primary-light-8);
-        border: 1px dashed cssVar(main-color);
+        border: 1px dashed cssVar(color-primary);
         border-radius: 3px;
       }
     }
@@ -45,7 +45,7 @@
     position: absolute;
     top: 30px;
     right: 10px;
-    color: cssVar(main-color);
+    color: cssVar(color-primary);
     transition: all cssVarEl(transition-duration-fast);
   }
 

@@ -17,11 +17,11 @@
       margin-left: 0;
       color: cssVar(gray-700);
       outline: none;
-      background-color: rgb(cssVar(gray-200-rgb), 0.8);
+      background-color: rgb(cssVar(gray-100-rgb));
       border: none;
 
       &:hover {
-        background-color: rgb(cssVar(gray-300-rgb), 0.75);
+        background-color: rgb(cssVar(gray-200-rgb));
       }
     }
   }
