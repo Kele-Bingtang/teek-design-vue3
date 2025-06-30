@@ -79,8 +79,6 @@ export const useTableCellEdit = (
   const handleStopEditClick = async (e: MouseEvent, row: TableRow, column: TableColumn) => {
     if (!(await row._validateCellEdit(undefined, column.prop))) return;
 
-    console.log(1);
-
     if (closeCurrentCellEdit && elTableInstance.value) {
       const target = e?.target as HTMLElement;
 

@@ -38,11 +38,11 @@ const { isMobile } = useCommon();
       <LanguageSelect id="languageSelect" />
       <ErrorLog
         id="errorLog"
-        :errorCount="errorCount"
         v-if="SystemConfig.layoutConfig.errorLog.showInHeader && errorCount > 0 && !isMobile"
+        :error-count="errorCount"
       />
       <LightDarkSwitch id="lightDarkSwitch" />
-      <UserAvatar id="user" />
+      <UserAvatar id="user" :name="false" />
     </div>
   </div>
 </template>

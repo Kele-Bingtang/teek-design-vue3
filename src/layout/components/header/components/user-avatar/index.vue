@@ -12,6 +12,10 @@ import "./index.scss";
 
 defineOptions({ name: "UserAvatar" });
 
+withDefaults(defineProps<{ name?: boolean }>(), {
+  name: true,
+});
+
 const ns = useNamespace("user-avatar");
 const userStore = useUserStore();
 const { t } = useI18n();
@@ -52,14 +56,25 @@ const logout = async () => {
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <el-popover placement="bottom-end" trigger="hover" :width="240" :hide-after="0" :offset="10" :popper-class="ns.b()">
+  <div :class="[ns.b(), 'customize']">
+    <el-popover
+      placement="bottom-end"
+      trigger="hover"
+      :width="240"
+      :hide-after="0"
+      :offset="10"
+      :popper-class="ns.b()"
+      v-bind="$attrs"
+    >
       <template #reference>
-        <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
-          <template #error>
-            <el-image :src="defaultAvatar" />
-          </template>
-        </el-image>
+        <div class="flx-align-center gap-15" :class="ns.e('avatar-wrapper')">
+          <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
+            <template #error>
+              <el-image :src="defaultAvatar" />
+            </template>
+          </el-image>
+          <span v-if="name">{{ userInfo.username }}</span>
+        </div>
       </template>
 
       <div :class="ns.e('wrapper')">

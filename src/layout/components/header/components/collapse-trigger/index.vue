@@ -16,9 +16,13 @@ const toggleTrigger = () => {
 </script>
 
 <template>
-  <Icon :class="ns.b()" @click.stop="toggleTrigger">
-    <component :is="isCollapse ? Expand : Fold"></component>
-  </Icon>
+  <div :class="[ns.b(), 'flx-center']" @click.stop="toggleTrigger">
+    <Icon>
+      <component :is="isCollapse ? Expand : Fold" />
+    </Icon>
+
+    <slot />
+  </div>
 </template>
 
 <style lang="scss" scoped>

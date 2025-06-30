@@ -199,6 +199,10 @@ export const removeCssVar = (keys: string[], el: any = document.documentElement)
   });
 };
 
+/**
+ * 获取 css var 值
+ * @param prop 属性
+ */
 export const getCssVar = (prop: string, el: any = document.documentElement) => {
   return getComputedStyle(el).getPropertyValue(prop);
 };

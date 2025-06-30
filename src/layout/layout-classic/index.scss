@@ -3,7 +3,7 @@
 
 @include b(classic-layout) {
   @include e(header-left) {
-    gap: 20px;
+    gap: 11px;
   }
 
   /* 内容区减去 header 高度，否则无法滚动 */
