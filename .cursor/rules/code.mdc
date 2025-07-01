@@ -1,0 +1,118 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## 组件格式
+
+```vue
+<script setup lang="ts">
+import xxx from "xx";
+
+defineOptions({ name: "Xxx" });
+
+const ns = useNamespace("xx-xx");
+</script>
+
+<template>
+  <div :class="ns.b()"></div>
+</template>
+
+<style scoped lang="scss">
+@use "./index";
+</style>
+```
+
+```scss
+@use "@styles/mixins/bem" as *;
+
+@include b(xx-xx) {
+}
+```
+
+## 带有 props、emits 的写法
+
+```vue
+<script setup lang="ts">
+defineOptions({ name: "Demo" });
+
+// 按照这种写法
+interface DemoProps {
+  modelValue: string;
+}
+
+// 按照这种写法
+interface DemoEmits {
+  submit: [value: string];
+}
+
+const props = defineProps<DemoProps>();
+const emit = defineEmits<DemoEmits>();
+
+const ns = useNamespace("login");
+</script>
+
+<template>
+  <div></div>
+</template>
+
+<style scoped lang="scss">
+@use "./index";
+</style>
+```
+
+## 组件里使用 composables
+
+不推荐 `props`、`emits`、`响应式变量`、`computed`、`watch`、`function`、`生命周期` 的结构写法。
+
+请使用可复用逻辑(composables)写法，即将关联性高的代码放到 `function useXx` 里然后暴露出来使用。
+
+```vue
+<script setup lang="ts">
+import http from "xx";
+
+defineOptions({ name: "Demo" });
+
+interface DemoProps {
+  params: string;
+}
+
+interface DemoEmits {
+  submit: [value: string];
+}
+
+const props = defineProps<DemoProps>();
+const emit = defineEmits<DemoEmits>();
+
+const ns = useNamespace("login");
+
+const username = ref("");
+const password = ref("");
+
+const { data } = useInitData();
+
+// 核心请看这个 composables
+function useInitData() {
+  const data = ref<Recore<string, any>[]>([]);
+
+  const request = async () => {
+    // 请求数据复制给 data
+    const result = await http.get(url, props.params);
+    data.value = result.data;
+  };
+
+  return { data };
+}
+</script>
+
+<template>
+  <div :class="ns.b()">
+    <input v-model="username" />
+    <input v-model="password" />
+  </div>
+</template>
+
+<style scoped lang="scss">
+@use "./index";
+</style>
+```

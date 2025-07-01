@@ -1,0 +1,37 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(chat-person-list) {
+  width: 360px;
+  height: 100%;
+  padding: 20px;
+  border-right: 1px solid cssVarEl(border-color);
+
+  @include e(header) {
+    padding-bottom: 20px;
+  }
+
+  @include e(user-info) {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  @include e(user-details) {
+    .name {
+      font-size: 16px;
+      font-weight: 500;
+      color: #222222;
+    }
+
+    .email {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #888888;
+    }
+  }
+
+  @include e(search-box) {
+    margin-top: 12px;
+  }
+}

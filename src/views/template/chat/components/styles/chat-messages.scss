@@ -1,0 +1,13 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(chat-messages) {
+  flex: 1;
+  padding: 30px 16px;
+  overflow-y: auto;
+  border-top: 1px solid cssVarEl(border-color-lighter);
+
+  &::-webkit-scrollbar {
+    width: 5px !important;
+  }
+}

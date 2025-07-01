@@ -1,0 +1,31 @@
+@use "@styles/mixins/bem.scss" as *;
+
+@include b(chat-input) {
+  padding: 16px;
+  @include e(actions) {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+  }
+  @include e(input-actions) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    @include e(left) {
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 20px;
+        font-size: 16px;
+        color: #888888;
+        cursor: pointer;
+      }
+    }
+
+    el-button {
+      min-width: 80px;
+    }
+  }
+}

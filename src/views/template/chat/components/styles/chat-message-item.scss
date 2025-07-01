@@ -1,0 +1,74 @@
+@use "@styles/mixins/bem.scss" as *;
+
+@include b(chat-message-item) {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 30px;
+
+  @include is(left) {
+    justify-content: flex-start;
+
+    @include e(content, true) {
+      align-items: flex-start;
+
+      @include e(info) {
+        flex-direction: row;
+      }
+
+      .text {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+  @include is(right) {
+    flex-direction: row-reverse;
+
+    @include e(content, true) {
+      align-items: flex-end;
+
+      @include e(info) {
+        flex-direction: row-reverse;
+      }
+
+      .text {
+        background-color: #e9f3ff;
+      }
+    }
+  }
+
+  @include e(avatar) {
+    flex-shrink: 0;
+  }
+
+  @include e(content) {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+
+    @include e(info, true) {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 12px;
+
+      .time {
+        color: #888888;
+      }
+
+      .sender {
+        font-weight: 500;
+      }
+    }
+
+    .text {
+      padding: 10px 14px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #222222;
+      border-radius: 6px;
+    }
+  }
+}
