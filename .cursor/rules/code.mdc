@@ -3,6 +3,11 @@ description:
 globs: 
 alwaysApply: false
 ---
+---
+description: "代码编写规范"
+priority: 99
+---
+
 ## 组件格式
 
 ```vue

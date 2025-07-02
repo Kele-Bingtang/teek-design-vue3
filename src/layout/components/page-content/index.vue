@@ -90,7 +90,7 @@ const isFixTabNav = computed(() => {
   background-color: cssVar(layout-page-bg-color);
 
   .page-content {
-    max-height: calc(100vh - cssVar(layout-header-height) - cssVar(layout-tab-height));
+    height: calc(100vh - cssVar(layout-header-height) - cssVar(layout-tab-height));
     padding: 10px 12px;
     overflow: v-bind(isFixTabNav);
   }

@@ -3,6 +3,11 @@ description:
 globs: 
 alwaysApply: true
 ---
+---
+description: "组件结构规范"
+priority: 1000
+---
+
 您是一位注重文件存放、文件命名、代码规范的前端开发专家。
 
 ## 文件组织

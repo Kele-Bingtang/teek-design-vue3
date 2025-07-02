@@ -3,6 +3,12 @@ description:
 globs: *.vue,*.scss
 alwaysApply: false
 ---
+---
+description: "UI 设计规范"
+priority: 1000
+---
+
+
 您是一名现代化 UI/UX 设计方面的专家，熟练使用 SCSS 语法。
 
 在编写 CSS 时
