@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<ProDialogProps>(), {
   fullscreen: false,
   fullscreenIcon: true,
   height: 400,
+  heightOffsetInFullscreen: 0,
   showFooter: true,
   footerAlign: "right",
   confirmLoading: false,
@@ -28,7 +29,7 @@ const emits = defineEmits<ProDialogEmits>();
 const dialogVisible = defineModel<boolean>({ default: false });
 
 const dialogHeight = ref(addUnit(props.height));
-const isFullscreen = ref(false);
+const isFullscreen = ref(props.fullscreen);
 const elDialogInstance = useTemplateRef<DialogProps>("elDialogInstance");
 
 const footerStyle = computed(() => ({
@@ -38,7 +39,10 @@ const footerStyle = computed(() => ({
 /**
  * 切换全屏
  */
-const toggleFullscreen = () => (isFullscreen.value = !isFullscreen.value);
+const toggleFullscreen = () => {
+  isFullscreen.value = !isFullscreen.value;
+  emits("fullscreen", isFullscreen.value);
+};
 
 watch(
   isFullscreen,
@@ -46,8 +50,8 @@ watch(
     await nextTick();
     if (val) {
       const windowHeight = document.documentElement.offsetHeight;
-      // 弹框整体 padding 上下各 16，头部高度 47，内容区整体 padding 上下各 25，底部存在时高度 58
-      dialogHeight.value = `${windowHeight - 32 - 47 - 50 - (props.showFooter ? 58 : 0)}px`;
+      // 弹框整体 padding 上下各 16，头部高度 47，内容区整体 padding 上下各 25，底部存在时高度 52
+      dialogHeight.value = `${windowHeight - 32 - 47 - 50 - (props.showFooter ? 52 : 0) - props.heightOffsetInFullscreen}px`;
     } else dialogHeight.value = addUnit(props.height);
   },
   { immediate: true }
@@ -104,12 +108,12 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
               v-if="fullscreenIcon"
               :icon="isFullscreen ? 'core-fullscreen-exit' : 'core-fullscreen'"
               @click="toggleFullscreen"
-              width="15px"
-              height="15px"
+              :size="15"
               :color="ns.cssVarEl('color-info')"
               hover
               :hover-color="ns.cssVarEl('color-primary')"
               :style="{ cursor: 'pointer', userSelect: 'none' }"
+              class="fullscreen-icon"
             />
           </slot>
         </div>
@@ -119,6 +123,8 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
     <el-scrollbar :height="dialogHeight" :max-height>
       <slot />
     </el-scrollbar>
+
+    <slot name="footer-top" />
 
     <template v-if="showFooter" #footer>
       <div :class="ns.e('footer')" :style="footerStyle">

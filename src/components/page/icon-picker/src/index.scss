@@ -1,41 +1,24 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(icon-picker) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@include b(icon-picker) {
-  @include e(icons) {
-    box-sizing: border-box;
+  @include e(icon) {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
 
-    @include e(icon) {
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2px;
-      cursor: pointer;
-      transition: all 0.3s ease 0s;
-
-      &:hover {
-        border-color: cssVarEl(color-primary) !important;
-      }
+    &:hover {
+      background-color: cssVar(gray-100);
     }
   }
 
   @include e(pagination) {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     display: flex;
     align-items: center;
-    height: 50px;
-    padding-right: cssVarEl(popover-padding);
-    padding-left: cssVarEl(popover-padding);
+    padding-top: 20px;
   }
 }

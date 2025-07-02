@@ -35,7 +35,11 @@ const footerStyle = computed(() => ({
 /**
  * 切换全屏
  */
-const toggleFullscreen = () => (isFullscreen.value = !isFullscreen.value);
+const toggleFullscreen = () => {
+  isFullscreen.value = !isFullscreen.value;
+
+  emits("fullscreen", isFullscreen.value);
+};
 /**
  * 确认按钮点击事件
  */

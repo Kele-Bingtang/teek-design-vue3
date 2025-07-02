@@ -41,7 +41,7 @@ export function useChart(options: UseChartOptions = {}) {
   const { initOptions, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = options;
 
   const settingStore = useSettingStore();
-  const { isDark, isCollapse, layoutMode } = storeToRefs(settingStore);
+  const { isDark, primaryColor, isCollapse, layoutMode } = storeToRefs(settingStore);
 
   const chartInstance = useTemplateRef<HTMLElement>(instanceName);
   const chart = shallowRef<echarts.ECharts | null>(null);
@@ -95,8 +95,8 @@ export function useChart(options: UseChartOptions = {}) {
   // 收缩菜单时，重新计算图表大小
   watch(isCollapse, () => multiDelayResize(RESIZE_DELAYS));
 
-  // 菜单类型变化触发
-  watch(layoutMode, () => {
+  // 布局变化触发或主题色变化触发图表重新渲染
+  watch([layoutMode, primaryColor], () => {
     nextTick(requestAnimationResize);
     setTimeout(() => multiDelayResize(LAYOUT_RESIZE_DELAYS), 0);
   });
@@ -237,6 +237,7 @@ export const useChartResize = (chart: ShallowRef<echarts.ECharts | null>) => {
   const handleResize = () => {
     if (chart?.value) {
       try {
+        console.log(1);
         chart.value.resize();
       } catch (error) {
         console.error("图表resize失败:", error);

@@ -72,6 +72,8 @@ export const showDrawer = (
 
     if (elDrawerEl) elDrawerEl.classList.toggle("is-fullscreen");
     isFullscreen.value = !isFullscreen.value;
+
+    drawerProps.onFullscreen?.(isFullscreen.value);
   };
 
   const vm = (

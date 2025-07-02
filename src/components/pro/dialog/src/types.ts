@@ -27,10 +27,14 @@ export interface ProDialogProps {
   height?: string | number;
   /**
    * 内容最大高度
-   *
-   * @default 400
    */
   maxHeight?: string | number;
+  /**
+   * 全屏时内容高度偏移量
+   *
+   * @default 0
+   */
+  heightOffsetInFullscreen?: number;
   /**
    * 是否渲染底部
    *
@@ -73,6 +77,10 @@ export interface ProDialogProps {
    */
   headerRender?: (scope: any) => RenderTypes;
   /**
+   * 自定义底部上方渲染
+   */
+  footerTopRender?: () => RenderTypes;
+  /**
    * 自定义底部渲染
    */
   footerRender?: (closeDialog: () => void) => RenderTypes;
@@ -84,9 +92,14 @@ export interface ProDialogProps {
    * 关闭按钮点击事件
    */
   onCancel?: (closeDialog: () => void) => unknown;
+  /**
+   * 全屏切换事件
+   */
+  onFullscreen?: (isFullscreen: boolean) => void;
 }
 
 export interface ProDialogEmits {
   cancel: [];
   confirm: [];
+  fullscreen: [isFullscreen: boolean];
 }

@@ -72,9 +72,14 @@ export interface ProDrawerProps {
    * 关闭按钮点击事件
    */
   onCancel?: (closeDrawer: () => void) => unknown;
+  /**
+   * 全屏切换事件
+   */
+  onFullscreen?: (isFullscreen: boolean) => void;
 }
 
 export interface ProDrawerEmits {
   cancel: [];
   confirm: [];
+  fullscreen: [isFullscreen: boolean];
 }

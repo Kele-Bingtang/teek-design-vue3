@@ -3,7 +3,7 @@
 // 深色模式主题变量
 :root.dark {
   // 主要色
-  --#{$admin-namespace}-color-primary: var(--#{$admin-namespace}-primary);
+  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
   --#{$admin-namespace}-bg-color: #1a1d26;
   --#{$admin-namespace}-bg-color-page: #121520;
 

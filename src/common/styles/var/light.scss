@@ -3,7 +3,7 @@
 // 浅色主题变量
 :root {
   // 主要色
-  --#{$admin-namespace}-color-primary: var(--#{$admin-namespace}-primary);
+  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
   --#{$admin-namespace}-bg-color: #ffffff; // 元素级别背景色
   --#{$admin-namespace}-bg-color-page: #f6f8fc; // 页面级别背景颜色
 

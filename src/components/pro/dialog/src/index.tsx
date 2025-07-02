@@ -82,8 +82,8 @@ export const showDialog = (
 
       if (val) {
         const windowHeight = document.documentElement.offsetHeight;
-        // 弹框整体 padding 上下各 16，头部高度 47，内容区整体 padding 上下各 25，底部存在时高度 58
-        contentHeight.value = `${windowHeight - 32 - 47 - 50 - (dialogProps.showFooter !== false ? 58 : 0)}px`;
+        // 弹框整体 padding 上下各 16，头部高度 47，内容区整体 padding 上下各 25，底部存在时高度 52
+        contentHeight.value = `${windowHeight - 32 - 47 - 50 - (dialogProps.showFooter !== false ? 52 : 0) - (dialogProps.heightOffsetInFullscreen ?? 0)}px`;
       } else contentHeight.value = addUnit(dialogProps.height ?? 400);
     },
     { immediate: true }
@@ -96,6 +96,8 @@ export const showDialog = (
 
     if (elDialogEl) elDialogEl.classList.toggle("is-fullscreen");
     isFullscreen.value = !isFullscreen.value;
+
+    dialogProps.onFullscreen?.(isFullscreen.value);
   };
 
   const finalDialogProps = {
@@ -143,6 +145,7 @@ export const showDialog = (
                     hover
                     hover-color={ns.cssVarEl("color-primary")}
                     style={{ cursor: "pointer", userSelect: "none" }}
+                    class="fullscreen-icon"
                     {...{ onClick: () => toggleFullscreen() }}
                   />
                 )}
@@ -153,16 +156,20 @@ export const showDialog = (
             if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
             if (dialogProps.showFooter === false) return;
             return (
-              <div class={ns.e("footer")} style={footerStyle.value}>
-                <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
-                <ElButton
-                  type="primary"
-                  loading={dialogProps.confirmLoading}
-                  onClick={() => handleConfirm(dialogProps)}
-                >
-                  {dialogProps.confirmText || "确定"}
-                </ElButton>
-              </div>
+              <>
+                {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
+
+                <div class={ns.e("footer")} style={footerStyle.value}>
+                  <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
+                  <ElButton
+                    type="primary"
+                    loading={dialogProps.confirmLoading}
+                    onClick={() => handleConfirm(dialogProps)}
+                  >
+                    {dialogProps.confirmText || "确定"}
+                  </ElButton>
+                </div>
+              </>
             );
           },
         }}
