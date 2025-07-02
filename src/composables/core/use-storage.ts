@@ -1,9 +1,8 @@
 import SystemConfig from "@/common/config";
+import { useCommon } from "./use-common";
 
 /**
- *
- * @param value 获取传入的值的类型
- * @returns
+ * 获取传入的值的类型
  */
 const getValueType = (value: any) => {
   const type = Object.prototype.toString.call(value);
@@ -14,47 +13,57 @@ const getValueType = (value: any) => {
  * storage 相关 API 封装
  */
 export const useStorage = <T = any>(type: "sessionStorage" | "localStorage" = "localStorage") => {
-  const { version } = __APP_INFO__.pkg;
-  const cacheKeyPrefix = SystemConfig.keyConfig.cacheKeyPrefix;
+  const { version } = useCommon();
+  const { cacheKeyPrefix } = SystemConfig.keyConfig;
 
   /**
    * 获取规范化的 key 值
    */
-  const normalizeKey = (key: string) => {
-    if (key.includes("userStore")) return `${cacheKeyPrefix}:userStore`;
+  const normalizeKey = (key: string) => `${version}:v${version}:${key}`;
 
-    const keySlot = "{key}";
-    return `${cacheKeyPrefix}:v${version}:${keySlot}`.replace(keySlot, key);
-  };
-
+  // 默认排除项
   const defaultExcludes = [""];
 
-  const getStorage = (key: string): T | undefined => {
-    const value = window[type].getItem(normalizeKey(key));
-    if (value) {
-      const { value: val } = JSON.parse(value);
-      return val;
-    }
+  /**
+   * 获取存储的值
+   */
+  const getStorage = (key: string): T | null => {
+    const storageValue = window[type].getItem(normalizeKey(key));
+    if (!storageValue) return null;
+
+    const { value } = JSON.parse(storageValue);
+    return value;
   };
 
+  /**
+   * 设置存储的值
+   */
   const setStorage = (key: string, value: T) => {
     const valueType = getValueType(value);
     window[type].setItem(normalizeKey(key), JSON.stringify({ _type: valueType, value }));
   };
 
+  /**
+   * 删除存储的值
+   */
   const removeStorage = (key: string) => {
     window[type].removeItem(normalizeKey(key));
   };
 
+  /**
+   * 删除多个存储的值
+   */
   const removeStorages = (key: string[]) => {
     key.forEach(key => window[type].removeItem(normalizeKey(key)));
   };
 
+  /**
+   * 清除存储的值
+   */
   const clear = (excludes?: string[]) => {
     // 获取排除项
     const keys = Object.keys(window[type]);
     const excludesArr = (excludes ? [...excludes, ...defaultExcludes] : defaultExcludes).map(key => normalizeKey(key));
-    console.log(excludesArr);
     const includesKeys = excludesArr.length
       ? keys.filter(key => !excludesArr.includes(key) && key.startsWith(cacheKeyPrefix))
       : keys;

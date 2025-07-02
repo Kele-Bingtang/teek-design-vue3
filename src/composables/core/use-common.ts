@@ -12,5 +12,7 @@ export const useCommon = () => {
   return {
     isMobile,
     refreshPage,
+    ...__APP_INFO__.pkg,
+    lastBuildTime: __APP_INFO__.lastBuildTime,
   };
 };

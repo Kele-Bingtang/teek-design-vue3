@@ -1,57 +1,96 @@
 import { ElNotification } from "element-plus";
 import SystemConfig, { LOGIN_NAME } from "@/common/config";
 import { useUserStore } from "@/pinia";
+import { upgradeLogList } from "@/mock/changeLog";
+import { useCommon } from "./use-common";
 import { useNamespace } from "./use-namespace";
-import { useStorage } from "./use-storage";
-
-// 当前前端版本
-const { version: frontendVersion } = __APP_INFO__.pkg;
 
 // 模拟后台获取升级信息
-const getUpgradeInfo = () => {
-  return Promise.resolve({
-    version: frontendVersion,
-    content: "<p>1. 新增超级组件</p> <p>2. 重构布局样式</p>",
-    reLogin: false,
-  });
-};
+const getUpgradeInfo = () => Promise.resolve(upgradeLogList);
 
 export const useUpgrade = async () => {
   const userStore = useUserStore();
-  const ns = useNamespace();
-  const storage = useStorage();
   const router = useRouter();
+  const ns = useNamespace();
+  // 当前前端版本号
+  const { version: currentVersion } = useCommon();
 
   const { cacheKeyPrefix, versionCacheKey } = SystemConfig.keyConfig;
+
+  const versionStorageKey = `${cacheKeyPrefix}:${versionCacheKey}`;
 
   /**
    * 移除前缀 'v'
    */
   const normalizeVersion = (version: string): string => version.replace(/^v/, "");
 
-  // 旧版本
-  const oldVersion = localStorage.getItem(`${cacheKeyPrefix}:${versionCacheKey}`);
+  /**
+   * 获取存储的版本号
+   */
+  const getStoredVersion = () => localStorage.getItem(versionStorageKey);
+
+  /**
+   * 设置存储的版本号
+   */
+  const setStoredVersion = (version: string) => localStorage.setItem(versionStorageKey, version);
+
+  /**
+   * 查找旧版本号的数据 key，以 cacheKeyPrefix:v 开头，且不能是当前版本号数据
+   */
+  const findOldVersionDataKeys = () => {
+    const storageKeys = Object.keys(localStorage);
+    return storageKeys.filter(
+      key => key.startsWith(`${cacheKeyPrefix}:v`) && !key.startsWith(`${cacheKeyPrefix}:v${currentVersion}`)
+    );
+  };
+
+  // 获取旧版本
+  const oldVersion = getStoredVersion();
 
   // 如果不存在旧版本，则不需要显示升级通知
-  if (!oldVersion) return localStorage.setItem(`${cacheKeyPrefix}:${versionCacheKey}`, `v${frontendVersion}`);
-
-  const upgradeInfo = await getUpgradeInfo();
-  if (!upgradeInfo) return;
-
-  const { version: backendVersion, content, reLogin } = upgradeInfo;
-  const currentVersion = backendVersion || frontendVersion;
-
-  if (normalizeVersion(currentVersion) <= normalizeVersion(oldVersion)) {
+  if (!oldVersion) {
+    setStoredVersion(`v${currentVersion}`);
+    console.info("[Upgrade] 首次访问，已设置当前版本");
     return;
   }
 
+  const normalizeFrontendVersion = normalizeVersion(currentVersion);
+  const normalizeOldVersion = normalizeVersion(oldVersion);
+
+  // 如果当前版本小于等于旧版本，则不需要显示升级通知（也可改成版本相同不需要通知）
+  if (normalizeFrontendVersion <= normalizeOldVersion) {
+    console.debug("[Upgrade] 版本低于或等于旧版本，无需升级");
+    return;
+  }
+
+  const oldVersionDataKeys = findOldVersionDataKeys();
+  if (oldVersionDataKeys.length === 0) {
+    setStoredVersion(`v${currentVersion}`);
+    console.info("[Upgrade] 无旧数据，已更新版本号");
+    return;
+  }
+
+  // 获取升级信息
+  const upgradeInfo = await getUpgradeInfo();
+  if (!upgradeInfo.value.length) {
+    console.warn("[Upgrade] 升级日志列表为空");
+    return;
+  }
+
+  // 检查是否需要重新登录
+  const requireReLogin = upgradeInfo.value.some(item => {
+    const itemVersion = normalizeVersion(item.version);
+
+    return item.requireReLogin && itemVersion > normalizeOldVersion && itemVersion <= normalizeFrontendVersion;
+  });
+
   // 系统升级公告
   const message = [
-    `<p style="color: ${ns.cssVar("gray-text-800")} !important; padding-bottom: 5px;">`,
+    `<p style="color: ${ns.cssVar("gray-text-800")}; padding-bottom: 5px;">`,
     `系统已升级到 ${currentVersion} 版本，此次更新带来了以下改进：`,
     `</p>`,
-    content,
-    reLogin
+    upgradeInfo.value[0].title,
+    requireReLogin
       ? `<p style="color: ${ns.cssVar("color-primary")}; padding-top: 5px;">升级完成，请重新登录后继续使用。</p>`
       : "",
   ].join("");
@@ -66,14 +105,23 @@ export const useUpgrade = async () => {
   });
 
   // 清除旧版本的缓存
-  storage.clear(reLogin ? [] : ["userStore"]);
+  oldVersionDataKeys.forEach(key => {
+    localStorage.removeItem(key);
+    console.info(`[Upgrade] 已清理旧存储: ${key}`);
+  });
 
   // 更新版本信息
-  localStorage.setItem(`${cacheKeyPrefix}:${versionCacheKey}`, `v${currentVersion}`);
+  setStoredVersion(`v${currentVersion}`);
 
   // 如果需要重新登录，则登出
-  if (reLogin) {
+  if (requireReLogin) {
     userStore.logout();
-    router.push(LOGIN_NAME);
+    router.push(LOGIN_NAME).catch(error => {
+      console.error("[Upgrade] 升级后登出失败:", error);
+    });
+
+    console.info("[Upgrade] 已执行升级后登出");
   }
+
+  console.info(`[Upgrade] 升级完成: ${oldVersion} → ${currentVersion}`);
 };

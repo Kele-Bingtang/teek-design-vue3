@@ -1,8 +1,7 @@
 import { createI18n } from "vue-i18n";
-import SystemConfig from "@/common/config";
 import { LanguageEnum } from "@/common/enums/appEnum";
 import { isObject } from "@/common/utils";
-import { useStorage } from "@/composables/core/use-storage";
+import { useStorage } from "@/composables";
 import zhCN from "./locales/zh-CN";
 import enUS from "./locales/en-US";
 
@@ -18,9 +17,10 @@ export const languageOptions = [
   { value: LanguageEnum.EnUs, label: "English" },
 ];
 
-export const getDefaultLocale = () => {
-  const layoutCache = useStorage().getStorage(`${SystemConfig.layoutConfig.cacheKeyPrefix}:layoutStore`);
-  const lang = layoutCache?.language || getBrowserLang();
+export const getDefaultLocale = async () => {
+  await nextTick();
+  const layoutStore = useStorage().getStorage("layoutStore");
+  const lang = layoutStore?.language || getBrowserLang();
 
   document.documentElement.lang = lang;
   return lang;
@@ -59,7 +59,7 @@ const formatTranslate = (message: string, option?: Record<string, string | numbe
 
 const i18n = createI18n({
   legacy: false, // 如果要支持 compositionAPI，此项必须设置为 false
-  locale: getDefaultLocale(), // 设置语言类型
+  locale: await getDefaultLocale(), // 设置语言类型
   globalInjection: true, // 全局注册 $t 方法
   messages,
 });

@@ -1,6 +1,7 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import SystemConfig from "@/common/config";
+import { useCommon } from "@/composables";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";
@@ -10,34 +11,70 @@ export * from "./stores/error-log";
 export * from "./stores/message";
 export * from "./stores/websocket";
 
-const { version } = __APP_INFO__.pkg;
-const cacheKeyPrefix = SystemConfig.keyConfig.cacheKeyPrefix;
+const { version: currentVersion } = useCommon();
+const { cacheKeyPrefix } = SystemConfig.keyConfig;
 
-// 自定义存储逻辑，与 useStorage 方式一样
+/**
+ * 自定义存储逻辑，与 useStorage 方式一样
+ */
 const customStorage = {
   getItem: (key: string) => {
-    // userStore 不进行版本管控，否则每次升版都要登录
-    if (key.includes("userStore")) key = `${cacheKeyPrefix}:userStore`;
+    const storageValue = localStorage.getItem(key);
+    if (!storageValue) return storageValue;
 
-    const value = localStorage.getItem(key);
-    if (!value) return value;
-
-    const { value: val } = JSON.parse(value);
-    return JSON.stringify(val);
+    const { value } = JSON.parse(storageValue);
+    return JSON.stringify(value);
   },
   setItem: (key: string, value: string) => {
-    // userStore 不进行版本管控，否则每次升版都要登录
-    if (key.includes("userStore")) key = `${cacheKeyPrefix}:userStore`;
-
     const valueType = Object.prototype.toString.call(value).slice(8, -1);
     localStorage.setItem(key, JSON.stringify({ _type: valueType, value: JSON.parse(value) }));
   },
 };
 
+/**
+ * 获取存储的 key
+ *
+ * 1. 如果当前版本有该 key，则返回当前版本 key
+ * 2. 如果当前版本没有该 key，则查找其他版本的 key
+ * 3. 如果其他版本有该 key，则合并数据到当前版本
+ * 4. 如果其他版本没有该 key，则返回当前版本 key
+ */
+const getStorageKey = (key: string) => {
+  const currentStoreKey = `${cacheKeyPrefix}:v${currentVersion}:${key}`;
+
+  // 如果当前版本有该 key，则返回当前版本 key
+  if (localStorage.getItem(currentStoreKey)) return currentStoreKey;
+
+  // 如果当前版本没有该 key，则查找其他版本的 key
+  const storageKeys = Object.keys(localStorage);
+
+  // 匹配旧版本数据 key，格式如 {cacheKeyPrefix}:vX.Y.Z:{key}
+  const oldVersionKeys = storageKeys.find(
+    k => k.startsWith(`${cacheKeyPrefix}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
+  );
+
+  // 如果其他版本没有该 key，则返回当前版本 key
+  if (!oldVersionKeys) return currentStoreKey;
+
+  // 将旧版本数据合并到新版本里
+  try {
+    const oldVersionData = JSON.parse(localStorage.getItem(oldVersionKeys) ?? "{}");
+    const { value: val } = oldVersionData;
+
+    localStorage.setItem(currentStoreKey, JSON.stringify({ _type: "Object", value: val }));
+    console.info(`[Storage] 已合并旧版本数据: ${oldVersionKeys} → ${currentStoreKey}`);
+    localStorage.removeItem(oldVersionKeys);
+  } catch (error) {
+    console.error(`[Storage] 合并旧版本数据失败: ${oldVersionKeys} → ${currentStoreKey}`, error);
+  }
+
+  return currentStoreKey;
+};
+
 const pinia = createPinia();
 pinia.use(
   createPersistedState({
-    key: key => `${cacheKeyPrefix}:v${version}:${key}`,
+    key: key => getStorageKey(key),
     storage: customStorage,
   })
 );

@@ -62,10 +62,8 @@ const routerConfig: RouterConfig = {
   routeUseTooltip: false,
 };
 
-const cacheKeyPrefix = "teek";
-
 const keyConfig: KeyConfig = {
-  cacheKeyPrefix,
+  cacheKeyPrefix: "teek",
   tabNavCacheKey: "tabNav",
   cacheDynamicRoutesKey: "dynamicRoutes",
   versionCacheKey: "version",
