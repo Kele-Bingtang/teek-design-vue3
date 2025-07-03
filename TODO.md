@@ -7,5 +7,6 @@
 ## 优化
 
 - 历史组件代码升级
+- ProTable 支持 beforeFilter，分页总条数支持 filter 的数量
 
 ## Bug

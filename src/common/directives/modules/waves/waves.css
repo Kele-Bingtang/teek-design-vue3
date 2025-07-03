@@ -1,25 +1,28 @@
 .waves-ripple {
   position: absolute;
+  z-index: 1;
   pointer-events: none;
   user-select: none;
-  background-color: rgb(0 0 0 / 15%);
+  background-color: var(--waves-color, rgb(0 0 0 / 15%));
   background-clip: padding-box;
-  border-radius: 100%;
+  border-radius: 50%;
   opacity: 1;
   transform: scale(0);
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 .waves-ripple.z-active {
   opacity: 0;
-  transform: scale(2);
+  transform: scale(2.2);
   transition:
-    opacity 1.2s ease-out,
-    -webkit-transform 0.6s ease-out;
-  transition:
-    opacity 1.2s ease-out,
-    transform 0.6s ease-out;
-  transition:
-    opacity 1.2s ease-out,
-    transform 0.6s ease-out,
-    -webkit-transform 0.6s ease-out;
+    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 兼容暗色模式，可根据主题变量调整 */
+html.dark .waves-ripple {
+  background-color: var(--waves-color, rgb(255 255 255 / 18%));
 }

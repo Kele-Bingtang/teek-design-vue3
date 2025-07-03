@@ -16,13 +16,13 @@ export const formatTitle = (route: Route, reTranslate = false) => {
   const meta: MetaProps = { ...route.meta };
   const { title: routeTitle, useI18n } = meta;
   const name = route.name as string;
-  let title = routeTitle;
+  let title = routeTitle ?? "";
 
-  if (reTranslate && !isFunction(title)) title = translateTitle(title + "", name, useI18n);
-  if (title && !isFunction(title)) return title + "";
+  if (reTranslate && !isFunction(title)) title = translateTitle(String(title), name, useI18n);
+  if (title && !isFunction(title)) return title;
   if (isFunction(title)) title = title(route as RouteLocationNormalizedLoaded);
 
-  return translateTitle(title + "", name, useI18n);
+  return translateTitle(String(title), name, useI18n);
 };
 
 /**
@@ -34,7 +34,7 @@ export const formatTitle = (route: Route, reTranslate = false) => {
  */
 export const translateTitle = (title: string, name?: string, useI18n = false) => {
   const { routeUseI18n } = SystemConfig.routerConfig;
-  const finalTitle = title + "" || name || "no-name";
+  const finalTitle = title || name || "no-name";
 
   if (!routeUseI18n || !useI18n) return finalTitle;
 

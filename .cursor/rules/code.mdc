@@ -1,10 +1,10 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 ---
-description: "代码编写规范"
+description: 代码编写规范
 priority: 99
 ---
 

@@ -12,6 +12,7 @@ export const useUpgrade = async () => {
   const userStore = useUserStore();
   const router = useRouter();
   const ns = useNamespace();
+
   // 当前前端版本号
   const { version: currentVersion } = useCommon();
 

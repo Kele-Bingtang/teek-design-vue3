@@ -19,7 +19,8 @@ export interface SystemConfig {
 }
 
 export interface SystemInfo {
-  name: string; // 系统名称
+  /** 系统名称 */
+  name: string;
 }
 
 export interface ThemeConfig {

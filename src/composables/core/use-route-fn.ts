@@ -160,7 +160,9 @@ export const useRouteFn = () => {
         route.meta._fullPath = fullPath;
         // 这两个顺序不能互换，因为 translateTitle 函数需要 route.meta.useI18n
         if (useI18n === undefined && routeUseI18n !== undefined) route.meta.useI18n = routeUseI18n;
-        if (!isFunction(title)) route.meta.title = translateTitle(title + "", route.name as string, route.meta.useI18n);
+        if (!isFunction(title)) {
+          route.meta.title = translateTitle(String(title), route.name as string, route.meta.useI18n);
+        }
 
         if (isKeepAlive === undefined && isKeepAliveGlobal !== undefined) route.meta.isKeepAlive = isKeepAliveGlobal;
         if (isFull === undefined && isFullGlobal !== undefined) route.meta.isFull = isFullGlobal;

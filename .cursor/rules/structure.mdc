@@ -4,7 +4,7 @@ globs:
 alwaysApply: true
 ---
 ---
-description: "组件结构规范"
+description: 组件结构规范
 priority: 1000
 ---
 

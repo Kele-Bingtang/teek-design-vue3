@@ -4,7 +4,7 @@ globs: *.vue,*.scss
 alwaysApply: false
 ---
 ---
-description: "UI 设计规范"
+description: UI 设计规范
 priority: 1000
 ---
 

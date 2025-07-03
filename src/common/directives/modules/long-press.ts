@@ -4,46 +4,71 @@
  */
 import type { Directive, DirectiveBinding } from "vue";
 
-const directive: Directive = {
-  mounted(el: HTMLElement, binding: DirectiveBinding) {
+interface LongPressEl extends HTMLElement {
+  __longPressHandlers__?: {
+    start: (e: MouseEvent | TouchEvent) => void;
+    cancel: (e: Event) => void;
+  };
+  __pressTimer__?: ReturnType<typeof setTimeout> | null;
+}
+
+/**
+ * v-longPress
+ * 长按指令，长按时触发事件
+ * 用法：<button v-longPress="handler">长按</button>
+ */
+const longPress: Directive = {
+  mounted(el: LongPressEl, binding: DirectiveBinding) {
     if (typeof binding.value !== "function") {
-      throw Error("callback must be a function");
+      throw new Error("v-longPress binding value must be a function");
     }
-    // 定义变量
-    let pressTimer: any = null;
-    // 创建计时器（ 2秒后执行函数 ）
-    const start = (e: any) => {
-      if (e.button) {
-        if (e.type === "click" && e.button !== 0) {
-          return;
-        }
-      }
-      if (pressTimer === null) {
-        pressTimer = setTimeout(() => {
-          handler(e);
-        }, 1000);
-      }
-    };
-    // 取消计时器
-    const cancel = () => {
-      if (pressTimer !== null) {
-        clearTimeout(pressTimer);
-        pressTimer = null;
-      }
-    };
-    // 运行函数
+
     const handler = (e: MouseEvent | TouchEvent) => {
       binding.value(e);
     };
-    // 添加事件监听器
+
+    const start = (e: MouseEvent | TouchEvent) => {
+      // 只允许鼠标左键
+      if (e instanceof MouseEvent && e.button !== 0) return;
+      if (el.__pressTimer__) return;
+      el.__pressTimer__ = setTimeout(() => {
+        handler(e);
+        el.__pressTimer__ = null;
+      }, 1000);
+    };
+
+    const cancel = () => {
+      if (el.__pressTimer__) {
+        clearTimeout(el.__pressTimer__);
+        el.__pressTimer__ = null;
+      }
+    };
+
     el.addEventListener("mousedown", start);
     el.addEventListener("touchstart", start);
-    // 取消计时器
     el.addEventListener("click", cancel);
     el.addEventListener("mouseout", cancel);
     el.addEventListener("touchend", cancel);
     el.addEventListener("touchcancel", cancel);
+
+    el.__longPressHandlers__ = { start, cancel };
+  },
+
+  beforeUnmount(el: LongPressEl) {
+    if (el.__longPressHandlers__) {
+      el.removeEventListener("mousedown", el.__longPressHandlers__.start);
+      el.removeEventListener("touchstart", el.__longPressHandlers__.start);
+      el.removeEventListener("click", el.__longPressHandlers__.cancel);
+      el.removeEventListener("mouseout", el.__longPressHandlers__.cancel);
+      el.removeEventListener("touchend", el.__longPressHandlers__.cancel);
+      el.removeEventListener("touchcancel", el.__longPressHandlers__.cancel);
+      delete el.__longPressHandlers__;
+    }
+    if (el.__pressTimer__) {
+      clearTimeout(el.__pressTimer__);
+      el.__pressTimer__ = null;
+    }
   },
 };
 
-export default directive;
+export default longPress;
