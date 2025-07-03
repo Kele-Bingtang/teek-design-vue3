@@ -65,7 +65,7 @@ const handleSort = ({ prop, order }: any) => {
 };
 
 /**
- * @description 多项排序
+ * 多项排序
  */
 const multiSort = (data: any, sortSameArr: number[], orderArray: any) => {
   if (orderArray.length === 0) return 0;
@@ -103,7 +103,7 @@ const multiSort = (data: any, sortSameArr: number[], orderArray: any) => {
 };
 
 /**
- * @description 对表格某些行的单项排序
+ * 对表格某些行的单项排序
  */
 const singleSort = (data: any, sortProp: string, sortOrder: string, sortSameArr: any) => {
   let newOrderArr = data.slice(sortSameArr[0], sortSameArr[1] + 1);

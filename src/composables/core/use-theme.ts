@@ -4,8 +4,8 @@ import { useNamespace } from "@/composables";
 import { SystemThemeEnum } from "@/common/enums/appEnum";
 
 /**
- * @description 切换主题
- * */
+ * 切换主题
+ */
 export const useTheme = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();

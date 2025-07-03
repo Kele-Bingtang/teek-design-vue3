@@ -171,9 +171,8 @@ const validateVideo = async (file: File) => {
   return true;
 };
 /**
- * @description 获取视频时长
+ * 获取视频时长
  * @param {File} file - 要上传的文件
- * @returns {Promise<number>}
  */
 const getVideoDuration = (file: File): Promise<number> => {
   return new Promise(resolve => {
@@ -186,10 +185,9 @@ const getVideoDuration = (file: File): Promise<number> => {
   });
 };
 /**
- * @description 上传文件
+ * 上传文件
  * @param {File} file - 要上传的文件
  * @param {string} folder - 所存放的文件夹，如果你的服务器没有该配置，则不需要传
- * @returns {Object}
  */
 // const uploadFile = async (file: any, folder = "video") => {
 // const formData = new FormData();

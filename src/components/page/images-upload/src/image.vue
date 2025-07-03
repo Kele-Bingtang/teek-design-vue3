@@ -76,7 +76,7 @@ const emits = defineEmits<{
 const imageUrl = defineModel<string>({ required: true });
 
 /**
- * @description 图片上传
+ * 图片上传
  * @param options 上传的文件
  * */
 const handleHttpUpload = async (options: UploadRequestOptions) => {
@@ -107,14 +107,14 @@ const uploadSuccess = (fileUrl: string) => {
 };
 
 /**
- * @description 删除图片
+ * 删除图片
  * */
 const deleteImg = () => {
   imageUrl.value = "";
 };
 
 /**
- * @description 编辑图片
+ * 编辑图片
  * */
 const editImg = () => {
   const dom = document.querySelector(`#${uuid.value} .${ns.elNamespace}-upload__input`);
@@ -122,7 +122,7 @@ const editImg = () => {
 };
 
 /**
- * @description 文件上传之前判断
+ * 文件上传之前判断
  * @param rawFile 上传的文件
  * */
 const beforeUpload: UploadProps["beforeUpload"] = rawFile => {

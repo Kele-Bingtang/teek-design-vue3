@@ -45,7 +45,6 @@ onMounted(() => {
  * 生成流星数据数组
  *
  * @param count 流星数量
- * @returns 流星数据数组
  */
 function generateMeteors(count: number): Meteor[] {
   // 计算每个流星的区域宽度

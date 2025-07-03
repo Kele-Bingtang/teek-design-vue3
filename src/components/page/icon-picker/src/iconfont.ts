@@ -69,7 +69,6 @@ export function extractIconClasses(): IconfontType[] {
 /**
  * 获取字符的 unicode 16 进制字符串
  * @param charCode 字符
- * @returns unicode 字符串
  */
 export const getUnicode = (charCode: string): string => {
   if (!charCode) return "";

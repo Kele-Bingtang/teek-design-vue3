@@ -3,10 +3,9 @@ import { onActivated, onBeforeUnmount, onDeactivated } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 
 /**
- * @description 使用 Echarts(只是为了添加图表响应式)
- * @param {Element} myChart Echarts实 例(必传)
- * @param {Object} options 绘制 Echarts 的参数(必传)
- * @return void
+ * 使用 Echarts(只是为了添加图表响应式)
+ * @param myChart Echarts实 例(必传)
+ * @param options 绘制 Echarts 的参数(必传)
  * */
 export const useEcharts = (myChart: echarts.ECharts, options: echarts.EChartsCoreOption) => {
   if (options && typeof options === "object") {

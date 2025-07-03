@@ -35,9 +35,9 @@ const customStorage = {
  * 获取存储的 key
  *
  * 1. 如果当前版本有该 key，则返回当前版本 key
- * 2. 如果当前版本没有该 key，则查找其他版本的 key
- * 3. 如果其他版本有该 key，则合并数据到当前版本
- * 4. 如果其他版本没有该 key，则返回当前版本 key
+ * 2. 如果当前版本没有该 key，则查找其他旧版本的 key
+ * 3. 如果其他旧版本有该 key，则合并数据到当前版本
+ * 4. 如果其他旧版本没有该 key，则返回当前版本 key
  */
 const getStorageKey = (key: string) => {
   const currentStoreKey = `${cacheKeyPrefix}:v${currentVersion}:${key}`;
@@ -45,15 +45,13 @@ const getStorageKey = (key: string) => {
   // 如果当前版本有该 key，则返回当前版本 key
   if (localStorage.getItem(currentStoreKey)) return currentStoreKey;
 
-  // 如果当前版本没有该 key，则查找其他版本的 key
-  const storageKeys = Object.keys(localStorage);
-
-  // 匹配旧版本数据 key，格式如 {cacheKeyPrefix}:vX.Y.Z:{key}
-  const oldVersionKeys = storageKeys.find(
+  // 如果当前版本没有该 key，则查找其他旧版本的 key
+  const oldVersionKeys = Object.keys(localStorage).find(
+    // 匹配旧版本数据 key，格式如 {cacheKeyPrefix}:vX.Y.Z:{key}
     k => k.startsWith(`${cacheKeyPrefix}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
   );
 
-  // 如果其他版本没有该 key，则返回当前版本 key
+  // 如果其他旧版本没有该 key，则返回当前版本 key
   if (!oldVersionKeys) return currentStoreKey;
 
   // 将旧版本数据合并到新版本里
@@ -66,6 +64,7 @@ const getStorageKey = (key: string) => {
     localStorage.removeItem(oldVersionKeys);
   } catch (error) {
     console.error(`[Storage] 合并旧版本数据失败: ${oldVersionKeys} → ${currentStoreKey}`, error);
+    localStorage.removeItem(oldVersionKeys);
   }
 
   return currentStoreKey;

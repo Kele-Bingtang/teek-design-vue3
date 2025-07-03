@@ -142,7 +142,6 @@ export const useRouteFn = () => {
    *
    * @param routers 路由表
    * @param basePath 路由 fullPath
-   * @returns 处理后的路由表
    */
   const processRouteMeta = (routers: RouterConfigRaw[], basePath = "/") => {
     routers.forEach(route => {

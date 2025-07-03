@@ -68,7 +68,7 @@ const self_disabled = computed(() => {
 const imagesList = defineModel<UploadUserFile[]>({ required: true });
 
 /**
- * @description 文件上传之前判断
+ * 文件上传之前判断
  * @param rawFile 上传的文件
  * */
 const beforeUpload: UploadProps["beforeUpload"] = rawFile => {
@@ -95,7 +95,7 @@ const beforeUpload: UploadProps["beforeUpload"] = rawFile => {
 const emits = defineEmits<{ uploadImg: [file: File, callback: SuccessFun] }>();
 
 /**
- * @description 图片上传
+ * 图片上传
  * @param options 上传的文件
  * */
 const handleHttpUpload = async (options: UploadRequestOptions) => {

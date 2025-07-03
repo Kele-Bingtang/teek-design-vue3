@@ -14,5 +14,5 @@ export * from "./core/use-upgrade";
 export * from "./use-boolean";
 export * from "./use-echarts";
 export * from "./use-confirm";
-export * from "./use-validator";
+export * from "./use-form-validator";
 export * from "./use-clipboard";

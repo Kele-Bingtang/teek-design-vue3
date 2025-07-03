@@ -7,7 +7,7 @@ import { resetRouter } from "..";
 
 export const beforeEach = (router: Router) => {
   /**
-   * @description 路由拦截 beforeEach
+   * 路由拦截 beforeEach
    **/
   router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();

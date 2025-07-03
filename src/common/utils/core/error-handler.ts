@@ -4,7 +4,7 @@ import { useErrorLogStore } from "@/pinia";
 import SystemConfig from "@/common/config";
 
 /**
- * @description 检查当前环境是否符合错误日志的运行
+ * 检查当前环境是否符合错误日志的运行
  */
 export const checkNeed = () => {
   const { env } = SystemConfig.layoutConfig.errorLog;
@@ -14,7 +14,7 @@ export const checkNeed = () => {
 };
 
 /**
- * @description 捕获错误回调
+ * 捕获错误回调
  */
 export const errorHandler = (error: any, vm: ComponentPublicInstance | null, info: string) => {
   if (!checkNeed()) return;

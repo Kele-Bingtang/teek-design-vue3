@@ -8,7 +8,7 @@
 export type Target = "_blank" | "_self" | "_parent" | "_top" | "framename";
 
 /**
- * @description 下载在线图片
+ * 下载在线图片
  * @param url 需要下载的 url
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -21,7 +21,7 @@ export const downloadByOnlineUrl = (url: string, filename: string, mime?: string
 };
 
 /**
- * @description 基于 base64 下载图片
+ * 基于 base64 下载图片
  * @param base64 base64 图片
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -33,7 +33,7 @@ export const downloadByBase64 = (base64: string, filename: string, mime?: string
 };
 
 /**
- * @description 根据后台接口文件流下载
+ * 根据后台接口文件流下载
  * @param data 文件流
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -55,7 +55,7 @@ export const downloadByData = (data: BlobPart, filename: string, mime?: string, 
 };
 
 /**
- * @description 根据文件地址下载文件
+ * 根据文件地址下载文件
  * @param url 文件地址
  * @param filename 文件名
  * @param target 打开方式：_blank、_self、_parent、_top、framename
