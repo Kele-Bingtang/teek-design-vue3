@@ -1,8 +1,10 @@
-# KBT Vue3 Admin
+# Teek Design Vue3
 
 基于 Vue3、TypeScript、Vite、Pinia、Element-Plus 搭建的现代 Template 管理系统模板。
 
 这是完整版，有完整的使用实例代码。纯净版请看 [kbt-vue3-template](https://github.com/Kele-Bingtang/kbt-vue3-template)。
+
+当前正在 2.0.0 版本的开发，下面的内容已经不适用，请等待 2.0.0 版本文档。
 
 ## 必须操作
 
