@@ -224,6 +224,9 @@ export const useLayoutStore = defineStore(
       iframeList.value.splice(index, 1);
     };
 
+    /**
+     * 设置 IFrame 缓存
+     */
     const setIFame = (iFameList: IFrame[] = []) => {
       iframeList.value = iFameList;
     };

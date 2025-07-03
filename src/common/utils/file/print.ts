@@ -1,195 +1,176 @@
-const Print = function (this: any, dom: string | HTMLElement, options?: object) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const _this: any = this;
-  options = options || {};
-  // @ts-expect-error
-  if (!(this instanceof Print)) return new Print(dom, options);
-  _this.conf = {
-    styleStr: "",
-    // Elements that need to dynamically get and set the height
-    setDomHeightArr: [],
-    // Callback before printing
-    printBeforeFn: null,
-    // Callback after printing
-    printDoneCallBack: null,
-  };
-  for (const key in _this.conf) {
-    if (key && options[key]) {
-      _this.conf[key] = (options as any)[key];
-    }
-  }
+/**
+ * 打印指定 DOM 内容
+ *
+ * @param dom 要打印的 DOM 元素或 CSS 选择器
+ * @param options 配置项
+ */
+export function printElement(
+  dom: string | HTMLElement,
+  options: {
+    styleStr?: string; // 自定义样式字符串
+    setDomHeightArr?: string[]; // 需要固定高度的元素选择器数组
+    beforePrint?: () => void; // 打印前回调
+    afterPrint?: () => void; // 打印后回调
+  } = {}
+): void {
+  const { styleStr = "", setDomHeightArr = [], beforePrint, afterPrint } = options;
+
+  let element: HTMLElement | null = null;
+
   if (typeof dom === "string") {
-    _this.dom = document.querySelector(dom);
-  } else {
-    _this.dom = _this.isDOM(dom) ? dom : (dom as any).$el;
+    element = document.querySelector(dom);
+  } else if (dom instanceof HTMLElement) {
+    element = dom;
   }
-  if (_this.conf.setDomHeightArr && _this.conf.setDomHeightArr.length) {
-    _this.setDomHeight(_this.conf.setDomHeightArr);
+
+  if (!element) {
+    console.error("未找到可打印的 DOM 元素");
+    return;
   }
-  _this.init();
-};
 
-Print.prototype = {
-  /**
-   * init
-   */
-  init: function (): void {
-    const content = this.getStyle() + this.getHtml();
-    this.writeIFrame(content);
-  },
-  /**
-   * Configuration property extension
-   * @param {Object} obj
-   * @param {Object} obj2
-   */
-  extendOptions: function <T>(obj: any, obj2: T): T {
-    for (const k in obj2) {
-      obj[k] = obj2[k];
-    }
-    return obj;
-  },
-  /**
-    Copy all styles of the original page
-  */
-  getStyle: function (): string {
-    let str = "";
-    const styles: NodeListOf<Element> = document.querySelectorAll("style,link");
-    for (let i = 0; i < styles.length; i++) {
-      str += styles[i].outerHTML;
-    }
-    str += `<style>.no-print{display:none;}${this.conf.styleStr}</style>`;
-    return str;
-  },
-  // form assignment
-  getHtml: function (): Element {
-    const inputs = document.querySelectorAll("input");
-    const selects = document.querySelectorAll("select");
-    const textareas = document.querySelectorAll("textarea");
-    const canvass = document.querySelectorAll("canvas");
+  // 设置需要固定高度的子元素
+  if (setDomHeightArr.length) {
+    setDomHeight(setDomHeightArr);
+  }
 
-    for (let k = 0; k < inputs.length; k++) {
-      if (inputs[k].type === "checkbox" || inputs[k].type === "radio") {
-        if (inputs[k].checked === true) {
-          inputs[k].setAttribute("checked", "checked");
-        } else {
-          inputs[k].removeAttribute("checked");
-        }
-      } else if (inputs[k].type === "text") {
-        inputs[k].setAttribute("value", inputs[k].value);
-      } else {
-        inputs[k].setAttribute("value", inputs[k].value);
-      }
-    }
+  // 构建打印内容
+  const content = `
+    <html>
+      <head>
+        <style>
+          ${getComputedStyle()}
+        </style>
+        ${styleStr}
+      </head>
+      <body>
+        ${cloneContent(element)}
+      </body>
+    </html>
+  `;
 
-    for (let k2 = 0; k2 < textareas.length; k2++) {
-      if (textareas[k2].type === "textarea") {
-        textareas[k2].innerHTML = textareas[k2].value;
-      }
-    }
+  // 创建 iframe
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "absolute";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.style.top = "-10px";
+  iframe.style.left = "-10px";
+  document.body.appendChild(iframe);
 
-    for (let k3 = 0; k3 < selects.length; k3++) {
-      if (selects[k3].type === "select-one") {
-        const child = selects[k3].children;
-        for (const i in child) {
-          if (child[i].tagName === "OPTION") {
-            if ((child[i] as any).selected === true) {
-              child[i].setAttribute("selected", "selected");
-            } else {
-              child[i].removeAttribute("selected");
-            }
-          }
-        }
-      }
-    }
+  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+  if (!iframeDoc) {
+    console.error("无法获取 iframe 文档对象");
+    return;
+  }
 
-    for (let k4 = 0; k4 < canvass.length; k4++) {
-      const imageURL = canvass[k4].toDataURL("image/png");
-      const img = document.createElement("img");
-      img.src = imageURL;
-      img.setAttribute("style", "max-width: 100%;");
-      img.className = "isNeedRemove";
-      canvass[k4].parentNode?.insertBefore(img, canvass[k4].nextElementSibling);
-    }
+  iframeDoc.open();
+  iframeDoc.write(content);
+  iframeDoc.close();
 
-    return this.dom.outerHTML;
-  },
-  /**
-    create iframe
-  */
-  writeIFrame: function (content: string) {
-    let w: Document | Window | null = null;
-    let doc: Document | null = null;
-    const iframe: HTMLIFrameElement = document.createElement("iframe");
-    const f: HTMLIFrameElement = document.body.appendChild(iframe);
-    iframe.id = "myIFrame";
-    iframe.setAttribute("style", "position:absolute;width:0;height:0;top:-10px;left:-10px;");
-    w = f.contentWindow || f.contentDocument;
-    doc = f.contentDocument || f.contentWindow?.document || null;
-    doc?.open();
-    doc?.write(content);
-    doc?.close();
-    const removes = document.querySelectorAll(".isNeedRemove");
-    for (let k = 0; k < removes.length; k++) {
-      removes[k].parentNode?.removeChild(removes[k]);
-    }
+  // 处理生命周期回调
+  const handleBeforePrint = () => {
+    beforePrint?.();
+  };
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _this = this;
-    iframe.onload = function (): void {
-      // Before popping, callback
-      if (_this.conf.printBeforeFn) {
-        _this.conf.printBeforeFn({ doc });
-      }
-      _this.toPrint(w);
-      setTimeout(function () {
-        document.body.removeChild(iframe);
-        // After popup, callback
-        if (_this.conf.printDoneCallBack) {
-          _this.conf.printDoneCallBack();
-        }
-      }, 100);
-    };
-  },
-  /**
-    Print
-  */
-  toPrint: function (frameWindow: Window): void {
+  const handleAfterPrint = () => {
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+      afterPrint?.();
+    }, 100);
+  };
+
+  // 监听加载完成
+  iframe.onload = () => {
+    handleBeforePrint();
+
     try {
-      setTimeout(function () {
-        frameWindow.focus();
-        try {
-          if (!frameWindow.document.execCommand("print", false, "")) {
-            frameWindow.print();
-          }
-        } catch {
-          frameWindow.print();
-        }
-        frameWindow.close();
-      }, 10);
-    } catch (err) {
-      console.error(err);
+      if (iframe.contentWindow) {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.onafterprint = handleAfterPrint;
+        iframe.contentWindow.print(); // 触发打印
+      }
+    } catch (error) {
+      console.error("打印过程中发生错误", error);
+      handleAfterPrint();
     }
-  },
-  isDOM:
-    typeof HTMLElement === "object"
-      ? (obj: any) => obj instanceof HTMLElement
-      : (obj: any) => obj && typeof obj === "object" && obj.nodeType === 1 && typeof obj.nodeName === "string",
-  /**
-   * Set the height of the specified dom element by getting the existing height of the dom element and setting
-   * @param {Array} arr
-   */
-  setDomHeight(arr: string[]) {
-    if (arr && arr.length) {
-      arr.forEach(name => {
-        const domArr = document.querySelectorAll(name);
-        domArr.forEach((dom: any) => {
-          dom.style.height = dom.offsetHeight + "px";
-        });
-      });
+  };
+}
+
+/**
+ * 获取当前页面所有样式
+ */
+function getComputedStyle(): string {
+  const styles = document.querySelectorAll("style, link[rel='stylesheet']");
+  let result = "";
+
+  styles.forEach(style => {
+    result += style.outerHTML;
+  });
+
+  return result;
+}
+
+/**
+ * 拷贝表单控件的值到 DOM 属性中（如 input value -> value 属性）
+ */
+function cloneContent(dom: HTMLElement): string {
+  const tmpNode = dom.cloneNode(true) as HTMLElement;
+  const inputs = tmpNode.querySelectorAll("input");
+  const textareas = tmpNode.querySelectorAll("textarea");
+  const selects = tmpNode.querySelectorAll("select");
+  const canvases = tmpNode.querySelectorAll("canvas");
+
+  // 同步 input 值
+  inputs.forEach(input => {
+    if (input.type === "checkbox" || input.type === "radio") {
+      input.setAttribute("checked", `${input.checked}`);
+    } else {
+      input.setAttribute("value", input.value);
     }
-  },
-};
+  });
 
-export default Print;
+  // 同步 textarea 值
+  textareas.forEach(textarea => {
+    textarea.textContent = textarea.value;
+  });
 
-export { Print };
+  // 同步 select 值
+  selects.forEach(select => {
+    const selectedOption = select.querySelector("option:checked");
+    if (selectedOption) {
+      selectedOption.setAttribute("selected", "selected");
+    }
+  });
+
+  // 替换 canvas 为 img
+  canvases.forEach(canvas => {
+    const img = document.createElement("img");
+    img.src = canvas.toDataURL("image/png");
+    img.style.maxWidth = "100%";
+    img.className = "isNeedRemove";
+
+    if (canvas.parentNode) {
+      canvas.parentNode.insertBefore(img, canvas.nextSibling);
+      canvas.parentNode.removeChild(canvas);
+    }
+  });
+
+  // 移除临时添加的元素
+  const removes = tmpNode.querySelectorAll(".isNeedRemove");
+  removes.forEach(el => el.remove());
+
+  // 返回 HTML 字符串
+  return tmpNode.outerHTML;
+}
+
+/**
+ * 设置指定 DOM 的高度为当前 offsetHeight
+ */
+function setDomHeight(selectors: string[]): void {
+  selectors.forEach(selector => {
+    const elements = document.querySelectorAll<HTMLElement>(selector);
+    elements.forEach(el => {
+      el.style.height = `${el.offsetHeight}px`;
+    });
+  });
+}

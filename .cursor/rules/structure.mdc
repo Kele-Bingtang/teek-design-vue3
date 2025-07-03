@@ -43,7 +43,7 @@ priority: 1000
 3. 使用 defineProps 和 defineEmits 宏定义属性和事件，用法如 `defineProps<{ts 类型}>();`、`defineEmits<{xx: []}>`，这些请用 Typescript 的 `interface` 定义
 4. 不推荐 `props`、`emits`、`响应式变量`、`computed`、`watch`、`function`、`生命周期` 的结构写法，请使用可复用逻辑(composables)写法，即将关联性高的代码放到 `function useXx` 里然后暴露出来使用
 5. 使用 `defineModel` 代替 `props.modelValue`
-6. 变量与函数之间适当换行，`script`、`template`、`style` 标签之间必须换行
+6. 适当换行，如变量与函数之间，`script`、`template`、`style` 标签之间必须换行
 
 ## 代码规范
 

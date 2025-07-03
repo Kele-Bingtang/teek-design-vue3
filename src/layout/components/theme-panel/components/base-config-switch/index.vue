@@ -12,12 +12,18 @@ const settingStore = useSettingStore();
 const { isMobile } = useCommon();
 const { t } = useI18n();
 
+/**
+ * 标签栏模式选项
+ */
 const tabNavModeOptions = computed(() => [
   { value: TabNavModeEnum.Simple, label: t("_setting.tabNavModeSelect.simple") },
   { value: TabNavModeEnum.Classic, label: t("_setting.tabNavModeSelect.classic") },
   { value: TabNavModeEnum.Element, label: t("_setting.tabNavModeSelect.element") },
 ]);
 
+/**
+ * 页面过渡选项
+ */
 const pageTransitionOptions = computed(() => [
   { value: PageTransitionEnum.None, label: t("_setting.pageTransitionSelect.none") },
   { value: PageTransitionEnum.Fade, label: t("_setting.pageTransitionSelect.fade") },
@@ -26,6 +32,9 @@ const pageTransitionOptions = computed(() => [
   { value: PageTransitionEnum.SlideBottom, label: t("_setting.pageTransitionSelect.slideBottom") },
 ]);
 
+/**
+ * 头部样式选项
+ */
 const headerStyleOptions = computed(() => [
   { value: HeaderStyleEnum.Page, label: t("_setting.headerStyleSelect.page") },
   { value: HeaderStyleEnum.Bg, label: t("_setting.headerStyleSelect.background") },
@@ -33,6 +42,9 @@ const headerStyleOptions = computed(() => [
   { value: HeaderStyleEnum.BgLine, label: t("_setting.headerStyleSelect.backgroundLine") },
 ]);
 
+/**
+ * 自定义圆角选项
+ */
 const customRadiusOptions = [
   { value: "0", label: "0" },
   { value: "0.25", label: "0.25" },

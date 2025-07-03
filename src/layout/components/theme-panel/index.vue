@@ -27,7 +27,9 @@ const settingStore = useSettingStore();
 
 const { isMobile } = useCommon();
 
-// 重置缓存
+/**
+ * 重置缓存
+ */
 const resetSetting = () => {
   let message = t("_setting.resetSetting");
   message = message === "_setting.resetSetting" ? "正在清除设置缓存并刷新，请稍候..." : message;
@@ -41,10 +43,15 @@ const resetSetting = () => {
   setTimeout(() => window.location.reload(), 1000);
 };
 
-// 打开主题设置
+/**
+ * 打开主题设置
+ */
 const drawerVisible = ref(false);
 mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
 
+/**
+ * 分割线组件
+ */
 const Divider = defineComponent({
   setup(_, { slots }) {
     return () => (

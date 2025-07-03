@@ -17,6 +17,9 @@ const { getBrowserTitle } = useBrowserTitle();
 
 const { language } = storeToRefs(layoutStore);
 
+/**
+ * 切换语言
+ */
 const handleSelectLanguage = (lang: LanguageEnum) => {
   i18n.locale.value = lang;
   layoutStore.$patch({ language: lang });

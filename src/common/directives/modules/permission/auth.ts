@@ -1,5 +1,5 @@
 import type { Directive } from "vue";
-import { usePermissionNoSetup } from "@/composables";
+import { usePermission } from "@/composables";
 
 /**
  * 权限指令
@@ -9,7 +9,7 @@ import { usePermissionNoSetup } from "@/composables";
  */
 const auth: Directive = {
   mounted(el, binding) {
-    const { hasAuth } = usePermissionNoSetup();
+    const { hasAuth } = usePermission();
     const { value } = binding;
 
     if (value) !hasAuth(value) && el.parentNode?.removeChild(el);

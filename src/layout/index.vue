@@ -23,6 +23,7 @@ import "./base-layout.scss";
 
 defineOptions({ name: "Layout" });
 
+// 布局组件
 const LayoutComponents: Record<string, Component> = {
   [LayoutModeEnum.Vertical]: LayoutVertical,
   [LayoutModeEnum.Classic]: LayoutClassic,

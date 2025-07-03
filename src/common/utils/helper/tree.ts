@@ -1,5 +1,6 @@
 /**
  * 提取菜单树中的每一项 id
+ *
  * @param tree 树
  * @returns 每一项 id 组成的数组
  */
@@ -22,6 +23,7 @@ export const extractPathList = (tree: any[]): any => {
 
 /**
  * 如果父级下 children 的 length 为 1，删除 children 并自动组建唯一 id
+ *
  * @param tree 树
  * @param pathList 每一项的 id 组成的数组
  * @returns 组件唯一 id 后的树
@@ -48,6 +50,7 @@ export const deleteChildren = (tree: any[], pathList = []): any => {
 
 /**
  * 创建层级关系
+ *
  * @param tree 树
  * @param pathList 每一项的 id 组成的数组
  * @returns 创建层级关系后的树
@@ -72,6 +75,7 @@ export const buildHierarchyTree = (tree: any[], pathList = []): any => {
 
 /**
  * 广度优先遍历，根据唯一 id 找当前节点信息
+ *
  * @param tree 树
  * @param id 唯一 id
  * @returns 当前节点信息
@@ -93,6 +97,7 @@ export const getNodeById = (tree: any[], id: number | string): any => {
 
 /**
  * 向当前唯一 id 节点中追加字段
+ *
  * @param tree 树
  * @param id 唯一 id
  * @param fields 需要追加的字段
@@ -118,6 +123,7 @@ export const appendFieldById = (tree: any[], id: number | string, fields: object
 
 /**
  * 构造树型结构数据
+ *
  * @param data 数据源
  * @param id id 字段 默认 id
  * @param parentId 父节点字段，默认 parentId

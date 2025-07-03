@@ -19,7 +19,7 @@ export const formatTitle = (route: Route, reTranslate = false) => {
   let title = routeTitle ?? "";
 
   if (reTranslate && !isFunction(title)) title = translateTitle(String(title), name, useI18n);
-  if (title && !isFunction(title)) return title;
+  if (title && !isFunction(title)) return String(title);
   if (isFunction(title)) title = title(route as RouteLocationNormalizedLoaded);
 
   return translateTitle(String(title), name, useI18n);

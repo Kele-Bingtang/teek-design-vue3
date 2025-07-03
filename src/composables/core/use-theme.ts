@@ -87,7 +87,7 @@ export const useTheme = () => {
     // 生成更淡的颜色
     for (let i = 1; i < 16; i++) {
       const itemColor = colorBlend(color, "#ffffff", i / 16);
-      setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor);
+      if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor);
     }
   };
 

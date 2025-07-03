@@ -17,19 +17,29 @@ const ns = useNamespace();
 const router = useRouter();
 const layoutStore = useLayoutStore();
 
+// 是否切换多语言
 const isSwitchLanguage = ref(false);
 
+/**
+ * 菜单点击事件，跳转页面
+ */
 const handleMenuClick = (menuItem: RouterConfig) => {
   if (isValidURL(menuItem.path)) return window.open(menuItem.path, "_blank");
   router.push(menuItem.meta._fullPath || menuItem.path || "");
 };
 
+/**
+ * 获取菜单标题
+ */
 const title = (menuItem: RouterConfig) => {
   const title = formatTitle(menuItem, isSwitchLanguage.value);
   menuItem.meta.title = title;
   return title;
 };
 
+/**
+ * 监听多语言切换
+ */
 watch(
   () => layoutStore.language,
   async () => {

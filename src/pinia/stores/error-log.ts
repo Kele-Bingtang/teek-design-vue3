@@ -3,21 +3,36 @@ import { defineStore } from "pinia";
 import { useUserStore } from "./core/user";
 
 export interface ErrorLog {
-  error: unknown; // 错误对象
-  vm?: ComponentPublicInstance | null; // 发生错误的 Vue 实例
-  info: string; // Vue 组件的错误信息
-  url: string; // 发生错误的 URL
-  hasRead: boolean; // 错误日志是否已读
-  time?: number; // 发生错误的时间
-  userId?: string; // 用户 ID
-  username?: string; // 用户名
-  accessToken?: string; // 用户 token
-  roles?: string[]; // 用户的角色
+  /** 错误对象 */
+  error: unknown;
+  /** 发生错误的 Vue 实例 */
+  vm?: ComponentPublicInstance | null;
+  /** Vue 组件的错误信息 */
+  info: string;
+  /** 发生错误的 URL */
+  url: string;
+  /** 错误日志是否已读 */
+  hasRead: boolean;
+  /** 发生错误的时间 */
+  time?: number;
+  /** 用户 ID */
+  userId?: string;
+  /** 用户名 */
+  username?: string;
+  /** 用户 token */
+  accessToken?: string;
+  /** 用户的角色 */
+  roles?: string[];
 }
 
 export const useErrorLogStore = defineStore("errorLogStore", () => {
   const errorLogs = ref<ErrorLog[]>([]);
 
+  /**
+   * 添加错误日志
+   *
+   * @param errorLog 错误日志
+   */
   const addErrorLog = (errorLog: ErrorLog) => {
     const userStore = useUserStore();
     const { userInfo, accessToken, roles } = userStore;
@@ -32,21 +47,37 @@ export const useErrorLogStore = defineStore("errorLogStore", () => {
     errorLogs.value.push(log);
   };
 
+  /**
+   * 删除一条错误日志
+   *
+   * @param errorLog 错误日志
+   */
   const deleteOneErrorLog = (errorLog: ErrorLog) => {
     const index = errorLogs.value.findIndex(e => e.time === errorLog.time);
     index !== -1 && errorLogs.value.splice(index, 1);
   };
 
+  /**
+   * 清空错误日志
+   *
+   * @param errorLog 错误日志
+   */
   const clearErrorLog = () => {
     errorLogs.value.splice(0);
   };
 
+  /**
+   * 设置错误日志的已读状态
+   *
+   * @param status 是否已读
+   */
   const setHasReadErrorLogsStatus = (status: boolean) => {
     errorLogs.value = errorLogs.value.map(errorLog => {
       errorLog.hasRead = status;
       return errorLog;
     });
   };
+
   return {
     errorLogs,
     addErrorLog,

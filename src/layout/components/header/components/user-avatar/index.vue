@@ -23,6 +23,7 @@ const router = useRouter();
 
 const { userInfo } = storeToRefs(userStore);
 
+// 下拉菜单列表
 const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message-center") },
@@ -33,14 +34,23 @@ const menuList = computed(() => [
   },
 ]);
 
+/**
+ * 跳转页面
+ */
 const toPage = (path: string) => {
   router.push(path);
 };
 
+/**
+ * 打开主题面板
+ */
 const openThemePanel = () => {
   mittBus.emit(OpenThemePanelKey);
 };
 
+/**
+ * 退出登录
+ */
 const logout = async () => {
   ElMessageBox.confirm(t("_headerBar.logout.confirm"), t("_headerBar.logout.confirmTitle"), {
     type: "warning",

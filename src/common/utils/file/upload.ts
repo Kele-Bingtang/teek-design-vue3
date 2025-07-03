@@ -5,7 +5,8 @@ export function uploadLocal(file: File): Promise<{ blobInfo: { id: string; file:
   return new Promise(resolve => {
     const reader = new FileReader();
     reader.onload = function () {
-      const id = "id" + new Date().getTime(); // 本地图片的文件名
+      // 使用时间戳作为本地图片的文件名
+      const id = "id" + new Date().getTime();
       const base64 = (reader as any).result.split(",")[1];
       const blobInfo = { id, file, base64 };
       resolve({ blobInfo, file });

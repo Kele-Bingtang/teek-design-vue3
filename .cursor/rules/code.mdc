@@ -121,3 +121,18 @@ function useInitData() {
 @use "./index";
 </style>
 ```
+
+## 类型引入规范
+
+```vue
+<script setup lang="ts">
+import type { xx } from "xx"; // 1.先引入所有 type 类型，如果统一依赖同时引入类型和函数，则类型必须独立引入，函数则按照下方规则引入
+import { xx } from "xx"; // 2. 引入第三方依赖，（vue 相关依赖优先，然后是组件库依赖，最后是第三方插件依赖）
+import { xx } from "@/xx"; // 3. 引入项目目录的其他依赖
+import { xx } from "@/xx.vue"; // 4. 引入项目目录的其他组件
+import { xx } from "../xx"; // 5. 引入相对路径的依赖
+import { xx } from "../xx.vue"; // 6. 引入相对路径的组件
+
+import "./xx.scss"; // 7. 引入相对路径的样式文件，且需与上方换行
+</script>
+```

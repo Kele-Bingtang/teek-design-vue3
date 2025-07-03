@@ -26,8 +26,8 @@ const switchRole = computed({
       <el-card shadow="never">
         <template #header>角色切换</template>
         <el-radio-group v-model="switchRole">
-          <el-radio-button label="admin" />
-          <el-radio-button label="visitor" />
+          <el-radio-button label="admin" value="admin" />
+          <el-radio-button label="visitor" value="visitor" />
         </el-radio-group>
       </el-card>
 
@@ -95,7 +95,7 @@ const switchRole = computed({
         请修改当前路由的 meta.auths 来切换权限。
       </el-card>
 
-      <el-tag size="large" effect="dark">当前拥有的 Auth 列表：{{ authList }}</el-tag>
+      <!-- <el-tag size="large" effect="dark">当前拥有的 Auth 列表：{{ authList }}</el-tag> -->
 
       <el-card shadow="never">
         <template #header>

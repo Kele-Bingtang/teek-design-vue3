@@ -4,6 +4,9 @@ import SystemConfig from "@/common/config";
 import { TitleModeEnum } from "@/common/enums/appEnum";
 import { formatTitle } from "@/router/helper";
 
+/**
+ * 浏览器标题管理
+ */
 export const useBrowserTitle = () => {
   const settingStore = useSettingStore();
   const userStore = useUserStore();

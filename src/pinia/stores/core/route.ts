@@ -10,8 +10,14 @@ export const useRouteStore = defineStore("routeStore", () => {
 
   const { processRouteMeta, findRouteByName, filterFlatRoutes, ascending } = useRouteFn();
 
-  const homeRoute = computed(() => findRouteByName(loadedRouteList.value, HOME_NAME)); // 路由里首页的 name 值，必须填且正确，默认为 Home
+  // 路由里首页的 name 值，必须填且正确，默认为 Home
+  const homeRoute = computed(() => findRouteByName(loadedRouteList.value, HOME_NAME));
 
+  /**
+   * 加载权限路由
+   *
+   * @param routers 路由配置
+   */
   const loadPermissionRoutes = (routers: RouterConfig[]) => {
     loadedRouteList.value = ascending(
       processRouteMeta(staticRoutes).concat(routers).concat(errorRouter).concat(notFoundRouter)

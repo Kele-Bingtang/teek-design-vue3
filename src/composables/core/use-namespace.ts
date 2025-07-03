@@ -1,7 +1,7 @@
 import namespaceModule from "./css-module/namespace.module.scss";
 
 /**
- * 命名空间
+ * 命名空间管理
  *
  * @param block 块，用于声明组件的命名空间
  * @param namespaceOverrides 自定义命名空间

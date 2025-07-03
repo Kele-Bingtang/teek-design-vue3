@@ -3,7 +3,7 @@ import { isArray, isFunction } from "@/common/utils";
 import { formatValue } from "./helper";
 
 /**
- * provide optionsMap key
+ * 提供 optionsMap key
  */
 export const optionsMapKey: InjectionKey<Ref<Map<string, MaybeRef<ElOption[]>>>> = Symbol("optionsMap");
 

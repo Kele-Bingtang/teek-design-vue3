@@ -3,6 +3,12 @@ import type { ProSearchProps } from "../types";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
+/**
+ * 使用 ProSearch 的 API
+ *
+ * @param model 搜索数据
+ * @param columnsProps 搜索列配置
+ */
 export const useSearchApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {
   const mergeProps = ref<ProSearchProps>({});
 

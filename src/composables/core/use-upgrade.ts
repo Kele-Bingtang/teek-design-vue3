@@ -5,9 +5,14 @@ import { upgradeLogList } from "@/mock/changeLog";
 import { useCommon } from "./use-common";
 import { useNamespace } from "./use-namespace";
 
-// 模拟后台获取升级信息
+/**
+ * 模拟后台获取升级信息
+ */
 const getUpgradeInfo = () => Promise.resolve(upgradeLogList);
 
+/**
+ * 版本升级管理
+ */
 export const useUpgrade = async () => {
   const userStore = useUserStore();
   const router = useRouter();

@@ -4,11 +4,19 @@ import { defaultPageInfo } from "@/components/pro/pagination";
 import { reactive, computed, toRefs } from "vue";
 import { isEmpty } from "@/common/utils";
 
+/**
+ * 表格状态数据
+ */
 export interface UseTableStateData {
+  /** 表格数据 */
   tableData: Recordable[];
+  /** 分页信息 */
   pageInfo: PageInfo & { total: number };
+  /** 查询参数 */
   searchParams: Recordable;
+  /** 初始化查询参数 */
   searchInitParams: Recordable;
+  /** 总参数 */
   totalParams: Recordable;
 }
 

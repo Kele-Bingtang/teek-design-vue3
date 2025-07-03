@@ -36,14 +36,23 @@ const menuList = computed(() => [
   },
 ]);
 
+/**
+ * 跳转页面
+ */
 const toPage = (path: string) => {
   router.push(path);
 };
 
+/**
+ * 打开主题面板
+ */
 const openThemePanel = () => {
   mittBus.emit(OpenThemePanelKey);
 };
 
+/**
+ * 退出登录
+ */
 const logout = async () => {
   ElMessageBox.confirm("您是否确认退出登录?", "温馨提示", {
     confirmButtonText: "确定",

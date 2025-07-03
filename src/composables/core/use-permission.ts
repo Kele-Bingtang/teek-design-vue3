@@ -1,27 +1,43 @@
-import { useRoute } from "vue-router";
 import router from "@/router";
 import { useUserStore } from "@/pinia";
 import { containsAll, containsAny, isString } from "@/common/utils";
 
+/**
+ * 权限管理
+ */
 export const usePermission = () => {
   const userStore = useUserStore();
 
+  /**
+   * 获取角色列表
+   */
   const getRoleList = () => {
     return userStore.roles;
   };
 
+  /**
+   * 判断是否具有角色
+   *
+   * @param value 角色
+   */
   const hasRole = (value: string | string[]) => {
     if (!value) return false;
     const roleList = getRoleList();
     return isString(value) ? roleList.includes(value) : containsAny(roleList, value);
   };
 
+  /**
+   * 获取权限列表
+   */
   const getAuthList = () => {
-    // 不能放到外面，否则 v-role 失效，因为 v-role 自定义指令不支持 useRoute()
-    const route = useRoute();
-    return route.meta.auths;
+    return router.currentRoute.value.meta.auths as string[];
   };
 
+  /**
+   * 判断是否具有权限
+   *
+   * @param value 权限
+   */
   const hasAuth = (value: string | string[]) => {
     if (!value) return false;
 
@@ -35,27 +51,6 @@ export const usePermission = () => {
     getRoleList,
     getAuthList,
     hasRole,
-    hasAuth,
-  };
-};
-
-/**
- * 可以在任意文件调用，不再拘束于 setup
- */
-export const usePermissionNoSetup = () => {
-  const getAuthList = () => {
-    return router.currentRoute.value.meta.auths as string[];
-  };
-
-  const hasAuth = (value: string | string[]) => {
-    if (!value) return false;
-    const authList = getAuthList();
-    if (!authList) return false;
-    return isString(value) ? authList.includes(value) : containsAll(authList, value);
-  };
-
-  return {
-    getAuthList,
     hasAuth,
   };
 };

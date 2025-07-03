@@ -31,6 +31,9 @@ const childrenMenu = ref<RouterConfig[]>([]);
 
 const { isCollapse } = storeToRefs(settingStore);
 
+/**
+ * 头部菜单
+ */
 const headerMenu = computed(() => {
   const parentMenu: RouterConfig[] = [];
 

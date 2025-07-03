@@ -3,7 +3,7 @@ import type { FormItemColumnProps } from "./form-item";
 import { isRef } from "vue";
 import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/common/utils";
 
-// 超级组件公共工具类
+// ============================== 超级组件公共工具类 ==============================
 
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
@@ -16,11 +16,15 @@ export const getProp = (
   if (!isObject(model)) return model;
 
   let value: any;
-  if (!prop.includes(".")) value = (model as any)[prop];
+  if (!prop.includes(".")) value = model[prop];
   else {
-    prop.split(".").forEach(item => (model = (model as any)[item] ?? ""));
+    const newModel = prop.split(".").reduce((acc: any, key: string) => {
+      if (acc === undefined || acc === null) return undefined;
+      return acc[key];
+    }, model);
+
     // 如果是 ElInputNumber，则需要返回数字类型，因此这里 form 如果为 ""，则返回 undefined，这样字符串和数字类型的组件都支持
-    value = model || undefined;
+    value = newModel || undefined;
   }
 
   // 格式化 value 值
@@ -46,10 +50,19 @@ export const setProp = (model: Recordable, prop: NonNullable<FormItemColumnProps
 
   for (let i = 0; i < props.length - 1; i++) {
     const prop = props[i];
+    // 如果路径中的某个属性不是对象且不是最后一个属性，则无法继续深入
+    if (current[prop] !== undefined && !isObject(current[prop])) {
+      // 如果不是最后一个属性，不能继续
+      if (i < props.length - 1) return false;
+      // 如果是最后一个属性，允许覆盖它
+      break;
+    }
+
     if (!current[prop]) current[prop] = {};
     current = current[prop];
   }
   current[props[props.length - 1]] = value;
+  return true;
 };
 
 /**
@@ -58,22 +71,27 @@ export const setProp = (model: Recordable, prop: NonNullable<FormItemColumnProps
  * @param obj 对象
  * @param prop 对象的key
  */
-export const deleteProp = (obj: Recordable, prop: string) => {
-  const keys = prop.split(".");
-  let current = obj;
+export const deleteProp = (obj: Record<string, any>, propPath: string): boolean => {
+  if (!propPath || !isObject(obj)) return false;
 
-  for (let i = 0; i < keys.length; i++) {
-    if (i === keys.length - 1) {
-      if (current[keys[i]] !== undefined) {
-        delete current[keys[i]];
-        return true; // 属性存在并已删除
-      } else return false; // 目标属性不存在
-    }
-    if (current[keys[i]] === undefined) return false; // 路径中的某个部分不存在
-    current = current[keys[i]];
+  const keys = propPath.split(".");
+  const lastKey = keys.pop();
+
+  if (!lastKey) return false; // 路径为空或无效
+
+  let current: any = obj;
+
+  for (const key of keys) {
+    if (current[key] === undefined) return false;
+    current = current[key];
   }
 
-  return false; // 不应该到达这里，除非路径为空
+  if (current[lastKey] !== undefined) {
+    delete current[lastKey];
+    return true;
+  }
+
+  return false;
 };
 
 /**

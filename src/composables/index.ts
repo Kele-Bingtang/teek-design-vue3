@@ -10,7 +10,6 @@ export * from "./core/use-common";
 export * from "./core/use-upgrade";
 
 export * from "./use-boolean";
-export * from "./use-echarts";
 export * from "./use-confirm";
 export * from "./use-form-validator";
 export * from "./use-clipboard";

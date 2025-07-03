@@ -25,6 +25,9 @@ watch(isMobile, newVal => {
   if (newVal) settingStore.closeSideMenu();
 });
 
+/**
+ * 点击外部区域关闭菜单
+ */
 const handleClickOutSide = () => {
   settingStore.closeSideMenu();
 };

@@ -20,20 +20,28 @@ const settingStore = useSettingStore();
 
 const { tabNavMode, showTabNav, maximize, fixTabNav, pageTransition } = storeToRefs(settingStore);
 
+// 标签栏组件
 const TabNavComponents: Record<string, Component> = {
   [TabNavModeEnum.Simple]: SimpleTabNav,
   [TabNavModeEnum.Classic]: ClassicTabNav,
   [TabNavModeEnum.Element]: ElTabNav,
 };
 
-// 刷新当前页面
 const isRefreshRoute = ref(true);
+
+/**
+ * 刷新当前页面函数
+ */
 const refreshPage = (value?: boolean) => {
   if (value !== undefined) return (isRefreshRoute.value = value);
   isRefreshRoute.value = false;
 
   nextTick(() => (isRefreshRoute.value = true));
 };
+
+/**
+ * 往所有路径组件提供刷新当前页面函数
+ */
 provide(RefreshPageKey, refreshPage);
 
 // 添加类型断言修复报错
@@ -52,6 +60,9 @@ watchEffect(() => {
   }
 });
 
+/**
+ * 是否固定标签栏
+ */
 const isFixTabNav = computed(() => {
   if (fixTabNav.value) return "hidden auto";
   return "";

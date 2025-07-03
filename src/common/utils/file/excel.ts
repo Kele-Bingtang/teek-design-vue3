@@ -133,17 +133,17 @@ export const exportTableToExcel = (id: string) => {
     const oo = generateArray(theTable);
     const ranges = oo[1];
 
-    /* original data */
+    // 原始数据
     const data = oo[0];
     const wsName = "Sheet1";
 
     const wb = new Workbook();
     const ws = sheetFromDataArray(data);
 
-    /* add ranges to worksheet */
+    // 新增合并单元格
     ws["!merges"] = ranges;
 
-    /* add worksheet to workbook */
+    // 新增工作表
     wb.SheetNames.push(wsName);
     wb.Sheets[wsName] = ws;
 

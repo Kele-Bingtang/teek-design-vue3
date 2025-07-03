@@ -22,6 +22,9 @@ const menuThemeModeList = [
 
 const isDisable = computed(() => [LayoutModeEnum.Horizontal, LayoutModeEnum.Columns].includes(layoutMode.value));
 
+/**
+ * 切换菜单主题
+ */
 const switchMenuTheme = (menuTheme: MenuThemeEnum) => {
   if (isDisable.value) return;
   settingStore.$patch({ menuTheme });

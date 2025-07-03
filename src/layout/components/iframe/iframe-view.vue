@@ -9,7 +9,9 @@ import { RefreshIFrameKey } from "@/common/config";
 defineOptions({ name: "IFrameView" });
 
 interface IFrameViewProps {
+  /**  iframe 地址 */
   iframeSrc?: string;
+  /** iframe 名称 */
   iframeName?: string;
 }
 
@@ -23,15 +25,18 @@ const route = useRoute();
 const iframeInstance = useTemplateRef("iframeInstance");
 
 const loading = ref(true);
+const isRefresh = ref(true);
 
 const iframeSrc = computed(() => props.iframeSrc || route.meta?.iframeSrc);
 
-const hideLoading = () => {
-  loading.value = false;
-};
+/**
+ * 隐藏加载
+ */
+const hideLoading = () => (loading.value = false);
 
-const isRefresh = ref(true);
-
+/**
+ * 刷新 iframe
+ */
 mittBus.on(RefreshIFrameKey, async () => {
   if (route.name !== props.iframeName) return;
 
@@ -41,6 +46,7 @@ mittBus.on(RefreshIFrameKey, async () => {
 });
 
 onMounted(() => {
+  // 监听 iframe 加载完成
   if (route.meta?.iframeLoading !== false) useEventListener(iframeInstance, "load", hideLoading);
   else hideLoading();
 });

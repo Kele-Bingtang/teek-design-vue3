@@ -8,6 +8,7 @@ import { useRouteStore, useUserStore } from "@/pinia";
 import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
 import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
 
+// 后端获取动态路由的接口类型
 type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
 
 export const useRouteFn = () => {

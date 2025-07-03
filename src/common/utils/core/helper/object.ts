@@ -56,33 +56,33 @@ export function deepClone<T>(obj: T, hash = new WeakMap()): T {
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */
-export function get(form: Record<string, any>, prop: string): any {
-  if (!form || !isObject(form)) return undefined;
-  if (!prop.includes(".")) return form[prop];
+export function get(model: Record<string, any>, prop: string): any {
+  if (!model || !isObject(model)) return undefined;
+  if (!prop.includes(".")) return model[prop];
 
   return prop.split(".").reduce((acc: any, key: string) => {
     if (acc === undefined || acc === null) return undefined;
     return acc[key];
-  }, form);
+  }, model);
 }
 
 /**
  * 处理 prop 为多级嵌套的情况，给指定 key 赋值 (列如: prop: user.name)
  */
-export function set(form: Record<string, any>, prop: string, value: any): boolean {
-  if (!form || !isObject(form)) return false;
+export function set(model: Record<string, any>, prop: string, value: any): boolean {
+  if (!model || !isObject(model)) return false;
 
   const props = prop.split(".");
-  let current = form;
+  let current = model;
 
   for (let i = 0; i < props.length - 1; i++) {
     const key = props[i];
 
     // 如果路径中的某个属性不是对象且不是最后一个属性，则无法继续深入
     if (current[key] !== undefined && !isObject(current[key])) {
-      // 如果不是最后一个属性，我们不能继续
+      // 如果不是最后一个属性，不能继续
       if (i < props.length - 1) return false;
-      // 如果是最后一个属性，我们允许覆盖它
+      // 如果是最后一个属性，允许覆盖它
       break;
     }
 

@@ -24,11 +24,13 @@ const route = useRoute();
 const settingStore = useSettingStore();
 const { menuList: menuListRef } = useMenu();
 
+// 当前激活菜单
 const activeMenu = computed(() =>
   props.activeMenu ? props.activeMenu : route.meta.activeMenu || route.meta._fullPath || route.path
 );
 const isCollapse = computed(() => (props.isCollapse === undefined ? settingStore.isCollapse : props.isCollapse));
 
+// 菜单列表
 const menuList = computed(() => {
   if (props.menuList?.length) return props.menuList;
   return menuListRef.value;

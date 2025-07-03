@@ -2,6 +2,12 @@ import type { FormColumn, ProFormNamespace } from "../types";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
+/**
+ * 使用 ProForm 的 API
+ *
+ * @param model 表单数据
+ * @param columnsProps 表单列配置
+ */
 export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {
   const mergeProps = ref<ProFormNamespace.Props>({});
 

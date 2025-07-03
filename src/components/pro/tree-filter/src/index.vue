@@ -45,7 +45,9 @@ onBeforeMount(async () => {
   initTreeData();
 });
 
-// 初始化树形数据
+/**
+ * 初始化树形数据
+ */
 const initTreeData = async () => {
   const { data, requestApi, transformData, id, label, enableTotal, defaultFirst } = props;
 
@@ -79,7 +81,9 @@ watch(filterText, val => {
   treeInstance.value!.filter(val);
 });
 
-// 过滤
+/**
+ * 过滤
+ */
 const filterNode = (value: string, data: Recordable, node: any) => {
   if (!value) return true;
   let parentNode = node.parent;
@@ -94,13 +98,17 @@ const filterNode = (value: string, data: Recordable, node: any) => {
   return labels.some(label => label.indexOf(value) !== -1);
 };
 
-// 单选
+/**
+ * 单选
+ */
 const handleNodeClick = (data: Recordable) => {
   if (props.multiple) return;
   emit("change", data[props.id], data);
 };
 
-// 多选
+/**
+ * 多选
+ */
 const handleCheckChange = () => {
   emit("change", treeInstance.value?.getCheckedKeys());
 };

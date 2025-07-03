@@ -14,11 +14,17 @@ const { t } = useI18n();
 const settingStore = useSettingStore();
 const { getBrowserTitle } = useBrowserTitle();
 
+/**
+ * 选择标题模式事件
+ */
 const handleTitleModeSelect = () => {
   // 根据选择的标题模式，重新渲染浏览器标题
   window.document.title = getBrowserTitle();
 };
 
+/**
+ * 标题模式选项
+ */
 const titleModeOptions = [
   { value: TitleModeEnum.ProjectPage, label: t("_setting.titleModeProjectPage") },
   { value: TitleModeEnum.UsernamePage, label: t("_setting.titleModeUsernamePage") },

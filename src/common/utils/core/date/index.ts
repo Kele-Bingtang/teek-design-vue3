@@ -21,7 +21,7 @@ export function getNowDate() {
 }
 
 /**
- * 获取当前时间对应的提示语
+ * 获取当前时间对应的提示语（登录成功后显示）
  */
 export function getTimeState() {
   const timeNow = new Date();

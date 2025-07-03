@@ -1,8 +1,8 @@
 <script setup lang="ts" name="Print">
-import { Print } from "@/common/utils";
-import ChartLine from "@/views/dashboard/console/index.vue";
+import { printElement } from "@/common/utils";
 import { simpleData } from "@/mock/table";
 import { useNamespace } from "@/composables";
+// import { BarChart } from "@/components";
 
 const ns = useNamespace();
 
@@ -14,11 +14,11 @@ const options = [
     el: `.${ns.joinEl("table")}`,
     label: "Table",
   },
-  {
-    value: "2",
-    el: ".echart",
-    label: "Echart",
-  },
+  // {
+  //   value: "2",
+  //   el: ".chart",
+  //   label: "Echart",
+  // },
   {
     value: "3",
     el: ".img",
@@ -28,7 +28,37 @@ const options = [
 
 function onPrint() {
   const el = options.filter(v => v.value === value.value)[0]?.el;
-  Print(el).toPrint;
+  printElement(el, {
+    styleStr: `
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          color: #333;
+        }
+        table {
+          width: 100%;
+          min-width: 600px;
+          table-layout: auto;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          white-space: nowrap;
+          overflow: visible;
+          text-overflow: ellipsis;
+          max-width: 300px;
+        }
+      </style>
+    `,
+    setDomHeightArr: [".chart", ".img"],
+    beforePrint: () => {
+      console.log("即将打印内容：", el);
+    },
+    afterPrint: () => {
+      console.log("打印完成");
+    },
+  });
 }
 
 const tableData = ref(simpleData);
@@ -63,10 +93,16 @@ const tableData = ref(simpleData);
 
         <el-divider />
 
-        <el-col :xs="17" :sm="17" :md="17" :lg="17" :xl="17">
+        <!-- <el-col :xs="17" :sm="17" :md="17" :lg="17" :xl="17">
           <p>Echart</p>
-          <ChartLine class="echart" />
-        </el-col>
+          <BarChart
+            :data="[120, 200, 150, 80, 70, 110, 130]"
+            :xAxisData="['周一', '周二', '周三', '周四', '周五', '周六', '周日']"
+            :showLegend="true"
+            legendPosition="right"
+            class="chart"
+          />
+        </el-col> -->
 
         <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
           <p>Image</p>

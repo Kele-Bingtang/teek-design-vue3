@@ -10,7 +10,9 @@ const route = useRoute();
 const router = useRouter();
 const props = defineProps<{ errorCount: number }>();
 
-// 打开错误日志页面
+/**
+ * 打开错误日志页面
+ */
 const openErrorLogger = () => {
   if (route.path !== "/error-log") {
     router.push("/error-log");

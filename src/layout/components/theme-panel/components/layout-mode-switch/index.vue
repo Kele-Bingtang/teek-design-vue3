@@ -46,6 +46,9 @@ const layoutModeList = [
   },
 ];
 
+/**
+ * 切换布局模式
+ */
 const switchLayoutMode = (layoutMode: LayoutModeEnum) => {
   settingStore.$patch({ layoutMode });
 };

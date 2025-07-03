@@ -30,6 +30,7 @@ watch(
       name: name as string,
       show: true,
     };
+    // 如果 iframe 没有缓存，则添加到 iframe 列表
     if (!isFrameCache(iframe.name) && iframeKeepAlive) layoutStore.addIFrame(iframe);
   },
   { immediate: true }

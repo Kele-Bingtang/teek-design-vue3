@@ -19,7 +19,7 @@ export const languageOptions = [
 /**
  * 获取默认语言
  */
-export const getDefaultLocale = async () => {
+export const getDefaultLocale = () => {
   const layoutStore = localStorageProxy.getItem("layoutStore");
   const lang = layoutStore?.language || getBrowserLang();
 
@@ -66,7 +66,7 @@ const formatTranslate = (message: string, option?: Record<string, string | numbe
  */
 const i18n = createI18n({
   legacy: false, // 如果要支持 compositionAPI，此项必须设置为 false
-  locale: await getDefaultLocale(), // 设置语言类型
+  locale: getDefaultLocale(), // 设置语言类型
   globalInjection: true, // 全局注册 $t 方法
   messages,
   fallbackLocale: LanguageEnum.ZhCn,

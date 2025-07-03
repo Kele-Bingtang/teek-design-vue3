@@ -10,9 +10,10 @@ const ns = useNamespace("collapse-trigger");
 const settingStore = useSettingStore();
 const { isCollapse } = storeToRefs(settingStore);
 
-const toggleTrigger = () => {
-  settingStore.toggleSideMenu();
-};
+/**
+ * 切换侧边菜单
+ */
+const toggleTrigger = () => settingStore.toggleSideMenu();
 </script>
 
 <template>

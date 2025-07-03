@@ -27,6 +27,7 @@ import "./base-layout.scss";
 
 defineOptions({ name: "Layout" });
 
+// 布局组件
 const LayoutComponents: Record<string, Component> = {
   [LayoutModeEnum.Vertical]: defineAsyncComponent(() => import("./layout-vertical/index.vue")),
   [LayoutModeEnum.Classic]: defineAsyncComponent(() => import("./layout-classic/index.vue")),

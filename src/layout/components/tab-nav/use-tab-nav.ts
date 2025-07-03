@@ -12,6 +12,7 @@ import { useCommon } from "@/composables";
 
 type ContextMenu = "refresh" | "current" | "left" | "right" | "other" | "all";
 
+// 右键菜单条件
 export interface ContextMenuCondition {
   /** 是否允许刷新当前标签页 */
   refresh: boolean;
@@ -27,6 +28,7 @@ export interface ContextMenuCondition {
   all: boolean;
 }
 
+// 默认标签
 export const defaultTab: TabProps = {
   path: "", // 路由的 path
   name: "", // 路由的 name
@@ -36,6 +38,9 @@ export const defaultTab: TabProps = {
   meta: {}, // 路由 meta 信息
 };
 
+/**
+ * 标签栏管理
+ */
 export const useTabNav = () => {
   const route = useRoute();
   const router = useRouter();

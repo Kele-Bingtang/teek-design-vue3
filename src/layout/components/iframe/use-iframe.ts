@@ -8,19 +8,22 @@ const IFrameView = () => import("./iframe-view.vue");
 const IFrameBlank = () => import("./iframe-blank.vue");
 
 export interface IFrame {
-  src: string; // 地址
-  name: string; // 名字
-  show: boolean; // 是否展示
+  /** iframe 地址 */
+  src: string;
+  /** iframe 名称 */
+  name: string;
+  /** 是否展示 */
+  show: boolean;
 }
 
 export interface IFrameMessage {
-  // 路由 name
+  /** 路由 name */
   name: string;
-  // iframe 地址
+  /** iframe 地址 */
   iframeSrc: string;
-  // 关闭的路由 name
+  /** 关闭的路由 name */
   closeName: string;
-  // 刷新的路由 name
+  /** 刷新的路由 name */
   refreshName: string;
 }
 
@@ -35,6 +38,9 @@ export const useIFrame = (immediate = true) => {
 
   let cleanup: ReturnType<typeof useEventListener>;
 
+  /**
+   * 判断是否是当前 iframe
+   */
   const isCurrentIFrame = (item: IFrame) => item.name === router.currentRoute.value.name;
 
   /**
@@ -73,15 +79,24 @@ export const useIFrame = (immediate = true) => {
     }
   };
 
+  /**
+   * 关闭 iframe
+   */
   const closeFrame = (name: string) => {
     const tab = layoutStore.tabNavList.find(tab => tab.name === name);
     tab && closeSelectedTab(tab);
   };
 
+  /**
+   * 开始监听 iframe 消息
+   */
   const start = () => {
     cleanup = useEventListener("message", watchFrameMessage);
   };
 
+  /**
+   * 停止监听 iframe 消息
+   */
   const stop = () => {
     cleanup?.();
   };

@@ -20,6 +20,11 @@ export const useWebSocketStore = defineStore("webSocketStore", () => {
   const status = ref(SocketStatus.Disconnected);
   const websocketUrl = ref(""); // socket 地址
 
+  /**
+   * 连接 WebSocket
+   *
+   * @param url WebSocket 地址
+   */
   const connect = (url: string) => {
     // 防止重复调用方法导致重复连接
     if (status.value === SocketStatus.Connected || status.value === SocketStatus.Connecting) return;

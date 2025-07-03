@@ -46,6 +46,9 @@ watch(
   }
 );
 
+/**
+ * 切换菜单事件
+ */
 const changeMenuItem = (item: RouterConfig) => {
   active.value = item.path;
   if (item.children?.length) return (menuItem.value = item.children);

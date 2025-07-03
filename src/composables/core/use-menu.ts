@@ -1,6 +1,9 @@
 import { useRouteStore } from "@/pinia";
 import SystemConfig, { LAYOUT_NAME } from "@/common/config";
 
+/**
+ * 菜单管理
+ */
 export const useMenu = () => {
   const menuList = ref<RouterConfig[]>([]);
   const { loadedRouteList } = storeToRefs(useRouteStore());

@@ -3,6 +3,9 @@ import { addUnit, removeCssVar, setCssVar } from "@/common/utils";
 import { HeaderStyleEnum } from "@/common/enums/appEnum";
 import { useNamespace } from "./use-namespace";
 
+/**
+ * 监听并初始化 css 变量
+ */
 export const useWatchCssVar = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();

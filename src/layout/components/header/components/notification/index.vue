@@ -14,12 +14,19 @@ import "./index.scss";
 defineOptions({ name: "Notification" });
 
 interface Notice {
+  /** 消息 id */
   id: string;
+  /** 消息头像 */
   avatar?: string;
+  /** 消息标题 */
   title: string;
+  /** 消息描述 */
   description?: string;
+  /** 消息日期 */
   date?: string;
+  /** 消息创建时间 */
   createTime?: string;
+  /** 消息标签 */
   tag?: {
     name: string;
     type: "primary" | "danger" | "success" | "info" | "warning";
@@ -27,8 +34,11 @@ interface Notice {
 }
 
 interface TabInfo {
+  /** 标签名称 */
   name: string;
+  /** 标签名称 */
   label: string;
+  /** 标签数据 */
   data: Notice[];
 }
 
@@ -45,6 +55,9 @@ onMounted(() => {
   messageStore.getMessageList();
 });
 
+/**
+ * 通知列表
+ */
 const noticeList: Notice[] = [
   { id: "1", avatar: msg1, title: "请您尽快填写本周的周报。", date: "一分钟前" },
   { id: "2", avatar: msg2, title: "您今天有 4 个重要会议。", date: "一小时前" },
@@ -58,6 +71,9 @@ const noticeList: Notice[] = [
   { id: "5", avatar: msg5, title: "恭喜您喜获 2022 年人才质量提升奖。", date: "2023-01-01" },
 ];
 
+/**
+ * 代办列表
+ */
 const arList: Notice[] = [
   {
     id: "1",
@@ -101,6 +117,7 @@ const arList: Notice[] = [
 
 const activeName = ref("notice");
 
+// 标签列表
 const tabList = computed<TabInfo[]>(() => [
   { name: "notice", label: "通知", data: noticeList },
   {
@@ -114,6 +131,9 @@ const tabList = computed<TabInfo[]>(() => [
   { name: "ar", label: "代办", data: arList },
 ]);
 
+/**
+ * 跳转消息中心
+ */
 const toDetail = () => {
   if (activeName.value === "message") router.push("/message-center");
 };

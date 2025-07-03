@@ -1,5 +1,5 @@
 // 定义一个初始的时间戳，作为雪花算法的基准时间点
-const epoch = BigInt(1622476800000); // 2021 年 6 月 1 日
+const epoch = BigInt(1577808000000); // 2020 年 1 月 1 日
 // 定义数据中心 ID 和工作节点 ID 的位数，这里假设都是 5 位
 const dataCenterIdBits = 5n;
 const workerIdBits = 5n;
@@ -27,12 +27,9 @@ export class Snowflake {
   // 构造函数，接受数据中心 ID 和工作节点 ID 作为参数，同时初始化上一次的时间戳和序列号
   constructor(dataCenterId: bigint, workerId: bigint) {
     // 检查数据中心 ID 和工作节点 ID 是否在合法范围内
-    if (dataCenterId < 0n || dataCenterId > maxDataCenterId) {
-      throw new Error("data center id is out of range");
-    }
-    if (workerId < 0n || workerId > maxWorkerId) {
-      throw new Error("worker id is out of range");
-    }
+    if (dataCenterId < 0n || dataCenterId > maxDataCenterId) throw new Error("data center id is out of range");
+    if (workerId < 0n || workerId > maxWorkerId) throw new Error("worker id is out of range");
+
     // 给对象的属性赋值
     this.dataCenterId = dataCenterId;
     this.workerId = workerId;
@@ -44,9 +41,7 @@ export class Snowflake {
     // 获取当前时间的毫秒数，转换为 BigInt 类型
     let timestamp = BigInt(Date.now());
     // 如果当前时间小于上一次的时间戳，说明系统时钟回拨，抛出异常
-    if (timestamp < this.lastTimestamp) {
-      throw new Error("clock moved backwards");
-    }
+    if (timestamp < this.lastTimestamp) throw new Error("clock moved backwards");
     // 如果当前时间等于上一次的时间戳，说明在同一毫秒内生成多个 ID
     if (timestamp === this.lastTimestamp) {
       // 将序列号加一，并用序列号掩码进行按位与运算，确保序列号不超过最大值
@@ -55,10 +50,7 @@ export class Snowflake {
       if (this.sequence === 0n) {
         timestamp = this.waitNextMillisecond(timestamp);
       }
-    } else {
-      // 如果当前时间大于上一次的时间戳，说明进入了新的毫秒，重置序列号为零
-      this.sequence = 0n;
-    }
+    } else this.sequence = 0n; // 如果当前时间大于上一次的时间戳，说明进入了新的毫秒，重置序列号为零
 
     // 更新上一次的时间戳为当前时间
     this.lastTimestamp = timestamp;
@@ -68,7 +60,7 @@ export class Snowflake {
       (this.dataCenterId << dataCenterIdShift) +
       (this.workerId << workerIdShift) +
       this.sequence
-    );
+    ).toString();
   }
 
   // 等待下一毫秒的方法，返回一个 BigInt 类型的时间戳

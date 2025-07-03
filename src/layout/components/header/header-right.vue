@@ -17,6 +17,9 @@ defineOptions({ name: "HeaderRight" });
 const ns = useNamespace("header-right");
 const errorLogStore = useErrorLogStore();
 
+/**
+ * 未读错误日志数量
+ */
 const errorCount = computed(() => {
   const noReadErrorLogs = errorLogStore.errorLogs.filter(errorLog => {
     return !errorLog.hasRead;

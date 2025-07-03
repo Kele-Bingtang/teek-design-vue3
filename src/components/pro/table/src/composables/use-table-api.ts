@@ -2,6 +2,11 @@ import type { ProTableNamespace, TableColumn } from "../types";
 import { setProp } from "@/components/pro/helper";
 import { isString } from "@/common/utils";
 
+/**
+ * 使用 ProTable 的 API
+ *
+ * @param columnsProps 表格列配置
+ */
 export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
   const mergeProps = ref<ProTableNamespace.Props>({});
 

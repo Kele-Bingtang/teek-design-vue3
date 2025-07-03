@@ -6,17 +6,28 @@ import { useRouteFn } from "@/composables";
 import { useLayoutStore } from "./layout";
 
 export interface UserInfo {
-  userId?: string; // 用户 ID
-  username?: string; // 用户名
-  sex?: string; // 用户性别
-  signature?: string; // 签名
-  email?: string; // 用户邮箱
-  phone?: string; // 用户联系方式
-  avatar?: string; // 用户头像
-  roles?: string[]; // 用户角色
-  job?: string; // 职位
-  dept?: string; // 部门
-  registerTime?: string; // 用户角色
+  /** 用户 ID */
+  userId?: string;
+  /** 用户名 */
+  username?: string;
+  /** 用户性别 */
+  sex?: string;
+  /** 签名 */
+  signature?: string;
+  /** 用户邮箱 */
+  email?: string;
+  /** 用户联系方式 */
+  phone?: string;
+  /** 用户头像 */
+  avatar?: string;
+  /** 用户角色 */
+  roles?: string[];
+  /** 职位 */
+  job?: string;
+  /** 部门 */
+  dept?: string;
+  /** 注册时间 */
+  registerTime?: string;
 }
 
 export const useUserStore = defineStore(

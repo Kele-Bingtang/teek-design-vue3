@@ -9,6 +9,7 @@ export type Target = "_blank" | "_self" | "_parent" | "_top" | "framename";
 
 /**
  * 下载在线图片
+ *
  * @param url 需要下载的 url
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -22,6 +23,7 @@ export const downloadByOnlineUrl = (url: string, filename: string, mime?: string
 
 /**
  * 基于 base64 下载图片
+ *
  * @param base64 base64 图片
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -34,6 +36,7 @@ export const downloadByBase64 = (base64: string, filename: string, mime?: string
 
 /**
  * 根据后台接口文件流下载
+ *
  * @param data 文件流
  * @param filename 文件名
  * @param mime 	类型（ 可选 ）
@@ -56,6 +59,7 @@ export const downloadByData = (data: BlobPart, filename: string, mime?: string, 
 
 /**
  * 根据文件地址下载文件
+ *
  * @param url 文件地址
  * @param filename 文件名
  * @param target 打开方式：_blank、_self、_parent、_top、framename
@@ -63,6 +67,7 @@ export const downloadByData = (data: BlobPart, filename: string, mime?: string, 
 export const downloadByUrl = (url: string, filename: string, target: Target = "_self") => {
   const isChrome = window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
   const isSafari = window.navigator.userAgent.toLowerCase().indexOf("safari") > -1;
+
   if (/(iP)/g.test(window.navigator.userAgent)) return console.error("Your browser does not support download!");
   if (isChrome || isSafari) {
     const aElement = document.createElement("a");
@@ -80,6 +85,7 @@ export const downloadByUrl = (url: string, filename: string, target: Target = "_
 
 /**
  * 图片链接转 Base64
+ *
  * @param url 需要下载的 url
  * @param mime 	类型（ 可选 ）
  * @param encoderOptions 转 Base64 的图片质量，0 - 1，
@@ -106,6 +112,7 @@ function urlToBase64(url: string, mime?: string, encoderOptions = 1): Promise<st
 
 /**
  * base64 图片转文件流
+ *
  * @param base64 图片 base64
  * @returns Blob 文件流
  */
@@ -122,6 +129,7 @@ function base64ToBlob(base64: string) {
 
 /**
  * 下载 url 文件
+ *
  * @param url 需要下载的 url
  * @param target 打开方式：_blank、_self、_parent、_top、framename
  */
