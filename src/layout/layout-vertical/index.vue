@@ -23,6 +23,7 @@ const { isMobile } = useCommon();
 
 watch(isMobile, newVal => {
   if (newVal) settingStore.closeSideMenu();
+  else settingStore.openSideMenu();
 });
 
 /**

@@ -6,6 +6,7 @@ onMounted(() => {
   message.success("欢迎回来：message.success('欢迎回来')");
   message("欢迎回来: message('欢迎回来', { type: 'info' })", {
     type: "info",
+    customClass: "antd",
   });
   message({
     message: "欢迎回来：message({ message: '欢迎回来', type: 'warning'});",
@@ -156,3 +157,9 @@ onMounted(() => {
     </el-card>
   </el-space>
 </template>
+
+<style lang="scss" scoped>
+h4 {
+  margin-bottom: 20px;
+}
+</style>

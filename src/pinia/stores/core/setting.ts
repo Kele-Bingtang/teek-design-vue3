@@ -52,18 +52,18 @@ export const useSettingStore = defineStore(
     });
 
     /**
+     * 打开侧边菜单
+     */
+    const openSideMenu = () => (isCollapse.value = false);
+    /**
      * 关闭侧边菜单
      */
-    const closeSideMenu = () => {
-      isCollapse.value = true;
-    };
+    const closeSideMenu = () => (isCollapse.value = true);
 
     /**
      * 切换侧边菜单
      */
-    const toggleSideMenu = () => {
-      isCollapse.value = !isCollapse.value;
-    };
+    const toggleSideMenu = () => (isCollapse.value = !isCollapse.value);
 
     /**
      * 重置设置
@@ -101,6 +101,7 @@ export const useSettingStore = defineStore(
       radius,
       watermark,
 
+      openSideMenu,
       closeSideMenu,
       toggleSideMenu,
       resetSetting,

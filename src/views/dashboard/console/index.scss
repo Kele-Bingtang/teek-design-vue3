@@ -42,6 +42,10 @@
     }
   }
 
+  .el-row {
+    row-gap: 20px;
+  }
+
   @media screen and (max-width: $device-phone) {
     --card-spacing: 15px;
   }

@@ -3,7 +3,14 @@
 @use "@styles/common/var" as *;
 
 .analysis-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding-bottom: 20px;
+
+  .el-row {
+    row-gap: 20px;
+  }
 
   :deep(.card) {
     display: flex;
@@ -56,6 +63,16 @@
     }
   }
 
+  @media screen and (max-width: $device-phone) {
+    :deep(.card) {
+      height: 100%;
+
+      &.height-large {
+        height: 100%;
+      }
+    }
+  }
+
   .#{$el-namespace}-card {
     border: 1px solid #e8ebf1;
     box-shadow: none;
@@ -63,12 +80,6 @@
 
   .mt-20 {
     margin-top: 20px;
-  }
-}
-
-@media screen and (max-width: $device-phone) {
-  :deep(.card) {
-    height: 300px;
   }
 }
 

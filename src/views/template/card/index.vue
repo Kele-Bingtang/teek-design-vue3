@@ -392,6 +392,10 @@ const handleMore = () => {};
 
 <style lang="scss" scoped>
 .card {
+  .el-row {
+    row-gap: 20px;
+  }
+
   .page-title {
     margin: 20px 0 15px;
     font-size: 22px;

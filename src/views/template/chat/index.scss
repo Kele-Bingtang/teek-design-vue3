@@ -28,20 +28,10 @@
 }
 
 @media only screen and (max-width: $device-ipad-pro) {
-  .chat {
+  @include b(chat) {
     flex-direction: column;
 
-    .person-list {
-      width: 100%;
-      height: 170px;
-      border-right: none;
-
-      .person-item-header {
-        display: none;
-      }
-    }
-
-    .chat-modal {
+    @include e(modal) {
       height: calc(70% - 30px);
     }
   }

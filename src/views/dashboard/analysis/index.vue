@@ -22,7 +22,7 @@ defineOptions({ name: "Analysis" });
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="mt-20">
+    <el-row :gutter="20">
       <el-col :xl="10" :lg="10" :xs="24">
         <TotalRevenue />
       </el-col>
@@ -34,7 +34,7 @@ defineOptions({ name: "Analysis" });
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="mt-20">
+    <el-row :gutter="20">
       <el-col :xl="10" :lg="10" :xs="24">
         <TopProducts />
       </el-col>

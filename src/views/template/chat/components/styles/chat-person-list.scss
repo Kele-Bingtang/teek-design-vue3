@@ -1,5 +1,6 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/function" as *;
+@use "@styles/common/var" as *;
 
 @include b(chat-person-list) {
   display: flex;
@@ -34,5 +35,17 @@
 
   @include e(search-box) {
     margin-top: 12px;
+  }
+}
+
+@media only screen and (max-width: $device-ipad-pro) {
+  @include b(chat-person-list) {
+    width: 100%;
+    height: 170px;
+    border-right: none;
+
+    @include e(header) {
+      display: none;
+    }
   }
 }
