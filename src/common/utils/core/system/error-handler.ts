@@ -9,6 +9,7 @@ import SystemConfig from "@/common/config";
 export const checkNeed = () => {
   const { env } = SystemConfig.layoutConfig.errorLog;
   const node_env = import.meta.env.MODE;
+
   if (isArray(env) && node_env) return env.includes(node_env);
   return false;
 };
@@ -18,6 +19,7 @@ export const checkNeed = () => {
  */
 export const errorHandler = (error: any, vm: ComponentPublicInstance | null, info: string) => {
   if (!checkNeed()) return;
+
   const errorStore = useErrorLogStore();
   errorStore.addErrorLog({
     error,
@@ -26,6 +28,7 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
     url: window.location.href,
     hasRead: false,
   });
+
   // 过滤 HTTP 请求错误
   if (error.status || error.status === 0) return false;
   const errorMap: Record<string, string> = {
@@ -37,7 +40,9 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
     EvalError: "错误的使用了Eval",
     URIError: "URI错误",
   };
+
   const errorName = errorMap[error.name] || "未知错误";
+
   ElNotification({
     title: errorName,
     message: error,

@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { useStorage, useCache } from "@/composables";
 import {
   HeaderStyleEnum,
   LayoutModeEnum,
@@ -10,6 +9,7 @@ import {
   TabNavModeEnum,
 } from "@/common/enums/appEnum";
 import SystemConfig from "@/common/config";
+import { cacheOperator, localStorageProxy } from "@/common/utils";
 
 export const useSettingStore = defineStore(
   "settingStore",
@@ -60,11 +60,8 @@ export const useSettingStore = defineStore(
     };
 
     const resetSetting = async () => {
-      const { removeStorage } = useStorage();
-      const cache = useCache();
-
-      removeStorage("settingStore");
-      if (!themeConfig.recordTabNav) cache.removeCacheTabNavList();
+      localStorageProxy.removeItem("settingStore");
+      if (!themeConfig.recordTabNav) cacheOperator.removeCacheTabNavList();
     };
 
     return {

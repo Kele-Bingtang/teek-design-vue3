@@ -1,17 +1,39 @@
 /* 定义全局样式变量文件 */
 
-// 媒体查询 & 设备尺寸
-// notebook
+// ===== 媒体查询 & 设备尺寸 =====
+
+// 超大屏（4K及更大）
+$device-4k: 2560px;
+
+// 大桌面显示器
+$device-desktop-xl: 1920px;
+
+// 普通桌面显示器
+$device-desktop: 1440px;
+
+// 笔记本
 $device-notebook: 1600px;
 
-// ipad pro
+// 小型笔记本/大平板
+$device-laptop: 1366px;
+
+// iPad Pro 横屏
 $device-ipad-pro: 1180px;
 
-// ipad
-$device-ipad: 768px;
+// iPad 横屏
+$device-ipad: 1024px;
 
-// ipad-竖屏
+// iPad 竖屏
 $device-ipad-vertical: 900px;
 
-// mobile
+// 大手机（如 iPhone Plus 系列）
+$device-phone-large: 768px;
+
+// 普通手机
 $device-phone: 640px;
+
+// 小屏手机
+$device-phone-small: 375px;
+
+// 超小屏（如 Apple Watch）
+$device-watch: 320px;

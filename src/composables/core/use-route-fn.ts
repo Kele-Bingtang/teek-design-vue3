@@ -5,8 +5,7 @@ import router from "@/router";
 import { notFoundRouter, rolesRoutes } from "@/router/routes-config";
 import { translateTitle } from "@/router/helper";
 import { useRouteStore, useUserStore } from "@/pinia";
-import { isValidURL, isType, isFunction } from "@/common/utils";
-import { useCache } from "@/composables";
+import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
 import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
 
 type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
@@ -15,7 +14,6 @@ export const useRouteFn = () => {
   const { cacheDynamicRoutes } = SystemConfig.routerConfig;
   const routeStore = useRouteStore();
   const userStore = useUserStore();
-  const { getDynamicRoutes, removeDynamicRoutes, setDynamicRoutes } = useCache();
 
   // 扫描 views 下的所有组件
   const modules = import.meta.glob("@/views/**/*.vue");
@@ -62,8 +60,8 @@ export const useRouteFn = () => {
    * 从浏览器 storage 缓存获取动态路由
    */
   const getDynamicRoutesFromStorage = () => {
-    if (cacheDynamicRoutes) return getDynamicRoutes();
-    removeDynamicRoutes();
+    if (cacheDynamicRoutes) return cacheOperator.getDynamicRoutes();
+    cacheOperator.removeDynamicRoutes();
   };
 
   /**
@@ -74,7 +72,7 @@ export const useRouteFn = () => {
 
     if (!routeList) return [];
     // 缓存路由
-    if (cacheDynamicRoutes) setDynamicRoutes(routeList);
+    if (cacheDynamicRoutes) cacheOperator.setDynamicRoutes(routeList);
 
     return routeList;
   };

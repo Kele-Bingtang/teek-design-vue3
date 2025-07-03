@@ -1,7 +1,6 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
-import SystemConfig from "@/common/config";
-import { useCommon } from "@/composables";
+import { localStorageProxy, StorageManager } from "@/common/utils";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";
@@ -11,24 +10,12 @@ export * from "./stores/error-log";
 export * from "./stores/message";
 export * from "./stores/websocket";
 
-const { version: currentVersion } = useCommon();
-const { cacheKeyPrefix } = SystemConfig.keyConfig;
-
 /**
- * 自定义存储逻辑，与 useStorage 方式一样
+ * 自定义存储逻辑
  */
 const customStorage = {
-  getItem: (key: string) => {
-    const storageValue = localStorage.getItem(key);
-    if (!storageValue) return storageValue;
-
-    const { value } = JSON.parse(storageValue);
-    return JSON.stringify(value);
-  },
-  setItem: (key: string, value: string) => {
-    const valueType = Object.prototype.toString.call(value).slice(8, -1);
-    localStorage.setItem(key, JSON.stringify({ _type: valueType, value: JSON.parse(value) }));
-  },
+  getItem: (key: string) => localStorageProxy.getItem(key, false),
+  setItem: (key: string, value: string) => localStorageProxy.setItem(key, value, false),
 };
 
 /**
@@ -40,7 +27,7 @@ const customStorage = {
  * 4. 如果其他旧版本没有该 key，则返回当前版本 key
  */
 const getStorageKey = (key: string) => {
-  const currentStoreKey = `${cacheKeyPrefix}:v${currentVersion}:${key}`;
+  const currentStoreKey = StorageManager.normalizeKey(key);
 
   // 如果当前版本有该 key，则返回当前版本 key
   if (localStorage.getItem(currentStoreKey)) return currentStoreKey;
@@ -48,7 +35,7 @@ const getStorageKey = (key: string) => {
   // 如果当前版本没有该 key，则查找其他旧版本的 key
   const oldVersionKeys = Object.keys(localStorage).find(
     // 匹配旧版本数据 key，格式如 {cacheKeyPrefix}:vX.Y.Z:{key}
-    k => k.startsWith(`${cacheKeyPrefix}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
+    k => k.startsWith(`${StorageManager.cacheKeyPrefix}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
   );
 
   // 如果其他旧版本没有该 key，则返回当前版本 key

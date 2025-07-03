@@ -191,3 +191,5 @@ Print.prototype = {
 };
 
 export default Print;
+
+export { Print };

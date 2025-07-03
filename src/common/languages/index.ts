@@ -1,7 +1,6 @@
 import { createI18n } from "vue-i18n";
 import { LanguageEnum } from "@/common/enums/appEnum";
-import { isObject } from "@/common/utils";
-import { useStorage } from "@/composables";
+import { isObject, localStorageProxy } from "@/common/utils";
 import zhCN from "./locales/zh-CN";
 import enUS from "./locales/en-US";
 
@@ -17,9 +16,11 @@ export const languageOptions = [
   { value: LanguageEnum.EnUs, label: "English" },
 ];
 
+/**
+ * 获取默认语言
+ */
 export const getDefaultLocale = async () => {
-  await nextTick();
-  const layoutStore = useStorage().getStorage("layoutStore");
+  const layoutStore = localStorageProxy.getItem("layoutStore");
   const lang = layoutStore?.language || getBrowserLang();
 
   document.documentElement.lang = lang;
@@ -51,19 +52,40 @@ export const t = (message: string | Record<string, string>, option?: Record<stri
   return formatTranslate(i18n.global.t(message), option);
 };
 
+/**
+ * 格式化翻译内容
+ */
 const formatTranslate = (message: string, option?: Record<string, string | number>) => {
   if (!option) return message;
 
   return message.replace(/\{(\w+)\}/g, (_, key) => `${option?.[key] ?? `{${key}}`}`);
 };
 
+/**
+ * 国际化实例
+ */
 const i18n = createI18n({
   legacy: false, // 如果要支持 compositionAPI，此项必须设置为 false
   locale: await getDefaultLocale(), // 设置语言类型
   globalInjection: true, // 全局注册 $t 方法
   messages,
+  fallbackLocale: LanguageEnum.ZhCn,
 });
 
-// 异步加载语言文件
+// 异步加载语言文件（文件过大可采用）
+// const loadLanguageAsync = async (lang: LanguageEnum) => {
+//   if (!messages[lang]) {
+//     const ms = await import(`./locales/${lang}.ts`);
+//     messages[lang] = ms.default;
+//   }
+//   i18n.global.setLocaleMessage(lang, messages[lang]);
+// };
+
+// const setupI18n = async () => {
+//   const lang = await getDefaultLocale();
+//   await loadLanguageAsync(lang);
+// };
+
+// setupI18n();
 
 export default i18n;

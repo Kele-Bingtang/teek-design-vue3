@@ -1,6 +1,12 @@
 import type { App, Directive } from "vue";
-import type { UseInstallWithPlugin, UseInstallWithContext } from "./typescript";
+import type { UseInstallWithPlugin, UseInstallWithContext } from "./types";
 
+/**
+ * 安装组件
+ *
+ * @param main 主组件
+ * @param extra 额外组件
+ */
 export const useInstall = <T, E extends Record<string, any>>(main: T, extra?: E) => {
   (main as UseInstallWithPlugin<T>).install = (app: App): void => {
     for (const comp of [main, ...Object.values(extra ?? {})]) {
@@ -16,6 +22,12 @@ export const useInstall = <T, E extends Record<string, any>>(main: T, extra?: E)
   return main as UseInstallWithPlugin<T> & E;
 };
 
+/**
+ * 安装函数
+ *
+ * @param fn 函数
+ * @param name 名称
+ */
 export const useInstallFunction = <T>(fn: T, name: string) => {
   (fn as UseInstallWithPlugin<T>).install = (app: App) => {
     (fn as UseInstallWithContext<T>)._context = app._context;
@@ -25,6 +37,12 @@ export const useInstallFunction = <T>(fn: T, name: string) => {
   return fn as UseInstallWithContext<T>;
 };
 
+/**
+ * 安装指令
+ *
+ * @param directive 指令
+ * @param name 名称
+ */
 export const useInstallDirective = <T extends Directive>(directive: T, name: string) => {
   (directive as UseInstallWithPlugin<T>).install = (app: App): void => {
     app.directive(name, directive);

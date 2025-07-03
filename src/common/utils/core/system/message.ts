@@ -2,7 +2,7 @@
 import type { VNode } from "vue";
 import type { MessageHandler } from "element-plus";
 import { ElMessage } from "element-plus";
-import { isFunction, isString } from "./is";
+import { isFunction, isString } from "../helper";
 
 type MessageStyle = "el" | "antd";
 type MessageTypes = "info" | "success" | "warning" | "error";

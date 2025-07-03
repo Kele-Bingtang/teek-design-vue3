@@ -10,3 +10,5 @@ NProgress.configure({
 });
 
 export default NProgress;
+
+export { NProgress };

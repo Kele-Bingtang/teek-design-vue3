@@ -153,3 +153,5 @@ const useLog = () => {
 const log = useLog();
 
 export default log;
+
+export { log };

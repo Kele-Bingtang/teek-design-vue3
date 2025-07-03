@@ -1,7 +1,7 @@
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { useUserStore } from "@/pinia";
-import { isIncludeAll, isIncludeSome, isString } from "@/common/utils";
+import { containsAll, containsAny, isString } from "@/common/utils";
 
 export const usePermission = () => {
   const userStore = useUserStore();
@@ -13,7 +13,7 @@ export const usePermission = () => {
   const hasRole = (value: string | string[]) => {
     if (!value) return false;
     const roleList = getRoleList();
-    return isString(value) ? roleList.includes(value) : isIncludeSome(roleList, value);
+    return isString(value) ? roleList.includes(value) : containsAny(roleList, value);
   };
 
   const getAuthList = () => {
@@ -28,7 +28,7 @@ export const usePermission = () => {
     const authList = getAuthList();
     if (!authList) return false;
 
-    return isString(value) ? authList.includes(value) : isIncludeAll(authList, value);
+    return isString(value) ? authList.includes(value) : containsAll(authList, value);
   };
 
   return {
@@ -51,7 +51,7 @@ export const usePermissionNoSetup = () => {
     if (!value) return false;
     const authList = getAuthList();
     if (!authList) return false;
-    return isString(value) ? authList.includes(value) : isIncludeAll(authList, value);
+    return isString(value) ? authList.includes(value) : containsAll(authList, value);
   };
 
   return {

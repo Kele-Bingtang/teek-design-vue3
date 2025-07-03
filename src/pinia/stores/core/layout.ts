@@ -4,9 +4,9 @@ import type { IconifyIcon } from "@iconify/vue";
 
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { useCache } from "@/composables";
 import SystemConfig from "@/common/config";
 import { useSettingStore } from "./setting";
+import { cacheOperator } from "@/common/utils";
 
 export interface TabProps {
   /** 路由的 path */
@@ -26,9 +26,7 @@ export interface TabProps {
 export const useLayoutStore = defineStore(
   "layoutStore",
   () => {
-    const cache = useCache();
-
-    const tabNavList = ref<TabProps[]>(cache.getCacheTabNavList() || []);
+    const tabNavList = ref<TabProps[]>(cacheOperator.getCacheTabNavList() || []);
     const keepAliveName = ref<string[]>([]);
     const layoutSize = ref(SystemConfig.layoutConfig.layoutSize);
     const language = ref(SystemConfig.layoutConfig.language);
@@ -244,8 +242,8 @@ export const useLayoutStore = defineStore(
     );
 
     const handleRecordTabNav = (needRecord: boolean) => {
-      if (needRecord) cache.setCacheTabNavList(tabNavList.value);
-      else cache.removeCacheTabNavList();
+      if (needRecord) cacheOperator.setCacheTabNavList(tabNavList.value);
+      else cacheOperator.removeCacheTabNavList();
     };
 
     return {
