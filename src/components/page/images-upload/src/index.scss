@@ -1,0 +1,157 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/mixins/namespace" as *;
+
+.is-error {
+  .upload {
+    :deep(.#{$el-namespace}-upload),
+    :deep(.#{$el-namespace}-upload-dragger) {
+      border: 1px dashed cssVarEl(color-danger) !important;
+
+      &:hover {
+        border-color: cssVarEl(color-primary) !important;
+      }
+    }
+  }
+}
+
+@include b(image-upload) {
+  :deep(.upload) {
+    @include no(no-border) {
+      .#{$el-namespace}-upload {
+        border: none !important;
+      }
+    }
+
+    @include is(disabled) {
+      @include el-joins(upload, upload-dragger) {
+        cursor: not-allowed !important;
+        background: cssVarEl(disabled-bg-color) !important;
+        border: 1px dashed cssVarEl(border-color-darker) !important;
+
+        &:hover {
+          border: 1px dashed cssVarEl(border-color-darker) !important;
+        }
+      }
+    }
+
+    @include el-joins(upload) {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--image-upload-width, 150px);
+      height: var(--image-upload-height, 150px);
+      overflow: hidden;
+      border: 1px dashed cssVarEl(border-color-darker);
+      border-radius: var(--image-upload-border-radius, 8px);
+      transition: cssVarEl(transition-duration-fast);
+
+      &:hover {
+        border-color: cssVarEl(color-primary);
+      }
+
+      @include el-joins(upload-dragger) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        overflow: hidden;
+        background-color: transparent;
+        border: 1px dashed cssVarEl(border-color-darker);
+        border-radius: var(--image-upload-border-radius, 8px);
+
+        &:hover {
+          border: 1px dashed cssVarEl(color-primary);
+        }
+      }
+
+      @include el-joins(upload-dragger) {
+        &.is-dragover {
+          background-color: cssVarEl(color-primary-light-9);
+          border: 2px dashed cssVarEl(color-primary) !important;
+        }
+      }
+    }
+
+    @include el-joins(upload-list__item, upload--picture-card) {
+      width: var(--image-upload-width, 150px);
+      height: var(--image-upload-height, 150px);
+      background-color: transparent;
+      border-radius: var(--image-upload-border-radius, 8px);
+    }
+  }
+
+  @include e(image) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @include e(handle) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: rgb(0 0 0 / 60%);
+    opacity: 0;
+    transition: cssVarEl(transition-duration-fast);
+
+    @include m(icon) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6%;
+      color: aliceblue;
+
+      :deep(.el-icon) {
+        margin-bottom: 40%;
+        font-size: 130%;
+        line-height: 130%;
+      }
+
+      span {
+        font-size: 85%;
+        line-height: 85%;
+      }
+    }
+  }
+
+  @include el-joins(upload, upload-list__item) {
+    &:hover {
+      @include e(handle, true) {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  @include e(empty) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 30px;
+    color: cssVarEl(color-info);
+
+    :deep(.el-icon) {
+      font-size: 28px;
+      color: cssVarEl(text-color-secondary);
+    }
+  }
+
+  @include el-joins(upload__tip) {
+    line-height: 18px;
+    text-align: center;
+  }
+}

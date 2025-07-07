@@ -17,7 +17,7 @@ export const useSearchApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns
    *
    * @param modelValue 设置的值
    */
-  const setValues = async (modelValue: Record<string, any> = {}) => {
+  const setValues = async (modelValue: Recordable = {}) => {
     model.value = Object.assign(model.value, modelValue);
   };
 

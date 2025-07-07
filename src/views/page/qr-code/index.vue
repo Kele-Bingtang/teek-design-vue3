@@ -1,25 +1,32 @@
 <script setup lang="ts" name="QrCodeDemo">
 import { ref } from "vue";
-import { message } from "@/common/utils";
+import { getCssVar, message } from "@/common/utils";
 import { QrCode } from "@/components";
+import { useNamespace } from "@/composables";
 
-const qrCodeText = "teek-design-vue3";
+const ns = useNamespace("qr-code-demo");
+
+const qrCodeText =
+  "Teek Design Vue3，一个基于 Vue3、TypeScript、Vite、Pinia、Element-Plus 搭建的现代 Template 管理系统模板";
 
 const asyncTitle = ref("");
+
 setTimeout(() => {
   asyncTitle.value = qrCodeText;
 }, 3000);
+
 const codeClick = () => {
   message("点击事件", { type: "info" });
 };
+
 const disabledClick = () => {
   message("失效", { type: "info" });
 };
 </script>
 
 <template>
-  <div>
-    <el-card shadow="never">
+  <div :class="ns.b()">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <div>
           <el-link href="https://github.com/soldair/node-qrcode" target="_blank" style="font-size: 20px">
@@ -47,8 +54,8 @@ const disabledClick = () => {
               :text="qrCodeText"
               :options="{
                 color: {
-                  dark: '#55D187',
-                  light: '#2d8cf0',
+                  dark: getCssVar(ns.cssVarNameEl('color-success')),
+                  light: getCssVar(ns.cssVarNameEl('color-primary')),
                 },
               }"
             />

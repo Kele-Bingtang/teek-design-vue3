@@ -2,23 +2,17 @@
 import { isNumber } from "@/common/utils";
 import { ElTable, type TableInstance } from "element-plus";
 import { useSlots, ref, computed } from "vue";
-import TableSort from "./index.vue";
+import type { SortOrder, TableSortProps } from "./types";
 
 defineOptions({ name: "TableSort" });
 
-export type TableSortInstance = InstanceType<typeof TableSort>;
-
-const slots = useSlots();
-
-interface TableSortProps {
-  data: any[];
-  loading?: boolean;
-}
 const props = withDefaults(defineProps<TableSortProps>(), {
   loading: false,
 });
 
-const sortOrder = ref<any[]>([]);
+const slots = useSlots();
+
+const sortOrder = ref<SortOrder[]>([]);
 const tableData = computed(() => props.data);
 
 const handleHeaderCellClassName = ({ column }: any) => {
@@ -30,34 +24,18 @@ const handleHeaderCellClassName = ({ column }: any) => {
 
 /**
  * 依次点击排序按钮，记录排序顺序 orderArray
- * @param tableDataParams 排序顺序 [{prop:prop,order:order}]
  * order: ascending、descending、null
+ *
+ * @param tableDataParams 排序顺序 [{prop:prop,order:order}]
  */
 const handleSort = ({ prop, order }: any) => {
   // 参与排序
+  const idx = sortOrder.value.findIndex(item => item.prop === prop);
   if (order) {
-    let propIsExist = false;
-    sortOrder.value.forEach(element => {
-      if (element.prop === prop) {
-        element.order = order;
-        propIsExist = true;
-      }
-    });
-    // 添加排序
-    if (!propIsExist) {
-      sortOrder.value.push({
-        prop: prop,
-        order: order,
-      });
-    }
-  } else {
-    // 更新排序
-    let orderIndex = 0;
-    sortOrder.value.forEach((element, index) => {
-      if (element.prop === prop) orderIndex = index;
-    });
-    sortOrder.value.splice(orderIndex, 1);
-  }
+    if (idx > -1) sortOrder.value[idx].order = order;
+    else sortOrder.value.push({ prop, order });
+  } else if (idx > -1) sortOrder.value.splice(idx, 1);
+
   const array = sortOrder.value.slice();
   const sameList = [0, tableData.value.length - 1];
   // 进行多项排序
@@ -67,7 +45,7 @@ const handleSort = ({ prop, order }: any) => {
 /**
  * 多项排序
  */
-const multiSort = (data: any, sortSameArr: number[], orderArray: any) => {
+const multiSort = (data: Recordable[], sortSameArr: number[], orderArray: SortOrder[]) => {
   if (orderArray.length === 0) return 0;
   let flag = false; // cell 值是否与上一行相同的标志，用来记录上下限
   let preVal = ""; // 上次遍历 prop 对应的 val
@@ -91,23 +69,28 @@ const multiSort = (data: any, sortSameArr: number[], orderArray: any) => {
       if (flag) {
         newSortSameArr.push(i - 1);
         flag = false;
-        multiSort(data, newSortSameArr, orderArray.slice());
+        multiSort(data, newSortSameArr, orderArray);
       }
     }
   }
   if (newSortSameArr.length === 1) {
     newSortSameArr.push(sortSameArr[1]);
     flag = false;
-    multiSort(data, newSortSameArr, orderArray.slice());
+    multiSort(data, newSortSameArr, orderArray);
   }
 };
 
 /**
  * 对表格某些行的单项排序
  */
-const singleSort = (data: any, sortProp: string, sortOrder: string, sortSameArr: any) => {
+const singleSort = (
+  data: Recordable[],
+  sortProp: string,
+  sortOrder: "ascending" | "descending",
+  sortSameArr: number[]
+) => {
   let newOrderArr = data.slice(sortSameArr[0], sortSameArr[1] + 1);
-  newOrderArr = newOrderArr.sort((x: Record<string, string>, y: Record<string, string>) => {
+  newOrderArr = newOrderArr.sort((x: Recordable, y: Recordable) => {
     // 数字
     if (isNumber(x[sortProp] + "")) {
       return sortOrder === "descending"

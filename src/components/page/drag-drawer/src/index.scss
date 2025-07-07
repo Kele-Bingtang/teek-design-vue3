@@ -1,0 +1,40 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
+
+@include b(drag-drawer) {
+  :deep(.#{$el-namespace}-drawer) {
+    @include no(select) {
+      pointer-events: none;
+      user-select: none;
+      transition: none;
+    }
+
+    @include is(inner) {
+      position: absolute;
+      overflow: visible;
+    }
+  }
+
+  @include e(trigger) {
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 100px;
+    line-height: 100px;
+    cursor: col-resize;
+    border-radius: 4px / 6px;
+    transform: translateY(-50%);
+  }
+
+  .rtl {
+    @include e(trigger) {
+      transform: translateX(50%);
+    }
+  }
+
+  .ltr {
+    @include e(trigger) {
+      transform: translateX(-50%);
+    }
+  }
+}

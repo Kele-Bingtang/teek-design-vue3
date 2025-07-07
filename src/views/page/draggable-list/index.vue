@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DraggableListDemo">
 import { DraggableList } from "@/components";
-import type { DragClass } from "@/components/view/draggable-list/src/index.vue";
+import type { DragClass } from "@/components";
 import { list1, list2 } from "@/mock/drag-list";
 import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
@@ -23,10 +23,9 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <el-card :class="ns.e('card')">
+  <el-space fill :class="ns.b()">
+    <el-card>
       <div :class="ns.e('box')">
-        <!-- 切记设置 list1 和 list2 属性时，一定要添加 .sync 修饰符 -->
         <DraggableList :left-list="listData1" :right-list="listData2" :drag-class="dragClass" @on-change="handleChange">
           <template #leftTitle>
             <h3>待办事项</h3>
@@ -59,7 +58,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
         <template #header>
           <span>操作记录</span>
         </template>
-        <div :class="ns.em('handle', 'inner')">
+        <div>
           <p v-for="(item, index) in handleList" :key="`handle_item_${index}`">{{ item }}</p>
         </div>
       </el-card>
@@ -82,6 +81,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
         <el-descriptions-item label="dragClass">
           拖拽元素 class。`{ left: string[]; right: string[]; }` 类型，默认为 `{ left: [], right: [] }`
         </el-descriptions-item>
+        <el-descriptions-item label="animation">动画时间。`number` 类型，默认为 `200`</el-descriptions-item>
       </el-descriptions>
     </el-card>
 
@@ -95,22 +95,13 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
-  </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>
 @use "@styles/mixins/bem" as *;
 
 @include b(draggable-list-demo) {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-
-  @include e(card) {
-    width: 100%;
-    height: 100%;
-  }
-
   @include e(box) {
     display: inline-block;
     width: 40%;
@@ -122,19 +113,14 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
     width: 220px;
     height: 100%;
 
-    @include m(inner) {
-      p {
-        padding: 7px 0;
-        margin: 0 7px;
-        border-bottom: 1px dashed #eeeeee;
-      }
+    p {
+      display: block;
+      padding: 4px 0;
     }
 
     @include m(show) {
       display: inline-block;
       width: 370px;
-      height: 100%;
-      margin-left: 10px;
     }
   }
 }
@@ -144,16 +130,14 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 @use "@styles/mixins/bem" as *;
 
 @include b(draggable-list-demo) {
-  @include e(card) {
-    @include el-joins(card__body) {
-      width: 100%;
-      height: 100%;
-    }
-  }
+  @include el-joins(card) {
+    width: 100%;
+    height: 100%;
 
-  @include e(box) {
-    height: calc(100% - 60px);
-    margin-right: 10px;
+    @include el-joins(card__body) {
+      display: flex;
+      gap: 10px;
+    }
   }
 }
 </style>

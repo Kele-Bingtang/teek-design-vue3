@@ -18,12 +18,23 @@ onMounted(() => {
   }, 500);
 });
 
+/**
+ * 查看
+ */
 const handleLook = () => {
   ElMessage.warning("消息弹框演示：无法查看");
 };
+
+/**
+ * 编辑
+ */
 const handleEdit = () => {
   ElMessage.warning("消息弹框演示：无法查看");
 };
+
+/**
+ * 删除
+ */
 const handleDelete = (row: any, index: number) => {
   ElMessageBox.confirm("此操作将永久删除该数据, 是否继续?", "提示", {
     confirmButtonText: "确定",
@@ -41,10 +52,17 @@ const handleDelete = (row: any, index: number) => {
     .catch(() => {});
 };
 
+/**
+ * 分页大小改变
+ */
 const handleSizeChange = (pagingParams: PageInfo) => {
   paging.pageNum = pagingParams.pageNum;
   paging.pageSize = pagingParams.pageSize;
 };
+
+/**
+ * 表格行类名
+ */
 const tableRowClassName = (row: any) => {
   if (row.rowIndex && row.rowIndex % 2 === 1) {
     return "table-highlight-row";
@@ -53,6 +71,9 @@ const tableRowClassName = (row: any) => {
   }
 };
 
+/**
+ * 表格状态过滤
+ */
 const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
   const statusMap: Record<string, "success" | "info" | "danger"> = {
     Enable: "success",
@@ -162,6 +183,10 @@ const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
 
   .search-container {
     margin-bottom: 20px;
+  }
+
+  p {
+    margin-bottom: 10px;
   }
 }
 </style>

@@ -22,7 +22,6 @@ export default {
     IconDemo: "Icon",
     CountToDemo: "CountTo",
     ClipperDemo: "Images Clipper",
-    SplitPaneDemo: "Split Pane",
     OrgTreeDemo: "Org Structure Tree",
     AnimationMixinDemo: "Animation Mixin",
     DraggableListDemo: "List Drag",

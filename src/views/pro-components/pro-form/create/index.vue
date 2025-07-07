@@ -2,8 +2,8 @@
 import { type FormColumn, useProForm, type ElFormProps } from "@/components";
 import { ElButton, ElRadio, ElMessageBox, ElMessage, type FormItemProp } from "element-plus";
 
-const model1 = ref<Record<string, any>>({});
-const model2 = ref<Record<string, any>>({});
+const model1 = ref<Recordable>({});
+const model2 = ref<Recordable>({});
 
 const {
   createMethods: { createForm, createFormComponent },
@@ -12,7 +12,7 @@ const {
 /**
  * context 里有 slots 和 attrs，如果元素里有 slots 和 attrs，则必传
  */
-const RenderProForm = (_: any, context: Record<string, any>) => {
+const RenderProForm = (_: any, context: Recordable) => {
   return createFormComponent(
     {
       columns: columns,

@@ -29,6 +29,10 @@ const columns: TableColumn[] = [
     editProps: {
       el: "el-select",
     },
+    filters: [
+      { text: "男", value: "1" },
+      { text: "女", value: "2" },
+    ],
   },
   {
     // 多级 prop

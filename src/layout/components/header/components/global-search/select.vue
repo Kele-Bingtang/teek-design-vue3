@@ -71,7 +71,7 @@ const filterNodeMethod = (queryString: string) => {
 };
 
 // 点击菜单跳转
-const handleClickMenu = (menuItem: Record<string, any>) => {
+const handleClickMenu = (menuItem: Recordable) => {
   searchMenu.value = "";
   if (menuItem.meta.isLink) window.open(menuItem.meta.isLink, "_blank");
   else router.push(menuItem.meta._fullPath);

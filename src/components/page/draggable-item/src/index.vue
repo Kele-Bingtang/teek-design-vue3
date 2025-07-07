@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DraggableItemProps } from "./types";
 import Draggable from "vuedraggable";
 import { useNamespace } from "@/composables";
 
@@ -6,34 +7,31 @@ defineOptions({ name: "DraggableItem" });
 
 const ns = useNamespace("drag-item");
 
-export interface DragItemList {
-  id: string;
-  name: string;
-}
-
-interface DraggableItemProps {
-  title?: string; // 标题
-  list?: DragItemList[]; // 数据列表
-  titleBgColor?: string; // 标题背景色
-  titleClass?: string; // 标题元素 class
-  dragClass?: string; // 拖拽元素 class
-}
-
 withDefaults(defineProps<DraggableItemProps>(), {
   title: "header",
   list: () => [],
   titleBgColor: "",
   titleClass: "",
   dragClass: "",
+  disabled: false,
+  animation: 200,
 });
 </script>
 
 <template>
   <div :class="ns.b()">
-    <div :class="`${ns.e('header')} ${titleClass}`" :style="{ backgroundColor: titleBgColor }">
+    <div :class="[ns.e('header'), titleClass]" :style="{ backgroundColor: titleBgColor }">
       <slot name="title">{{ title }}</slot>
     </div>
-    <draggable :list="list" v-bind="$attrs" :class="`${ns.e('content')} ${dragClass}`" itemKey="id">
+
+    <draggable
+      :list="list"
+      v-bind="$attrs"
+      :class="[ns.e('content'), dragClass]"
+      :animation="animation"
+      :disabled="disabled"
+      itemKey="id"
+    >
       <template #item="{ element }">
         <div :class="ns.em('content', 'item')">
           <slot name="content" :item="element">{{ element }}</slot>
@@ -61,7 +59,6 @@ withDefaults(defineProps<DraggableItemProps>(), {
     line-height: 50px;
     color: #ffffff;
     text-align: center;
-    background: #333333;
     border-radius: 3px 3px 0 0;
   }
 

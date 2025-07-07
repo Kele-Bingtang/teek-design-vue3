@@ -1,15 +1,27 @@
 import type { Component } from "vue";
 import type { IconifyIcon } from "@iconify/vue";
 
+export type CommonIconType =
+  | "svg"
+  | "unicode"
+  | "iconfont"
+  | "symbol"
+  | "img"
+  | "component"
+  | "iconifyOffline"
+  | "iconifyOnline";
+
+export type CommonIcon = string | Object | Component | IconifyIcon;
+
 export interface IconProps {
   /**
    * 图标
    */
-  icon?: string | Object | Component | IconifyIcon;
+  icon?: CommonIcon;
   /**
    * 图标类型
    */
-  iconType?: "svg" | "unicode" | "iconfont" | "symbol" | "img" | "component" | "iconifyOffline" | "iconifyOnline";
+  iconType?: CommonIconType;
   /**
    * 图标大小
    *
@@ -43,5 +55,5 @@ export interface IconProps {
   /**
    * 自定义图标样式
    */
-  style?: Record<string, any>;
+  style?: Recordable;
 }

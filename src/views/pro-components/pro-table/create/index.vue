@@ -10,7 +10,7 @@ const {
 /**
  * context 里有 slots 和 attrs，如果元素里有 slots 和 attrs，则必传
  */
-const RenderProTable = (_: any, context: Record<string, any>) => {
+const RenderProTable = (_: any, context: Recordable) => {
   // 函数式创建 Template 组件
   return createTableComponent({ pageScope: "client", columns: columns, requestApi: getTicketList }, context);
 };

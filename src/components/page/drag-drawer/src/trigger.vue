@@ -16,16 +16,9 @@ defineOptions({ name: "DragDrawerTrigger" });
 
 <style lang="scss" scoped>
 .drag-drawer-move-trigger {
-  position: absolute;
-  top: 50%;
-  width: 8px;
-  height: 100px;
-  line-height: 100px;
-  cursor: col-resize;
   background: rgb(243 243 243);
   border-radius: 4px / 6px;
   box-shadow: 0 0 1px 1px rgb(0 0 0 / 20%);
-  transform: translate(-50%, -50%);
 
   .drag-drawer-move-trigger-point {
     display: inline-block;

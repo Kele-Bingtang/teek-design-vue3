@@ -3,20 +3,13 @@ import { ElMessage, ElButton, type UploadRequestOptions } from "element-plus";
 import { VueCropper } from "vue-cropper";
 import "vue-cropper/dist/index.css";
 import { Upload, ZoomIn, ZoomOut, Download } from "@element-plus/icons-vue";
-import { toRefs, ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useNamespace } from "@/composables";
+import type { CropperEmitProps, CropperProps } from "./types";
 
 defineOptions({ name: "Cropper" });
 
 const ns = useNamespace("cropper");
-
-interface CropperProps {
-  imgLink?: string; // 图片链接
-  imageType?: "blob" | "base64"; // 图片类型
-  cropWidth?: number; // 截图框宽度
-  cropHeight?: number; // 截图框高度
-  cropContainerHeight?: number; // 截图容器高度
-}
 
 const props = withDefaults(defineProps<CropperProps>(), {
   imgLink: "",
@@ -26,15 +19,7 @@ const props = withDefaults(defineProps<CropperProps>(), {
   cropContainerHeight: 350,
 });
 
-type CropperEmitProps = {
-  uploadImage: [formData: FormData]; // 图片上传回调
-  imgMoving: []; // 图片移动事件
-  cropMoving: []; // 图片剪切事件
-};
-
 const emits = defineEmits<CropperEmitProps>();
-
-const { imgLink, imageType, cropWidth, cropHeight, cropContainerHeight } = toRefs(props);
 
 // 缩略图对象
 const previews = ref({
@@ -52,6 +37,7 @@ const previews = ref({
   w: 0,
   h: 0,
 });
+
 const options = reactive({
   img: "", // 图片地址
   outputSize: 1, // 裁剪生成图片的质量
@@ -77,16 +63,21 @@ const options = reactive({
 const cropperInstance = useTemplateRef("cropperInstance");
 
 onMounted(() => {
-  options.autoCropWidth = cropWidth.value || 200;
-  options.autoCropHeight = cropHeight.value || 200;
-  options.img = imgLink.value || "";
+  options.autoCropWidth = props.cropWidth || 200;
+  options.autoCropHeight = props.cropHeight || 200;
+  options.img = props.imgLink || "";
 });
 
-// 实时缩略图的回调
+/**
+ * 实时缩略图的回调
+ */
 const realTime = (image: any) => {
   previews.value = image;
 };
-// 上传图片前的校验
+
+/**
+ * 上传图片前的校验
+ */
 const beforeUpload = (file: File) => {
   if (file.type.indexOf("image/") === -1) {
     ElMessage.error("文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件");
@@ -99,19 +90,25 @@ const beforeUpload = (file: File) => {
   }
 };
 
+/**
+ * 图片加载的回调
+ */
 const imgLoad = (res: "success" | "error") => {
   if (res === "error") ElMessage.error("图片上传失败");
 };
 
+/**
+ * 上传图片
+ */
 const uploadImage = () => {
   const formData = new FormData();
-  if (imageType.value === "blob") {
+  if (props.imageType === "blob") {
     cropperInstance.value.getCropBlob((data: Blob) => {
       const timer = new Date().getTime();
       formData.append("file", data, timer + ".png");
       emits("uploadImage", formData);
     });
-  } else if (imageType.value === "base64") {
+  } else if (props.imageType === "base64") {
     cropperInstance.value.getCropData((data: string) => {
       formData.append("images", data);
       emits("uploadImage", formData);
@@ -121,6 +118,9 @@ const uploadImage = () => {
   }
 };
 
+/**
+ * 下载图片
+ */
 const downloadImg = (type?: string) => {
   const aLink = document.createElement("a");
   const timer = new Date().getTime();
@@ -139,19 +139,30 @@ const downloadImg = (type?: string) => {
   }
 };
 
+/**
+ * 左旋转
+ */
 const rotateLeft = () => {
   cropperInstance.value.rotateLeft();
 };
 
+/**
+ * 右旋转
+ */
 const rotateRight = () => {
   cropperInstance.value.rotateRight();
 };
 
+/**
+ * 改变缩放比例
+ */
 const changeScale = (num: number) => {
   cropperInstance.value.changeScale(num);
 };
 
-// 手动上传的回调，目前为了取消自动上传
+/**
+ * 手动上传的回调，目前为了取消自动上传
+ */
 const handleHttpRequest = (options: UploadRequestOptions): Promise<any> => {
   return new Promise(resolve => {
     resolve(options);

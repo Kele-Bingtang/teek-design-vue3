@@ -1,0 +1,122 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-smallest: 12px;
+$font-weight-normal: normal;
+$font-weight-bold: bold;
+$spacer: 10px;
+$transition: 0.2s ease all;
+$index-has-icon: 30px;
+
+@mixin slide-top() {
+  top: -($font-size-base + $spacer);
+  left: 0;
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+}
+
+%base-bar-pseudo {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  content: "";
+  transition: $transition;
+}
+
+@include b(material-input) {
+  position: relative;
+  margin-top: 15px;
+
+  @include e(input) {
+    display: block;
+    width: 100%;
+    padding: $spacer $spacer $spacer calc($spacer / 2);
+    font-size: $font-size-base;
+    background: none;
+    border: none;
+    border-radius: 0;
+
+    &::placeholder {
+      color: cssVar(gray-400);
+    }
+  }
+
+  @include e(bar) {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    &::before,
+    &::after {
+      @extend %base-bar-pseudo;
+
+      width: 50%;
+      background: cssVar(gray-300);
+    }
+
+    &::before {
+      left: 50%;
+    }
+
+    &::after {
+      right: 50%;
+    }
+  }
+
+  @include e(label) {
+    @include slide-top;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: $font-size-small;
+    font-weight: $font-weight-normal;
+    color: cssVar(gray-400);
+    pointer-events: none;
+    transition: $transition;
+  }
+
+  @include has(icon) {
+    @include e(icon, true) {
+      position: absolute;
+      top: $spacer;
+      left: 0;
+      width: $index-has-icon;
+      height: $font-size-base;
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      line-height: $font-size-base;
+      color: cssVar(gray-600);
+      pointer-events: none;
+    }
+
+    @include e(label, true) {
+      left: $index-has-icon;
+    }
+
+    @include e(input, true) {
+      text-indent: $index-has-icon;
+    }
+  }
+
+  @include is(active) {
+    @include e(label, true) {
+      color: cssVar(active-color);
+    }
+  }
+
+  @include is(disabled) {
+    @include e(input, true) {
+      border-bottom-style: dashed;
+    }
+  }
+
+  @include is(raised) {
+    @include e(label, true) {
+      @include slide-top;
+    }
+  }
+}

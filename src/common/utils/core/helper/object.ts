@@ -56,7 +56,7 @@ export function deepClone<T>(obj: T, hash = new WeakMap()): T {
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */
-export function get(model: Record<string, any>, prop: string): any {
+export function get(model: Recordable, prop: string): any {
   if (!model || !isObject(model)) return undefined;
   if (!prop.includes(".")) return model[prop];
 
@@ -69,7 +69,7 @@ export function get(model: Record<string, any>, prop: string): any {
 /**
  * 处理 prop 为多级嵌套的情况，给指定 key 赋值 (列如: prop: user.name)
  */
-export function set(model: Record<string, any>, prop: string, value: any): boolean {
+export function set(model: Recordable, prop: string, value: any): boolean {
   if (!model || !isObject(model)) return false;
 
   const props = prop.split(".");
@@ -102,7 +102,7 @@ export function set(model: Record<string, any>, prop: string, value: any): boole
  * @param removeKeys 参与去重的 key
  * @param keyIsAndOr and: 所有 key 都重复才去重；or: 任意 key 重复就去重
  */
-export function removeDuplicateObj<T extends Record<string, any>>(
+export function removeDuplicateObj<T extends Recordable>(
   arr: T[],
   removeKeys: string[],
   keyIsAndOr: "and" | "or" = "and"
@@ -136,7 +136,7 @@ export function removeDuplicateObj<T extends Record<string, any>>(
 /**
  * 判断两个对象是否相同（浅/深比较）
  */
-export function isObjectValueEqual(a: Record<string, any>, b: Record<string, any>) {
+export function isObjectValueEqual(a: Recordable, b: Recordable) {
   if (!a || !b) return false;
   const aProps = Object.getOwnPropertyNames(a);
   const bProps = Object.getOwnPropertyNames(b);

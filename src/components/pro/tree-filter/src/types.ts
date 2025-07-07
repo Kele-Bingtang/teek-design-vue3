@@ -4,7 +4,7 @@ export interface TreeFilterProps {
   /**
    * 树形数据，如果传入该配置项且有数据，则不会执行 api 请求
    */
-  data?: Record<string, any>[];
+  data?: Recordable[];
   /**
    * 请求数据的 api
    */

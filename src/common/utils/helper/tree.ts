@@ -165,7 +165,7 @@ export const handleTree = (data: any[], id?: string, parentId?: string, children
     adaptToChildrenList(t);
   }
 
-  function adaptToChildrenList(o: Record<string, any>) {
+  function adaptToChildrenList(o: Recordable) {
     if (childrenListMap[o[config.id]] !== null) {
       o[config.childrenList] = childrenListMap[o[config.id]];
     }

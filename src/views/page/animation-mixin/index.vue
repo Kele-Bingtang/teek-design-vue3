@@ -1,24 +1,34 @@
 <script setup lang="ts" name="AnimationMixin">
-import { MaterialInput, TextHoverEffect } from "@/components";
-import Button from "./button.vue";
+import type { FormInstance } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import Button from "./components/button/index.vue";
+import MaterialInput from "./components/material-input/index.vue";
+import TextHoverEffect from "./components/text-hover-effect/index.vue";
 
 const ns = useNamespace("animation-mixin");
 
-const demo = reactive({
+const inputModel = ref({
   title: "",
 });
+
+const elFormInstance = useTemplateRef<FormInstance>("elFormInstance");
+
+/**
+ * 验证长度
+ *
+ * @param rule 规则
+ * @param value 值
+ * @param callback 回调
+ */
 const validateLength = (rule: any, value: string, callback: (e?: Error) => void) => {
-  if (value.length !== 6) {
-    callback(new Error("请输入六个字符"));
-  } else {
-    callback();
-  }
+  console.log(value);
+  if (value.length !== 6) callback(new Error("请输入六个字符"));
+  else callback();
 };
 
-const demoRules = {
-  title: [{ validator: validateLength, trigger: "change" }],
+const rules = {
+  title: [{ validator: validateLength }],
 };
 </script>
 
@@ -26,7 +36,7 @@ const demoRules = {
   <div :class="ns.b()">
     <el-card class="box-card">
       <template #header>
-        <span>按钮</span>
+        <span>原生动画按钮</span>
       </template>
       <el-row>
         <el-col :xs="12" :sm="12" :md="8" :lg="4" class="text-center mixin-col">
@@ -60,9 +70,15 @@ const demoRules = {
             <span>Material Design 的 input</span>
           </template>
           <div style="height: 100px">
-            <el-form :model="demo" :rules="demoRules">
+            <el-form ref="elFormInstance" :model="inputModel" :rules="rules">
               <el-form-item prop="title">
-                <MaterialInput v-model="demo.title" :icon="Search" name="title" placeholder="输入标题">
+                <MaterialInput
+                  v-model="inputModel.title"
+                  :icon="Search"
+                  name="title"
+                  placeholder="输入标题"
+                  :el-form="elFormInstance"
+                >
                   标题
                 </MaterialInput>
               </el-form-item>
@@ -74,9 +90,9 @@ const demoRules = {
       <el-col :xs="24" :sm="12" :md="8" :lg="6" class="mixin-col">
         <el-card class="box-card">
           <template #header>
-            <span>水波纹 waves</span>
+            <span>水波纹 v-waves</span>
           </template>
-          <div class="component-item">
+          <div class="component-item buttons">
             <el-button v-waves type="primary">水波纹效果</el-button>
             <el-button v-waves type="success">水波纹效果</el-button>
             <el-button v-waves type="warning">水波纹效果</el-button>
@@ -164,6 +180,7 @@ $yellow: #ffb350;
     padding: 14px 36px;
     font-size: 14px;
     color: #ffffff;
+    cursor: pointer;
     outline: none;
     border: none;
     border-radius: 8px;
@@ -200,6 +217,16 @@ $yellow: #ffb350;
 
   .component-item {
     min-height: 100px;
+  }
+
+  .buttons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+
+    .el-button {
+      margin-left: 0;
+    }
   }
 }
 </style>

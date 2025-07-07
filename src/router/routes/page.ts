@@ -63,12 +63,6 @@ const pageRoutes: RouterConfigRaw = {
       meta: { title: "抽屉拖拽", icon: StarFilled },
     },
     {
-      path: "split-pane",
-      name: "SplitPaneDemo",
-      component: () => import("@/views/page/split-pane/index.vue"),
-      meta: { title: "分割窗口", icon: StarFilled },
-    },
-    {
       path: "org-tree",
       name: "OrgTreeDemo",
       component: () => import("@/views/page/org-tree/index.vue"),

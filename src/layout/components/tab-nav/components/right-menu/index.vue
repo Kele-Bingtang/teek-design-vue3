@@ -106,11 +106,11 @@ const handleOutsideClick = (e: Event) => {
 
 // Escape 关闭右键菜单
 const handleKeydown = (e: KeyboardEvent) => {
-  if (e.key === "Escape") close();
+  if (e.key === "Escape" && visible.value) close();
 };
 
-useEventListener("click", handleOutsideClick);
-useEventListener("keydown", handleKeydown);
+useEventListener("click", handleOutsideClick, { capture: true });
+useEventListener("keydown", handleKeydown, { capture: true });
 </script>
 
 <template>

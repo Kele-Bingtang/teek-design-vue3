@@ -60,12 +60,12 @@ watch(filterText, val => {
 });
 
 // 过滤搜索条件
-const filterNode = (value: string, data: Record<string, any>) => {
+const filterNode = (value: string, data: Recordable) => {
   if (!value) return true;
   return data.label.includes(value);
 };
 
-const handleCheck = (_: any, selected: { checkedKeys: string[]; checkedNodes: Record<string, any>[] }) => {
+const handleCheck = (_: any, selected: { checkedKeys: string[]; checkedNodes: Recordable[] }) => {
   if (props.checkBaseValueType === "nodes") checkedList.value = selected.checkedNodes;
   else checkedList.value = selected.checkedKeys;
 

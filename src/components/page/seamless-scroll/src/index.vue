@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SeamlessScrollEmits, SeamlessScrollProps } from "./types";
 import { computed, nextTick, ref, type CSSProperties } from "vue";
 import { tryOnMounted, tryOnUnmounted, templateRef, useDebounceFn } from "@vueuse/core";
 import * as utilsMethods from "./utils";
@@ -8,35 +9,7 @@ defineOptions({ name: "SeamlessScroll" });
 const { animationFrame } = utilsMethods;
 animationFrame();
 
-interface ClassOption {
-  key?: number; // ref key
-  step?: number; // 步长
-  limitMoveNum?: number; // 启动无缝滚动最小数据数
-  hoverStop?: boolean; // 是否启用鼠标hover控制
-  direction?: string; // bottom 往下 top 往上(默认) left 向左 right 向右
-  openTouch?: boolean; // 开启移动端 touch
-  singleHeight?: number; // 单条数据高度有值 hoverStop 关闭
-  singleWidth?: number; // 单条数据宽度有值 hoverStop 关闭
-  waitTime?: number; // 单步停止等待时间
-  switchOffset?: number; // 偏移量
-  autoPlay?: boolean; // 是否自动播放
-  navigation?: boolean; // 是否暂停播放
-  switchSingleStep?: number; // 单步距离
-  switchDelay?: number; // 切换模式延迟
-  switchDisabledClass?: string; // 滚动元素的 class
-  isSingleRemUnit?: boolean; // singleWidth/singleHeight 是否开启 rem 度量
-}
-
-interface SeamlessScrollProps {
-  data: any[];
-  classOption: ClassOption;
-}
-
 const props = defineProps<SeamlessScrollProps>();
-
-type SeamlessScrollEmits = {
-  scrollEnd: []; // 滚动结束事件
-};
 
 const emits = defineEmits<SeamlessScrollEmits>();
 
@@ -120,14 +93,17 @@ const options = computed(() => {
   return Object.assign({}, defaultOption.value, classOption);
 });
 
+// 左侧切换按钮的 class
 const leftSwitchClass = computed(() => {
   return leftSwitchState.value ? "" : options.value.switchDisabledClass;
 });
 
+// 右侧切换按钮的 class
 const rightSwitchClass = computed(() => {
   return rightSwitchState.value ? "" : options.value.switchDisabledClass;
 });
 
+// 左侧切换按钮的样式
 const leftSwitch = computed((): CSSProperties => {
   return {
     position: "absolute",
@@ -136,6 +112,7 @@ const leftSwitch = computed((): CSSProperties => {
   };
 });
 
+// 右侧切换按钮的样式
 const rightSwitch = computed((): CSSProperties => {
   return {
     position: "absolute",
@@ -144,14 +121,17 @@ const rightSwitch = computed((): CSSProperties => {
   };
 });
 
+// 是否水平滚动
 const isHorizontal = computed(() => {
   return options.value.direction !== "bottom" && options.value.direction !== "top";
 });
 
+// 浮动样式
 const float = computed((): CSSProperties => {
   return isHorizontal.value ? { float: "left", overflow: "hidden" } : { overflow: "hidden" };
 });
 
+// 位置样式
 const pos = computed(() => {
   return {
     transform: `translate(${xPos.value}px,${yPos.value}px)`,
@@ -160,40 +140,49 @@ const pos = computed(() => {
   };
 });
 
+// 是否暂停播放
 const navigation = computed(() => {
   return options.value.navigation;
 });
 
+// 是否自动播放
 const autoPlay = computed(() => {
   if (navigation.value) return false;
   return options.value.autoPlay;
 });
 
+// 是否可以滚动
 const scrollSwitch = computed(() => {
   // 从 props 解构出来的 属性 不再具有响应性.
   return (props.data as any).length >= options.value.limitMoveNum;
 });
 
+// 是否启用鼠标 hover 控制
 const hoverStopSwitch = computed(() => {
   return options.value.hoverStop && autoPlay.value && scrollSwitch.value;
 });
 
+// 是否启用移动端 touch
 const canTouchScroll = computed(() => {
   return options.value.openTouch;
 });
 
+// 基础字体大小
 const baseFontSize = computed(() => {
   return options.value.isSingleRemUnit ? parseInt(window.getComputedStyle(document.documentElement, null).fontSize) : 1;
 });
 
+// 实际单步滚动宽度
 const realSingleStopWidth = computed(() => {
   return options.value.singleWidth * baseFontSize.value;
 });
 
+// 实际单步滚动高度
 const realSingleStopHeight = computed(() => {
   return options.value.singleHeight * baseFontSize.value;
 });
 
+// 步长
 const step = computed(() => {
   let singleStep;
   const step = options.value.step;
@@ -208,14 +197,20 @@ const step = computed(() => {
   return step;
 });
 
-function reset() {
+/**
+ * 重置
+ */
+const reset = () => {
   xPos.value = 0;
   yPos.value = 0;
-  scrollCancle();
+  scrollCancel();
   scrollInitMove();
-}
+};
 
-function leftSwitchClick() {
+/**
+ * 左侧切换按钮点击
+ */
+const leftSwitchClick = () => {
   if (!leftSwitchState.value) return;
   // 小于单步距离
   if (Math.abs(xPos.value) < options.value.switchSingleStep) {
@@ -223,9 +218,12 @@ function leftSwitchClick() {
     return;
   }
   xPos.value += options.value.switchSingleStep;
-}
+};
 
-function rightSwitchClick() {
+/**
+ * 右侧切换按钮点击
+ */
+const rightSwitchClick = () => {
   if (!rightSwitchState.value) return;
   // 小于单步距离
   if (realBoxWidth.value - width.value + xPos.value < options.value.switchSingleStep) {
@@ -233,13 +231,19 @@ function rightSwitchClick() {
     return;
   }
   xPos.value -= options.value.switchSingleStep;
-}
+};
 
-function scrollCancle() {
+/**
+ * 取消滚动
+ */
+const scrollCancel = () => {
   cancelAnimationFrame(reqFrame);
-}
+};
 
-function touchStart(e: any) {
+/**
+ * 触摸开始
+ */
+const touchStart = (e: any) => {
   if (!canTouchScroll.value) return;
   let timer;
   // touches数组对象获得屏幕上所有的touch，取第一个touch
@@ -257,14 +261,17 @@ function touchStart(e: any) {
   if (!!singleHeight && !!singleWidth) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      scrollCancle();
+      scrollCancel();
     }, waitTime + 20);
   } else {
-    scrollCancle();
+    scrollCancel();
   }
-}
+};
 
-function touchMove(e: any) {
+/**
+ * 触摸移动
+ */
+const touchMove = (e: any) => {
   // 当屏幕有多个touch或者页面被缩放过，就不执行move操作
   if (!canTouchScroll.value || e.targetTouches.length > 1 || (e.scale && e.scale !== 1)) return;
   const touch = e.targetTouches[0];
@@ -284,9 +291,12 @@ function touchMove(e: any) {
     // 为横向滑动 && 运动方向为左右
     xPos.value = startPosX + endPos.x;
   }
-}
+};
 
-function touchEnd() {
+/**
+ * 触摸结束
+ */
+const touchEnd = () => {
   if (!canTouchScroll.value) return;
   // eslint-disable-next-line prefer-const
   let timer: any;
@@ -308,17 +318,26 @@ function touchEnd() {
     delay.value = 0;
     scrollMove();
   }, delay.value);
-}
+};
 
-function enter() {
+/**
+ * 鼠标进入
+ */
+const enter = () => {
   if (hoverStopSwitch.value) scrollStopMove();
-}
+};
 
-function leave() {
+/**
+ * 鼠标离开
+ */
+const leave = () => {
   if (hoverStopSwitch.value) scrollStartMove();
-}
+};
 
-function scrollMove() {
+/**
+ * 滚动移动
+ */
+const scrollMove = () => {
   // 鼠标移入时拦截scrollMove()
   if (isHover) return;
   // 进入move立即先清除动画 防止频繁touchMove导致多动画同时进行
@@ -382,9 +401,12 @@ function scrollMove() {
       scrollMove();
     }
   });
-}
+};
 
-function scrollInitMove() {
+/**
+ * 初始化滚动
+ */
+const scrollInitMove = () => {
   nextTick(() => {
     const { switchDelay } = options.value;
     // 清空copy
@@ -422,33 +444,41 @@ function scrollInitMove() {
         scrollMove();
       }, 0);
     } else {
-      scrollCancle();
+      scrollCancel();
       yPos.value = xPos.value = 0;
     }
   });
-}
+};
 
-function scrollStartMove() {
+/**
+ * 开始滚动
+ */
+const scrollStartMove = () => {
   // 开启scrollMove
   isHover = false;
   scrollMove();
-}
+};
 
-function scrollStopMove() {
+/**
+ * 停止滚动
+ */
+const scrollStopMove = () => {
   // 关闭scrollMove
   isHover = true;
   // 防止频频hover进出单步滚动,导致定时器乱掉
   if (singleWaitTime) clearTimeout(singleWaitTime);
-  scrollCancle();
-}
+  scrollCancel();
+};
 
-// 鼠标滚轮事件
-function wheel(e: WheelEvent) {
+/**
+ * 鼠标滚轮事件
+ */
+const wheel = (e: WheelEvent) => {
   if (options.value.direction === "left" || options.value.direction === "right") return;
   useDebounceFn(() => {
     e.deltaY > 0 ? (yPos.value -= step.value) : (yPos.value += step.value);
   }, 50)();
-}
+};
 
 // watchEffect(() => {
 //   const watchData = data;
@@ -470,7 +500,7 @@ tryOnMounted(() => {
 });
 
 tryOnUnmounted(() => {
-  scrollCancle();
+  scrollCancel();
   singleWaitTime && clearTimeout(singleWaitTime);
 });
 
@@ -484,9 +514,11 @@ defineExpose({
     <div :style="leftSwitch" v-if="navigation" :class="leftSwitchClass" @click="leftSwitchClick">
       <slot name="left-switch" />
     </div>
+
     <div :style="rightSwitch" v-if="navigation" :class="rightSwitchClass" @click="rightSwitchClick">
       <slot name="right-switch" />
     </div>
+
     <div
       :ref="'realBox' + classOption['key']"
       :style="pos"

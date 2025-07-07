@@ -7,7 +7,7 @@ import IconifyOffline from "./src/components/iconify-offline.vue";
 
 export { SvgIcon, FontIcon, IconifyOnline, IconifyOffline };
 
-export * from "./src/types";
+export type * from "./src/types";
 
 export const Icon = useInstall(index);
 

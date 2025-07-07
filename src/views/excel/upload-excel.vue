@@ -1,10 +1,11 @@
 <script setup lang="ts" name="UploadExcel">
+import type { ExcelData } from "@/components";
 import { UploadExcel } from "@/components";
-import type { ExcelData } from "@/components/view/excel-upload/src/index.vue";
 import { ElMessage } from "element-plus";
 
 const tableData = ref([]);
 const tableHeader = ref<string[]>([]);
+const radio = ref(1);
 
 const beforeUpload = (file: File) => {
   const isLt1M = file.size / 1024 / 1024 < 1;
@@ -22,7 +23,13 @@ const handleSuccess = ({ results, header }: ExcelData) => {
 
 <template>
   <div class="upload-excel-container">
-    <upload-excel :on-success="handleSuccess" :before-upload="beforeUpload" />
+    <el-radio-group v-model="radio">
+      <el-radio :label="1">拖拽 & 按钮上传</el-radio>
+      <el-radio :label="2">按钮上传</el-radio>
+    </el-radio-group>
+
+    <UploadExcel v-if="radio === 1" :on-success="handleSuccess" :before-upload="beforeUpload" drag />
+    <UploadExcel v-else :on-success="handleSuccess" :before-upload="beforeUpload" />
     <el-table :data="tableData" border highlight-current-row style="width: 100%; margin-top: 20px">
       <el-table-column v-for="item of tableHeader" :key="item" :prop="item" :label="item" />
     </el-table>

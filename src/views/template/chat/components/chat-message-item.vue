@@ -3,7 +3,7 @@ import { useNamespace } from "@/composables/core/use-namespace";
 const ns = useNamespace("chat-message-item");
 
 interface ChatMessageItemProps {
-  message: Record<string, any>;
+  message: Recordable;
 }
 
 defineProps<ChatMessageItemProps>();

@@ -75,7 +75,7 @@ const datenum = (date: Date) => {
 };
 
 const sheetFromDataArray = (data: any) => {
-  const ws: Record<string, any> = {};
+  const ws: Recordable = {};
   const range = {
     s: {
       c: 10000000,

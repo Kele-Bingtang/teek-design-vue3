@@ -1,33 +1,14 @@
 <script setup lang="ts" name="QrCode">
-import QRCode, { type QRCodeRenderersOptions } from "qrcode";
+import type { QrCodeEmits, QrCodeLogo, QrCodeProps } from "./types";
+import type { QRCodeRenderersOptions } from "qrcode";
+import QRCode from "qrcode";
 import { isString } from "@/common/utils";
 import { RefreshRight } from "@element-plus/icons-vue";
-import { ref, computed, nextTick, watch } from "vue";
+import { ref, computed, nextTick, watch, useTemplateRef } from "vue";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "QrCode" });
 
-const ns = useNamespace("qrcode");
-
-interface QrCodeLogo {
-  src?: string;
-  logoSize?: number;
-  bgColor?: string;
-  borderSize?: number;
-  crossOrigin?: string;
-  borderRadius?: number;
-  logoRadius?: number;
-}
-
-interface QrCodeProps {
-  tag?: string;
-  text?: string | Record<string, any>[];
-  options?: QRCodeRenderersOptions;
-  width?: number;
-  logo?: QrCodeLogo | string;
-  disabled?: boolean;
-  disabledText?: string;
-}
 const props = withDefaults(defineProps<QrCodeProps>(), {
   tag: "canvas",
   text: "",
@@ -38,13 +19,9 @@ const props = withDefaults(defineProps<QrCodeProps>(), {
   disabledText: "",
 });
 
-type QrCodeEmits = {
-  done: [url: string];
-  click: [];
-  disabledClick: [];
-};
-
 const emits = defineEmits<QrCodeEmits>();
+
+const ns = useNamespace("qrcode");
 
 const { toCanvas, toDataURL } = QRCode;
 const loading = ref(true);
@@ -57,6 +34,9 @@ const wrapStyle = computed(() => {
   };
 });
 
+/**
+ * 初始化二维码
+ */
 const initQrCode = async () => {
   await nextTick();
   const options = JSON.parse(JSON.stringify(props.options) || "{}");
@@ -91,15 +71,14 @@ const initQrCode = async () => {
 watch(
   () => renderText.value,
   val => {
-    if (!val) return;
-    initQrCode();
+    val && initQrCode();
   },
-  {
-    deep: true,
-    immediate: true,
-  }
+  { deep: true, immediate: true }
 );
 
+/**
+ * 创建 logo 二维码
+ */
 const createLogoCode = (canvasRef: HTMLCanvasElement) => {
   const canvasWidth = canvasRef.width;
   const logoOptions: QrCodeLogo = Object.assign(
@@ -143,12 +122,16 @@ const createLogoCode = (canvasRef: HTMLCanvasElement) => {
   }
   (image as any).src = logoSrc;
 
-  // 使用image绘制可以避免某些跨域情况
+  /**
+   * 使用 image 绘制可以避免某些跨域情况
+   */
   const drawLogoWithImage = (image: HTMLImageElement) => {
     ctx.drawImage(image, logoXY, logoXY, logoWidth, logoWidth);
   };
 
-  // 使用canvas绘制以获得更多的功能
+  /**
+   * 使用canvas绘制以获得更多的功能
+   */
   const drawLogoWithCanvas = (image: HTMLImageElement) => {
     const canvasImage = document.createElement("canvas");
     canvasImage.width = logoXY + logoWidth;
@@ -170,7 +153,9 @@ const createLogoCode = (canvasRef: HTMLCanvasElement) => {
     }
   };
 
-  // 将 logo绘制到 canvas上
+  /**
+   * 将 logo绘制到 canvas上
+   */
   return new Promise((resolve: any) => {
     image.onload = () => {
       logoRadius ? drawLogoWithCanvas(image) : drawLogoWithImage(image);
@@ -179,14 +164,18 @@ const createLogoCode = (canvasRef: HTMLCanvasElement) => {
   });
 };
 
-// 得到原QrCode的大小，以便缩放得到正确的QrCode大小
+/**
+ * 得到原QrCode的大小，以便缩放得到正确的QrCode大小
+ */
 const getOriginWidth = async (content: string, options: QRCodeRenderersOptions) => {
   const _canvas = document.createElement("canvas");
   await toCanvas(_canvas, content, options);
   return _canvas.width;
 };
 
-// 对于内容少的QrCode，增大容错率
+/**
+ * 对于内容少的QrCode，增大容错率
+ */
 const getErrorCorrectionLevel = (content: string) => {
   if (content.length > 36) {
     return "M";
@@ -197,7 +186,9 @@ const getErrorCorrectionLevel = (content: string) => {
   }
 };
 
-// 用于绘制圆角
+/**
+ * 用于绘制圆角
+ */
 const canvasRoundRect = (ctx: CanvasRenderingContext2D) => {
   return (x: number, y: number, w: number, h: number, r: number) => {
     const minSize = Math.min(w, h);
@@ -215,10 +206,16 @@ const canvasRoundRect = (ctx: CanvasRenderingContext2D) => {
   };
 };
 
+/**
+ * 点击二维码
+ */
 const clickCode = () => {
   emits("click");
 };
 
+/**
+ * 禁用点击二维码
+ */
 const disabledClick = () => {
   emits("disabledClick");
 };
@@ -228,6 +225,7 @@ const disabledClick = () => {
   <div v-loading="loading" :class="ns.b()" :style="wrapStyle">
     <canvas v-if="props.tag === 'canvas'" ref="ImgInstance" @click="clickCode"></canvas>
     <img v-else ref="ImgInstance" @click="clickCode" />
+
     <div v-if="props.disabled" :class="ns.m('disabled')" @click="disabledClick">
       <div :class="ns.e('icon')" :color="ns.cssVarEl('color-primary')">
         <el-icon style="cursor: pointer" :size="30"><RefreshRight /></el-icon>
@@ -238,30 +236,5 @@ const disabledClick = () => {
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/bem" as *;
-
-@include b(qrcode) {
-  position: relative;
-  display: inline-block;
-
-  @include m(disabled) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background: #fffffff2;
-  }
-
-  @include e(icon) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-weight: bold;
-    transform: translate(-50%, -50%);
-  }
-}
+@use "./index";
 </style>

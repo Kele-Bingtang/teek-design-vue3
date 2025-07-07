@@ -1,21 +1,21 @@
-<script setup lang="ts" name="ImagesUploadDemo">
+<script setup lang="ts" name="ImageUploadDemo">
 import type { FormInstance } from "element-plus";
-import { ImageUpload, ImagesUpload } from "@/components";
-import type { SuccessFun } from "@/components/view/images-upload/src/images.vue";
+import type { SuccessFun } from "@/components";
+import { ImageUpload } from "@/components";
 import { uploadLocal } from "@/common/utils";
 import { Avatar, Picture } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("images-upload-demo");
 
-const fileList = ref([{ name: "img", url: "https://i.imgtg.com/2023/01/16/QRBHS.jpg" }]);
+const fileList = ref([{ name: "img", url: "https://vp.teek.top/blog/bg1.webp" }]);
 const fileList1 = ref([]);
 
 const avatar1 = ref("");
 const avatar2 = ref("");
 const avatar3 = ref("");
 const avatar4 = ref("");
-const avatar5 = ref("https://i.imgtg.com/2023/01/16/QRqMK.jpg");
+const avatar5 = ref("https://vp.teek.top/blog/bg3.webp");
 
 const rules = reactive({
   avatar: [{ required: true, message: "请上传用户头像" }],
@@ -27,14 +27,14 @@ const rules = reactive({
 
 const fromModel = ref({
   avatar: "",
-  photo: [{ name: "img", url: "https://i.imgtg.com/2023/01/16/QR57a.jpg" }],
+  photo: [{ name: "img", url: "https://vp.teek.top/blog/bg2.webp" }],
   username: "",
   idCard: "",
   email: "",
 });
 const fromModel1 = ref({
   avatar: "",
-  photo: [{ name: "img", url: "https://i.imgtg.com/2023/01/16/QR57a.jpg" }],
+  photo: [{ name: "img", url: "https://vp.teek.top/blog/bg2.webp" }],
   username: "",
   idCard: "",
   email: "",
@@ -63,13 +63,15 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         <ImageUpload v-model="avatar1" @upload-img="uploadImg" :fileSize="3">
           <template #tip>上传图片最大为 3M</template>
         </ImageUpload>
-        <ImageUpload v-model="avatar2" @upload-img="uploadImg" :drag="false" borderRadius="50%">
+
+        <ImageUpload v-model="avatar2" @upload-img="uploadImg" :drag="false" border-radius="50%">
           <template #empty>
             <el-icon><Avatar /></el-icon>
             <span>请上传头像</span>
           </template>
           <template #tip>圆形组件（禁止拖拽上传）</template>
         </ImageUpload>
+
         <ImageUpload v-model="avatar3" @upload-img="uploadImg" width="250px">
           <template #empty>
             <el-icon><Picture /></el-icon>
@@ -77,13 +79,16 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
           </template>
           <template #tip>长方形组件（可拖拽上传）</template>
         </ImageUpload>
+
         <ImageUpload v-model="avatar4" @upload-img="uploadImg" disabled>
           <template #tip>无图（禁用上传）</template>
         </ImageUpload>
+
         <ImageUpload v-model="avatar5" @upload-img="uploadImg" disabled>
           <template #tip>有图（禁用编辑、删除）</template>
         </ImageUpload>
       </div>
+
       <el-descriptions title="属性项 📚" :column="1" border>
         <el-descriptions-item label="imageUrl">
           双向绑定的 imageUrl 值，使用示例： v-model:imageUrl="avatar"
@@ -101,10 +106,12 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         <el-descriptions-item label="width">组件宽度样式，默认为 "150px"</el-descriptions-item>
         <el-descriptions-item label="borderRadius">组件边框圆角样式，默认为 "8px"</el-descriptions-item>
       </el-descriptions>
+
       <el-descriptions title="插槽项 📚" :column="1" border>
         <el-descriptions-item label="empty">自定义操作区，当内容为空时显示</el-descriptions-item>
         <el-descriptions-item label="tip">自定义提示，显示在文件下方</el-descriptions-item>
       </el-descriptions>
+
       <el-descriptions title="事件项 📚" :column="1" border>
         <el-descriptions-item label="upload-img">
           上传文件时的回调，接收的参数：
@@ -114,32 +121,37 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         <el-descriptions-item label="check-validate">上传文件成功的校验回调</el-descriptions-item>
       </el-descriptions>
     </div>
+
     <!-- 多图上传 -->
     <div :class="[ns.e('card'), ns.e('box')]">
       <h2>多图片上传组件 🍓🍇🍈🍉</h2>
       <div :class="ns.e('list')">
-        <ImagesUpload v-model="fileList" @upload-img="uploadImg" :drag="false" borderRadius="50%">
+        <ImageUpload v-model="fileList" @upload-img="uploadImg" :drag="false" border-radius="50%">
           <template #empty>
             <el-icon><Picture /></el-icon>
             <span>请上传照片</span>
           </template>
           <template #tip>圆形组件，图片最大为 5M（禁止拖拽上传）</template>
-        </ImagesUpload>
-        <ImagesUpload v-model="fileList1" @upload-img="uploadImg" width="250px">
+        </ImageUpload>
+
+        <ImageUpload v-model="fileList1" @upload-img="uploadImg" width="250px">
           <template #empty>
             <el-icon><Picture /></el-icon>
             <span>请上传照片</span>
           </template>
           <template #tip>长方形组件（可拖拽上传）</template>
-        </ImagesUpload>
+        </ImageUpload>
       </div>
+
       <el-descriptions title="配置项 📚（其它参数和单图上传组件相同）" :column="1" border>
         <el-descriptions-item label="fileList">
           双向绑定的 fileList 值，使用示例： v-model="fileList"
         </el-descriptions-item>
         <el-descriptions-item label="limit">最大图片上传数，默认为 5 张</el-descriptions-item>
       </el-descriptions>
+
       <el-descriptions title="插槽项 📚（其它参数和单图上传组件相同）" :column="1" border></el-descriptions>
+
       <el-descriptions title="事件项 📚" :column="1" border>
         <el-descriptions-item label="upload-img">
           上传文件时的回调，接收的参数：
@@ -148,6 +160,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         </el-descriptions-item>
       </el-descriptions>
     </div>
+
     <!-- 表单使用 -->
     <div :class="ns.e('form')">
       <div :class="ns.em('form', 'card')">
@@ -158,6 +171,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
           :closable="false"
           style="margin-bottom: 20px"
         />
+
         <el-form ref="ruleFormRef" label-width="100px" label-suffix=" :" :rules="rules" :model="fromModel">
           <el-form-item label="用户头像" prop="avatar">
             <ImageUpload v-model="fromModel.avatar" @upload-img="uploadImg" width="135px" height="135px" :file-size="3">
@@ -168,8 +182,9 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
               <template #tip>头像大小不能超过 3M</template>
             </ImageUpload>
           </el-form-item>
+
           <el-form-item label="用户照片" prop="photo">
-            <ImagesUpload
+            <ImageUpload
               v-model="fromModel.photo"
               @upload-img="uploadImg"
               :limit="3"
@@ -182,17 +197,21 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
                 <span>请上传照片</span>
               </template>
               <template #tip>最多上传 3 张照片</template>
-            </ImagesUpload>
+            </ImageUpload>
           </el-form-item>
+
           <el-form-item label="用户姓名" prop="username">
             <el-input v-model="fromModel.username" placeholder="请填写用户姓名" clearable></el-input>
           </el-form-item>
+
           <el-form-item label="身份证号" prop="idCard">
             <el-input v-model="fromModel.idCard" placeholder="请填写身份证号" clearable></el-input>
           </el-form-item>
+
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="fromModel.email" placeholder="请填写邮箱" clearable></el-input>
           </el-form-item>
+
           <el-form-item>
             <el-button>取消</el-button>
             <el-button type="primary" @click="submit">确定</el-button>
@@ -207,6 +226,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
           :closable="false"
           style="margin-bottom: 20px"
         />
+
         <el-form label-width="100px" label-suffix=" :" disabled :model="fromModel1">
           <el-form-item label="用户头像" prop="avatar">
             <ImageUpload v-model="fromModel1.avatar" width="135px" height="135px" :file-size="3">
@@ -217,8 +237,9 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
               <template #tip>头像大小不能超过 3M</template>
             </ImageUpload>
           </el-form-item>
+
           <el-form-item label="用户照片" prop="photo">
-            <ImagesUpload
+            <ImageUpload
               v-model="fromModel1.photo"
               @upload-img="uploadImg"
               height="140px"
@@ -230,17 +251,21 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
                 <span>请上传照片</span>
               </template>
               <template #tip>照片大小不能超过 5M</template>
-            </ImagesUpload>
+            </ImageUpload>
           </el-form-item>
+
           <el-form-item label="用户姓名" prop="username">
             <el-input v-model="fromModel1.username" placeholder="请填写用户姓名" clearable></el-input>
           </el-form-item>
+
           <el-form-item label="身份证号" prop="idCard">
             <el-input v-model="fromModel1.idCard" placeholder="请填写身份证号" clearable></el-input>
           </el-form-item>
+
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="fromModel1.email" placeholder="请填写邮箱" clearable></el-input>
           </el-form-item>
+
           <el-form-item>
             <el-button>取消</el-button>
             <el-button type="primary" @click="submit">确定</el-button>

@@ -3,33 +3,28 @@ import { ElButton, ElMessage } from "element-plus";
 import { ref, reactive } from "vue";
 import { read, utils } from "xlsx";
 import { useNamespace } from "@/composables";
+import type { UploadExcelProps } from "./types";
 
 defineOptions({ name: "UploadExcel" });
 
 const ns = useNamespace("excel-upload");
 
-export type ExcelData = { results: any; header: string[] };
-
-interface UploadExcelProps {
-  beforeUpload?: (file: File) => boolean;
-  onSuccess: (excelData: ExcelData) => void;
-}
-
-const props = defineProps<UploadExcelProps>();
+const props = withDefaults(defineProps<UploadExcelProps>(), {
+  drag: false,
+});
 
 const loading = ref(false);
 const excelData = reactive({
   header: [],
   results: null,
 });
+
 const excelUploadInputInstance = useTemplateRef("excelUploadInputInstance");
 
-const generateData = (header: any, results: any) => {
-  excelData.header = header;
-  excelData.results = results;
-  props.onSuccess && props.onSuccess(excelData);
-};
-
+/**
+ * 拖拽事件
+ * @param e 事件
+ */
 const handleDrop = (e: DragEvent) => {
   e.stopPropagation();
   e.preventDefault();
@@ -46,24 +41,34 @@ const handleDrop = (e: DragEvent) => {
     ElMessage.error("只支持 .xlsx, .xls, .csv 结尾的文件");
     return false;
   }
+
   upload(rawFile);
+
   e.stopPropagation();
   e.preventDefault();
 };
 
+/**
+ * 拖拽事件
+ * @param e 事件
+ */
 const handleDragover = (e: DragEvent) => {
   e.stopPropagation();
   e.preventDefault();
-  if (e.dataTransfer) {
-    e.dataTransfer.dropEffect = "copy";
-  }
+  if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
 };
 
+/**
+ * 点击按钮事件
+ */
 const handleUpload = () => {
   excelUploadInputInstance.value?.click();
 };
 
-const handleClick = (e: Event) => {
+/**
+ * 上传文件确认事件
+ */
+const handleUploadChange = (e: Event) => {
   const files = (e.target as HTMLInputElement).files;
   if (files) {
     const rawFile = files[0];
@@ -71,6 +76,10 @@ const handleClick = (e: Event) => {
   }
 };
 
+/**
+ * 上传 Excel 文件
+ * @param rawFile 文件
+ */
 const upload = (rawFile: File) => {
   if (excelUploadInputInstance.value) excelUploadInputInstance.value.value = ""; // 上传新的 excel 前，清空当前表格的数据，如果追加数据，则可以去掉
   if (!props.beforeUpload) {
@@ -78,11 +87,23 @@ const upload = (rawFile: File) => {
     return;
   }
   const before = props.beforeUpload(rawFile);
-  if (before) {
-    readerData(rawFile);
-  }
+  if (before) readerData(rawFile);
 };
 
+/**
+ * 生成数据
+ * @param header 表头
+ * @param results 数据
+ */
+const generateData = (header: any, results: any) => {
+  excelData.header = header;
+  excelData.results = results;
+  props.onSuccess && props.onSuccess(excelData);
+};
+
+/**
+ * 读取 Excel 数据
+ */
 const readerData = (rawFile: File) => {
   loading.value = true;
   const reader = new FileReader();
@@ -99,7 +120,12 @@ const readerData = (rawFile: File) => {
   reader.readAsArrayBuffer(rawFile);
 };
 
-const getHeaderRow = (sheet: Record<string, any>) => {
+/**
+ * 获取 Excel 表头
+ * @param sheet 表
+ * @returns 表头
+ */
+const getHeaderRow = (sheet: Recordable) => {
   const headers: string[] = [];
   const range = utils.decode_range(sheet["!ref"]);
   const R = range.s.r;
@@ -118,6 +144,11 @@ const getHeaderRow = (sheet: Record<string, any>) => {
   return headers;
 };
 
+/**
+ * 判断是否为 Excel 文件
+ * @param file 文件
+ * @returns 是否为 Excel 文件
+ */
 const isExcel = (file: File) => {
   return /\.(xlsx|xls|csv)$/.test(file.name);
 };
@@ -130,12 +161,16 @@ const isExcel = (file: File) => {
       :class="ns.e('input')"
       type="file"
       accept=".xlsx, .xls"
-      @change="handleClick"
+      @change="handleUploadChange"
     />
-    <div :class="ns.e('drop')" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
-      上传 Excel 文件
-      <el-button :loading="loading" style="margin-left: 16px" type="primary" @click="handleUpload">浏览</el-button>
+    <div v-if="drag" :class="ns.e('drop')" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
+      拖拽 Excel 文件到此处
+      <el-button :loading="loading" style="margin-left: 16px" type="primary" @click="handleUpload">预览</el-button>
     </div>
+
+    <el-button v-else :loading="loading" style="margin-left: 16px" type="primary" @click="handleUpload">
+      导入 Excel
+    </el-button>
   </div>
 </template>
 

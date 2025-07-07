@@ -71,7 +71,7 @@ export const setProp = (model: Recordable, prop: NonNullable<FormItemColumnProps
  * @param obj 对象
  * @param prop 对象的key
  */
-export const deleteProp = (obj: Record<string, any>, propPath: string): boolean => {
+export const deleteProp = (obj: Recordable, propPath: string): boolean => {
   if (!propPath || !isObject(obj)) return false;
 
   const keys = propPath.split(".");

@@ -25,7 +25,9 @@ const parseText = (text: string) => {
   return result.split(/{{|}}/);
 };
 
-// 5. 生成高亮节点数组
+/**
+ * 生成高亮节点数组
+ */
 const highlightNodes = computed(() => {
   if (!slots.default?.()?.[0]?.children) return [];
 

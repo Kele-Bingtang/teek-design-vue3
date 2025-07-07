@@ -22,7 +22,6 @@ export default {
     IconDemo: "图标选择",
     CountToDemo: "数字渐变",
     ClipperDemo: "图片裁剪",
-    SplitPaneDemo: "分割窗口",
     OrgTreeDemo: "组织结构树",
     AnimationMixinDemo: "动画混入",
     DraggableListDemo: "列表拖拽",

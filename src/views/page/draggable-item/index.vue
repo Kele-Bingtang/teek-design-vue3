@@ -17,12 +17,14 @@ const listData3 = ref(list3);
             {{ item.name }}
           </template>
         </DraggableItem>
+
         <DraggableItem :key="2" :list="listData2" :group="group" title-bg-color="#F9944A">
           <template #title>Working</template>
           <template #content="{ item }">
             {{ item.name }}
           </template>
         </DraggableItem>
+
         <DraggableItem :key="3" :list="listData3" :group="group" title-bg-color="#2AC06D">
           <template #title>Done</template>
           <template #content="{ item }">
@@ -41,6 +43,8 @@ const listData3 = ref(list3);
         <el-descriptions-item label="titleBgColor">标题背景色。`string` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="titleClass">标题元素 class。`string` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="dragClass">拖拽元素 class。`string` 类型，默认为 `""`</el-descriptions-item>
+        <el-descriptions-item label="disabled">是否禁用。`boolean` 类型，默认为 `false`</el-descriptions-item>
+        <el-descriptions-item label="animation">动画时间。`number` 类型，默认为 `200`</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

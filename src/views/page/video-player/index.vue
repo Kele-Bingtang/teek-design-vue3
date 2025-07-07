@@ -26,12 +26,15 @@ const visible = ref(false);
           视频播放器
         </el-link>
       </template>
+      <h3 style="margin-bottom: 16px; font-size: 20px; font-weight: 500">页面式渲染</h3>
       <VideoPlayer
         url="//sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/mp4/xgplayer-demo-720p.mp4"
         poster="//lf3-static.bytednsdoc.com/obj/eden-cn/nupenuvpxnuvo/xgplayer_doc/poster.jpg"
       />
 
       <el-divider />
+
+      <h3 style="margin-bottom: 16px; font-size: 20px; font-weight: 500">触发式渲染</h3>
 
       <el-button @Click="showVideo">函数式打开视频播放器预览</el-button>
 

@@ -1,0 +1,27 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(qrcode) {
+  position: relative;
+  display: inline-block;
+
+  @include m(disabled) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgb(255 255 255 / 95%);
+  }
+
+  @include e(icon) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+  }
+}

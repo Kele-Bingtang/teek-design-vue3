@@ -5,12 +5,12 @@ const {
   createMethods: { createSearch, createSearchComponent },
 } = useProSearch();
 
-const model = ref<Record<string, any>>({});
+const model = ref<Recordable>({});
 
 /**
  * context 里有 slots 和 attrs，如果元素里有 slots 和 attrs，则必传
  */
-const RenderProSearch = (_: any, context: Record<string, any>) => {
+const RenderProSearch = (_: any, context: Recordable) => {
   // 函数式创建 Template 组件
   return createSearchComponent(
     {
@@ -23,7 +23,7 @@ const RenderProSearch = (_: any, context: Record<string, any>) => {
   );
 };
 
-const handleSearch = async (data: Record<string, any>) => {
+const handleSearch = async (data: Recordable) => {
   console.log(data);
 };
 

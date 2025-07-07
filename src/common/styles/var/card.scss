@@ -82,8 +82,8 @@
   background-color: var(--#{$admin-namespace}-bg-color);
 
   // 添加响应式圆角，最小为 2px，最大为 12px
-  border-radius: clamp(2px, calc(var(--#{$admin-namespace}-radius) * 0.5 + 2px), 12px);
-  transition: all var(--#{$admin-namespace}-card-transition-duration) ease;
+  border-radius: clamp(2px, calc(var(--#{$admin-namespace}-radius) * 0.5 + 2px), 12px) !important;
+  transition: all var(--#{$admin-namespace}-card-transition-duration) ease !important;
 
   // 悬停效果整合
   &.hover {
@@ -95,6 +95,11 @@
     z-index: 5;
     outline: none;
     box-shadow: var(--#{$admin-namespace}-card-shadow-select);
+  }
+
+  // 当与 el-card 组件同时使用时，去除 el-card 的 padding
+  &.#{$el-namespace}-card {
+    padding: 0;
   }
 
   // 原子类系统
@@ -240,7 +245,7 @@
   overflow: visible; // 允许特殊效果溢出
 }
 
-// 极简卡片
+// 极简卡片（默认卡片）
 .#{$admin-namespace}-card-minimal {
   @extend %card-base;
   @include card-border("base");

@@ -1,8 +1,8 @@
 import { useInstall } from "@/common/utils";
-import image from "./src/image.vue";
-import images from "./src/images.vue";
+import index from "./src/image.vue";
 
-export const ImageUpload = useInstall(image);
-export const ImagesUpload = useInstall(images);
+export const ImageUpload = useInstall(index);
 
-export default [image, images];
+export type * from "./src/types";
+
+export default index;

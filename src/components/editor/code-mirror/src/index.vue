@@ -70,15 +70,15 @@ export interface CodeMirrorProps {
   tabSize?: number; // Tab 键缩进单位，默认 undefined
   multiple?: boolean; // 是否开启允许多选，默认不开启 false，See https://codemirror.net/docs/ref/#state.EditorState^allowMultipleSelections
   lineSeparator?: string; // 换行符，默认 "\n"
-  customTheme?: Record<string, any>; // 自定义主题，See https://codemirror.net/docs/ref/#view.EditorView^theme
+  customTheme?: Recordable; // 自定义主题，See https://codemirror.net/docs/ref/#view.EditorView^theme
   readonly?: boolean; // 是否只读代码编辑器，默认不开启 false
   disabled?: boolean; // 是否禁用代码编辑器，默认不开启 false
   phrases?: Record<string, string>; // 自定义代码编辑器的国际化语言内容，See https://codemirror.net/6/examples/translate/
   linter?: LintSource | any; // 代码校验器，See https://codemirror.net/docs/ref/#lint.linter
-  linterConfig?: Record<string, any>; // 代码校验器配置项，See https://codemirror.net/docs/ref/#lint.linter^config
+  linterConfig?: Recordable; // 代码校验器配置项，See https://codemirror.net/docs/ref/#lint.linter^config
   forceLinting?: boolean; // 是否在输入过程开始校验语法，false 则在输入完成后校验，默认不开启 false
   gutter?: boolean; // 当代码语法出错，开头是否红色圆圈 🔴 提示，前提开启 linter 属性，默认不开启 false
-  gutterConfig?: Record<string, any>; // 语法错误配置项，See https://codemirror.net/docs/ref/#lint.lintGutter^config
+  gutterConfig?: Recordable; // 语法错误配置项，See https://codemirror.net/docs/ref/#lint.lintGutter^config
   tag?: string; // 代码编辑器根标签，默认是 div
   indentUnit?: string; // 缩进单位，如 "  "，缩进两个空格，"    " 代表缩进四个空格
   extensions?: Extension[]; // 额外扩展

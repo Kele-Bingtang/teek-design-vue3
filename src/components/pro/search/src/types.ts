@@ -129,11 +129,11 @@ export type ProSearchEmits = {
   /**
    * 搜索事件
    */
-  search: [model: Record<string, any>];
+  search: [model: Recordable];
   /**
    * 重置事件
    */
-  reset: [model: Record<string, any>];
+  reset: [model: Recordable];
   /**
    * 注册事件
    */
@@ -151,7 +151,7 @@ export type ProSearchEmits = {
 /**
  * 将 ProSearchEmits 类型的 key 变为 on{Key} 的形式
  *
- * @example 返回 { onSearch: (params: Record<string, any>) => void }
+ * @example 返回 { onSearch: (params: Recordable) => void }
  */
 export type ProSearchOnEmits = keyOnPrefix<ProSearchEmits>;
 

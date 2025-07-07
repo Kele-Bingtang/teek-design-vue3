@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DraggableListEmits, DraggableListProps, DragList } from "./types";
 import { ref } from "vue";
 import Draggable from "vuedraggable";
 import { useNamespace } from "@/composables";
@@ -7,44 +8,16 @@ defineOptions({ name: "DraggableList" });
 
 const ns = useNamespace("drag-list");
 
-export interface DragClass {
-  left: string[];
-  right: string[];
-}
-
-export interface DragList {
-  id: string;
-  name: string;
-}
-
-interface DraggableListProps {
-  leftList?: DragList[]; // 左侧数据
-  rightList?: DragList[]; // 右侧数据
-  leftTitle?: string; // 左侧标题
-  rightTitle?: string; // 右侧标题
-  leftWidth?: string; // 左侧宽度
-  rightWidth?: string; // 右侧宽度
-  // 拖拽元素 class
-  dragClass?: {
-    left: string[];
-    right: string[];
-  };
-}
-
 const props = withDefaults(defineProps<DraggableListProps>(), {
   leftList: () => [],
   rightList: () => [],
   leftTitle: "",
   rightTitle: "",
-  leftWidth: "48%",
-  rightWidth: "48%",
+  leftWidth: "50%",
+  rightWidth: "50%",
   dragClass: () => ({ left: [], right: [] }),
+  animation: 200,
 });
-
-type DraggableListEmits = {
-  onChange: [value: { src: string; target: string; oldIndex: number; newIndex: number }];
-  itemClick: [id: string, type: string];
-};
 
 const emits = defineEmits<DraggableListEmits>();
 
@@ -106,13 +79,14 @@ const pushList = (list: DragList, type: string) => {
       <draggable
         :list="leftList"
         itemKey="id"
-        :class="`${ns.e('left')} ${dragClass.left}`"
+        :class="[ns.e('left'), dragClass.left, 'list']"
         :group="group"
+        :animation="animation"
         v-bind="$attrs"
         @end="handleEnd($event, 'left')"
       >
         <template #item="{ element }">
-          <div :class="ns.e('item')" @click="handleClick(element.id, 'left')">
+          <div class="item" @click="handleClick(element.id, 'left')">
             <slot name="left" :item="element">{{ element }}</slot>
             <div :class="[ns.em('left', 'icon'), 'icon']" @click="pushList(element, 'left')">
               <slot name="leftIcon"></slot>
@@ -121,18 +95,19 @@ const pushList = (list: DragList, type: string) => {
         </template>
       </draggable>
     </div>
+
     <div :class="ns.e('content')" :style="{ width: rightWidth }">
       <slot name="rightTitle">{{ rightTitle }}</slot>
       <draggable
         :list="rightList"
         itemKey="id"
-        :class="`${ns.e('right')} ${dragClass.right}`"
+        :class="[ns.e('right'), dragClass.right, 'list']"
         :group="group"
         v-bind="$attrs"
         @end="handleEnd($event, 'right')"
       >
         <template #item="{ element }">
-          <div :class="ns.e('item')" @click="handleClick(element.id, 'right')">
+          <div class="item" @click="handleClick(element.id, 'right')">
             <slot name="right" :item="element">{{ element }}</slot>
             <div :class="[ns.em('right', 'icon'), 'icon']" @click="pushList(element, 'right')">
               <slot name="rightIcon"></slot>
@@ -148,23 +123,31 @@ const pushList = (list: DragList, type: string) => {
 @use "@styles/mixins/bem" as *;
 
 @include b(drag-list) {
+  display: flex;
+  gap: 10px;
   height: 100%;
 
   @include e(content) {
-    float: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     height: 100%;
-  }
 
-  @include e(item) {
-    position: relative;
-    line-height: inherit;
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
-    .icon {
-      position: absolute;
-      top: 50%;
-      right: 7px;
-      line-height: inherit;
-      transform: translateY(-50%);
+      .item {
+        position: relative;
+
+        .icon {
+          position: absolute;
+          top: 50%;
+          right: 7px;
+          transform: translateY(-50%);
+        }
+      }
     }
   }
 }

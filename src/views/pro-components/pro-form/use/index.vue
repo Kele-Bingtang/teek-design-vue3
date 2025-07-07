@@ -22,7 +22,7 @@ const {
   getFormModel,
 } = formMethods;
 
-const model = ref<Record<string, any>>({});
+const model = ref<Recordable>({});
 
 // 表单整体配置项
 const elFormProps: ElFormProps = {

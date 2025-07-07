@@ -90,7 +90,7 @@ const tinymceContent = defineModel<string>({ default: "" });
 
 const fullscreen = ref(false);
 
-const languageTypeList = reactive<Record<string, any>>({
+const languageTypeList = reactive<Recordable>({
   "zh-CN": "zh_CN",
 });
 

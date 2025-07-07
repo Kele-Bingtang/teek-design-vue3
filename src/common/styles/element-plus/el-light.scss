@@ -24,20 +24,7 @@
       "base": #909399,
     ),
   ),
-  $button: (
-    "hover-bg-color": var(--#{$admin-namespace}-color-primary-light-9),
-    "hover-border-color": var(--#{$admin-namespace}-color-primary),
-    "border-color": var(--#{$admin-namespace}-color-primary),
-    "text-color": var(--#{$admin-namespace}-color-primary),
-  ),
-  $dialog: (
-    "border-radius": "14px",
-  ),
   $messagebox: (
-    "border-radius": "12px",
-  ),
-  $popover: (
-    "padding": "14px",
     "border-radius": "10px",
   )
 );

@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useNamespace } from "@/composables";
+import type { TextHoverEffectProps } from "./types";
 
 defineOptions({ name: "TextHoverEffect" });
 
 const ns = useNamespace("link-hover");
 const blockClass = ns.b();
 
-interface TextHoverEffectProps {
-  className?: string;
-  text?: string;
-  initColor?: string;
-  hoverColor?: string;
-}
 const props = withDefaults(defineProps<TextHoverEffectProps>(), {
   className: "",
   text: "",

@@ -7,7 +7,7 @@ import type { UseInstallWithPlugin, UseInstallWithContext } from "./types";
  * @param main 主组件
  * @param extra 额外组件
  */
-export const useInstall = <T, E extends Record<string, any>>(main: T, extra?: E) => {
+export const useInstall = <T, E extends Recordable>(main: T, extra?: E) => {
   (main as UseInstallWithPlugin<T>).install = (app: App): void => {
     for (const comp of [main, ...Object.values(extra ?? {})]) {
       app.component(comp.name, comp);
