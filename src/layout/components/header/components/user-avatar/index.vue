@@ -26,7 +26,7 @@ const { userInfo } = storeToRefs(userStore);
 // 下拉菜单列表
 const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
-  { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message-center") },
+  { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
   {
     label: "Github",

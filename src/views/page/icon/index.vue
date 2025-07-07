@@ -6,8 +6,8 @@ const currentIcon = ref("");
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never">
+  <el-space fill alignment="normal" style="width: 100%">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <span>使用 Icon 组件</span>
       </template>
@@ -30,7 +30,7 @@ const currentIcon = ref("");
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <span>图标选择器</span>
       </template>
@@ -39,7 +39,7 @@ const currentIcon = ref("");
       </div>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="图标选择器 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model/modelValue">接收图标名字的响应式</el-descriptions-item>
       </el-descriptions>

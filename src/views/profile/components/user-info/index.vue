@@ -23,7 +23,7 @@ const hobby = ["躺平", "专注开发", "热爱学习", "旅游"];
 </script>
 
 <template>
-  <el-card style="margin-bottom: 20px" :class="ns.b()">
+  <el-card shadow="never" :class="[ns.b(), 'tk-card-minimal']">
     <div :class="ns.e('head')">
       <slot>
         <el-image :src="user.avatar" :class="ns.m('avatar')" alt="头像">

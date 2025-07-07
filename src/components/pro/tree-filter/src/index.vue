@@ -110,7 +110,7 @@ const handleNodeClick = (data: Recordable) => {
  * 多选
  */
 const handleCheckChange = () => {
-  emit("change", treeInstance.value?.getCheckedKeys());
+  emit("change", treeInstance.value?.getCheckedKeys() || []);
 };
 
 defineExpose({ treeData, treeAllData, initTreeData });

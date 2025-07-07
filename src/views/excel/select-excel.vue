@@ -1,9 +1,9 @@
 <script setup lang="ts" name="SelectExcel">
+import { ElMessage, ElTable } from "element-plus";
+import { Document, Top } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { largeData } from "@/mock/table";
-import { ElMessage, ElTable } from "element-plus";
 import { tableStatusFilter } from "@/common/config";
-import { Document, Top } from "@element-plus/icons-vue";
 
 const tableData = ref(largeData);
 const multipleSelection = ref([]);
@@ -15,13 +15,18 @@ const handleSelectionChange = (value: any) => {
   multipleSelection.value = value;
 };
 
+/**
+ * 导出选择的数据
+ */
 const handleDownload = () => {
   if (multipleSelection.value.length) {
     downloadLoading.value = true;
+
     const tHeader = ["ID", "Name", "Date", "Address", "Status", "Priority", "Title"];
     const filterVal = ["id", "name", "date", "address", "status", "priority", "title"];
     const list = multipleSelection.value;
     const data = formatJsonToArray(list, filterVal);
+
     exportJsonToExcel(tHeader, data, filename.value !== "" ? filename.value : undefined);
     multipleTableRef.value?.clearSelection();
     downloadLoading.value = false;
@@ -32,14 +37,18 @@ const handleDownload = () => {
 </script>
 
 <template>
-  <div class="select-excel-container">
-    <el-input
-      v-model="filename"
-      placeholder="请输入导出的文件名，默认为 excel-table"
-      style="width: 350px"
-      :prefix-icon="Document"
-    />
-    <el-button :loading="downloadLoading" type="success" :icon="Top" @click="handleDownload">导出选择的数据</el-button>
+  <div class="select-excel-container tk-card-minimal">
+    <div class="header flx gap-10">
+      <el-input
+        v-model="filename"
+        placeholder="请输入导出的文件名，默认为 excel-table"
+        style="width: 350px"
+        :prefix-icon="Document"
+      />
+      <el-button :loading="downloadLoading" type="success" :icon="Top" @click="handleDownload">
+        导出选择的数据
+      </el-button>
+    </div>
 
     <el-table
       ref="multipleTableRef"
@@ -74,7 +83,8 @@ const handleDownload = () => {
 
 <style lang="scss" scoped>
 .select-excel-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
+  .header {
+    margin-bottom: 16px;
+  }
 }
 </style>

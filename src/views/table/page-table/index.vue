@@ -17,7 +17,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
 </script>
 
 <template>
-  <div class="page-table-container">
+  <div class="tk-card-minimal">
     <el-table :data="tablePageData" border highlight-current-row row-key="id" style="width: 100%">
       <el-table-column prop="id" label="ID" width="70" align="center" sortable></el-table-column>
       <el-table-column prop="date" label="日期"></el-table-column>
@@ -40,10 +40,3 @@ const handleSizeChange = (pagingParam: PageInfo) => {
     <pagination v-show="tableData.length > 0" :total="tableData.length" v-model="paging" @change="handleSizeChange" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.page-table-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
-}
-</style>

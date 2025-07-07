@@ -18,8 +18,8 @@ const handleResize = (event: any) => {
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <el-card shadow="never" header="">
+  <el-space fill :class="ns.b()">
+    <el-card shadow="never" class="tk-card-minimal">
       <div :class="ns.e('header')">
         <el-switch
           v-model="placement"
@@ -59,7 +59,7 @@ const handleResize = (event: any) => {
       </DragDrawer>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否打开抽屉。`boolean` 类型，默认为 `false`</el-descriptions-item>
         <el-descriptions-item label="v-model:width">
@@ -72,18 +72,19 @@ const handleResize = (event: any) => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="onResizeStart">拖拽启动事件。`() => void` 类型</el-descriptions-item>
         <el-descriptions-item label="onResize">拖拽过程事件。`(event: MouseEvent) => void` 类型</el-descriptions-item>
         <el-descriptions-item label="onResizeEnd">拖拽结束事件。`() => void` 类型</el-descriptions-item>
       </el-descriptions>
     </el-card>
-  </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>
 @use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(darg-drawer-demo) {
   @include e(header) {

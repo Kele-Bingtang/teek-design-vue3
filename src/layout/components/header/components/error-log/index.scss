@@ -3,7 +3,7 @@
 
 @include b(error-badge) {
   :deep(.#{$el-namespace}-badge__content.is-fixed) {
-    top: 11px;
-    right: 7px;
+    top: 16px;
+    right: 18px;
   }
 }

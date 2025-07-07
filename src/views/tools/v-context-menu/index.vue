@@ -6,8 +6,8 @@ import "v-contextmenu/dist/themes/default.css";
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never">
+  <el-space fill style="width: 100%">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <span class="font-medium">
           <el-link

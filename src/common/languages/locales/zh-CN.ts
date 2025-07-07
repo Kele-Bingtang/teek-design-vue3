@@ -30,7 +30,6 @@ export default {
     QrCodeDemo: "二维码",
     UploadImagesDemo: "图片上传",
     SeamlessScrollDemo: "无限滚动",
-    ImageViewerDemo: "图片预览",
     HighlightDemo: "文字高亮",
     VideoPlayerDemo: "视频播放器",
 
@@ -72,6 +71,7 @@ export default {
     EditProDescriptions: "编辑 ProDescriptions",
     ProDialog: "ProDialog 弹框",
     ProDrawer: "ProDrawer 抽屉",
+    ProImageViewer: "图片预览",
     ProTreeFilter: "树形筛选",
     ProSteps: "超级步骤条",
     SimpleProSteps: "简单 ProSteps",

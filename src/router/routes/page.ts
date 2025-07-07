@@ -27,12 +27,6 @@ const pageRoutes: RouterConfigRaw = {
       meta: { title: "文字高亮", icon: StarFilled },
     },
     {
-      path: "image-viewer",
-      name: "ImageViewerDemo",
-      component: () => import("@/views/page/image-viewer/index.vue"),
-      meta: { title: "图片预览", icon: StarFilled },
-    },
-    {
       path: "video-player",
       name: "VideoPlayerDemo",
       component: () => import("@/views/page/video-player/index.vue"),

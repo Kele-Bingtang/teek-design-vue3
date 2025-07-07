@@ -7,6 +7,9 @@ const tableData = ref([]);
 const tableHeader = ref<string[]>([]);
 const radio = ref(1);
 
+/**
+ * 上传前事件
+ */
 const beforeUpload = (file: File) => {
   const isLt1M = file.size / 1024 / 1024 < 1;
   if (isLt1M) {
@@ -15,6 +18,10 @@ const beforeUpload = (file: File) => {
   ElMessage.warning("Please do not upload files larger than 1m in size.");
   return false;
 };
+
+/**
+ * 上传成功事件
+ */
 const handleSuccess = ({ results, header }: ExcelData) => {
   tableData.value = results;
   tableHeader.value = header;
@@ -22,7 +29,7 @@ const handleSuccess = ({ results, header }: ExcelData) => {
 </script>
 
 <template>
-  <div class="upload-excel-container">
+  <div class="upload-excel-container tk-card-minimal">
     <el-radio-group v-model="radio">
       <el-radio :label="1">拖拽 & 按钮上传</el-radio>
       <el-radio :label="2">按钮上传</el-radio>
@@ -38,7 +45,10 @@ const handleSuccess = ({ results, header }: ExcelData) => {
 
 <style lang="scss" scoped>
 .upload-excel-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
+  height: 100%;
+
+  .el-radio-group {
+    margin-bottom: 16px;
+  }
 }
 </style>

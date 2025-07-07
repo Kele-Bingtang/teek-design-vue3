@@ -1,15 +1,13 @@
-<!-- vue-codemirror6 1.3.0 -->
-
+<!-- vue-codemirror6 v1.3.0 -->
 <script setup lang="ts">
 import { indentWithTab } from "@codemirror/commands";
-import { indentUnit as indentUnitConfig, type LanguageSupport } from "@codemirror/language";
+import { indentUnit as indentUnitConfig } from "@codemirror/language";
 import {
   diagnosticCount as linterDagnosticCount,
   forceLinting as forceLintingFun,
   linter as linterFun,
   lintGutter,
   type Diagnostic,
-  type LintSource,
 } from "@codemirror/lint";
 import {
   Compartment,
@@ -29,62 +27,7 @@ import { useNamespace } from "@/composables";
 import { addUnit } from "@/common/utils";
 import { ref, shallowRef, computed, type Ref, type ComputedRef, watch, onMounted, nextTick, onUnmounted } from "vue";
 import { FullScreen } from "@element-plus/icons-vue";
-
-export interface MergeCodeMirrorProps {
-  [key: string]: any;
-  oldDoc?: string | Text; // 旧代码
-  newDoc?: string | Text; // 新代码
-  revertControls?: "a-to-b" | "b-to-a" | boolean; // 是否新旧代码支持一键替换
-  highlight?: boolean; // 新旧代码对比高亮，默认开启 true
-  orientation?: "a-b" | "b-a"; // 左右编辑器顺序，默认 "a-b"
-  gutter?: boolean; // 行代码前使用高亮竖线条，默认使用 true
-  enabled?: ("a" | "b" | string)[]; // 是否禁用编辑功能，默认禁用 a、b
-  header?: boolean; // 是否启用 header，默认不启用 false
-  headerBgColor?: string; // header 背景色，默认 "#f6f8fa"，需要开启 header
-  headerBorderColor?: string; // header 边框色，默认 "#d0d7de"，需要开启 header
-  leftTitle?: string; // header 左侧标题，默认 "Before"
-  rightTitle?: string; // header 右侧标题，默认 "After"
-  margin?: number; // 与 minSize 互斥，指定多少个相同的代码行数不允许折叠，默认为 3
-  minSize?: number; // 多少行没有区别的代码行数可以折叠，默认折叠超过 4 行的代码行
-  highlightColor?: {
-    aHighlightLineBgColor?: string; // a 编辑器高亮行背景色，默认 #ffebe9
-    aHighlightTextBgColor?: string; // a 编辑器高亮文本背景色，默认 #ff818266
-    bHighlightLineBgColor?: string; // b 编辑器高亮行背景色，默认 #e6ffec
-    bHighlightTextBgColor?: string; // b 编辑器高亮文本背景色，默认 #abf2bc
-  };
-}
-
-export interface CodeMirrorProps {
-  width?: string | number; // 代码编辑器宽度，默认 undefined
-  height?: string | number; // 代码编辑器高度，默认 undefined
-  maxHeight?: string | number; // 代码编辑器最大高度，默认 undefined
-  fontSize?: string | number; // 字体大小，默认 14px
-  localTheme?: Extension; // 本地主题包
-  lang?: LanguageSupport; // 本地代码语言包
-  basic?: boolean; // 是否导入代码编辑器常用功能，See https://codemirror.net/docs/ref/#codemirror.basicSetup
-  minimal?: boolean; // 是否导入代码编辑器 Mini 功能，See https://codemirror.net/docs/ref/#codemirror.minimalSetup
-  dark?: boolean; // 是否切换为暗黑主题（前提是主题支持切换），默认不切换 false
-  placeholder?: string; // 代码编辑器占位符
-  wrap?: boolean; // 内容宽度超出屏幕后，是否开启自动换行，默认开启 true
-  tab?: boolean; // 是否启用 Tab 键缩进，默认开启 true
-  tabSize?: number; // Tab 键缩进单位，默认 undefined
-  multiple?: boolean; // 是否开启允许多选，默认不开启 false，See https://codemirror.net/docs/ref/#state.EditorState^allowMultipleSelections
-  lineSeparator?: string; // 换行符，默认 "\n"
-  customTheme?: Recordable; // 自定义主题，See https://codemirror.net/docs/ref/#view.EditorView^theme
-  readonly?: boolean; // 是否只读代码编辑器，默认不开启 false
-  disabled?: boolean; // 是否禁用代码编辑器，默认不开启 false
-  phrases?: Record<string, string>; // 自定义代码编辑器的国际化语言内容，See https://codemirror.net/6/examples/translate/
-  linter?: LintSource | any; // 代码校验器，See https://codemirror.net/docs/ref/#lint.linter
-  linterConfig?: Recordable; // 代码校验器配置项，See https://codemirror.net/docs/ref/#lint.linter^config
-  forceLinting?: boolean; // 是否在输入过程开始校验语法，false 则在输入完成后校验，默认不开启 false
-  gutter?: boolean; // 当代码语法出错，开头是否红色圆圈 🔴 提示，前提开启 linter 属性，默认不开启 false
-  gutterConfig?: Recordable; // 语法错误配置项，See https://codemirror.net/docs/ref/#lint.lintGutter^config
-  tag?: string; // 代码编辑器根标签，默认是 div
-  indentUnit?: string; // 缩进单位，如 "  "，缩进两个空格，"    " 代表缩进四个空格
-  extensions?: Extension[]; // 额外扩展
-  mergeConfig?: MergeCodeMirrorProps; // 代码对比编辑器配置项，传入配置项即开启
-  fullScreen?: boolean; // 是否启用全屏模式，默认不开启 false
-}
+import type { CodeMirrorEmits, CodeMirrorProps } from "./types";
 
 defineOptions({ name: "CodeMirror6" });
 
@@ -108,26 +51,7 @@ const props = withDefaults(defineProps<CodeMirrorProps>(), {
   fullScreen: true,
 });
 
-type CodeMirror6Emits = {
-  /** CodeMirror update */
-  update: [_value: ViewUpdate];
-  /** CodeMirror onReady */
-  ready: [
-    _value: {
-      view?: EditorView | MergeView;
-      state?: EditorState | { a: EditorState; b: EditorState };
-      container: HTMLElement;
-    },
-  ];
-  /** CodeMirror onFocus */
-  focus: [_value: boolean];
-  /** State Changed */
-  change: [_value: EditorState];
-  /** CodeMirror onDestroy */
-  destroy: [];
-};
-
-const emits = defineEmits<CodeMirror6Emits>();
+const emits = defineEmits<CodeMirrorEmits>();
 
 // 编辑器 DOM 元素引用
 const editorInstance = useTemplateRef<HTMLElement | undefined>("editorInstance");

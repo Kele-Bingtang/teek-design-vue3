@@ -45,7 +45,7 @@ function changeDirection(val: string) {
 
 <template>
   <el-space fill>
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <div class="card-header">
           <span>无缝滚动示例</span>
@@ -78,14 +78,14 @@ function changeDirection(val: string) {
       </SeamlessScroll>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="data">滚动数据。`any[]` 类型，默认为 `undefined`</el-descriptions-item>
         <el-descriptions-item label="classOption">滚动配置。`ClassOption` 类型，必穿</el-descriptions-item>
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="ClassOption 配置项 📚" :column="1" border>
         <el-descriptions-item label="key">ref key。`number` 类型，默认为 `undefined`</el-descriptions-item>
         <el-descriptions-item label="step">步长。`number` 类型，默认为 `1`</el-descriptions-item>
@@ -119,7 +119,7 @@ function changeDirection(val: string) {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="scrollEnd">滚动结束事件。`() => void` 类型</el-descriptions-item>
       </el-descriptions>

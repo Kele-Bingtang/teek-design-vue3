@@ -87,7 +87,7 @@ const rowDrop2 = () => {
 </script>
 
 <template>
-  <div class="drag-table-container">
+  <div class="drag-table-container tk-card-minimal">
     <p>循环 table-column 可以实现列和行拖拽</p>
     <!-- 实现行拖拽, 必须指定 row-key 为一条数据的唯一值 -->
     <el-table ref="draggableTable1" :data="tableData" border highlight-current-row row-key="id" style="width: 100%">
@@ -133,6 +133,10 @@ const rowDrop2 = () => {
 .drag-table-container {
   padding: 10px 12px;
   background-color: #ffffff;
+
+  p {
+    margin: 16px 0;
+  }
 
   :deep(.sortable-ghost) {
     color: #ffffff !important;

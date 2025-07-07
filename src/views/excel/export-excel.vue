@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ExportExcel">
+import { Document, Top } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { largeData } from "@/mock/table";
 import { tableStatusFilter } from "@/common/config";
-import { Document, Top } from "@element-plus/icons-vue";
 
 const options = ["xlsx", "csv", "txt"];
 
@@ -12,12 +12,17 @@ const filename = ref("");
 const autoWidth = ref(true);
 const bookType = ref("xlsx");
 
+/**
+ * 导出 Excel
+ */
 const handleDownload = () => {
   downloadLoading.value = true;
+
   const tHeader = ["ID", "Name", "Date", "Address", "Status", "Priority", "Title"];
   const filterVal = ["id", "name", "date", "address", "status", "priority", "title"];
   const list = tableData.value;
   const data = formatJsonToArray(list, filterVal);
+
   exportJsonToExcel(
     tHeader,
     data,
@@ -32,7 +37,7 @@ const handleDownload = () => {
 </script>
 
 <template>
-  <div class="export-excel-container">
+  <div class="export-excel-container tk-card-minimal pd-16">
     <div style="display: flex">
       <div>
         <label class="radio-label" style="padding-left: 0">文件名：</label>
@@ -96,13 +101,9 @@ const handleDownload = () => {
 
 <style lang="scss" scoped>
 .export-excel-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
-
   .radio-label {
     padding: 0 12px 0 30px;
     font-size: 14px;
-    color: #606266;
   }
 }
 </style>

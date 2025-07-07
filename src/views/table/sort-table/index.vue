@@ -85,7 +85,7 @@ const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
 </script>
 
 <template>
-  <div class="table-sort-container">
+  <div class="table-sort-container tk-card-minimal">
     <p>方法一：使用 TableSoft 组件代替 el-table</p>
     <TableSort
       :data="data"
@@ -178,15 +178,12 @@ const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
 
 <style lang="scss" scoped>
 .table-sort-container {
-  padding: 10px 12px;
-  background: #ffffff;
+  p {
+    margin-bottom: 16px;
+  }
 
   .search-container {
     margin-bottom: 20px;
-  }
-
-  p {
-    margin-bottom: 10px;
   }
 }
 </style>

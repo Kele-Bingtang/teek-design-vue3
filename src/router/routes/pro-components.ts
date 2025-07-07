@@ -209,13 +209,19 @@ const proComponents: RouterConfigRaw = {
       path: "pro-dialog",
       name: "ProDialog",
       component: () => import("@/views/pro-components/pro-dialog/index.vue"),
-      meta: { title: "Pro Dialog", icon: StarFilled },
+      meta: { title: "ProDialog 弹框", icon: StarFilled },
     },
     {
       path: "pro-drawer",
       name: "ProDrawer",
       component: () => import("@/views/pro-components/pro-drawer/index.vue"),
-      meta: { title: "Pro Drawer", icon: StarFilled },
+      meta: { title: "ProDrawer 抽屉", icon: StarFilled },
+    },
+    {
+      path: "image-viewer",
+      name: "ProImageViewer",
+      component: () => import("@/views/pro-components/pro-image-viewer/index.vue"),
+      meta: { title: "图片预览", icon: StarFilled },
     },
     {
       path: "pro-tree-filter",
@@ -223,40 +229,40 @@ const proComponents: RouterConfigRaw = {
       component: () => import("@/views/pro-components/pro-tree-filter/index.vue"),
       meta: { title: "树形筛选", icon: StarFilled },
     },
-    {
-      path: "/pro-steps",
-      name: "ProSteps",
-      meta: {
-        notClickBread: true,
-        title: "超级步骤条",
-        icon: Box,
-      },
-      children: [
-        {
-          path: "simple",
-          name: "SimpleProSteps",
-          component: () => import("@/views/pro-components/pro-steps/index.vue"),
-          meta: { title: () => "简单 ProSteps", icon: StarFilled },
-        },
-      ],
-    },
-    {
-      path: "/pro-transfer",
-      name: "ProTransfer",
-      meta: {
-        notClickBread: true,
-        title: "超级穿梭框",
-        icon: Box,
-      },
-      children: [
-        {
-          path: "simple",
-          name: "SimpleProTransfer",
-          component: () => import("@/views/pro-components/pro-transfer/index.vue"),
-          meta: { title: () => "简单 ProTransfer", icon: StarFilled },
-        },
-      ],
-    },
+    // {
+    //   path: "/pro-steps",
+    //   name: "ProSteps",
+    //   meta: {
+    //     notClickBread: true,
+    //     title: "超级步骤条",
+    //     icon: Box,
+    //   },
+    //   children: [
+    //     {
+    //       path: "simple",
+    //       name: "SimpleProSteps",
+    //       component: () => import("@/views/pro-components/pro-steps/index.vue"),
+    //       meta: { title: () => "简单 ProSteps", icon: StarFilled },
+    //     },
+    //   ],
+    // },
+    // {
+    //   path: "/pro-transfer",
+    //   name: "ProTransfer",
+    //   meta: {
+    //     notClickBread: true,
+    //     title: "超级穿梭框",
+    //     icon: Box,
+    //   },
+    //   children: [
+    //     {
+    //       path: "simple",
+    //       name: "SimpleProTransfer",
+    //       component: () => import("@/views/pro-components/pro-transfer/index.vue"),
+    //       meta: { title: () => "简单 ProTransfer", icon: StarFilled },
+    //     },
+    //   ],
+    // },
   ],
 };
 

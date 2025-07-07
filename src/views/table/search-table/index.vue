@@ -136,7 +136,7 @@ const handleDelete = (row: any, index: number) => {
 </script>
 
 <template>
-  <div class="single-search-table-container">
+  <div class="single-search-table-container tk-card-minimal">
     <div class="search-container">
       <div class="single-search search-content">
         <el-select v-model="singleSearchKey" placeholder="关键词" clearable style="width: 150px">
@@ -196,8 +196,9 @@ const handleDelete = (row: any, index: number) => {
 
 <style lang="scss" scoped>
 .single-search-table-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
+  p {
+    margin-bottom: 16px;
+  }
 
   .search-container {
     margin-bottom: 20px;

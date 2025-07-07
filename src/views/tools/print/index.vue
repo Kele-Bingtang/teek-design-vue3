@@ -65,10 +65,10 @@ const tableData = ref(simpleData);
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never" class="print-container">
+  <el-space fill style="width: 100%">
+    <el-card shadow="never" class="print-container tk-card-minimal">
       <template #header>
-        <div class="card-header">
+        <div class="flx-align-center-between">
           <span>打印功能（报表、图表、图片）</span>
           <div>
             <el-select v-model="value" class="m-2" placeholder="Select" size="small" style="width: 100px">
@@ -115,12 +115,6 @@ const tableData = ref(simpleData);
 
 <style lang="scss" scoped>
 .print-container {
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   .img {
     width: 300px;
     height: 300px;

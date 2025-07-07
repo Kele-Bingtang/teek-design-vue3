@@ -1,14 +1,18 @@
 <script setup lang="ts" name="MergeHeader">
+import { Top } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { largeData } from "@/mock/table";
 import { tableStatusFilter } from "@/common/config";
-import { Top } from "@element-plus/icons-vue";
 
 const tableData = ref(largeData);
 const downloadLoading = ref(false);
 
+/**
+ * 导出 Excel
+ */
 const handleDownload = () => {
   downloadLoading.value = true;
+
   const filterVal = ["id", "name", "date", "address", "status", "priority", "title"];
   const header = ["ID", "Date", "Name", "Address", "Status", "Priority", "Title"];
   const multiHeader = [["ID", "Date", "Info", "", "", "", ""]];
@@ -21,7 +25,7 @@ const handleDownload = () => {
 </script>
 
 <template>
-  <div class="merge-header-container">
+  <div class="tk-card-minimal">
     <el-button
       :loading="downloadLoading"
       style="margin-bottom: 20px"
@@ -55,10 +59,3 @@ const handleDownload = () => {
     </el-table>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.merge-header-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
-}
-</style>

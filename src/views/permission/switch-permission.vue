@@ -21,7 +21,7 @@ const switchRole = computed({
 </script>
 
 <template>
-  <el-card class="switch-permission-container">
+  <el-card class="switch-permission-container tk-card-minimal">
     <div shadow="never" class="left-container">
       <el-card shadow="never">
         <template #header>角色切换</template>

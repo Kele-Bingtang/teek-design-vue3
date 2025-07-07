@@ -26,6 +26,8 @@ const rightClick = (event: MouseEvent) => {
 </template>
 
 <style lang="scss" scoped>
+@use "@styles/mixins/function" as *;
+
 .component-component {
   display: flex;
   align-items: center;

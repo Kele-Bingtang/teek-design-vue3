@@ -10,7 +10,7 @@ const listData3 = ref(list3);
 
 <template>
   <el-space fill>
-    <el-card>
+    <el-card class="tk-card-minimal">
       <div style="display: flex; width: 100%">
         <DraggableItem :key="1" :list="listData1" :group="group" title-bg-color="#4A9FF9" title="Todo">
           <template #content="{ item }">
@@ -34,7 +34,7 @@ const listData3 = ref(list3);
       </div>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="title">标题。`string` 类型，默认为 `"header"`</el-descriptions-item>
         <el-descriptions-item label="list">

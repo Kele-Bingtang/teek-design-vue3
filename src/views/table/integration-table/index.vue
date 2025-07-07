@@ -285,7 +285,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
 </script>
 
 <template>
-  <div class="integrationTable-table-container">
+  <div class="integrationTable-table-container tk-card-minimal">
     <div class="search-container">
       <div class="single-search search-content">
         <el-select v-model="singleSearchKey" placeholder="关键词" clearable style="width: 150px">
@@ -455,9 +455,6 @@ const handleSizeChange = (pagingParam: PageInfo) => {
 
 <style lang="scss" scoped>
 .integrationTable-table-container {
-  margin: 10px 12px;
-  background-color: #ffffff;
-
   .search-container {
     margin-bottom: 20px;
 

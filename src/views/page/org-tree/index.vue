@@ -5,6 +5,7 @@ import { useNamespace } from "@/composables";
 const ns = useNamespace("org-tree-demo");
 
 const treeRef = useTemplateRef<any>("treeRef");
+
 const data = ref({
   id: 1,
   title: "公司名",
@@ -35,6 +36,7 @@ const data = ref({
     { id: 4, pid: 1, title: "业务", label: "业务部" },
   ],
 });
+
 const scalable = ref(true);
 const horizontal = ref(true);
 const collapsable = ref(true);
@@ -96,8 +98,8 @@ const onNodeClick = (e: MouseEvent, data: any) => {
 </script>
 
 <template>
-  <el-space fill :class="ns.b()">
-    <el-card shadow="never">
+  <el-space fill alignment="normal" :class="ns.b()">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <el-link
           href="https://sangtian152.github.io/vue3-tree-org/"
@@ -202,6 +204,9 @@ const onNodeClick = (e: MouseEvent, data: any) => {
 @use "@styles/mixins/bem" as *;
 
 @include b(org-tree-demo) {
+  width: 100%;
+  height: 100%;
+
   .tree-org-node__text {
     font-size: 14px;
     text-align: left;

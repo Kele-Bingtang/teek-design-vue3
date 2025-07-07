@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Check, Close } from "@element-plus/icons-vue";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "Pricing" });
+
+const ns = useNamespace("pricing");
 
 interface Feature {
   text: string;
@@ -83,21 +86,21 @@ const pricingPlans = ref<PricingPlan[]>([
 </script>
 
 <template>
-  <div class="pricing-container">
-    <div class="pricing-header">
+  <div :class="ns.b()">
+    <div :class="ns.e('header')">
       <h1 class="title">超过 53,476 位信赖的开发者</h1>
       <h2 class="subtitle">以及众多科技巨头的选择</h2>
-      <div class="free-notice">
+      <div :class="ns.e('free-notice')">
         <p class="notice-text">本项目基于 MIT 协议开源免费，当前页面为定价模板，仅作演示用途</p>
         <ElTag type="success" size="large" round>免费商用</ElTag>
       </div>
     </div>
 
-    <div class="pricing-cards">
+    <div :class="ns.e('cards')">
       <el-row :gutter="20" justify="center">
         <el-col v-for="plan in pricingPlans" :key="plan.type" :xs="24" :sm="12" :md="6">
-          <ElCard class="pricing-card" :class="{ popular: plan.isPopular }" shadow="never">
-            <div class="card-header">
+          <el-card :class="[ns.e('card'), ns.is('popular', plan.isPopular)]" shadow="never">
+            <div :class="ns.e('card-header')">
               <h3>{{ plan.title }}</h3>
               <p class="description">{{ plan.description }}</p>
               <div class="price">
@@ -106,7 +109,7 @@ const pricingPlans = ref<PricingPlan[]>([
               </div>
             </div>
 
-            <div class="features">
+            <div :class="ns.e('features')">
               <div v-for="(feature, index) in plan.features" :key="index" class="feature-item">
                 <el-icon :class="feature.available ? 'available' : 'unavailable'">
                   <Check v-if="feature.available" />
@@ -116,10 +119,10 @@ const pricingPlans = ref<PricingPlan[]>([
               </div>
             </div>
 
-            <div class="card-footer">
+            <div :class="ns.e('footer')">
               <el-button type="primary" class="purchase-btn" v-waves>立即购买</el-button>
             </div>
-          </ElCard>
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -127,14 +130,15 @@ const pricingPlans = ref<PricingPlan[]>([
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/function";
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
-.pricing-container {
-  padding: 6rem 5rem 0;
+@include b(pricing) {
+  padding: 2rem;
   background-color: transparent !important;
   border: none !important;
 
-  .pricing-header {
+  @include e(header) {
     margin-bottom: 40px;
     text-align: center;
 
@@ -150,7 +154,7 @@ const pricingPlans = ref<PricingPlan[]>([
       color: #666666;
     }
 
-    .free-notice {
+    @include e(free-notice, true) {
       display: flex;
       gap: 8px;
       align-items: center;
@@ -165,20 +169,20 @@ const pricingPlans = ref<PricingPlan[]>([
     }
   }
 
-  .pricing-cards {
+  @include e(cards) {
     margin-top: 80px;
 
     .#{$el-namespace}-col {
       margin-bottom: 20px;
     }
 
-    .pricing-card {
+    @include e(card, true) {
       display: flex;
       flex-direction: column;
       height: 100%;
       border-radius: 10px;
 
-      &.popular {
+      @include is(popular) {
         position: relative;
         border: 2px solid cssVarEl(color-primary);
 
@@ -195,7 +199,7 @@ const pricingPlans = ref<PricingPlan[]>([
         }
       }
 
-      .card-header {
+      @include e(card-header, true) {
         margin-bottom: 20px;
 
         h3 {
@@ -233,7 +237,7 @@ const pricingPlans = ref<PricingPlan[]>([
         }
       }
 
-      .features {
+      @include e(features) {
         flex-grow: 1;
         margin-bottom: 20px;
 
@@ -257,7 +261,7 @@ const pricingPlans = ref<PricingPlan[]>([
         }
       }
 
-      .card-footer {
+      @include e(footer) {
         margin-top: auto;
         text-align: center;
 

@@ -58,6 +58,8 @@ const timeline = [
 
 <style lang="scss">
 .timeline-container {
+  padding: 10px;
+
   .#{$el-namespace}-timeline-item:first-child {
     .#{$el-namespace}-timeline-item__icon {
       animation: rotating 2s linear infinite;

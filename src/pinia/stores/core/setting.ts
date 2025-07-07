@@ -9,14 +9,15 @@ import {
   TabNavModeEnum,
 } from "@/common/enums/appEnum";
 import SystemConfig from "@/common/config";
-import { cacheOperator, localStorageProxy } from "@/common/utils";
+import { cacheOperator, getCssVar, localStorageProxy } from "@/common/utils";
+import { useNamespace } from "@/composables";
 
 export const useSettingStore = defineStore(
   "settingStore",
   () => {
     const { themeConfig } = SystemConfig;
 
-    const primaryColor = ref(themeConfig.primaryColor);
+    const primaryColor = ref(themeConfig.primaryColor ?? getCssVar(useNamespace().cssVar("color-primary")));
     const titleMode = ref(themeConfig.titleMode);
     const layoutMode = ref(themeConfig.layoutMode || LayoutModeEnum.Classic);
     const tabNavMode = ref(themeConfig.tabNavMode || TabNavModeEnum.Simple);

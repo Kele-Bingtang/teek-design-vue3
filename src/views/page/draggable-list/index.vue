@@ -24,7 +24,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
 
 <template>
   <el-space fill :class="ns.b()">
-    <el-card>
+    <el-card class="tk-card-minimal">
       <div :class="ns.e('box')">
         <DraggableList :left-list="listData1" :right-list="listData2" :drag-class="dragClass" @on-change="handleChange">
           <template #leftTitle>
@@ -70,7 +70,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
       </el-card>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="leftList">左侧宽度侧数据。`DragList[]` 类型，默认为 `[]`</el-descriptions-item>
         <el-descriptions-item label="rightList">右侧数据。`DragList[]` 类型，默认为 `[]`</el-descriptions-item>
@@ -85,7 +85,7 @@ const handleChange = ({ src, target, oldIndex, newIndex }: any) => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="onChange">
           拖拽改变事件。`(value: { src: string; target: string; oldIndex: number; newIndex: number }) => void` 类型

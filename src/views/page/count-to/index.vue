@@ -104,8 +104,8 @@ const reset = () => {
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <el-card shadow="never" style="margin-bottom: 10px">
+  <el-space fill :class="ns.b()">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <el-link
           href="https://github.com/inorganik/countUp.js"
@@ -120,7 +120,7 @@ const reset = () => {
 
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-card shadow="hover">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>基础用法</span>
           </template>
@@ -131,7 +131,7 @@ const reset = () => {
       </el-col>
 
       <el-col :span="5">
-        <el-card shadow="hover">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>添加前缀和后缀</span>
           </template>
@@ -142,7 +142,7 @@ const reset = () => {
       </el-col>
 
       <el-col :span="7">
-        <el-card shadow="hover">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>保留 2 位小数点 & 循环三次</span>
           </template>
@@ -153,7 +153,7 @@ const reset = () => {
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="hover">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>动画持续 10 秒</span>
           </template>
@@ -173,7 +173,7 @@ const reset = () => {
 
     <el-row :gutter="20" class="count-to-row">
       <el-col :span="8">
-        <el-card shadow="hover" style="height: 270px">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>单位转换（自带）</span>
           </template>
@@ -204,7 +204,7 @@ const reset = () => {
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="hover">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>自定义单位</span>
           </template>
@@ -243,7 +243,7 @@ const reset = () => {
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="hover" style="height: 270px">
+        <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>异步更新数据</span>
           </template>
@@ -255,7 +255,7 @@ const reset = () => {
     </el-row>
 
     <el-row class="count-to-row">
-      <el-card shadow="hover">
+      <el-card shadow="hover" class="tk-card-minimal">
         <template #header>
           <span>
             完整 Demo： &lt;CountTo :start-val=&#x27;{{ startVal }}&#x27; :end-val=&#x27;{{ endVal }}&#x27;
@@ -314,7 +314,7 @@ const reset = () => {
       </el-card>
     </el-row>
 
-    <el-card shadow="never" style="margin-top: 10px">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="init">
           初始值，后面会被 startVal 覆盖。`number` 类型，默认为 `0`
@@ -363,14 +363,14 @@ const reset = () => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never" style="margin-top: 10px">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="init">初始化后事件。`(counter: CountUp) => void` 类型</el-descriptions-item>
         <el-descriptions-item label="finished">数字渐变结束事件。`() => void` 类型</el-descriptions-item>
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never" style="margin-top: 10px">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Expose 参数 📚" :column="1" border>
         <el-descriptions-item label="restart">重启数字渐变函数。`(counter: CountUp) => void` 类型</el-descriptions-item>
         <el-descriptions-item label="pause">暂停数字渐变函数。`() => void` 类型</el-descriptions-item>
@@ -378,17 +378,13 @@ const reset = () => {
         <el-descriptions-item label="init">初始化数字渐变函数。`() => void` 类型</el-descriptions-item>
       </el-descriptions>
     </el-card>
-  </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>
 @use "@styles/mixins/bem" as *;
 
 @include b(count-to-demo) {
-  .count-to-row {
-    margin-top: 20px;
-  }
-
   .count-to-content {
     text-align: center;
   }

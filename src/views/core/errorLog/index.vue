@@ -1,11 +1,16 @@
 <script setup lang="ts" name="ErrorLog">
+import { computed, reactive, ref } from "vue";
+import { useNamespace } from "@/composables";
 import { useErrorLogStore, type ErrorLog } from "@/pinia";
-import { computed, onActivated, onMounted, reactive, ref } from "vue";
+import { ProDialog } from "@/components";
+
+const ns = useNamespace("error-log");
 
 const errorStore = useErrorLogStore();
 const dialogErrorStackVisible = ref(false);
 
 let clickCurrentRow = reactive<ErrorLog>({
+  id: "",
   error: undefined,
   info: "",
   url: "",
@@ -14,18 +19,9 @@ let clickCurrentRow = reactive<ErrorLog>({
 
 const errorLogs = computed(() => errorStore.errorLogs);
 
-onMounted(() => {
-  errorStore.setHasReadErrorLogsStatus(true);
-});
-
-onActivated(() => {
-  errorStore.setHasReadErrorLogsStatus(true);
-});
-
 const getViewTime = (timestamp: number | undefined) => {
-  if (!timestamp) {
-    return;
-  }
+  if (!timestamp) return;
+
   const date = new Date(timestamp);
   const Y = date.getFullYear();
   const M = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -37,18 +33,32 @@ const getViewTime = (timestamp: number | undefined) => {
   return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
 };
 
+/**
+ * 删除全部错误日志
+ */
 const clearAll = () => {
   errorStore.clearErrorLog();
 };
 
+/**
+ * 查看一条错误日志
+ */
 const handleClick = (row: ErrorLog) => {
   clickCurrentRow = row;
   dialogErrorStackVisible.value = true;
+  errorStore.readOneErrorLog(row.id);
 };
 
+/**
+ * 删除一条错误日志
+ */
 const handleDelete = (row: ErrorLog) => {
   errorStore.deleteOneErrorLog(row);
 };
+
+/**
+ * 添加一条错误日志
+ */
 const addErrorLog = () => {
   const letters = [
     "a",
@@ -85,24 +95,28 @@ const addErrorLog = () => {
 </script>
 
 <template>
-  <div class="error-log-container">
+  <div :class="[ns.b(), 'tk-card-minimal']">
     <el-alert
-      title="注意：页面错误日志不会在浏览器持久化存储，刷新页面即会丢失"
-      description="如果你在本页面添加错误日志，那么右上角的红色文字不会变成 0，您需要离开该页面，再重新进入，才会将红色数字置为 0，代表已读"
+      title="注意：错误日志不会在浏览器持久化存储，刷新页面即会丢失，如果需要，请在生产环境接入后端持久化存储"
       type="warning"
       :closable="false"
-      style="margin-bottom: 10px"
     ></el-alert>
-    <el-button type="primary" @click="addErrorLog" style="margin-bottom: 10px">添加一条错误日志</el-button>
-    <el-popconfirm placement="right" title="您确定删除全部日志吗？" @confirm="clearAll">
-      <template #reference>
-        <el-button type="danger" :disabled="errorLogs.length === 0" style="margin-bottom: 10px">删除全部</el-button>
-      </template>
-    </el-popconfirm>
+
+    <div style="margin: 16px 0">
+      <el-button type="success" @click="errorStore.readAllErrorLogs(true)">全部已读</el-button>
+      <el-button type="primary" @click="addErrorLog">添加一条错误日志</el-button>
+
+      <el-popconfirm placement="right" title="您确定删除全部日志吗？" @confirm="clearAll">
+        <template #reference>
+          <el-button type="danger" :disabled="errorLogs.length === 0">删除全部</el-button>
+        </template>
+      </el-popconfirm>
+    </div>
+
     <el-table :data="errorLogs" border>
-      <el-table-column type="index" label="序号" width="50"></el-table-column>
-      <el-table-column prop="err.name" label="名字" width="220px"></el-table-column>
-      <el-table-column prop="err.message" label="信息" width="280px"></el-table-column>
+      <el-table-column type="index" label="#" width="50"></el-table-column>
+      <el-table-column prop="error.name" label="名字" width="220px"></el-table-column>
+      <el-table-column prop="error.message" label="信息" width="280px"></el-table-column>
       <el-table-column prop="url" label="URL" width="380px"></el-table-column>
       <el-table-column prop="info" label="位置">
         <template #default="{ row }">
@@ -117,6 +131,11 @@ const addErrorLog = () => {
           {{ getViewTime(row.time) }}
         </template>
       </el-table-column>
+      <el-table-column prop="hasRead" label="状态" width="180px">
+        <template #default="{ row }">
+          <el-tag :type="row.hasRead ? 'success' : 'danger'">{{ row.hasRead ? "已读" : "未读" }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="190px">
         <template #default="{ row }">
           <el-button type="primary" @click="handleClick(row)">查看</el-button>
@@ -129,7 +148,7 @@ const addErrorLog = () => {
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dialogErrorStackVisible" title="错误信息" width="50%" append-to-body>
+    <ProDialog v-model="dialogErrorStackVisible" title="错误信息" width="70%" top="10vh">
       <el-table :data="[clickCurrentRow]" border>
         <el-table-column label="name" width="160px">
           <template #default="{ row }">
@@ -152,6 +171,6 @@ const addErrorLog = () => {
           </template>
         </el-table-column>
       </el-table>
-    </el-dialog>
+    </ProDialog>
   </div>
 </template>

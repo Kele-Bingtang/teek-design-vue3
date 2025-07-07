@@ -1,3 +1,5 @@
+import type { SystemInfo, LayoutConfig, SystemConfig, ThemeConfig, RouterConfig, KeyConfig } from "./types";
+
 import {
   HeaderStyleEnum,
   LanguageEnum,
@@ -9,7 +11,6 @@ import {
   TabNavModeEnum,
   TitleModeEnum,
 } from "@/common/enums/appEnum";
-import type { SystemInfo, LayoutConfig, SystemConfig, ThemeConfig, RouterConfig, KeyConfig } from "./types";
 
 const systemInfo: SystemInfo = {
   name: "Teek Design Pro",
@@ -45,7 +46,7 @@ const themeConfig: ThemeConfig = {
 };
 
 const layoutConfig: LayoutConfig = {
-  errorLog: { showInHeader: true, env: [""] },
+  errorLog: { showInHeader: true, env: [] },
   moreRouteChildrenHideInMenuThenOnlyOne: false,
   tooltipEffect: "light",
   layoutSize: LayoutSizeEnum.Default,

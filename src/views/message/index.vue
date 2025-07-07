@@ -120,7 +120,7 @@ const handleOperate = (message: MessageItem) => {
 
 <template>
   <div :class="ns.b()">
-    <el-card :class="ns.e('card')">
+    <el-card :class="[ns.e('card'), 'tk-card-minimal']">
       <div :class="[ns.e('page'), ns.e('category')]">
         <el-menu default-active="unread" @select="handleCategorySelect">
           <el-menu-item index="unread">

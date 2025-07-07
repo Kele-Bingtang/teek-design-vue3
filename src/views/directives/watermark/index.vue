@@ -1,13 +1,14 @@
 <script setup lang="ts" name="Watermark"></script>
 
 <template>
-  <el-space fill>
+  <el-space fill alignment="normal" style="width: 100%; height: 100%">
     <el-card
       shadow="never"
       header="自定义水印指令"
       v-waterMarker="{ text: 'Teek Design Vue3', fontSize: '16px', textColor: 'rgba(180, 180, 180, 0.6)' }"
+      class="tk-card-minimal"
     >
-      <p>
+      <p style="margin-bottom: 16px">
         在标签上加 v-waterMarker="{ text: 'Teek Design Vue3', fontSize: '16px', textColor: 'rgba(180, 180, 180, 0.6)' }"
       </p>
       <el-descriptions title="配置项 📚" :column="1" border>

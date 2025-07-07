@@ -33,8 +33,8 @@ const rules = {
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <el-card class="box-card">
+  <el-space fill alignment="normal" :class="ns.b()">
+    <el-card class="tk-card-minimal">
       <template #header>
         <span>原生动画按钮</span>
       </template>
@@ -65,7 +65,7 @@ const rules = {
 
     <el-row :gutter="20" style="margin-top: 20px">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" class="mixin-col">
-        <el-card class="box-card">
+        <el-card class="tk-card-minimal">
           <template #header>
             <span>Material Design 的 input</span>
           </template>
@@ -88,7 +88,7 @@ const rules = {
       </el-col>
 
       <el-col :xs="24" :sm="12" :md="8" :lg="6" class="mixin-col">
-        <el-card class="box-card">
+        <el-card class="tk-card-minimal">
           <template #header>
             <span>水波纹 v-waves</span>
           </template>
@@ -102,7 +102,7 @@ const rules = {
       </el-col>
 
       <el-col :xs="24" :sm="12" :md="8" :lg="6" class="mixin-col">
-        <el-card class="box-card">
+        <el-card class="tk-card-minimal">
           <template #header>
             <span>悬停文本</span>
           </template>
@@ -112,7 +112,7 @@ const rules = {
         </el-card>
       </el-col>
     </el-row>
-  </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>

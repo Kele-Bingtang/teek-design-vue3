@@ -20,18 +20,18 @@ const handleCancel = () => {
   console.log("cancel clicked");
 };
 
-const PresetBanners = {
+const presetBanners = {
   marketing: {
     title: "限时优惠活动",
     subtitle: "精选商品 48 小时闪购，最高享受 7 折优惠，数量有限！",
     titleColor: ns.cssVar("gray-900"),
     subtitleColor: ns.cssVar("gray-900"),
-    backgroundColor: `rgb(${ns.cssVar("success-rbg")}, 0.1)`,
+    backgroundColor: `rgb(${ns.cssVar("success-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {
       show: true,
       text: "立即抢购",
-      color: `rgb(${ns.cssVar("success-rbg")}, 0.9)`,
+      color: `rgb(${ns.cssVar("success-rgb")}, 0.9)`,
       textColor: "#fff",
     },
   },
@@ -40,12 +40,12 @@ const PresetBanners = {
     subtitle: "您的高级服务将在 7 天后到期，请及时续费以继续享受完整功能。",
     titleColor: ns.cssVar("gray-900"),
     subtitleColor: ns.cssVar("gray-900"),
-    backgroundColor: `rgb(${ns.cssVar("primary-rbg")}, 0.1)`,
+    backgroundColor: `rgb(${ns.cssVar("primary-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {
       show: true,
       text: "立即续费",
-      color: `rgb(${ns.cssVar("secondary-rbg")}, 0.9)`,
+      color: `rgb(${ns.cssVar("secondary-rgb")}, 0.9)`,
       textColor: "#fff",
     },
   },
@@ -132,10 +132,10 @@ const PresetBanners = {
       <h1 class="page-title">抽象配置方案（Preset 模式）</h1>
       <el-row :gutter="20">
         <el-col :xs="24" :sm="12" :md="12">
-          <BannerCard v-bind="PresetBanners.marketing" />
+          <BannerCard v-bind="presetBanners.marketing" />
         </el-col>
         <el-col :xs="24" :sm="12" :md="12">
-          <BannerCard v-bind="PresetBanners.info" />
+          <BannerCard v-bind="presetBanners.info" />
         </el-col>
       </el-row>
     </div>

@@ -25,7 +25,7 @@ const disabledClick = () => {
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <el-space fill>
     <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <div>
@@ -108,5 +108,5 @@ const disabledClick = () => {
         </el-col>
       </el-row>
     </el-card>
-  </div>
+  </el-space>
 </template>

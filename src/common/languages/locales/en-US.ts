@@ -30,7 +30,6 @@ export default {
     QrCodeDemo: "QrCode",
     UploadImagesDemo: "Upload Images",
     SeamlessScrollDemo: "Seamless Scroll",
-    ImageViewerDemo: "Image Viewer",
     HighlightDemo: "Text Highlight",
     VideoPlayerDemo: "Video Player",
 
@@ -72,6 +71,7 @@ export default {
     EditProDescriptions: "Edit ProDescriptions",
     ProDialog: "Pro Dialog",
     ProDrawer: "Pro Drawer",
+    ProImageViewer: "Pro ImageViewer",
     ProTreeFilter: "Pro TreeFilter",
     ProSteps: "Pro Steps",
     SimpleProSteps: "Simple ProSteps",

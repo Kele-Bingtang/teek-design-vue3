@@ -11,6 +11,8 @@ defineProps<{ menus: menusItemType[] }>();
 </template>
 
 <style lang="scss" scoped>
+@use "@styles/mixins/function" as *;
+
 .directive-component {
   display: flex;
   align-items: center;

@@ -17,7 +17,7 @@ watch(
 </script>
 
 <template>
-  <div class="checkbox-container" style="margin-bottom: 10px">
+  <div>
     <el-checkbox-group v-model="checkboxVal">
       <el-checkbox value="date">date</el-checkbox>
       <el-checkbox value="address">address</el-checkbox>

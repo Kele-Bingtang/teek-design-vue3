@@ -28,7 +28,7 @@ const againOpenDialog = () => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="useDialog 组件">
+    <el-card shadow="never" header="useDialog 组件" class="tk-card-minimal">
       <el-button @click="openDialog()">函数式打开 Dialog 组件</el-button>
 
       <el-button @Click="visible = true">组件式打开 Dialog 组件</el-button>
@@ -36,7 +36,7 @@ const againOpenDialog = () => {
       <ProDialog v-model="visible" height="300">我是通过 modelValue 打开的 Dialog 组件</ProDialog>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="useDialog 函数配置项 📚" :column="1" border>
         <el-descriptions-item label="open">
           打开 Dialog 的函数，需要传入参数，详情请看「open 函数配置项 」
@@ -90,7 +90,7 @@ const againOpenDialog = () => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="ProDialog 组件配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Dialog。`boolean` 类型，必传</el-descriptions-item>
         <el-descriptions-item label="title">Dialog 标题。`string` 类型</el-descriptions-item>

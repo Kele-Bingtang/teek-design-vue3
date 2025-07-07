@@ -22,7 +22,7 @@ const { userInfo } = storeToRefs(userStore);
       </el-col>
 
       <el-col :span="18" :xs="24">
-        <el-card>
+        <el-card shadow="never" class="tk-card-minimal">
           <el-tabs v-model="activeTab">
             <el-tab-pane label="时间线" name="timeline">
               <Timeline />

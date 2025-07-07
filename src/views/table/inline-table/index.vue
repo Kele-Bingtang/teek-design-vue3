@@ -35,7 +35,7 @@ const confirmEdit = (row: any) => {
 </script>
 
 <template>
-  <div class="inline-table-container">
+  <div class="inline-table-container tk-card-minimal">
     <p>
       目前仅
       <span style="color: red">标题</span>
@@ -83,8 +83,9 @@ const confirmEdit = (row: any) => {
 
 <style lang="scss" scoped>
 .inline-table-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
+  p {
+    margin-bottom: 16px;
+  }
 
   .edit-input {
     padding-right: 100px;

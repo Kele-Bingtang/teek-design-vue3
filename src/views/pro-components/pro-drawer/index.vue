@@ -23,7 +23,7 @@ const againOpenDrawer = () => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="useDrawer 组件">
+    <el-card shadow="never" header="useDrawer 组件" class="tk-card-minimal">
       <el-button @click="openDrawer()">函数式打开 Drawer</el-button>
 
       <el-button @Click="visible = true">组件式打开 Drawer 组件</el-button>
@@ -31,7 +31,7 @@ const againOpenDrawer = () => {
       <ProDrawer v-model="visible">我是通过 modelValue 打开的 Drawer 组件</ProDrawer>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="useDrawer 函数配置项 📚" :column="1" border>
         <el-descriptions-item label="open">
           打开 Drawer 的函数，需要传入参数，详情请看「open 函数配置项 」
@@ -79,7 +79,7 @@ const againOpenDrawer = () => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="ProDrawer 组件配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Drawer。`boolean` 类型，必穿</el-descriptions-item>
         <el-descriptions-item label="title">Drawer 标题。`string` 类型，默认为 `""`</el-descriptions-item>

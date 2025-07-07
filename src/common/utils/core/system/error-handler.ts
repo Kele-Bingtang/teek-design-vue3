@@ -1,5 +1,5 @@
 import { ElNotification } from "element-plus";
-import { isArray } from "@/common/utils";
+import { isArray, useSimpleUuid } from "@/common/utils";
 import { useErrorLogStore } from "@/pinia";
 import SystemConfig from "@/common/config";
 
@@ -8,9 +8,9 @@ import SystemConfig from "@/common/config";
  */
 export const checkNeed = () => {
   const { env } = SystemConfig.layoutConfig.errorLog;
-  const node_env = import.meta.env.MODE;
+  const nodeEnv = import.meta.env.MODE;
 
-  if (isArray(env) && node_env) return env.includes(node_env);
+  if (isArray(env) && nodeEnv) return env.includes(nodeEnv);
   return false;
 };
 
@@ -22,6 +22,7 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
 
   const errorStore = useErrorLogStore();
   errorStore.addErrorLog({
+    id: useSimpleUuid(),
     error,
     vm,
     info,

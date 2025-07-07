@@ -55,9 +55,9 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <el-space fill :class="ns.b()">
     <!-- 单图上传 -->
-    <div :class="[ns.e('card'), ns.e('box')]">
+    <div class="flx-column-center tk-card-minimal">
       <h2>单图片上传组件 🍓🍇🍈🍉</h2>
       <div :class="ns.e('list')">
         <ImageUpload v-model="avatar1" @upload-img="uploadImg" :fileSize="3">
@@ -123,7 +123,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
     </div>
 
     <!-- 多图上传 -->
-    <div :class="[ns.e('card'), ns.e('box')]">
+    <div class="flx-column-center tk-card-minimal">
       <h2>多图片上传组件 🍓🍇🍈🍉</h2>
       <div :class="ns.e('list')">
         <ImageUpload v-model="fileList" @upload-img="uploadImg" :drag="false" border-radius="50%">
@@ -163,7 +163,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
 
     <!-- 表单使用 -->
     <div :class="ns.e('form')">
-      <div :class="ns.em('form', 'card')">
+      <div :class="[ns.em('form', 'card'), 'tk-card-minimal', 'flx-column-center']">
         <el-alert
           title="图片上传组件在 form 表单中使用，上传之后成功会自动重新校验"
           type="warning"
@@ -218,7 +218,8 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
           </el-form-item>
         </el-form>
       </div>
-      <div :class="ns.em('form', 'card')">
+
+      <div :class="[ns.em('form', 'card'), 'tk-card-minimal', 'flx-column-center']">
         <el-alert
           title="图片上传组件在 form 表单中使用，如果该表单禁用，则上传组件会自动禁用"
           type="warning"
@@ -273,7 +274,7 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
         </el-form>
       </div>
     </div>
-  </div>
+  </el-space>
 </template>
 
 <style lang="scss" scoped>
@@ -282,18 +283,9 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
 @include b(images-upload-demo) {
   height: auto;
 
-  @include e(card) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  :deep(.#{$el-namespace}-descriptions) {
     width: 100%;
-    padding: 20px;
-    background-color: #ffffff;
-
-    :deep(.#{$el-namespace}-descriptions) {
-      width: 100%;
-      padding: 40px 0 0;
-    }
+    padding: 40px 0 0;
   }
 
   @include e(list) {
@@ -304,19 +296,12 @@ const uploadImg = async (file: File, callback: SuccessFun) => {
     margin: 10px 0;
   }
 
-  @include e(box) {
-    margin-bottom: 10px;
-  }
-
   @include e(form) {
     display: flex;
     justify-content: space-around;
     width: 100%;
 
     @include m(card) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       width: 100%;
       padding: 20px;
       margin-right: 10px;

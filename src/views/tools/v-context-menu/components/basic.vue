@@ -41,6 +41,8 @@ const vContextmenu = directive;
 </template>
 
 <style lang="scss" scoped>
+@use "@styles/mixins/function" as *;
+
 .basic-component {
   display: flex;
   align-items: center;

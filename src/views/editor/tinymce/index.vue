@@ -12,6 +12,9 @@ const theme = ref<UITheme>("default");
 
 const { language } = storeToRefs(layoutStore);
 
+// 是否已上传图片
+const hasUploadImage = ref(false);
+
 onActivated(() => {
   tinymceActive.value = true;
 });
@@ -53,22 +56,25 @@ const handleImgUpload = async (blobInfo: any, success: (value: unknown) => void,
   //   failure("上传文件只能是 jpg、png 格式!");
   //   return false;
   // }
+
   if (!isLt2M) {
     failure("上传失败，图片不可超过 10M!");
     return false;
   }
 
-  /**
-   * 模拟本地批量上传图片，实际应该上传到云端，则下面的 if 需要去掉（单个图片上传时，length 大于 2，只有批量上传，才等于 2）
-   * 批量上传只是类似于 for 循环调用该 handleImgUpload 函数，所以实际的云端批量上传，直接把下面的 if 去掉即可
-   */
-  // if (Object.keys(blobInfo).length === 2) {
-  //   const { blobInfo: b, file: f } = await uploadLocal(blobFile);
+  // 批量上传等于 for 循环调用该 handleImgUpload 函数
+  // if ("file" in blobInfo) {
+  //   const { blobInfo: b } = await uploadLocal(blobInfo.file);
+  //   console.log(b.blobUri());
   //   success(b.blobUri());
   // }
-  // const { blobInfo: b } = await uploadLocal(blobFile);
-  // console.log(b.blobUri());
-  // success(b.blobUri());
+
+  if (!hasUploadImage.value) {
+    const { blobInfo: b } = await uploadLocal(blobFile);
+    success(b.blobUri());
+    hasUploadImage.value = true;
+  } else hasUploadImage.value = false;
+
   // 上传服务器
   // let formData = new FormData();
   // formData.append("file", blobInfo.blob());
@@ -101,28 +107,26 @@ const handleFileUpload = async (
   callback: (uri: string, meta?: { text?: string; title?: string }) => void
 ) => {
   if (filetype === "image") {
+    // 图片
     if (file.type && !file.type.startsWith("image")) {
       ElMessage.error("请上传图片！");
       return;
     }
-    /**
-     * 这里不应该上传图片到云端，因为执行完 callback，就会执行 @img-upload 回调，所以请在 @img-upload 的回调函数上传到云端
-     * 为了演示 Demo，这里仅仅是上传到本地浏览器，如果上传云端，则在 @img-upload 回调执行逻辑，这里就不进行 if 判断逻辑处理
-     */
+    // 本地上传
     const { blobInfo, file: f } = await uploadLocal(file);
-    console.log(blobInfo);
+    hasUploadImage.value = true;
     callback(blobInfo.blobUri(), { text: f.name, title: f.name });
   } else if (filetype === "media") {
+    // 媒体，如视频
     const isValid = await validateVideo(file);
     if (isValid) {
       // 本地上传
       const { blobInfo, file: f } = await uploadLocal(file);
       callback(blobInfo.blobUri(), { text: f.name, title: f.name });
-      // 云端上传
-      // const { url, name } = await uploadFile(file, "video");
-      // callback(url, { title: name });
     }
   } else if (filetype === "file") {
+    // 文件
+    // 本地上传
     const { blobInfo, file: f } = await uploadLocal(file);
     callback(blobInfo.blobUri(), { text: f.name, title: f.name });
   }
@@ -172,7 +176,7 @@ const validateVideo = async (file: File) => {
 };
 /**
  * 获取视频时长
- * @param {File} file - 要上传的文件
+ * @param file - 要上传的文件
  */
 const getVideoDuration = (file: File): Promise<number> => {
   return new Promise(resolve => {
@@ -186,8 +190,8 @@ const getVideoDuration = (file: File): Promise<number> => {
 };
 /**
  * 上传文件
- * @param {File} file - 要上传的文件
- * @param {string} folder - 所存放的文件夹，如果你的服务器没有该配置，则不需要传
+ * @param file - 要上传的文件
+ * @param folder - 所存放的文件夹，如果你的服务器没有该配置，则不需要传
  */
 // const uploadFile = async (file: any, folder = "video") => {
 // const formData = new FormData();
@@ -266,6 +270,10 @@ const getVideoDuration = (file: File): Promise<number> => {
           true：编辑器可以垂直移动；false：编辑器无法移动；both：编辑器垂直和水平都可以移动。`true | false | "both"`
           类型，默认 `true`
         </el-descriptions-item>
+        <el-descriptions-item label="tinymceProps">
+          编辑器额外的配置项。`Recordable` 类型，默认 `{}`
+        </el-descriptions-item>
+        <el-descriptions-item label="bodyClass">编辑器内自定义 class。`string` 类型，默认 `""`</el-descriptions-item>
       </el-descriptions>
     </el-card>
 

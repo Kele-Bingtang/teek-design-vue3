@@ -1,4 +1,5 @@
 <script setup lang="ts" name="TreeFilterDemo">
+import type { TreeKey } from "element-plus";
 import { ElMessage } from "element-plus";
 import { TreeFilter } from "@/components";
 import { useNamespace } from "@/composables";
@@ -11,16 +12,16 @@ interface Tree {
   children?: Tree[];
 }
 
-const treeFilterValue = reactive({ departmentId: "1" });
-const changeTreeFilter = (val: string) => {
+const treeFilterValue = reactive<{ departmentId: string }>({ departmentId: "1" });
+const changeTreeFilter = (val: string | TreeKey[]) => {
   ElMessage.success(`你选择了 id 为 ${val} 的数据🤔`);
-  treeFilterValue.departmentId = val;
+  treeFilterValue.departmentId = val as string;
 };
 
-const treeFilterValue1 = reactive({ departmentId: ["11"] });
-const changeTreeFilter1 = (val: string[]) => {
+const treeFilterValue1 = reactive<{ departmentId: TreeKey[] }>({ departmentId: ["11"] });
+const changeTreeFilter1 = (val: string | TreeKey[]) => {
   ElMessage.success(`你选择了 id 为 ${JSON.stringify(val)} 的数据🤔`);
-  treeFilterValue1.departmentId = val;
+  treeFilterValue1.departmentId = val as TreeKey[];
 };
 
 const data: Tree[] = [
@@ -92,7 +93,7 @@ const data: Tree[] = [
       :defaultValue="treeFilterValue1.departmentId"
       @change="changeTreeFilter1"
     />
-    <el-card :class="ns.e('descriptions')">
+    <el-card :class="[ns.e('descriptions'), 'tk-card-minimal']">
       <h2>树形筛选器 🍓🍇🍈🍉</h2>
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="requestApi">请求分类数据的 api</el-descriptions-item>

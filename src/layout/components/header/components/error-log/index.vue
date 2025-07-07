@@ -14,9 +14,7 @@ const props = defineProps<{ errorCount: number }>();
  * 打开错误日志页面
  */
 const openErrorLogger = () => {
-  if (route.path !== "/error-log") {
-    router.push("/error-log");
-  }
+  if (route.path !== "/error-log") router.push("/error-log");
 };
 </script>
 

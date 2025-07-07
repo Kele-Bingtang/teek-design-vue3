@@ -373,8 +373,8 @@ const directives = [
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never" class="v-menus-container">
+  <el-space fill style="width: 100%">
+    <el-card shadow="never" class="v-menus-container tk-card-minimal">
       <template #header>
         <span class="font-medium">
           <el-link
@@ -441,6 +441,12 @@ const directives = [
     font-size: 16px;
     font-weight: 700;
     color: #000000;
+  }
+
+  h2 {
+    margin: 16px 0;
+    font-size: 22px;
+    font-weight: 700;
   }
 }
 </style>

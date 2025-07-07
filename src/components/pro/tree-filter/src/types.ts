@@ -1,3 +1,4 @@
+import type { TreeKey } from "element-plus";
 import TreeFilter from "./index.vue";
 
 export interface TreeFilterProps {
@@ -54,7 +55,7 @@ export interface TreeFilterProps {
 }
 
 export type FilterEmits = {
-  change: [value: unknown, data?: Recordable];
+  change: [value: string | TreeKey[], data?: Recordable];
 };
 
 export type TreeFilterInstance = InstanceType<typeof TreeFilter>;

@@ -8,15 +8,22 @@ import { ref, reactive, computed, onMounted, nextTick } from "vue";
 import { formatTitle } from "@/router/helper";
 
 interface Role {
-  key: number; // 角色 id
-  name: string; // 角色姓名
-  description: string; // 角色描述
-  routes: RouterConfigRaw[]; // 角色路由
+  /** 角色 ID */
+  key: number;
+  /** 角色姓名 */
+  name: string;
+  /** 角色描述 */
+  description: string;
+  /** 角色路由 */
+  routes: RouterConfigRaw[];
 }
 
 interface RoutesTreeData {
+  /** 子节点 */
   children: RoutesTreeData[];
+  /** 标题 */
   title: string;
+  /** 路径 */
   path: string;
 }
 

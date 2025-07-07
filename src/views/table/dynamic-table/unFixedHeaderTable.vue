@@ -6,7 +6,7 @@ const formThead = ref(["date", "address"]);
 </script>
 
 <template>
-  <div class="checkbox-container">
+  <div>
     <el-checkbox-group v-model="formThead">
       <el-checkbox value="date">date</el-checkbox>
       <el-checkbox value="address">address</el-checkbox>

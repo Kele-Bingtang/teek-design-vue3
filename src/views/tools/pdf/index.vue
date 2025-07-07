@@ -27,8 +27,8 @@ const onPrint = () => {
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never" class="pdf-preview-container">
+  <el-space fill style="width: 100%">
+    <el-card shadow="never" class="pdf-preview-container tk-card-minimal">
       <template #header>
         <div>
           <el-link

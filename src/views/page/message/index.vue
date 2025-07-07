@@ -17,7 +17,7 @@ onMounted(() => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="Message 提示">
+    <el-card shadow="never" header="Message 提示" class="tk-card-minimal">
       <h4>element-plus 的消息提示，点击弹出提示信息</h4>
 
       <el-space wrap>
@@ -78,7 +78,7 @@ onMounted(() => {
       </el-space>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <h4>
         类似 Ant Design 风格的消息提示，点击弹出提示信息（基于 ElMessage 样式改版，不会影响 ElMessage
         原本样式，使用和打包大小成本极低并适配暗黑模式），需要加上 customClass: antd

@@ -14,8 +14,8 @@ const visible = ref(false);
 </script>
 
 <template>
-  <el-space fill>
-    <el-card shadow="never">
+  <el-space fill style="width: 100%">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <el-link
           href="https://v2.h5player.bytedance.com/gettingStarted/"
@@ -42,7 +42,7 @@ const visible = ref(false);
       <VideoPlayerViewer v-model="visible" v-bind="videoInfo" />
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="VideoPlayerViewer 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model/modelValue">
           组件式需要：是否打开视频播放器预览。`boolean` 类型，默认为 `false`

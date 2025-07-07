@@ -166,7 +166,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
 </script>
 
 <template>
-  <div class="operate-table-container">
+  <div class="operate-table-container tk-card-minimal">
     <el-button v-waves type="primary" :icon="Plus" @click="handleAdd()" style="margin-bottom: 10px">添加</el-button>
     <el-table
       :data="tableData.slice((paging.pageNum - 1) * paging.pageSize, paging.pageNum * paging.pageSize)"
@@ -301,9 +301,6 @@ const handleSizeChange = (pagingParam: PageInfo) => {
 
 <style lang="scss" scoped>
 .operate-table-container {
-  padding: 10px 12px;
-  background-color: #ffffff;
-
   .edit-input {
     padding-right: 90px;
   }
