@@ -114,7 +114,7 @@ export const showDialog = (
       <ElDialog
         modelValue
         title="弹框"
-        top="2vh"
+        top="10vh"
         width="50%"
         close-on-click-modal={false}
         draggable

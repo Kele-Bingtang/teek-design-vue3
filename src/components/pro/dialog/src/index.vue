@@ -87,7 +87,7 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
     v-model="dialogVisible"
     :title="title"
     :fullscreen="isFullscreen"
-    top="2vh"
+    top="10vh"
     width="50%"
     draggable
     :close-on-click-modal="false"
