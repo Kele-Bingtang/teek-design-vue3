@@ -1,29 +1,29 @@
+import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import { ElNotification } from "element-plus";
-import axios, {
-  type AxiosInstance,
-  AxiosError,
-  type AxiosRequestConfig,
-  type InternalAxiosRequestConfig,
-  type AxiosResponse,
-} from "axios";
+import axios from "axios";
 import qs from "qs";
 import router from "@/router";
-import { isArray, isValidURL, message } from "@/common/utils";
+import { isArray, isValidURL, message, useSimpleUuid } from "@/common/utils";
 import { useErrorLogStore, useUserStore } from "@/pinia";
 import { LOGIN_URL } from "@/common/config";
-import { showFullScreenLoading, tryHideFullScreenLoading } from "./service-loading";
+import { useNamespace } from "@/composables";
 import { ContentTypeEnum, ResultEnum } from "./http-enum";
 import { AxiosCanceler } from "./axios-cancel";
 import { checkStatus } from "./check-status";
-import { useNamespace } from "@/composables";
-
-const ns = useNamespace();
+import { showFullScreenLoading, tryHideFullScreenLoading } from "./service-loading";
 
 export interface PlusAxiosRequestConfig extends InternalAxiosRequestConfig {
+  /** 是否显示全局 loading */
   loading?: boolean;
+  /** 是否取消重复请求 */
   cancel?: boolean;
+  /** 是否映射 url */
+  mapping?: boolean;
+  /** 请求头 Content-Type 类型 */
+  type?: "form" | "file" | "json" | "info" | "multi";
 }
 
+// 请求配置
 type AxiosRequestConfigProp<D = any> = AxiosRequestConfig<D> & {
   method: "get" | "post" | "delete" | "put" | "download";
 };
@@ -32,8 +32,8 @@ const axiosCanceler = new AxiosCanceler();
 
 /**
  * 当请求 url 携带的如下前缀（key），会替换为 http（value），如接口 url 为 /test/xx/xxx，则最终发送的请求为 https://youngkbt.cn/xx/xxx
- * @condition 接口在 header 填写 mapping: true 来开启 URL 映射功能，{ headers: { mapping: true } }
- * 详细请看 README.md 文档的 API 介绍
+ *
+ * @condition 接口在请求配置第三个参数中填写 { mapping: true } 来开启 URL 映射功能
  */
 const mappingUrl: Record<string, string> = {
   default: import.meta.env.VITE_API_URL,
@@ -41,7 +41,7 @@ const mappingUrl: Record<string, string> = {
 };
 
 const config = {
-  // 默认地址请求地址，可在 .env.*** 文件中修改
+  // 默认地址请求地址，可在 .env.xxx 文件中修改
   baseURL: mappingUrl.default,
   // 设置超时时间（10s）
   timeout: ResultEnum.TIMEOUT as number,
@@ -67,16 +67,14 @@ class RequestHttp {
         config.loading ??= true;
         config.loading && showFullScreenLoading();
 
-        const userStore = useUserStore();
         // 处理 url 映射
-        config.headers?.mapping && processMappingUrl(config) && delete config.headers?.mapping;
+        config.mapping && processMappingUrl(config);
         // 处理 ContentType
-        config.params?._type && config.method?.toLocaleLowerCase() === "post" && processParamsType(config);
-        config.params?._type === "multi" && processArray(config);
-        config.params && delete config.params._type;
+        config.type && config.method?.toLocaleLowerCase() === "post" && processParamsType(config);
+        config.type === "multi" && processArray(config);
 
         // 请求头携带 Token
-        config.headers.token = userStore.accessToken;
+        config.headers.token = useUserStore().accessToken;
         return config;
       },
       (error: AxiosError) => {
@@ -96,11 +94,10 @@ class RequestHttp {
         // 在请求结束后，取消本次请求（防止下次重复请求）
         axiosCanceler.removePending(config);
 
-        const userStore = useUserStore();
         //  登陆失效（code == 401）
         if (data.code === ResultEnum.OVERDUE) {
           message.error(data.message);
-          userStore.logout();
+          useUserStore().logout();
           router.replace(LOGIN_URL);
           return Promise.reject(data);
         }
@@ -115,6 +112,7 @@ class RequestHttp {
         const { response, config } = error;
         const errorStore = useErrorLogStore();
 
+        // 在请求结束后，关闭请求 loading，取消重复请求缓存
         tryHideFullScreenLoading();
         axiosCanceler.removePending(config as PlusAxiosRequestConfig);
 
@@ -136,7 +134,7 @@ class RequestHttp {
     );
   }
 
-  // 常用请求方法封装
+  // ============================== 常用请求方法封装 ==============================
   get<T>(url: string, params?: object, _object = {}): Promise<T> {
     return this.service.get(url, { params, ..._object });
   }
@@ -153,7 +151,7 @@ class RequestHttp {
     return this.service.post(url, params, { ..._object, responseType: "blob" });
   }
 
-  // 全部方法请求封装
+  // ============================== 全部方法请求封装 ==============================
   request<T, R = any>(config: AxiosRequestConfigProp<R>): Promise<T> {
     return this.service(config) as unknown as Promise<T>;
   }
@@ -167,51 +165,57 @@ export default new RequestHttp(config);
  * @param config Axios 配置信息
  */
 const processMappingUrl = (config: InternalAxiosRequestConfig) => {
-  const keys = Object.keys(mappingUrl);
-  let url = config.url || "";
-  let prefix = "";
-  let index = url.indexOf("/");
-  // 如果 url 开头携带 /
-  if (index === 0) {
-    // 去掉开头的 /，获取后面的第二个 / 位置
-    const u = url.slice(1);
-    index = u.indexOf("/");
-    prefix = u.slice(0, index);
-    // 去掉的 / 占一个数
-    index += 1;
-  } else prefix = url.slice(0, index);
-  // 获取除 prefix 的 url
-  url = url.slice(index);
-  for (const key of keys) {
-    if (prefix === key) {
-      config.url = mappingUrl[key] + url;
-      config.baseURL = "";
-      break;
-    }
+  const url = config.url || "";
+  if (!url.startsWith("/")) return config;
+
+  // 去除开头的 /
+  const urlWithoutSlash = url.slice(1);
+  const firstSlashIdx = urlWithoutSlash.indexOf("/");
+  // 没有第二个 /，直接返回
+  if (firstSlashIdx === -1) return config;
+
+  const prefix = urlWithoutSlash.slice(0, firstSlashIdx);
+  const restUrl = urlWithoutSlash.slice(firstSlashIdx);
+
+  if (mappingUrl[prefix]) {
+    config.url = mappingUrl[prefix] + restUrl;
+    config.baseURL = "";
   }
+
   return config;
 };
 
 /**
- * 通过 params 的 _type 属性来设置不同的 contentType
+ * 根据 params 的 type 属性设置不同的 Content-Type，并处理 data 格式
  *
  * @param config Axios 配置信息
  */
-const processParamsType = (config: InternalAxiosRequestConfig) => {
-  if (config.params?._type) {
-    const type = config.params._type;
-    if (type === "form") {
+const processParamsType = (config: PlusAxiosRequestConfig) => {
+  const type = config.type as string | undefined;
+
+  switch (type) {
+    case "form":
       config.headers["Content-Type"] = ContentTypeEnum.FORM_URLENCODED;
       config.data = qs.stringify(config.data);
-    } else if (type === "file") config.headers["Content-Type"] = ContentTypeEnum.FILE_FORM_DATA;
-    else if (type === "json") config.headers["Content-Type"] = ContentTypeEnum.JSON;
-    else if (type === "info") {
+      break;
+    case "file":
+      config.headers["Content-Type"] = ContentTypeEnum.FILE_FORM_DATA;
+      break;
+    case "json":
+      config.headers["Content-Type"] = ContentTypeEnum.JSON;
+      break;
+    case "info":
       config.headers["Content-Type"] = ContentTypeEnum.Multi_FILE_FORM_DATA; // 传输数据为二进制类型，如：图片、MP3、文件
-    }
-  } else {
-    config.headers["Content-Type"] = ContentTypeEnum.JSON;
-    config.data = qs.stringify(config.data);
+      break;
+    default:
+      config.headers["Content-Type"] = ContentTypeEnum.JSON;
+      // 仅当 data 为对象时才序列化，避免重复序列化
+      if (config.data && typeof config.data === "object" && !(config.data instanceof FormData)) {
+        config.data = JSON.stringify(config.data);
+      }
+      break;
   }
+
   return config;
 };
 /**
@@ -219,22 +223,28 @@ const processParamsType = (config: InternalAxiosRequestConfig) => {
  *
  * @param config Axios 配置信息
  */
-const processArray = (config: InternalAxiosRequestConfig) => {
-  let url = String(config.url);
-  if (url.indexOf("?") !== -1) url += "&";
-  else url += "?";
-  const keys = Object.keys(config.params);
-  for (const key of keys) {
-    if (!!config.params[key] || config.params[key] === 0 || config.params[key] === undefined) {
-      if (isArray(config.params[key])) {
-        config.params[key].forEach((item: any) => {
-          url += `${key}=${item}&`;
-        });
-      } else url += `${key}=${config.params[key]}&`;
-    }
-  }
+const processArray = (config: PlusAxiosRequestConfig) => {
+  const url = String(config.url);
+  const params = config.params || {};
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined) return;
+    if (isArray(value)) {
+      value.forEach(item => {
+        // null/undefined 跳过
+        if (item === undefined || item === null) return;
+        searchParams.append(key, item);
+      });
+    } else searchParams.append(key, String(value));
+  });
+
+  // 拼接参数到 url
+  const hasQuery = url.includes("?");
+  const queryString = searchParams.toString();
+
+  config.url = queryString ? url + (hasQuery ? "&" : "?") + queryString : url;
   config.params = {};
-  config.url = url.slice(0, -1);
   return config;
 };
 /**
@@ -242,35 +252,50 @@ const processArray = (config: InternalAxiosRequestConfig) => {
  *
  * @param error Axios 错误
  */
+/**
+ * 处理 Axios 错误并格式化为错误日志对象
+ *
+ * @param error AxiosError 实例
+ * @returns 错误日志对象
+ */
 const processError = (error: AxiosError) => {
-  const e = JSON.parse(JSON.stringify(error));
-  if (Object.keys(e).includes("baseURL")) {
-    const {
-      config: { baseURL, url, params, method, data },
-    } = JSON.parse(e);
-    const requestURL = isValidURL(baseURL) ? baseURL + url : url;
-    let { message } = error;
-    message = message + "，token 不存在或者失效了";
-    let stack = "您发送的请求为 " + method.toUpperCase() + "，您请求的地址为 " + requestURL;
-    if (params) stack = stack + "，请求携带的 params 为 " + JSON.stringify(params);
-    if (data) stack = stack + "，请求携带的 data 为 " + JSON.stringify(data);
-    error.stack = stack;
-    error.message = message;
-    // 添加异常
-    return {
-      error,
-      vm: null,
-      info: "axios 请求错误",
-      url: window.location.href,
-      hasRead: false,
-    };
+  // 直接从 error.config 取值，避免多余的 JSON 序列化/反序列化
+  const config = error.config as PlusAxiosRequestConfig | undefined;
+  if (!config) return;
+
+  const { baseURL = "", url = "", params, method = "", data } = config;
+  const requestURL = isValidURL(baseURL) ? baseURL + url : url;
+  let message = error.message || "";
+
+  if (message.includes("token") || message.includes("401")) message += "，token 不存在或者失效了";
+
+  let stack = `您发送的请求为 ${method.toUpperCase()}，您请求的地址为 ${requestURL}`;
+
+  if (params && Object.keys(params).length > 0) {
+    stack += `，请求携带的 params 为 ${JSON.stringify(params)}`;
   }
+  if (data && typeof data === "object" && Object.keys(data).length > 0) {
+    stack += `，请求携带的 data 为 ${JSON.stringify(data)}`;
+  }
+
+  error.stack = stack;
+  error.message = message;
+
+  return {
+    id: useSimpleUuid(),
+    error,
+    vm: null,
+    info: "axios 请求错误",
+    url: window.location.href,
+    hasRead: false,
+  };
 };
 
 /**
- * h 手动渲染 ElNotification
+ * h 渲染 ElNotification
  */
 export const noPermission = () => {
+  const ns = useNamespace();
   ElNotification.closeAll();
 
   const notify = ElNotification({

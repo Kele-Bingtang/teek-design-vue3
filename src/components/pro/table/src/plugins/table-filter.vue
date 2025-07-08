@@ -4,8 +4,7 @@ import { computed } from "vue";
 import { ElPopover, ElIcon, ElButton } from "element-plus";
 import { Filter } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { isEmpty, isObject } from "@/common/utils";
-import { getProp, setProp } from "@/components/pro/helper";
+import { isEmpty } from "@/common/utils";
 import ProFormItem from "@/components/pro/form-item";
 
 defineOptions({ name: "TableFilter" });

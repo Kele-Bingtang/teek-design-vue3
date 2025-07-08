@@ -3,7 +3,7 @@ import { message } from "@/common/utils";
 /**
  * 校验网络请求状态码
  *
- * @param status
+ * @param status 状态码
  */
 export const checkStatus = (status: number): void => {
   switch (status) {

@@ -44,7 +44,7 @@ if (import.meta.env.VITE_LOAD_ALL_EP_STYLE === "true") {
 
 // 是否全部引入 Element Plus 的组件
 if (import.meta.env.VITE_LOAD_ALL_EP_COMPONENTS === "true") {
-  // EP 样式按需引入和组件全部引入有冲突。因为样式按需引入的前提是手动 import 组件（import 组件才根据组件去找样式），而组件全部引入导致在 vue 文件不需要 import。所以样式按需引入会失效，因此这里全量引入样式
+  // EP 样式按需引入和组件全部引入有冲突。因为样式按需引入的前提是手动 import 组件（import 组件才根据组件去找样式），而这里组件全部引入导致在 vue 文件不需要 import。所以样式按需引入会失效，因此这里需要全量引入样式
   if (import.meta.env.VITE_LOAD_ALL_EP_STYLE === "false") {
     import("@styles/element-plus/el-light.scss");
   }

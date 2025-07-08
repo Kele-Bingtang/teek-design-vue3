@@ -86,8 +86,8 @@ export const useLayoutStore = defineStore(
     /**
      * 更新 tab 信息
      */
-    const updateTab = (tab: TabProps) => {
-      const index = findTabIndex(tab.path);
+    const updateTab = (tab: Partial<TabProps>) => {
+      const index = findTabIndex(tab.path ?? "");
       if (index !== -1) tabNavList.value[index] = { ...tabNavList.value[index], ...tab };
     };
 

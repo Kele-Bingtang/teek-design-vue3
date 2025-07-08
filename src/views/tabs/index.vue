@@ -1,4 +1,5 @@
 <script setup lang="ts" name="Tabs">
+import type { TabProps } from "@/pinia";
 import { appendFieldById, deleteChildren, getNodeById } from "@/common/utils";
 import { useLayoutStore } from "@/pinia";
 import { useMenu } from "@/composables";
@@ -6,12 +7,17 @@ import { copyObj } from "@/common/utils";
 import { formatTitle } from "@/router/helper";
 import { useDetail } from "./use-tabs";
 
-const { toDetail, router } = useDetail();
+const { toDetail, router, route } = useDetail();
 const layoutStore = useLayoutStore();
 const { menuList } = useMenu();
+
+const newTabTitle = ref("");
+
+// 深拷贝菜单
 const routesTreeData = copyObj(menuList.value);
 
 const treeData = computed(() => {
+  // 删除 children 并给根节点添加 disabled 字段
   return appendFieldById(deleteChildren(routesTreeData), 0, {
     disabled: true,
   });
@@ -21,17 +27,63 @@ const currentValues = ref<string[]>([]);
 
 const { tabNavList } = storeToRefs(layoutStore);
 
-function onCloseTags() {
+/**
+ * 关闭标签页
+ */
+const closeSelectedTabs = () => {
   if (currentValues.value.length === 0) return;
+
   currentValues.value.forEach(id => {
-    const currentPath =
-      getNodeById(treeData.value, id).redirect ??
-      getNodeById(treeData.value, id).meta?._fullPath ??
-      getNodeById(treeData.value, id).path;
-    layoutStore.removeTab({ path: currentPath } as any);
-    if (currentPath === "/tabs") router.push(tabNavList.value[(tabNavList as any).value.length - 1].path);
+    const node = getNodeById(treeData.value, id);
+    const currentPath = node?.redirect ?? node?.meta?._fullPath ?? node?.path;
+
+    layoutStore.removeTab(currentPath);
+
+    const tabNavListValue = tabNavList.value;
+    // 如果关闭的是当前页
+    if (currentPath === route.path) router.push(tabNavListValue[tabNavListValue.length - 1].path);
   });
-}
+};
+
+/**
+ * 关闭当前标签页
+ */
+const handleCloseCurrentTab = () => {
+  layoutStore.removeTab(route.path);
+  const tabNavListValue = tabNavList.value;
+
+  router.push(tabNavListValue[tabNavListValue.length - 1].path);
+};
+
+/**
+ * 关闭其他标签页
+ */
+const handleCloseOthersTab = () => {
+  layoutStore.removeOtherTabs(route as unknown as TabProps);
+};
+
+/**
+ * 关闭所有标签页
+ */
+const handleCloseAllTab = () => {
+  layoutStore.removeAllTabs();
+  router.push("/");
+};
+
+/**
+ * 更新标签页标题
+ */
+const handleUpdateTabTitle = () => {
+  layoutStore.updateTab({ title: newTabTitle.value, path: route.path });
+};
+
+/**
+ * 重置标签页标题
+ */
+const handleResetTabTitle = () => {
+  layoutStore.updateTab({ title: formatTitle(route), path: route.path });
+  newTabTitle.value = "";
+};
 </script>
 
 <template>
@@ -47,7 +99,16 @@ function onCloseTags() {
     </el-card>
 
     <el-card shadow="never" header="标签页关闭" class="tk-card-minimal">
+      <el-input v-model="newTabTitle" placeholder="请输入新的标签页标题" clearable style="width: 300px" />
+
+      <el-button type="primary" @click="handleUpdateTabTitle" :disabled="!newTabTitle.trim()" style="margin-left: 10px">
+        修改
+      </el-button>
+      <el-button @click="handleResetTabTitle" style="margin-right: 10px">重置</el-button>
+
       <el-tree-select
+        v-model="currentValues"
+        :data="treeData"
         node-key="id"
         placeholder="请选择要关闭的标签"
         clearable
@@ -60,15 +121,17 @@ function onCloseTags() {
           children: 'children',
           disabled: 'disabled',
         }"
-        :data="treeData"
-        v-model="currentValues"
         style="width: 240px"
       >
         <template #default="{ data }">
           <span>{{ formatTitle(data) }}</span>
         </template>
       </el-tree-select>
-      <el-button @click="onCloseTags" style="margin-left: 10px">关闭标签</el-button>
+      <el-button type="primary" plain @click="closeSelectedTabs" style="margin-left: 10px">关闭选择标签</el-button>
+
+      <el-button type="success" plain @click="handleCloseCurrentTab">关闭当前标签</el-button>
+      <el-button type="warning" plain @click="handleCloseOthersTab">关闭其他标签</el-button>
+      <el-button type="danger" plain @click="handleCloseAllTab">关闭所有标签</el-button>
     </el-card>
 
     <el-card shadow="never" header="路由跳转" class="tk-card-minimal">

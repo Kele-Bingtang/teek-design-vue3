@@ -1,179 +1,152 @@
+import { isArray, isObject } from "../core";
+
 /**
- * 提取菜单树中的每一项 id
+ * 提取树结构中所有节点的 id 列表（深度优先）
  *
- * @param tree 树
- * @returns 每一项 id 组成的数组
+ * @param tree 树结构
+ * @returns 所有节点 id 组成的数组
  */
-export const extractPathList = (tree: any[]): any => {
-  if (!Array.isArray(tree)) {
+export const extractPathList = (tree: Recordable[]): (string | number)[] => {
+  if (!isArray(tree)) {
     console.warn("tree must be an array");
     return [];
   }
-  if (!tree || tree.length === 0) return [];
-  const expandedPaths: Array<number | string> = [];
-  for (const node of tree) {
-    const hasChildren = node.children && node.children.length > 0;
-    if (hasChildren) {
-      extractPathList(node.children);
+
+  const result: (string | number)[] = [];
+
+  const traverse = (nodes: Recordable[], parentPath: (string | number)[] = []) => {
+    for (const node of nodes) {
+      const currentPath = [...parentPath, node.id];
+      result.push(node.id);
+      if (node.children?.length) traverse(node.children, currentPath);
     }
-    expandedPaths.push(node.id);
-  }
-  return expandedPaths;
+  };
+
+  traverse(tree);
+
+  return result;
 };
 
 /**
- * 如果父级下 children 的 length 为 1，删除 children 并自动组建唯一 id
+ * 如果某节点 children 长度为 1，则删除 children 并生成唯一 pathId
  *
- * @param tree 树
- * @param pathList 每一项的 id 组成的数组
- * @returns 组件唯一 id 后的树
+ * @param tree 树结构
+ * @returns 新的树结构（不可变）
  */
-export const deleteChildren = (tree: any[], pathList = []): any => {
-  if (!Array.isArray(tree)) {
+export const deleteChildren = (tree: Recordable[]): Recordable[] => {
+  if (!isArray(tree)) {
     console.warn("menuTree must be an array");
     return [];
   }
-  if (!tree || tree.length === 0) return [];
-  for (const [key, node] of tree.entries()) {
-    if (node.children && node.children.length === 1) delete node.children;
-    node.id = key;
-    node.parentId = pathList.length ? pathList[pathList.length - 1] : null;
-    node.pathList = [...pathList, node.id];
-    node.id = node.pathList.length > 1 ? node.pathList.join("-") : node.pathList[0];
-    const hasChildren = node.children && node.children.length > 0;
-    if (hasChildren) {
-      deleteChildren(node.children, node.pathList);
-    }
-  }
-  return tree;
+
+  const traverse = (nodes: Recordable[], pathList: (string | number)[] = []): Recordable[] =>
+    nodes.map((node, index) => {
+      const currentPath = [...pathList, index];
+      const hasSingleChild = node.children?.length === 1;
+
+      const updatedNode = { ...node };
+      if (hasSingleChild) updatedNode.children = undefined;
+
+      updatedNode.parentId = pathList.length ? pathList[pathList.length - 1] : null;
+      updatedNode.pathList = currentPath;
+      updatedNode.id = currentPath.join("-");
+
+      if (updatedNode.children?.length) updatedNode.children = traverse(updatedNode.children, currentPath);
+
+      return updatedNode;
+    });
+
+  return traverse(tree);
 };
 
 /**
- * 创建层级关系
+ * 获取树中指定 id 的节点
  *
- * @param tree 树
- * @param pathList 每一项的 id 组成的数组
- * @returns 创建层级关系后的树
+ * @param tree 树结构
+ * @param id 节点唯一标识
+ * @returns 匹配的节点或 undefined
  */
-export const buildHierarchyTree = (tree: any[], pathList = []): any => {
-  if (!Array.isArray(tree)) {
-    console.warn("tree must be an array");
-    return [];
-  }
-  if (!tree || tree.length === 0) return [];
-  for (const [key, node] of tree.entries()) {
-    node.id = key;
-    node.parentId = pathList.length ? pathList[pathList.length - 1] : null;
-    node.pathList = [...pathList, node.id];
-    const hasChildren = node.children && node.children.length > 0;
-    if (hasChildren) {
-      buildHierarchyTree(node.children, node.pathList);
+export const getNodeById = (tree: Recordable[], id: string | number): Recordable | undefined => {
+  if (!isArray(tree)) return undefined;
+
+  const queue = [...tree];
+
+  while (queue.length) {
+    const node = queue.shift();
+    if (!node) continue;
+
+    if (node.id === id) return node;
+
+    if (node.children?.length) {
+      queue.push(...node.children);
     }
   }
-  return tree;
+
+  return undefined;
 };
 
 /**
- * 广度优先遍历，根据唯一 id 找当前节点信息
+ * 向指定 id 的节点添加字段
  *
- * @param tree 树
- * @param id 唯一 id
- * @returns 当前节点信息
+ * @param tree 树结构
+ * @param id 节点唯一标识
+ * @param fields 要添加的字段对象
+ * @returns 新的树结构（不可变）
  */
-export const getNodeById = (tree: any[], id: number | string): any => {
-  if (!Array.isArray(tree)) {
-    console.warn("menuTree must be an array");
-    return [];
-  }
-  if (!tree || tree.length === 0) return [];
-  const item = tree.find(node => node.id === id);
-  if (item) return item;
-  const childrenList = tree
-    .filter(node => node.children)
-    .map(i => i.children)
-    .flat(1) as unknown;
-  return getNodeById(childrenList as any[], id);
+export const appendFieldById = (tree: Recordable[], id: string | number, fields: Recordable): Recordable[] => {
+  if (!isArray(tree)) return [];
+
+  const traverse = (nodes: Recordable[]): Recordable[] =>
+    nodes.map(node => {
+      const updatedNode = { ...node };
+
+      if (updatedNode.id === id && isObject(fields)) Object.assign(updatedNode, fields);
+
+      if (updatedNode.children?.length) updatedNode.children = traverse(updatedNode.children);
+
+      return updatedNode;
+    });
+
+  return traverse(tree);
 };
 
 /**
- * 向当前唯一 id 节点中追加字段
- *
- * @param tree 树
- * @param id 唯一 id
- * @param fields 需要追加的字段
- * @returns 追加字段后的树
- */
-export const appendFieldById = (tree: any[], id: number | string, fields: object): any => {
-  if (!Array.isArray(tree)) {
-    console.warn("menuTree must be an array");
-    return [];
-  }
-  if (!tree || tree.length === 0) return [];
-  for (const node of tree) {
-    const hasChildren = node.children && node.children.length > 0;
-    if (node.id === id && Object.prototype.toString.call(fields) === "[object Object]") {
-      Object.assign(node, fields);
-    }
-    if (hasChildren) {
-      appendFieldById(node.children, id, fields);
-    }
-  }
-  return tree;
-};
-
-/**
- * 构造树型结构数据
+ * 将扁平数据转换为树形结构
  *
  * @param data 数据源
- * @param id id 字段 默认 id
- * @param parentId 父节点字段，默认 parentId
- * @param children 子节点字段，默认 children
- * @returns 追加字段后的树
+ * @param id 字段名，默认 'id'
+ * @param parentId 父节点字段名，默认 'parentId'
+ * @param children 子节点字段名，默认 'children'
+ * @returns 树形结构数据
  */
-export const handleTree = (data: any[], id?: string, parentId?: string, children?: string): any => {
-  if (!Array.isArray(data)) {
+export const handleTree = (
+  data: Recordable[],
+  id: string = "id",
+  parentId: string = "parentId",
+  children: string = "children"
+): Recordable[] => {
+  if (!isArray(data)) {
     console.warn("data must be an array");
     return [];
   }
-  const config = {
-    id: id || "id",
-    parentId: parentId || "parentId",
-    childrenList: children || "children",
-  };
 
-  const childrenListMap: any = {};
-  const nodeIds: any = {};
-  const tree = [];
+  const map = new Map<string | number, Recordable>();
+  const rootNodes: Recordable[] = [];
 
-  for (const d of data) {
-    const parentId = d[config.parentId];
-    if (childrenListMap[parentId] == null) {
-      childrenListMap[parentId] = [];
-    }
-    nodeIds[d[config.id]] = d;
-    childrenListMap[parentId].push(d);
+  // 构建映射表
+  for (const item of data) map.set(item[id], { ...item });
+
+  // 构建父子关系
+  for (const item of data) {
+    const pid = item[parentId];
+    const node = map.get(item[id])!;
+
+    if (pid && map.has(pid)) {
+      const parent = map.get(pid)!;
+      parent[children] = parent[children] || [];
+      parent[children].push(node);
+    } else rootNodes.push(node);
   }
 
-  for (const d of data) {
-    const parentId = d[config.parentId];
-    if (nodeIds[parentId] == null) {
-      tree.push(d);
-    }
-  }
-
-  for (const t of tree) {
-    adaptToChildrenList(t);
-  }
-
-  function adaptToChildrenList(o: Recordable) {
-    if (childrenListMap[o[config.id]] !== null) {
-      o[config.childrenList] = childrenListMap[o[config.id]];
-    }
-    if (o[config.childrenList]) {
-      for (const c of o[config.childrenList]) {
-        adaptToChildrenList(c);
-      }
-    }
-  }
-  return tree;
+  return rootNodes;
 };

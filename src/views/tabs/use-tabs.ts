@@ -25,5 +25,5 @@ export function useDetail() {
     }
   }
 
-  return { toDetail, id, router };
+  return { toDetail, id, router, route };
 }

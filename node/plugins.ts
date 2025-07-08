@@ -25,6 +25,7 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
         disabled: true, // 是否生成二维码
       },
     }),
+
     progress(),
     !viteEnv.VITE_LOAD_ALL_EP_STYLE
       ? createStyleImportPlugin({
@@ -41,6 +42,7 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
           ],
         })
       : undefined,
+
     AutoImport({
       imports: ["vue", "vue-router", "pinia"], // 自动引入 vue 的 ref、toRefs、onMounted 等，无需在页面中再次引入
       dts: "src/types/auto-import.d.ts", // 生成在 src 路径下名为 auto-import.d.ts 的声明文件
@@ -49,6 +51,7 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
       },
       resolvers: !viteEnv.VITE_LOAD_ALL_EP_COMPONENTS ? [ElementPlusResolver()] : [],
     }),
+
     !viteEnv.VITE_LOAD_ALL_EP_COMPONENTS
       ? Components({
           resolvers: [ElementPlusResolver({ importStyle: "sass" })],
@@ -57,12 +60,15 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
           directoryAsNamespace: true,
         })
       : undefined,
+
     // 使用 svg 图标
     createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), "src/common/assets/icons")],
       symbolId: "icon-[dir]-[name]",
     }),
+
     viteEnv.VITE_BUILD_GZIP && configCompressPlugin(viteEnv.VITE_COMPRESSION),
+
     // 打包分析
     (lifecycle === "report" || viteEnv.VITE_REPORT) &&
       visualizer({ open: true, brotliSize: true, filename: "report.html" }),

@@ -4,12 +4,16 @@ import qs from "qs";
 // 声明一个 Map 用于存储每个请求的标识 和 取消函数
 const pendingMap = new Map<string, AbortController>();
 
-// 序列化参数，确保对象属性顺序一致
+/**
+ * 序列化参数，确保对象属性顺序一致
+ */
 const sortedStringify = (obj: any) => {
   return qs.stringify(obj, { arrayFormat: "repeat", sort: (a, b) => a.localeCompare(b) });
 };
 
-// 序列化参数
+/**
+ * 序列化参数
+ */
 export const getPendingUrl = (config: PlusAxiosRequestConfig) => {
   return [config.method, config.url, sortedStringify(config.data), sortedStringify(config.params)].join("&");
 };

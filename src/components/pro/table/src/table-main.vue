@@ -6,14 +6,7 @@ import { ElTable, ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
 import { isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
-import {
-  getProp,
-  filterOptions,
-  filterOptionsValue,
-  getObjectKeys,
-  setProp,
-  filterEmpty,
-} from "@/components/pro/helper";
+import { getProp, filterOptions, filterOptionsValue, getObjectKeys, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";

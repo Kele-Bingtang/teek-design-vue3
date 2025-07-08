@@ -6,9 +6,6 @@
 
 ## 优化
 
-- ep 按需加载优化（main.ts）
-- 移动端适配
-- `utils/helper/tree.ts` 优化
-- `axios.ts` 优化
+- 移动端适配（宽度略大）
 
 ## Bug
