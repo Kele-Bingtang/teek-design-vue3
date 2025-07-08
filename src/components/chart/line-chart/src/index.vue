@@ -2,12 +2,11 @@
 
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
-import type { LineChartProps, LineDataItem } from "../types";
+import type { LineChartProps, LineDataItem } from "../../types";
 import * as echarts from "echarts";
 import { getCssVar, hexToRgba } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { useChartOps, useChart } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
+import { useNamespace, useChartOps, useChart } from "@/composables";
+import { ChartEmpty } from "../../chart-empty";
 
 defineOptions({ name: "LineChart" });
 
@@ -145,8 +144,8 @@ const generateAreaStyle = (item: LineDataItem, color: string) => {
 
   return {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: hexToRgba(color, areaConfig.startOpacity || 0.2).rgba },
-      { offset: 1, color: hexToRgba(color, areaConfig.endOpacity || 0.02).rgba },
+      { offset: 0, color: hexToRgba(color, areaConfig.startOpacity || 0.2)?.rgba ?? "" },
+      { offset: 1, color: hexToRgba(color, areaConfig.endOpacity || 0.02)?.rgba ?? "" },
     ]),
   };
 };
@@ -158,8 +157,8 @@ const generateSingleAreaStyle = () => {
   const color = getColor(props.colors[0]);
   return {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: hexToRgba(color, 0.2).rgba },
-      { offset: 1, color: hexToRgba(color, 0.02).rgba },
+      { offset: 0, color: hexToRgba(color, 0.2)?.rgba ?? "" },
+      { offset: 1, color: hexToRgba(color, 0.02)?.rgba ?? "" },
     ]),
   };
 };

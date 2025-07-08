@@ -1,11 +1,10 @@
 <!-- 散点图 -->
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
-import type { ScatterChartProps } from "../types";
+import type { ScatterChartProps } from "../../types";
 import { getCssVar } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { useChartOps, useChartComponent } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
+import { useNamespace, useChartOps, useChartComponent } from "@/composables";
+import { ChartEmpty } from "../../chart-empty";
 
 defineOptions({ name: "ScatterChart" });
 

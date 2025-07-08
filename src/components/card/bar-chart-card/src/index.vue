@@ -2,8 +2,7 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { BarChartCard } from "./types";
-import { useChartOps, useChartComponent } from "@/components/chart";
-import { useNamespace } from "@/composables";
+import { useNamespace, useChartOps, useChartComponent } from "@/composables";
 import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "BarChartCard" });

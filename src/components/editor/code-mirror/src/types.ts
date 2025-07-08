@@ -2,8 +2,13 @@ import type { LanguageSupport } from "@codemirror/language";
 import type { LintSource } from "@codemirror/lint";
 import type { MergeView } from "@codemirror/merge";
 import type { EditorState, Extension, Text } from "@codemirror/state";
-import type { EditorView, ViewUpdate } from "@codemirror/view";
+import type { EditorView, KeyBinding, ViewUpdate } from "@codemirror/view";
 
+/**
+ * 代码对比编辑器配置项
+ *
+ * @see {@link https://codemirror.net/docs/ref/#merge.MergeView^config}
+ */
 export interface MergeCodeMirrorProps {
   [key: string]: any;
   /** 旧代码 */
@@ -47,12 +52,17 @@ export interface MergeCodeMirrorProps {
   };
 }
 
+/**
+ * 代码编辑器配置项
+ *
+ * @see {@link https://codemirror.net/docs/ref/#view.EditorView^config}
+ */
 export interface CodeMirrorProps {
-  /** 代码编辑器宽度，默认 undefined */
+  /** 代码编辑器宽度 */
   width?: string | number;
-  /** 代码编辑器高度，默认 undefined */
+  /** 代码编辑器高度 */
   height?: string | number;
-  /** 代码编辑器最大高度，默认 undefined */
+  /** 代码编辑器最大高度 */
   maxHeight?: string | number;
   /** 字体大小，默认 14px */
   fontSize?: string | number;
@@ -72,7 +82,7 @@ export interface CodeMirrorProps {
   wrap?: boolean;
   /** 是否启用 Tab 键缩进，默认开启 true */
   tab?: boolean;
-  /** Tab 键缩进单位，默认 undefined */
+  /** Tab 键缩进单位 */
   tabSize?: number;
   /** 是否开启允许多选，默认不开启 false，See https://codemirror.net/docs/ref/#state.EditorState^allowMultipleSelections */
   multiple?: boolean;
@@ -106,8 +116,17 @@ export interface CodeMirrorProps {
   mergeConfig?: MergeCodeMirrorProps;
   /** 是否启用全屏模式，默认不开启 false */
   fullScreen?: boolean;
+  /** 是否启用滚动到视图，默认开启 true */
+  scrollIntoView?: boolean;
+  /** 自定义 keymap，See https://codemirror.net/docs/ref/#view.keymap */
+  keymap?: KeyBinding[];
 }
 
+/**
+ * 代码编辑器事件
+ *
+ * @see {@link https://codemirror.net/docs/ref/#view.EditorView^events}
+ */
 export interface CodeMirrorEmits {
   /** CodeMirror 更新事件 */
   update: [_value: ViewUpdate];

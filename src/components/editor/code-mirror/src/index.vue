@@ -1,5 +1,12 @@
-<!-- vue-codemirror6 v1.3.0 -->
+<!-- vue-codemirror6 v1.3.20 Pro -->
 <script setup lang="ts">
+import type { Ref, ComputedRef } from "vue";
+import type { Diagnostic } from "@codemirror/lint";
+import type { Transaction, Extension, SelectionRange, StateField, Text } from "@codemirror/state";
+import type { KeyBinding, ViewUpdate } from "@codemirror/view";
+import type { CodeMirrorEmits, CodeMirrorProps } from "./types";
+import { ref, shallowRef, computed, watch, onMounted, nextTick, onUnmounted } from "vue";
+import { basicSetup, minimalSetup } from "codemirror";
 import { indentWithTab } from "@codemirror/commands";
 import { indentUnit as indentUnitConfig } from "@codemirror/language";
 import {
@@ -7,27 +14,13 @@ import {
   forceLinting as forceLintingFun,
   linter as linterFun,
   lintGutter,
-  type Diagnostic,
 } from "@codemirror/lint";
-import {
-  Compartment,
-  EditorSelection,
-  EditorState,
-  StateEffect,
-  type Transaction,
-  type Extension,
-  type SelectionRange,
-  type StateField,
-  type Text,
-} from "@codemirror/state";
-import { EditorView, keymap, placeholder as placeholderFun, type ViewUpdate } from "@codemirror/view";
+import { Compartment, EditorSelection, EditorState, StateEffect } from "@codemirror/state";
+import { EditorView, keymap, placeholder as placeholderFun } from "@codemirror/view";
 import { MergeView } from "@codemirror/merge";
-import { basicSetup, minimalSetup } from "codemirror";
 import { useNamespace } from "@/composables";
 import { addUnit } from "@/common/utils";
-import { ref, shallowRef, computed, type Ref, type ComputedRef, watch, onMounted, nextTick, onUnmounted } from "vue";
 import { FullScreen } from "@element-plus/icons-vue";
-import type { CodeMirrorEmits, CodeMirrorProps } from "./types";
 
 defineOptions({ name: "CodeMirror6" });
 
@@ -35,20 +28,31 @@ const ns = useNamespace("code-mirror");
 
 const props = withDefaults(defineProps<CodeMirrorProps>(), {
   fontSize: 14,
+  lang: undefined,
   basic: true,
   minimal: false,
+  dark: false,
+  placeholder: undefined,
   wrap: true,
   tab: true,
+  tabSize: undefined,
   multiple: false,
+  lineSeparator: undefined,
   readonly: false,
   disabled: false,
+  phrases: undefined,
   extensions: () => [],
   customTheme: () => ({}),
+  linter: undefined,
   linterConfig: () => defaultPhrases,
   forceLinting: false,
   gutter: false,
+  gutterConfig: undefined,
   tag: "div",
+  indentUnit: undefined,
   fullScreen: true,
+  scrollIntoView: true,
+  keymap: () => [],
 });
 
 const emits = defineEmits<CodeMirrorEmits>();
@@ -120,6 +124,15 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
   const language = new Compartment();
   const tabSize = new Compartment();
 
+  if (props.basic && props.minimal) {
+    throw new Error("[Vue CodeMirror] Both basic and minimal cannot be specified.");
+  }
+
+  // 自定义 keymap
+  let keymaps: KeyBinding[] = [];
+  if (props.keymap && props.keymap.length > 0) keymaps = props.keymap;
+  if (props.tab) keymaps.push(indentWithTab);
+
   return [
     // 切换基本设置
     props.basic ? basicSetup : undefined,
@@ -144,11 +157,10 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
     }),
     // 切换浅色/深色模式
     EditorView.theme(props.customTheme, { dark: props.dark }),
+    // 自定义主题
     props.localTheme ? props.localTheme : undefined,
     // 开启行宽换行
     props.wrap ? EditorView.lineWrapping : undefined,
-    // 启用 Tab 键缩进
-    props.tab ? keymap.of([indentWithTab]) : undefined,
     // Tab 键缩进单位
     props.indentUnit ? indentUnitConfig.of(props.indentUnit) : undefined,
     // 允许多选
@@ -171,8 +183,10 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
     props.linter && props.gutter ? lintGutter(props.gutterConfig) : undefined,
     // 编辑器占位符
     props.placeholder ? placeholderFun(props.placeholder) : undefined,
+    // 自定义 keymap 和 Tab 键缩进
+    keymaps.length !== 0 ? keymap.of(keymaps) : undefined,
     // 添加 props 自定义扩展
-    ...(props.extensions || []),
+    ...props.extensions,
   ].filter((extension): extension is Extension => !!extension);
 });
 
@@ -216,7 +230,7 @@ watch(
     view.value.dispatch({
       changes: { from: 0, to: view.value.state.doc.length, insert: value },
       selection: view.value.state.selection,
-      scrollIntoView: true,
+      scrollIntoView: props.scrollIntoView,
     });
   },
   { immediate: true }

@@ -6,7 +6,6 @@
 
 ## 优化
 
-- 历史组件代码升级（editor/codeMirror）
 - `role-permission.vue` 组件
 - ProTable 支持 beforeFilter，分页总条数支持 filter 的数量
 - ProTable Filter 是否居右

@@ -3,4 +3,6 @@ import index from "./src/index.vue";
 
 export const CountTo = useInstall(index);
 
+export type * from "./src/types";
+
 export default index;

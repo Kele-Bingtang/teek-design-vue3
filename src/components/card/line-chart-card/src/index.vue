@@ -1,11 +1,10 @@
 <!-- 折线图卡片 -->
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
+import type { LineChartProps } from "./types";
 import * as echarts from "echarts";
 import { addUnit, getCssVar, hexToRgba } from "@/common/utils";
-import { useChartOps, useChartComponent } from "@/components/chart";
-import type { LineChartProps } from "./types";
-import { useNamespace } from "@/composables";
+import { useNamespace, useChartOps, useChartComponent } from "@/composables";
 
 defineOptions({ name: "LineChartCard" });
 
@@ -50,14 +49,14 @@ const { chartInstance } = useChartComponent({
                   {
                     offset: 0,
                     color: props.color
-                      ? hexToRgba(props.color, 0.2).rgba
-                      : hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.2).rgba,
+                      ? (hexToRgba(props.color, 0.2)?.rgba ?? "")
+                      : (hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.2)?.rgba ?? ""),
                   },
                   {
                     offset: 1,
                     color: props.color
-                      ? hexToRgba(props.color, 0.01).rgba
-                      : hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.01).rgba,
+                      ? (hexToRgba(props.color, 0.01)?.rgba ?? "")
+                      : (hexToRgba(getCssVar(ns.cssVarNameEl("color-primary")), 0.01)?.rgba ?? ""),
                   },
                 ]),
               }

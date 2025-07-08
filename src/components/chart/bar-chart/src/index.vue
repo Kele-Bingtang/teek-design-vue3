@@ -1,14 +1,13 @@
-<!-- 水平柱状图 -->
+<!-- 柱状图 -->
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
-import type { BarChartProps, BarDataItem } from "../types";
+import type { BarChartProps, BarDataItem } from "../../types";
 import * as echarts from "echarts";
 import { getCssVar } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { useChartOps, useChartComponent } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
+import { useNamespace, useChartOps, useChartComponent } from "@/composables";
+import { ChartEmpty } from "../../chart-empty";
 
-defineOptions({ name: "HBarChart" });
+defineOptions({ name: "BarChart" });
 
 const props = withDefaults(defineProps<BarChartProps>(), {
   // 基础配置
@@ -16,11 +15,12 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   loading: false,
   isEmpty: false,
   colors: () => useChartOps().colors,
+  borderRadius: 4,
 
   // 数据配置
   data: () => [0, 0, 0, 0, 0, 0, 0],
   xAxisData: () => [],
-  barWidth: "36%",
+  barWidth: "40%",
   stack: false,
 
   // 轴线显示配置
@@ -46,20 +46,18 @@ const isMultipleData = computed(
 const getColor = (customColor?: string, index?: number) => {
   if (customColor) return customColor;
 
-  if (index !== undefined) {
-    return props.colors![index % props.colors!.length];
-  }
+  if (index !== undefined) return props.colors![index % props.colors!.length];
 
   // 默认渐变色
-  return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-    { offset: 0, color: getCssVar(ns.cssVarNameEl("color-primary")) },
-    { offset: 1, color: getCssVar(ns.cssVarNameEl("color-primary-light-4")) },
+  return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    { offset: 0, color: getCssVar(ns.cssVarNameEl("color-primary-light-9")) },
+    { offset: 1, color: getCssVar(ns.cssVarNameEl("color-primary")) },
   ]);
 };
 
 // 创建渐变色
 const createGradientColor = (color: string) => {
-  return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+  return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
     { offset: 0, color: color },
     { offset: 1, color: color },
   ]);
@@ -67,7 +65,7 @@ const createGradientColor = (color: string) => {
 
 // 获取基础样式配置
 const getBaseItemStyle = (color: any) => ({
-  borderRadius: 4,
+  borderRadius: props.borderRadius,
   color: typeof color === "string" ? createGradientColor(color) : color,
 });
 
@@ -132,18 +130,17 @@ const {
       }),
       tooltip: props.showTooltip ? getTooltipStyle() : undefined,
       xAxis: {
-        type: "value",
-        axisTick: getAxisTickStyle(),
-        axisLine: getAxisLineStyle(props.showAxisLine),
-        axisLabel: getAxisLabelStyle(props.showAxisLabel),
-        splitLine: getSplitLineStyle(props.showSplitLine),
-      },
-      yAxis: {
         type: "category",
         data: props.xAxisData,
         axisTick: getAxisTickStyle(),
+        axisLine: getAxisLineStyle(props.showAxisLine),
+        axisLabel: getAxisLabelStyle(props.showAxisLabel),
+      },
+      yAxis: {
+        type: "value",
         axisLabel: getAxisLabelStyle(props.showAxisLabel),
         axisLine: getAxisLineStyle(props.showAxisLine),
+        splitLine: getSplitLineStyle(props.showSplitLine),
       },
     };
 
@@ -171,7 +168,12 @@ const {
       const singleData = props.data as number[];
       const computedColor = getColor();
 
-      options.series = [createSeriesItem({ data: singleData, color: computedColor })];
+      options.series = [
+        createSeriesItem({
+          data: singleData,
+          color: computedColor,
+        }),
+      ];
     }
 
     return options;

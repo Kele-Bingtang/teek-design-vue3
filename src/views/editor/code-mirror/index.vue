@@ -218,7 +218,7 @@ watch(
           代码编辑器宽度。`string | Text` 类型，默认为 `undefined`
         </el-descriptions-item>
         <el-descriptions-item label="maxHeight">代码编辑器高度。`string` 类型，默认 `undefined`</el-descriptions-item>
-        <el-descriptions-item label="fontSize">字体大小。`string` 类型，默认 `"14px"`</el-descriptions-item>
+        <el-descriptions-item label="fontSize">字体大小。`string` 类型，默认 `14px`</el-descriptions-item>
         <el-descriptions-item label="localTheme">本地主题包。`Extension` 类型，默认 `undefined`</el-descriptions-item>
         <el-descriptions-item label="lang">
           本地代码语言包。`LanguageSupport` 类型，默认 `undefined`
@@ -239,7 +239,7 @@ watch(
         <el-descriptions-item label="tab">是否启用 Tab 键缩进。`boolean` 类型，默认 `true`</el-descriptions-item>
         <el-descriptions-item label="tabSize">Tab 键缩进单位。`number` 类型，默认 `undefined`</el-descriptions-item>
         <el-descriptions-item label="multiple">是否开启允许多选。`boolean` 类型，默认 `false`</el-descriptions-item>
-        <el-descriptions-item label="lineSeparator">换行符。`string` 类型，默认 `"\n"`</el-descriptions-item>
+        <el-descriptions-item label="lineSeparator">换行符。`string` 类型，默认 `\n`</el-descriptions-item>
         <el-descriptions-item label="customTheme">自定义主题。`{}` 类型，默认 `undefined`</el-descriptions-item>
         <el-descriptions-item label="readonly">是否只读代码编辑器。`boolean` 类型，默认 `false`</el-descriptions-item>
         <el-descriptions-item label="disabled">是否禁用代码编辑器。`boolean` 类型，默认 `false`</el-descriptions-item>
@@ -257,7 +257,7 @@ watch(
           当代码语法出错，开头是否红色圆圈 🔴 提示，前提开启 linter 属性。`boolean` 类型，默认 `false`
         </el-descriptions-item>
         <el-descriptions-item label="gutterConfig">语法错误配置项。`{}` 类型，默认 `undefined`</el-descriptions-item>
-        <el-descriptions-item label="tag">代码编辑器根标签。`string` 类型，默认 `"div"`</el-descriptions-item>
+        <el-descriptions-item label="tag">代码编辑器根标签。`string` 类型，默认 `div`</el-descriptions-item>
         <el-descriptions-item label="indentUnit">
           缩进单位，如 " "，缩进两个空格，" " 代表缩进四个空格。`string` 类型，默认 `undefined`
         </el-descriptions-item>
@@ -265,6 +265,10 @@ watch(
         <el-descriptions-item label="mergeConfig">
           代码对比编辑器配置项，传入配置项即开启。`MergeCodeMirrorProps` 类型，默认 `undefined`。详情请看「代码对比器
           mergeConfig 配置项」
+        </el-descriptions-item>
+        <el-descriptions-item label="keymap">自定义 keymap。`KeyBinding[]` 类型，默认 `undefined`</el-descriptions-item>
+        <el-descriptions-item label="scrollIntoView">
+          是否启用滚动到视图。`boolean` 类型，默认 `true`
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -345,13 +349,13 @@ watch(
         <el-descriptions-item label="gutter">行代码前使用高亮竖线条。`boolean` 类型，默认 `true`</el-descriptions-item>
         <el-descriptions-item label="header">是否启用 header。`boolean` 类型，默认 `false`</el-descriptions-item>
         <el-descriptions-item label="headerBgColor">
-          header 背景色。`string` 类型，默认 `"#f6f8fa"`
+          header 背景色。`string` 类型，默认 `var(--tk-bg-color)`
         </el-descriptions-item>
         <el-descriptions-item label="headerBorderColor">
-          header 边框色。`string` 类型，默认 `"#d0d7de"`
+          header 边框色。`string` 类型，默认 `var(--tk-border-color)`
         </el-descriptions-item>
-        <el-descriptions-item label="leftTitle">header 左侧标题。`string` 类型，默认 `"Before"`</el-descriptions-item>
-        <el-descriptions-item label="rightTitle">header 右侧标题。`string` 类型，默认 `"After"`</el-descriptions-item>
+        <el-descriptions-item label="leftTitle">header 左侧标题。`string` 类型，默认 `Before`</el-descriptions-item>
+        <el-descriptions-item label="rightTitle">header 右侧标题。`string` 类型，默认 `After`</el-descriptions-item>
         <el-descriptions-item label="margin">
           与 minSize 互斥，指定多少个相同的代码行数不允许折叠。`number` 类型，默认 `3`
         </el-descriptions-item>
@@ -367,16 +371,16 @@ watch(
     <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="highlightColor 配置项 📚" :column="1" border>
         <el-descriptions-item label="aHighlightLineBgColor">
-          a 编辑器高亮行背景色。`string` 类型，默认为 `#ffebe9`
+          a 编辑器高亮行背景色。`string` 类型，默认为 `var(--tk-bg-danger)`
         </el-descriptions-item>
         <el-descriptions-item label="aHighlightTextBgColor">
-          a 编辑器高亮文本背景色。`string` 类型，默认 `#ff818266"`
+          a 编辑器高亮文本背景色。`string` 类型，默认 `var(--tk-danger-muted)`
         </el-descriptions-item>
         <el-descriptions-item label="aHighlightLineBgColor">
-          b 编辑器高亮行背景色。`string` 类型，默认为 `#e6ffec`
+          b 编辑器高亮行背景色。`string` 类型，默认为 `var(--tk-bg-success)`
         </el-descriptions-item>
         <el-descriptions-item label="aHighlightTextBgColor">
-          b 编辑器高亮文本背景色。`string` 类型，默认 `#abf2bc"`
+          b 编辑器高亮文本背景色。`string` 类型，默认 `var(--tk-success-muted)`
         </el-descriptions-item>
       </el-descriptions>
     </el-card>

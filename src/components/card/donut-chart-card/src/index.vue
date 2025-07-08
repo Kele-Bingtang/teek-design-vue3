@@ -2,8 +2,7 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { DonutChartCardProps } from "./types";
-import { useChartOps, useChartComponent } from "@/components";
-import { useNamespace } from "@/composables";
+import { useNamespace, useChartOps, useChartComponent } from "@/composables";
 import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "DonutChartCard" });

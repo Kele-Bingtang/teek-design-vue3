@@ -1,10 +1,10 @@
 <!-- 地图图表 -->
 <script setup lang="ts">
-import type { MapChartProps } from "../types";
+import type { MapChartProps } from "../../types";
 import * as echarts from "echarts";
 import { useSettingStore } from "@/pinia";
 import chinaMapJson from "./default-data.json";
-import ChartEmpty from "../chart-empty/index.vue";
+import { ChartEmpty } from "../../chart-empty";
 
 defineOptions({ name: "MapChart" });
 

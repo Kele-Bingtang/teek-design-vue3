@@ -2,7 +2,7 @@ import type { App, Directive } from "vue";
 import type { UseInstallWithPlugin, UseInstallWithContext } from "./types";
 
 /**
- * 安装组件
+ * 安装组件，通过 app.use 安装
  *
  * @param main 主组件
  * @param extra 额外组件

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const MapChart = defineAsyncComponent(() => import("@/components/chart/map-chart/index.vue"));
+const MapChart = defineAsyncComponent(() => import("@/components/chart/map-chart/src/index.vue"));
 </script>
 
 <template>

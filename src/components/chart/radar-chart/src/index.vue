@@ -2,9 +2,9 @@
 
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
-import type { RadarChartProps } from "../types";
-import { useChartOps, useChartComponent } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
+import type { RadarChartProps } from "../../types";
+import { useChartOps, useChartComponent } from "@/composables";
+import { ChartEmpty } from "../../chart-empty";
 
 defineOptions({ name: "RadarChart" });
 

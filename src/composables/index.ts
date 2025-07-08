@@ -9,6 +9,9 @@ export * from "./core/use-watch-css-var";
 export * from "./core/use-common";
 export * from "./core/use-upgrade";
 
+export * from "./chart/use-chart";
+export * from "./chart/use-chart-component";
+
 export * from "./use-boolean";
 export * from "./use-confirm";
 export * from "./use-form-validator";

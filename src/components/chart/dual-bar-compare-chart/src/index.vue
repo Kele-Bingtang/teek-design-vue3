@@ -1,9 +1,9 @@
 <!-- 双向堆叠柱状图 -->
 <script setup lang="ts">
 import type { EChartsOption, BarSeriesOption } from "echarts";
-import type { BidirectionalBarChartProps } from "../types";
-import { useChartOps, useChartComponent } from "../composables";
-import ChartEmpty from "../chart-empty/index.vue";
+import type { BidirectionalBarChartProps } from "../../types";
+import { useChartOps, useChartComponent } from "@/composables";
+import { ChartEmpty } from "../../chart-empty";
 
 defineOptions({ name: "DualBarCompareChart" });
 
