@@ -29,5 +29,5 @@ import "tinymce/plugins/visualblocks"; // 允许用户在可编辑区域中查�
 import "tinymce/plugins/visualchars"; // 增加了查看可编辑区域中显示的不可见字符的功能，https://www.tiny.cloud/docs/tinymce/latest/visualchars/
 import "tinymce/plugins/wordcount"; // 右下角统计字数，https://www.tiny.cloud/docs/tinymce/latest/wordcount/
 
-import "/public/tinymce/plugins/template"; // 添加了对自定义模板的支持，https://www.tiny.cloud/docs/tinymce/6/template/（v7.x 已移到付费版，但是可以复制旧版的文件到 public 目录下继续使用）
+import "/public/tinymce/plugins/template/plugin"; // 添加了对自定义模板的支持，https://www.tiny.cloud/docs/tinymce/6/template/（v7.x 已移到付费版，但是可以复制旧版的文件到 public 目录下继续使用）
 import "/public/tinymce/plugins/axupimgs/plugin"; // 图片批量上传
