@@ -21,8 +21,12 @@ import { xml } from "@codemirror/lang-xml";
 import oldDoc from "../code-diff-editor/oldDoc.json";
 import newDoc from "../code-diff-editor/newDoc.json";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 const ns = useNamespace();
+
+const settingStore = useSettingStore();
+const { isDark } = storeToRefs(settingStore);
 
 const code = ref('const a = "codeMirror"\nconst b = "kbt"\n\n\n\n\n\n\n\n\n\nconst getCode = () => "useCodeMirror"');
 const theme = ref("default");
@@ -120,11 +124,19 @@ const langOptions = [
   { label: "SQL", value: "sql" },
   { label: "XML", value: "xml" },
 ];
+
+watch(
+  isDark,
+  newVal => {
+    theme.value = newVal ? "oneDark" : "default";
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <el-space fill>
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <el-link
           href="https://codemirror.net/"
@@ -140,12 +152,12 @@ const langOptions = [
         </el-alert>
       </template>
     </el-card>
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <div style="font-weight: bold">基本编辑器</div>
       </template>
 
-      <el-space :size="30">
+      <el-space :size="20" style="margin-bottom: 16px">
         <el-select v-model="theme" style="width: 200px">
           <el-option v-for="item in themeOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
@@ -176,11 +188,11 @@ const langOptions = [
       ></CodeMirror>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <div style="font-weight: bold">代码对比器</div>
       </template>
-      <el-space :size="20">
+      <el-space :size="20" style="margin-bottom: 16px">
         <el-checkbox v-model="revertControls" label="是否支持一键替换" style="margin-left: 10px" />
         <el-checkbox v-model="highlight" label="是否下划线高亮" />
         <el-checkbox v-model="gutter1" label="是否开启线条提示" />
@@ -199,7 +211,7 @@ const langOptions = [
       <CodeMirror :wrap="wrap" :merge-config="mergeConfig" :height="height2" :max-height="maxHeight2"></CodeMirror>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="基本编辑器 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">代码内容。`string | Text` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="width">
@@ -257,7 +269,7 @@ const langOptions = [
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="update">
           CodeMirror 内容修改后触发。`(_value: ViewUpdate) => void`
@@ -274,7 +286,7 @@ const langOptions = [
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="expose 参数 📚" :column="1" border>
         <el-descriptions-item label="editor">CodeMirror 编辑器 Ref 实例</el-descriptions-item>
         <el-descriptions-item label="view">EditorView 实例</el-descriptions-item>
@@ -320,7 +332,7 @@ const langOptions = [
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="代码对比器 mergeConfig 配置项 📚" :column="1" border>
         <el-descriptions-item label="oldDoc">旧代码。`string | Text` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="newDoc">新代码。`string | Text` 类型，默认 `""`</el-descriptions-item>
@@ -352,7 +364,7 @@ const langOptions = [
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="highlightColor 配置项 📚" :column="1" border>
         <el-descriptions-item label="aHighlightLineBgColor">
           a 编辑器高亮行背景色。`string` 类型，默认为 `#ffebe9`

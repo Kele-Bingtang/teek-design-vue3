@@ -68,3 +68,26 @@ code {
   margin-right: 1.5rem;
   padding-right: 1rem;
 }
+
+
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #f0f0f2;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(191, 193, 204, 0.4);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}

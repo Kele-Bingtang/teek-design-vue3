@@ -34,6 +34,7 @@ import SalesOverview from "./components/sales-overview.vue";
 import NewUser from "./components/new-user.vue";
 import Dynamic from "./components/dynamic.vue";
 import TodoList from "./components/todo-list.vue";
+import { Tooltip } from "@/components";
 
 defineOptions({ name: "Console" });
 

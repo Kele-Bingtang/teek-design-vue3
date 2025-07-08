@@ -1,19 +1,35 @@
 <script setup lang="ts" name="TinymceDemo">
 import { Tinymce, type UITheme } from "@/components";
-import { useLayoutStore } from "@/pinia";
+import { useLayoutStore, useSettingStore } from "@/pinia";
 import { tinymceHtml } from "@/mock/tinymce";
 import { ElMessage } from "element-plus";
 
 const layoutStore = useLayoutStore();
+const settingStore = useSettingStore();
+
 const content = ref(tinymceHtml);
 const tinymceActive = ref(true);
 const disabled = ref(false);
 const theme = ref<UITheme>("default");
 
 const { language } = storeToRefs(layoutStore);
+const { isDark } = storeToRefs(settingStore);
 
 // 是否已上传图片
 const hasUploadImage = ref(false);
+
+watch(
+  isDark,
+  newValue => {
+    tinymceActive.value = false;
+    if (newValue) theme.value = "dark";
+    else theme.value = "default";
+    nextTick(() => {
+      tinymceActive.value = true;
+    });
+  },
+  { immediate: true }
+);
 
 onActivated(() => {
   tinymceActive.value = true;
@@ -29,11 +45,9 @@ const handleDisabled = () => {
 
 const handleTheme = () => {
   tinymceActive.value = false;
-  if (theme.value === "default") {
-    theme.value = "dark";
-  } else {
-    theme.value = "default";
-  }
+  if (theme.value === "default") theme.value = "dark";
+  else theme.value = "default";
+
   nextTick(() => {
     tinymceActive.value = true;
   });
@@ -219,7 +233,7 @@ const getVideoDuration = (file: File): Promise<number> => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <template #header>
         <el-link href="https://www.tiny.cloud/" target="_blank" underline="never" style="font-size: 20px">
           Tinymce 富文本
@@ -244,11 +258,11 @@ const getVideoDuration = (file: File): Promise<number> => {
       />
     </el-card>
 
-    <el-card shadow="never" header="实时预览">
+    <el-card shadow="never" header="实时预览" class="tk-card-minimal">
       <div v-html="content"></div>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">编辑器内容。`string` 类型，必传</el-descriptions-item>
         <el-descriptions-item label="disabled">编辑器是否禁用。`boolean` 类型，默认 `false`</el-descriptions-item>
@@ -277,7 +291,7 @@ const getVideoDuration = (file: File): Promise<number> => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="imgUpload">
           图片上传事件。 `(blobInfo: Function, resolve: (url: url) => void, reject: (value: unknown) => void, progress:

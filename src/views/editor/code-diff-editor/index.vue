@@ -3,8 +3,12 @@ import { CodeDiff } from "v-code-diff";
 import oldDoc from "./oldDoc.json";
 import newDOc from "./newDoc.json";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 const ns = useNamespace();
+
+const settingStore = useSettingStore();
+const { isDark } = storeToRefs(settingStore);
 
 const oldString = ref(JSON.stringify(oldDoc, null, 2));
 const newString = ref(JSON.stringify(newDOc, null, 2));
@@ -25,6 +29,14 @@ const state = reactive({
   maxHeight: "900px",
 });
 
+watch(
+  isDark,
+  newVal => {
+    state.theme = newVal ? "dark" : "light";
+  },
+  { immediate: true }
+);
+
 const printEvent = (e: Event) => {
   console.log("diff finished! below is data:");
   console.log(e);
@@ -33,7 +45,7 @@ const printEvent = (e: Event) => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="CodeMirror 组件">
+    <el-card shadow="never" header="CodeMirror 组件" class="tk-card-minimal">
       <template #header>
         <el-link
           href="https://github.com/Shimada666/v-code-diff"
@@ -152,7 +164,7 @@ const printEvent = (e: Event) => {
       />
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="配置项 📚" :column="1" border>
         <el-descriptions-item label="language">
           代码语言，如 typescript，默认纯文本 plaintext。
@@ -202,7 +214,7 @@ const printEvent = (e: Event) => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="Emits 事件 📚" :column="1" border>
         <el-descriptions-item label="diff">
           diff 完成后触发，类型为 `(result: {stat: { isChanged: boolean, addNum: number, delNum: number}}) => void`
@@ -210,7 +222,7 @@ const printEvent = (e: Event) => {
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never">
+    <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="插槽 📚" :column="1" border>
         <el-descriptions-item label="stat">自定义统计内容，参数为 { stat }</el-descriptions-item>
       </el-descriptions>

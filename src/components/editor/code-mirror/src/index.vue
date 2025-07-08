@@ -469,24 +469,36 @@ const toggleFullScreen = () => {
   isFullscreen.value = !isFullscreen.value;
 };
 
-const codeMirrorWidth = computed(() => addUnit(props.width));
-const codeMirrorHeight = computed(() => addUnit(props.height));
-const codeMirrorMaxHeight = computed(() => addUnit(props.maxHeight));
-const codeMirrorFontSize = computed(() => addUnit(props.fontSize));
-const mergeCmBgColor = computed(() => props.mergeConfig?.headerBgColor || "#f6f8fa");
-const mergeCmBorderColor = computed(() => props.mergeConfig?.headerBorderColor || "#d0d7de");
-const mergeCmAHighlightLineBgColor = computed(
-  () => props.mergeConfig?.highlightColor?.aHighlightLineBgColor || "#ffebe9"
-);
-const mergeCmAHighlightTextBgColor = computed(
-  () => props.mergeConfig?.highlightColor?.aHighlightTextBgColor || "#ff818266"
-);
-const mergeCmBHighlightLineBgColor = computed(
-  () => props.mergeConfig?.highlightColor?.bHighlightLineBgColor || "#e6ffec"
-);
-const mergeCmBHighlightTextBgColor = computed(
-  () => props.mergeConfig?.highlightColor?.bHighlightTextBgColor || "#abf2bc"
-);
+const style = computed(() => {
+  const codeMirrorWidth = addUnit(props.width);
+  const codeMirrorHeight = addUnit(props.height);
+  const codeMirrorMaxHeight = addUnit(props.maxHeight);
+  const codeMirrorFontSize = addUnit(props.fontSize);
+
+  const mergeCmBgColor = props.mergeConfig?.headerBgColor || ns.cssVar("bg-color");
+  const mergeCmBorderColor = props.mergeConfig?.headerBorderColor || ns.cssVar("border-color");
+  const mergeCmAHighlightLineBgColor =
+    props.mergeConfig?.highlightColor?.aHighlightLineBgColor || ns.cssVar("bg-danger");
+  const mergeCmAHighlightTextBgColor =
+    props.mergeConfig?.highlightColor?.aHighlightTextBgColor || ns.cssVar("danger-muted");
+  const mergeCmBHighlightLineBgColor =
+    props.mergeConfig?.highlightColor?.bHighlightLineBgColor || ns.cssVar("bg-success");
+  const mergeCmBHighlightTextBgColor =
+    props.mergeConfig?.highlightColor?.bHighlightTextBgColor || ns.cssVar("success-muted");
+
+  return {
+    "--cm-width": codeMirrorWidth,
+    "--cm-height": codeMirrorHeight,
+    "--cm-max-height": codeMirrorMaxHeight,
+    "--cm-font-size": codeMirrorFontSize,
+    "--cm-bg-color": mergeCmBgColor,
+    "--cm-border-color": mergeCmBorderColor,
+    "--cm-a-highlight-line-bg-color": mergeCmAHighlightLineBgColor,
+    "--cm-a-highlight-text-bg-color": mergeCmAHighlightTextBgColor,
+    "--cm-b-highlight-line-bg-color": mergeCmBHighlightLineBgColor,
+    "--cm-b-highlight-text-bg-color": mergeCmBHighlightTextBgColor,
+  };
+});
 </script>
 
 <script lang="ts">
@@ -530,7 +542,7 @@ const defaultPhrases = {
 </script>
 
 <template>
-  <component :is="tag" ref="editorInstance" :class="[ns.b(), ns.is('fullscreen', isFullscreen)]">
+  <component :is="tag" ref="editorInstance" :class="[ns.b(), ns.is('fullscreen', isFullscreen)]" :style="style">
     <template v-if="mergeConfig && mergeConfig.header">
       <slot name="header">
         <div :class="ns.e('header')">
@@ -559,98 +571,5 @@ const defaultPhrases = {
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/bem" as *;
-@use "@styles/mixins/namespace" as *;
-
-@include b(code-mirror) {
-  position: relative;
-  width: v-bind(codeMirrorWidth);
-  height: v-bind(codeMirrorHeight);
-  max-height: v-bind(codeMirrorMaxHeight);
-  font-size: v-bind(codeMirrorFontSize);
-
-  @include is(fullscreen) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: #ffffff;
-  }
-
-  // CodeMirror 实际高度
-  :deep(.cm-editor) {
-    height: 100%;
-  }
-
-  :deep(.cm-editor.cm-focused) {
-    outline: none;
-    box-shadow: 0 0 0 1px cssVarEl(color-primary);
-  }
-
-  /* a 编辑器高亮行背景色 */
-  :deep(.ͼ1.cm-merge-a .cm-changedLine, .ͼ1 .cm-deletedChunk) {
-    background-color: v-bind(mergeCmAHighlightLineBgColor);
-  }
-
-  /* b 编辑器高亮行背景色 */
-  :deep(.ͼ1.cm-merge-b .cm-changedLine) {
-    background-color: v-bind(mergeCmBHighlightLineBgColor);
-  }
-
-  /* a 编辑器高亮文字背景色 */
-  :deep(.ͼ2.cm-merge-a .cm-changedText, .ͼ2 .cm-deletedChunk .cm-deletedText) {
-    background-color: v-bind(mergeCmAHighlightTextBgColor);
-  }
-
-  /* b 编辑器高亮文字背景色 */
-  :deep(.ͼ2.cm-merge-b .cm-changedText) {
-    background-color: v-bind(mergeCmBHighlightTextBgColor);
-  }
-
-  :deep(.cm-mergeView) {
-    height: 100%;
-  }
-
-  @include e(header) {
-    display: flex;
-    align-items: stretch;
-
-    @include m(left) {
-      flex-grow: 1;
-      flex-basis: 0;
-      padding: 8px 11px;
-      text-align: center;
-      background-color: v-bind(mergeCmBgColor);
-      border: 1px solid v-bind(mergeCmBorderColor);
-    }
-
-    @include m(right) {
-      flex-grow: 1;
-      flex-basis: 0;
-      padding: 8px 11px;
-      text-align: center;
-      background-color: v-bind(mergeCmBgColor);
-      border: 1px solid v-bind(mergeCmBorderColor);
-    }
-  }
-
-  @include e(fullscreen-btn) {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    z-index: 1999;
-
-    @include el-joins(button) {
-      width: 24px;
-      height: 24px;
-
-      @include el-joins(icon) {
-        font-size: 16px;
-      }
-    }
-  }
-}
+@use "./index";
 </style>

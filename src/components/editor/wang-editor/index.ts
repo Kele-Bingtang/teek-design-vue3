@@ -1,8 +1,8 @@
 import { useInstall } from "@/common/utils";
-import index, { type FileInsertFnType, type ImageInsertFnType, type VideoInsertFnType } from "./src/index.vue";
-
-export { type FileInsertFnType, type ImageInsertFnType, type VideoInsertFnType };
+import index from "./src/index.vue";
 
 export const WangEditor = useInstall(index);
+
+export type * from "./src/types";
 
 export default index;

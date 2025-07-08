@@ -171,3 +171,14 @@ watch(language, () => {
     <TinymceEditor :id="id" v-model="tinymceContent" :init="initOptions" :disabled v-bind="tinymceProps" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+@use "@styles/mixins/function" as *;
+
+:deep(.tox-edit-area) {
+  &::before {
+    // 鼠标悬浮时，编辑器边框颜色
+    border-color: cssVar(color-primary) !important;
+  }
+}
+</style>
