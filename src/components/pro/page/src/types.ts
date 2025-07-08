@@ -9,7 +9,7 @@ export interface PageColumn<T = any> extends TableColumn<T> {
     /**
      * 搜索事件前置处理
      */
-    beforeSearch?: (value: unknown, searchParams: Recordable, column: TableColumn) => Recordable | false | undefined;
+    beforeSearch?: (value: unknown, searchParams: Recordable, column: TableColumn) => unknown | false | undefined;
     /**
      * 搜索项所占用的列数，默认为 1 列
      */

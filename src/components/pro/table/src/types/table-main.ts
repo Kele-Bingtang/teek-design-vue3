@@ -84,7 +84,7 @@ export namespace ProTableMainNamespace {
     radioProps?: TableColumnTypeNamespace.Props["radioProps"];
   }
 
-  export interface Emits extends TableColumnDataNamespace.Emits, OperationNamespace.Emits {
+  export interface Emits extends Omit<TableColumnDataNamespace.Emits, "filter">, OperationNamespace.Emits {
     /**
      * 多选框勾选事件
      */
@@ -109,5 +109,9 @@ export namespace ProTableMainNamespace {
      * 离开单元格编辑事件
      */
     leaveCellEdit: [row: TableRow, column: TableColumn];
+    /**
+     * 过滤事件，返回输入的值以及 prop
+     */
+    filter: [filterModel: Recordable, filterValue: unknown, prop: string | undefined];
   }
 }

@@ -199,6 +199,14 @@ export interface TableColumn<T = any>
    */
   filterProps?: TableFilterProps;
   /**
+   * 过滤前置处理，可以返回新的过滤值或者 false 来阻止过滤
+   */
+  beforeFilter?: (
+    filterValue: unknown,
+    filterModel: Recordable,
+    prop: string | undefined
+  ) => unknown | false | undefined;
+  /**
    * 列配置中是否禁用列排序选择
    *
    * @default false

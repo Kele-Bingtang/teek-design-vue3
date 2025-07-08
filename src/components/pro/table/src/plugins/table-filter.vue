@@ -25,28 +25,25 @@ const emits = defineEmits<TableFilterEmits>();
 
 const ns = useNamespace("pro-table-filter");
 
-const model = ref<Recordable>({});
+const model = ref<Recordable>();
 
 const prop = computed(() => props.prop || props.formColumn.prop);
 const elProps = computed(() => ({ ...props.formColumn.elProps, teleported: false }));
 
 // 事件处理方法
 const handleFilter = () => {
-  let filterValue = model.value;
-  if (isObject(model.value) && prop.value) filterValue = getProp(model.value, prop.value);
-  emits("filter", model.value, filterValue, prop.value);
+  emits("filter", model.value, prop.value);
 };
 
 const handleClear = () => {
-  if (isObject(model.value) && prop.value) setProp(model.value, prop.value, undefined);
-  else model.value = {};
+  model.value = undefined;
 
   handleFilter();
   emits("clear", prop.value);
 };
 
 const handleReset = () => {
-  model.value = {};
+  model.value = undefined;
   emits("reset");
 };
 </script>
@@ -65,9 +62,7 @@ const handleReset = () => {
           @click.stop
           :class="ns.b('icon')"
           :style="{
-            [ns.cssVarName('pro-table-filter-icon-color')]: isEmpty(getProp(model, prop))
-              ? 'inherit'
-              : ns.cssVarEl('color-primary'),
+            [ns.cssVarName('pro-table-filter-icon-color')]: isEmpty(model) ? 'inherit' : ns.cssVarEl('color-primary'),
           }"
         >
           <el-icon><Filter /></el-icon>

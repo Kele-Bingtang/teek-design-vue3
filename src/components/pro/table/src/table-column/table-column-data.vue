@@ -107,8 +107,8 @@ const handleRegisterProFormInstance = (index: number, prop: string, instance: Pr
 /**
  * 执行过滤搜索
  */
-const handleFilter = (model: Recordable, filterValue: unknown, prop: string | undefined) => {
-  emits("filter", model, filterValue, prop);
+const handleFilter = (filterValue: unknown, prop: string | undefined) => {
+  emits("filter", filterValue, prop);
 };
 
 /**

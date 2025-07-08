@@ -24,7 +24,7 @@ export namespace TableColumnDataNamespace {
     /**
      * 过滤事件，返回输入的值以及 prop
      */
-    filter: [filterModel: Recordable, filterValue: unknown, prop: string | undefined];
+    filter: [filterValue: unknown, prop: string | undefined];
     /**
      * 清空事件，返回输入的 prop
      */

@@ -20,7 +20,7 @@ import { isEmpty, isFunction } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
-import { filterEmpty } from "@/components/pro/helper";
+import { filterEmpty, setProp } from "@/components/pro/helper";
 
 defineOptions({ name: "ProPage" });
 
@@ -60,7 +60,7 @@ const initShowSearch = ref(true);
 watchEffect(() => (initShowSearch.value = toValue(props.initShowSearch)));
 
 const { optionsMap, initOptionsMap } = useOptions();
-const { searchParams, searchDefaultParams, searchColumns } = usePageSearchInit();
+const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePageSearchInit();
 
 provide(optionsMapKey, optionsMap);
 
@@ -80,7 +80,7 @@ function usePageSearchInit() {
 
     filterColumns.forEach(async column => {
       // Table 默认查询参数初始化
-      const prop = lastProp(column.search?.prop ?? column.prop!);
+      const prop = lastProp(column.search?.prop ?? column.prop ?? "");
       const defaultValue = unref(column.search?.defaultValue);
 
       if (!isEmpty(defaultValue)) {
@@ -147,19 +147,34 @@ function usePageSearchInit() {
     { deep: true, immediate: true }
   );
 
-  return { searchParams, searchDefaultParams, searchColumns };
+  return { flatColumns, searchParams, searchDefaultParams, searchColumns };
 }
 
 // ---------- ProSearch 事件监听 ----------
 
-const handleSearch = (model: Recordable) => {
+const handleSearch = (searchModel: Recordable) => {
+  const newSearchModel = { ...searchModel };
+
+  // 触发每个配置项的 beforeSearch
+  for (const column of flatColumns.value) {
+    if (!column.search?.beforeSearch) continue;
+
+    const prop = lastProp(column.search?.prop ?? column.prop ?? "");
+    const newSearchValue = column.search?.beforeSearch(newSearchModel[prop], newSearchModel, column);
+
+    // 如果返回 false，则不执行查询
+    if (newSearchValue === false) return;
+
+    newSearchValue && setProp(newSearchModel, prop, newSearchValue);
+  }
+
   // ProSearch 已经自动清除空值，因此传入 false
-  proTableInstance.value?.search(model, false);
-  emits("search", model);
+  proTableInstance.value?.search(newSearchModel, false);
+  emits("search", newSearchModel);
 };
-const handleReset = (model: Recordable) => {
-  proTableInstance.value?.reset(model, false);
-  emits("reset", model);
+const handleReset = (searchModel: Recordable) => {
+  proTableInstance.value?.reset(searchModel, false);
+  emits("reset", searchModel);
 };
 
 const searchRegister = (proSearchInstance: ProSearchInstance) => {

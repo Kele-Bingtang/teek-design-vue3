@@ -6,7 +6,14 @@ import { ElTable, ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
 import { isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
-import { getProp, filterOptions, filterOptionsValue, getObjectKeys } from "@/components/pro/helper";
+import {
+  getProp,
+  filterOptions,
+  filterOptionsValue,
+  getObjectKeys,
+  setProp,
+  filterEmpty,
+} from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
@@ -44,7 +51,8 @@ const pageInfo = ref({ ...defaultPageInfo, ...props.pageInfo });
 watchEffect(() => (pageInfo.value = { ...defaultPageInfo, ...props.pageInfo }));
 
 // 表格实际渲染的数据
-const tableData = computed(() => tryPagination(props.data));
+const tableData = computed(() => tryPagination(filterTableData.value ?? props.data));
+const tableDataTotal = computed(() => filterTableData.value?.length ?? props.data.length);
 
 // 数据发生改变，则清除过滤的数据
 watch(
@@ -310,28 +318,37 @@ function useTableOperation() {
  * 表格列过滤相关逻辑
  */
 function useTableFiler() {
+  // 过滤后的表格数据
   const filterTableData = ref<Recordable[]>();
+  // 过滤数据表单
+  const filterModel = ref<Recordable>({});
 
   /**
    * 执行过滤搜索
    */
-  const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string | undefined) => {
-    // 后端过滤
-    if (isServer(toValue(props.filterScope))) return emits("filter", filterModel, filterValue, prop);
+  const handleFilter = (filterValue: unknown, prop: string | undefined) => {
+    if (prop) setProp(filterModel.value, prop, filterValue);
 
-    const keys = getObjectKeys(filterModel);
+    // 后端过滤
+    if (isServer(toValue(props.filterScope))) return emits("filter", filterModel.value, filterValue, prop);
+
+    const keys = getObjectKeys(filterModel.value);
 
     const filterRule: Recordable = {};
     keys.forEach(key => {
       const column = availableColumns.value.find(item => item.prop === key);
+      // 可以返回新的过滤值，如去掉 %、转换为小写等
+      const formatFilterValue = column?.beforeFilter?.(filterValue, filterModel.value, prop);
+      if (formatFilterValue === false) return;
+
+      formatFilterValue && setProp(filterModel.value, key, formatFilterValue);
       initModel(filterRule, key, column?.filterProps?.rule || "eq");
     });
 
     // 前端过滤
-    const finalFilterData = filterData(tableData.value, filterModel, filterRule);
-    filterTableData.value = tryPagination(finalFilterData);
+    filterTableData.value = filterData(props.data, filterModel.value, filterRule);
 
-    emits("filter", filterModel, filterValue, prop);
+    emits("filter", filterModel.value, filterValue, prop);
   };
   /**
    * 执行过滤清除
@@ -393,7 +410,7 @@ defineExpose(expose);
     show-overflow-tooltip
     v-bind="$attrs"
     :header-cell-style="{ backgroundColor: `rgb(${ns.cssVar('gray-200-rgb')}, 0.6)`, ...headerCellStyle }"
-    :data="filterTableData ? filterTableData : tableData"
+    :data="tableData"
     :row-key
     :class="ns.b()"
     @selection-change="handleSelectionChange"
@@ -475,7 +492,7 @@ defineExpose(expose);
       v-if="pageScope"
       v-model="pageInfo"
       @change="handlePaginationChange"
-      :total="data.length"
+      :total="tableDataTotal"
       v-bind="paginationProps"
     >
       <template v-if="$slots['pagination-left']" #pagination-left>

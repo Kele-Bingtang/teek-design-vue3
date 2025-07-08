@@ -21,7 +21,16 @@ const columns: PageColumn[] = [
   { type: "index", label: "#", width: 60 },
   { type: "sort", label: "Sort", width: 80 },
   { type: "expand", label: "Expand", width: 80 },
-  { prop: "username", label: "用户姓名", search: { el: "el-input" } },
+  {
+    prop: "username",
+    label: "用户姓名",
+    search: {
+      el: "el-input",
+      beforeSearch: (searchValue, searchParams, column) => {
+        return `#${searchValue}`;
+      },
+    },
+  },
   {
     prop: "gender",
     label: "性别",

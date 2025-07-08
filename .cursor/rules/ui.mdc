@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 ---
 description: UI 设计规范
-priority: 1000
+priority: 999
 ---
 
 

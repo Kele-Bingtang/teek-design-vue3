@@ -5,7 +5,7 @@ alwaysApply: true
 ---
 ---
 description: 代码编写规范
-priority: 99
+priority: 999
 ---
 
 ## 组件格式
