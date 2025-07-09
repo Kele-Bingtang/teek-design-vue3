@@ -35,7 +35,7 @@ const currentIcon = ref("");
         <span>图标选择器</span>
       </template>
       <div style="width: 600px">
-        <IconPicker v-model="currentIcon" />
+        <IconPicker v-model="currentIcon" copy />
       </div>
     </el-card>
 

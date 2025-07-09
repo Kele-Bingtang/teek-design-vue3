@@ -30,7 +30,7 @@ export const useValidator = () => {
    *
    * @param options 配置
    */
-  const lengthRange = (options: LengthRange): FormItemRule => {
+  const validateLengthRange = (options: LengthRange): FormItemRule => {
     const { min, max, message } = options;
 
     return {
@@ -45,7 +45,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const notSpace = (message?: string): FormItemRule => {
+  const validateNotSpace = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (val?.indexOf(" ") !== -1) return callback(new Error(message || "不能包含空格"));
@@ -59,7 +59,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const notSpecialCharacters = (message?: string): FormItemRule => {
+  const validateNotSpecialCharacters = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (/[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/gi.test(val)) return callback(new Error(message || "不能包含特殊字符"));
@@ -73,7 +73,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const phone = (message?: string): FormItemRule => {
+  const validatePhone = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -88,7 +88,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const email = (message?: string): FormItemRule => {
+  const validateEmail = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -108,7 +108,7 @@ export const useValidator = () => {
    * @param password 密码
    * @param message 错误提示
    */
-  const password = (min = 6, max = 20, message?: string): FormItemRule => {
+  const validatePassword = (min = 6, max = 20, message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -137,7 +137,7 @@ export const useValidator = () => {
    * @param max 最大长度
    * @param message 错误提示
    */
-  const strongPassword = (min = 8, max = 20, message?: string): FormItemRule => {
+  const validateStrongPassword = (min = 8, max = 20, message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -167,7 +167,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const chineseIdCard = (message?: string): FormItemRule => {
+  const validateChineseIdCard = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -201,7 +201,7 @@ export const useValidator = () => {
    *
    * @param message 错误提示
    */
-  const bankCard = (message?: string): FormItemRule => {
+  const validateBankCard = (message?: string): FormItemRule => {
     return {
       validator: (_, val, callback) => {
         if (!val) return callback();
@@ -235,12 +235,32 @@ export const useValidator = () => {
   };
 
   /**
+   * 链接验证
+   *
+   * @param message 错误提示
+   */
+  const validateUrl = (message?: string): FormItemRule => {
+    return {
+      validator: (_, val, callback) => {
+        if (!val) return callback();
+
+        try {
+          new URL(val);
+          return callback();
+        } catch {
+          return callback(new Error(message || "请输入正确的链接"));
+        }
+      },
+    };
+  };
+
+  /**
    * 最大长度
    *
    * @param max 最大长度
    * @param message 错误提示
    */
-  const maxLength = (max: number, message?: string): FormItemRule => {
+  const validateMaxLength = (max: number, message?: string): FormItemRule => {
     return {
       max,
       message: message || `长度不能超过 ${max} 个字符`,
@@ -253,7 +273,7 @@ export const useValidator = () => {
    * @param min 最小长度
    * @param message 错误提示
    */
-  const minLength = (min: number, message?: string): FormItemRule => {
+  const validateMinLength = (min: number, message?: string): FormItemRule => {
     return {
       min,
       message: message || `长度不能小于 ${min} 个字符`,
@@ -262,16 +282,17 @@ export const useValidator = () => {
 
   return {
     required,
-    lengthRange,
-    notSpace,
-    notSpecialCharacters,
-    phone,
-    email,
-    password,
-    strongPassword,
-    chineseIdCard,
-    bankCard,
-    maxLength,
-    minLength,
+    validateLengthRange,
+    validateNotSpace,
+    validateNotSpecialCharacters,
+    validatePhone,
+    validateEmail,
+    validatePassword,
+    validateStrongPassword,
+    validateChineseIdCard,
+    validateBankCard,
+    validateUrl,
+    validateMaxLength,
+    validateMinLength,
   };
 };

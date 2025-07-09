@@ -126,6 +126,15 @@ export const rolesRoutes: RouterConfigRaw[] = [
   {
     path: HOME_URL,
     name: HOME_NAME,
+    component: "/workbenches/index",
+    meta: {
+      title: "工作台",
+      icon: HomeFilled,
+    },
+  },
+  {
+    path: "dashboard",
+    name: "Dashboard",
     meta: {
       title: "仪表盘",
       icon: HomeFilled,
@@ -136,7 +145,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
         name: "Console",
         component: "/dashboard/console/index",
         meta: {
-          title: "工作台",
+          title: "看板页",
           isAffix: true,
         },
       },

@@ -11,6 +11,12 @@ import { extractIconClasses } from "./iconfont";
 
 defineOptions({ name: "IconPicker" });
 
+interface IconPickerProps {
+  copy?: boolean;
+}
+
+const props = withDefaults(defineProps<IconPickerProps>(), { copy: false });
+
 const ns = useNamespace("icon-picker");
 
 const emit = defineEmits<{ select: [icon: string] }>();
@@ -165,7 +171,7 @@ const fullscreenChange = (isFullscreen: boolean) => {
               }"
               :class="ns.e('icon')"
               @click="iconSelect(icon)"
-              v-copy="modelValue"
+              v-copy="props.copy ? modelValue : false"
             >
               <Icon :icon="icon" :size="20" />
             </div>

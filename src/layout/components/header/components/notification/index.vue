@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Bell } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import SystemConfig from "@/common/config";
 import { Tooltip } from "@/components";
 import { useMessageStore } from "@/pinia";
 import msg1 from "@/common/assets/images/msg/msg01.png";
@@ -47,8 +46,6 @@ const { unreadMessageList } = storeToRefs(messageStore);
 
 const ns = useNamespace("notification");
 const router = useRouter();
-
-const tooltipEffect = SystemConfig.layoutConfig.tooltipEffect;
 
 onMounted(() => {
   // 请求获取消息列表
@@ -165,7 +162,7 @@ const toDetail = () => {
 
                   <div :class="[ns.e('info'), 'flx-1']">
                     <div class="flx-align-center-between">
-                      <Tooltip :effect="tooltipEffect" :line="1" :try="1">
+                      <Tooltip :line="1" :try="1">
                         <span class="title">{{ data.title }}</span>
                       </Tooltip>
                       <div v-if="data.tag?.length" class="flx" style="gap: 2px">
@@ -175,7 +172,7 @@ const toDetail = () => {
                       </div>
                     </div>
 
-                    <Tooltip v-if="data.description" :effect="tooltipEffect" :line="2" :try="1">
+                    <Tooltip v-if="data.description" :line="2" :try="1">
                       <span class="desc">{{ data.description }}</span>
                     </Tooltip>
 

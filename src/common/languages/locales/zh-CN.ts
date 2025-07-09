@@ -1,6 +1,7 @@
 export default {
   _route: {
-    Home: "仪表盘",
+    Home: "工作台",
+    Dashboard: "仪表盘",
     Login: "登录",
     Redirect: "重定向",
     Layout: "布局",
@@ -13,7 +14,7 @@ export default {
     Profile: "我的主页",
     Message: "我的消息",
 
-    Console: "工作台",
+    Console: "看板页",
     Analysis: "分析页",
     ECommerce: "电子商务",
 

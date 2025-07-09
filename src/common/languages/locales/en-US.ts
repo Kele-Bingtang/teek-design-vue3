@@ -1,6 +1,7 @@
 export default {
   _route: {
-    Home: "Dashboard",
+    Home: "Workbenches",
+    Dashboard: "Dashboard",
     Login: "Login",
     Redirect: "Redirect",
     Layout: "Layout",

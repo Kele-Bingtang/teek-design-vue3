@@ -8,6 +8,7 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { ElTooltip } from "element-plus";
 import { useResizeObserver } from "@vueuse/core";
+import SystemConfig from "@/common/config";
 
 defineOptions({ name: "Tooltip" });
 
@@ -123,7 +124,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <el-tooltip v-if="showTip" v-bind="$attrs" :disabled="!showTip" :content="contentText">
+  <el-tooltip
+    v-if="showTip"
+    :effect="SystemConfig.layoutConfig.tooltipEffect"
+    v-bind="$attrs"
+    :disabled="!showTip"
+    :content="contentText"
+  >
     <div ref="containerInstance" :class="containerClass" :style="line > 1 ? { '-webkit-line-clamp': line } : {}">
       <slot></slot>
     </div>

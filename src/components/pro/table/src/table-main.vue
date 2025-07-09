@@ -196,6 +196,7 @@ function useTableInit() {
     return flatArr.filter(item => !item.children?.length);
   };
 
+  // 当 columns 发生改变时，重新初始化
   watch(
     availableColumns,
     newValue => {
@@ -211,6 +212,21 @@ function useTableInit() {
       }, 10);
     },
     { deep: true, flush: "post" }
+  );
+
+  // 不对数据进行深度监听，当数据整体发生改变时，重新初始化
+  watch(
+    () => props.data,
+    newValue => {
+      clearTimer();
+      timer = setTimeout(async () => {
+        const flatColumns = flatColumnsFn(availableColumns.value);
+        for (const column of flatColumns) {
+          await initOptionsMap(column.options, column.prop || "");
+          initEnhanceFnInData(newValue as TableRow[], column);
+        }
+      }, 10);
+    }
   );
 
   return { availableColumns };

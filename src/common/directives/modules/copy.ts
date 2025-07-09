@@ -47,17 +47,17 @@ async function copyToClipboard(text: string | number): Promise<boolean> {
 const copy: Directive = {
   mounted(el: CopyEl, binding: DirectiveBinding) {
     el.__copyData__ = binding.value;
+    // 如果值为 false，则不进行复制
+    if (binding.value === false) return;
+
     el.__handleCopyClick__ = async function () {
       if (!el.__copyData__ && el.__copyData__ !== 0) {
         ElMessage({ type: "error", message: "复制失败，内容为空" });
         return;
       }
       const success = await copyToClipboard(el.__copyData__);
-      if (success) {
-        ElMessage({ type: "success", message: "复制成功" });
-      } else {
-        ElMessage({ type: "error", message: "复制失败" });
-      }
+      if (success) ElMessage({ type: "success", message: "复制成功" });
+      else ElMessage({ type: "error", message: "复制失败" });
     };
     el.addEventListener("click", el.__handleCopyClick__);
   },
