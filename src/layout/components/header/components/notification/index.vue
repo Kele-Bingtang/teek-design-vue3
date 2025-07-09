@@ -132,7 +132,7 @@ const tabList = computed<TabInfo[]>(() => [
  * 跳转消息中心
  */
 const toDetail = () => {
-  if (activeName.value === "message") router.push("/message-center");
+  if (activeName.value === "message") router.push("/message");
 };
 </script>
 
