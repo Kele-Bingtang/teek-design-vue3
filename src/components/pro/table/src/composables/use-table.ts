@@ -18,7 +18,7 @@ export const useProTable = () => {
 
   const ns = useNamespace();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const { layoutSize } = storeToRefs(useLayoutStore());
 
   const currentInstance = getCurrentInstance();
 

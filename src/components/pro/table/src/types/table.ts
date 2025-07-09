@@ -13,7 +13,7 @@ export namespace ProTableNamespace {
      *
      * @default '[]'
      */
-    columns?: TableColumn[];
+    columns?: TableColumn<any>[];
     /**
      * table 数据
      *

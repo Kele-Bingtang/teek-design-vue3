@@ -1,6 +1,5 @@
 import type { CSSProperties } from "vue";
 import type { ElTooltipProps } from "element-plus";
-import type { ProTableNamespace } from "./table";
 import type { TableColumn } from "./table-column";
 import type { ExportProps } from "./table-export";
 import type { TableSizeEnum, ToolButtonEnum } from "../helper";
@@ -134,7 +133,7 @@ export namespace ProTableHeadNamespace {
      *
      * @default '[]'
      */
-    data?: ProTableNamespace.Props["data"];
+    data?: Recordable[];
     /**
      * 列配置项
      *

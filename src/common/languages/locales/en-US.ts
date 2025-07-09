@@ -64,6 +64,7 @@ export default {
     ProPage: "Pro Page",
     SimpleProPage: "Simple ProPage",
     AdvancedProPage: "Advanced ProPage",
+    CreateProPage: "Create ProPage",
     ProTreePage: "Pro TreePage",
     ComplexProPage: "Complex ProPage",
     ProDescriptions: "Pro Descriptions",

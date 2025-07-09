@@ -169,6 +169,12 @@ const proComponents: RouterConfigRaw = {
           meta: { title: () => "进阶 ProPage", icon: StarFilled },
         },
         {
+          path: "create",
+          component: () => import("@/views/pro-components/pro-page/create/index.vue"),
+          name: "CreateProPage",
+          meta: { title: "创建 ProPage", icon: StarFilled },
+        },
+        {
           path: "tree-filter",
           name: "ProTreePage",
           component: () => import("@/views/pro-components/pro-page/tree-filter/index.vue"),

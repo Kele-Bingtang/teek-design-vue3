@@ -97,6 +97,7 @@ const tableMainProps = computed(() => {
   return filterEmpty({
     ...finalProps.value,
     // 去掉 TableHead 的配置项，确保所有的非 TableHead 的 props 都透传到 ElTable
+    requestApi: undefined,
     initRequestParams: undefined,
     defaultRequestParams: undefined,
     requestImmediate: undefined,

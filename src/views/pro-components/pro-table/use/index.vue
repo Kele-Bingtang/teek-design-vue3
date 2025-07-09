@@ -20,7 +20,7 @@ const showSelections = (show: boolean) => {
   setColumn([
     {
       prop: "selection",
-      field: "hide",
+      field: "hidden",
       value: show,
     },
   ]);
@@ -47,7 +47,7 @@ const showExpandedRows = (show: boolean) => {
   setColumn([
     {
       prop: "expand",
-      field: "hide",
+      field: "hidden",
       value: show,
     },
   ]);
@@ -99,9 +99,9 @@ const height = ref<string | number>("auto");
 const fixedHeaderOrAuto = () => {
   if (height.value === "auto") {
     setProps({
-      height: 300,
+      height: 600,
     });
-    height.value = 300;
+    height.value = 600;
   } else {
     setProps({
       height: "auto",
@@ -192,7 +192,7 @@ const columns = reactive<TableColumn<ResUserList>[]>([
 </script>
 
 <template>
-  <el-space fill>
+  <el-space fill style="width: 100%">
     <el-card shadow="never" header="UseTable 操作">
       <el-space wrap>
         <el-button @click="showTableButton(false)">隐藏表格头部按钮</el-button>

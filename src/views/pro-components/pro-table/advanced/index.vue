@@ -1,5 +1,5 @@
 <script setup lang="tsx" name="SimpleProTable">
-import { ProTable, type TableColumn, type ProTableInstance, type TableRow } from "@/components";
+import { ProTable, type TableColumn, type ProTableInstance, type TableRow, setProp } from "@/components";
 import { useConfirm, usePermission } from "@/composables";
 import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
 import { tableData } from "@/mock/pro-table";
@@ -107,6 +107,15 @@ const columns: TableColumn<ResUserList>[] = [
       { userLabel: "禁用", userStatus: 0 },
     ],
     optionField: { label: "userLabel", value: "userStatus" },
+    editProps: {
+      el: "el-switch",
+      elProps: {
+        activeText: "启用",
+        inactiveText: "禁用",
+        activeValue: 1,
+        inactiveValue: 0,
+      },
+    },
     render: ({ value, row }) => {
       return (
         <>
@@ -116,7 +125,7 @@ const columns: TableColumn<ResUserList>[] = [
               active-text={value ? "启用" : "禁用"}
               active-value={1}
               inactive-value={0}
-              onClick={() => changeStatus(row)}
+              {...{ onClick: () => changeStatus(row) }}
             />
           ) : (
             <ElTag type={value ? "success" : "danger"}>{value ? "启用" : "禁用"}</ElTag>
@@ -186,6 +195,10 @@ const downloadFile = async () => {
   });
 };
 
+const handleFormChange = async (fromValue: unknown, prop: string, scope: Recordable) => {
+  setProp(data.value[scope.rowIndex], prop, fromValue);
+};
+
 // 取消行内编辑
 const cancelEdit = (row: TableRow) => {
   row._editable = false;
@@ -210,7 +223,7 @@ const confirmEdit = (row: TableRow) => {
 </script>
 
 <template>
-  <ProTable ref="proTableInstance" :data="data" :columns="columns" page-scope card>
+  <ProTable ref="proTableInstance" :data="data" :columns="columns" page-scope card @form-change="handleFormChange">
     <template #head-left="scope">
       <el-button v-auth="'add'" type="primary" :icon="CirclePlus">新增用户</el-button>
       <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain>批量添加用户</el-button>

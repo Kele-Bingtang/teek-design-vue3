@@ -73,6 +73,7 @@ const slotParams = computed(() => ({
 
 watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
 
+// 有子组件的表单组件映射
 const childComponentMap: Record<string, { root: Component; child?: Component }> = {
   [FormElComponentEnum.EL_SELECT]: { root: formELComponentsMap.ElSelect, child: Select },
   [FormElComponentEnum.EL_RADIO]: { root: formELComponentsMap.ElRadioGroup, child: Radio },
@@ -82,6 +83,7 @@ const childComponentMap: Record<string, { root: Component; child?: Component }> 
   [FormElComponentEnum.EL_CHECKBOX_GROUP]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
   [FormElComponentEnum.EL_CHECKBOX_BUTTON]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
 };
+
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
   if (labelSize === "default") return { fontSize: "16px", fontWeight: 600 };

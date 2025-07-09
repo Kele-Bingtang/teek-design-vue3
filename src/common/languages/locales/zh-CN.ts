@@ -64,6 +64,7 @@ export default {
     ProPage: "超级页面",
     SimpleProPage: "简单 ProPage",
     AdvancedProPage: "进阶 ProPage",
+    CreateProPage: "创建 ProPage",
     ProTreePage: "树形 ProTreePage",
     ComplexProPage: "复杂 ProPage",
     ProDescriptions: "超级描述",

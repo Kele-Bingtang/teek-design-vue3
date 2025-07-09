@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import { ProPage, type PageColumn, type ProPageInstance, type TableRow } from "@/components";
+import { ProPage, setProp, type PageColumn, type ProPageInstance, type TableRow } from "@/components";
 import { useConfirm, usePermission } from "@/composables";
-import { ElButton, ElInput, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
+import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
 import { tableData } from "@/mock/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
@@ -126,6 +126,15 @@ const columns: PageColumn<ResUserList>[] = [
     ],
     search: { el: "el-select", props: { filterable: true } },
     optionField: { label: "userLabel", value: "userStatus" },
+    editProps: {
+      el: "el-switch",
+      elProps: {
+        activeText: "启用",
+        inactiveText: "禁用",
+        activeValue: 1,
+        inactiveValue: 0,
+      },
+    },
     render: ({ value, row }) => {
       return (
         <>
@@ -135,7 +144,7 @@ const columns: PageColumn<ResUserList>[] = [
               active-text={value ? "启用" : "禁用"}
               active-value={1}
               inactive-value={0}
-              onChange={() => changeStatus(row)}
+              {...{ onClick: () => changeStatus(row) }}
             />
           ) : (
             <ElTag type={value ? "success" : "danger"}>{value ? "启用" : "禁用"}</ElTag>
@@ -211,6 +220,10 @@ const downloadFile = async () => {
   });
 };
 
+const handleFormChange = async (fromValue: unknown, prop: string, scope: Recordable) => {
+  setProp(data.value[scope.rowIndex], prop, fromValue);
+};
+
 // 取消行内编辑
 const cancelEdit = (row: TableRow) => {
   row._editable = false;
@@ -235,11 +248,11 @@ const confirmEdit = (row: TableRow) => {
 </script>
 
 <template>
-  <ProPage ref="proPageInstance" :columns :data page-scope>
-    <template #tableHeader="scope">
-      <el-button v-auth="'add'" type="primary" :icon="CirclePlus">新增用户</el-button>
-      <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain>批量添加用户</el-button>
-      <el-button v-auth="'export'" type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
+  <ProPage ref="proPageInstance" :columns :data page-scope @form-change="handleFormChange">
+    <template #head-left="scope">
+      <el-button type="primary" :icon="CirclePlus">新增用户</el-button>
+      <el-button type="primary" :icon="Upload" plain>批量添加用户</el-button>
+      <el-button type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
       <el-button type="primary" plain>To 子集详情页面</el-button>
       <el-button
         type="danger"

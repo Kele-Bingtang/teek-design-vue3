@@ -265,10 +265,12 @@ defineExpose(expose);
       @register="searchRegister"
     >
       <template
-        v-for="slot in Object.keys($slots).map(key => {
-          key = key.replace('-search', '');
-          return key;
-        })"
+        v-for="slot in Object.keys($slots)
+          .filter(key => key.endsWith('search'))
+          .map(key => {
+            key = key.replace('-search', '');
+            return key;
+          })"
         #[slot]="scope"
       >
         <slot :name="`${slot}-search`" v-bind="scope" />

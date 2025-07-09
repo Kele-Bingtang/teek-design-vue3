@@ -21,7 +21,7 @@ onMounted(() => {
 });
 
 const tableSlots = {
-  headLeft: (scope: any) => (
+  "head-left": (scope: any) => (
     <>
       <ElButton type="primary">新增用户</ElButton>
       <ElButton type="primary" plain>
@@ -51,7 +51,7 @@ const getTicketList = () => {
   });
 };
 
-const columns = reactive<TableColumn[]>([
+const columns: TableColumn[] = [
   { type: "selection", prop: "selection", fixed: "left", width: 60 },
   { type: "index", label: "#", width: 60 },
   { type: "sort", label: "Sort", width: 80 },
@@ -114,14 +114,14 @@ const columns = reactive<TableColumn[]>([
       );
     },
   },
-]);
+];
 </script>
 
 <template>
   <el-space fill>
     <el-card shadow="never" header="createTableComponent 函数式创建 Template 组件">
       <RenderProTable>
-        <template #tableHeader="scope">
+        <template #head-left="scope">
           <el-button type="primary">新增用户</el-button>
           <el-button type="primary" plain>批量添加用户</el-button>
           <el-button type="primary" plain>导出用户数据</el-button>

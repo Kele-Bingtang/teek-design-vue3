@@ -18,6 +18,7 @@ const changeTreeFilter = () => {
 
 // 表格配置项
 const columns: TableColumn<ResUserList>[] = [
+  { type: "selection", fixed: "left", width: 60 },
   { type: "index", label: "#", width: 80 },
   { prop: "username", label: "用户姓名", width: 120 },
   {
@@ -85,7 +86,7 @@ const downloadFile = async () => {
     <div class="table-box">
       <ProTable ref="proTableRef" :data :columns>
         <!-- 表格 header 按钮 -->
-        <template #tableHeader="scope">
+        <template #head-left="scope">
           <el-button type="primary" :icon="CirclePlus">新增用户</el-button>
           <el-button type="primary" :icon="Upload" plain>批量添加用户</el-button>
           <el-button type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
