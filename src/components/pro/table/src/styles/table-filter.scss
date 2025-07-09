@@ -13,6 +13,9 @@
 @include b(pro-table-filter-icon) {
   margin-left: 4px;
   vertical-align: -2px;
-  color: cssVar(pro-table-filter-icon-color);
   cursor: pointer;
+
+  @include is(active) {
+    color: cssVar(color-primary);
+  }
 }

@@ -57,13 +57,7 @@ const handleReset = () => {
     <!-- 过滤图标 -->
     <template #reference>
       <slot name="filter-icon">
-        <span
-          @click.stop
-          :class="ns.b('icon')"
-          :style="{
-            [ns.cssVarName('pro-table-filter-icon-color')]: isEmpty(model) ? 'inherit' : ns.cssVarEl('color-primary'),
-          }"
-        >
+        <span @click.stop :class="[ns.b('icon'), ns.is('active', !isEmpty(model))]">
           <el-icon><Filter /></el-icon>
         </span>
       </slot>
@@ -86,6 +80,6 @@ const handleReset = () => {
   </el-popover>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use "../styles/table-filter";
 </style>
