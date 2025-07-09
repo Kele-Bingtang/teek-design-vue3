@@ -46,7 +46,7 @@ import proComponentsRoutes from "./routes/pro-components";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
 import templateRoutes from "./routes/template";
-import { User, Bell, HomeFilled, StarFilled, Document } from "@element-plus/icons-vue";
+import { User, Bell, Odometer, StarFilled, Document, Compass } from "@element-plus/icons-vue";
 import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
 export const staticRoutes: RouterConfigRaw[] = [
@@ -129,7 +129,8 @@ export const rolesRoutes: RouterConfigRaw[] = [
     component: "/workbenches/index",
     meta: {
       title: "工作台",
-      icon: HomeFilled,
+      icon: Compass,
+      isAffix: true,
     },
   },
   {
@@ -137,7 +138,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
     name: "Dashboard",
     meta: {
       title: "仪表盘",
-      icon: HomeFilled,
+      icon: Odometer,
     },
     children: [
       {
@@ -146,7 +147,6 @@ export const rolesRoutes: RouterConfigRaw[] = [
         component: "/dashboard/console/index",
         meta: {
           title: "看板页",
-          isAffix: true,
         },
       },
       {
@@ -173,7 +173,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
     component: "/dashboard/console/index",
     meta: {
       title: "全屏工作台",
-      icon: HomeFilled,
+      icon: Odometer,
       isFull: true,
       useI18n: false,
     },

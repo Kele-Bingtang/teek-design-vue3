@@ -1,10 +1,10 @@
-import { StarFilled } from "@element-plus/icons-vue";
+import { Memo } from "@element-plus/icons-vue";
 
 const templateRoutes: RouterConfigRaw = {
   path: "/template",
   name: "Template",
   meta: {
-    icon: StarFilled,
+    icon: Memo,
     title: "模板组件",
   },
   children: [
