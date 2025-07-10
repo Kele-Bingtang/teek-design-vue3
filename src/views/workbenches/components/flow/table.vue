@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { TableColumn } from "@/components";
 import type { FlowType } from "./index.vue";
 import { ProTable } from "@/components";
 import { myAgentData } from "./data/my-agent";
@@ -26,14 +27,24 @@ watch(
   { immediate: true }
 );
 
-const columns = [
+const columns: TableColumn[] = [
   { type: "index", label: "序号", width: 60 },
-  { prop: "title", label: "任务标题" },
-  { prop: "system", label: "所属系统", width: 160 },
-  { prop: "status", label: "任务状态", width: 160 },
-  { prop: "creator", label: "创建人/提出人", width: 160 },
+  { prop: "title", label: "任务标题", minWidth: 200 },
+  { prop: "system", label: "所属系统", width: 100 },
+  {
+    prop: "status",
+    label: "任务状态",
+    width: 120,
+    el: "el-tag",
+    options: [
+      { label: "审批中", value: "审批中", tagType: "info" },
+      { label: "执行中", value: "执行中", tagType: "warning" },
+    ],
+    ignoreOptionIfAbsent: true,
+  },
+  { prop: "creator", label: "创建人", width: 100 },
   { prop: "createTime", label: "创建时间", width: 160 },
-  { prop: "deadline", label: "任务期限", width: 160 },
+  { prop: "deadline", label: "任务期限", width: 120 },
 ];
 </script>
 

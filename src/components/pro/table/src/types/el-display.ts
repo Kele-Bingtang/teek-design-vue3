@@ -1,4 +1,5 @@
 import type { AvatarProps, ImageProps, LinkProps, ProgressProps, TagProps } from "element-plus";
+import type { ElOption } from "@/components/pro/form-item";
 import type { TableComponentEnum } from "../helper";
 
 /**
@@ -41,6 +42,10 @@ export interface ElDisplayProps {
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
   elProps?: MaybeRefOrGetter<LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable>;
+  /**
+   * 指定 el 组件的 options
+   */
+  options?: ElOption[];
   /**
    * 显示的数据
    */

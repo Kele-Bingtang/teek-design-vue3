@@ -81,7 +81,13 @@ const isIconifyOffline = computed(() => !isString(icon) && (iconType === "iconif
 // 是否为 Iconify 在线图标
 const isIconifyOnline = computed(() => isString(icon) && (iconType === "iconifyOnline" || icon.includes(":")));
 // 是否为图片
-const isImage = computed(() => isString(icon) && (iconType === "img" || icon.toLowerCase().startsWith("img-")));
+const isImage = computed(
+  () =>
+    isString(icon) &&
+    (iconType === "img" ||
+      icon.toLowerCase().startsWith("img-") ||
+      [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"].some(ext => icon.endsWith(ext)))
+);
 </script>
 
 <template>

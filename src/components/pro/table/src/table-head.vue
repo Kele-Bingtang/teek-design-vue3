@@ -3,6 +3,7 @@ import type { ProTableHeadNamespace, SizeStyle, TableColumn } from "./types";
 import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElPopover, ElCheckbox } from "element-plus";
 import { Coin, Operation, Download, Setting, Refresh } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { flatColumnsFn } from "@/components/pro/helper";
 import { TableColumnTypeEnum, TableSizeEnum, ToolButtonEnum } from "./helper";
 import { exportExcel } from "./plugins/table-head-export";
 import TableHeadColumnSetting from "./plugins/table-head-column-setting.vue";
@@ -72,7 +73,7 @@ const settingColumns = computed(() => {
     .map(column => {
       column.hidden ??= false;
       column.filterProps ??= {};
-      return column;
+      return { ...column, children: undefined };
     });
 });
 
@@ -128,15 +129,15 @@ function useButtonEvent() {
   const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
     const { columns } = props;
 
-    const partColumns = columns.slice(0, newIndex);
+    const partColumns = columns.slice(0, Math.max(oldIndex, newIndex));
     const specialColumnsLength = partColumns.filter(column => hasSpecialColumn(column)).length;
 
     if (specialColumnsLength) {
       const [removedItem] = columns.splice(oldIndex + specialColumnsLength, 1);
-      props.columns.splice(newIndex + specialColumnsLength, 0, removedItem);
+      columns.splice(newIndex + specialColumnsLength, 0, removedItem);
     } else {
       const [removedItem] = columns.splice(oldIndex, 1);
-      props.columns.splice(newIndex, 0, removedItem);
+      columns.splice(newIndex, 0, removedItem);
     }
   };
 

@@ -48,7 +48,7 @@ const themeConfig: ThemeConfig = {
 const layoutConfig: LayoutConfig = {
   errorLog: { showInHeader: true, env: [] },
   moreRouteChildrenHideInMenuThenOnlyOne: false,
-  tooltipEffect: "light",
+  tooltipEffect: isDark => (isDark ? "light" : "dark"),
   layoutSize: LayoutSizeEnum.Default,
   language: LanguageEnum.ZhCn,
   watchFrame: false,

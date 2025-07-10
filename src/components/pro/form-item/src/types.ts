@@ -110,7 +110,7 @@ export interface ElOption {
    */
   children?: ElOption[];
   /**
-   * 拓展其他选项
+   * 拓展其他选项，如 ProTable 也是用该类型，可以接收 tagType、tagEffect 等 ElTag 相关属性
    */
   [key: string]: any;
 }

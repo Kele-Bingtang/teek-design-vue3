@@ -7,6 +7,13 @@ import { systemLinks, flowLinks, otherLinks } from "./data";
 
 defineOptions({ name: "CommonLinks" });
 
+interface CommonLink {
+  name: string;
+  desc: string;
+  icon: string;
+  url: string;
+}
+
 const ns = useNamespace("common-links");
 
 const activeTab = ref("all");
@@ -24,27 +31,11 @@ const form = ref({
   desc: "",
 });
 
-const tabs = ref([
-  {
-    label: "全部",
-    value: "all",
-    data: [...systemLinks, ...flowLinks, ...otherLinks],
-  },
-  {
-    label: "系统链接",
-    value: "system",
-    data: systemLinks,
-  },
-  {
-    label: "流程链接",
-    value: "flow",
-    data: flowLinks,
-  },
-  {
-    label: "其他",
-    value: "other",
-    data: otherLinks,
-  },
+const tabs = ref<{ label: string; value: string; data: CommonLink[] }[]>([
+  { label: "全部", value: "all", data: [...systemLinks, ...flowLinks, ...otherLinks] },
+  { label: "系统链接", value: "system", data: systemLinks },
+  { label: "流程链接", value: "flow", data: flowLinks },
+  { label: "其他", value: "other", data: otherLinks },
 ]);
 
 const rules = {
@@ -66,8 +57,8 @@ const columns: FormColumn[] = [
   { label: "链接描述", prop: "desc" },
 ];
 
-const handleClick = (item: any) => {
-  window.open(item.url, "_blank");
+const handleClick = (item: CommonLink) => {
+  item.url && window.open(item.url, "_blank");
 };
 
 const handleAddLink = () => {
@@ -89,7 +80,7 @@ const handleConfirm = async () => {
   <div :class="ns.b()" class="tk-card-minimal">
     <div class="flx-align-center-between" :class="ns.e('header')">
       <h2>常用链接</h2>
-      <el-button type="primary" size="small" link :icon="Plus" @click="handleAddLink">添加链接</el-button>
+      <el-button type="primary" link :icon="Plus" @click="handleAddLink">添加链接</el-button>
     </div>
 
     <el-tabs v-model="activeTab" tab-position="top">
@@ -97,9 +88,9 @@ const handleConfirm = async () => {
         <template v-if="tab.data.length">
           <div v-for="item in tab.data" :key="item.name" :class="ns.e('item')" @click="handleClick(item)">
             <div :class="ns.e('icon')" class="flx-center">
-              <Icon :icon="item.icon || Link" />
+              <Icon :icon="item.icon || Link" :size="36" />
             </div>
-            <div class="flx-column">
+            <div class="flx-column" :class="ns.e('item-content')">
               <div class="name sle">{{ item.name }}</div>
               <div class="desc sle">{{ item.desc }}</div>
             </div>
@@ -138,7 +129,7 @@ const handleConfirm = async () => {
 @use "@styles/mixins/function" as *;
 
 @include b(common-links) {
-  height: 360px;
+  height: 40vh;
   overflow: hidden;
 
   @include e(header) {
@@ -150,47 +141,70 @@ const handleConfirm = async () => {
     }
   }
 
-  @include e(icon) {
-    width: 36px;
-    height: 36px;
-    background-color: cssVar(gray-200);
-    border-radius: 50%;
-  }
-
-  @include e(item) {
-    display: inline-flex;
-    gap: 10px;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-
-    &:hover {
-      background-color: cssVar(gray-100);
-    }
-  }
-
-  @include e(empty) {
-    width: 100%;
-  }
-
   .el-tabs {
     height: calc(100% - 27px);
+
+    :deep(.el-tabs__content) {
+      overflow: auto;
+    }
   }
 
   .el-tab-pane {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    padding-bottom: 20px;
     overflow: auto;
 
-    .name {
-      font-size: 16px;
-      font-weight: 600;
+    @include e(item) {
+      display: inline-flex;
+      gap: 10px;
+      width: 300px;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all cssVarEl(transition-duration-fast) ease;
+
+      &:hover {
+        color: cssVar(color-primary);
+        background-color: cssVar(gray-100);
+
+        @include e(icon) {
+          color: cssVar(color-primary);
+        }
+
+        .desc {
+          color: cssVar(color-primary) !important;
+        }
+      }
     }
 
-    .desc {
-      font-size: 12px;
-      color: cssVar(gray-500);
+    @include e(item-content) {
+      width: 230px;
+
+      .name {
+        font-weight: 600;
+      }
+
+      .desc {
+        font-size: 12px;
+        color: cssVar(gray-500);
+
+        &:hover {
+          color: cssVar(color-primary);
+        }
+      }
+    }
+
+    @include e(icon) {
+      width: 36px;
+      height: 36px;
+      background-color: cssVar(gray-200);
+      border-radius: 50%;
+    }
+
+    @include e(empty) {
+      width: 100%;
     }
   }
 }

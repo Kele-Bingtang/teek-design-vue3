@@ -78,7 +78,7 @@ const changeMenuItem = (item: RouterConfig) => {
           >
             <Icon v-if="item.meta?.icon" :icon="item.meta.icon" />
             <div class="flx-center" style="width: 100%">
-              <Tooltip :effect="SystemConfig.layoutConfig.tooltipEffect">
+              <Tooltip>
                 <span class="title">{{ item.meta?.title }}</span>
               </Tooltip>
             </div>

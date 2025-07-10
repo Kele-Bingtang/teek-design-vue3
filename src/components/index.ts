@@ -59,6 +59,7 @@ export * from "./page/draggable-item";
 export * from "./page/draggable-list";
 export * from "./page/highlight";
 export * from "./page/icon-picker";
+export * from "./page/point-tag";
 export * from "./page/qr-code";
 export * from "./page/seamless-scroll";
 export * from "./page/table-sort";

@@ -29,12 +29,13 @@ const handleMore = () => {
     </div>
 
     <div
-      v-for="item in data"
+      v-for="(item, index) in data"
       :key="item.title"
       @click="handleClick(item)"
       :class="ns.e('item')"
       class="flx-align-center gap-10 sle"
     >
+      <i class="index" :class="`index-${index + 1}`">{{ index + 1 }}</i>
       <Tooltip class="title" placement="top">
         <span>{{ item.title }}</span>
       </Tooltip>
@@ -63,9 +64,34 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
+    transition: all cssVarEl(transition-duration-fast) ease;
 
     &:last-child {
       margin-bottom: 0;
+    }
+
+    &:hover {
+      color: cssVar("color-primary");
+      background-color: cssVar("gray-100");
+
+      .el-tag {
+        color: cssVar("color-primary");
+        background-color: cssVar("gray-200");
+      }
+    }
+
+    .index {
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 600;
+      color: cssVar("text-gray-400");
+      border-radius: 8px 0;
+
+      &.index-1,
+      &.index-2,
+      &.index-3 {
+        color: cssVar("color-primary");
+      }
     }
 
     .title {
@@ -80,16 +106,6 @@ const handleMore = () => {
     .time {
       font-size: 12px;
       color: cssVar("text-gray-600");
-    }
-
-    &:hover {
-      color: cssVar("color-primary");
-      background-color: cssVar("gray-100");
-
-      .el-tag {
-        color: cssVar("color-primary");
-        background-color: cssVar("gray-200");
-      }
     }
   }
 }

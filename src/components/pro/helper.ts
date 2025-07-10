@@ -2,6 +2,7 @@ import type { Reactive } from "vue";
 import type { FormItemColumnProps } from "./form-item";
 import { isRef } from "vue";
 import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/common/utils";
+import type { TableColumn } from "./table";
 
 // ============================== 超级组件公共工具类 ==============================
 
@@ -221,4 +222,19 @@ export const filterEmpty = <T extends Recordable>(obj: T) => {
     }
     return acc;
   }, {} as T);
+};
+
+/**
+ * 扁平化 columns
+ *
+ * @param columns 列配置
+ * @param flatArr 扁平化后的列配置
+ */
+export const flatColumnsFn = (columns: TableColumn[], flatArr: TableColumn[] = [], key = "children") => {
+  columns.forEach(col => {
+    if (col[key]?.length) flatArr.push(...flatColumnsFn(col[key], [], key));
+    flatArr.push(col);
+  });
+
+  return flatArr.filter(item => !item[key]?.length);
 };

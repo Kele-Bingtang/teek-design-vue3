@@ -6,7 +6,6 @@ import { isValidURL } from "@/common/utils";
 import { useNamespace, useCommon } from "@/composables";
 import { Tooltip } from "@/components";
 import { useLayoutStore, useSettingStore } from "@/pinia";
-import SystemConfig from "@/common/config";
 import { formatTitle } from "@/router/helper";
 
 defineOptions({ name: "AsideMenuItem" });
@@ -69,7 +68,7 @@ watch(
     <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
     <template #title>
       <span v-if="!menuItem.meta.useTooltip">{{ title(menuItem) }}</span>
-      <Tooltip v-else :effect="SystemConfig.layoutConfig.tooltipEffect" :offset="-10" :try="1">
+      <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
     </template>
@@ -79,7 +78,7 @@ watch(
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
       <span v-if="!menuItem.meta.useTooltip">{{ title(menuItem) }}</span>
-      <Tooltip v-else :effect="SystemConfig.layoutConfig.tooltipEffect" :offset="-10" :try="1">
+      <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
     </template>
