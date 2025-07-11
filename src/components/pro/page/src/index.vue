@@ -20,7 +20,7 @@ import { isEmpty, isFunction } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
-import { filterEmpty, setProp } from "@/components/pro/helper";
+import { filterEmpty, flatColumnsFn, setProp } from "@/components/pro/helper";
 
 defineOptions({ name: "ProPage" });
 
@@ -71,6 +71,7 @@ function usePageSearchInit() {
   const searchParams = ref<Recordable>({});
   const searchDefaultParams = ref<Recordable>({});
 
+  // 扁平化 columns，为了过滤搜索配置项
   const flatColumns = computed(() => flatColumnsFn(props.columns));
 
   // 组装 ProSearch 配置项
@@ -118,15 +119,6 @@ function usePageSearchInit() {
   const setSearchParams = (prop: string, value: unknown) => {
     searchParams.value[prop] = value;
     searchDefaultParams.value[prop] = value;
-  };
-
-  // 扁平化 columns，为了过滤搜索配置项
-  const flatColumnsFn = (columns: PageColumn[], flatArr: PageColumn[] = []) => {
-    columns.forEach(col => {
-      if (col.children?.length) flatArr.push(...flatColumnsFn(col.children));
-      flatArr.push(col);
-    });
-    return flatArr.filter(item => !item.children?.length);
   };
 
   let timer: ReturnType<typeof setTimeout> | null = null;

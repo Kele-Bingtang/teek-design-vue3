@@ -41,13 +41,12 @@ defineExpose({ open, close });
 
 <template>
   <el-drawer v-model="visible" title="列设置" :size="450" :class="ns.b()">
-    <el-table ref="elTableInstance" :data="columns" :border="true" row-key="prop" default-expand-all>
+    <el-table ref="elTableInstance" :data="columns" :border="true" row-key="prop">
       <TableColumnDragSort
         v-if="!columnSetting.hideDragSort"
         :table-instance="elTableInstance"
         label="排序"
         align="center"
-        :width="60"
         @drag-sort-end="handleDragSortEnd"
       >
         <template #drag-sort-icon>☷</template>

@@ -3,11 +3,11 @@ import { Bell } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { Tooltip } from "@/components";
 import { useMessageStore } from "@/pinia";
-import msg1 from "@/common/assets/images/msg/msg01.png";
-import msg2 from "@/common/assets/images/msg/msg02.png";
-import msg3 from "@/common/assets/images/msg/msg03.png";
-import msg4 from "@/common/assets/images/msg/msg04.png";
-import msg5 from "@/common/assets/images/msg/msg05.png";
+import message1 from "@/common/assets/images/message/msg01.png";
+import message2 from "@/common/assets/images/message/msg02.png";
+import message3 from "@/common/assets/images/message/msg03.png";
+import message4 from "@/common/assets/images/message/msg04.png";
+import message5 from "@/common/assets/images/message/msg05.png";
 import "./index.scss";
 
 defineOptions({ name: "Notification" });
@@ -56,16 +56,16 @@ onMounted(() => {
  * 通知列表
  */
 const noticeList: Notice[] = [
-  { id: "1", avatar: msg1, title: "请您尽快填写本周的周报。", date: "一分钟前" },
-  { id: "2", avatar: msg2, title: "您今天有 4 个重要会议。", date: "一小时前" },
-  { id: "3", avatar: msg3, title: "请下午 18:30 参加前端面试。", date: "一天天前" },
+  { id: "1", avatar: message1, title: "请您尽快填写本周的周报。", date: "一分钟前" },
+  { id: "2", avatar: message2, title: "您今天有 4 个重要会议。", date: "一小时前" },
+  { id: "3", avatar: message3, title: "请下午 18:30 参加前端面试。", date: "一天天前" },
   {
     id: "4",
-    avatar: msg4,
+    avatar: message4,
     title: "今天将举行消费演练，于下午 14 点至 16 点之间开始，请注意配合，谢谢！",
     date: "一星期前",
   },
-  { id: "5", avatar: msg5, title: "恭喜您喜获 2022 年人才质量提升奖。", date: "2023-01-01" },
+  { id: "5", avatar: message5, title: "恭喜您喜获 2022 年人才质量提升奖。", date: "2023-01-01" },
 ];
 
 /**
@@ -121,7 +121,7 @@ const tabList = computed<TabInfo[]>(() => [
     name: "message",
     label: "消息",
     data: unreadMessageList.value.map((item: Notice) => {
-      item.avatar = msg2;
+      item.avatar = message2;
       return item;
     }),
   },

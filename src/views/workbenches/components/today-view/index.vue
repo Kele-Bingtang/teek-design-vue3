@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import { useNamespace } from "@/composables";
-import { Tooltip } from "@/components";
+import { Tooltip, PointTag } from "@/components";
 import { todayViewData } from "./data";
 
 defineOptions({ name: "TodayView" });
+
+interface TodayViewItem {
+  title: string;
+  tag: string;
+  hasRead: boolean;
+  time: string;
+}
 
 const ns = useNamespace("today-view");
 
 const limit = 12;
 
-const data = todayViewData.slice(0, limit);
+const data = ref<TodayViewItem[]>(todayViewData.slice(0, limit));
 
-const handleClick = (item: (typeof todayViewData)[0]) => {
+const handleClick = (item: TodayViewItem) => {
   item.hasRead = true;
   console.log(item);
 };
@@ -29,12 +36,13 @@ const handleMore = () => {
     </div>
 
     <div
-      v-for="item in data"
+      v-for="item in data.slice(0, limit)"
       :key="item.title"
       @click="handleClick(item)"
-      :class="ns.e('item')"
+      :class="[ns.e('item'), ns.has('read', item.hasRead)]"
       class="flx-align-center gap-10 sle"
     >
+      <PointTag v-if="!item.hasRead" theme="danger" :size="6" :offset="0" />
       <el-tag type="info">{{ item.tag }}</el-tag>
       <Tooltip class="title" placement="top">
         <span>{{ item.title }}</span>
@@ -63,9 +71,20 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
+    transition: all cssVarEl(transition-duration-fast) ease;
 
     &:last-child {
       margin-bottom: 0;
+    }
+
+    &:hover {
+      color: cssVar("color-primary");
+      background-color: cssVar("gray-100");
+
+      .el-tag {
+        color: cssVar("color-primary");
+        background-color: cssVar("gray-200");
+      }
     }
 
     .title {
@@ -82,13 +101,11 @@ const handleMore = () => {
       color: cssVar("text-gray-600");
     }
 
-    &:hover {
-      color: cssVar("color-primary");
-      background-color: cssVar("gray-100");
+    @include has(read) {
+      color: cssVar("text-gray-500");
 
       .el-tag {
-        color: cssVar("color-primary");
-        background-color: cssVar("gray-200");
+        color: cssVar("text-gray-500");
       }
     }
   }

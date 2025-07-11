@@ -67,9 +67,13 @@ export type TableRow<T extends string | number | symbol = any> = {
    */
   _options: Recordable;
   /**
+   * 当前列的 option 相关配置，_getValue 里需要使用，因此需要提前缓存起来
+   */
+  _optionProps: Recordable;
+  /**
    * 获取单元格值
    */
-  _getValue: (prop: string) => unknown;
+  _getValue: (prop: string, column?: TableColumn) => unknown;
   /**
    * 获取当前行的数据
    */
@@ -109,7 +113,7 @@ export type TableRow<T extends string | number | symbol = any> = {
  */
 export interface TableColumn<T = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
-    Omit<ElDisplayProps, "value"> {
+    Omit<ElDisplayProps, "value" | "options"> {
   /**
    * 表头宽度
    */
@@ -154,6 +158,12 @@ export interface TableColumn<T = any>
    * @default true
    */
   isFilterOptions?: MaybeRefOrGetter<boolean>;
+  /**
+   * 如果 options 里找不到对应的 label，则使用 value 作为 label
+   *
+   * @default false
+   */
+  ignoreOptionIfAbsent?: MaybeRefOrGetter<boolean>;
   /**
    * 自定义当前 option 选项
    */

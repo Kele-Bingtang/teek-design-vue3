@@ -252,7 +252,13 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-bind="getRenderParams(scope, column)"
       />
       <!-- 自定义 el 组件 -->
-      <ElDisplay v-else-if="column.el" :value="getCellValue(scope, column)" :el="column.el" :el-props="column.elProps">
+      <ElDisplay
+        v-else-if="column.el"
+        :value="getCellValue(scope, column)"
+        :el="column.el"
+        :el-props="column.elProps"
+        :options="scope.row._options?.[prop(column)]"
+      >
         <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
           <component :is="slot" v-bind="{ ...getRenderParams(scope, column), ...data }" />
         </template>

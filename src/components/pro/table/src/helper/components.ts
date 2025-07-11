@@ -1,6 +1,6 @@
-import type { TablePascalCaseComponentName } from "../types";
+import type { ElDisplayProps, TablePascalCaseComponentName } from "../types";
 import { withModifiers } from "vue";
-import { ElLink, ElTag, ElProgress, ElImage, ElAvatar, dayjs, ElIcon, ElMessage } from "element-plus";
+import { ElLink, ElTag, ElCheckTag, ElProgress, ElImage, ElAvatar, dayjs, ElIcon, ElMessage } from "element-plus";
 import { DocumentCopy } from "@element-plus/icons-vue";
 import { isArray, isString } from "@/common/utils";
 
@@ -16,7 +16,9 @@ export interface ComponentConfig {
   /**
    * 组件默认 Props，如果外界传入相同的配置，则会覆盖默认的配置
    */
-  props?: Recordable | ((value: unknown, formatValue: unknown) => Recordable);
+  props?:
+    | Recordable
+    | ((value: unknown, formatValue: unknown, options: ElDisplayProps["options"] | undefined) => Recordable);
   /**
    * 格式化单元格数据
    */
@@ -27,8 +29,9 @@ export interface ComponentConfig {
  * 组件名枚举，key 要求是大写和 PascalCase 格式（自动与 componentMap 映射），value 则是 el 的字面量（使用配置项的 el 时用到）
  */
 export enum TableComponentEnum {
-  EL_LINK = "ElLink",
   EL_TAG = "ElTag",
+  EL_CHECK_TAG = "ElCheckTag",
+  EL_LINK = "ElLink",
   EL_PROGRESS = "ElProgress",
   EL_IMAGE = "ElImage",
   EL_AVATAR = "ElAvatar",
@@ -45,7 +48,35 @@ const tableElComponentsMap: Record<
   Omit<Component, keyof ComponentConfig> | ComponentConfig
 > = {
   // 标签
-  ElTag,
+  ElTag: {
+    is: ElTag,
+    props: (value, _, options) => {
+      const option = options?.find(item => item.label === value) || {};
+      const { tagType, tagEffect, tagColor, tagSize, tagRound, tagHit } = option;
+
+      return {
+        type: tagType,
+        effect: tagEffect,
+        color: tagColor,
+        size: tagSize,
+        round: tagRound,
+        hit: tagHit,
+      };
+    },
+  },
+  // 复选标签
+  ElCheckTag: {
+    is: ElCheckTag,
+    props: (value, _, options) => {
+      const option = options?.find(item => item.label === value) || {};
+      const { tagType, tagDisabled } = option;
+
+      return {
+        type: tagType,
+        disabled: tagDisabled,
+      };
+    },
+  },
   // Link
   ElLink: { is: ElLink, props: { type: "primary" } },
   // 进度条

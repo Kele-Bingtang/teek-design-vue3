@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { useNamespace } from "@/composables";
-import { Tooltip } from "@/components";
+import { Tooltip, PointTag } from "@/components";
 import { trainingData, internalAnnouncementData, changeNotificationData } from "./data";
 
 defineOptions({ name: "BulletinBoard" });
+
+interface BulletinBoardItem {
+  title: string;
+  tag: string;
+  hasRead: boolean;
+}
 
 const ns = useNamespace("bulletin-board");
 
@@ -11,7 +17,7 @@ const activeTab = ref("training");
 
 const limit = 7;
 
-const tabs = [
+const tabs = ref<{ label: string; value: string; data: BulletinBoardItem[] }[]>([
   {
     label: "宣传培训",
     value: "training",
@@ -27,9 +33,9 @@ const tabs = [
     value: "changeNotification",
     data: changeNotificationData.slice(0, limit),
   },
-];
+]);
 
-const handleClick = (item: (typeof trainingData)[0]) => {
+const handleClick = (item: BulletinBoardItem) => {
   item.hasRead = true;
   console.log(item);
 };
@@ -52,9 +58,10 @@ const handleMore = () => {
           v-for="item in tab.data"
           :key="item.title"
           @click="handleClick(item)"
-          :class="ns.e('item')"
+          :class="[ns.e('item'), ns.has('read', item.hasRead)]"
           class="flx-align-center gap-10 sle"
         >
+          <PointTag v-if="!item.hasRead" theme="danger" :size="6" :offset="0" />
           <el-tag type="info">{{ item.tag }}</el-tag>
           <Tooltip placement="top">
             <span class="title">{{ item.title }}</span>
@@ -82,14 +89,10 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
+    transition: all cssVarEl(transition-duration-fast) ease;
 
     &:last-child {
       margin-bottom: 0;
-    }
-
-    .title {
-      font-size: 14px;
-      font-weight: 500;
     }
 
     &:hover {
@@ -99,6 +102,19 @@ const handleMore = () => {
       .el-tag {
         color: cssVar("color-primary");
         background-color: cssVar("gray-200");
+      }
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    @include has(read) {
+      color: cssVar("text-gray-500");
+
+      .el-tag {
+        color: cssVar("text-gray-500");
       }
     }
   }

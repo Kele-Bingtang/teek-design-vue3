@@ -5,10 +5,12 @@
     </div>
  -->
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watch, type CSSProperties } from "vue";
 import { ElTooltip } from "element-plus";
 import { useResizeObserver } from "@vueuse/core";
+import { useSettingStore } from "@/pinia";
 import SystemConfig from "@/common/config";
+import { isFunction } from "@/common/utils";
 
 defineOptions({ name: "Tooltip" });
 
@@ -32,9 +34,24 @@ const showTip = ref(false); // 是否显示tooltip
 const contentText = ref(""); // 文本内容
 const tryCount = ref(0); // 当前尝试次数
 
+const attrs = useAttrs();
+
+const { isDark } = storeToRefs(useSettingStore());
+
+const effect = computed(() => {
+  const effect = SystemConfig.layoutConfig.tooltipEffect;
+  if (isFunction(effect)) return effect(isDark.value);
+  return effect;
+});
+
 // 容器 class
 const containerClass = computed(() => {
   return props.line === 1 ? "single-line" : "multi-line";
+});
+
+const style = computed(() => {
+  const style = attrs.style as CSSProperties;
+  return props.line > 1 ? { "-webkit-line-clamp": props.line, ...style } : style;
 });
 
 /**
@@ -126,17 +143,17 @@ onBeforeUnmount(() => {
 <template>
   <el-tooltip
     v-if="showTip"
-    :effect="SystemConfig.layoutConfig.tooltipEffect"
-    v-bind="$attrs"
+    :effect
+    v-bind="{ ...attrs, class: '', style: '' }"
     :disabled="!showTip"
     :content="contentText"
   >
-    <div ref="containerInstance" :class="containerClass" :style="line > 1 ? { '-webkit-line-clamp': line } : {}">
+    <div ref="containerInstance" :class="[containerClass, attrs.class]" :style="style">
       <slot></slot>
     </div>
   </el-tooltip>
 
-  <div v-else ref="containerInstance" :class="containerClass" :style="line > 1 ? { '-webkit-line-clamp': line } : {}">
+  <div v-else ref="containerInstance" :class="containerClass" :style="style">
     <slot></slot>
   </div>
 </template>

@@ -6,7 +6,14 @@ import { ElTable, ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
 import { isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
-import { getProp, filterOptions, filterOptionsValue, getObjectKeys, setProp } from "@/components/pro/helper";
+import {
+  getProp,
+  setProp,
+  filterOptions,
+  filterOptionsValue,
+  getObjectKeys,
+  flatColumnsFn,
+} from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
@@ -94,13 +101,26 @@ function useTableInit() {
 
   // 在表格的数据的每一个 row 配置 _options 相关字典信息（如果配置了 options）
   const initEnhanceFnInData = async (data: TableRow[], column: TableColumn) => {
-    const { prop = "", isFilterOptions = true, optionField, transformOption, optionsProp } = column;
+    // 获取当前列的配置项，！获取的配置无法直接作用在 row._xx 里
+    const {
+      prop = "",
+      isFilterOptions = true,
+      optionsProp,
+      optionField,
+      transformOption,
+      ignoreOptionIfAbsent,
+    } = column;
+
     const options = unref(optionsMap.value.get(optionsProp || prop));
 
     // 如果字段有配置枚举信息，则存放到 _options[prop] 里
     data.forEach(row => {
       row._options ??= {};
       if (options && toValue(isFilterOptions)) row._options[prop] = options;
+
+      row._optionProps ??= {};
+      row._optionProps[prop] ??= { optionField, transformOption, ignoreOptionIfAbsent };
+
       /**
        * 根据 prop 获取 value
        */
@@ -109,11 +129,16 @@ function useTableInit() {
         const value = getProp(row, prop);
         if (!options) return value;
 
+        const { optionField, transformOption, ignoreOptionIfAbsent } = row._optionProps[prop] || {};
+
         const option = transformOption
           ? transformOption(value, options, row)
           : filterOptions(value, options, optionField);
 
-        return filterOptionsValue(option, optionField?.label || "label");
+        const label = filterOptionsValue(option, optionField?.label || "label");
+
+        if ((!label || label === "--") && toValue(ignoreOptionIfAbsent)) return value;
+        return label;
       };
 
       // 获取 row 的纯数据（过滤掉内置的加强方法）
@@ -185,15 +210,6 @@ function useTableInit() {
       clearTimeout(timer);
       timer = null;
     }
-  };
-
-  // 扁平化 columns，为了过滤搜索配置项
-  const flatColumnsFn = (columns: TableColumn[], flatArr: TableColumn[] = []) => {
-    columns.forEach(col => {
-      if (col.children?.length) flatArr.push(...flatColumnsFn(col.children));
-      flatArr.push(col);
-    });
-    return flatArr.filter(item => !item.children?.length);
   };
 
   // 当 columns 发生改变时，重新初始化

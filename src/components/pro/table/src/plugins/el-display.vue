@@ -13,6 +13,7 @@ defineOptions({ name: "ElDisplay" });
 const props = withDefaults(defineProps<ElDisplayProps>(), {
   el: undefined,
   elProps: () => ({}),
+  options: () => [],
   value: undefined,
 });
 
@@ -50,7 +51,7 @@ const finalElProps = computed(() => {
 
   if ("is" in componentInfoValue || "renderEl" in componentInfoValue) {
     defaultProps = isFunction(componentInfoValue.props)
-      ? componentInfoValue.props(value, formatValue.value)
+      ? componentInfoValue.props(value, formatValue.value, props.options)
       : componentInfoValue.props;
   }
   return { ...defaultProps, ...elPropsValue.value };
