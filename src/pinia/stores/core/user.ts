@@ -40,6 +40,11 @@ export const useUserStore = defineStore(
     const roles = ref<string[]>([]);
     const searchHistory = ref<RouterConfig[]>([]);
 
+    // 锁屏状态
+    const isLock = ref(false);
+    // 锁屏密码
+    const lockPassword = ref("");
+
     const login = async (loginParams: LoginParams) => {
       // 模拟调用登录接口拿到 token
       // return await UserService.login(loginParams).then(res => {
@@ -86,7 +91,27 @@ export const useUserStore = defineStore(
       return userInfo;
     };
 
+    /**
+     * 设置锁屏状态
+     * @param status 锁屏状态
+     */
+    const setLockStatus = (status: boolean) => {
+      isLock.value = status;
+    };
+
+    /**
+     * 设置锁屏密码
+     * @param password 锁屏密码
+     */
+    const setLockPassword = (password: string) => {
+      lockPassword.value = password;
+    };
+
     const logout = async () => {
+      // 重置锁屏状态
+      isLock.value = false;
+      // 清空锁屏密码
+      lockPassword.value = "";
       userInfo.value = {};
       clearPermission();
 
@@ -128,6 +153,8 @@ export const useUserStore = defineStore(
     const setSearchHistory = (searchHistoryParam: RouterConfig[]) => (searchHistory.value = searchHistoryParam);
 
     return {
+      isLock,
+      lockPassword,
       accessToken,
       refreshToken,
       userInfo,
@@ -143,11 +170,13 @@ export const useUserStore = defineStore(
       setToken,
       setRoles,
       setSearchHistory,
+      setLockStatus,
+      setLockPassword,
     };
   },
   {
     persist: {
-      pick: ["accessToken", "refreshToken", "searchHistory"],
+      pick: ["accessToken", "refreshToken", "searchHistory", "isLock", "lockPassword"],
     },
   }
 );
