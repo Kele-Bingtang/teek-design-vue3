@@ -10,7 +10,7 @@ defineOptions({ name: "Test" });
 const data = ref(tableData);
 
 const columns: TableColumn[] = [
-  // { type: "selection", fixed: "left", width: 60 },
+  { type: "selection", fixed: "left", width: 60 },
   { type: "index", label: "#", width: 60 },
   { type: "sort", label: "Sort", width: 80 },
   { type: "expand", label: "Expand", width: 80 },

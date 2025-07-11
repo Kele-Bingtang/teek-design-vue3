@@ -54,4 +54,24 @@ export const todayViewData = [
     hasRead: false,
     time: "2025-06-12",
   },
+  {
+    title: "【技术分享】如何高效利用AI工具提升工作效率？",
+    hasRead: false,
+    time: "2025-06-11",
+  },
+  {
+    title: "【活动预告】下半年IT创新大赛即将开启，敬请期待！",
+    hasRead: false,
+    time: "2025-06-10",
+  },
+  {
+    title: "【经验交流】远程办公有哪些高效协作小技巧？",
+    hasRead: false,
+    time: "2025-06-09",
+  },
+  {
+    title: "【问答】你最喜欢的编程语言是什么？为什么？",
+    hasRead: false,
+    time: "2025-06-08",
+  },
 ];

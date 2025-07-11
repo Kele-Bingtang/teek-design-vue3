@@ -38,7 +38,39 @@ export const trainingData = [
 ];
 
 // 内部公告
-export const internalAnnouncementData = [];
+export const internalAnnouncementData = [
+  {
+    title: "IT处2025年第1季度奖项公示（团队篇）",
+    tag: "其他",
+    hasRead: false,
+  },
+  {
+    title: "IT处2025年第1季度奖项公示（个人篇）",
+    tag: "其他",
+    hasRead: false,
+  },
+  {
+    title: "AI应用专项工作组命名",
+    tag: "任命",
+    hasRead: false,
+  },
+  {
+    title: "【IT宣传-组织篇】IT处2025第二季度日历更新",
+    tag: "通知",
+    hasRead: false,
+  },
+  {
+    title: "Teek专项自主性审视报告",
+    tag: "其他",
+    hasRead: false,
+  },
+];
 
 // 变更通知
-export const changeNotificationData = [];
+export const changeNotificationData = [
+  {
+    title: "关于ITOM系统变更通知（8月1日 - 8月31日）",
+    tag: "变更通知",
+    hasRead: false,
+  },
+];

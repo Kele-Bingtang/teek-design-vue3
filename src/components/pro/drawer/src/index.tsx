@@ -111,22 +111,23 @@ export const showDrawer = (
               </>
             );
           },
-          footer: () => {
-            if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
-            if (drawerProps.showFooter === false) return;
-            return (
-              <div class={ns.e("footer")} style={footerStyle.value}>
-                <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
-                <ElButton
-                  type="primary"
-                  loading={drawerProps.confirmLoading}
-                  onClick={() => handleConfirm(drawerProps)}
-                >
-                  {drawerProps.confirmText || "确定"}
-                </ElButton>
-              </div>
-            );
-          },
+          footer: drawerProps.showFooter
+            ? () => {
+                if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
+                return (
+                  <div class={ns.e("footer")} style={footerStyle.value}>
+                    <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
+                    <ElButton
+                      type="primary"
+                      loading={drawerProps.confirmLoading}
+                      onClick={() => handleConfirm(drawerProps)}
+                    >
+                      {drawerProps.confirmText || "确定"}
+                    </ElButton>
+                  </div>
+                );
+              }
+            : undefined,
         }}
       </ElDrawer>
     </ElConfigProvider>

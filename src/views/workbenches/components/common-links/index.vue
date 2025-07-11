@@ -129,7 +129,7 @@ const handleConfirm = async () => {
 @use "@styles/mixins/function" as *;
 
 @include b(common-links) {
-  height: 40vh;
+  height: 600px;
   overflow: hidden;
 
   @include e(header) {
@@ -146,6 +146,11 @@ const handleConfirm = async () => {
 
     :deep(.el-tabs__content) {
       overflow: auto;
+
+      // 滚动条隐藏
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
@@ -163,7 +168,7 @@ const handleConfirm = async () => {
       padding: 10px;
       cursor: pointer;
       border-radius: 8px;
-      transition: all cssVarEl(transition-duration-fast) ease;
+      transition: all cssVarEl(transition-duration-fast) cssVar(easing);
 
       &:hover {
         color: cssVar(color-primary);

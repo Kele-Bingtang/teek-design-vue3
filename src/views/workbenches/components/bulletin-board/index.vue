@@ -54,19 +54,23 @@ const handleMore = () => {
 
     <el-tabs v-model="activeTab" tab-position="top">
       <el-tab-pane v-for="tab in tabs" :key="tab.value" :label="tab.label" :name="tab.value">
-        <div
-          v-for="item in tab.data"
-          :key="item.title"
-          @click="handleClick(item)"
-          :class="[ns.e('item'), ns.has('read', item.hasRead)]"
-          class="flx-align-center gap-10 sle"
-        >
-          <PointTag v-if="!item.hasRead" theme="danger" :size="6" :offset="0" />
-          <el-tag type="info">{{ item.tag }}</el-tag>
-          <Tooltip placement="top">
-            <span class="title">{{ item.title }}</span>
-          </Tooltip>
-        </div>
+        <template v-if="tab.data.length">
+          <div
+            v-for="item in tab.data"
+            :key="item.title"
+            @click="handleClick(item)"
+            :class="[ns.e('item'), ns.has('read', item.hasRead)]"
+            class="flx-align-center gap-10 sle"
+          >
+            <PointTag v-if="!item.hasRead" theme="danger" :size="6" :offset="0" />
+            <el-tag type="info">{{ item.tag }}</el-tag>
+            <Tooltip placement="top">
+              <span class="title">{{ item.title }}</span>
+            </Tooltip>
+          </div>
+        </template>
+
+        <el-empty v-else description="暂无内容" :image-size="100" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -89,7 +93,7 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
-    transition: all cssVarEl(transition-duration-fast) ease;
+    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
 
     &:last-child {
       margin-bottom: 0;

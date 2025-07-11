@@ -39,7 +39,7 @@ const emits = defineEmits<ProFormNamespace.Emits>();
 
 const ns = useNamespace("pro-form");
 
-const model = defineModel<Recordable>({ default: () => reactive({}) });
+const model = defineModel<Recordable>({ default: () => {} });
 // 存储 ElForm 实例
 const elFormInstance = useTemplateRef<FormInstance>("elFormInstance");
 

@@ -7,7 +7,7 @@ defineOptions({ name: "HotRecommend" });
 
 const ns = useNamespace("hot-recommend");
 
-const limit = 12;
+const limit = 15;
 
 const data = todayViewData.slice(0, limit);
 
@@ -64,7 +64,7 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
-    transition: all cssVarEl(transition-duration-fast) ease;
+    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
 
     &:last-child {
       margin-bottom: 0;
@@ -90,7 +90,7 @@ const handleMore = () => {
       &.index-1,
       &.index-2,
       &.index-3 {
-        color: cssVar("color-primary");
+        color: cssVar("warning");
       }
     }
 

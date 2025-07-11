@@ -152,26 +152,27 @@ export const showDialog = (
               </div>
             );
           },
-          footer: () => {
-            if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
-            if (dialogProps.showFooter === false) return;
-            return (
-              <>
-                {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
+          footer: dialogProps.showFooter
+            ? () => {
+                if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
+                return (
+                  <>
+                    {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
 
-                <div class={ns.e("footer")} style={footerStyle.value}>
-                  <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
-                  <ElButton
-                    type="primary"
-                    loading={dialogProps.confirmLoading}
-                    onClick={() => handleConfirm(dialogProps)}
-                  >
-                    {dialogProps.confirmText || "确定"}
-                  </ElButton>
-                </div>
-              </>
-            );
-          },
+                    <div class={ns.e("footer")} style={footerStyle.value}>
+                      <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
+                      <ElButton
+                        type="primary"
+                        loading={dialogProps.confirmLoading}
+                        onClick={() => handleConfirm(dialogProps)}
+                      >
+                        {dialogProps.confirmText || "确定"}
+                      </ElButton>
+                    </div>
+                  </>
+                );
+              }
+            : undefined,
         }}
       </ElDialog>
     </ElConfigProvider>

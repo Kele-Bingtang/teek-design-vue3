@@ -7,7 +7,7 @@ export const REDIRECT_NAME = "Redirect";
 export const NOT_FOUND = "NotFound";
 
 // 移动端最大宽度
-export const mobileMaxWidthMedia = "(max-width: 768px)";
+export const mobileMaxWidthMedia = "(max-width: 960px)";
 
 /**
  * 表格状态过滤器

@@ -214,9 +214,9 @@ export const getObjectKeys = (model: Recordable, prefix = ""): string[] => {
 export const filterEmpty = <T extends Recordable>(obj: T) => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     if (!isEmpty(value)) {
-      if (isObject(value)) {
+      if (isObject(value) && Object.keys(value).length) {
         // 如果是嵌套对象，递归处理
-        const nestedFiltered = filterEmpty(value as Recordable);
+        const nestedFiltered = filterEmpty(unref(value));
         if (Object.keys(nestedFiltered).length) acc[key as keyof T] = nestedFiltered as T[keyof T];
       } else acc[key as keyof T] = value;
     }

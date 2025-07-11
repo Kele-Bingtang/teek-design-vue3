@@ -1,0 +1,115 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/mixins/namespace" as *;
+
+@include b(calendar-schedule) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 710px;
+  overflow: hidden;
+
+  @include e(header) {
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+
+  :deep(.#{$el-namespace}-calendar) {
+    --#{$el-namespace}-calendar-border: none;
+    --#{$el-namespace}-calendar-header-border-bottom: none;
+    --#{$el-namespace}-calendar-selected-bg-color: var(--#{$el-namespace}-color-primary-light-9);
+    --#{$el-namespace}-calendar-cell-width: 40px;
+
+    @include el-joins(calendar__header) {
+      display: flex;
+      align-items: center;
+      padding-top: 0;
+
+      @include e(switch-icon, true) {
+        padding: 4px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all cssVarEl(transition-duration) cssVar(easing);
+
+        &:hover {
+          color: cssVar(color-primary);
+          background-color: cssVar(gray-200);
+        }
+      }
+    }
+
+    @include el-joins(calendar__body) {
+      padding: 0;
+
+      @include el-joins(calendar-table) {
+        td {
+          padding: 2px 14px;
+
+          .dot {
+            margin-top: 2px;
+          }
+
+          &.is-selected {
+            background-color: transparent;
+
+            .dot {
+              background-color: #ffffff;
+            }
+
+            @include el-joins(calendar-day) {
+              color: #ffffff;
+              background-color: cssVar(color-primary);
+            }
+          }
+        }
+
+        @include el-joins(calendar-day) {
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  @include e(schedule) {
+    height: calc(100% - 360px);
+    padding: 0 20px;
+
+    @include e(schedule-header) {
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    @include e(schedule-list) {
+      height: calc(100% - 37px);
+      padding-left: 1px;
+      overflow: hidden auto;
+
+      // 滚动条隐藏
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      @include e(list-item, true) {
+        cursor: pointer;
+
+        .title {
+          gap: 6px;
+          font-size: 14px;
+          font-weight: 600;
+          color: cssVar(text-gray-900);
+
+          &:hover {
+            color: cssVar(color-primary);
+          }
+        }
+
+        .location {
+          font-size: 14px;
+          color: cssVar(text-gray-500);
+        }
+      }
+    }
+  }
+}

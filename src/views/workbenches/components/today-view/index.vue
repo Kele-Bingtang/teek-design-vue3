@@ -14,7 +14,7 @@ interface TodayViewItem {
 
 const ns = useNamespace("today-view");
 
-const limit = 12;
+const limit = 15;
 
 const data = ref<TodayViewItem[]>(todayViewData.slice(0, limit));
 
@@ -71,7 +71,7 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
-    transition: all cssVarEl(transition-duration-fast) ease;
+    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
 
     &:last-child {
       margin-bottom: 0;

@@ -19,7 +19,7 @@
     transition: opacity 0.2s ease-in-out;
   }
 
-  @media (max-width: $device-ipad) {
+  @media (max-width: $device-tablet) {
     @include joins(layout-aside) {
       position: fixed;
       top: 0;
