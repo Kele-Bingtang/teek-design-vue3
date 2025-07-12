@@ -16,7 +16,7 @@ import { defaultPageInfo } from "@/components/pro/pagination";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { useTableApi, useTableState, type UseSelectState } from "./composables";
-import { Environment, filterData, TableSizeEnum } from "./helper";
+import { Environment, TableSizeEnum } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";
 

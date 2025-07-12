@@ -1,3 +1,4 @@
+// 超级表格数据
 export const tableData = [
   {
     id: "805839158256013232",
@@ -361,24 +362,19 @@ export const tableData = [
   },
 ];
 
-// 字典
-
-/**
- * @description：用户性别
- */
+// 用户性别
 export const genderType = [
   { label: "男", value: 1 },
   { label: "女", value: 2 },
 ];
 
-/**
- * @description：用户状态
- */
+// 用户状态
 export const userStatus = [
   { label: "启用", value: 1 },
   { label: "禁用", value: 0 },
 ];
 
+// 部门
 export const department = [
   {
     id: "1",

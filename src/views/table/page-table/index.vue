@@ -1,6 +1,6 @@
 <script setup lang="ts" name="pageTable">
 import { Pagination, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table";
+import { largeData } from "@/mock/table/common";
 import { tableStatusFilter } from "@/common/config";
 
 const tableData = ref(largeData);

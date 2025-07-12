@@ -1,5 +1,5 @@
 <script setup lang="ts" name="FixedHeaderTable">
-import { simpleData } from "@/mock/table";
+import { simpleData } from "@/mock/table/common";
 
 const tableData = ref(simpleData);
 const key = ref(1);

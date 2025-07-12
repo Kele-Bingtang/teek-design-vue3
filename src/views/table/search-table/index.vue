@@ -1,5 +1,5 @@
 <script setup lang="ts" name="SearchTable">
-import { middleData } from "@/mock/table";
+import { middleData } from "@/mock/table/common";
 import { ElMessageBox, ElNotification } from "element-plus";
 import { tableStatusFilter } from "@/common/config";
 import { Search, Refresh, Delete } from "@element-plus/icons-vue";

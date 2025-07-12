@@ -1,5 +1,5 @@
 <script setup lang="ts" name="UnFixedHeaderTable">
-import { simpleData } from "@/mock/table";
+import { simpleData } from "@/mock/table/common";
 
 const tableData = ref(simpleData);
 const formThead = ref(["date", "address"]);

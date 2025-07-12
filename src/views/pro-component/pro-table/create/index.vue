@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="CreateTable">
 import { useProTable, type TableColumn } from "@/components";
-import { tableData } from "@/mock/pro-table";
+import { tableData } from "@/mock/pro-component/pro-table";
 import { ElButton, ElMessage } from "element-plus";
 
 const {

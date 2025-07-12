@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DraggableListDemo">
 import { DraggableList } from "@/components";
 import type { DragClass } from "@/components";
-import { list1, list2 } from "@/mock/drag-list";
+import { list1, list2 } from "@/mock/page/drag-list";
 import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 

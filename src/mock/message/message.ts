@@ -1,6 +1,7 @@
 import type { MessageItem } from "@/pinia";
-import { myHtml } from "./html";
+import { myHtml } from "./message-html";
 
+// 未读消息列表
 export const unreadList: Array<MessageItem> = [
   {
     id: "01",
@@ -48,6 +49,7 @@ export const unreadList: Array<MessageItem> = [
   },
 ];
 
+// 已读消息列表
 export const hasReadList: Array<MessageItem> = [
   {
     id: "11",
@@ -83,6 +85,8 @@ export const hasReadList: Array<MessageItem> = [
     createTime: "2022-10-15",
   },
 ];
+
+// 回收站消息列表
 export const recycleList: Array<MessageItem> = [
   {
     id: "21",

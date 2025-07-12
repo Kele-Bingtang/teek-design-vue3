@@ -1,6 +1,6 @@
 <script setup lang="ts" name="IntegrationTable">
 import { Pagination, TableSort, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table";
+import { largeData } from "@/mock/table/common";
 import Sortable from "sortablejs";
 import { ElMessage, ElMessageBox, ElNotification, type FormInstance } from "element-plus";
 import { tableStatusFilter } from "@/common/config";

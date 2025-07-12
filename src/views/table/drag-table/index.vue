@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DragTable">
 import Sortable from "sortablejs";
-import { simpleData } from "@/mock/table";
+import { simpleData } from "@/mock/table/common";
 import { tableStatusFilter } from "@/common/config";
 import { useNamespace } from "@/composables";
 

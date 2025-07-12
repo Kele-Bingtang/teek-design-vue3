@@ -1,5 +1,5 @@
 <script setup lang="ts" name="InlineTable">
-import { simpleData } from "@/mock/table";
+import { simpleData } from "@/mock/table/common";
 import { ElMessage } from "element-plus";
 import { tableStatusFilter } from "@/common/config";
 import { Refresh, Check, EditPen } from "@element-plus/icons-vue";

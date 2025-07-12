@@ -1,6 +1,6 @@
 <script setup lang="ts" name="Print">
 import { printElement } from "@/common/utils";
-import { simpleData } from "@/mock/table";
+import { simpleData } from "@/mock/table/common";
 import { useNamespace } from "@/composables";
 // import { BarChart } from "@/components";
 

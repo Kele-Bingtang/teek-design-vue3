@@ -1,23 +1,25 @@
-<script setup lang="tsx">
-import { ProPage, type PageColumn, type TableScope, type ProPageInstance } from "@/components";
+<script setup lang="tsx" name="ComplexProTable">
+import type { TableColumn, TableScope, ProTableInstance } from "@/components";
+import type { ResUserList } from "../advanced/index.vue";
+import { ProTable } from "@/components";
 import { useConfirm } from "@/composables";
 import { ElButton, ElMessage, type TableColumnCtx } from "element-plus";
-import { genderType, tableData, userStatus } from "@/mock/pro-table";
+import { genderType, tableData, userStatus } from "@/mock/pro-component/pro-table";
 import { CirclePlus, Delete, Pointer, Refresh } from "@element-plus/icons-vue";
-import type { ResUserList } from "../advanced/index.vue";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace();
-const proPageInstance = useTemplateRef<ProPageInstance>("proPageInstance");
+const proTableInstance = useTemplateRef<ProTableInstance>("proTableInstance");
 const data = ref(tableData);
 
-const columns: PageColumn<ResUserList>[] = [
+const columns: TableColumn<ResUserList>[] = [
   { type: "selection", width: 80 },
   { type: "index", label: "#", width: 80 },
   { type: "expand", label: "Expand", width: 100 },
   {
     prop: "base",
     label: "基本信息",
+    // 自定义渲染表头（使用tsx语法）
     headerRender: (scope: TableScope<ResUserList>) => {
       return (
         <ElButton type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
@@ -32,9 +34,6 @@ const columns: PageColumn<ResUserList>[] = [
         prop: "gender",
         label: "性别",
         width: 100,
-        search: {
-          el: "el-select",
-        },
         options: genderType,
       },
       {
@@ -51,8 +50,7 @@ const columns: PageColumn<ResUserList>[] = [
   {
     prop: "status",
     label: "用户状态",
-    tag: true,
-    enum: userStatus,
+    options: userStatus,
   },
   { prop: "createTime", label: "创建时间", width: 200 },
   { prop: "operation", label: "操作", fixed: "right", width: 230 },
@@ -60,8 +58,7 @@ const columns: PageColumn<ResUserList>[] = [
 
 // 选择行
 const setCurrent = () => {
-  const proTableInstance = proPageInstance.value?.proTableInstance;
-  proTableInstance?.getElTableInstance()?.setCurrentRow(proTableInstance.value?.tableData[4]);
+  proTableInstance.value?.getElTableInstance()?.setCurrentRow(proTableInstance.value?.tableData[4]);
 };
 
 // 表尾合计行（自行根据条件计算）
@@ -72,7 +69,7 @@ interface SummaryMethodProps<T = ResUserList> {
 const getSummaries = (param: SummaryMethodProps) => {
   const { columns } = param;
   const sums: string[] = [];
-  columns.forEach((column, index) => {
+  columns.forEach((_, index) => {
     if (index === 0) return (sums[index] = "合计");
     else sums[index] = "N/A";
   });
@@ -112,7 +109,7 @@ const deleteAccount = async (params: ResUserList) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => item.id !== params.id);
   }, `删除【${params.username}】用户`);
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.getTableList();
 };
 
 // 批量删除用户信息
@@ -120,20 +117,20 @@ const batchDelete = async (id: string[]) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => !id.includes(item.id));
   }, "删除所选用户信息");
-  proPageInstance.value?.proTableInstance?.tableMainInstance?.clearSelection();
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.tableMainInstance?.clearSelection();
+  proTableInstance.value?.getTableList();
 };
 
 // 重置用户密码
 const resetPass = async (params: ResUserList) => {
   await useConfirm(() => {}, `重置【${params.username}】用户密码`);
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.getTableList();
 };
 </script>
 
 <template>
-  <ProPage
-    ref="proPageInstance"
+  <ProTable
+    ref="proTableInstance"
     :data="data"
     :columns="columns"
     :row-class-name="tableRowClassName"
@@ -144,11 +141,7 @@ const resetPass = async (params: ResUserList) => {
   >
     <!-- 表格 header 按钮 -->
     <template #head-left="scope">
-      <el-button
-        type="primary"
-        :icon="CirclePlus"
-        @click="proPageInstance?.proTableInstance?.getElTableInstance()?.toggleAllSelection"
-      >
+      <el-button type="primary" :icon="CirclePlus" @click="proTableInstance?.getElTableInstance()?.toggleAllSelection">
         全选 / 全不选
       </el-button>
       <el-button type="primary" :icon="Pointer" plain @click="setCurrent">选中第五行</el-button>
@@ -176,7 +169,7 @@ const resetPass = async (params: ResUserList) => {
         我是插入在表格最后的内容。若表格有合计行，该内容会位于合计行之上。
       </span>
     </template>
-  </ProPage>
+  </ProTable>
 </template>
 
 <style lang="scss">

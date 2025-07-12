@@ -1,8 +1,8 @@
-<script setup lang="tsx">
-import { ProPage, setProp, type PageColumn, type ProPageInstance, type TableRow } from "@/components";
+<script setup lang="tsx" name="SimpleProTable">
+import { ProTable, type TableColumn, type ProTableInstance, type TableRow, setProp } from "@/components";
 import { useConfirm, usePermission } from "@/composables";
 import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
-import { tableData } from "@/mock/pro-table";
+import { tableData } from "@/mock/pro-component/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { withModifiers } from "vue";
@@ -25,11 +25,10 @@ export interface ResUserList {
 const { hasAuth } = usePermission();
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
-const proPageInstance = useTemplateRef<ProPageInstance>("proPageInstance");
-
+const proTableInstance = useTemplateRef<ProTableInstance>("proTableInstance");
 const data = ref(tableData);
 
-const columns: PageColumn<ResUserList>[] = [
+const columns: TableColumn<ResUserList>[] = [
   { type: "selection", fixed: "left", width: 60 },
   { type: "index", label: "#", width: 60 },
   { type: "sort", label: "Sort", width: 80 },
@@ -37,7 +36,6 @@ const columns: PageColumn<ResUserList>[] = [
   {
     prop: "username",
     label: "用户姓名",
-    search: { el: "el-input" },
     render: ({ value }) => {
       return (
         <ElButton
@@ -58,7 +56,6 @@ const columns: PageColumn<ResUserList>[] = [
       { genderLabel: "女", genderValue: 2 },
     ],
     optionField: { label: "genderLabel", value: "genderValue" },
-    search: { el: "el-select", elProps: { filterable: true } },
     filters: [
       { text: "男", value: "1" },
       { text: "女", value: "2" },
@@ -75,7 +72,6 @@ const columns: PageColumn<ResUserList>[] = [
   {
     // 多级 prop
     prop: "user.detail.age",
-    renderUseProp: ["minAge", "maxAge"],
     label: "年龄",
     filterProps: {
       formColumn: { width: 400 },
@@ -83,19 +79,6 @@ const columns: PageColumn<ResUserList>[] = [
       rule: (model, row) => {
         const value = row.user.detail.age;
         return value >= model.minAge && value <= model.maxAge;
-      },
-    },
-    search: {
-      el: "el-input-number",
-      // 自定义 search 显示内容
-      render: (model: any) => {
-        return (
-          <div class="flx-center">
-            <el-input vModel_trim={model.minAge} placeholder="最小年龄" />
-            <span style="margin: 0 10px">-</span>
-            <el-input vModel_trim={model.maxAge} placeholder="最大年龄" />
-          </div>
-        );
       },
     },
     editProps: {
@@ -110,7 +93,6 @@ const columns: PageColumn<ResUserList>[] = [
     filterProps: {
       rule: "like",
     },
-    search: { el: "el-input" },
     editProps: {
       formItemProps: { required: true },
     },
@@ -124,7 +106,6 @@ const columns: PageColumn<ResUserList>[] = [
       { userLabel: "启用", userStatus: 1 },
       { userLabel: "禁用", userStatus: 0 },
     ],
-    search: { el: "el-select", props: { filterable: true } },
     optionField: { label: "userLabel", value: "userStatus" },
     editProps: {
       el: "el-switch",
@@ -167,12 +148,6 @@ const columns: PageColumn<ResUserList>[] = [
     filterProps: {
       formColumn: { width: 400 },
     },
-    search: {
-      el: "el-date-picker",
-      span: 2, // 占两个位置
-      elProps: { type: "datetimerange", valueFormat: "YYYY-MM-DD HH:mm:ss" },
-      defaultValue: ["1900-11-12 11:35:00", "2024-12-12 11:35:00"],
-    },
   },
   { prop: "operation", label: "操作", fixed: "right", width: 330 },
 ];
@@ -182,7 +157,7 @@ const deleteAccount = async (params: ResUserList) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => item.id !== params.id);
   }, `删除【${params.username}】用户`);
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.getTableList();
 };
 
 // 批量删除用户信息
@@ -190,14 +165,14 @@ const batchDelete = async (id: string[]) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => !id.includes(item.id));
   }, "删除所选用户信息");
-  proPageInstance.value?.proTableInstance?.tableMainInstance?.clearSelection();
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.tableMainInstance?.clearSelection();
+  proTableInstance.value?.getTableList();
 };
 
 // 重置用户密码
 const resetPass = async (params: ResUserList) => {
   await useConfirm(() => {}, `重置【${params.username}】用户密码`);
-  proPageInstance.value?.proTableInstance?.getTableList();
+  proTableInstance.value?.getTableList();
 };
 
 // 切换用户状态
@@ -248,11 +223,11 @@ const confirmEdit = (row: TableRow) => {
 </script>
 
 <template>
-  <ProPage ref="proPageInstance" :columns :data page-scope @form-change="handleFormChange">
+  <ProTable ref="proTableInstance" :data="data" :columns="columns" page-scope card @form-change="handleFormChange">
     <template #head-left="scope">
-      <el-button type="primary" :icon="CirclePlus">新增用户</el-button>
-      <el-button type="primary" :icon="Upload" plain>批量添加用户</el-button>
-      <el-button type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
+      <el-button v-auth="'add'" type="primary" :icon="CirclePlus">新增用户</el-button>
+      <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain>批量添加用户</el-button>
+      <el-button v-auth="'export'" type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
       <el-button type="primary" plain>To 子集详情页面</el-button>
       <el-button
         type="danger"
@@ -277,7 +252,7 @@ const confirmEdit = (row: TableRow) => {
 
     <template #createTime="scope">
       <el-button type="primary" link @click="ElMessage.success('我是通过作用域插槽渲染的内容')">
-        {{ scope.row?.createTime }}
+        {{ scope.row.createTime }}
       </el-button>
     </template>
 
@@ -291,5 +266,5 @@ const confirmEdit = (row: TableRow) => {
       <el-button v-if="!row._editable" type="primary" link :icon="Refresh" @click="resetPass(row)">重置密码</el-button>
       <el-button v-if="!row._editable" type="primary" link :icon="Delete" @click="deleteAccount(row)">删除</el-button>
     </template>
-  </ProPage>
+  </ProTable>
 </template>

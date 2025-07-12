@@ -1,6 +1,6 @@
 <script setup lang="ts" name="SortTable">
 import { TableSort, Pagination, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table";
+import { largeData } from "@/mock/table/common";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Search, EditPen, Delete } from "@element-plus/icons-vue";
 

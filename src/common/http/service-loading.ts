@@ -22,10 +22,11 @@ const endLoading = () => {
   loadingInstance.close();
 };
 
+let needLoadingRequestCount = 0;
+
 /**
  * 显示全屏加载
  * */
-let needLoadingRequestCount = 0;
 export const showFullScreenLoading = () => {
   if (needLoadingRequestCount === 0) startLoading();
   needLoadingRequestCount++;

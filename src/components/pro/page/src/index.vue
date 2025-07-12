@@ -12,7 +12,7 @@ import type {
   TableSizeEnum,
   UseSelectState,
 } from "@/components/pro/table";
-import type { PageColumn, ProPageEmits, ProPageProps } from "./types";
+import type { ProPageEmits, ProPageProps } from "./types";
 import type { PageInfo } from "@/components/pro/pagination";
 import { Search } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";

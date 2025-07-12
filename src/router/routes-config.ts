@@ -42,7 +42,7 @@ import nestedRoutes from "./routes/nested";
 import outerChainRoutes from "./routes/outer-chain";
 import permissionRoutes from "./routes/permission";
 import tableRoutes from "./routes/table";
-import proComponentsRoutes from "./routes/pro-components";
+import proComponentsRoutes from "./routes/pro-component";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
 import templateRoutes from "./routes/template";
