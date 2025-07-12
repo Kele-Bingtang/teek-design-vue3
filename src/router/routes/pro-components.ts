@@ -1,11 +1,11 @@
-import { Box } from "@element-plus/icons-vue";
+import { Film } from "@element-plus/icons-vue";
 
 const proComponents: RouterConfigRaw = {
   path: "/pro-components",
   name: "ProComponents",
   meta: {
     title: "超级组件",
-    icon: Box,
+    icon: Film,
   },
   children: [
     {
@@ -14,7 +14,6 @@ const proComponents: RouterConfigRaw = {
       name: "ProTable",
       meta: {
         title: "超级表格",
-        icon: Box,
       },
       children: [
         {
@@ -65,7 +64,6 @@ const proComponents: RouterConfigRaw = {
       name: "ProForm",
       meta: {
         title: "超级表单",
-        icon: Box,
       },
       children: [
         {
@@ -124,7 +122,6 @@ const proComponents: RouterConfigRaw = {
       meta: {
         notClickBread: true,
         title: "超级搜索",
-        icon: Box,
       },
       children: [
         {
@@ -153,7 +150,6 @@ const proComponents: RouterConfigRaw = {
       meta: {
         notClickBread: true,
         title: "超级页面",
-        icon: Box,
       },
       children: [
         {
@@ -194,7 +190,6 @@ const proComponents: RouterConfigRaw = {
       meta: {
         notClickBread: true,
         title: "超级描述",
-        icon: Box,
       },
       children: [
         {
@@ -241,7 +236,7 @@ const proComponents: RouterConfigRaw = {
     //   meta: {
     //     notClickBread: true,
     //     title: "超级步骤条",
-    //     icon: Box,
+    //
     //   },
     //   children: [
     //     {
@@ -258,7 +253,7 @@ const proComponents: RouterConfigRaw = {
     //   meta: {
     //     notClickBread: true,
     //     title: "超级穿梭框",
-    //     icon: Box,
+    //
     //   },
     //   children: [
     //     {

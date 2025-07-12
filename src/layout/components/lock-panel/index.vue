@@ -40,12 +40,10 @@ const { userInfo, lockPassword, isLock } = storeToRefs(userStore);
 // 监听锁屏状态变化
 watch(isLock, newValue => {
   if (newValue) {
-    document.body.style.overflow = "hidden";
     setTimeout(() => {
       unlockInputInstance.value?.input?.focus();
     }, 100);
   } else {
-    document.body.style.overflow = "auto";
     showDevToolsWarning.value = false;
   }
 });
@@ -56,7 +54,7 @@ const rules = computed<FormRules>(() => ({
 }));
 
 /**
- * 事件处理函数
+ * 快捷键打开锁屏
  */
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.altKey && event.key.toLowerCase() === "¬") {
@@ -174,7 +172,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener("keydown", handleKeydown);
-  document.body.style.overflow = "auto";
   // 清理禁用开发者工具的事件监听器
   if (cleanup) cleanup();
 });

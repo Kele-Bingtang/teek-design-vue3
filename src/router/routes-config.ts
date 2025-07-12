@@ -135,6 +135,17 @@ export const rolesRoutes: RouterConfigRaw[] = [
     },
   },
   {
+    path: "workbenches-full",
+    name: "WorkbenchesFull",
+    component: "/workbenches/index",
+    meta: {
+      title: "全屏工作台",
+      icon: Compass,
+      isFull: true,
+      useI18n: false,
+    },
+  },
+  {
     path: "dashboard",
     name: "Dashboard",
     meta: {
@@ -167,17 +178,6 @@ export const rolesRoutes: RouterConfigRaw[] = [
         },
       },
     ],
-  },
-  {
-    path: "console-full",
-    name: "ConsoleFull",
-    component: "/dashboard/console/index",
-    meta: {
-      title: "全屏工作台",
-      icon: Odometer,
-      isFull: true,
-      useI18n: false,
-    },
   },
   { ...proComponentsRoutes },
   { ...pageRoutes },

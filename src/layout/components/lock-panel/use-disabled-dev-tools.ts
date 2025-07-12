@@ -156,10 +156,16 @@ export const useDisableDevTools = () => {
     }
   };
 
-  // 仅在桌面端启用开发者工具检测
-  if (!isMobile()) {
-    devToolsInterval = setInterval(checkDevTools, 500);
-  }
+  // 仅在锁屏状态且桌面端启用开发者工具检测
+  watch(
+    isLock,
+    newVal => {
+      if (newVal && !isMobile()) {
+        devToolsInterval = setInterval(checkDevTools, 500);
+      } else if (devToolsInterval) clearInterval(devToolsInterval);
+    },
+    { immediate: true }
+  );
 
   // 返回清理函数
   return {
