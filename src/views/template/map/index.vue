@@ -1,10 +1,14 @@
 <script setup lang="ts">
 const MapChart = defineAsyncComponent(() => import("@/components/chart/map-chart/src/index.vue"));
+
+const handleRegionClick = (region: any) => {
+  console.log(`选中区域: ${region.name}`, region);
+};
 </script>
 
 <template>
   <div class="page-content" element-loading-text="加载中...">
-    <MapChart />
+    <MapChart @region-click="handleRegionClick" />
   </div>
 </template>
 

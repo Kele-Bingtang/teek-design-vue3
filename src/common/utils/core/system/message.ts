@@ -109,6 +109,7 @@ function messageType(
         onClose,
         plain,
       } = extra;
+
       return ElMessage({
         message: params,
         type,
@@ -124,43 +125,44 @@ function messageType(
         plain,
       });
     }
+
     return ElMessage({
       message: params,
       type: t,
       plain: true,
     });
-  } else {
-    const {
-      message,
-      icon,
-      dangerouslyUseHTMLString = false,
-      mode = "el",
-      duration = 3000,
-      showClose = false,
-      offset = 20,
-      appendTo = document.body,
-      grouping = false,
-      onClose,
-    } = params;
-
-    let type = t;
-    if (isMessageParams(params)) type = params.type || t;
-
-    return ElMessage({
-      message,
-      type,
-      icon,
-      dangerouslyUseHTMLString,
-      duration,
-      showClose,
-      offset,
-      appendTo,
-      grouping,
-      // antd-message 在 style 的 index.scss 和 element-dark.scss 下
-      customClass: mode === "antd" ? "antd-message" : mode,
-      onClose: () => (isFunction(onClose) ? onClose() : null),
-    });
   }
+
+  const {
+    message,
+    icon,
+    dangerouslyUseHTMLString = false,
+    mode = "el",
+    duration = 3000,
+    showClose = false,
+    offset = 20,
+    appendTo = document.body,
+    grouping = false,
+    onClose,
+  } = params;
+
+  let type = t;
+  if (isMessageParams(params)) type = params.type || t;
+
+  return ElMessage({
+    message,
+    type,
+    icon,
+    dangerouslyUseHTMLString,
+    duration,
+    showClose,
+    offset,
+    appendTo,
+    grouping,
+    // antd-message 在 src/common/styles/plugins.scss 下
+    customClass: mode === "antd" ? "antd-message" : mode,
+    onClose: () => (isFunction(onClose) ? onClose() : null),
+  });
 }
 
 function isMessageProps(value: MessageProps | MessageParams): value is MessageProps {

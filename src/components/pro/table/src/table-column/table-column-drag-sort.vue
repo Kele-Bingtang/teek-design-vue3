@@ -10,6 +10,7 @@ defineOptions({ name: "TableColumnTypeDrag" });
 const props = withDefaults(defineProps<TableColumnDragSortProps>(), {
   sortable: true,
   tableInstance: undefined,
+  disabled: false,
 });
 
 const emits = defineEmits<TableColumnDragSortEmits>();
@@ -40,6 +41,8 @@ const dragSort = () => {
     group: "table-column",
     easing: "cubic-bezier(1, 0, 0, 1)",
     chosenClass: "table-column-sortable-chosen",
+    filter: ".is-disabled", // 过滤禁用拖拽排序的列
+    disabled: props.disabled,
     onEnd({ newIndex, oldIndex }) {
       if (newIndex !== undefined && oldIndex !== undefined) {
         emits("dragSortEnd", newIndex, oldIndex);
@@ -50,8 +53,8 @@ const dragSort = () => {
 </script>
 
 <template>
-  <el-table-column width="60" v-bind="$attrs">
-    <span :class="ns.e('icon')" style="cursor: move">
+  <el-table-column :width="60" v-bind="$attrs" v-slot="{ row }">
+    <span :class="[ns.e('icon'), ns.is('disabled', row.disabledDragSort ?? false)]" style="cursor: move">
       <slot name="drag-sort-icon">
         <el-icon><DCaret /></el-icon>
       </slot>

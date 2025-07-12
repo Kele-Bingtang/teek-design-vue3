@@ -137,7 +137,6 @@ const initOptions = computed(() => ({
    * 复制前的回调，可以添加文字水印
    */
   paste_preprocess: (plugin: any, args: any) => {
-    console.log(args.content);
     // args.content += "水印";
   },
   ...useAttrs(), // 其他透传的属性

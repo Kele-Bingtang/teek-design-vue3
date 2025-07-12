@@ -41,20 +41,28 @@ defineExpose({ open, close });
 
 <template>
   <el-drawer v-model="visible" title="列设置" :size="450" :class="ns.b()">
-    <el-table ref="elTableInstance" :data="columns" :border="true" row-key="prop">
+    <el-table ref="elTableInstance" :data="columns" :border="true" row-key="prop" default-expand-all>
       <TableColumnDragSort
         v-if="!columnSetting.hideDragSort"
         :table-instance="elTableInstance"
         label="排序"
         align="center"
+        :disabled="columnSetting.disabledDragSort"
         @drag-sort-end="handleDragSortEnd"
       >
         <template #drag-sort-icon>☷</template>
       </TableColumnDragSort>
 
-      <el-table-column prop="label" align="center" label="列名" />
+      <el-table-column prop="label" align="center" label="列名" min-width="100" />
 
-      <el-table-column v-if="!columnSetting.hideHidden" v-slot="{ row }" prop="hidden" align="center" label="显示">
+      <el-table-column
+        v-if="!columnSetting.hideHidden"
+        v-slot="{ row }"
+        prop="hidden"
+        align="center"
+        label="显示"
+        :width="65"
+      >
         <el-switch
           v-model="row.hidden"
           :active-value="false"
@@ -63,14 +71,28 @@ defineExpose({ open, close });
         />
       </el-table-column>
 
-      <el-table-column v-if="!columnSetting.hideSortable" v-slot="{ row }" prop="sortable" align="center" label="排序">
+      <el-table-column
+        v-if="!columnSetting.hideSortable"
+        v-slot="{ row }"
+        prop="sortable"
+        align="center"
+        label="排序"
+        :width="65"
+      >
         <el-switch
           v-model="row.sortable"
           :disabled="!!row.type || (row.disabledSortable ?? columnSetting.disabledSortable)"
         />
       </el-table-column>
 
-      <el-table-column v-if="!columnSetting.hideFilter" v-slot="{ row }" prop="filter" align="center" label="筛选">
+      <el-table-column
+        v-if="!columnSetting.hideFilter"
+        v-slot="{ row }"
+        prop="filter"
+        align="center"
+        label="筛选"
+        :width="65"
+      >
         <el-switch
           v-model="row.filter"
           :disabled="!!row.type || (row.disabledFilter ?? columnSetting.disabledFilter)"
@@ -86,3 +108,10 @@ defineExpose({ open, close });
     </el-table>
   </el-drawer>
 </template>
+
+<style lang="scss" scoped>
+// 有 children 的列，不显示缩进
+:deep(.el-table__indent) {
+  display: none;
+}
+</style>

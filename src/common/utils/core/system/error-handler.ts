@@ -32,6 +32,7 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
 
   // 过滤 HTTP 请求错误
   if (error.status || error.status === 0) return false;
+
   const errorMap: Record<string, string> = {
     InternalError: "Javascript引擎内部错误",
     ReferenceError: "未找到对象",

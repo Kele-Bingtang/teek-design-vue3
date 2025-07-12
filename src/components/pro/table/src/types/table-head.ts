@@ -38,6 +38,12 @@ export interface ColumnSetting {
    */
   hideFilter?: boolean;
   /**
+   * 是否禁用拖拽排序选择
+   *
+   * @default false
+   */
+  disabledDragSort?: boolean;
+  /**
    * 是否禁用隐藏选择
    *
    * @default false

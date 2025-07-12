@@ -223,6 +223,12 @@ export interface TableColumn<T = any>
    */
   disabledSortable?: MaybeRefOrGetter<boolean>;
   /**
+   * 列配置中是否禁用列拖拽排序
+   *
+   * @default false
+   */
+  disabledDragSort?: MaybeRefOrGetter<boolean>;
+  /**
    * 是否开启编辑功能
    */
   editable?: MaybeRefOrGetter<boolean>;

@@ -9,6 +9,10 @@ export interface TableColumnDragSortProps {
    * ElTable 实例
    */
   tableInstance?: MaybeRef<TableInstance> | null;
+  /**
+   * 是否禁用拖拽排序
+   */
+  disabled?: boolean;
 }
 
 export interface TableColumnDragSortEmits {
