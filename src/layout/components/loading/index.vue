@@ -7,7 +7,7 @@ const ns = useNamespace("layout-loading");
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-column-center']">
+  <div :class="ns.b()" class="flx-column-center">
     <div :class="ns.e('wrap')">
       <span class="dot dot-spin">
         <i></i>

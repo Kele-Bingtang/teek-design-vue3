@@ -17,7 +17,7 @@ const toggleTrigger = () => settingStore.toggleSideMenu();
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']" @click.stop="toggleTrigger">
+  <div :class="ns.b()" class="flx-center" @click.stop="toggleTrigger">
     <Icon>
       <component :is="isCollapse ? Expand : Fold" />
     </Icon>

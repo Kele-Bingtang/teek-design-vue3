@@ -136,7 +136,7 @@ const fullscreenChange = (isFullscreen: boolean) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']">
+  <div :class="ns.b()" class="flx-center">
     <el-input v-model="modelValue" clearable v-bind="$attrs" @click="dialogVisible = true">
       <template #prepend><Icon :icon="modelValue" :size="20" /></template>
     </el-input>

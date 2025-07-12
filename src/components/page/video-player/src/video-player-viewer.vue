@@ -54,8 +54,8 @@ useEventListener("keydown", handleEscClose, { capture: true });
     <!-- viewer-fade 在 Element Plus 已经定义 -->
     <transition name="viewer-fade" appear>
       <el-overlay v-if="visible" :id="id">
-        <div :class="[ns.b()]" @click.stop="close">
-          <div :class="[ns.e('close')]" @click.stop="close">
+        <div :class="ns.b()" @click.stop="close">
+          <div :class="ns.e('close')" @click.stop="close">
             <Icon :icon="Close" :size="24" />
           </div>
           <VideoPlayer :url="url" :poster="poster" />

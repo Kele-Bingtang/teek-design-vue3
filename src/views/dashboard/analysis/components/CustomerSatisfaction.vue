@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LineDataItem } from "@/components";
+import type { LineDataItem } from "@/components/chart/types";
 import { LineChart } from "@/components";
 
 // 图表数据配置

@@ -182,7 +182,8 @@ const handlePreview = (imageUrl: string) => {
       :drag="drag"
       :accept="fileType.join(',')"
       v-bind="$attrs"
-      :class="['upload', ns.is('disabled', disabled), ns.no('border', drag)]"
+      :class="[ns.is('disabled', disabled), ns.no('border', drag)]"
+      class="upload"
     >
       <template v-if="imageUrl">
         <img :src="imageUrl" :class="ns.e('image')" />

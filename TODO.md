@@ -8,6 +8,5 @@
 
 - 操作列支持多级表头，支持多级表头拖拽
 - ProTable 支持简化 setting
-- 动态 `class` 和静态 `class` 拆开写
 
 ## Bug

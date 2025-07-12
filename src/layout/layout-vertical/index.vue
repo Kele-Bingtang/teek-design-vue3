@@ -36,8 +36,8 @@ const handleClickOutSide = () => {
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme), 'flx-column']">
-      <div :class="[ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
+    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme)]" class="flx-column">
+      <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
         <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
       </div>
@@ -51,7 +51,7 @@ const handleClickOutSide = () => {
     <div v-if="isMobile && !isCollapse" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
 
     <el-container>
-      <el-header :class="[ns.join('layout-header'), 'flx-align-center-between']">
+      <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>
       <PageContent />

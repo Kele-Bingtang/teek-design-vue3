@@ -26,7 +26,7 @@ const systemThemeModeList = [
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-wrap', 'gap-15']">
+  <div :class="ns.b()" class="flx-wrap gap-15">
     <div
       v-for="item in systemThemeModeList"
       :key="item.theme"

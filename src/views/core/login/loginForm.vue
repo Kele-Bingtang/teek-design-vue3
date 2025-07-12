@@ -153,14 +153,14 @@ const resetForm = () => {
     </el-form-item>
 
     <el-form-item>
-      <div :class="[ns.e('item'), 'flx-align-center-between']">
+      <div :class="ns.e('item')" class="flx-align-center-between">
         <el-checkbox v-model="checked">记住密码</el-checkbox>
         <el-button link type="primary" @click="handleForgetPwd">忘记密码?</el-button>
       </div>
     </el-form-item>
 
     <el-form-item>
-      <div :class="[ns.e('btn'), 'flx-align-center-between']">
+      <div :class="ns.e('btn')" class="flx-align-center-between">
         <el-button :icon="CircleClose" round @click="resetForm()" size="large">重置</el-button>
         <el-button :icon="UserFilled" round @click="login()" size="large" type="primary" :loading="loading">
           登录
@@ -169,7 +169,7 @@ const resetForm = () => {
     </el-form-item>
 
     <el-form-item>
-      <div :class="[ns.e('item'), 'flx-align-center-between']">
+      <div :class="ns.e('item')" class="flx-align-center-between">
         <el-button v-for="(item, index) in operates" :key="index" @click="switchLoginMode(item.mode)" size="default">
           {{ item.title }}
         </el-button>

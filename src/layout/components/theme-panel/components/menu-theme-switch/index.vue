@@ -32,7 +32,7 @@ const switchMenuTheme = (menuTheme: MenuThemeEnum) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-wrap', 'gap-15']">
+  <div :class="ns.b()" class="flx-wrap gap-15">
     <div v-for="item in menuThemeModeList" :key="item.theme" :class="ns.e('item')">
       <div
         :class="[ns.e('box'), ns.is('active', item.theme === menuTheme)]"

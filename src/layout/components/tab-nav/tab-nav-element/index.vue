@@ -114,8 +114,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="tabNavInstance" :class="[ns.b(), 'tab-nav']">
-    <div :class="[ns.e('content'), 'flx-align-center']">
+  <div ref="tabNavInstance" :class="ns.b()" class="tab-nav">
+    <div :class="ns.e('content')" class="flx-align-center">
       <el-tabs
         ref="elTabsInstance"
         :model-value="activeTab.path"

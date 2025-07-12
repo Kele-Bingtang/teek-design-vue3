@@ -18,7 +18,6 @@ import "@styles/common/atomic.scss";
 import "@styles/common/scrollbar.scss";
 import "@styles/common/transition.scss";
 import "@styles/common/theme-animation.scss";
-import "@styles/common/menu-theme.scss";
 import "@styles/element-plus/el-ui.scss"; // 重写部分 Element Plus 样式
 import "@styles/element-plus/el-dark.scss";
 import "@styles/plugin.scss";

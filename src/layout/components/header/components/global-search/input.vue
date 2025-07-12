@@ -17,9 +17,9 @@ const openSearchDialog = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'customize']">
+  <div :class="ns.b()" class="customize">
     <div :class="ns.e('input')" @click="openSearchDialog">
-      <div :class="[ns.e('content'), 'flx-align-center']">
+      <div :class="ns.e('content')" class="flx-align-center">
         <Icon icon="core-search" :size="17" />
         <span>{{ $t("_headerBar.search") }}</span>
       </div>

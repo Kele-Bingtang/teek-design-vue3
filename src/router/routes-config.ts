@@ -46,7 +46,7 @@ import proComponentsRoutes from "./routes/pro-components";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
 import templateRoutes from "./routes/template";
-import { User, Bell, Odometer, StarFilled, Document, Compass } from "@element-plus/icons-vue";
+import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";
 import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
 export const staticRoutes: RouterConfigRaw[] = [
@@ -199,7 +199,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
     component: "/tabs/index",
     meta: {
       title: "标签页操作",
-      icon: StarFilled,
+      icon: Discount,
     },
   },
   {

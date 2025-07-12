@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Handbag, Coin } from "@element-plus/icons-vue";
 import { BarChart } from "@/components";
+
 const weekDays = ref(["周一", "周二", "周三", "周四", "周五", "周六", "周日"]);
 
 const revenueData = ref([

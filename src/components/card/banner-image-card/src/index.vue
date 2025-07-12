@@ -49,8 +49,8 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-column-justify-center']" :style="{ height: height }">
-    <div :class="[ns.e('content'), 'flx-column-align-center']">
+  <div :class="[ns.b(), ns.join('card-minimal')]" :style="{ height: height }" class="flx-column-justify-center">
+    <div :class="ns.e('content')" class="flx-column-align-center">
       <div :class="ns.e('icon')">
         <img :src="image" :alt="title" />
       </div>

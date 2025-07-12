@@ -23,8 +23,8 @@ const { isCollapse } = storeToRefs(settingStore);
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme), 'flx-column']">
-      <div :class="[ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
+    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme)]" class="flx-column">
+      <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
         <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
       </div>
@@ -34,7 +34,7 @@ const { isCollapse } = storeToRefs(settingStore);
       />
 
       <!-- 菜单底部 -->
-      <div :class="[ns.e('menu-footer'), ns.is('collapse', isCollapse), 'flx-column', 'gap-20']">
+      <div :class="[ns.e('menu-footer'), ns.is('collapse', isCollapse)]" class="flx-column gap-10">
         <UserAvatar placement="right" :offset="isCollapse ? 6 : 30" />
 
         <el-tooltip placement="right" :content="isCollapse ? '菜单展开' : '菜单折叠'" :disabled="!isCollapse">

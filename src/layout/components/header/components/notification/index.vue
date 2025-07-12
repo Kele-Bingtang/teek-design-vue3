@@ -160,7 +160,7 @@ const toDetail = () => {
                 <li v-for="data in item.data" :key="data.id" class="flx-align-center">
                   <img v-if="data.avatar" :src="data.avatar" alt="" :class="ns.m('avatar')" />
 
-                  <div :class="[ns.e('info'), 'flx-1']">
+                  <div :class="ns.e('info')" class="flx-1">
                     <div class="flx-align-center-between">
                       <Tooltip :line="1" :try="1">
                         <span class="title">{{ data.title }}</span>

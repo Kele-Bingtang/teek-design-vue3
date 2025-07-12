@@ -43,7 +43,7 @@ const maxHeight = computed(() => `${itemHeight * props.maxCount}px`);
           :center="true"
           v-bind="timelineItemProps"
         >
-          <div :class="[ns.e('item'), 'flx-align-center']">
+          <div :class="ns.e('item')" class="flx-align-center">
             <div :class="ns.e('content')">
               <span :class="ns.em('content', 'text')">{{ item.content }}</span>
               <span v-if="item.code" :class="ns.em('content', 'code')">#{{ item.code }}</span>

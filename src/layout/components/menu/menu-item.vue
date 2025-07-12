@@ -56,7 +56,7 @@ watch(
 
 <template>
   <template v-if="menuItem.meta.render">
-    <component :is="menuItem.meta.render" :class="[`${ns.elNamespace}-menu-item`, 'is-only']" />
+    <component :is="menuItem.meta.render" :class="`${ns.elNamespace}-menu-item`" class="is-only" />
   </template>
 
   <el-menu-item

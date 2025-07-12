@@ -36,7 +36,7 @@ provide("switchLoginMode", switchLoginMode);
       </div>
 
       <div :class="ns.e('right')">
-        <div :class="[ns.e('right__header'), 'flx-center']">
+        <div :class="ns.e('right__header')" class="flx-center">
           <img src="@/common/assets/images/logo.png" alt="" />
           <h2 class="title">{{ SystemConfig.systemInfo.name }}</h2>
         </div>
