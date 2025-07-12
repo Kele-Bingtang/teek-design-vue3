@@ -11,6 +11,7 @@ import type {
   TableScope,
   TableRow,
 } from "./types";
+import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { defaultPageInfo } from "@/components/pro/pagination";
 import { filterEmpty, setProp } from "@/components/pro/helper";

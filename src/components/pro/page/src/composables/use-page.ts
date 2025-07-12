@@ -30,7 +30,7 @@ export const useProPage = () => {
           ...attrs,
           ...proPageProps,
           onTableRegister: proTable.tableRegister,
-          onSearchRegister: proSearch.searchElState,
+          onSearchRegister: proSearch.searchRegister,
         },
         { ...slots }
       );
@@ -47,7 +47,7 @@ export const useProPage = () => {
     ) => {
       const proPageInstance = createVNode(
         ProPage,
-        { ...proPageProps, onTableRegister: proTable.tableRegister, onSearchRegister: proSearch.searchElState },
+        { ...proPageProps, onTableRegister: proTable.tableRegister, onSearchRegister: proSearch.searchRegister },
         { ...slots }
       );
       const rootInstance = createVNode(

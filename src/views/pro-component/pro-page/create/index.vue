@@ -1,8 +1,10 @@
 <script setup lang="tsx">
-import { useProPage, type PageColumn, type ProPageInstance } from "@/components";
-import { ElButton, ElMessage, type TableColumnCtx } from "element-plus";
-import { tableData } from "@/mock/pro-component/pro-table";
+import type { TableColumnCtx } from "element-plus";
+import type { PageColumn, ProPageInstance } from "@/components";
 import { withModifiers } from "vue";
+import { ElButton, ElMessage, ElInput } from "element-plus";
+import { useProPage } from "@/components";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 const {
   createMethods: { createPage, createPageComponent },
@@ -112,9 +114,9 @@ const columns: PageColumn[] = [
       render: (model: any) => {
         return (
           <div class="flx-center">
-            <el-input vModel_trim={model.minAge} placeholder="最小年龄" />
+            <ElInput vModel_trim={model.minAge} placeholder="最小年龄" />
             <span style="margin: 0 10px">-</span>
-            <el-input vModel_trim={model.maxAge} placeholder="最大年龄" />
+            <ElInput vModel_trim={model.maxAge} placeholder="最大年龄" />
           </div>
         );
       },

@@ -6,6 +6,9 @@
 
 ## 优化
 
-- 版本发布前根据规则优化 import 引入
+- 工作台常用链接添加管理功能
+- 版本发布前根据规则优化 vue/element plus 等缺失的 import 引入
 
 ## Bug
+
+- CodeMirror 控制台报错修复

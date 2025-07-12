@@ -41,11 +41,11 @@ export interface ProPageEmits extends Omit<ProTableNamespace.Emits, "register">,
   /**
    * ProSearch 的注册事件
    */
-  searchRegister: [proFormInstance: ProSearchInstance];
+  searchRegister: [proFormInstance: ProSearchInstance | null];
   /**
    * ProTable 的注册事件
    */
-  tableRegister: [proTableInstance: ProTableInstance, elTableInstance: TableInstance | null];
+  tableRegister: [proTableInstance: ProTableInstance | null, elTableInstance: TableInstance | null];
 }
 
 /**

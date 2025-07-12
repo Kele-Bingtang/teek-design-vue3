@@ -35,9 +35,6 @@ import TodoList from "./components/todo-list.vue";
 
 defineOptions({ name: "Console" });
 
-const route = useRoute();
-const router = useRouter();
-
 onMounted(() => {
   window.scrollTo({ top: 0 });
 });

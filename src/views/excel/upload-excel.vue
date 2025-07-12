@@ -31,8 +31,8 @@ const handleSuccess = ({ results, header }: ExcelData) => {
 <template>
   <div class="upload-excel-container tk-card-minimal">
     <el-radio-group v-model="radio">
-      <el-radio :label="1">拖拽 & 按钮上传</el-radio>
-      <el-radio :label="2">按钮上传</el-radio>
+      <el-radio :value="1">拖拽 & 按钮上传</el-radio>
+      <el-radio :value="2">按钮上传</el-radio>
     </el-radio-group>
 
     <UploadExcel v-if="radio === 1" :on-success="handleSuccess" :before-upload="beforeUpload" drag />

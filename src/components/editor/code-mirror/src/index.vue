@@ -10,7 +10,7 @@ import { basicSetup, minimalSetup } from "codemirror";
 import { indentWithTab } from "@codemirror/commands";
 import { indentUnit as indentUnitConfig } from "@codemirror/language";
 import {
-  diagnosticCount as linterDagnosticCount,
+  diagnosticCount as linterDiagnosticCount,
   forceLinting as forceLintingFun,
   linter as linterFun,
   lintGutter,
@@ -195,9 +195,7 @@ watch(
   extensions,
   exts => {
     // 重新更新 extensions
-    view.value.dispatch({
-      effects: StateEffect.reconfigure.of(exts),
-    });
+    view.value?.dispatch({ effects: StateEffect.reconfigure.of(exts) });
   },
   { immediate: true }
 );
@@ -227,9 +225,13 @@ watch(
       return;
     }
 
+    const isSelectionOutOfRange = !view.value.state.selection.ranges.every(
+      range => range.anchor < value.length && range.head < value.length
+    );
+
     view.value.dispatch({
       changes: { from: 0, to: view.value.state.doc.length, insert: value },
-      selection: view.value.state.selection,
+      selection: isSelectionOutOfRange ? { anchor: 0, head: 0 } : view.value.state.selection,
       scrollIntoView: props.scrollIntoView,
     });
   },
@@ -303,7 +305,7 @@ onMounted(async () => {
       view.value.update([tr]);
       if (tr.changes.empty || !tr.docChanged) return;
 
-      doc.value = tr.state.doc.toString() ?? "";
+      doc.value = tr.state.doc.toString();
       emits("change", tr.state);
     },
   });
@@ -331,7 +333,7 @@ onUnmounted(() => {
 const lint = (): void => {
   if (!props.linter || !view.value) return;
   if (props.forceLinting) forceLintingFun(view.value);
-  diagnosticCount.value = linterDagnosticCount(view.value.state);
+  diagnosticCount.value = linterDiagnosticCount(view.value.state);
 };
 
 /**

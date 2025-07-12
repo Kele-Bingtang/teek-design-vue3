@@ -65,3 +65,12 @@ onMounted(() => {
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+@use "@styles/mixins/bem" as *;
+
+@include b(iframe-view) {
+  width: 100%;
+  height: 100%;
+}
+</style>
