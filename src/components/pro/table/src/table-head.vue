@@ -3,7 +3,6 @@ import type { ProTableHeadNamespace, SizeStyle, TableColumn } from "./types";
 import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElPopover, ElCheckbox } from "element-plus";
 import { Coin, Operation, Download, Setting, Refresh } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { flatColumnsFn } from "@/components/pro/helper";
 import { TableColumnTypeEnum, TableSizeEnum, ToolButtonEnum } from "./helper";
 import { exportExcel } from "./plugins/table-head-export";
 import TableHeadColumnSetting from "./plugins/table-head-column-setting.vue";
@@ -73,7 +72,7 @@ const settingColumns = computed(() => {
     .map(column => {
       column.hidden ??= false;
       column.filterProps ??= {};
-      return { ...column, children: undefined };
+      return column;
     });
 });
 

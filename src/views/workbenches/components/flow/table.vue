@@ -29,7 +29,13 @@ watch(
 
 const columns: TableColumn[] = [
   { type: "index", label: "序号", width: 60 },
-  { prop: "title", label: "任务标题", minWidth: 200 },
+  {
+    prop: "title",
+    label: "任务标题",
+    minWidth: 200,
+    el: "el-link",
+    elProps: { href: "https://vue3-admin.teek.top/", target: "_blank" },
+  },
   { prop: "system", label: "所属系统", width: 100 },
   {
     prop: "status",
