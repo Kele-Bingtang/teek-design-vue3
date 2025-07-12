@@ -63,6 +63,16 @@ export namespace ProTableNamespace {
      */
     hideHead?: boolean;
     /**
+     * 是否显示控制表格顶部栏的图标列
+     *
+     * @default false
+     */
+    controlHeadColumn?: boolean;
+    /**
+     * 控制表格顶部栏图标列（ElTableColumn）的 Props
+     */
+    controlHeadColumnProps?: TableColumn<any>;
+    /**
      * 是否使用卡片样式
      *
      * @default false

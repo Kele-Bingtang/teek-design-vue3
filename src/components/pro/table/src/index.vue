@@ -11,11 +11,12 @@ import type {
   TableScope,
   TableRow,
 } from "./types";
+import { Tools } from "@element-plus/icons-vue";
 import { defaultPageInfo } from "@/components/pro/pagination";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { useTableApi, useTableState, type UseSelectState } from "./composables";
-import { Environment, TableSizeEnum } from "./helper";
+import { Environment, filterData, TableSizeEnum } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";
 
@@ -35,6 +36,8 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   requestError: undefined,
   transformData: undefined,
   hideHead: false,
+  controlHeadColumn: false,
+  controlHeadColumnProps: () => ({}),
   card: false,
   rowStyle: () => ({}),
   cellStyle: () => ({}),
@@ -76,6 +79,9 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
 const emits = defineEmits<ProTableNamespace.Emits>();
 
 const ns = useNamespace("pro-table");
+
+const hideHead = ref(false);
+watchEffect(() => (hideHead.value = props.hideHead));
 
 // 最终的 props
 const finalProps = computed(() => {
@@ -341,7 +347,7 @@ const getElFormItemInstance = () => tableMainInstance.value?.getElFormItemInstan
 const getElInstance = () => tableMainInstance.value?.getElInstance;
 
 const expose = {
-  tableData,
+  tableData: finalTableData,
   pageInfo,
   searchParams,
   searchInitParams,
@@ -385,6 +391,7 @@ defineExpose(expose);
       :is-selected="tableMainInstance?.isSelected"
       :selected-list="tableMainInstance?.selectedList"
       :selected-list-ids="tableMainInstance?.selectedListIds"
+      :operation-prop="finalProps.operationProp"
       @refresh="handleRefresh"
       @size-change="handleSizeChange"
     >
@@ -414,6 +421,16 @@ defineExpose(expose);
     >
       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />
+      </template>
+
+      <template #append-column>
+        <el-table-column v-if="controlHeadColumn" :width="45" v-bind="controlHeadColumnProps">
+          <template #header>
+            <el-button size="large" link :icon="Tools" @click="hideHead = !hideHead" />
+          </template>
+        </el-table-column>
+
+        <slot name="append-column" />
       </template>
     </TableMain>
   </div>

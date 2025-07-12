@@ -69,7 +69,7 @@ interface SummaryMethodProps<T = ResUserList> {
 const getSummaries = (param: SummaryMethodProps) => {
   const { columns } = param;
   const sums: string[] = [];
-  columns.forEach((column, index) => {
+  columns.forEach((_, index) => {
     if (index === 0) return (sums[index] = "合计");
     else sums[index] = "N/A";
   });

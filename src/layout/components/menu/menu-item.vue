@@ -72,7 +72,7 @@ watch(
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText"
+        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
         size="small"
         type="danger"
         effect="dark"
@@ -92,6 +92,16 @@ watch(
       <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
+      <el-tag
+        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
+        size="small"
+        type="danger"
+        effect="dark"
+        v-bind="menuItem.meta.tagProps"
+        class="sub-menu-item-tag"
+      >
+        {{ menuItem.meta.tagText }}
+      </el-tag>
     </template>
 
     <template v-if="menuItem.children">
@@ -115,6 +125,13 @@ watch(
   position: absolute;
   top: 50%;
   right: 12px;
+  transform: translateY(-50%);
+}
+
+.sub-menu-item-tag {
+  position: absolute;
+  top: 50%;
+  right: 38px;
   transform: translateY(-50%);
 }
 </style>

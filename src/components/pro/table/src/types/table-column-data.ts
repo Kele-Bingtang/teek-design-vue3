@@ -7,10 +7,6 @@ export namespace TableColumnDataNamespace {
      */
     column: TableColumn;
     /**
-     * 字典
-     */
-    optionsMap?: Recordable[];
-    /**
      * 是否开启编辑功能，或指定编辑功能触发方式
      */
     editable?: boolean | "click" | "dblclick";

@@ -18,6 +18,7 @@ import { useOptions } from "@/components/pro/use-options";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnType from "./table-column/table-column-type.vue";
+import TableHead from "./table-head.vue";
 import { useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
 import { filterData, initModel, isServer } from "./helper";
 
@@ -495,6 +496,9 @@ defineExpose(expose);
           </template>
         </TableColumnOperation>
       </template>
+
+      <!-- 插入表格最后一列之后的插槽 -->
+      <slot name="append-column" />
     </slot>
 
     <!-- 插入表格最后一行之后的插槽 -->

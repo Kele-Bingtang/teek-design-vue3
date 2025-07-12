@@ -146,7 +146,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 
 <template>
   <el-table-column
-    v-bind="{ ...$attrs, ...initTableColumn(column) }"
+    v-bind="{ ...$attrs, ...initTableColumn(column), sortable: column.sortable }"
     :class-name="`${ns.b()}${' ' + ns.is('cell-edit', useEditable)}${column.className ? ' ' + column.className : ''}`"
   >
     <!-- 表头插槽 - 表头内容 -->

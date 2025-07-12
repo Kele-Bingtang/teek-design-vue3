@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<ProTableHeadNamespace.Props>(), {
   isSelected: undefined,
   selectedList: undefined,
   selectedListIds: undefined,
+  operationProp: "operation",
 });
 
 const emits = defineEmits<ProTableHeadNamespace.Emits>();
@@ -68,10 +69,13 @@ const sizeStyleMap = computed<Record<TableSizeEnum, SizeStyle>>(() => {
 // 列配置需要的列
 const settingColumns = computed(() => {
   return props.columns
-    .filter(column => !hasSpecialColumn(column))
+    .filter(column => !hasSpecialColumnType(column))
     .map(column => {
-      column.hidden ??= false;
-      column.filterProps ??= {};
+      // 禁用操作列的排序和筛选
+      if (column.prop === props.operationProp) {
+        column.disabledFilter = true;
+        column.disabledSortable = true;
+      }
       return column;
     });
 });
@@ -129,7 +133,7 @@ function useButtonEvent() {
     const { columns } = props;
 
     const partColumns = columns.slice(0, Math.max(oldIndex, newIndex));
-    const specialColumnsLength = partColumns.filter(column => hasSpecialColumn(column)).length;
+    const specialColumnsLength = partColumns.filter(column => hasSpecialColumnType(column)).length;
 
     if (specialColumnsLength) {
       const [removedItem] = columns.splice(oldIndex + specialColumnsLength, 1);
@@ -146,7 +150,7 @@ function useButtonEvent() {
 /**
  * 是否含有特殊列（多选列、单选列）
  */
-const hasSpecialColumn = (column: TableColumn) =>
+const hasSpecialColumnType = (column: TableColumn) =>
   [TableColumnTypeEnum.Selection, TableColumnTypeEnum.Radio].includes(column.type as TableColumnTypeEnum);
 
 /**

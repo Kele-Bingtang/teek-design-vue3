@@ -7,7 +7,7 @@ import TableColumnDragSort from "../table-column/table-column-drag-sort.vue";
 
 defineOptions({ name: "TableHeadColumnSetting" });
 
-const props = withDefaults(defineProps<TableHeadColumnSettingProps>(), {
+withDefaults(defineProps<TableHeadColumnSettingProps>(), {
   columns: () => [],
   columnSetting: () => ({}),
   emptyText: "暂无可配置列",
@@ -66,12 +66,15 @@ defineExpose({ open, close });
       <el-table-column v-if="!columnSetting.hideSortable" v-slot="{ row }" prop="sortable" align="center" label="排序">
         <el-switch
           v-model="row.sortable"
-          :disabled="row.type || (row.disabledSortable ?? columnSetting.disabledSortable)"
+          :disabled="!!row.type || (row.disabledSortable ?? columnSetting.disabledSortable)"
         />
       </el-table-column>
 
       <el-table-column v-if="!columnSetting.hideFilter" v-slot="{ row }" prop="filter" align="center" label="筛选">
-        <el-switch v-model="row.filter" :disabled="row.type || (row.disabledFilter ?? columnSetting.disabledFilter)" />
+        <el-switch
+          v-model="row.filter"
+          :disabled="!!row.type || (row.disabledFilter ?? columnSetting.disabledFilter)"
+        />
       </el-table-column>
 
       <template #empty>

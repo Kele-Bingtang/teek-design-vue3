@@ -6,6 +6,10 @@ const proComponents: RouterConfigRaw = {
   meta: {
     title: "超级组件",
     icon: Film,
+    tagText: "Core",
+    tagProps: {
+      type: "success",
+    },
   },
   children: [
     {
@@ -22,8 +26,6 @@ const proComponents: RouterConfigRaw = {
           name: "SimpleProTable",
           meta: {
             title: "简单 ProTable",
-            useI18n: false,
-            tagText: "New",
           },
         },
         {
