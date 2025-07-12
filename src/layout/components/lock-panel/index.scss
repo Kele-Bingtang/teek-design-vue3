@@ -1,0 +1,162 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(lock-panel) {
+  :deep(.el-dialog) {
+    border-radius: 10px;
+  }
+
+  // 开发者工具警告样式
+  @include e(dev-tools-warning) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%);
+    animation: fadeIn 0.3s ease-in-out;
+
+    @include e(warning-content, true) {
+      padding: 20px;
+      text-align: center;
+      user-select: none;
+
+      .warning-icon {
+        margin-bottom: 30px;
+        font-size: 48px;
+      }
+
+      .warning-title {
+        margin: 0 0 20px;
+        font-size: 28px;
+        font-weight: 600;
+        color: cssVarEl(color-danger);
+      }
+
+      .warning-text {
+        max-width: 500px;
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.6;
+        color: cssVar(gray-800);
+      }
+
+      .warning-subtitle {
+        margin-top: 30px;
+        font-size: 14px;
+        color: cssVar(gray-600);
+      }
+    }
+  }
+
+  @include e(lock-content) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .cover {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+
+    .username {
+      margin: 15px 0;
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      color: cssVar(gray-800);
+    }
+
+    .el-form {
+      width: 90%;
+    }
+
+    .el-input {
+      width: 100%;
+      margin-top: 35px;
+    }
+
+    .lock-btn {
+      width: 100%;
+    }
+  }
+
+  @include e(unlock-content) {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: cssVar(bg-color-page);
+    background-size: cover;
+  }
+
+  @include e(box) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    padding: 20px;
+    background: cssVar(bg-color);
+    border-radius: 10px;
+
+    .cover {
+      width: 64px;
+      height: 64px;
+      margin-top: 20px;
+      border-radius: 50%;
+    }
+
+    .username {
+      margin: 15px 0;
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      color: cssVar(gray-800);
+    }
+
+    .el-form {
+      width: 100%;
+      padding: 0 10px !important;
+    }
+
+    .el-input {
+      margin-top: 20px;
+      color: cssVar(gray-800);
+    }
+
+    .unlock-btn {
+      width: 100%;
+    }
+
+    .login-btn {
+      display: block;
+      margin: 10px auto 0;
+      color: cssVar(gray-800);
+
+      &:hover {
+        color: cssVarEl(color-primary) !important;
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

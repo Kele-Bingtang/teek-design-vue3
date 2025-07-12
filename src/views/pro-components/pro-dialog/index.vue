@@ -7,7 +7,7 @@ const { open } = useDialog();
 
 const openDialog = () => {
   open({
-    title: "useDialog 弹框",
+    title: "ProDialog 弹框",
     height: 400,
     render: () => (
       <>
@@ -19,7 +19,7 @@ const openDialog = () => {
 
 const againOpenDialog = () => {
   open({
-    title: "useDialog 弹框",
+    title: "ProDialog 弹框",
     top: "20vh",
     render: () => <div>我被函数再次打开</div>,
   });
@@ -28,7 +28,7 @@ const againOpenDialog = () => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="useDialog 组件" class="tk-card-minimal">
+    <el-card shadow="never" header="ProDrawer 组件" class="tk-card-minimal">
       <el-button @click="openDialog()">函数式打开 Dialog 组件</el-button>
 
       <el-button @Click="visible = true">组件式打开 Dialog 组件</el-button>
@@ -37,11 +37,11 @@ const againOpenDialog = () => {
     </el-card>
 
     <el-card shadow="never" class="tk-card-minimal">
-      <el-descriptions title="useDialog 函数配置项 📚" :column="1" border>
+      <el-descriptions title="ProDrawer 函数配置项 📚" :column="1" border>
         <el-descriptions-item label="open">
           打开 Dialog 的函数，需要传入参数，详情请看「open 函数配置项 」
         </el-descriptions-item>
-        <el-descriptions-item label="cancel">关闭 Dialog 函数</el-descriptions-item>
+        <el-descriptions-item label="close">关闭 Dialog 函数</el-descriptions-item>
       </el-descriptions>
 
       <el-descriptions title="open 函数配置项 📚" :column="1" border style="margin-top: 10px">

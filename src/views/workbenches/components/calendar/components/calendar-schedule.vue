@@ -123,14 +123,14 @@ const handleClickSchedule = (item: ScheduleData) => {
 
     <el-calendar ref="calendarInstance" v-model="currentTime">
       <template #header="{ date }">
-        <div :class="ns.e('switch-icon')">
-          <Icon :icon="ArrowLeft" @click="selectDate('prev-month')" />
+        <div :class="ns.e('switch-icon')" @click="selectDate('prev-month')">
+          <Icon :icon="ArrowLeft" />
         </div>
 
         <span class="date">{{ date }}</span>
 
-        <div :class="ns.e('switch-icon')">
-          <Icon :icon="ArrowRight" @click="selectDate('next-month')" />
+        <div :class="ns.e('switch-icon')" @click="selectDate('next-month')">
+          <Icon :icon="ArrowRight" />
         </div>
       </template>
 

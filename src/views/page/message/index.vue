@@ -1,12 +1,13 @@
 <script setup lang="ts" name="MessageDemo">
 import { h } from "vue";
+import { Check } from "@element-plus/icons-vue";
 import { message, closeAllMessage } from "@/common/utils";
 
 onMounted(() => {
   message.success("欢迎回来：message.success('欢迎回来')");
   message("欢迎回来: message('欢迎回来', { type: 'info' })", {
     type: "info",
-    customClass: "antd",
+    mode: "antd",
   });
   message({
     message: "欢迎回来：message({ message: '欢迎回来', type: 'warning'});",
@@ -41,7 +42,7 @@ onMounted(() => {
           @click="
             message({
               message: '自定义消息图标',
-              icon: 'Check',
+              icon: Check,
             })
           "
         >
@@ -81,36 +82,30 @@ onMounted(() => {
     <el-card shadow="never" class="tk-card-minimal">
       <h4>
         类似 Ant Design 风格的消息提示，点击弹出提示信息（基于 ElMessage 样式改版，不会影响 ElMessage
-        原本样式，使用和打包大小成本极低并适配暗黑模式），需要加上 customClass: antd
+        原本样式，使用和打包大小成本极低并适配暗黑模式），需要加上 mode: antd
       </h4>
 
       <el-space wrap>
-        <el-button type="info" @click="message({ message: 'Info 类型消息', customClass: 'antd' })">Info</el-button>
-        <el-button
-          type="success"
-          @click="message({ message: 'Success 类型消息', customClass: 'antd', type: 'success' })"
-        >
+        <el-button type="info" @click="message({ message: 'Info 类型消息', mode: 'antd' })">Info</el-button>
+        <el-button type="success" @click="message({ message: 'Success 类型消息', mode: 'antd', type: 'success' })">
           Success
         </el-button>
-        <el-button
-          type="warning"
-          @click="message({ message: 'Warning 类型消息', customClass: 'antd', type: 'warning' })"
-        >
+        <el-button type="warning" @click="message({ message: 'Warning 类型消息', mode: 'antd', type: 'warning' })">
           Warning
         </el-button>
-        <el-button type="danger" @click="message({ message: 'Error 类型消息', customClass: 'antd', type: 'error' })">
+        <el-button type="danger" @click="message({ message: 'Error 类型消息', mode: 'antd', type: 'error' })">
           Error
         </el-button>
-        <el-button @click="message({ message: '可关闭消息', customClass: 'antd', showClose: true })">可关闭</el-button>
-        <el-button @click="message({ message: '分组消息合并', customClass: 'antd', type: 'success', grouping: true })">
+        <el-button @click="message({ message: '可关闭消息', mode: 'antd', showClose: true })">可关闭</el-button>
+        <el-button @click="message({ message: '分组消息合并', mode: 'antd', type: 'success', grouping: true })">
           分组消息合并
         </el-button>
         <el-button
           @click="
             message({
               message: '自定义消息图标',
-              customClass: 'antd',
-              icon: 'Check',
+              mode: 'antd',
+              icon: Check,
             })
           "
         >
@@ -120,9 +115,9 @@ onMounted(() => {
           @click="
             message({
               message: '3 秒后关闭',
-              customClass: 'antd',
+              mode: 'antd',
               duration: 3000,
-              onClose: () => message({ message: '消息已关闭', customClass: 'antd', type: 'success' }),
+              onClose: () => message({ message: '消息已关闭', mode: 'antd', type: 'success' }),
             })
           "
         >
@@ -132,7 +127,7 @@ onMounted(() => {
           @click="
             message({
               message: h('p', null, [h('span', null, 'Message can be '), h('i', { style: 'color: teal' }, 'VNode')]),
-              customClass: 'antd',
+              mode: 'antd',
             })
           "
         >
@@ -142,7 +137,7 @@ onMounted(() => {
           @click="
             message({
               message: '<strong>This is <i>HTML</i> string</strong>',
-              customClass: 'antd',
+              mode: 'antd',
               dangerouslyUseHTMLString: true,
             })
           "

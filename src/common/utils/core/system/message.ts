@@ -18,7 +18,7 @@ interface MessageParams {
   /** 是否将 `message` 属性作为 `HTML` 片段处理，默认 `false` */
   dangerouslyUseHTMLString?: boolean;
   /** 消息风格，可选 `el` 、`antd` ，默认 `antd` */
-  customClass?: MessageStyle;
+  mode?: MessageStyle;
   /** 显示时间，单位为毫秒。设为 `0` 则不会自动关闭，`element-plus` 默认是 `3000` */
   duration?: number;
   /** 是否显示关闭按钮，默认值 `false` */
@@ -33,6 +33,7 @@ interface MessageParams {
   grouping?: boolean;
   /** 关闭时的回调函数, 参数为被关闭的 `message` 实例 */
   onClose?: () => unknown;
+  /** 是否显示为朴素消息，默认值 `false` */
   plain?: boolean;
 }
 
@@ -99,7 +100,7 @@ function messageType(
         icon,
         type = t,
         dangerouslyUseHTMLString = false,
-        customClass = "el",
+        mode = "el",
         duration = 3000,
         showClose = false,
         offset = 20,
@@ -118,7 +119,7 @@ function messageType(
         offset,
         appendTo,
         grouping,
-        customClass: customClass === "antd" ? "antd-message" : customClass,
+        customClass: mode === "antd" ? "antd-message" : mode,
         onClose: () => (isFunction(onClose) ? onClose() : null),
         plain,
       });
@@ -133,7 +134,7 @@ function messageType(
       message,
       icon,
       dangerouslyUseHTMLString = false,
-      customClass = "el",
+      mode = "el",
       duration = 3000,
       showClose = false,
       offset = 20,
@@ -156,7 +157,7 @@ function messageType(
       appendTo,
       grouping,
       // antd-message 在 style 的 index.scss 和 element-dark.scss 下
-      customClass: customClass === "antd" ? "antd-message" : customClass,
+      customClass: mode === "antd" ? "antd-message" : mode,
       onClose: () => (isFunction(onClose) ? onClose() : null),
     });
   }

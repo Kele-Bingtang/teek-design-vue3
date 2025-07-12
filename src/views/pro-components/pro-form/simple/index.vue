@@ -16,7 +16,7 @@ const elFormProps: Partial<ElFormProps> = {
 // 表单列配置项 (formItem 代表 item 配置项，attrs 代表 输入、选择框 配置项)
 const columns: FormColumn[] = [
   {
-    formItemProps: { labelWidth: "80px", required: true },
+    formItemProps: { labelWidth: "80px" },
     label: "用户名",
     prop: "username",
     el: "el-input",
@@ -98,11 +98,11 @@ const editable = ref(true);
 <template>
   <div>
     <div class="tk-card-minimal">
-      <h4>1 个 ProForm</h4>
+      <h4 style="margin: 10px 0; font-size: 16px; font-weight: 600">1 个 ProForm</h4>
       <ProForm :elFormProps :columns v-model="model" />
       {{ model }}
 
-      <h4>3 个 ProFormItem</h4>
+      <h4 style="margin: 10px 0; font-size: 16px; font-weight: 600">3 个 ProFormItem</h4>
 
       <ProFormItem v-model="model2.name" label="输入框" prop="name" :editable />
       <ProFormItem

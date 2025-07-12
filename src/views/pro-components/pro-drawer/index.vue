@@ -7,14 +7,14 @@ const { open } = useDrawer();
 
 const openDrawer = () => {
   open({
-    title: "useDrawer 弹框",
+    title: "ProDrawer 弹框",
     render: () => <el-button onClick={() => againOpenDrawer()}>使用函数打开 Drawer</el-button>,
   });
 };
 
 const againOpenDrawer = () => {
   open({
-    title: "useDrawer 弹框",
+    title: "ProDrawer 弹框",
     size: "60%",
     render: () => <div>我被函数再次打开</div>,
   });
@@ -23,7 +23,7 @@ const againOpenDrawer = () => {
 
 <template>
   <el-space fill>
-    <el-card shadow="never" header="useDrawer 组件" class="tk-card-minimal">
+    <el-card shadow="never" header="ProDrawer 组件" class="tk-card-minimal">
       <el-button @click="openDrawer()">函数式打开 Drawer</el-button>
 
       <el-button @Click="visible = true">组件式打开 Drawer 组件</el-button>
@@ -32,11 +32,11 @@ const againOpenDrawer = () => {
     </el-card>
 
     <el-card shadow="never" class="tk-card-minimal">
-      <el-descriptions title="useDrawer 函数配置项 📚" :column="1" border>
+      <el-descriptions title="ProDrawer 函数配置项 📚" :column="1" border>
         <el-descriptions-item label="open">
           打开 Drawer 的函数，需要传入参数，详情请看「open 函数配置项 」
         </el-descriptions-item>
-        <el-descriptions-item label="cancel">关闭 Drawer 函数</el-descriptions-item>
+        <el-descriptions-item label="close">关闭 Drawer 函数</el-descriptions-item>
       </el-descriptions>
 
       <el-descriptions title="open 函数配置项 📚" :column="1" border style="margin-top: 10px">

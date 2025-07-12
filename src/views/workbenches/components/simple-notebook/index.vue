@@ -93,12 +93,15 @@ const handleFlag = (item: NotebookItem) => {
               <span class="title">{{ item.title }}</span>
             </Tooltip>
           </div>
-          <Icon
-            v-show="(item.showFlag && !item.isDone) || item.isFollow"
-            :icon="Flag"
-            :class="ns.is('active', item.isFollow)"
-            @click="handleFlag(item)"
-          />
+
+          <el-tooltip :content="item.isFollow ? '取消标记' : '标记为重点'">
+            <Icon
+              v-show="(item.showFlag && !item.isDone) || item.isFollow"
+              :icon="Flag"
+              :class="ns.is('active', item.isFollow)"
+              @click="handleFlag(item)"
+            />
+          </el-tooltip>
         </div>
       </div>
 

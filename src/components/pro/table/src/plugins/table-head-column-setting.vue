@@ -36,7 +36,6 @@ const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
   emits("dragSortEnd", newIndex, oldIndex);
 };
 
-console.log(props.columns);
 defineExpose({ open, close });
 </script>
 

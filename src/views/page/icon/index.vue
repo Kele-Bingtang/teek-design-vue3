@@ -42,6 +42,9 @@ const currentIcon = ref("");
     <el-card shadow="never" class="tk-card-minimal">
       <el-descriptions title="图标选择器 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model/modelValue">接收图标名字的响应式</el-descriptions-item>
+        <el-descriptions-item label="copy">
+          选中图标后复制图标名字到剪贴板，类型 `boolean` ，默认 `false`
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

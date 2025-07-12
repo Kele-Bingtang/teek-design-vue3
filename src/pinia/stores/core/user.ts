@@ -77,11 +77,11 @@ export const useUserStore = defineStore(
             sex: "保密",
             signature: "这个人很懒，什么都没有写",
             email: "1234567890@qq.com",
-            phone: "13377492843",
+            phone: "1234567890",
             avatar: "https://cdn.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
             roles: ["admin"],
             job: "开发工程师",
-            dept: "MIT-智能制造科",
+            dept: "Teek 云科技技术部 - 智能全栈科",
             registerTime: "2022-10-01 19:07:27",
           });
         });
@@ -153,13 +153,13 @@ export const useUserStore = defineStore(
     const setSearchHistory = (searchHistoryParam: RouterConfig[]) => (searchHistory.value = searchHistoryParam);
 
     return {
-      isLock,
       lockPassword,
       accessToken,
       refreshToken,
       userInfo,
       roles,
       searchHistory,
+      isLock,
 
       login,
       logout,

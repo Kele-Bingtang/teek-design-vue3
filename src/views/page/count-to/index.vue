@@ -119,7 +119,7 @@ const reset = () => {
     </el-card>
 
     <el-row :gutter="20">
-      <el-col :span="4">
+      <el-col :sm="12" :md="8" :lg="4" :xl="4">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>基础用法</span>
@@ -130,7 +130,7 @@ const reset = () => {
         </el-card>
       </el-col>
 
-      <el-col :span="5">
+      <el-col :sm="12" :md="8" :lg="5" :xl="5">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>添加前缀和后缀</span>
@@ -141,7 +141,7 @@ const reset = () => {
         </el-card>
       </el-col>
 
-      <el-col :span="7">
+      <el-col :sm="12" :md="8" :lg="7" :xl="7">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>保留 2 位小数点 & 循环三次</span>
@@ -152,7 +152,7 @@ const reset = () => {
         </el-card>
       </el-col>
 
-      <el-col :span="8">
+      <el-col :sm="12" :md="8" :lg="8" :xl="8">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>动画持续 10 秒</span>
@@ -172,7 +172,7 @@ const reset = () => {
     </el-row>
 
     <el-row :gutter="20" class="count-to-row">
-      <el-col :span="8">
+      <el-col :sm="12" :md="8" :lg="8" :xl="8">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>单位转换（自带）</span>
@@ -203,7 +203,7 @@ const reset = () => {
         </el-card>
       </el-col>
 
-      <el-col :span="8">
+      <el-col :sm="12" :md="8" :lg="8" :xl="8">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>自定义单位</span>
@@ -242,7 +242,7 @@ const reset = () => {
         </el-card>
       </el-col>
 
-      <el-col :span="8">
+      <el-col :sm="12" :md="8" :lg="8" :xl="8">
         <el-card shadow="hover" class="tk-card-minimal">
           <template #header>
             <span>异步更新数据</span>
@@ -396,6 +396,10 @@ const reset = () => {
     font-weight: 500;
     color: cssVarEl(color-primary);
     text-align: center;
+  }
+
+  .el-row {
+    row-gap: 10px;
   }
 
   :deep(.count-text),

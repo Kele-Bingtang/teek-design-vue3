@@ -67,7 +67,6 @@ const handleClick = (type: FlowType) => {
   height: 100%;
 
   .count {
-    margin-left: -16px;
     font-size: 20px;
     font-weight: 600;
   }
