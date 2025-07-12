@@ -174,12 +174,21 @@ export default {
     profile: "我的主页",
     messageCenter: "我的消息",
     setting: "我的设置",
+    lock: "锁屏",
     logout: {
       label: " 退出登录",
       confirmTitle: "温馨提示",
       confirm: "确定退出登录吗？",
       success: " 退出成功！",
     },
+  },
+  _lockScreen: {
+    inputPlaceholder: "请输入锁屏密码",
+    lockBtnText: "锁屏",
+    unInputPlaceholder: "请输入解锁密码",
+    unlockBtnText: "解锁",
+    backLogin: "返回登录",
+    pwdError: "密码错误！",
   },
   _setting: {
     layoutMode: "布局模式",
