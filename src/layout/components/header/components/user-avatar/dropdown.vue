@@ -9,7 +9,7 @@ import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useRoute, useRouter } from "vue-router";
 import defaultAvatar from "@/common/assets/images/default.png";
-import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
+import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
 
 defineOptions({ name: "UserAvatarDropdown" });
 
@@ -30,6 +30,7 @@ const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message-center") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
+  { label: t("_headerBar.lock"), icon: Lock, click: OpenLockPanel },
   {
     label: "Github",
     click: () => window.open("https://github.com/Kele-Bingtang/teek-design-vue3"),
@@ -48,6 +49,13 @@ const toPage = (path: string) => {
  */
 const openThemePanel = () => {
   mittBus.emit(OpenThemePanelKey);
+};
+
+/**
+ * 锁屏
+ */
+const OpenLockPanel = () => {
+  mittBus.emit(OpenLockPanelKey);
 };
 
 /**

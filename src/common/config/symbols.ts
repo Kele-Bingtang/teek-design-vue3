@@ -18,3 +18,5 @@ export const RefreshIFrameKey: InjectionKey<() => void> = Symbol("RefreshIFrameK
 export const OpenSearchDialogKey: InjectionKey<() => void> = Symbol("OpenSearchDialog");
 /** 打开主题面板 */
 export const OpenThemePanelKey: InjectionKey<() => void> = Symbol("OpenThemePanel");
+/** 打开锁屏面板 */
+export const OpenLockPanelKey: InjectionKey<() => void> = Symbol("OpenLockPanel");

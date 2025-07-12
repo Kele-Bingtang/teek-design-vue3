@@ -1,6 +1,7 @@
 <template>
   <component :is="LayoutComponents[layoutMode]" />
   <ThemePanel />
+  <LockPanel />
   <Watermark />
 </template>
 
@@ -10,6 +11,7 @@ import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/pinia";
 import { useCommon, useUpgrade } from "@/composables";
 import { LayoutModeEnum } from "@/common/enums/appEnum";
+import LockPanel from "./components/lock-panel/index.vue";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";
 import LayoutVertical from "./layout-vertical/index.vue";

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
-import { User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
+import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import defaultAvatar from "@/common/assets/images/default.png";
 import { useUserStore } from "@/pinia";
 import { mittBus } from "@/common/utils";
-import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
+import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
 
 import "./index.scss";
 
@@ -28,6 +28,7 @@ const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
+  { label: t("_headerBar.lock"), icon: Lock, click: OpenLockPanel },
   {
     label: "Github",
     click: () => window.open("https://github.com/Kele-Bingtang/teek-design-vue3"),
@@ -46,6 +47,13 @@ const toPage = (path: string) => {
  */
 const openThemePanel = () => {
   mittBus.emit(OpenThemePanelKey);
+};
+
+/**
+ * 锁屏
+ */
+const OpenLockPanel = () => {
+  mittBus.emit(OpenLockPanelKey);
 };
 
 /**

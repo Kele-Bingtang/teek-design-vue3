@@ -172,6 +172,7 @@ export default {
     profile: "My Profile",
     setting: "My Setting",
     messageCenter: "My Message",
+    lock: "Lock",
     logout: {
       label: " Logout",
       confirmTitle: "Tips",
@@ -179,6 +180,15 @@ export default {
       success: " Logout success!",
     },
   },
+  _lockScreen: {
+    inputPlaceholder: "Please enter the lock screen password",
+    lockBtnText: "Lock Screen",
+    unInputPlaceholder: "Please enter the unlock password",
+    unlockBtnText: "Unlock",
+    backLogin: "Return to login",
+    pwdError: "wrong password!",
+  },
+
   _setting: {
     layoutMode: "Layout Mode",
     layoutModeSelect: {
