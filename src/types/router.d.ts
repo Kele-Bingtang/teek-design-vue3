@@ -1,6 +1,7 @@
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteComponent } from "vue-router";
 import type { IconifyIcon } from "@iconify/vue";
 import type { Component, TransitionProps, VNode } from "vue";
+import type { TagProps } from "element-plus";
 
 export {};
 
@@ -158,5 +159,13 @@ declare global {
      * 自定义 Render 菜单元素（TSX 语法）
      */
     render?: () => string | VNode | Component;
+    /**
+     * 菜单标签，使用 ElTag 组件
+     */
+    tagText?: string;
+    /**
+     * 菜单标签的属性，即 ElTag 组件的 props
+     */
+    tagProps?: Partial<TagProps>;
   }
 }

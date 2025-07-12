@@ -81,11 +81,12 @@ export const staticRoutes: RouterConfigRaw[] = [
     path: LOGIN_URL,
     name: LOGIN_NAME,
     component: () => import("@/views/core/login/index.vue"),
-    meta: { title: "登录" },
+    meta: { title: "登录", hideInMenu: true },
   },
   {
     path: "/redirect/:path(.*)",
     name: REDIRECT_NAME,
+    meta: { hideInMenu: true },
     component: () => import("@/layout/redirect.vue"),
   },
 ];
@@ -130,6 +131,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
       title: "工作台",
       icon: Compass,
       isAffix: true,
+      tagText: "New",
     },
   },
   {

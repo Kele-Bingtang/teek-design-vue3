@@ -71,9 +71,20 @@ watch(
       <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
+      <el-tag
+        v-if="menuItem.meta.tagText"
+        size="small"
+        type="danger"
+        effect="dark"
+        v-bind="menuItem.meta.tagProps"
+        class="menu-item-tag"
+      >
+        {{ menuItem.meta.tagText }}
+      </el-tag>
     </template>
   </el-menu-item>
 
+  <!-- 子菜单 -->
   <el-sub-menu v-else :index="menuItem.meta._fullPath || menuItem.path" class="is-sub">
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
@@ -98,5 +109,12 @@ watch(
   font-size: 18px;
   vertical-align: middle;
   text-align: center;
+}
+
+.menu-item-tag {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
 }
 </style>
