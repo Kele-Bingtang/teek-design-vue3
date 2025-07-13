@@ -44,7 +44,6 @@ const tableColumnTypeMap: Record<TableColumnTypeEnum, TableColumnTypeInfo> = {
   [TableColumnTypeEnum.Sort]: {
     el: TableColumnDragSort,
     props: {
-      tableInstance: props.elTableInstance,
       // 行拖拽排序结束事件
       onDragSortEnd: (newIndex: number, oldIndex: number) => {
         emits("dragSortEnd", newIndex, oldIndex);
@@ -75,7 +74,11 @@ const handleRadioChange = (row: Recordable, index: number) => {
   <component
     v-if="column.type && columnTypes.includes(column.type)"
     :is="tableColumnTypeMap[column.type].el"
-    v-bind="{ ...column, ...tableColumnTypeMap[column.type].props }"
+    v-bind="{
+      ...column,
+      ...tableColumnTypeMap[column.type].props,
+      ...(column.type === TableColumnTypeEnum.Sort ? { tableInstance: elTableInstance } : {}),
+    }"
     :align="column.align ?? 'center'"
   >
     <!-- 功能列 - 表头插槽 -->

@@ -18,10 +18,6 @@ const emits = defineEmits<TableColumnDragSortEmits>();
 
 const ns = useNamespace("table-column-drag-sort");
 
-onMounted(() => {
-  if (props.tableInstance && props.sortable) dragSort();
-});
-
 watch(
   () => props.tableInstance,
   val => {
@@ -29,18 +25,20 @@ watch(
   }
 );
 
-// 拖拽排序
+/**
+ * 拖拽排序
+ */
 const dragSort = () => {
   const tbody = unref(props.tableInstance)?.$el?.querySelector(
-    `.${ns.elNamespace}-table__body-wrapper tbody`
+    `.${ns.joinEl("table__body-wrapper")} tbody`
   ) as HTMLElement;
   if (!tbody) return;
 
   Sortable.create(tbody, {
     handle: `.${ns.e("icon")}`,
-    animation: 300,
     group: "table-column",
-    easing: "cubic-bezier(1, 0, 0, 1)",
+    animation: 300,
+    easing: "cubic-bezier(0.22, 0.61, 0.36, 1)",
     chosenClass: "table-column-sortable-chosen",
     filter: ".is-disabled", // 过滤禁用拖拽排序的列
     disabled: props.disabled,
@@ -51,11 +49,18 @@ const dragSort = () => {
     },
   });
 };
+
+onMounted(() => {
+  if (props.tableInstance && props.sortable) dragSort();
+});
 </script>
 
 <template>
   <el-table-column :width="60" v-bind="$attrs" v-slot="{ row }">
-    <span :class="[ns.e('icon'), ns.is('disabled', row.disabledDragSort ?? false)]" style="cursor: move">
+    <span
+      :class="[ns.e('icon'), ns.is('disabled', row.disabledDragSort ?? false)]"
+      :style="{ cursor: row.disabledDragSort ? 'not-allowed' : 'move' }"
+    >
       <slot name="drag-sort-icon">
         <el-icon><DCaret /></el-icon>
       </slot>
