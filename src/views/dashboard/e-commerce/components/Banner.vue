@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { TopRight } from "@element-plus/icons-vue";
 import bannerCover from "@/common/assets/images/login/login_left0.png";
 import { BannerCard } from "@/components";

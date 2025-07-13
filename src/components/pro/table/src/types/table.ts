@@ -1,3 +1,4 @@
+import type { MaybeRef } from "vue";
 import type { TableInstance, TableProps } from "element-plus";
 import type { ProTableHeadNamespace } from "./table-head";
 import type { ProTableMainNamespace } from "./table-main";
@@ -62,6 +63,16 @@ export namespace ProTableNamespace {
      * @default false
      */
     hideHead?: boolean;
+    /**
+     * 是否显示控制表格顶部栏的图标列
+     *
+     * @default false
+     */
+    controlHeadColumn?: boolean;
+    /**
+     * 控制表格顶部栏图标列（ElTableColumn）的 Props
+     */
+    controlHeadColumnProps?: TableColumn<any>;
     /**
      * 是否使用卡片样式
      *

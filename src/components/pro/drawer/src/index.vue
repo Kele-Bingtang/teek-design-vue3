@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { ProDrawerEmits, ProDrawerProps } from "./types";
 import type { DrawerProps } from "element-plus";
-import { ref } from "vue";
+import { ref, computed, useTemplateRef } from "vue";
 import { ElDrawer, ElButton } from "element-plus";
 import { useNamespace } from "@/composables";
+import { Icon } from "@/components/core/icon";
 
 defineOptions({ name: "ProDrawer" });
 

@@ -1,4 +1,4 @@
-import type { AppContext } from "vue";
+import type { AppContext, Component, MaybeRef } from "vue";
 import type {
   ButtonProps,
   ElMessageBoxOptions,

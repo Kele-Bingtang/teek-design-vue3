@@ -38,6 +38,12 @@ export interface ColumnSetting {
    */
   hideFilter?: boolean;
   /**
+   * 是否禁用拖拽排序选择
+   *
+   * @default false
+   */
+  disabledDragSort?: boolean;
+  /**
    * 是否禁用隐藏选择
    *
    * @default false
@@ -194,6 +200,12 @@ export namespace ProTableHeadNamespace {
      * 表格选中数据列表 id，head-left 插槽需要
      */
     selectedListIds?: string[];
+    /**
+     * 表格操作列的 prop
+     *
+     * @default 'operation'
+     */
+    operationProp?: string;
   }
 
   export interface Emits {

@@ -1,6 +1,8 @@
-import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteComponent } from "vue-router";
-import type { IconifyIcon } from "@iconify/vue";
 import type { Component, TransitionProps, VNode } from "vue";
+import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteComponent } from "vue-router";
+import type { TagProps } from "element-plus";
+import type { IconifyIcon } from "@iconify/vue";
+import type { PointTagProps } from "@/components";
 
 export {};
 
@@ -158,5 +160,23 @@ declare global {
      * 自定义 Render 菜单元素（TSX 语法）
      */
     render?: () => string | VNode | Component;
+    /**
+     * 菜单标签，使用 ElTag 组件
+     */
+    tagText?: string;
+    /**
+     * 菜单标签的属性，即 ElTag 组件的 props
+     */
+    tagProps?: Partial<TagProps>;
+    /**
+     * 是否显示点标记
+     *
+     * @default false
+     */
+    pointTag?: boolean;
+    /**
+     * 点标记的属性，即 PointTag 组件的 props
+     */
+    pointTagProps?: PointTagProps;
   }
 }

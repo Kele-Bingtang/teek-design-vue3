@@ -100,6 +100,8 @@ export interface LayoutConfig {
   language: LanguageEnum;
   /** 是否监听 IFrame 传来的通信，用于 Portal 门户系统，来监听门户所有 IFrame 嵌入系统的通信，比如 A 系统想打开 B 系统，则告诉 Portal 门户帮忙打开 */
   watchFrame: boolean;
+  /** 锁屏密钥 */
+  lockSecretKey: string;
 }
 
 export interface RouterConfig {

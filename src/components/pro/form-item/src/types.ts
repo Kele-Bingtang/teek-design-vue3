@@ -1,4 +1,5 @@
-import type { VNode, ExtractPropTypes, UnwrapRef } from "vue";
+import type { VNode, ExtractPropTypes, UnwrapRef, MaybeRefOrGetter, Component, MaybeRef } from "vue";
+import type { JSX } from "vue/jsx-runtime";
 import type {
   FormItemProps,
   InputProps,
@@ -21,14 +22,13 @@ import type {
   TimePickerDefaultProps,
   ElTooltipProps,
 } from "element-plus";
-import type ProFormItem from "./index.vue";
-import type { TreeProps as CustomTreeProps } from "./components/tree.vue";
 import type { TreeProps } from "element-plus/es/components/tree-v2/src/types";
 import type { SelectProps } from "element-plus/es/components/select/src/select";
-import type { SelectProps as SelectV2Props } from "element-plus/es/components/select-v2/src/defaults";
+import type { SelectV2Props } from "element-plus/es/components/select-v2/src/defaults";
 import type { TimeSelectProps } from "element-plus/es/components/time-select/src/time-select";
-import type { JSX } from "vue/jsx-runtime";
 import type { FormElComponentEnum } from "./helper";
+import type { TreeProps as CustomTreeProps } from "./components/tree.vue";
+import type ProFormItem from "./index.vue";
 
 export type ElFormItemProps = Partial<FormItemProps>;
 
@@ -159,8 +159,8 @@ export interface FormItemColumnProps {
   elProps?: MaybeRefOrGetter<
     | InputProps
     | InputNumberProps
-    | ExtractPropTypes<typeof SelectProps>
-    | ExtractPropTypes<typeof SelectV2Props>
+    | ExtractPropTypes<SelectProps>
+    | ExtractPropTypes<SelectV2Props>
     | TreeProps
     | CustomTreeProps
     | CascaderProps

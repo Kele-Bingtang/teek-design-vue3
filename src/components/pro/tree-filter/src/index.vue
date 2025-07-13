@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FilterEmits, TreeFilterProps } from "./types";
-import { ref, watch, onBeforeMount } from "vue";
+import { ref, watch, onBeforeMount, useTemplateRef, nextTick } from "vue";
 import { ElInput, ElScrollbar, ElTree } from "element-plus";
 import { useNamespace } from "@/composables";
 

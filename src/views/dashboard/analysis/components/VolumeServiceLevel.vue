@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { BarChart } from "@/components";
 
 // 服务类别数据

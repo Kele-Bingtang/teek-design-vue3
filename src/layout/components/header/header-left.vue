@@ -15,7 +15,7 @@ const { isMobile } = useCommon();
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']">
+  <div :class="ns.b()" class="flx-center">
     <CollapseTrigger />
     <Breadcrumb v-if="showBreadcrumb && !isMobile" />
   </div>

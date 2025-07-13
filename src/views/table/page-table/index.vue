@@ -1,7 +1,9 @@
 <script setup lang="ts" name="pageTable">
-import { Pagination, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table";
+import type { PageInfo } from "@/components";
+import { ref, reactive, computed } from "vue";
 import { tableStatusFilter } from "@/common/config";
+import { Pagination, defaultPageInfo } from "@/components";
+import { largeData } from "@/mock/table/common";
 
 const tableData = ref(largeData);
 const paging = reactive(defaultPageInfo);

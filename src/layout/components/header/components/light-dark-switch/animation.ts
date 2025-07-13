@@ -1,7 +1,7 @@
-import { useTheme } from "@/composables";
 import { SystemThemeEnum } from "@/common/enums/appEnum";
-import { useSettingStore } from "@/pinia";
 import { setCssVar } from "@/common/utils";
+import { useTheme } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 const { Dark, Light } = SystemThemeEnum;
 

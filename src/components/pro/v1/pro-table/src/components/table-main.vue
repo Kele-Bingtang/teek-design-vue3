@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { inject } from "vue";
-import { ElTable, ElButton, ElTableColumn, ElPopconfirm, ElTag, ElIcon, type TableColumnCtx } from "element-plus";
+import type { TableColumnProps, TypeProps } from "../interface";
+import type { TableColumnCtx } from "element-plus";
+import { inject, useTemplateRef } from "vue";
+import { ElTable, ElButton, ElTableColumn, ElPopconfirm, ElTag, ElIcon } from "element-plus";
 import { Edit, Delete, DCaret } from "@element-plus/icons-vue";
 import TableColumn from "./table-column.vue";
-import { dialogFormInstanceKey, proTablePrefixClassKey, type TableColumnProps, type TypeProps } from "../interface";
+import { dialogFormInstanceKey, proTablePrefixClassKey } from "../interface";
 import { visibleButton } from "../helper";
 import type { DialogFormProps } from "./dialog-form.vue";
 

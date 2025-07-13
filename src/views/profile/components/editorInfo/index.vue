@@ -1,6 +1,9 @@
 <script setup lang="ts" name="EditorInfo">
-import { useUserStore, type UserInfo } from "@/pinia";
-import { ElMessage, type FormInstance } from "element-plus";
+import type { FormInstance } from "element-plus";
+import type { UserInfo } from "@/pinia";
+import { ref, useTemplateRef, toRefs } from "vue";
+import { ElMessage } from "element-plus";
+import { useUserStore } from "@/pinia";
 
 const props = defineProps<{ user: UserInfo }>();
 

@@ -1,7 +1,8 @@
-import type { PageInfo } from "@/components";
+import type { MaybeRef } from "vue";
+import type { PageInfo } from "@/components/pro/pagination";
 import type { ProTableMainNamespace } from "../types";
 import { defaultPageInfo } from "@/components/pro/pagination";
-import { reactive, computed, toRefs } from "vue";
+import { reactive, computed, toRefs, toValue } from "vue";
 import { isEmpty } from "@/common/utils";
 
 /**

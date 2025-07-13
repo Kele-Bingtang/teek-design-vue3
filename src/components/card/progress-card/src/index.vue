@@ -1,9 +1,10 @@
 <!-- 进度条卡片 -->
 <script setup lang="ts">
 import type { ProgressCardProps } from "./types";
-import { useNamespace } from "@/composables";
-import { CountTo } from "@/components";
+import { ElProgress } from "element-plus";
 import { addUnit } from "@/common/utils";
+import { CountTo } from "@/components";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProgressCard" });
 
@@ -53,7 +54,7 @@ watch(
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-column-justify-center']">
+  <div :class="[ns.b(), ns.join('card-minimal')]" class="flx-column-justify-center">
     <div :class="ns.e('info')" :style="{ justifyContent: icon ? 'space-between' : 'flex-start' }">
       <div :class="ns.em('info', 'left')">
         <Icon
@@ -82,6 +83,7 @@ watch(
         </p>
       </div>
     </div>
+
     <el-progress :percentage="currentPercentage" :stroke-width="strokeWidth" :show-text="false" :color="color" />
   </div>
 </template>

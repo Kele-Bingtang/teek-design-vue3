@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { TableColumnProps } from "../interface";
+import { inject } from "vue";
 import { ElDrawer, ElSwitch, ElTable, ElTableColumn } from "element-plus";
-import { proTablePrefixClassKey, type TableColumnProps } from "../interface";
+import { proTablePrefixClassKey } from "../interface";
 
 defineOptions({ name: "ColSetting" });
 

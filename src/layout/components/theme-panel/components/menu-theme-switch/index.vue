@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
 import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums/appEnum";
-import { useNamespace } from "@/composables";
-import { useSettingStore } from "@/pinia";
 import lightTheme from "@/common/assets/images/menu-theme/light.png";
 import darkTheme from "@/common/assets/images/menu-theme/dark.png";
-import { useI18n } from "vue-i18n";
+import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "MenuThemeSwitch" });
 
@@ -32,7 +34,7 @@ const switchMenuTheme = (menuTheme: MenuThemeEnum) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-wrap', 'gap-15']">
+  <div :class="ns.b()" class="flx-wrap gap-15">
     <div v-for="item in menuThemeModeList" :key="item.theme" :class="ns.e('item')">
       <div
         :class="[ns.e('box'), ns.is('active', item.theme === menuTheme)]"

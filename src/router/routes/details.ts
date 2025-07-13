@@ -1,4 +1,4 @@
-import { StarFilled } from "@element-plus/icons-vue";
+import { Star } from "@element-plus/icons-vue";
 
 const detailsRoutes: RouterConfigRaw = {
   path: "/arg",
@@ -15,7 +15,7 @@ const detailsRoutes: RouterConfigRaw = {
       component: "/tabs/query-detail",
       meta: {
         title: route => `{{ _route.Query }}-${route.query.id}`,
-        icon: StarFilled,
+        icon: Star,
         beforeCloseName: "before_close_normal",
       },
     },
@@ -25,7 +25,7 @@ const detailsRoutes: RouterConfigRaw = {
       component: "/tabs/params-detail",
       meta: {
         title: route => `{{ _route.Params }}-${route.params.id}`,
-        icon: StarFilled,
+        icon: Star,
         beforeCloseName: "before_close_normal",
         dynamicLevel: 3,
       },

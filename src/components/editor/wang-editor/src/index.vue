@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { ImageInsertFnType, VideoInsertFnType, WangEditorEmits, WangEditorProp } from "./types";
-import { onMounted, watch, onBeforeUnmount, computed, shallowRef, reactive } from "vue";
 import type { IEditorConfig, IDomEditor } from "@wangeditor/editor";
+import { onMounted, watch, onBeforeUnmount, computed, shallowRef, reactive } from "vue";
 import { Boot } from "@wangeditor/editor";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import attachmentModule from "@wangeditor/plugin-upload-attachment"; // wangeditor 的附件插件
-import { toolbarKeys as toolbarKeysConfig } from "./config";
 import { useNamespace } from "@/composables";
+import { toolbarKeys as toolbarKeysConfig } from "./config";
 
 import "@wangeditor/editor/dist/css/style.css";
 

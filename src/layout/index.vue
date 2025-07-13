@@ -7,10 +7,11 @@
 
 <script setup lang="ts">
 import type { Component } from "vue";
+import { watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useSettingStore } from "@/pinia";
-import { useCommon, useUpgrade } from "@/composables";
 import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { useCommon, useUpgrade } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import LockPanel from "./components/lock-panel/index.vue";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";

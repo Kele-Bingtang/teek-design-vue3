@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from "vue";
+import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
@@ -149,7 +149,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="tabNavInstance" :class="[ns.b(), ns.is(type), 'flx-align-center', 'tab-nav']">
+  <div ref="tabNavInstance" :class="[ns.b(), ns.is(type)]" class="flx-align-center tab-nav">
     <div v-show="hasScroll" :class="[ns.e('btn'), ns.is('left')]">
       <el-button plain @click="handleScroll(240)">
         <Icon><ArrowLeft /></Icon>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ElCheckbox, type CheckboxValueType } from "element-plus";
-import { computed, ref, watch } from "vue";
+import type { CheckboxValueType } from "element-plus";
 import type { FormFieldNamesProps } from "../interface";
+import { computed, ref, watch } from "vue";
+import { ElCheckbox } from "element-plus";
 
 defineOptions({ name: "CheckBoxSelect" });
 

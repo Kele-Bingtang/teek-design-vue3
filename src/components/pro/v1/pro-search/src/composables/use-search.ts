@@ -1,20 +1,11 @@
+import type { Ref, ShallowRef } from "vue";
 import type { FormSchemaProps, FormSetProps } from "@/components/pro/v1/pro-form";
-import ProSearch, { type ProSearchExpose, type ProSearchOnEmits, type ProSearchProps } from "../index.vue";
-import { useNamespace } from "@/composables";
+import type { ProSearchExpose, ProSearchOnEmits, ProSearchProps } from "../index.vue";
+import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
 import { ElConfigProvider } from "element-plus";
-import {
-  type Ref,
-  createVNode,
-  getCurrentInstance,
-  isRef,
-  isShallow,
-  nextTick,
-  ref,
-  render,
-  unref,
-  type ShallowRef,
-} from "vue";
+import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/pinia";
+import ProSearch from "../index.vue";
 
 export const useProSearch = () => {
   // ProSearch 实例

@@ -1,3 +1,4 @@
+import type { Component, MaybeRefOrGetter } from "vue";
 import type { RadioProps, TableProps } from "element-plus";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { TableColumn, TableScope } from "./table-column";

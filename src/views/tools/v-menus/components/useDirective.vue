@@ -1,5 +1,6 @@
 <script setup lang="ts" name="UseDirective">
-import { directive, type menusItemType } from "vue3-menus";
+import type { menusItemType } from "vue3-menus";
+import { directive } from "vue3-menus";
 
 const vMenus = directive;
 

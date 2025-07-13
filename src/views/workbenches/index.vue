@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { FlowType } from "./components/flow/index.vue";
+import { ref } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 import { getNowDate } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import Flow from "./components/flow/index.vue";
@@ -15,15 +17,22 @@ const ns = useNamespace("workbenches");
 
 const activeType = ref<FlowType>("");
 
+// 与 styles 里的 @media (max-width: $device-phone-large) 对应
+const isPhoneLarge = useMediaQuery("(max-width: 768px)");
+
 const handleClick = (type: FlowType) => {
   activeType.value = type;
 };
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <div :class="[ns.b(), ns.is('full', $route.meta.isFull)]">
     <div>
       <Flow @click="handleClick" />
+    </div>
+
+    <div v-if="isPhoneLarge" v-show="activeType" class="column-2">
+      <FlowTable :type="activeType" />
     </div>
 
     <div>
@@ -39,7 +48,7 @@ const handleClick = (type: FlowType) => {
       <Calendar :class="ns.e('calendar')" />
     </div>
 
-    <div v-show="activeType" class="column-2">
+    <div v-if="!isPhoneLarge" v-show="activeType" class="column-2">
       <FlowTable :type="activeType" />
     </div>
 
@@ -58,69 +67,5 @@ const handleClick = (type: FlowType) => {
 </template>
 
 <style lang="scss" scoped>
-@use "@styles/mixins/bem" as *;
-
-@include b(workbenches) {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: auto;
-  grid-auto-flow: dense;
-  gap: 10px;
-  align-items: start;
-
-  > div {
-    height: 100%;
-  }
-
-  .column-2 {
-    grid-column-start: span 2;
-  }
-
-  .row-2 {
-    grid-row-start: span 2;
-  }
-
-  .row-5 {
-    grid-row-start: span 5;
-  }
-
-  .welcome {
-    height: 100%;
-
-    .title {
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .time {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-  }
-
-  // 响应式 grid 布局
-  @media (max-width: $device-laptop) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    .column-2 {
-      grid-column-start: span 1;
-    }
-  }
-
-  @media (max-width: $device-phone-large) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-
-    .column-2 {
-      grid-column-start: span 1;
-    }
-
-    .row-2 {
-      grid-row-start: span 1;
-    }
-
-    .row-5 {
-      grid-row-start: span 1;
-    }
-  }
-}
+@use "./index";
 </style>

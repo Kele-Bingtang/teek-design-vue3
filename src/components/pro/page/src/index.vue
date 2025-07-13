@@ -12,15 +12,17 @@ import type {
   TableSizeEnum,
   UseSelectState,
 } from "@/components/pro/table";
-import type { PageColumn, ProPageEmits, ProPageProps } from "./types";
 import type { PageInfo } from "@/components/pro/pagination";
+import type { ProPageEmits, ProPageProps } from "./types";
+import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
+import { ElTooltip, ElButton } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { isEmpty, isFunction } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
 import { filterEmpty, flatColumnsFn, setProp } from "@/components/pro/helper";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProPage" });
 
@@ -169,13 +171,13 @@ const handleReset = (searchModel: Recordable) => {
   emits("reset", searchModel);
 };
 
-const searchRegister = (proSearchInstance: ProSearchInstance) => {
+const handleSearchRegister = (proSearchInstance: ProSearchInstance | null) => {
   emits("searchRegister", proSearchInstance);
 };
 
 // ---------- ProTable 事件监听 ----------
 
-const tableRegister = (proTableInstance: ProTableInstance, elTableInstance: TableInstance | null) => {
+const handleTableRegister = (proTableInstance: ProTableInstance | null, elTableInstance: TableInstance | null) => {
   emits("tableRegister", proTableInstance, elTableInstance);
 };
 
@@ -254,7 +256,7 @@ defineExpose(expose);
       v-bind="searchProps"
       @search="handleSearch"
       @reset="handleReset"
-      @register="searchRegister"
+      @register="handleSearchRegister"
     >
       <template
         v-for="slot in Object.keys($slots)
@@ -286,7 +288,7 @@ defineExpose(expose);
       @confirm="handleConfirm"
       @cancel="handleCancel"
       @leave-cell-edit="handleLeaveCellEdit"
-      @register="tableRegister"
+      @register="handleTableRegister"
     >
       <template #head-right-after>
         <el-tooltip

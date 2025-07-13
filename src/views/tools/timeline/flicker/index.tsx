@@ -1,6 +1,7 @@
+import type { Component } from "vue";
 import { defineComponent, h } from "vue";
-import "./index.scss";
 import { useNamespace } from "@/composables";
+import "./index.scss";
 
 const ns = useNamespace("point-flicker");
 

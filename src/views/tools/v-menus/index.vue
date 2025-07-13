@@ -1,4 +1,5 @@
 <script setup lang="ts" name="VMenus">
+import { ref } from "vue";
 import UseDirective from "./components/useDirective.vue";
 import UseFunction from "./components/useFunction.vue";
 import UseComponent from "./components/useComponent.vue";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { StyleValue } from "vue";
 import { Select, CloseBold } from "@element-plus/icons-vue";
-import { type StyleValue } from "vue";
 
 export interface Step {
   title: string;

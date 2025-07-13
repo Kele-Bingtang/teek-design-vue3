@@ -13,7 +13,7 @@ const { breadcrumbList } = useBreadcrumbs();
 </script>
 
 <template>
-  <el-breadcrumb :class="[ns.b(), 'flx-align-center']" :separator-icon="ArrowRight">
+  <el-breadcrumb :class="ns.b()" class="flx-align-center" :separator-icon="ArrowRight">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="breadcrumb.path">
         <div

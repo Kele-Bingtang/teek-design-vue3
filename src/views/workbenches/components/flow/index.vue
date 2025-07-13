@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { myAgentData } from "./data/my-agent";
@@ -67,7 +68,6 @@ const handleClick = (type: FlowType) => {
   height: 100%;
 
   .count {
-    margin-left: -16px;
     font-size: 20px;
     font-weight: 600;
   }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Picture, Paperclip } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables/core/use-namespace";
+import { useNamespace } from "@/composables";
+
 const ns = useNamespace("chat-input");
 
 interface ChatInputEmits {

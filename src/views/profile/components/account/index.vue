@@ -1,12 +1,14 @@
 <script setup lang="ts" name="Account">
-import { ElMessage, type FormInstance } from "element-plus";
+import type { FormInstance } from "element-plus";
+import { reactive, useTemplateRef } from "vue";
+import { ElMessage } from "element-plus";
 
 const user = reactive({
   oldPassword: "",
   newPassword: "",
   confirmPassword: "",
 });
-const formRef = useTemplateRef("formRef");
+const formInstance = useTemplateRef("formInstance");
 
 const equalToPassword = (rule: any, value: string, callback: (info?: string) => void) => {
   if (user.newPassword !== value) {
@@ -28,21 +30,21 @@ const rules = {
   ],
 };
 
-const submit = async (formRef: FormInstance | null) => {
-  await formRef?.validate(valid => {
+const submit = async (formInstance: FormInstance | null) => {
+  await formInstance?.validate(valid => {
     if (valid) {
       ElMessage({
         message: "修改密码成功！",
         type: "success",
         duration: 4000,
       });
-      reset(formRef);
+      reset(formInstance);
     }
   });
 };
 
-const reset = (formRef: FormInstance | null) => {
-  formRef?.resetFields();
+const reset = (formInstance: FormInstance | null) => {
+  formInstance?.resetFields();
   user.oldPassword = "";
   user.newPassword = "";
   user.confirmPassword = "";
@@ -50,7 +52,7 @@ const reset = (formRef: FormInstance | null) => {
 </script>
 
 <template>
-  <el-form ref="formRef" :model="user" :rules="rules" label-width="80px">
+  <el-form ref="formInstance" :model="user" :rules="rules" label-width="80px">
     <el-form-item label="旧密码" prop="oldPassword">
       <el-input v-model="user.oldPassword" placeholder="请输入旧密码" type="password" show-password />
     </el-form-item>
@@ -61,8 +63,8 @@ const reset = (formRef: FormInstance | null) => {
       <el-input v-model="user.confirmPassword" placeholder="请确认新密码" type="password" show-password />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit(formRef)">保存</el-button>
-      <el-button type="danger" @click="reset(formRef)">重置</el-button>
+      <el-button type="primary" @click="submit(formInstance)">保存</el-button>
+      <el-button type="danger" @click="reset(formInstance)">重置</el-button>
     </el-form-item>
   </el-form>
 </template>

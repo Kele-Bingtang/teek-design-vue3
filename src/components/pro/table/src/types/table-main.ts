@@ -1,12 +1,12 @@
+import type { MaybeRef, UnwrapRef } from "vue";
 import type { PaginationProps, TableProps } from "element-plus";
-import type { UnwrapRef } from "vue";
 import type { PageInfo } from "@/components/pro/pagination";
 import type { TableColumn, TableRow } from "./table-column";
 import type { TableColumnDataNamespace } from "./table-column-data";
 import type { OperationNamespace } from "./table-column-operation";
+import type { TableColumnTypeNamespace } from "./table-column-type";
 import type { UseSelectState } from "../composables";
 import type { Environment } from "../helper";
-import type { TableColumnTypeNamespace } from "./table-column-type";
 
 /**
  * TableMain 组件的类型命名空间

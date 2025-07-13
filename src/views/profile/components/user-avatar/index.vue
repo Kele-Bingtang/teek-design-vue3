@@ -1,7 +1,8 @@
 <script setup lang="ts" name="UserAvatar">
 import type { UserInfo } from "@/pinia";
-import { Cropper } from "@/components";
+import { ref, toRefs } from "vue";
 import defaultAvatar from "@/common/assets/images/default.png";
+import { Cropper } from "@/components";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("user-avatar");

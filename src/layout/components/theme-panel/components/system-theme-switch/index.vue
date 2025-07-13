@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { useNamespace, useTheme } from "@/composables";
-import { SystemThemeEnum } from "@/common/enums/appEnum";
-import { useSettingStore } from "@/pinia";
 import lightTheme from "@/common/assets/images/system-theme/light.png";
 import darkTheme from "@/common/assets/images/system-theme/dark.png";
 import systemTheme from "@/common/assets/images/system-theme/system.png";
+import { useNamespace, useTheme } from "@/composables";
+import { SystemThemeEnum } from "@/common/enums/appEnum";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "SystemThemeSwitch" });
 
@@ -26,7 +27,7 @@ const systemThemeModeList = [
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-wrap', 'gap-15']">
+  <div :class="ns.b()" class="flx-wrap gap-15">
     <div
       v-for="item in systemThemeModeList"
       :key="item.theme"

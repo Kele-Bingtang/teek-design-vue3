@@ -36,10 +36,6 @@
     background-image: initial !important;
   }
 
-  .#{$el-namespace}-message__icon {
-    margin-right: 8px !important;
-  }
-
   .#{$el-namespace}-message__closeBtn {
     right: 9px !important;
     outline: none;

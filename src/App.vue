@@ -8,15 +8,15 @@
 
 <script setup lang="ts" name="App">
 import { reactive, computed, provide } from "vue";
+import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
-import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/common/config";
-import { useUserStore, useWebSocketStore, useLayoutStore } from "@/pinia";
-import { isFunction } from "@/common/utils";
 import { LanguageEnum } from "@/common/enums/appEnum";
-import { useNamespace, useBrowserTitle, useWatchCssVar } from "@/composables";
-import { useTheme } from "@/composables/core/use-theme";
+import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/common/config";
+import { isFunction } from "@/common/utils";
+import { useNamespace, useBrowserTitle, useWatchCssVar, useTheme } from "@/composables";
+import { useUserStore, useWebSocketStore, useLayoutStore } from "@/pinia";
 import { useIFrame } from "@/layout/components/iframe/use-iframe";
 
 const ns = useNamespace();

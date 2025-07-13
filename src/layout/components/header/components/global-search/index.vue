@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ArrowUp, ArrowDown, Back, Close } from "@element-plus/icons-vue";
-import { useMenu, useNamespace } from "@/composables";
+import { ref, onMounted, nextTick, useTemplateRef } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useEventListener } from "@vueuse/core";
+import { ArrowUp, ArrowDown, Back, Close } from "@element-plus/icons-vue";
 import { isArray, mittBus } from "@/common/utils";
+import { OpenSearchDialogKey } from "@/common/config";
+import { useMenu, useNamespace } from "@/composables";
 import { formatTitle } from "@/router/helper";
 import { useUserStore } from "@/pinia";
-import { OpenSearchDialogKey } from "@/common/config";
 
 import "./index.scss";
 

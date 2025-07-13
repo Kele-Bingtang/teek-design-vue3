@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { Bell } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { Tooltip } from "@/components";
+import { useNamespace } from "@/composables";
 import { useMessageStore } from "@/pinia";
 import message1 from "@/common/assets/images/message/msg01.png";
 import message2 from "@/common/assets/images/message/msg02.png";
@@ -160,7 +163,7 @@ const toDetail = () => {
                 <li v-for="data in item.data" :key="data.id" class="flx-align-center">
                   <img v-if="data.avatar" :src="data.avatar" alt="" :class="ns.m('avatar')" />
 
-                  <div :class="[ns.e('info'), 'flx-1']">
+                  <div :class="ns.e('info')" class="flx-1">
                     <div class="flx-align-center-between">
                       <Tooltip :line="1" :try="1">
                         <span class="title">{{ data.title }}</span>

@@ -1,9 +1,10 @@
 <script setup lang="ts" name="Tabs">
 import type { TabProps } from "@/pinia";
-import { appendFieldById, deleteChildren, getNodeById } from "@/common/utils";
-import { useLayoutStore } from "@/pinia";
+import { ref, computed } from "vue";
+import { storeToRefs } from "pinia";
+import { appendFieldById, deleteChildren, getNodeById, copyObj } from "@/common/utils";
 import { useMenu } from "@/composables";
-import { copyObj } from "@/common/utils";
+import { useLayoutStore } from "@/pinia";
 import { formatTitle } from "@/router/helper";
 import { useDetail } from "./use-tabs";
 

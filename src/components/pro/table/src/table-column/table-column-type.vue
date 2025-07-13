@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { TableColumnTypeInfo, TableColumnTypeNamespace } from "../types/table-column-type";
+import { ref, watch, toValue, h } from "vue";
 import { ElRadio, ElTableColumn } from "element-plus";
+import { isFunction } from "@/common/utils";
 import { TableColumnTypeEnum } from "../helper";
 import TableColumnDragSort from "./table-column-drag-sort.vue";
-import { isFunction } from "@/common/utils";
 
 defineOptions({ name: "TableColumnType" });
 
@@ -43,7 +44,6 @@ const tableColumnTypeMap: Record<TableColumnTypeEnum, TableColumnTypeInfo> = {
   [TableColumnTypeEnum.Sort]: {
     el: TableColumnDragSort,
     props: {
-      tableInstance: props.elTableInstance,
       // 行拖拽排序结束事件
       onDragSortEnd: (newIndex: number, oldIndex: number) => {
         emits("dragSortEnd", newIndex, oldIndex);
@@ -74,7 +74,11 @@ const handleRadioChange = (row: Recordable, index: number) => {
   <component
     v-if="column.type && columnTypes.includes(column.type)"
     :is="tableColumnTypeMap[column.type].el"
-    v-bind="{ ...column, ...tableColumnTypeMap[column.type].props }"
+    v-bind="{
+      ...column,
+      ...tableColumnTypeMap[column.type].props,
+      ...(column.type === TableColumnTypeEnum.Sort ? { tableInstance: elTableInstance } : {}),
+    }"
     :align="column.align ?? 'center'"
   >
     <!-- 功能列 - 表头插槽 -->

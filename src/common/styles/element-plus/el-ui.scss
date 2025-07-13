@@ -13,6 +13,18 @@
   --#{$el-namespace}-card-border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
 }
 
+// 修改 el-button 高度
+.#{$el-namespace}-button--default {
+  height: var(--#{$el-namespace}-component-height) !important;
+}
+
+// 修改 el-select 高度
+.#{$el-namespace}-select--default {
+  .#{$el-namespace}-select__wrapper {
+    min-height: var(--#{$el-namespace}-component-height) !important;
+  }
+}
+
 // 修改 el-pagination 大小
 .#{$el-namespace}-pagination--default {
   --el-pagination-button-width: 32px;
@@ -23,18 +35,6 @@
 
   .#{$el-namespace}-pagination__jump .#{$el-namespace}-input {
     height: var(--el-pagination-button-width) !important;
-  }
-}
-
-// 修改 el-button 高度
-.#{$el-namespace}-button--default {
-  height: var(--#{$el-namespace}-component-height) !important;
-}
-
-// 修改 el-select 高度
-.#{$el-namespace}-select--default {
-  .#{$el-namespace}-select__wrapper {
-    min-height: var(--#{$el-namespace}-component-height) !important;
   }
 }
 
@@ -49,6 +49,11 @@
 .#{$el-namespace}-pagination.is-background .#{$el-namespace}-pager li {
   border-radius: 6px;
 }
+
+// 修改全屏 loading 背景色
+// .el-loading-mask {
+//   background-color: var(--#{$admin-namespace}-bg-color) !important  ;
+// }
 
 .#{$el-namespace}-popover {
   min-width: 80px;
@@ -213,7 +218,6 @@
     }
 
     &::after {
-      inset: 0 0 4px;
       width: 4px;
       height: 8px;
       margin: auto;

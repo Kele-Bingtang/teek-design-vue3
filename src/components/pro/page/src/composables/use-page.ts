@@ -1,10 +1,12 @@
+import type { MaybeRef } from "vue";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { ProPageEmits, ProPageProps } from "../types";
-import { createVNode, getCurrentInstance, nextTick, render } from "vue";
-import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { createVNode, getCurrentInstance, nextTick, render, toValue } from "vue";
+import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import { isString } from "@/common/utils";
+import { useNamespace } from "@/composables";
+import { useLayoutStore } from "@/pinia";
 import { useProTable } from "@/components/pro/table";
 import { useProSearch } from "@/components/pro/search";
 import ProPage from "../index.vue";
@@ -30,7 +32,7 @@ export const useProPage = () => {
           ...attrs,
           ...proPageProps,
           onTableRegister: proTable.tableRegister,
-          onSearchRegister: proSearch.searchElState,
+          onSearchRegister: proSearch.searchRegister,
         },
         { ...slots }
       );
@@ -47,7 +49,7 @@ export const useProPage = () => {
     ) => {
       const proPageInstance = createVNode(
         ProPage,
-        { ...proPageProps, onTableRegister: proTable.tableRegister, onSearchRegister: proSearch.searchElState },
+        { ...proPageProps, onTableRegister: proTable.tableRegister, onSearchRegister: proSearch.searchRegister },
         { ...slots }
       );
       const rootInstance = createVNode(

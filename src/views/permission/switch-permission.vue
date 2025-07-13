@@ -1,6 +1,7 @@
 <script setup lang="ts" name="SwitchPermission">
-import { useUserStore } from "@/pinia";
+import { computed } from "vue";
 import { useCommon, usePermission } from "@/composables";
+import { useUserStore } from "@/pinia";
 
 const userStore = useUserStore();
 const { getRoleList, hasRole, hasAuth } = usePermission();

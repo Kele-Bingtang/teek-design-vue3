@@ -1,10 +1,13 @@
 <script setup lang="ts" name="OperateTable">
-import { Pagination, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table";
-import { ElMessage, ElMessageBox, ElNotification, type FormInstance, type TableInstance } from "element-plus";
-import { tableStatusFilter } from "@/common/config";
+import type { FormInstance, TableInstance } from "element-plus";
+import type { PageInfo } from "@/components";
+import { ref, useTemplateRef, onMounted, nextTick, reactive } from "vue";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { Search, Refresh, Plus, Check, EditPen, Delete } from "@element-plus/icons-vue";
+import { tableStatusFilter } from "@/common/config";
+import { Pagination, defaultPageInfo } from "@/components";
 import { useNamespace } from "@/composables";
+import { largeData } from "@/mock/table/common";
 
 const ns = useNamespace();
 const defaultTableData = {

@@ -1,7 +1,7 @@
 import type { Component, ComponentInternalInstance, AppContext, ComputedRef } from "vue";
 import type { DialogProps } from "element-plus";
 import type { ProDialogProps } from "./types";
-import { render, getCurrentInstance, nextTick, ref } from "vue";
+import { render, getCurrentInstance, nextTick, ref, computed, watch, inject } from "vue";
 import { ElDialog, ElButton, ElScrollbar, ElConfigProvider } from "element-plus";
 import { addUnit, isArray } from "@/common/utils";
 import { useNamespace } from "@/composables";

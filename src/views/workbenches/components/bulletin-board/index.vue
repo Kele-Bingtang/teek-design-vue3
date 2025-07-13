@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useNamespace } from "@/composables";
 import { Tooltip, PointTag } from "@/components";
 import { trainingData, internalAnnouncementData, changeNotificationData } from "./data";

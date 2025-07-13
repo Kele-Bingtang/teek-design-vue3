@@ -1,5 +1,6 @@
 <!-- 图表空状态 -->
 <script setup lang="ts">
+import { ElEmpty } from "element-plus";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ChartEmpty", inheritAttrs: false });

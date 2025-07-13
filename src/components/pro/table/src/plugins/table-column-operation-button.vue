@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ElMessageBoxProps, OperationButtonEmits, OperationButtonProps } from "../types";
+import { computed, toRaw } from "vue";
 import { ElPopconfirm, ElTooltip, ElIcon, ElButton, ElLink, ElMessageBox } from "element-plus";
 import { OperationConfirmEl, OperationEl } from "../helper";
 

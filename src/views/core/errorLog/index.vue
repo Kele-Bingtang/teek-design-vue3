@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ErrorLog">
 import { computed, reactive, ref } from "vue";
+import { ProDialog } from "@/components";
 import { useNamespace } from "@/composables";
 import { useErrorLogStore, type ErrorLog } from "@/pinia";
-import { ProDialog } from "@/components";
 
 const ns = useNamespace("error-log");
 
@@ -95,7 +95,7 @@ const addErrorLog = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'tk-card-minimal']">
+  <div :class="[ns.b(), ns.join('card-minimal')]">
     <el-alert
       title="注意：错误日志不会在浏览器持久化存储，刷新页面即会丢失，如果需要，请在生产环境接入后端持久化存储"
       type="warning"

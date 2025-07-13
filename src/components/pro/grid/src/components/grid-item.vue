@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { Ref } from "vue";
 import type { GridItemProps, BreakPoint } from "../types";
-import { computed, inject, type Ref, ref, useAttrs, watch } from "vue";
+import { computed, inject, ref, useAttrs, watch } from "vue";
 
 defineOptions({ name: "GridItem" });
 

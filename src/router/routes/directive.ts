@@ -1,4 +1,4 @@
-import { Stamp, DocumentCopy, Open } from "@element-plus/icons-vue";
+import { Place, Open } from "@element-plus/icons-vue";
 
 const directiveRoutes: RouterConfigRaw = {
   path: "/directives",
@@ -6,7 +6,7 @@ const directiveRoutes: RouterConfigRaw = {
   redirect: "/directives/copy",
   meta: {
     title: "自定义指令",
-    icon: Stamp,
+    icon: Place,
   },
   children: [
     {
@@ -15,7 +15,7 @@ const directiveRoutes: RouterConfigRaw = {
       component: "/directives/copy/index",
       meta: {
         title: "复制指令",
-        icon: DocumentCopy,
+        icon: Open,
       },
     },
     {

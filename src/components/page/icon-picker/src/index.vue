@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed, ref, watch, inject } from "vue";
 import { ElInput, ElTabs, ElTabPane, ElPagination } from "element-plus";
+import { GlobalConfigKey } from "@/common/config";
 import { ProDialog } from "@/components";
 import { useNamespace } from "@/composables";
-import { GlobalConfigKey } from "@/common/config";
 import epIcons from "./data/icons.ep";
 import antIcons from "./data/icons.ant-design";
 import tIcons from "./data/icons.tdesign";
@@ -136,7 +136,7 @@ const fullscreenChange = (isFullscreen: boolean) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']">
+  <div :class="ns.b()" class="flx-center">
     <el-input v-model="modelValue" clearable v-bind="$attrs" @click="dialogVisible = true">
       <template #prepend><Icon :icon="modelValue" :size="20" /></template>
     </el-input>

@@ -1,7 +1,8 @@
+import type { ComponentPublicInstance } from "vue";
 import { ElNotification } from "element-plus";
+import SystemConfig from "@/common/config";
 import { isArray, useSimpleUuid } from "@/common/utils";
 import { useErrorLogStore } from "@/pinia";
-import SystemConfig from "@/common/config";
 
 /**
  * 检查当前环境是否符合错误日志的运行
@@ -32,6 +33,7 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
 
   // 过滤 HTTP 请求错误
   if (error.status || error.status === 0) return false;
+
   const errorMap: Record<string, string> = {
     InternalError: "Javascript引擎内部错误",
     ReferenceError: "未找到对象",

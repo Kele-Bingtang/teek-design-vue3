@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { isNumber } from "@/common/utils";
-import { ElTable, type TableInstance } from "element-plus";
-import { useSlots, ref, computed } from "vue";
+import type { TableInstance } from "element-plus";
 import type { SortOrder, TableSortProps } from "./types";
+import { useSlots, ref, computed, useTemplateRef } from "vue";
+import { ElTable } from "element-plus";
+import { isNumber } from "@/common/utils";
 
 defineOptions({ name: "TableSort" });
 

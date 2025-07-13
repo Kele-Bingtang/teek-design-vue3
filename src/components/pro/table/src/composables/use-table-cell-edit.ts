@@ -1,4 +1,4 @@
-import type { ShallowRef } from "vue";
+import type { ShallowRef, Ref } from "vue";
 import type { FormValidationResult, TableInstance } from "element-plus";
 import type { ProTableNamespace, TableColumn, TableRow } from "../types";
 

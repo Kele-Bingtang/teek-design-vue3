@@ -1,11 +1,13 @@
 <script setup lang="ts" name="Cropper">
-import { ElMessage, ElButton, type UploadRequestOptions } from "element-plus";
-import { VueCropper } from "vue-cropper";
-import "vue-cropper/dist/index.css";
-import { Upload, ZoomIn, ZoomOut, Download } from "@element-plus/icons-vue";
-import { ref, reactive, onMounted } from "vue";
-import { useNamespace } from "@/composables";
+import type { UploadRequestOptions } from "element-plus";
 import type { CropperEmitProps, CropperProps } from "./types";
+import { ref, reactive, onMounted, useTemplateRef } from "vue";
+import { ElMessage, ElButton, ElUpload } from "element-plus";
+import { Upload, ZoomIn, ZoomOut, Download } from "@element-plus/icons-vue";
+import { VueCropper } from "vue-cropper";
+import { useNamespace } from "@/composables";
+
+import "vue-cropper/dist/index.css";
 
 defineOptions({ name: "Cropper" });
 

@@ -2,9 +2,9 @@
 <script setup lang="ts">
 import type { StatsCardProps } from "./types";
 import { ArrowRight } from "@element-plus/icons-vue";
+import { addUnit } from "@/common/utils";
 import { CountTo } from "@/components";
 import { useNamespace } from "@/composables";
-import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "StatsCard" });
 
@@ -26,10 +26,15 @@ const ns = useNamespace("stats-card");
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-align-center']" :style="{ backgroundColor: backgroundColor }">
+  <div
+    :class="[ns.b(), ns.join('card-minimal')]"
+    :style="{ backgroundColor: backgroundColor }"
+    class="flx-align-center"
+  >
     <div
       v-if="icon"
-      :class="[ns.e('icon'), 'flx-center']"
+      :class="ns.e('icon')"
+      class="flx-center"
       :style="{ backgroundColor: iconBgColor, borderRadius: addUnit(iconBgRadius) }"
     >
       <Icon :icon="icon" :size="iconSize" :color="iconColor" />

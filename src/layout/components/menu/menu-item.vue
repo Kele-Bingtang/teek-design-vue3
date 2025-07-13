@@ -3,10 +3,10 @@ import { ref, watch, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { ElMenuItem, ElSubMenu } from "element-plus";
 import { isValidURL } from "@/common/utils";
+import { Tooltip, PointTag } from "@/components";
 import { useNamespace, useCommon } from "@/composables";
-import { Tooltip } from "@/components";
-import { useLayoutStore, useSettingStore } from "@/pinia";
 import { formatTitle } from "@/router/helper";
+import { useLayoutStore, useSettingStore } from "@/pinia";
 
 defineOptions({ name: "AsideMenuItem" });
 
@@ -56,7 +56,7 @@ watch(
 
 <template>
   <template v-if="menuItem.meta.render">
-    <component :is="menuItem.meta.render" :class="[`${ns.elNamespace}-menu-item`, 'is-only']" />
+    <component :is="menuItem.meta.render" :class="`${ns.elNamespace}-menu-item`" class="is-only" />
   </template>
 
   <el-menu-item
@@ -71,9 +71,26 @@ watch(
       <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
+      <el-tag
+        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
+        size="small"
+        type="danger"
+        effect="dark"
+        v-bind="menuItem.meta.tagProps"
+        class="menu-item-tag"
+      >
+        {{ menuItem.meta.tagText }}
+      </el-tag>
+      <PointTag
+        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        theme="danger"
+        v-bind="menuItem.meta.pointTagProps"
+        class="menu-item-tag"
+      />
     </template>
   </el-menu-item>
 
+  <!-- 子菜单 -->
   <el-sub-menu v-else :index="menuItem.meta._fullPath || menuItem.path" class="is-sub">
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
@@ -81,6 +98,22 @@ watch(
       <Tooltip v-else :offset="-10" :try="1">
         <span>{{ title(menuItem) }}</span>
       </Tooltip>
+      <el-tag
+        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
+        size="small"
+        type="danger"
+        effect="dark"
+        v-bind="menuItem.meta.tagProps"
+        class="sub-menu-item-tag"
+      >
+        {{ menuItem.meta.tagText }}
+      </el-tag>
+      <PointTag
+        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        theme="danger"
+        v-bind="menuItem.meta.pointTagProps"
+        class="sub-menu-item-tag"
+      />
     </template>
 
     <template v-if="menuItem.children">
@@ -98,5 +131,19 @@ watch(
   font-size: 18px;
   vertical-align: middle;
   text-align: center;
+}
+
+.menu-item-tag {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.sub-menu-item-tag {
+  position: absolute;
+  top: 50%;
+  right: 38px;
+  transform: translateY(-50%);
 }
 </style>

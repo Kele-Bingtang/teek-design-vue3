@@ -1,22 +1,22 @@
 <!-- vue-codemirror6 v1.3.20 Pro -->
 <script setup lang="ts">
-import type { Ref, ComputedRef } from "vue";
 import type { Diagnostic } from "@codemirror/lint";
 import type { Transaction, Extension, SelectionRange, StateField, Text } from "@codemirror/state";
 import type { KeyBinding, ViewUpdate } from "@codemirror/view";
 import type { CodeMirrorEmits, CodeMirrorProps } from "./types";
-import { ref, shallowRef, computed, watch, onMounted, nextTick, onUnmounted } from "vue";
+import { ref, shallowRef, computed, watch, onMounted, nextTick, onUnmounted, useTemplateRef } from "vue";
+import { ElButton, ElIcon } from "element-plus";
 import { basicSetup, minimalSetup } from "codemirror";
 import { indentWithTab } from "@codemirror/commands";
 import { indentUnit as indentUnitConfig } from "@codemirror/language";
 import {
-  diagnosticCount as linterDagnosticCount,
-  forceLinting as forceLintingFun,
-  linter as linterFun,
+  diagnosticCount as linterDiagnosticCount,
+  forceLinting as forceLintingFn,
+  linter as linterFn,
   lintGutter,
 } from "@codemirror/lint";
 import { Compartment, EditorSelection, EditorState, StateEffect } from "@codemirror/state";
-import { EditorView, keymap, placeholder as placeholderFun } from "@codemirror/view";
+import { EditorView, keymap, placeholder as placeholderFn } from "@codemirror/view";
 import { MergeView } from "@codemirror/merge";
 import { useNamespace } from "@/composables";
 import { addUnit } from "@/common/utils";
@@ -41,15 +41,16 @@ const props = withDefaults(defineProps<CodeMirrorProps>(), {
   readonly: false,
   disabled: false,
   phrases: undefined,
-  extensions: () => [],
   customTheme: () => ({}),
   linter: undefined,
-  linterConfig: () => defaultPhrases,
+  linterConfig: () => ({}),
   forceLinting: false,
   gutter: false,
   gutterConfig: undefined,
   tag: "div",
   indentUnit: undefined,
+  extensions: () => [],
+  mergeConfig: undefined,
   fullScreen: true,
   scrollIntoView: true,
   keymap: () => [],
@@ -108,17 +109,17 @@ const json = computed<Record<string, StateField<any>>>({
 });
 
 /** 文本长度 */
-const length: Ref<number> = ref(0);
+const length = ref(0);
 
 /**
  * 语法检查的诊断代码数量
  *
  * @see {@link https://codemirror.net/docs/ref/#lint.diagnosticCount}
  */
-const diagnosticCount: Ref<number> = ref(0);
+const diagnosticCount = ref(0);
 
 /** 获取 CodeMirror 的扩展 */
-const extensions: ComputedRef<Extension[]> = computed(() => {
+const extensions = computed<Extension[]>(() => {
   // 配置
   // @see https://codemirror.net/examples/config/
   const language = new Compartment();
@@ -135,11 +136,11 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
 
   return [
     // 切换基本设置
-    props.basic ? basicSetup : undefined,
+    props.basic && !props.minimal ? basicSetup : undefined,
     // 切换最小设置
     props.minimal && !props.basic ? minimalSetup : undefined,
     // 添加监听器
-    EditorView.updateListener.of((update: ViewUpdate): void => {
+    EditorView.updateListener.of((update: ViewUpdate) => {
       // 触发焦点事件
       emits("focus", view.value.hasFocus);
 
@@ -149,7 +150,7 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
       if (update.changes.empty || !update.docChanged) return; // 如果没有更改，则不触发
       if (props.linter) {
         // 代码校验处理
-        if (props.forceLinting) forceLintingFun(view.value); // 如果 forceLinting 开启，第一次加载视图后校验。
+        if (props.forceLinting) forceLintingFn(view.value); // 如果 forceLinting 开启，第一次加载视图后校验。
         // 计算诊断数量
         diagnosticCount.value = (props.linter(view.value) as readonly Diagnostic[]).length;
       }
@@ -178,11 +179,11 @@ const extensions: ComputedRef<Extension[]> = computed(() => {
     // 代码语言
     props.lang ? language.of(props.lang) : undefined,
     // 添加代码校验器
-    props.linter ? linterFun(props.linter, props.linterConfig) : undefined,
+    props.linter ? linterFn(props.linter, props.linterConfig) : undefined,
     // 显示错误行的红色圆圈 🔴 提示
     props.linter && props.gutter ? lintGutter(props.gutterConfig) : undefined,
     // 编辑器占位符
-    props.placeholder ? placeholderFun(props.placeholder) : undefined,
+    props.placeholder ? placeholderFn(props.placeholder) : undefined,
     // 自定义 keymap 和 Tab 键缩进
     keymaps.length !== 0 ? keymap.of(keymaps) : undefined,
     // 添加 props 自定义扩展
@@ -195,9 +196,7 @@ watch(
   extensions,
   exts => {
     // 重新更新 extensions
-    view.value.dispatch({
-      effects: StateEffect.reconfigure.of(exts),
-    });
+    view.value?.dispatch({ effects: StateEffect.reconfigure.of(exts) });
   },
   { immediate: true }
 );
@@ -221,15 +220,19 @@ watch(
   async value => {
     if (
       view.value.composing || // IME 修复
-      view.value.state.doc.toJSON().join(props.lineSeparator ?? "\n") === value // don't need to update
+      view.value.state.doc.toJSON().join(props.lineSeparator ?? "\n") === value
     ) {
-      // 不要提交 CodeMirror 的存储。
+      // 不要提交 CodeMirror 的存储
       return;
     }
 
+    const isSelectionOutOfRange = !view.value.state.selection.ranges.every(
+      range => range.anchor < value.length && range.head < value.length
+    );
+
     view.value.dispatch({
       changes: { from: 0, to: view.value.state.doc.length, insert: value },
-      selection: view.value.state.selection,
+      selection: isSelectionOutOfRange ? { anchor: 0, head: 0 } : view.value.state.selection,
       scrollIntoView: props.scrollIntoView,
     });
   },
@@ -239,6 +242,7 @@ watch(
 onMounted(async () => {
   /** 初始化 Value */
   let value: string | Text = doc.value;
+
   if (!editorInstance.value) return;
   if (editorInstance.value.children[0] && !props.mergeConfig && !props.fullScreen) {
     if (doc.value !== "") {
@@ -250,8 +254,8 @@ onMounted(async () => {
   }
 
   // 如果开启代码对比编辑器
-  if (props.mergeConfig) {
-    const { mergeConfig } = props;
+  const { mergeConfig } = props;
+  if (mergeConfig) {
     mergeView.value = new MergeView({
       a: {
         doc: mergeConfig.oldDoc, // 旧代码
@@ -303,7 +307,7 @@ onMounted(async () => {
       view.value.update([tr]);
       if (tr.changes.empty || !tr.docChanged) return;
 
-      doc.value = tr.state.doc.toString() ?? "";
+      doc.value = tr.state.doc.toString();
       emits("change", tr.state);
     },
   });
@@ -330,8 +334,8 @@ onUnmounted(() => {
  */
 const lint = (): void => {
   if (!props.linter || !view.value) return;
-  if (props.forceLinting) forceLintingFun(view.value);
-  diagnosticCount.value = linterDagnosticCount(view.value.state);
+  if (props.forceLinting) forceLintingFn(view.value);
+  diagnosticCount.value = linterDiagnosticCount(view.value.state);
 };
 
 /**
@@ -516,7 +520,7 @@ const style = computed(() => {
 </script>
 
 <script lang="ts">
-const defaultPhrases = {
+export const defaultPhrases = {
   // @codemirror/view
   "Control character": "控制字符",
   // @codemirror/commands

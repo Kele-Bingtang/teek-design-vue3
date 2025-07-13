@@ -79,7 +79,8 @@ const pushList = (list: DragList, type: string) => {
       <draggable
         :list="leftList"
         itemKey="id"
-        :class="[ns.e('left'), dragClass.left, 'list']"
+        :class="[ns.e('left'), dragClass.left]"
+        class="list"
         :group="group"
         :animation="animation"
         v-bind="$attrs"
@@ -88,7 +89,7 @@ const pushList = (list: DragList, type: string) => {
         <template #item="{ element }">
           <div class="item" @click="handleClick(element.id, 'left')">
             <slot name="left" :item="element">{{ element }}</slot>
-            <div :class="[ns.em('left', 'icon'), 'icon']" @click="pushList(element, 'left')">
+            <div :class="ns.em('left', 'icon')" class="icon" @click="pushList(element, 'left')">
               <slot name="leftIcon"></slot>
             </div>
           </div>
@@ -101,7 +102,8 @@ const pushList = (list: DragList, type: string) => {
       <draggable
         :list="rightList"
         itemKey="id"
-        :class="[ns.e('right'), dragClass.right, 'list']"
+        :class="[ns.e('right'), dragClass.right]"
+        class="list"
         :group="group"
         v-bind="$attrs"
         @end="handleEnd($event, 'right')"
@@ -109,7 +111,7 @@ const pushList = (list: DragList, type: string) => {
         <template #item="{ element }">
           <div class="item" @click="handleClick(element.id, 'right')">
             <slot name="right" :item="element">{{ element }}</slot>
-            <div :class="[ns.em('right', 'icon'), 'icon']" @click="pushList(element, 'right')">
+            <div :class="ns.em('right', 'icon')" class="icon" @click="pushList(element, 'right')">
               <slot name="rightIcon"></slot>
             </div>
           </div>

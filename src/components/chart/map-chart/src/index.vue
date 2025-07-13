@@ -1,6 +1,8 @@
 <!-- 地图图表 -->
 <script setup lang="ts">
 import type { MapChartProps } from "../../types";
+import { computed, defineOptions, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { storeToRefs } from "pinia";
 import * as echarts from "echarts";
 import { useSettingStore } from "@/pinia";
 import chinaMapJson from "./default-data.json";
@@ -211,8 +213,6 @@ const handleMapClick = (params: any) => {
       adcode: params.data?.adcode || "",
       level: params.data?.level || "",
     };
-
-    console.log(`选中区域: ${params.name}`, params);
 
     // 高亮选中区域
     chartInstance.value?.dispatchAction({

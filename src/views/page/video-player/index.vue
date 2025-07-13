@@ -1,4 +1,5 @@
 <script setup lang="ts" name="VideoPlayerDemo">
+import { ref } from "vue";
 import { VideoPlayer, createVideoViewer, VideoPlayerViewer } from "@/components";
 
 const videoInfo = {

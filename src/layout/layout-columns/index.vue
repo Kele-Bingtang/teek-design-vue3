@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { watch, ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader, ElScrollbar } from "element-plus";
-import { useSettingStore } from "@/pinia";
-import { useMenu } from "@/composables";
-import { Tooltip } from "@/components";
-import { useNamespace } from "@/composables";
 import SystemConfig, { HOME_URL } from "@/common/config";
+import { Tooltip } from "@/components";
+import { useMenu } from "@/composables";
+import { useSettingStore } from "@/pinia";
+import { useNamespace } from "@/composables";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";
@@ -30,20 +30,34 @@ const active = ref<string>("");
 const { isCollapse } = storeToRefs(settingStore);
 
 watch(
-  route,
+  () => route.path,
   () => {
     // 当前菜单没有数据直接 return
     if (!menuList.value.length) return;
-    active.value = route.path;
-    const item = menuList.value.filter(item => [route.path, `/${route.path.split("/")[1]}`].includes(item.path));
+    // 查找 route.path 所属的一级菜单
+    const findTopMenu = (menus: RouterConfig[], path: string): RouterConfig | undefined => {
+      for (const menu of menus) {
+        if (menu.meta._fullPath === path) return menu;
+        if (menu.children?.length) {
+          // 如果 children 里有 path，则返回当前 menu
+          const found = menu.children.find(child => child.meta._fullPath === path);
+          if (found) return menu;
+          // 递归查找更深层级
+          const deepFound = findTopMenu(menu.children, path);
+          if (deepFound) return menu;
+        }
+      }
+      return undefined;
+    };
 
-    if (item[0] && item[0].children?.length) return (menuItem.value = item[0].children);
+    const item = [findTopMenu(menuList.value, route.path)].filter(Boolean);
+
+    active.value = item[0]?.path || route.path;
+
+    if (item[0]?.children?.length) return (menuItem.value = item[0].children);
     menuItem.value = [];
   },
-  {
-    deep: true,
-    immediate: true,
-  }
+  { immediate: true }
 );
 
 /**
@@ -59,8 +73,8 @@ const changeMenuItem = (item: RouterConfig) => {
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <div :class="[ns.e('aside'), 'flx-column']">
-      <div :class="[ns.e('logo'), ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
+    <div :class="ns.e('aside')" class="flx-column">
+      <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center" @click="router.push(HOME_URL)">
         <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
       </div>
 
@@ -70,8 +84,8 @@ const changeMenuItem = (item: RouterConfig) => {
             :class="[
               ns.e('aside__list-item'),
               ns.is('active', [active, `/${active.split('/')[1]}`].includes(item.path)),
-              'flx-center',
             ]"
+            class="flx-center"
             v-for="item in menuList"
             :key="item.path"
             @click="changeMenuItem(item)"
@@ -87,8 +101,8 @@ const changeMenuItem = (item: RouterConfig) => {
       </el-scrollbar>
     </div>
 
-    <el-aside :class="[ns.join('layout-aside'), 'flx-column', { 'not-aside': !menuItem.length }]">
-      <div :class="[ns.e('logo'), ns.join('layout-logo'), 'flx-center']">
+    <el-aside :class="[ns.join('layout-aside'), { 'not-aside': !menuItem.length }]" class="flx-column">
+      <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center">
         <span v-show="menuItem.length">{{ isCollapse ? "K" : SystemConfig.systemInfo.name }}</span>
       </div>
 
@@ -102,7 +116,7 @@ const changeMenuItem = (item: RouterConfig) => {
     </el-aside>
 
     <el-container>
-      <el-header :class="[ns.join('layout-header'), 'flx-align-center-between']">
+      <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>
       <PageContent />

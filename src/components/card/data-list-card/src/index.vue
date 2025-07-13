@@ -1,7 +1,9 @@
 <!-- 数据列表卡片 -->
 <script setup lang="ts">
-import { useNamespace } from "@/composables";
 import type { DataListCardEmits, DataListCardProps } from "./types";
+import { computed } from "vue";
+import { ElScrollbar, ElButton } from "element-plus";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "DataListCard" });
 
@@ -30,12 +32,12 @@ const handleMore = () => emit("more");
     </div>
 
     <el-scrollbar :style="{ height: maxHeight }">
-      <div v-for="(item, index) in list" :key="index" :class="[ns.e('item'), 'flx-align-center']">
-        <div v-if="item.icon" :class="[ns.em('item', 'icon'), item.class, 'flx-center']">
+      <div v-for="(item, index) in list" :key="index" :class="ns.e('item')" class="flx-align-center">
+        <div v-if="item.icon" :class="[ns.em('item', 'icon'), item.class]" class="flx-center">
           <Icon :icon="item.icon" :size="20" class="icon-sys" />
         </div>
 
-        <div :class="[ns.e('item-content'), 'flx-1']">
+        <div :class="ns.e('item-content')" class="flx-1">
           <div :class="ns.em('item-content', 'title')">{{ item.title }}</div>
           <div :class="ns.em('item-content', 'status')">{{ item.status }}</div>
         </div>

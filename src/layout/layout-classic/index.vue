@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader } from "element-plus";
-import { useRouter } from "vue-router";
 import SystemConfig, { HOME_URL } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
@@ -24,11 +24,11 @@ const { isCollapse } = storeToRefs(settingStore);
 <template>
   <!-- 布局：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧 -->
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-header :class="[ns.join('layout-header'), 'flx-align-center-between']">
+    <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
       <Header>
         <template #left>
-          <div :class="[ns.e('header-left'), 'flx-align-center']">
-            <div :class="[ns.join('layout-logo'), 'flx-center']" @click="router.push(HOME_URL)">
+          <div :class="ns.e('header-left')" class="flx-align-center">
+            <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
               <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
               <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
             </div>

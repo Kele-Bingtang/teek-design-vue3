@@ -1,8 +1,9 @@
 <script setup lang="ts" name="ExportExcel">
+import { ref } from "vue";
 import { Document, Top } from "@element-plus/icons-vue";
-import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
-import { largeData } from "@/mock/table";
 import { tableStatusFilter } from "@/common/config";
+import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
+import { largeData } from "@/mock/table/common";
 
 const options = ["xlsx", "csv", "txt"];
 

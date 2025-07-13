@@ -1,4 +1,4 @@
-import type { CSSProperties } from "vue";
+import type { CSSProperties, MaybeRefOrGetter, MaybeRef } from "vue";
 import type { DescriptionItemProps } from "element-plus";
 import type { ProFormNamespace } from "@/components/pro/form";
 import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";

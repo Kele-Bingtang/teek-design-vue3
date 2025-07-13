@@ -1,7 +1,8 @@
+import { storeToRefs } from "pinia";
 import { getLightColor, getDarkColor, setCssVar, colorBlend } from "@/common/utils";
+import { SystemThemeEnum } from "@/common/enums/appEnum";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
-import { SystemThemeEnum } from "@/common/enums/appEnum";
 
 /**
  * 切换主题

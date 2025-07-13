@@ -8,7 +8,7 @@ export const defaultPageInfo: PageInfo = {
 
 <script setup lang="ts">
 import type { PaginationEmits, PaginationProps, PageInfo } from "./types";
-import { nextTick } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { ElPagination } from "element-plus";
 import { useNamespace } from "@/composables";
 

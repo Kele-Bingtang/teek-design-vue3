@@ -1,6 +1,7 @@
 <script setup lang="ts" name="PdfPreview">
-import VuePdfEmbed from "vue-pdf-embed";
+import { ref, useTemplateRef } from "vue";
 import { Refresh, Printer } from "@element-plus/icons-vue";
+import VuePdfEmbed from "vue-pdf-embed";
 
 const pdfRef = useTemplateRef<any>("pdfRef");
 const pageCount = ref(1);

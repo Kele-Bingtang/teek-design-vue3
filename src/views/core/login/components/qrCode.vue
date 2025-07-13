@@ -1,6 +1,7 @@
 <script setup lang="ts" name="QrCode">
-import { QrCode } from "@/components";
+import { inject } from "vue";
 import { CircleClose } from "@element-plus/icons-vue";
+import { QrCode } from "@/components";
 
 const switchLoginMode = inject("switchLoginMode") as (mode: string) => void;
 </script>

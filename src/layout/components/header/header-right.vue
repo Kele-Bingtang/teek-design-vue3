@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useErrorLogStore } from "@/pinia";
-import { useCommon, useNamespace } from "@/composables";
 import SystemConfig from "@/common/config";
+import { useCommon, useNamespace } from "@/composables";
 import Fullscreen from "./components/fullscreen/index.vue";
 import LanguageSelect from "./components/language-select/index.vue";
 import Notification from "./components/notification/index.vue";
@@ -31,10 +31,10 @@ const { isMobile } = useCommon();
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']">
+  <div :class="ns.b()" class="flx-center">
     <GlobalSearch />
 
-    <div :class="[ns.e('btn'), 'flx-align-center']" :style="{ '--icon-size': ns.cssVar('layout-header-icon-size') }">
+    <div :class="ns.e('btn')" :style="{ '--icon-size': ns.cssVar('layout-header-icon-size') }" class="flx-align-center">
       <GlobalSearchInput id="menuSearch" v-if="!isMobile" />
       <Fullscreen id="fullscreen" v-if="!isMobile" />
       <Notification id="notification" />

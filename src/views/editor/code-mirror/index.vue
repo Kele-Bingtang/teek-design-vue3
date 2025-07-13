@@ -1,6 +1,9 @@
 <script setup lang="ts" name="CodeMirrorDemo">
-import { CodeMirror, type MergeCodeMirrorProps } from "@/components";
-import { computed, ref } from "vue";
+import type { MergeCodeMirrorProps } from "@/components";
+import { computed, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { CodeMirror } from "@/components";
+
 // 如果需要更多主题，可以查看开源项目 https://uiwjs.github.io/react-codemirror/#/theme/home，或者自行搜索其他开源项目，或者自定义主题
 import { oneDark } from "@codemirror/theme-one-dark";
 import { dracula } from "@uiw/codemirror-theme-dracula";
@@ -18,10 +21,10 @@ import { php } from "@codemirror/lang-php";
 import { python } from "@codemirror/lang-python";
 import { sql } from "@codemirror/lang-sql";
 import { xml } from "@codemirror/lang-xml";
-import oldDoc from "../code-diff-editor/oldDoc.json";
-import newDoc from "../code-diff-editor/newDoc.json";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
+import oldDoc from "../code-diff-editor/oldDoc.json";
+import newDoc from "../code-diff-editor/newDoc.json";
 
 const ns = useNamespace();
 
@@ -73,9 +76,13 @@ const themeValue = computed(() => {
 const config = {
   languageOptions: {
     globals: { ...globals.node },
-    parserOptions: { ecmaVersion: "2024", sourceType: "module" },
+    parserOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+    },
   },
   rules: {
+    // 自定义更多的 eslint Rule 规则
     semi: ["error", "never"],
   },
 };
@@ -85,7 +92,10 @@ const config = {
  */
 const langValue = computed(() => {
   if (["js", "javascript"].includes(lang.value)) {
-    return { lang: javascript(), linter: esLint(new eslintLinter.Linter(), config) };
+    return {
+      lang: javascript(),
+      linter: esLint(new eslintLinter.Linter(), config),
+    };
   }
 
   if (["ts", "typescript"].includes(lang.value)) {
@@ -186,6 +196,8 @@ watch(
         :max-height="maxHeight1"
         v-bind="langValue"
       ></CodeMirror>
+
+      {{ code }}
     </el-card>
 
     <el-card shadow="never" class="tk-card-minimal">
@@ -249,7 +261,7 @@ watch(
         <el-descriptions-item label="linter">
           代码校验器。`LintSource | any` 类型，默认 `undefined`
         </el-descriptions-item>
-        <el-descriptions-item label="linterConfig">代码校验器配置项。`{}` 类型，默认 `undefined`</el-descriptions-item>
+        <el-descriptions-item label="linterConfig">代码校验器配置项。`{}` 类型，默认 `{}`</el-descriptions-item>
         <el-descriptions-item label="forceLinting">
           是否在输入过程开始校验语法。`boolean` 类型，默认 `false`
         </el-descriptions-item>

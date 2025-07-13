@@ -1,8 +1,8 @@
 <!-- 卡片横幅组件 -->
 <script setup lang="ts">
 import type { CardBannerProps } from "./types";
-import { useNamespace } from "@/composables";
 import defaultIcon from "@/common/assets/images/3d/icon1.webp"; // 导入默认图标
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "BannerImageCard" });
 
@@ -49,8 +49,8 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-minimal'), 'flx-column-justify-center']" :style="{ height: height }">
-    <div :class="[ns.e('content'), 'flx-column-align-center']">
+  <div :class="[ns.b(), ns.join('card-minimal')]" :style="{ height: height }" class="flx-column-justify-center">
+    <div :class="ns.e('content')" class="flx-column-align-center">
       <div :class="ns.e('icon')">
         <img :src="image" :alt="title" />
       </div>

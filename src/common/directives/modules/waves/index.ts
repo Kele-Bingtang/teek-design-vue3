@@ -1,5 +1,5 @@
-import "./waves.css";
 import type { Directive, DirectiveBinding } from "vue";
+import "./waves.css";
 
 /**
  * 波纹指令 v-waves

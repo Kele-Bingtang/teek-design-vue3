@@ -1,10 +1,10 @@
-import { HotWater, StarFilled } from "@element-plus/icons-vue";
+import { HotWater, Link } from "@element-plus/icons-vue";
 
 const frameRoutes: RouterConfigRaw = {
   path: "/iframe",
   name: "IFrame",
   meta: {
-    icon: StarFilled,
+    icon: Link,
     title: "外部页面",
   },
   children: [

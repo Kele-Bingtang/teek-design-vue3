@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { TableFilterEmits, TableFilterProps } from "../types";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { ElPopover, ElIcon, ElButton } from "element-plus";
 import { Filter } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { isEmpty } from "@/common/utils";
+import { useNamespace } from "@/composables";
 import ProFormItem from "@/components/pro/form-item";
 
 defineOptions({ name: "TableFilter" });

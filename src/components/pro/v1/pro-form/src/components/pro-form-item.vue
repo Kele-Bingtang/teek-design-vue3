@@ -1,4 +1,5 @@
 <script setup lang="tsx">
+import type { Component, defineComponent } from "vue";
 import { computed, inject, ref, resolveComponent } from "vue";
 import { ComponentNameEnum, formEnumMapKey, type FormSchemaProps, type PascalCaseComponentName } from "../interface";
 import Tree from "./tree.vue";
@@ -7,7 +8,6 @@ import { useRenderSelect } from "./use-render-select";
 import { useRenderRadio } from "./use-render-radio";
 import { useRenderCheckbox } from "./use-render-checkbox";
 import { useRenderComponent } from "./use-render-component";
-import type { Component, defineComponent } from "vue";
 import { componentMap } from "../helper/component-map";
 
 defineOptions({ name: "ProFormItem" });

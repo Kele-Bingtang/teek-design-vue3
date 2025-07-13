@@ -1,5 +1,7 @@
+import type { Component, ComponentPublicInstance } from "vue";
 import type { FormItemInstance } from "element-plus";
 import type { FormColumn, ProFormMainInstance } from "../types";
+import { useTemplateRef } from "vue";
 
 /**
  * ProFormMain 相关方法获取

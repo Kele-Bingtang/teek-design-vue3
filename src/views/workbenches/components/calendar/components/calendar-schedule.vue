@@ -1,10 +1,11 @@
 <script setup lang="tsx">
 import type { CalendarDateType, CalendarInstance } from "element-plus";
 import type { CalendarScheduleEmits, CalendarScheduleProps, ScheduleData, ScheduleFormModel } from "./types";
+import { computed, useTemplateRef, useId } from "vue";
 import { dayjs } from "element-plus";
 import { Plus, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { useDialog, PointTag } from "@/components";
+import { useNamespace } from "@/composables";
 import ScheduleForm from "./schedule-form.vue";
 
 const ns = useNamespace("calendar-schedule");
@@ -123,14 +124,14 @@ const handleClickSchedule = (item: ScheduleData) => {
 
     <el-calendar ref="calendarInstance" v-model="currentTime">
       <template #header="{ date }">
-        <div :class="ns.e('switch-icon')">
-          <Icon :icon="ArrowLeft" @click="selectDate('prev-month')" />
+        <div :class="ns.e('switch-icon')" @click="selectDate('prev-month')">
+          <Icon :icon="ArrowLeft" />
         </div>
 
         <span class="date">{{ date }}</span>
 
-        <div :class="ns.e('switch-icon')">
-          <Icon :icon="ArrowRight" @click="selectDate('next-month')" />
+        <div :class="ns.e('switch-icon')" @click="selectDate('next-month')">
+          <Icon :icon="ArrowRight" />
         </div>
       </template>
 

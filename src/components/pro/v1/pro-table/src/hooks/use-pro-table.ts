@@ -1,21 +1,12 @@
-import { ElConfigProvider, type TableInstance } from "element-plus";
-import type { ProTableInstance, TableColumnProps, TableSetProps } from "../interface";
-import ProTable, { type ProTableOnEmits, type ProTableProps } from "../index.vue";
+import type { Ref, ShallowRef } from "vue";
 import type { ProSearchInstance, PageInfo } from "@/components";
-import {
-  type Ref,
-  createVNode,
-  getCurrentInstance,
-  isRef,
-  isShallow,
-  nextTick,
-  ref,
-  render,
-  unref,
-  type ShallowRef,
-} from "vue";
+import type { ProTableInstance, TableColumnProps, TableSetProps } from "../interface";
+import type { ProTableOnEmits, ProTableProps } from "../index.vue";
+import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
+import { ElConfigProvider, type TableInstance } from "element-plus";
 import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/pinia";
+import ProTable from "../index.vue";
 
 export const useProTable = () => {
   // ProTable 实例

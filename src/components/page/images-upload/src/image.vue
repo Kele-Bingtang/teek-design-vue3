@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { FileTypes, ImageUploadEmits, ImageUploadProps } from "./types";
 import type { UploadFile, UploadProps, UploadRequestOptions, UploadUserFile } from "element-plus";
-import { ref, inject, computed } from "vue";
+import { ref, inject, computed, useId } from "vue";
 import { ElUpload, ElImageViewer, ElIcon, ElNotification, formContextKey, formItemContextKey } from "element-plus";
 import { Edit, ZoomIn, Delete, Plus } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { isArray } from "@/common/utils";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ImageUpload" });
 
@@ -182,7 +182,8 @@ const handlePreview = (imageUrl: string) => {
       :drag="drag"
       :accept="fileType.join(',')"
       v-bind="$attrs"
-      :class="['upload', ns.is('disabled', disabled), ns.no('border', drag)]"
+      :class="[ns.is('disabled', disabled), ns.no('border', drag)]"
+      class="upload"
     >
       <template v-if="imageUrl">
         <img :src="imageUrl" :class="ns.e('image')" />

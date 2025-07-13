@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ElDisplayProps } from "../types";
 import type { TableComponentEnum } from "../helper";
-import { toValue } from "vue";
-import { toCamelCase } from "@/components/pro/helper";
+import { toValue, computed } from "vue";
 import { isFunction } from "@/common/utils";
+import { toCamelCase } from "@/components/pro/helper";
 import { tableElComponentsMap } from "../helper";
 
 import "../styles/el-display.scss";

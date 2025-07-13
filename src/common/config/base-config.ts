@@ -1,5 +1,4 @@
 import type { SystemInfo, LayoutConfig, SystemConfig, ThemeConfig, RouterConfig, KeyConfig } from "./types";
-
 import {
   HeaderStyleEnum,
   LanguageEnum,
@@ -52,6 +51,7 @@ const layoutConfig: LayoutConfig = {
   layoutSize: LayoutSizeEnum.Default,
   language: LanguageEnum.ZhCn,
   watchFrame: false,
+  lockSecretKey: "my-secret-key",
 };
 
 const routerConfig: RouterConfig = {

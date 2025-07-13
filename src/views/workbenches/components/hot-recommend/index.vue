@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useNamespace } from "@/composables";
 import { Tooltip } from "@/components";
+import { useNamespace } from "@/composables";
 import { todayViewData } from "./data";
 
 defineOptions({ name: "HotRecommend" });

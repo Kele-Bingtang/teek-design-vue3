@@ -1,9 +1,11 @@
 <script setup lang="ts" name="Forget">
-import { ElMessage, type FormInstance } from "element-plus";
-import { useVerifyCode } from "../verifyCode";
-import { updateRules } from "../rules";
+import type { FormInstance } from "element-plus";
+import { ref, reactive, inject, useTemplateRef } from "vue";
+import { ElMessage } from "element-plus";
 import { Phone, Lock, WarnTriangleFilled } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { useVerifyCode } from "../verifyCode";
+import { updateRules } from "../rules";
 
 const ns = useNamespace("login-form");
 const { isDisabled, text } = useVerifyCode();
@@ -104,7 +106,7 @@ const onBack = () => {
     </el-form-item>
 
     <el-form-item>
-      <div :class="[ns.e('btn'), 'flx-align-center-between']">
+      <div :class="ns.e('btn')" class="flx-align-center-between">
         <el-button icon="UserFilled" round size="large" type="primary" :loading="loading" @click="login">
           登录
         </el-button>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { TabProps } from "@/pinia";
 import type { ContextMenuCondition } from "../../use-tab-nav";
-import { unref } from "vue";
+import { unref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, CircleClose, Lock, Unlock } from "@element-plus/icons-vue";
 import { useEventListener } from "@vueuse/core";
+import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, CircleClose, Lock, Unlock } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { useTabNav } from "../../use-tab-nav";
 

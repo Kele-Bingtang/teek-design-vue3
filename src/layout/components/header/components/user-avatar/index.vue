@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
-import defaultAvatar from "@/common/assets/images/default.png";
-import { useUserStore } from "@/pinia";
-import { mittBus } from "@/common/utils";
 import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
+import defaultAvatar from "@/common/assets/images/default.png";
+import { mittBus } from "@/common/utils";
+import { useNamespace } from "@/composables";
+import { useUserStore } from "@/pinia";
 
 import "./index.scss";
 
@@ -74,7 +77,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), 'customize']">
+  <div :class="ns.b()" class="customize">
     <el-popover
       placement="bottom-end"
       trigger="hover"
@@ -96,7 +99,7 @@ const logout = async () => {
       </template>
 
       <div :class="ns.e('wrapper')">
-        <div :class="[ns.e('head'), 'flx-align-center']">
+        <div :class="ns.e('head')" class="flx-align-center">
           <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
             <template #error>
               <el-image :src="defaultAvatar" />
@@ -111,7 +114,7 @@ const logout = async () => {
 
         <el-divider />
 
-        <ul :class="[ns.e('menu'), 'flx-column']">
+        <ul :class="ns.e('menu')" class="flx-column">
           <li class="flx-align-center" v-for="item in menuList" :key="item.label" @click="item.click">
             <Icon :icon="item.icon || View" class="icon" />
             <span class="label">{{ item.label }}</span>

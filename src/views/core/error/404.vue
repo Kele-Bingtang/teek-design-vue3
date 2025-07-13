@@ -11,7 +11,7 @@ const router = useRouter();
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-center']">
+  <div :class="ns.b()" class="flx-center">
     <img src="@/common/assets/images/status/404.png" :class="ns.e('img')" alt="404" />
     <div :class="ns.e('detail')">
       <h2>404</h2>

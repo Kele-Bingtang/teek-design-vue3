@@ -30,6 +30,7 @@
       @include e(switch-icon, true) {
         padding: 4px;
         cursor: pointer;
+        user-select: none;
         border-radius: 10px;
         transition: all cssVarEl(transition-duration) cssVar(easing);
 

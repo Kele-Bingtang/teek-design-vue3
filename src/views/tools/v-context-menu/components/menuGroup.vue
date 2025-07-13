@@ -1,4 +1,5 @@
 <script setup lang="ts" name="MenuGroup">
+import { useTemplateRef } from "vue";
 import { directive, Contextmenu, ContextmenuItem, ContextmenuDivider, ContextmenuGroup } from "v-contextmenu";
 
 const contextmenu = useTemplateRef("contextmenu");

@@ -1,12 +1,14 @@
 <script setup lang="ts" name="Login">
-import { SwitchDark } from "@/components";
-import LoginForm from "./loginForm.vue";
+import type { Component } from "vue";
+import { ref, provide } from "vue";
 import SystemConfig from "@/common/config";
+import { SwitchDark } from "@/components";
+import { useNamespace } from "@/composables";
+import LoginForm from "./loginForm.vue";
 import Phone from "./components/phone.vue";
 import QrCode from "./components/qrCode.vue";
 import Register from "./components/register.vue";
 import Forget from "./components/forget.vue";
-import { useNamespace } from "@/composables";
 
 const ns = useNamespace("login");
 
@@ -36,7 +38,7 @@ provide("switchLoginMode", switchLoginMode);
       </div>
 
       <div :class="ns.e('right')">
-        <div :class="[ns.e('right__header'), 'flx-center']">
+        <div :class="ns.e('right__header')" class="flx-center">
           <img src="@/common/assets/images/logo.png" alt="" />
           <h2 class="title">{{ SystemConfig.systemInfo.name }}</h2>
         </div>

@@ -1,8 +1,10 @@
 <script setup lang="ts" name="MessageCenter">
-import { useMessageStore, type MessageItem } from "@/pinia";
+import { type MessageItem } from "@/pinia";
+import { ref, computed, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Delete, RefreshLeft } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { useMessageStore } from "@/pinia";
 
 const ns = useNamespace("message-center");
 

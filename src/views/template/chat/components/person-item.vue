@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Person } from "../types";
-import { useNamespace } from "@/composables/core/use-namespace";
+import { useNamespace } from "@/composables";
 
 const ns = useNamespace("chat-person-item");
 

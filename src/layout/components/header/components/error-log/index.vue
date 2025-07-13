@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useRoute, useRouter } from "vue-router";
 import { ElBadge } from "element-plus";
 import { useNamespace } from "@/composables";
-import { useRoute, useRouter } from "vue-router";
 
 defineOptions({ name: "ErrorLog" });
 

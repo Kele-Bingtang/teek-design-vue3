@@ -1,6 +1,8 @@
 <script setup lang="ts" name="WangEditorDemo">
-import { WangEditor, type FileInsertFnType, type ImageInsertFnType, type VideoInsertFnType } from "@/components";
+import type { FileInsertFnType, ImageInsertFnType, VideoInsertFnType } from "@/components";
+import { ref } from "vue";
 import { uploadLocal } from "@/common/utils";
+import { WangEditor } from "@/components";
 
 const content = ref("");
 const disabled = ref(false);

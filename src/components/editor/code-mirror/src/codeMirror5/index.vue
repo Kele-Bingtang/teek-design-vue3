@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onMounted, useTemplateRef } from "vue";
 import Codemirror from "codemirror-editor-vue3";
 import "codemirror/lib/codemirror.css";
 // 编辑器代码格式

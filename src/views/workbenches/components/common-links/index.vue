@@ -1,61 +1,30 @@
 <script setup lang="ts">
-import type { FormColumn, ProFormInstance } from "@/components";
-import { Link, Plus } from "@element-plus/icons-vue";
-import { ProDialog, ProForm, IconPicker } from "@/components";
-import { useNamespace, useValidator } from "@/composables";
+import type { CommonLink, CommonLinkTab } from "./types";
+import { ref } from "vue";
+import { Link, Edit } from "@element-plus/icons-vue";
+import { ProDialog } from "@/components";
+import { useNamespace } from "@/composables";
 import { systemLinks, flowLinks, otherLinks } from "./data";
+import CommonLinksDetails from "./details.vue";
+import { ElMessage } from "element-plus";
 
 defineOptions({ name: "CommonLinks" });
-
-interface CommonLink {
-  name: string;
-  desc: string;
-  icon: string;
-  url: string;
-}
 
 const ns = useNamespace("common-links");
 
 const activeTab = ref("all");
-const formInstance = useTemplateRef<ProFormInstance>("formInstance");
 
 const dialogVisible = ref(false);
 
-const { validateUrl } = useValidator();
+const commonLinksDetailsInstance =
+  useTemplateRef<InstanceType<typeof CommonLinksDetails>>("commonLinksDetailsInstance");
 
-const form = ref({
-  type: "",
-  name: "",
-  url: "",
-  icon: "",
-  desc: "",
-});
-
-const tabs = ref<{ label: string; value: string; data: CommonLink[] }[]>([
+const tabs = ref<CommonLinkTab[]>([
   { label: "全部", value: "all", data: [...systemLinks, ...flowLinks, ...otherLinks] },
   { label: "系统链接", value: "system", data: systemLinks },
   { label: "流程链接", value: "flow", data: flowLinks },
   { label: "其他", value: "other", data: otherLinks },
 ]);
-
-const rules = {
-  name: [{ required: true, message: "请输入链接名称" }],
-  url: [validateUrl(), { required: true, message: "请输入链接地址" }],
-  type: [{ required: true, message: "请选择链接类型" }],
-};
-
-const columns: FormColumn[] = [
-  {
-    label: "链接类型",
-    prop: "type",
-    el: "el-select",
-    options: tabs.value.filter(tab => tab.value !== "all").map(tab => ({ label: tab.label, value: tab.value })),
-  },
-  { label: "链接名称", prop: "name" },
-  { label: "链接地址", prop: "url" },
-  { label: "链接图标", prop: "icon" },
-  { label: "链接描述", prop: "desc" },
-];
 
 const handleClick = (item: CommonLink) => {
   item.url && window.open(item.url, "_blank");
@@ -65,28 +34,33 @@ const handleAddLink = () => {
   dialogVisible.value = true;
 };
 
-const handleConfirm = async () => {
-  const res = await formInstance.value?.submitForm();
-
-  if (res) {
-    console.log(form.value);
-    tabs.value.find(tab => tab.value === form.value.type)?.data.push(form.value);
-    dialogVisible.value = false;
+const handleConfirm = () => {
+  const newTabs = commonLinksDetailsInstance.value?.tabs;
+  // 实际请请求接口获取更新后的的常用链接
+  if (newTabs) {
+    tabs.value = newTabs;
+    ElMessage.success("更新成功！");
   }
+  dialogVisible.value = false;
 };
 </script>
 
 <template>
   <div :class="ns.b()" class="tk-card-minimal">
-    <div class="flx-align-center-between" :class="ns.e('header')">
+    <div :class="ns.e('header')" class="flx-align-center-between">
       <h2>常用链接</h2>
-      <el-button type="primary" link :icon="Plus" @click="handleAddLink">添加链接</el-button>
+      <el-button type="primary" link :icon="Edit" @click="handleAddLink">管理常用链接</el-button>
     </div>
 
     <el-tabs v-model="activeTab" tab-position="top">
       <el-tab-pane v-for="tab in tabs" :key="tab.value" :label="tab.label" :name="tab.value">
         <template v-if="tab.data.length">
-          <div v-for="item in tab.data" :key="item.name" :class="ns.e('item')" @click="handleClick(item)">
+          <div
+            v-for="item in tab.data.filter(item => item.selected)"
+            :key="item.name"
+            :class="ns.e('item')"
+            @click="handleClick(item)"
+          >
             <div :class="ns.e('icon')" class="flx-center">
               <Icon :icon="item.icon || Link" :size="36" />
             </div>
@@ -107,19 +81,15 @@ const handleConfirm = async () => {
       </el-tab-pane>
     </el-tabs>
 
-    <ProDialog v-model="dialogVisible" title="添加链接" width="30%" :height="300" @confirm="handleConfirm">
-      <ProForm
-        ref="formInstance"
-        :columns="columns"
-        v-model="form"
-        :rules="rules"
-        :col-props="{ span: 24 }"
-        :show-footer="false"
-      >
-        <template #icon>
-          <IconPicker v-model="form.icon" style="width: 100%" />
-        </template>
-      </ProForm>
+    <ProDialog
+      v-model="dialogVisible"
+      title="添加常用链接"
+      top="2vh"
+      width="74%"
+      height="70vh"
+      @confirm="handleConfirm"
+    >
+      <CommonLinksDetails ref="commonLinksDetailsInstance" />
     </ProDialog>
   </div>
 </template>

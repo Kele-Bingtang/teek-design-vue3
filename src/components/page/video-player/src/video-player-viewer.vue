@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { VideoPlayerViewerProps } from "./types";
-import { computed, nextTick } from "vue";
+import { computed, nextTick, useId } from "vue";
+import { useEventListener } from "@vueuse/core";
 import { ElOverlay, ElConfigProvider } from "element-plus";
 import { Close } from "@element-plus/icons-vue";
-import { useLayoutStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import { Icon } from "@/components";
+import { useNamespace } from "@/composables";
+import { useLayoutStore } from "@/pinia";
 import VideoPlayer from "./index.vue";
-import { useEventListener } from "@vueuse/core";
 
 defineOptions({ name: "VideoPlayerViewer" });
 
@@ -54,8 +54,8 @@ useEventListener("keydown", handleEscClose, { capture: true });
     <!-- viewer-fade 在 Element Plus 已经定义 -->
     <transition name="viewer-fade" appear>
       <el-overlay v-if="visible" :id="id">
-        <div :class="[ns.b()]" @click.stop="close">
-          <div :class="[ns.e('close')]" @click.stop="close">
+        <div :class="ns.b()" @click.stop="close">
+          <div :class="ns.e('close')" @click.stop="close">
             <Icon :icon="Close" :size="24" />
           </div>
           <VideoPlayer :url="url" :poster="poster" />

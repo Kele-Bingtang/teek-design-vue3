@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Message } from "../types";
 import { ref, watch, nextTick } from "vue";
+import { useNamespace } from "@/composables";
 import ChatMessageItem from "./chat-message-item.vue";
-import { useNamespace } from "@/composables/core/use-namespace";
 
 const ns = useNamespace("chat-messages");
 

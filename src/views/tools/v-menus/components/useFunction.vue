@@ -1,5 +1,6 @@
 <script setup lang="ts" name="UseFunction">
-import { menusEvent, type menusItemType } from "vue3-menus";
+import type { menusItemType } from "vue3-menus";
+import { menusEvent } from "vue3-menus";
 
 const props = defineProps<{ menus: menusItemType[] }>();
 

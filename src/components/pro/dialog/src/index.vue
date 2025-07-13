@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { DialogProps } from "element-plus";
 import type { ProDialogEmits, ProDialogProps } from "./types";
-import { nextTick, ref, watch } from "vue";
+import { nextTick, ref, watch, computed, useTemplateRef } from "vue";
 import { ElDialog, ElScrollbar, ElButton } from "element-plus";
 import { addUnit } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { Icon } from "@/components/core/icon";
 
 defineOptions({ name: "ProDialog" });
 

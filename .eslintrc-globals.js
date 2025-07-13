@@ -88,6 +88,7 @@ export default {
   watchEffect: true,
   watchPostEffect: true,
   watchSyncEffect: true,
+  // 上面是 unplugin-auto-import/vite 插件自动导入的变量，下面是手动维护的变量
   MetaProps: "readonly",
   RouterConfig: "readonly",
   RouterConfigRaw: "readonly",

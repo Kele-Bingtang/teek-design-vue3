@@ -1,10 +1,12 @@
+import { HOME_NAME, LOGIN_NAME, LAYOUT_NAME } from "@/common/config/constant";
+
 export default {
   _route: {
-    Home: "工作台",
+    [HOME_NAME]: "工作台",
     Dashboard: "仪表盘",
-    Login: "登录",
+    [LOGIN_NAME]: "登录",
     Redirect: "重定向",
-    Layout: "布局",
+    [LAYOUT_NAME]: "布局",
     Error: "错误页面",
     403: "403 页面",
     404: "404 页面",
@@ -184,11 +186,11 @@ export default {
   },
   _lockScreen: {
     inputPlaceholder: "请输入锁屏密码",
-    lockBtnText: "锁屏",
+    lockButtonText: "锁屏",
     unInputPlaceholder: "请输入解锁密码",
-    unlockBtnText: "解锁",
+    unlockButtonText: "解锁",
     backLogin: "返回登录",
-    pwdError: "密码错误！",
+    passwordError: "密码错误！",
   },
   _setting: {
     layoutMode: "布局模式",

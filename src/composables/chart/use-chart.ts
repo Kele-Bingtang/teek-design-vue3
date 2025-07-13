@@ -1,10 +1,12 @@
-import type { ShallowRef } from "vue";
+import type { ShallowRef, MaybeRef } from "vue";
 import type { EChartsOption } from "echarts";
-import type { ChartThemeConfig, UseChartOptions } from "../types";
+import type { ChartThemeConfig, UseChartOptions } from "@/components/chart/types";
+import { useTemplateRef, shallowRef, watch, nextTick, onMounted, onBeforeUnmount, onUnmounted, unref } from "vue";
+import { storeToRefs } from "pinia";
 import * as echarts from "echarts";
-import { useSettingStore } from "@/pinia";
 import { getCssVar } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 // 图表默认配置
 export const useChartOps = (): ChartThemeConfig => {
@@ -237,7 +239,6 @@ export const useChartResize = (chart: ShallowRef<echarts.ECharts | null>) => {
   const handleResize = () => {
     if (chart?.value) {
       try {
-        console.log(1);
         chart.value.resize();
       } catch (error) {
         console.error("图表resize失败:", error);

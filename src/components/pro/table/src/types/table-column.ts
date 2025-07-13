@@ -1,12 +1,13 @@
+import type { MaybeRefOrGetter } from "vue";
 import type { FormValidateCallback, FormValidationResult, TableColumnCtx } from "element-plus";
 import type { ProFormInstance } from "@/components/pro/form";
 import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pro/form-item";
+import type { TableColumnTypeEnum } from "../helper";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
-import type { TableColumnTypeEnum } from "../helper";
 import type { ElDisplayProps } from "./el-display";
 
-export interface RenderParams<T = any> extends TableScope<T> {
+export interface RenderParams<T extends Recordable = any> extends TableScope<T> {
   value: unknown;
   /**
    * 字典枚举数据
@@ -21,7 +22,7 @@ export interface RenderParams<T = any> extends TableScope<T> {
 /**
  * 表格行 Scope
  */
-export type TableScope<T = Recordable> = {
+export type TableScope<T extends Recordable = any> = {
   /**
    * 表格行索引
    */
@@ -111,7 +112,7 @@ export type TableRow<T extends string | number | symbol = any> = {
 /**
  * 表格列配置
  */
-export interface TableColumn<T = any>
+export interface TableColumn<T extends Recordable = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
     Omit<ElDisplayProps, "value" | "options"> {
   /**
@@ -222,6 +223,12 @@ export interface TableColumn<T = any>
    * @default false
    */
   disabledSortable?: MaybeRefOrGetter<boolean>;
+  /**
+   * 列配置中是否禁用列拖拽排序
+   *
+   * @default false
+   */
+  disabledDragSort?: MaybeRefOrGetter<boolean>;
   /**
    * 是否开启编辑功能
    */

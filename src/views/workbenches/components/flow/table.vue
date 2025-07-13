@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn } from "@/components";
 import type { FlowType } from "./index.vue";
+import { ref, watch } from "vue";
 import { ProTable } from "@/components";
 import { myAgentData } from "./data/my-agent";
 import { myApplyData } from "./data/my-apply";
@@ -36,7 +37,7 @@ const columns: TableColumn[] = [
     el: "el-link",
     elProps: { href: "https://vue3-admin.teek.top/", target: "_blank" },
   },
-  { prop: "system", label: "所属系统", width: 100 },
+  { prop: "system", label: "所属系统", width: 110 },
   {
     prop: "status",
     label: "任务状态",
@@ -55,5 +56,5 @@ const columns: TableColumn[] = [
 </script>
 
 <template>
-  <ProTable :columns :data card page-scope :page-info="{ pageSize: 10 }" />
+  <ProTable :columns :data card page-scope :page-info="{ pageSize: 10 }" hide-head control-head-column />
 </template>

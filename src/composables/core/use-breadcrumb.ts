@@ -1,11 +1,12 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { ElMessage } from "element-plus";
+import { ref, watch } from "vue";
+import { tryOnScopeDispose } from "@vueuse/core";
 import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
+import { LAYOUT_NAME } from "@/common/config";
+import { formatTitle } from "@/router/helper";
 import { useRouteStore } from "@/pinia";
 import { useRouteFn } from "./use-route-fn";
-import { tryOnScopeDispose } from "@vueuse/core";
-import { formatTitle } from "@/router/helper";
-import { LAYOUT_NAME } from "@/common/config";
 
 /**
  * 面包屑导航管理

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import { ElSwitch } from "element-plus";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useSettingStore } from "@/pinia";

@@ -1,3 +1,4 @@
+import type { ComponentPublicInstance } from "vue";
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useUserStore } from "./core/user";

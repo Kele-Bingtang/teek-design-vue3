@@ -1,0 +1,76 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/common/var" as *;
+
+@include b(workbenches) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  grid-auto-flow: dense;
+  gap: 10px;
+  align-items: start;
+
+  // 兼容全屏工作台菜单
+  @include is(full) {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    overflow: auto;
+    background-color: cssVar(bg-color-page);
+  }
+
+  > div {
+    height: 100%;
+  }
+
+  .column-2 {
+    grid-column-start: span 2;
+  }
+
+  .row-2 {
+    grid-row-start: span 2;
+  }
+
+  .row-5 {
+    grid-row-start: span 5;
+  }
+
+  .welcome {
+    height: 100%;
+
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .time {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  }
+
+  // 响应式 grid 布局
+  @media (max-width: $device-laptop) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .column-2 {
+      grid-column-start: span 1;
+    }
+  }
+
+  @media (max-width: $device-phone-large) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    .column-2 {
+      grid-column-start: span 1;
+    }
+
+    .row-2 {
+      grid-row-start: span 1;
+    }
+
+    .row-5 {
+      grid-row-start: span 1;
+    }
+  }
+}

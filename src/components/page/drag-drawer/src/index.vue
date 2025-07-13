@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from "vue";
 import type { DragDrawerProps, DragDrawerEmits } from "./types";
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
 import { ElDrawer } from "element-plus";
 import { useNamespace } from "@/composables";
 import Trigger from "./trigger.vue";

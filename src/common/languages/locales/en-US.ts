@@ -1,10 +1,12 @@
+import { HOME_NAME, LOGIN_NAME, LAYOUT_NAME } from "@/common/config/constant";
+
 export default {
   _route: {
-    Home: "Workbenches",
+    [HOME_NAME]: "Workbenches",
     Dashboard: "Dashboard",
-    Login: "Login",
+    [LOGIN_NAME]: "Login",
     Redirect: "Redirect",
-    Layout: "Layout",
+    [LAYOUT_NAME]: "Layout",
     Error: "Error",
     403: "403",
     404: "404",
@@ -182,11 +184,11 @@ export default {
   },
   _lockScreen: {
     inputPlaceholder: "Please enter the lock screen password",
-    lockBtnText: "Lock Screen",
+    lockButtonText: "Lock Screen",
     unInputPlaceholder: "Please enter the unlock password",
-    unlockBtnText: "Unlock",
+    unlockButtonText: "Unlock",
     backLogin: "Return to login",
-    pwdError: "wrong password!",
+    passwordError: "wrong password!",
   },
 
   _setting: {

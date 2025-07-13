@@ -1,5 +1,6 @@
 <script setup lang="ts" name="UserCard">
 import type { UserInfo } from "@/pinia";
+import { computed } from "vue";
 import defaultAvatar from "@/common/assets/images/default.png";
 import { useNamespace } from "@/composables";
 

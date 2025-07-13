@@ -1,12 +1,13 @@
+import type { TableColumnProps } from "../../interface";
+import { computed, inject, withModifiers } from "vue";
+import { ElPopover, ElIcon, ElButton } from "element-plus";
+import { Filter } from "@element-plus/icons-vue";
+import { isEmpty } from "@/common/utils";
 import ProForm from "@/components/pro/v1/pro-form";
 import { hyphenToCamelCase } from "@/components/pro/v1/pro-form";
-import { ElPopover, ElIcon, ElButton } from "element-plus";
-import { filterKey, type TableColumnProps } from "../../interface";
-import { Filter } from "@element-plus/icons-vue";
-import { lastProp } from "../../helper";
-import { computed, inject, withModifiers } from "vue";
-import { isEmpty } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { filterKey } from "../../interface";
+import { lastProp } from "../../helper";
 
 export const useHeaderFilter = (column: TableColumnProps) => {
   const filterProps = inject(filterKey);

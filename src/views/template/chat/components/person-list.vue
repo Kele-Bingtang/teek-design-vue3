@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import PersonItem from "./person-item.vue";
-import { useNamespace } from "@/composables/core/use-namespace";
 import type { Person } from "../types";
+import { ref } from "vue";
+import { useNamespace } from "@/composables";
+import PersonItem from "./person-item.vue";
+
 const ns = useNamespace("chat-person-list");
 
 interface PersonListProps {

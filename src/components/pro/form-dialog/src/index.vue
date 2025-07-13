@@ -2,6 +2,7 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormDialogEmits, ProFormDialogProps } from "./types";
+import { useTemplateRef } from "vue";
 import { ProForm } from "@/components/pro/form";
 import { ProDialog } from "@/components/pro/dialog";
 

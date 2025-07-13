@@ -32,6 +32,8 @@
  * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
  */
 
+import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";
+import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 import pageRoutes from "./routes/page";
 import detailsRoutes from "./routes/details";
 import directiveRoutes from "./routes/directive";
@@ -42,12 +44,10 @@ import nestedRoutes from "./routes/nested";
 import outerChainRoutes from "./routes/outer-chain";
 import permissionRoutes from "./routes/permission";
 import tableRoutes from "./routes/table";
-import proComponentsRoutes from "./routes/pro-components";
+import proComponentsRoutes from "./routes/pro-component";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
 import templateRoutes from "./routes/template";
-import { User, Bell, Odometer, StarFilled, Document, Compass } from "@element-plus/icons-vue";
-import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
 export const staticRoutes: RouterConfigRaw[] = [
   // 建议把 LAYOUT_NAME 路由放在第一位
@@ -81,12 +81,12 @@ export const staticRoutes: RouterConfigRaw[] = [
     path: LOGIN_URL,
     name: LOGIN_NAME,
     component: () => import("@/views/core/login/index.vue"),
-    meta: { title: "登录", hideInMenu: true, hideInBread: true, isFull: true },
+    meta: { title: "登录", hideInMenu: true },
   },
   {
     path: "/redirect/:path(.*)",
     name: REDIRECT_NAME,
-    meta: { hideInMenu: true, hideInBread: true, isFull: true },
+    meta: { hideInMenu: true },
     component: () => import("@/layout/redirect.vue"),
   },
 ];
@@ -131,6 +131,18 @@ export const rolesRoutes: RouterConfigRaw[] = [
       title: "工作台",
       icon: Compass,
       isAffix: true,
+      tagText: "New",
+    },
+  },
+  {
+    path: "workbenches-full",
+    name: "WorkbenchesFull",
+    component: "/workbenches/index",
+    meta: {
+      title: "全屏工作台",
+      icon: Compass,
+      isFull: true,
+      useI18n: false,
     },
   },
   {
@@ -167,17 +179,6 @@ export const rolesRoutes: RouterConfigRaw[] = [
       },
     ],
   },
-  {
-    path: "console-full",
-    name: "ConsoleFull",
-    component: "/dashboard/console/index",
-    meta: {
-      title: "全屏工作台",
-      icon: Odometer,
-      isFull: true,
-      useI18n: false,
-    },
-  },
   { ...proComponentsRoutes },
   { ...pageRoutes },
   { ...editorRoutes },
@@ -198,7 +199,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
     component: "/tabs/index",
     meta: {
       title: "标签页操作",
-      icon: StarFilled,
+      icon: Discount,
     },
   },
   {

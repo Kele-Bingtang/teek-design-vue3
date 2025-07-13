@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted, watch, useTemplateRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext, type TabsInstance } from "element-plus";
-import { useSettingStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import { addUnit, removeUnit, isString } from "@/common/utils";
+import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
 import RightMenu from "../components/right-menu/index.vue";
 import MoreButton from "../components/more-button/index.vue";
@@ -114,8 +114,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="tabNavInstance" :class="[ns.b(), 'tab-nav']">
-    <div :class="[ns.e('content'), 'flx-align-center']">
+  <div ref="tabNavInstance" :class="ns.b()" class="tab-nav">
+    <div :class="ns.e('content')" class="flx-align-center">
       <el-tabs
         ref="elTabsInstance"
         :model-value="activeTab.path"

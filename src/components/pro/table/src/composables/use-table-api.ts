@@ -1,6 +1,8 @@
+import type { Ref } from "vue";
 import type { ProTableNamespace, TableColumn } from "../types";
-import { setProp } from "@/components/pro/helper";
+import { ref, unref } from "vue";
 import { isString } from "@/common/utils";
+import { setProp } from "@/components/pro/helper";
 
 /**
  * 使用 ProTable 的 API

@@ -4,7 +4,7 @@
 @include b(iframe-layout) {
   @include e(menu-footer) {
     width: 100%;
-    padding: 16px 24px 8px;
+    padding: 16px 0 8px;
     border-top: 1px solid cssVar(border-color);
 
     .name {
@@ -12,7 +12,16 @@
     }
 
     > * {
-      height: 30px;
+      padding: 10px 24px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: cssVar(layout-aside-bg-hover-color);
+      }
+    }
+
+    > *:not(.customize) {
+      height: 40px;
     }
 
     // 菜单折叠按钮
@@ -22,13 +31,15 @@
       width: 100%;
 
       &:hover {
-        background-color: transparent;
+        background-color: cssVar(layout-aside-bg-hover-color);
       }
     }
 
     // 菜单折叠时
     @include is(collapse) {
-      padding: 16px 0;
+      > * {
+        padding: 0;
+      }
 
       .name {
         display: none;
