@@ -1,3 +1,4 @@
+import { isFunction, isObject } from "../core";
 import snowflake from "./snowflakes";
 
 /**
@@ -11,11 +12,9 @@ export const useSnowflakeId = () => {
  * 生成唯一 uuid，带有 -
  */
 export const useUuid = () => {
-  if (typeof crypto === "object") {
-    if (typeof crypto.randomUUID === "function") {
-      return crypto.randomUUID();
-    }
-    if (typeof crypto.getRandomValues === "function" && typeof Uint8Array === "function") {
+  if (isObject(crypto)) {
+    if (isFunction(crypto.randomUUID)) return crypto.randomUUID();
+    if (isFunction(crypto.getRandomValues) && isFunction(Uint8Array)) {
       const callback = (c: any) => {
         const num = Number(c);
         return (num ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (num / 4)))).toString(16);
@@ -23,8 +22,10 @@ export const useUuid = () => {
       return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, callback);
     }
   }
+
   let timestamp = new Date().getTime();
-  let performanceNow = (typeof performance !== "undefined" && performance.now && performance.now() * 1000) || 0;
+  let performanceNow = (performance?.now && performance.now() * 1000) || 0;
+
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
     let random = Math.random() * 16;
     if (timestamp > 0) {
