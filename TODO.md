@@ -10,5 +10,3 @@
 - 版本发布前根据规则优化 vue/element plus 等缺失的 import 引入
 
 ## Bug
-
-- CodeMirror 控制台报错修复
