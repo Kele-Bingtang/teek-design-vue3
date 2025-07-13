@@ -1,10 +1,12 @@
 <script setup lang="ts" name="treeFilterProTable">
-import { ProTable, TreeFilter, type TableColumn, type ProTableInstance } from "@/components";
-import { useConfirm } from "@/composables";
+import type { TableColumn, ProTableInstance } from "@/components";
+import { ref, useTemplateRef } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { genderType, tableData, userStatus, department } from "@/mock/pro-component/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
+import { ProTable, TreeFilter } from "@/components";
+import { useConfirm } from "@/composables";
+import { genderType, tableData, userStatus, department } from "@/mock/pro-component/pro-table";
 import type { ResUserList } from "../advanced/index.vue";
 
 const proTableRef = useTemplateRef<ProTableInstance>("proTableRef");

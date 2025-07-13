@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { nextTick, ref, watch, useTemplateRef } from "vue";
 import { ElCheckbox, ElInput, ElTree } from "element-plus";
-import { nextTick, ref, watch } from "vue";
 
 defineOptions({ name: "Tree" });
 

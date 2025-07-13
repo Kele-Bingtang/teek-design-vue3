@@ -5,8 +5,8 @@ import type { IconifyIcon } from "@iconify/vue";
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 import SystemConfig from "@/common/config";
-import { useSettingStore } from "./setting";
 import { cacheOperator } from "@/common/utils";
+import { useSettingStore } from "./setting";
 
 export interface TabProps {
   /** 路由的 path */

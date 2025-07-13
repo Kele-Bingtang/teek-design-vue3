@@ -1,9 +1,10 @@
 <script setup lang="ts" name="ImageUploadDemo">
 import type { FormInstance } from "element-plus";
 import type { SuccessFun } from "@/components";
-import { ImageUpload } from "@/components";
-import { uploadLocal } from "@/common/utils";
+import { ref, reactive, useTemplateRef } from "vue";
 import { Avatar, Picture } from "@element-plus/icons-vue";
+import { uploadLocal } from "@/common/utils";
+import { ImageUpload } from "@/components";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("images-upload-demo");

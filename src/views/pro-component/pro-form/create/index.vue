@@ -1,6 +1,9 @@
 <script setup lang="tsx" name="CreateProForm">
-import { type FormColumn, useProForm, type ElFormProps } from "@/components";
-import { ElButton, ElRadio, ElMessageBox, ElMessage, type FormItemProp } from "element-plus";
+import type { FormItemProp } from "element-plus";
+import type { FormColumn, ElFormProps } from "@/components";
+import { ref, reactive, onMounted } from "vue";
+import { ElButton, ElRadio, ElMessageBox, ElMessage } from "element-plus";
+import { useProForm } from "@/components";
 
 const model1 = ref<Recordable>({});
 const model2 = ref<Recordable>({});
@@ -15,7 +18,7 @@ const {
 const RenderProForm = (_: any, context: Recordable) => {
   return createFormComponent(
     {
-      columns: columns,
+      columns: columns as FormColumn[],
       modelValue: model1.value,
       elFormProps,
       onValidate: formValidate,
@@ -26,7 +29,7 @@ const RenderProForm = (_: any, context: Recordable) => {
 
 onMounted(() => {
   createForm("proFormRef", {
-    columns: columns,
+    columns: columns as FormColumn[],
     modelValue: model2.value,
     elFormProps,
     onValidate: formValidate,

@@ -1,42 +1,17 @@
 <script setup lang="tsx">
-import {
-  shallowRef,
-  ref,
-  provide,
-  watch,
-  unref,
-  useSlots,
-  onMounted,
-  computed,
-  type ComponentPublicInstance,
-  type ComputedRef,
-  defineComponent,
-} from "vue";
-import {
-  ComponentNameEnum,
-  formEnumMapKey,
-  type FormSchemaProps,
-  type FormSetProps,
-  type ProElFormProps,
-  type ValueType,
-} from "./interface";
+import type { ComponentPublicInstance, ComputedRef } from "vue";
+import type { FormInstance, RowProps, ColProps, FormItemInstance, FormItemProp } from "element-plus";
+import type { FormSchemaProps, FormSetProps, ProElFormProps, ValueType } from "./interface";
+import { shallowRef, ref, provide, watch, unref, useSlots, onMounted, computed, defineComponent } from "vue";
 import ProFormItem from "./components/pro-form-item.vue";
-import {
-  ElForm,
-  ElFormItem,
-  ElTooltip,
-  type FormInstance,
-  type RowProps,
-  type ColProps,
-  type FormItemInstance,
-  type FormItemProp,
-} from "element-plus";
-import { getProp, setProp, hyphenToCamelCase, deleteObjProperty } from "./helper";
-import { useNamespace } from "@/composables";
-import { componentMap } from "./helper/component-map";
+import { ElForm, ElFormItem, ElTooltip } from "element-plus";
 import { Icon } from "@/components";
-import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isString } from "@/common/utils";
+import { componentMap } from "./helper/component-map";
+import { QuestionFilled } from "@element-plus/icons-vue";
+import { useNamespace } from "@/composables";
+import { getProp, setProp, hyphenToCamelCase, deleteObjProperty } from "./helper";
+import { ComponentNameEnum, formEnumMapKey } from "./interface";
 
 defineOptions({ name: "ProForm" });
 

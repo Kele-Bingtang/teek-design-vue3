@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { LineChartProps, LineDataItem } from "../../types";
+import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import * as echarts from "echarts";
 import { getCssVar, hexToRgba } from "@/common/utils";
 import { useNamespace, useChartOps, useChart } from "@/composables";

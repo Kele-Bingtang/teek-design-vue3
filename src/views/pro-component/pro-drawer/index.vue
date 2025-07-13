@@ -1,4 +1,5 @@
 <script setup lang="tsx" name="UseDrawerDemo">
+import { ref } from "vue";
 import { useDrawer, ProDrawer } from "@/components";
 
 const visible = ref(false);

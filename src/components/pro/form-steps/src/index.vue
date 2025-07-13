@@ -2,6 +2,8 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormStepsEmits, ProFormStepsProps } from "./types";
+import { ref, useTemplateRef, computed, watchEffect } from "vue";
+import { ElSteps, ElStep } from "element-plus";
 import { ProForm } from "@/components/pro/form";
 import { useNamespace } from "@/composables";
 

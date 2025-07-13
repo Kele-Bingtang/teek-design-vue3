@@ -1,5 +1,4 @@
 import type { SystemInfo, LayoutConfig, SystemConfig, ThemeConfig, RouterConfig, KeyConfig } from "./types";
-
 import {
   HeaderStyleEnum,
   LanguageEnum,

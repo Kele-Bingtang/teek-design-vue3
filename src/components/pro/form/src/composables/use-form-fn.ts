@@ -1,4 +1,5 @@
 import type { FormColumn, ProFormInstance } from "../types";
+import { useTemplateRef } from "vue";
 
 /**
  * ProForm 相关方法获取（调用 defineExpose 暴露的数据）

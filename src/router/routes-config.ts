@@ -32,6 +32,8 @@
  * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
  */
 
+import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";
+import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 import pageRoutes from "./routes/page";
 import detailsRoutes from "./routes/details";
 import directiveRoutes from "./routes/directive";
@@ -46,8 +48,6 @@ import proComponentsRoutes from "./routes/pro-component";
 import toolsRoutes from "./routes/tool";
 import editorRoutes from "./routes/editor";
 import templateRoutes from "./routes/template";
-import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";
-import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
 
 export const staticRoutes: RouterConfigRaw[] = [
   // 建议把 LAYOUT_NAME 路由放在第一位

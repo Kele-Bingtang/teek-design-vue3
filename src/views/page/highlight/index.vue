@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HighlightDemo">
-import { Highlight } from "@/components";
 import { message } from "@/common/utils";
+import { Highlight } from "@/components";
 
 const handleClick = (key: string) => {
   message.info(key);

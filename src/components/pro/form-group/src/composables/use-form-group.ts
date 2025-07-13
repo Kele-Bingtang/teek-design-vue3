@@ -1,12 +1,13 @@
+import type { MaybeRef } from "vue";
 import type { FormColumn } from "@/components/pro/form";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { ProFormGroupInstance, ProFormGroupOnEmits, ProFormGroupProps } from "../types";
 import { ElConfigProvider, type FormInstance } from "element-plus";
-import { createVNode, getCurrentInstance, nextTick, ref, render } from "vue";
-import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { createVNode, getCurrentInstance, nextTick, ref, render, computed, toValue } from "vue";
 import { isString } from "@/common/utils";
 import { filterEmpty } from "@/components/pro/helper";
+import { useNamespace } from "@/composables";
+import { useLayoutStore } from "@/pinia";
 import ProFormGroup from "../index.vue";
 
 type ProFormGroupPropsWithModel = ProFormGroupProps & { modelValue?: Recordable };

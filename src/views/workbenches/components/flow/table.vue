@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn } from "@/components";
 import type { FlowType } from "./index.vue";
+import { ref, watch } from "vue";
 import { ProTable } from "@/components";
 import { myAgentData } from "./data/my-agent";
 import { myApplyData } from "./data/my-apply";

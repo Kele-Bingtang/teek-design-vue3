@@ -1,4 +1,5 @@
 <script setup lang="ts" name="OrgTreeDemo">
+import { ref, useTemplateRef } from "vue";
 import { ElMessage } from "element-plus";
 import { useNamespace } from "@/composables";
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from "vue";
+
 const MapChart = defineAsyncComponent(() => import("@/components/chart/map-chart/src/index.vue"));
 
 const handleRegionClick = (region: any) => {

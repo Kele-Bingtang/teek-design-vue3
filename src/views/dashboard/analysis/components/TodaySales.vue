@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { Download } from "@element-plus/icons-vue";
 import { CountTo } from "@/components";
 import { useNamespace } from "@/composables";

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="MessageDemo">
-import { h } from "vue";
+import { h, onMounted } from "vue";
 import { Check } from "@element-plus/icons-vue";
 import { message, closeAllMessage } from "@/common/utils";
 

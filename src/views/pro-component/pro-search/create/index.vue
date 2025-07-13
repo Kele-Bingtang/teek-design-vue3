@@ -1,5 +1,7 @@
 <script setup lang="ts" name="CreateProSearch">
-import { useProSearch, type ProSearchColumnProps } from "@/components";
+import type { ProSearchColumnProps } from "@/components";
+import { ref, reactive } from "vue";
+import { useProSearch } from "@/components";
 
 const {
   createMethods: { createSearch, createSearchComponent },

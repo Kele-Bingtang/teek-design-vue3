@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElRow, ElCol } from "element-plus";
 import TodaySales from "./components/TodaySales.vue";
 import VisitorInsights from "./components/VisitorInsights.vue";
 import TotalRevenue from "./components/TotalRevenue.vue";

@@ -1,14 +1,15 @@
 import type { TabProps } from "@/pinia";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { ref, reactive, nextTick } from "vue";
+import { ref, reactive, nextTick, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import Sortable from "sortablejs";
-import { useLayoutStore, useRouteStore } from "@/pinia";
-import beforeClose from "@/router/before-close";
 import { getUrlParams, isFunction, mittBus } from "@/common/utils";
 import SystemConfig, { HOME_URL, RefreshIFrameKey } from "@/common/config";
-import { formatTitle } from "@/router/helper";
 import { useCommon } from "@/composables";
+import beforeClose from "@/router/before-close";
+import { formatTitle } from "@/router/helper";
+import { useLayoutStore, useRouteStore } from "@/pinia";
 
 type ContextMenu = "refresh" | "current" | "left" | "right" | "other" | "all";
 

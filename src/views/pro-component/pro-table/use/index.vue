@@ -1,7 +1,9 @@
 <script setup lang="tsx" name="useProTable">
-import { useProTable, ProTable, type TableColumn } from "@/components";
-import { tableData } from "@/mock/pro-component/pro-table";
+import type { TableColumn } from "@/components";
+import { ref, reactive } from "vue";
 import { ElButton, ElMessage } from "element-plus";
+import { useProTable, ProTable } from "@/components";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 const { tableRegister, tableMethods } = useProTable();
 const { setProps, setColumn, getElTableExpose, addColumn, delColumn, clearSelection, changePagination } = tableMethods;

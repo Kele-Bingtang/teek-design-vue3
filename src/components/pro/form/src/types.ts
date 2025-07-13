@@ -1,3 +1,4 @@
+import type { MaybeRef } from "vue";
 import type { ColProps, FormInstance, FormItemProp, FormProps, FormValidateCallback, RowProps } from "element-plus";
 import type { FormItemColumnProps, ProFormItemEmits } from "@/components/pro/form-item";
 import type ProForm from "./index.vue";

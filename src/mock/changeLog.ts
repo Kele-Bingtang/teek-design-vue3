@@ -1,3 +1,5 @@
+import { ref } from "vue";
+
 interface UpgradeLog {
   /** 版本号 */
   version: string;

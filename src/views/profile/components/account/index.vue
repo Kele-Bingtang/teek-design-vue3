@@ -1,5 +1,7 @@
 <script setup lang="ts" name="Account">
-import { ElMessage, type FormInstance } from "element-plus";
+import type { FormInstance } from "element-plus";
+import { reactive, useTemplateRef } from "vue";
+import { ElMessage } from "element-plus";
 
 const user = reactive({
   oldPassword: "",

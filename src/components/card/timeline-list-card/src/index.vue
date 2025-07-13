@@ -1,6 +1,7 @@
 <!-- 时间轴列表卡片 -->
 <script setup lang="ts">
 import type { TimelineProps } from "./types";
+import { ElScrollbar, ElTimeline, ElTimelineItem } from "element-plus";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "TimelineListCard" });

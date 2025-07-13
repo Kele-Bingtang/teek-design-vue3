@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { FileTypes, ImageUploadEmits, ImageUploadProps } from "./types";
 import type { UploadFile, UploadProps, UploadRequestOptions, UploadUserFile } from "element-plus";
-import { ref, inject, computed } from "vue";
+import { ref, inject, computed, useId } from "vue";
 import { ElUpload, ElImageViewer, ElIcon, ElNotification, formContextKey, formItemContextKey } from "element-plus";
 import { Edit, ZoomIn, Delete, Plus } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { isArray } from "@/common/utils";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ImageUpload" });
 

@@ -1,5 +1,6 @@
 <script setup lang="ts" name="TreeFilterDemo">
 import type { TreeKey } from "element-plus";
+import { reactive } from "vue";
 import { ElMessage } from "element-plus";
 import { TreeFilter } from "@/components";
 import { useNamespace } from "@/composables";

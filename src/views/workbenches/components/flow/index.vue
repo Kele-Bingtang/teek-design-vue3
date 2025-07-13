@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { myAgentData } from "./data/my-agent";

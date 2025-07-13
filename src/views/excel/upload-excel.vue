@@ -1,7 +1,8 @@
 <script setup lang="ts" name="UploadExcel">
 import type { ExcelData } from "@/components";
-import { UploadExcel } from "@/components";
+import { ref } from "vue";
 import { ElMessage } from "element-plus";
+import { UploadExcel } from "@/components";
 
 const tableData = ref([]);
 const tableHeader = ref<string[]>([]);

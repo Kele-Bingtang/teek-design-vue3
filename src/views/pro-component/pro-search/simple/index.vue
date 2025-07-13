@@ -1,5 +1,7 @@
 <script setup lang="ts" name="SimpleProSearch">
-import { ProSearch, type ProSearchColumnProps } from "@/components";
+import type { ProSearchColumnProps } from "@/components";
+import { ref, onMounted } from "vue";
+import { ProSearch } from "@/components";
 
 const model = ref({});
 

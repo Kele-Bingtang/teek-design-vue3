@@ -1,3 +1,4 @@
+import type { MaybeRefOrGetter, Component } from "vue";
 import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
 import type { CardProps } from "element-plus";
 import type ProFormGroup from "./index.vue";

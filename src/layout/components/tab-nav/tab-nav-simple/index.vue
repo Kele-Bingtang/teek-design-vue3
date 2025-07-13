@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useSettingStore } from "@/pinia";
 import ClassicTabNav from "../tab-nav-classic/index.vue";
 

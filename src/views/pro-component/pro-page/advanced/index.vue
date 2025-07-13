@@ -1,11 +1,13 @@
 <script setup lang="tsx">
-import { ProPage, setProp, type PageColumn, type ProPageInstance, type TableRow } from "@/components";
-import { withModifiers } from "vue";
-import { useConfirm, usePermission } from "@/composables";
-import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
-import { tableData } from "@/mock/pro-component/pro-table";
+import type { TableColumnCtx } from "element-plus";
+import type { PageColumn, ProPageInstance, TableRow } from "@/components";
+import { ref, useTemplateRef, withModifiers } from "vue";
+import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag } from "element-plus";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
+import { ProPage, setProp } from "@/components";
+import { useConfirm, usePermission } from "@/composables";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 export interface ResUserList {
   id: string;

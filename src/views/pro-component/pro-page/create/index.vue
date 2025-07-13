@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import type { TableColumnCtx } from "element-plus";
 import type { PageColumn, ProPageInstance } from "@/components";
-import { withModifiers } from "vue";
+import { onMounted, useTemplateRef, withModifiers } from "vue";
 import { ElButton, ElMessage, ElInput } from "element-plus";
 import { useProPage } from "@/components";
 import { tableData } from "@/mock/pro-component/pro-table";

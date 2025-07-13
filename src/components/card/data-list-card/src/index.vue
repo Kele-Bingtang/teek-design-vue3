@@ -1,7 +1,9 @@
 <!-- 数据列表卡片 -->
 <script setup lang="ts">
-import { useNamespace } from "@/composables";
 import type { DataListCardEmits, DataListCardProps } from "./types";
+import { computed } from "vue";
+import { ElScrollbar, ElButton } from "element-plus";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "DataListCard" });
 

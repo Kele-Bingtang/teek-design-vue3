@@ -1,12 +1,12 @@
 <script setup lang="ts" name="RolePermission">
 import type { TreeKey } from "element-plus";
-import { ref, reactive, computed, onMounted, nextTick } from "vue";
+import { ref, reactive, computed, onMounted, nextTick, useTemplateRef } from "vue";
 import { ElMessage, ElMessageBox, ElNotification, ElTree } from "element-plus";
+import { ProDialog } from "@/components";
+import { useMenu, useRouteFn } from "@/composables";
+import { useRouteStore, useUserStore } from "@/pinia";
 import router, { resetRouter } from "@/router";
 import { formatTitle } from "@/router/helper";
-import { useRouteStore, useUserStore } from "@/pinia";
-import { useMenu, useRouteFn } from "@/composables";
-import { ProDialog } from "@/components";
 
 interface Role {
   /** 角色 ID */

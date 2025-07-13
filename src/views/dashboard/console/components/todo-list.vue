@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reactive } from "vue";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace();

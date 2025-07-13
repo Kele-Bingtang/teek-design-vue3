@@ -13,7 +13,7 @@
 -->
 
 <script setup lang="ts">
-import type { LineDataItem } from "@/components/chart";
+import type { LineDataItem } from "@/components/chart/types";
 import { ref } from "vue";
 import {
   BarChart,

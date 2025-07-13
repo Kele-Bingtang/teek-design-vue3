@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { ArrowDownBold, User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
-import { useUserStore } from "@/pinia";
-import { mittBus } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { useRoute, useRouter } from "vue-router";
-import defaultAvatar from "@/common/assets/images/default.png";
 import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
+import { mittBus } from "@/common/utils";
+import defaultAvatar from "@/common/assets/images/default.png";
+import { useNamespace } from "@/composables";
+import { useUserStore } from "@/pinia";
 
 defineOptions({ name: "UserAvatarDropdown" });
 

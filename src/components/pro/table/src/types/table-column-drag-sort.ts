@@ -1,3 +1,4 @@
+import type { MaybeRef } from "vue";
 import type { TableInstance } from "element-plus";
 
 export interface TableColumnDragSortProps {

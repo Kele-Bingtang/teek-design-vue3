@@ -1,9 +1,11 @@
 <script setup lang="ts" name="Phone">
-import { ElMessage, type FormInstance } from "element-plus";
-import { useVerifyCode } from "../verifyCode";
-import { phoneRules } from "../rules";
+import type { FormInstance } from "element-plus";
+import { ref, reactive, inject, useTemplateRef } from "vue";
+import { ElMessage } from "element-plus";
 import { Phone, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { useVerifyCode } from "../verifyCode";
+import { phoneRules } from "../rules";
 
 const ns = useNamespace("login-form");
 

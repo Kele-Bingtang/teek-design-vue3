@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { setProp } from "@/components/pro/helper";
-import { ProTable, type OperationNamespace, type TableColumn } from "@/components/pro/table";
-import { tableData } from "@/mock/pro-component/pro-table";
-import { Edit, Delete } from "@element-plus/icons-vue";
+import type { OperationNamespace, TableColumn } from "@/components/pro/table";
+import { ref, computed } from "vue";
 import { ElMessage } from "element-plus";
+import { Edit, Delete } from "@element-plus/icons-vue";
+import { setProp } from "@/components/pro/helper";
+import { ProTable } from "@/components/pro/table";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 defineOptions({ name: "Test" });
 

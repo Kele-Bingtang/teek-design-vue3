@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CountToEmits, CountToProps } from "./types";
-import { ref, watch, onMounted, onUnmounted } from "vue";
+import { ref, watch, onMounted, onUnmounted, useTemplateRef } from "vue";
 import CountUp from "countup";
 import { useNamespace } from "@/composables";
 

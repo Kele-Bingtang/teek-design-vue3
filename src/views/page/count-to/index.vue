@@ -1,4 +1,5 @@
 <script setup lang="ts" name="CountToDemo">
+import { ref, reactive, computed, onMounted, onActivated, onDeactivated, onBeforeUnmount, useTemplateRef } from "vue";
 import { CountTo } from "@/components";
 import { useNamespace } from "@/composables";
 

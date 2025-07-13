@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useErrorLogStore } from "@/pinia";
-import { useCommon, useNamespace } from "@/composables";
 import SystemConfig from "@/common/config";
+import { useCommon, useNamespace } from "@/composables";
 import Fullscreen from "./components/fullscreen/index.vue";
 import LanguageSelect from "./components/language-select/index.vue";
 import Notification from "./components/notification/index.vue";

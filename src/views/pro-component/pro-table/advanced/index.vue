@@ -1,10 +1,12 @@
 <script setup lang="tsx" name="SimpleProTable">
-import { ProTable, type TableColumn, type ProTableInstance, type TableRow, setProp } from "@/components";
-import { useConfirm, usePermission } from "@/composables";
+import type { TableColumn, ProTableInstance, TableRow } from "@/components";
+import { ref, useTemplateRef } from "vue";
 import { ElButton, ElMessage, ElMessageBox, ElSwitch, ElTag, type TableColumnCtx } from "element-plus";
-import { tableData } from "@/mock/pro-component/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
+import { ProTable, setProp } from "@/components";
+import { useConfirm, usePermission } from "@/composables";
+import { tableData } from "@/mock/pro-component/pro-table";
 import { withModifiers } from "vue";
 
 export interface ResUserList {

@@ -1,4 +1,5 @@
 <script setup lang="tsx" name="UseDialogDemo">
+import { ref } from "vue";
 import { useDialog, ProDialog } from "@/components";
 
 const visible = ref(false);

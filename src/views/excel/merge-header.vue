@@ -1,4 +1,5 @@
 <script setup lang="ts" name="MergeHeader">
+import { ref } from "vue";
 import { Top } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
 import { largeData } from "@/mock/table/common";

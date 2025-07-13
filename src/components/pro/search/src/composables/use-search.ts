@@ -3,7 +3,7 @@ import type { FormInstance } from "element-plus";
 import type { FormColumn } from "@/components/pro/form";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { ProSearchInstance, ProSearchOnEmits, ProSearchProps } from "../types";
-import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref } from "vue";
+import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";

@@ -1,5 +1,7 @@
 <script setup lang="ts" name="UseComponent">
-import { Vue3Menus, type menusItemType } from "vue3-menus";
+import type { menusItemType } from "vue3-menus";
+import { ref, nextTick } from "vue";
+import { Vue3Menus } from "vue3-menus";
 
 defineProps<{ menus: menusItemType[] }>();
 

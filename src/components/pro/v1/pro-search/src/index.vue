@@ -1,20 +1,14 @@
 <script setup lang="ts">
+import type { FormItemProp } from "element-plus";
+import type { BreakPoint, GridInstance, GridItemProps } from "@/components";
+import type { FormSchemaProps, FormSetProps } from "@/components/pro/v1/pro-form";
 import { computed, onMounted, ref, shallowRef, unref } from "vue";
-import {
-  Grid,
-  GridItem,
-  ProForm,
-  ProFormItem,
-  type BreakPoint,
-  useProForm,
-  type GridInstance,
-  type GridItemProps,
-} from "@/components";
-import { type FormSchemaProps, type FormSetProps, setProp } from "@/components/pro/v1/pro-form";
+import { ElFormItem, ElButton, ElIcon } from "element-plus";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
-import { ElFormItem, ElButton, ElIcon, type FormItemProp } from "element-plus";
 import { isEmpty, isObject, isString } from "@/common/utils";
+import { setProp } from "@/components/pro/v1/pro-form";
+import { Grid, GridItem, ProForm, ProFormItem, useProForm } from "@/components";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProSearch" });
 

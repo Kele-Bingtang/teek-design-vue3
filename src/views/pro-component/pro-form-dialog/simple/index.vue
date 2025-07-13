@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ProFormDialog, type ElFormProps, type FormColumn } from "@/components";
+import type { ElFormProps, FormColumn } from "@/components";
+import { ref } from "vue";
+import { ProFormDialog } from "@/components";
 
 const model = ref({});
 const dialogVisible = ref(false);

@@ -1,3 +1,4 @@
+import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
 import SystemConfig, { LOGIN_NAME } from "@/common/config";
 import { useUserStore } from "@/pinia";

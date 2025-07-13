@@ -1,4 +1,5 @@
 <script setup lang="ts" name="DragTable">
+import { ref, useTemplateRef, shallowRef, onMounted, nextTick } from "vue";
 import Sortable from "sortablejs";
 import { simpleData } from "@/mock/table/common";
 import { tableStatusFilter } from "@/common/config";

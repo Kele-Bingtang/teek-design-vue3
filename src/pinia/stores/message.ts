@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
 import { ref } from "vue";
+import { defineStore } from "pinia";
 import { hasReadList, recycleList, unreadList } from "@/mock/message/message";
 
 export interface MessageItem {

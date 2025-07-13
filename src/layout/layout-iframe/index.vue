@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { ElContainer, ElAside } from "element-plus";
-import { useSettingStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import SystemConfig, { HOME_URL } from "@/common/config";
+import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
 import Menu from "../components/menu/index.vue";
 import UserAvatar from "../components/header/components/user-avatar/index.vue";

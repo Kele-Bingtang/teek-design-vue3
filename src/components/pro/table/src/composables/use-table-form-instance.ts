@@ -1,5 +1,6 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { TableColumn } from "../types";
+import { ref } from "vue";
 import { setProp } from "@/components/pro/helper";
 
 /**

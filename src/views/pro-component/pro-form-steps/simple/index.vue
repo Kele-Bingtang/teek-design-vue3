@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import type { FormStepColumn } from "@/components";
 import { ref } from "vue";
-import { ProFormSteps, type FormStepColumn } from "@/components";
+import { ProFormSteps } from "@/components";
 
 const active = ref(1);
 

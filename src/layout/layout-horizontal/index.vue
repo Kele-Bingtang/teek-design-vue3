@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ElContainer, ElHeader } from "element-plus";
 import { useRouter } from "vue-router";
-import { useSettingStore } from "@/pinia";
-import { useNamespace } from "@/composables";
+import { ElContainer, ElHeader } from "element-plus";
 import SystemConfig, { HOME_URL } from "@/common/config";
+import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
 import Menu from "../components/menu/index.vue";
 import HeaderRight from "../components/header/header-right.vue";

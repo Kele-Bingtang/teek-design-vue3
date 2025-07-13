@@ -1,8 +1,8 @@
 import type { LoginParams } from "@/common/api/user";
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { resetRouter } from "@/router";
 import { useRouteFn } from "@/composables";
+import { resetRouter } from "@/router";
 import { useLayoutStore } from "./layout";
 
 export interface UserInfo {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader } from "element-plus";
-import { useRouter } from "vue-router";
 import SystemConfig, { HOME_URL } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";

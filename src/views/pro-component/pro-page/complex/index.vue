@@ -1,11 +1,13 @@
 <script setup lang="tsx">
-import { ProPage, type PageColumn, type TableScope, type ProPageInstance } from "@/components";
-import { useConfirm } from "@/composables";
-import { ElButton, ElMessage, type TableColumnCtx } from "element-plus";
-import { genderType, tableData, userStatus } from "@/mock/pro-component/pro-table";
+import type { TableColumnCtx } from "element-plus";
+import type { PageColumn, TableScope, ProPageInstance, TableColumn } from "@/components";
+import { ref, useTemplateRef } from "vue";
+import { ElButton, ElMessage } from "element-plus";
 import { CirclePlus, Delete, Pointer, Refresh } from "@element-plus/icons-vue";
+import { ProPage } from "@/components";
+import { useConfirm, useNamespace } from "@/composables";
+import { genderType, tableData, userStatus } from "@/mock/pro-component/pro-table";
 import type { ResUserList } from "../advanced/index.vue";
-import { useNamespace } from "@/composables";
 
 const ns = useNamespace();
 const proPageInstance = useTemplateRef<ProPageInstance>("proPageInstance");
@@ -66,7 +68,7 @@ const setCurrent = () => {
 
 // 表尾合计行（自行根据条件计算）
 interface SummaryMethodProps<T = ResUserList> {
-  columns: TableColumnCtx<T>[];
+  columns: TableColumn[];
   data: T[];
 }
 const getSummaries = (param: SummaryMethodProps) => {

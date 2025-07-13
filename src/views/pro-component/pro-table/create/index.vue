@@ -1,7 +1,9 @@
 <script setup lang="tsx" name="CreateTable">
-import { useProTable, type TableColumn } from "@/components";
-import { tableData } from "@/mock/pro-component/pro-table";
+import type { TableColumn } from "@/components";
+import { onMounted } from "vue";
 import { ElButton, ElMessage } from "element-plus";
+import { useProTable } from "@/components";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 const {
   createMethods: { createTable, createTableComponent },

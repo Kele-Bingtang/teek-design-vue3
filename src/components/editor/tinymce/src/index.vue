@@ -3,12 +3,13 @@ import type { TinymceEmitProps, TinymceProps } from "./types";
 import { ref, reactive, computed, onBeforeUnmount, watch, nextTick, useAttrs } from "vue";
 import TinymceEditor from "@tinymce/tinymce-vue";
 import { useNamespace } from "@/composables";
+import { plugins, toolbar as toolbarConfig } from "./config";
+
 import "tinymce/tinymce";
 import "tinymce/icons/default";
 import "tinymce/themes/silver";
 import "tinymce/models/dom";
 import "./plugins-import";
-import { plugins, toolbar as toolbarConfig } from "./config";
 
 defineOptions({ name: "Tinymce" });
 

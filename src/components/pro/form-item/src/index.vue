@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Component } from "vue";
 import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "./types";
+import { computed, watch, useTemplateRef, toValue, ref } from "vue";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isObject, isString } from "@/common/utils";
-import { formELComponentsMap, FormElComponentEnum } from "./helper";
 import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
+import { formELComponentsMap, FormElComponentEnum } from "./helper";
 import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";

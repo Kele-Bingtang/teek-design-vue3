@@ -12,24 +12,24 @@ priority: 999
 
 ## 文件组织
 
-1. 通用组件(components)请放到 `src/components8` 目录下，且按功能分子文件夹，比如 `card/`、`chart/`、`pro/`
+1. 通用组件(components)请放到 `src/components/` 目录下，且按功能分子文件夹，比如 `card/`、`chart/`、`pro/`
 2. 通用可复用逻辑(composables)放在 `src/composables/`
 3. 通用样式放在 `src/common/styles/`
 4. 通用 API 请求相关文件放在 `src/common/api/`
 5. 通用工具函数放在 `src/common/utils/`
 6. Typescript 类型文件请在组件同级目录下创建 `types.ts` 或者 types 目录，且
-7. ! 上述非通用文件请在组件同级目录创建，如 `src/views/lgoin` 下有 `index.vue`、`components`、`composables`、`api` 等 !
+7. 上述非通用文件请在组件同级目录创建，如 `src/views/lgoin` 下有 `index.vue`、`components`、`composables`、`api` 等
 
 ## 命名规范
 
 1. 所有文件请使用 `kebab-case` 风格，如 `pro-table.vue`、`use-table.ts`、`pro-table.scss`
+2. 引入组件的命名为 `Camel-Case`，如 `import ProTable from "pro-table.vue"`
 2. TypeScript 接口和类型用 PascalCase，统一放在同级目录 `types.ts` 或 `types/xx.ts` 文件中，且组件里的 Typescript 类型移到类型文件里，如 `ProTableProps`、`ProTableEmits`
 
 ## TypeScript 使用
 
-1. 所有函数参数都要加类型注解，如果返回值可以确定推导则不需要添加
-2. Vue SFC 使用 `<script setup lang="ts">`。
-3. 全局类型放在 `src/types/`，模块专用类型
+1. 所有函数参数都要加类型注解，如果返回值可以推导则不需要添加
+2. 全局类型放在 `src/types/`，模块专用类型
 
 ## 导入与导出
 
@@ -57,4 +57,4 @@ priority: 999
 ## Git 版本管理
 
 1. 不要提交构建产物和本地环境配置文件
-2. TODO.md 及时记录和更新待办事项。
+2. TODO.md 及时记录和更新待办事项

@@ -1,4 +1,5 @@
 <script setup lang="ts" name="DetailProForm">
+import { ref } from "vue";
 import { ProForm } from "@/components";
 import { columns, elFormProps } from "./options";
 

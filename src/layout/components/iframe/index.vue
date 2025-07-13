@@ -2,6 +2,7 @@
 import type { IFrame } from "./use-iframe";
 import { watch } from "vue";
 import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useLayoutStore } from "@/pinia";
 import { useIFrame } from "./use-iframe";
 import IFrameView from "./iframe-view.vue";

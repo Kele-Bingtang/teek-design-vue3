@@ -1,5 +1,6 @@
 <script setup lang="ts" name="AnimationMixin">
 import type { FormInstance } from "element-plus";
+import { ref, useTemplateRef } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import Button from "./components/button/index.vue";

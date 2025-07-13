@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ImageViewerProps } from "element-plus";
-import { ElImageViewer, ElConfigProvider } from "element-plus";
 import { computed } from "vue";
+import { ElImageViewer, ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/pinia";
 

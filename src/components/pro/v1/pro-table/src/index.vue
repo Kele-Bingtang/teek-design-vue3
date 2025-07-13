@@ -1,51 +1,46 @@
 <script setup lang="ts">
-import {
-  ref,
-  watch,
-  provide,
-  onMounted,
-  computed,
-  useAttrs,
-  unref,
-  type CSSProperties,
-  type ComponentPublicInstance,
-  isReactive,
-  reactive,
-} from "vue";
-import { useTable, type Table } from "./hooks/use-table";
-import { useSelection } from "./hooks/use-selection";
-import { Pagination } from "@/components/pro/pagination";
-import { type BreakPoint } from "@/components/pro/grid";
-import { type ProFormInstance, setProp } from "@/components/pro/v1/pro-form";
-import {
-  ProSearch,
-  type ProSearchInstance,
-  type ProSearchExpose,
-  type ProSearchProps,
-  type ProSearchSchemaProps,
+import type { CSSProperties, ComponentPublicInstance } from "vue";
+import type { FormInstance, TableInstance, TableProps } from "element-plus";
+import type { BreakPoint } from "@/components/pro/grid";
+import type { ProFormInstance } from "@/components/pro/v1/pro-form";
+import type {
+  ProSearchInstance,
+  ProSearchExpose,
+  ProSearchProps,
+  ProSearchSchemaProps,
 } from "@/components/pro/v1/pro-search";
+import type { Table } from "./hooks/use-table";
+import type {
+  TableColumnProps,
+  DialogFormInstance,
+  TypeProps,
+  ToolButton,
+  TableSetProps,
+  FilterRule,
+} from "./interface";
+import type { CustomTableSize, ElTableSize } from "./components/table-main-header.vue";
+import type { DialogFormProps } from "./components/dialog-form.vue";
+import { ref, watch, provide, onMounted, computed, useAttrs, unref, isReactive, reactive, useTemplateRef } from "vue";
+import Sortable from "sortablejs";
+import { useNamespace } from "@/composables";
+import { Pagination } from "@/components/pro/pagination";
+import { setProp } from "@/components/pro/v1/pro-form";
+import { ProSearch } from "@/components/pro/v1/pro-search";
+import { filterEnum, filterEnumLabel, handleRowAccordingToProp, lastProp, frontFilter, exportExcel } from "./helper";
+import { useTable } from "./hooks/use-table";
+import { useSelection } from "./hooks/use-selection";
 import {
-  type TableColumnProps,
-  type DialogFormInstance,
-  type TypeProps,
   TableSizeEnum,
-  type ToolButton,
-  type TableSetProps,
   proTablePrefixClassKey,
   tableEnumMapKey,
   dialogFormInstanceKey,
   filterKey,
-  type FilterRule,
   editKey,
 } from "./interface";
-import { filterEnum, filterEnumLabel, handleRowAccordingToProp, lastProp, frontFilter, exportExcel } from "./helper";
 import ColSetting from "./components/col-setting.vue";
 import TableMain from "./components/table-main.vue";
-import TableMainHeader, { type CustomTableSize, type ElTableSize } from "./components/table-main-header.vue";
-import DialogFormComponent, { type DialogFormProps } from "./components/dialog-form.vue";
-import Sortable from "sortablejs";
-import { useNamespace } from "@/composables";
-import { type FormInstance, type TableInstance, type TableProps } from "element-plus";
+import TableMainHeader from "./components/table-main-header.vue";
+import DialogFormComponent from "./components/dialog-form.vue";
 
 defineOptions({ name: "ProTable" });
 

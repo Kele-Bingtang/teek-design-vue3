@@ -1,5 +1,6 @@
+import type { Component, VNode } from "vue";
 import type { ElDisplayProps, TablePascalCaseComponentName } from "../types";
-import { withModifiers } from "vue";
+import { withModifiers, h } from "vue";
 import { ElLink, ElTag, ElCheckTag, ElProgress, ElImage, ElAvatar, dayjs, ElIcon, ElMessage } from "element-plus";
 import { DocumentCopy } from "@element-plus/icons-vue";
 import { isArray, isString } from "@/common/utils";

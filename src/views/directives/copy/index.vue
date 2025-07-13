@@ -1,4 +1,7 @@
 <script setup lang="ts" name="Copy">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 const router = useRouter();
 const data = ref<string>("https://github.com/Kele-Bingtang/teek-design-vue3");
 </script>

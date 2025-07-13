@@ -3,10 +3,10 @@ import { ref, defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElButton, ElDivider, ElDrawer, ElMessage } from "element-plus";
 import { Notification, Menu, ColdDrink, Setting, Box, Refresh, Loading } from "@element-plus/icons-vue";
-import { useSettingStore } from "@/pinia";
+import { OpenThemePanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
 import { useCommon, useNamespace } from "@/composables";
-import { OpenThemePanelKey } from "@/common/config";
+import { useSettingStore } from "@/pinia";
 import {
   LayoutModeSwitch,
   MenuThemeSwitch,

@@ -2,6 +2,7 @@
 import Basic from "./components/basic.vue";
 import MenuGroup from "./components/menuGroup.vue";
 import MenuDynamic from "./components/menuDynamic.vue";
+
 import "v-contextmenu/dist/themes/default.css";
 </script>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, reactive, onMounted } from "vue";
 import avatar1 from "@/common/assets/images/default.png";
 import avatar2 from "@/common/assets/images/default.png";
 import avatar3 from "@/common/assets/images/default.png";

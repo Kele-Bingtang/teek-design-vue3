@@ -1,4 +1,5 @@
 <script setup lang="ts" name="SelectExcel">
+import { ref, useTemplateRef } from "vue";
 import { ElMessage, ElTable } from "element-plus";
 import { Document, Top } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";

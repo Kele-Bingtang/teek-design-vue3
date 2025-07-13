@@ -1,5 +1,7 @@
 <script setup lang="ts" name="UseProSearchDemo">
-import { ProSearch, type ProSearchColumnProps, useProSearch, type ActionPosition } from "@/components";
+import type { ProSearchColumnProps, ActionPosition } from "@/components";
+import { ref, reactive } from "vue";
+import { ProSearch, useProSearch } from "@/components";
 
 const { searchRegister, searchMethods } = useProSearch();
 const { setColumn, setProps, setValues, getFormModel } = searchMethods;

@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import CardList from "./components/card-list.vue";
+import ActiveUser from "./components/active-user.vue";
+import SalesOverview from "./components/sales-overview.vue";
+import NewUser from "./components/new-user.vue";
+import Dynamic from "./components/dynamic.vue";
+import TodoList from "./components/todo-list.vue";
+
+defineOptions({ name: "Console" });
+
+onMounted(() => {
+  window.scrollTo({ top: 0 });
+});
+</script>
+
 <template>
   <div class="console">
     <CardList></CardList>
@@ -24,21 +40,6 @@
     </el-row>
   </div>
 </template>
-
-<script setup lang="ts">
-import CardList from "./components/card-list.vue";
-import ActiveUser from "./components/active-user.vue";
-import SalesOverview from "./components/sales-overview.vue";
-import NewUser from "./components/new-user.vue";
-import Dynamic from "./components/dynamic.vue";
-import TodoList from "./components/todo-list.vue";
-
-defineOptions({ name: "Console" });
-
-onMounted(() => {
-  window.scrollTo({ top: 0 });
-});
-</script>
 
 <style lang="scss" scoped>
 @use "./index";

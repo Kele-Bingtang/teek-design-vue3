@@ -1,8 +1,8 @@
 <!-- 卡片横幅组件 -->
 <script setup lang="ts">
 import type { CardBannerProps } from "./types";
-import { useNamespace } from "@/composables";
 import defaultIcon from "@/common/assets/images/3d/icon1.webp"; // 导入默认图标
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "BannerImageCard" });
 

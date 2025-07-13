@@ -2,14 +2,14 @@
 import type { BreakPoint, GridInstance } from "@/components/pro/grid";
 import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
 import type { ProSearchColumnProps, ProSearchEmits, ProSearchProps } from "./types";
-import { computed, onMounted } from "vue";
-import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
+import { computed, onMounted, useTemplateRef } from "vue";
 import { ElButton, ElIcon } from "element-plus";
-import { useNamespace } from "@/composables";
+import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { filterEmpty } from "@/components/pro/helper";
 import { ProForm, useProFormFn } from "@/components/pro/form";
 import { ProFormItem } from "@/components/pro/form-item";
 import { Grid, GridItem } from "@/components/pro/grid";
+import { useNamespace } from "@/composables";
 import { useSearchApi } from "./composables/use-search-api";
 
 defineOptions({ name: "ProSearch" });

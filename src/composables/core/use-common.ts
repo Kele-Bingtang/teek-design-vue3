@@ -1,5 +1,6 @@
-import { mobileMaxWidthMedia, RefreshPageKey } from "@/common/config";
+import { inject } from "vue";
 import { useMediaQuery } from "@vueuse/core";
+import { mobileMaxWidthMedia, RefreshPageKey } from "@/common/config";
 
 /**
  * 复用性较高的变量或方法

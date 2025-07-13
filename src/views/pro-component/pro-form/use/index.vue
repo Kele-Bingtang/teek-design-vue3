@@ -1,13 +1,9 @@
 <script setup lang="tsx" name="UseProForm">
-import { ProForm, type FormColumn, useProForm, type ElFormProps } from "@/components";
-import {
-  ElRadio,
-  type ComponentSize,
-  type FormItemProp,
-  type InputInstance,
-  ElMessageBox,
-  ElMessage,
-} from "element-plus";
+import type { ComponentSize, FormItemProp, InputInstance } from "element-plus";
+import type { FormColumn, ElFormProps } from "@/components";
+import { ref, reactive } from "vue";
+import { ElRadio, ElMessageBox, ElMessage } from "element-plus";
+import { ProForm, useProForm } from "@/components";
 
 const { formRegister, formMethods } = useProForm();
 const {

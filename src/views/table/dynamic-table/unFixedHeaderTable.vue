@@ -1,4 +1,5 @@
 <script setup lang="ts" name="UnFixedHeaderTable">
+import { ref } from "vue";
 import { simpleData } from "@/mock/table/common";
 
 const tableData = ref(simpleData);

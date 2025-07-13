@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { BarChartProps, BarDataItem } from "../../types";
+import { computed } from "vue";
 import * as echarts from "echarts";
 import { getCssVar } from "@/common/utils";
 import { useNamespace, useChartOps, useChartComponent } from "@/composables";

@@ -1,8 +1,11 @@
 <script setup lang="ts" name="TinymceDemo">
-import { Tinymce, type UITheme } from "@/components";
+import type { UITheme } from "@/components";
+import { ref, watch, nextTick, onActivated, onDeactivated } from "vue";
+import { storeToRefs } from "pinia";
+import { ElMessage } from "element-plus";
+import { Tinymce } from "@/components";
 import { useLayoutStore, useSettingStore } from "@/pinia";
 import { tinymceHtml } from "@/mock/editor/tinymce";
-import { ElMessage } from "element-plus";
 
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();

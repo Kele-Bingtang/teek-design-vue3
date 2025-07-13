@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { computed, inject, nextTick, watch, type CSSProperties } from "vue";
-import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, type ComponentSize } from "element-plus";
+import type { CSSProperties } from "vue";
+import type { ComponentSize } from "element-plus";
+import type { TableColumnProps, ToolButton } from "../interface";
+import type { DialogFormProps } from "./dialog-form.vue";
+import { computed, inject, nextTick, watch } from "vue";
+import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton } from "element-plus";
 import { Refresh, Plus, Operation, Search, Delete, Coin, Download } from "@element-plus/icons-vue";
 import { visibleButton } from "../helper";
-import type { DialogFormProps } from "./dialog-form.vue";
-import {
-  TableSizeEnum,
-  dialogFormInstanceKey,
-  proTablePrefixClassKey,
-  type TableColumnProps,
-  type ToolButton,
-} from "../interface";
+import { TableSizeEnum, dialogFormInstanceKey, proTablePrefixClassKey } from "../interface";
 
 defineOptions({ name: "ProTableMainHeader" });
 

@@ -1,4 +1,5 @@
 <script setup lang="ts" name="ImageViewerDemo">
+import { ref } from "vue";
 import { createImageViewer, ImageViewer } from "@/components";
 
 const urlList = [

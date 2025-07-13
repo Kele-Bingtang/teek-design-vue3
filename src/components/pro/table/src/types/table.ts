@@ -1,3 +1,4 @@
+import type { MaybeRef } from "vue";
 import type { TableInstance, TableProps } from "element-plus";
 import type { ProTableHeadNamespace } from "./table-head";
 import type { ProTableMainNamespace } from "./table-main";

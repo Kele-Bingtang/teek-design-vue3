@@ -2,6 +2,7 @@
 import type { FormColumn, ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { TableEditProps, TableEditEmits } from "../types";
+import { ref, computed, watch, useTemplateRef } from "vue";
 import { setProp } from "@/components/pro/helper";
 import ProForm from "@/components/pro/form";
 

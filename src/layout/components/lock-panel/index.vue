@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules, InputInstance } from "element-plus";
-import { ref, reactive, computed, watch, onMounted, onUnmounted } from "vue";
+import { ref, reactive, computed, watch, onMounted, onUnmounted, useTemplateRef } from "vue";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 import { ElDialog, ElForm, ElFormItem, ElButton, ElInput, ElIcon, ElMessage } from "element-plus";
 import { Unlock, Lock } from "@element-plus/icons-vue";
 import { mittBus } from "@/common/utils";
 import SystemConfig, { LOGIN_URL, OpenLockPanelKey } from "@/common/config";
-import { useUserStore } from "@/pinia";
 import { useNamespace } from "@/composables";
+import { useUserStore } from "@/pinia";
 import { useDisableDevTools } from "./use-disabled-dev-tools";
 
 defineOptions({ name: "LockPanel" });

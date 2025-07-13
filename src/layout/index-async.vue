@@ -14,11 +14,11 @@
 
 <script setup lang="ts">
 import type { Component } from "vue";
-import { defineAsyncComponent } from "vue";
+import { defineAsyncComponent, watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useSettingStore } from "@/pinia";
-import { useCommon, useUpgrade } from "@/composables";
 import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { useCommon, useUpgrade } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";
 import Loading from "./components/loading/index.vue";

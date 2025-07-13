@@ -1,4 +1,5 @@
 <script setup lang="ts" name="DragDrawerDemo">
+import { ref } from "vue";
 import { DragDrawer } from "@/components";
 import { useNamespace } from "@/composables";
 

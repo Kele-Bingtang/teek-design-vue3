@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { FlowType } from "./components/flow/index.vue";
+import { ref } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 import { getNowDate } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import Flow from "./components/flow/index.vue";
@@ -10,7 +12,6 @@ import HotRecommend from "./components/hot-recommend/index.vue";
 import SimpleNotebook from "./components/simple-notebook/index.vue";
 import CommonLinks from "./components/common-links/index.vue";
 import Calendar from "./components/calendar/index.vue";
-import { useMediaQuery } from "@vueuse/core";
 
 const ns = useNamespace("workbenches");
 

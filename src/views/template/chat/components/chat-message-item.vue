@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useNamespace } from "@/composables/core/use-namespace";
+import { useNamespace } from "@/composables";
+
 const ns = useNamespace("chat-message-item");
 
 interface ChatMessageItemProps {

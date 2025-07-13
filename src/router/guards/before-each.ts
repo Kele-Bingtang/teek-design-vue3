@@ -1,8 +1,8 @@
 import type { Router } from "vue-router";
+import SystemConfig, { LOGIN_URL } from "@/common/config";
 import { NProgress } from "@/common/utils";
 import { useRouteFn } from "@/composables";
 import { useRouteStore, useUserStore } from "@/pinia";
-import SystemConfig, { LOGIN_URL } from "@/common/config";
 import { resetRouter } from "..";
 
 export const beforeEach = (router: Router) => {

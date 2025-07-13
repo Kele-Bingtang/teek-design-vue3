@@ -1,12 +1,12 @@
 import type { Component, ComponentInternalInstance, AppContext, ComputedRef } from "vue";
 import type { ProDrawerProps } from "./types";
 import type { DrawerProps } from "element-plus";
-import { render, getCurrentInstance, nextTick, ref } from "vue";
+import { render, getCurrentInstance, nextTick, ref, computed, inject } from "vue";
 import { ElDrawer, ElButton, ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
 import { isArray } from "@/common/utils";
 import { GlobalConfigKey } from "@/common/config";
-import { Icon } from "@/components";
+import { Icon } from "@/components/core/icon";
 
 import "./index.scss";
 

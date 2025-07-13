@@ -1,9 +1,11 @@
 <script setup lang="ts" name="Forget">
-import { ElMessage, type FormInstance } from "element-plus";
-import { useVerifyCode } from "../verifyCode";
-import { updateRules } from "../rules";
+import type { FormInstance } from "element-plus";
+import { ref, reactive, inject, useTemplateRef } from "vue";
+import { ElMessage } from "element-plus";
 import { User, Phone, Lock, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { useVerifyCode } from "../verifyCode";
+import { updateRules } from "../rules";
 
 const ns = useNamespace("login-form");
 const { isDisabled, text } = useVerifyCode();

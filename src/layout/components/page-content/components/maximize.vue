@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Close } from "@element-plus/icons-vue";
-import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "CustomTransition" });
 

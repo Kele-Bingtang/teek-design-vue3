@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { CSSProperties } from "vue";
 import type { SeamlessScrollEmits, SeamlessScrollProps } from "./types";
-import { computed, nextTick, ref, type CSSProperties } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { tryOnMounted, tryOnUnmounted, templateRef, useDebounceFn } from "@vueuse/core";
 import * as utilsMethods from "./utils";
 

@@ -5,23 +5,17 @@
     </div>
  -->
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch, type CSSProperties } from "vue";
+import type { CSSProperties } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watch, useTemplateRef, useAttrs } from "vue";
+import { storeToRefs } from "pinia";
 import { ElTooltip } from "element-plus";
 import { useResizeObserver } from "@vueuse/core";
 import { useSettingStore } from "@/pinia";
 import SystemConfig from "@/common/config";
 import { isFunction } from "@/common/utils";
+import type { TooltipProps } from "./types";
 
 defineOptions({ name: "Tooltip" });
-
-interface TooltipProps {
-  /** 多少行文字溢出开始省略并气泡提示，默认 1 行 */
-  line?: number;
-  /** 是否实时的判断文字是否溢出（适用于元素默认隐藏，需要鼠标悬停触发的场景），默认 false */
-  realTime?: boolean;
-  /** 最大尝试判断次数（适用于元素默认隐藏，需要鼠标悬停触发的场景），仅当 realTime = false 时生效，默认 3 次 */
-  maxTry?: number;
-}
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   line: 1,

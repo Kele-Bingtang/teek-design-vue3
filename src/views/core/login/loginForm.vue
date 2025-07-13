@@ -1,12 +1,14 @@
 <script setup lang="ts" name="LoginForm">
-import { useRouter } from "vue-router";
-import { ElNotification, type FormInstance } from "element-plus";
-import { useUserStore } from "@/pinia";
-import { getTimeState } from "@/common/utils";
-import SystemConfig, { HOME_URL } from "@/common/config";
-import { ImageVerifyCode } from "@/components";
+import type { FormInstance } from "element-plus";
+import { ref, reactive, inject, useTemplateRef } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { ElNotification } from "element-plus";
 import { User, Lock, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
+import SystemConfig, { HOME_URL } from "@/common/config";
+import { getTimeState } from "@/common/utils";
+import { ImageVerifyCode } from "@/components";
 import { useNamespace } from "@/composables";
+import { useUserStore } from "@/pinia";
 
 interface LoginForm {
   username: string;

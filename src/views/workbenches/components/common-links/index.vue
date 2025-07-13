@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormColumn, ProFormInstance } from "@/components";
+import { ref, useTemplateRef } from "vue";
 import { Link, Plus } from "@element-plus/icons-vue";
 import { ProDialog, ProForm, IconPicker } from "@/components";
 import { useNamespace, useValidator } from "@/composables";

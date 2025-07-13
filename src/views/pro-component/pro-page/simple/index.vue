@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { OperationNamespace, TableColumn } from "@components/pro/table";
 import type { PageColumn } from "@components/pro/page";
-import { ProPage } from "@components/pro/page";
-import { tableData } from "@/mock/pro-component/pro-table";
-import { Edit, Delete } from "@element-plus/icons-vue";
+import { ref, computed } from "vue";
 import { ElMessage } from "element-plus";
+import { Edit, Delete } from "@element-plus/icons-vue";
+import { ProPage } from "@/components";
+import { tableData } from "@/mock/pro-component/pro-table";
 
 defineOptions({ name: "Test" });
 

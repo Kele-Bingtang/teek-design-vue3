@@ -1,6 +1,7 @@
 <script setup lang="ts" name="IconDemo">
-import { IconPicker } from "@/components";
+import { ref } from "vue";
 import Upload from "@iconify-icons/ant-design/upload";
+import { IconPicker } from "@/components";
 
 const currentIcon = ref("");
 </script>

@@ -1,8 +1,9 @@
 <script setup lang="ts" name="Print">
+import { ref } from "vue";
 import { printElement } from "@/common/utils";
-import { simpleData } from "@/mock/table/common";
-import { useNamespace } from "@/composables";
 // import { BarChart } from "@/components";
+import { useNamespace } from "@/composables";
+import { simpleData } from "@/mock/table/common";
 
 const ns = useNamespace();
 

@@ -1,7 +1,8 @@
+import type { ComponentPublicInstance } from "vue";
 import { ElNotification } from "element-plus";
+import SystemConfig from "@/common/config";
 import { isArray, useSimpleUuid } from "@/common/utils";
 import { useErrorLogStore } from "@/pinia";
-import SystemConfig from "@/common/config";
 
 /**
  * 检查当前环境是否符合错误日志的运行

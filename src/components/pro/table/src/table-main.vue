@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
-import { toValue } from "vue";
+import { toValue, ref, computed, watch, watchEffect, useTemplateRef, nextTick, unref } from "vue";
 import { ElTable, ElMessage } from "element-plus";
-import { useNamespace } from "@/composables";
 import { isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
 import {
@@ -15,6 +14,7 @@ import {
   flatColumnsFn,
 } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
+import { useNamespace } from "@/composables";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnType from "./table-column/table-column-type.vue";

@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
-import defaultAvatar from "@/common/assets/images/default.png";
-import { useUserStore } from "@/pinia";
-import { mittBus } from "@/common/utils";
 import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
+import defaultAvatar from "@/common/assets/images/default.png";
+import { mittBus } from "@/common/utils";
+import { useNamespace } from "@/composables";
+import { useUserStore } from "@/pinia";
 
 import "./index.scss";
 

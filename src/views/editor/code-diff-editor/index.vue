@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import { ref, reactive, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { CodeDiff } from "v-code-diff";
-import oldDoc from "./oldDoc.json";
-import newDOc from "./newDoc.json";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
+import oldDoc from "./oldDoc.json";
+import newDOc from "./newDoc.json";
 
 const ns = useNamespace();
 

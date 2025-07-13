@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { watch, ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader, ElScrollbar } from "element-plus";
-import { useSettingStore } from "@/pinia";
-import { useMenu } from "@/composables";
-import { Tooltip } from "@/components";
-import { useNamespace } from "@/composables";
 import SystemConfig, { HOME_URL } from "@/common/config";
+import { Tooltip } from "@/components";
+import { useMenu } from "@/composables";
+import { useSettingStore } from "@/pinia";
+import { useNamespace } from "@/composables";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";

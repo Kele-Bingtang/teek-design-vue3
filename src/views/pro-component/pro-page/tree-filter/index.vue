@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ProPage, TreeFilter, type TableColumn, type ProPageInstance } from "@/components";
-import { useConfirm } from "@/composables";
+import type { TableColumn, ProPageInstance } from "@/components";
+import { ref, useTemplateRef } from "vue";
+import { ProPage, TreeFilter } from "@/components";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { genderType, tableData, userStatus, department } from "@/mock/pro-component/pro-table";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
 import { exportJsonToExcel, formatJsonToArray } from "@/common/utils";
+import { useConfirm } from "@/composables";
+import { genderType, tableData, userStatus, department } from "@/mock/pro-component/pro-table";
 import type { ResUserList } from "../advanced/index.vue";
 
 const proPageInstance = useTemplateRef<ProPageInstance>("proPageInstance");

@@ -1,8 +1,10 @@
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { tryOnScopeDispose } from "@vueuse/core";
-import { useSettingStore, useUserStore } from "@/pinia";
-import SystemConfig from "@/common/config";
 import { TitleModeEnum } from "@/common/enums/appEnum";
+import SystemConfig from "@/common/config";
 import { formatTitle } from "@/router/helper";
+import { useSettingStore, useUserStore } from "@/pinia";
 
 /**
  * 浏览器标题管理

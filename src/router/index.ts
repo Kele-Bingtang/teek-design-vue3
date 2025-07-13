@@ -1,11 +1,11 @@
 import type { RouteRecordRaw, RouterHistory } from "vue-router";
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import { NProgress } from "@/common/utils";
+import { LOGIN_NAME } from "@/common/config";
+import { useRouteStore } from "@/pinia";
 import { staticRoutes } from "./routes-config";
 import { beforeEach } from "./guards/before-each";
 import { afterEach } from "./guards/after-each";
-import { useRouteStore } from "@/pinia";
-import { LOGIN_NAME } from "@/common/config";
 
 /**
  * 初始化路由

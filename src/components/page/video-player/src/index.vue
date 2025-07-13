@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PlayerProps } from "./types";
-import { ref, onMounted, watch, onBeforeUnmount, nextTick } from "vue";
+import { ref, onMounted, watch, onBeforeUnmount, nextTick, useTemplateRef } from "vue";
 import Player from "xgplayer";
 
 import "xgplayer/dist/index.min.css";

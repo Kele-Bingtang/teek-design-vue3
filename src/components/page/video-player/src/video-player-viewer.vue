@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { VideoPlayerViewerProps } from "./types";
-import { computed, nextTick } from "vue";
+import { computed, nextTick, useId } from "vue";
+import { useEventListener } from "@vueuse/core";
 import { ElOverlay, ElConfigProvider } from "element-plus";
 import { Close } from "@element-plus/icons-vue";
-import { useLayoutStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import { Icon } from "@/components";
+import { useNamespace } from "@/composables";
+import { useLayoutStore } from "@/pinia";
 import VideoPlayer from "./index.vue";
-import { useEventListener } from "@vueuse/core";
 
 defineOptions({ name: "VideoPlayerViewer" });
 

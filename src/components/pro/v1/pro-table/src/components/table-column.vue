@@ -1,8 +1,9 @@
 <script setup lang="tsx">
+import type { TableColumnProps, TableRenderScope, HeaderRenderScope } from "../interface";
 import { inject, ref, useSlots } from "vue";
-import { type TableColumnProps, type TableRenderScope, type HeaderRenderScope, tableEnumMapKey } from "../interface";
-import { filterEnum, filterEnumLabel, formatCellValue, lastProp, handleRowAccordingToProp } from "../helper";
 import { ElCheckTag, ElTag, ElTableColumn, ElButton } from "element-plus";
+import { tableEnumMapKey } from "../interface";
+import { filterEnum, filterEnumLabel, formatCellValue, lastProp, handleRowAccordingToProp } from "../helper";
 import { useHeaderFilter } from "./plugins/header-filter";
 import { useRowInlineEdit } from "./plugins/row-inline-edit";
 

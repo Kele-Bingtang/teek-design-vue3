@@ -2,11 +2,11 @@
 import type { TableColumnCtx } from "element-plus";
 import type { TableScope, TableColumn, TableColumnDataNamespace, RenderParams } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
-import { toValue } from "vue";
+import { toValue, computed, toRaw } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { getProp } from "@/components/pro/helper";
 import { isBoolean, isString } from "@/common/utils";
+import { getProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { formatCellValue, lastProp } from "../helper";
 import TableFilter from "../plugins/table-filter.vue";

@@ -1,8 +1,9 @@
 <script setup lang="ts" name="Clipboard">
-import { ElMessage } from "element-plus";
-import useClipboard from "vue-clipboard3";
-import { Document } from "@element-plus/icons-vue";
+import { ref } from "vue";
 import { useClipboard as vueuseClipboard } from "@vueuse/core";
+import { ElMessage } from "element-plus";
+import { Document } from "@element-plus/icons-vue";
+import useClipboard from "vue-clipboard3";
 
 const { toClipboard } = useClipboard();
 const content = ref("https://github.com/Kele-Bingtang/teek-design-vue3");

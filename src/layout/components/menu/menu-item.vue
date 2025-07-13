@@ -3,10 +3,10 @@ import { ref, watch, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { ElMenuItem, ElSubMenu } from "element-plus";
 import { isValidURL } from "@/common/utils";
+import { Tooltip, PointTag } from "@/components";
 import { useNamespace, useCommon } from "@/composables";
-import { Tooltip } from "@/components";
-import { useLayoutStore, useSettingStore } from "@/pinia";
 import { formatTitle } from "@/router/helper";
+import { useLayoutStore, useSettingStore } from "@/pinia";
 
 defineOptions({ name: "AsideMenuItem" });
 
@@ -81,6 +81,12 @@ watch(
       >
         {{ menuItem.meta.tagText }}
       </el-tag>
+      <PointTag
+        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        theme="danger"
+        v-bind="menuItem.meta.pointTagProps"
+        class="menu-item-tag"
+      />
     </template>
   </el-menu-item>
 
@@ -102,6 +108,12 @@ watch(
       >
         {{ menuItem.meta.tagText }}
       </el-tag>
+      <PointTag
+        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        theme="danger"
+        v-bind="menuItem.meta.pointTagProps"
+        class="sub-menu-item-tag"
+      />
     </template>
 
     <template v-if="menuItem.children">

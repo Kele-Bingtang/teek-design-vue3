@@ -1,4 +1,5 @@
 <script setup lang="ts" name="seamlessScroll">
+import { ref, reactive, useTemplateRef } from "vue";
 import { SeamlessScroll } from "@/components";
 
 const scroll = useTemplateRef("scroll");

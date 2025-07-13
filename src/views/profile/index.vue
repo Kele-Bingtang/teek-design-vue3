@@ -1,10 +1,12 @@
 <script setup lang="ts" name="Profile">
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/pinia";
 import EditorInfo from "./components/editorInfo/index.vue";
 import Account from "./components/account/index.vue";
 import UserInfo from "./components/user-info/index.vue";
 import UserAvatar from "./components/user-avatar/index.vue";
 import Timeline from "./components/timeline/index.vue";
-import { useUserStore } from "@/pinia";
 
 const userStore = useUserStore();
 const activeTab = ref("timeline");

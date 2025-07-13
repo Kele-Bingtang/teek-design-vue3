@@ -12,16 +12,17 @@ import type {
   TableSizeEnum,
   UseSelectState,
 } from "@/components/pro/table";
-import type { ProPageEmits, ProPageProps } from "./types";
 import type { PageInfo } from "@/components/pro/pagination";
+import type { ProPageEmits, ProPageProps } from "./types";
+import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
 import { ElTooltip, ElButton } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
 import { isEmpty, isFunction } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, lastProp } from "@/components/pro/table";
 import { filterEmpty, flatColumnsFn, setProp } from "@/components/pro/helper";
+import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProPage" });
 

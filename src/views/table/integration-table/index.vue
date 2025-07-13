@@ -1,11 +1,14 @@
 <script setup lang="ts" name="IntegrationTable">
-import { Pagination, TableSort, defaultPageInfo, type PageInfo } from "@/components";
-import { largeData } from "@/mock/table/common";
-import Sortable from "sortablejs";
-import { ElMessage, ElMessageBox, ElNotification, type FormInstance } from "element-plus";
-import { tableStatusFilter } from "@/common/config";
+import type { FormInstance } from "element-plus";
+import type { PageInfo } from "@/components";
+import { ref, useTemplateRef, shallowRef, onMounted, nextTick, watch, reactive } from "vue";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { Search, Refresh, Plus, Check, EditPen, Delete } from "@element-plus/icons-vue";
+import Sortable from "sortablejs";
+import { tableStatusFilter } from "@/common/config";
+import { Pagination, TableSort, defaultPageInfo } from "@/components";
 import { useNamespace } from "@/composables";
+import { largeData } from "@/mock/table/common";
 
 const defaultTableData = {
   id: "",

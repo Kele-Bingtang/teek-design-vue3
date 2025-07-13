@@ -1,3 +1,4 @@
+import type { MaybeRefOrGetter } from "vue";
 import type { TableInstance } from "element-plus";
 import type { ProTableInstance, ProTableNamespace, TableColumn } from "@/components/pro/table";
 import type { ProSearchColumnProps, ProSearchEmits, ProSearchInstance, ProSearchProps } from "@/components/pro/search";

@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ErrorLog">
 import { computed, reactive, ref } from "vue";
+import { ProDialog } from "@/components";
 import { useNamespace } from "@/composables";
 import { useErrorLogStore, type ErrorLog } from "@/pinia";
-import { ProDialog } from "@/components";
 
 const ns = useNamespace("error-log");
 

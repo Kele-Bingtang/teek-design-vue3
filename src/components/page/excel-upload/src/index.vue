@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { ref, reactive, useTemplateRef } from "vue";
 import { ElButton, ElMessage } from "element-plus";
-import { ref, reactive } from "vue";
 import { read, utils } from "xlsx";
 import { useNamespace } from "@/composables";
 import type { UploadExcelProps } from "./types";

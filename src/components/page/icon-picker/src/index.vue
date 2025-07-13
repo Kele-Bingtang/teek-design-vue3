@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed, ref, watch, inject } from "vue";
 import { ElInput, ElTabs, ElTabPane, ElPagination } from "element-plus";
+import { GlobalConfigKey } from "@/common/config";
 import { ProDialog } from "@/components";
 import { useNamespace } from "@/composables";
-import { GlobalConfigKey } from "@/common/config";
 import epIcons from "./data/icons.ep";
 import antIcons from "./data/icons.ant-design";
 import tIcons from "./data/icons.tdesign";

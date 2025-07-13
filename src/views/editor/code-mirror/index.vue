@@ -1,7 +1,9 @@
 <script setup lang="ts" name="CodeMirrorDemo">
 import type { MergeCodeMirrorProps } from "@/components";
+import { computed, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { CodeMirror } from "@/components";
-import { computed, ref } from "vue";
+
 // 如果需要更多主题，可以查看开源项目 https://uiwjs.github.io/react-codemirror/#/theme/home，或者自行搜索其他开源项目，或者自定义主题
 import { oneDark } from "@codemirror/theme-one-dark";
 import { dracula } from "@uiw/codemirror-theme-dracula";

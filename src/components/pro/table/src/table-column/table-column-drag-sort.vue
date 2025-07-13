@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { TableColumnDragSortProps, TableColumnDragSortEmits } from "../types";
+import { onMounted, watch, unref } from "vue";
 import { ElTableColumn, ElIcon } from "element-plus";
-import Sortable from "sortablejs";
 import { DCaret } from "@element-plus/icons-vue";
+import Sortable from "sortablejs";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "TableColumnTypeDrag" });

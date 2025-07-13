@@ -1,10 +1,11 @@
 <script setup lang="ts" name="QrCode">
 import type { QrCodeEmits, QrCodeLogo, QrCodeProps } from "./types";
 import type { QRCodeRenderersOptions } from "qrcode";
+import { ref, computed, nextTick, watch, useTemplateRef } from "vue";
+import { ElIcon } from "element-plus";
+import { RefreshRight } from "@element-plus/icons-vue";
 import QRCode from "qrcode";
 import { isString } from "@/common/utils";
-import { RefreshRight } from "@element-plus/icons-vue";
-import { ref, computed, nextTick, watch, useTemplateRef } from "vue";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "QrCode" });

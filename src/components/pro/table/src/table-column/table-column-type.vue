@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { TableColumnTypeInfo, TableColumnTypeNamespace } from "../types/table-column-type";
+import { ref, watch, toValue, h } from "vue";
 import { ElRadio, ElTableColumn } from "element-plus";
+import { isFunction } from "@/common/utils";
 import { TableColumnTypeEnum } from "../helper";
 import TableColumnDragSort from "./table-column-drag-sort.vue";
-import { isFunction } from "@/common/utils";
 
 defineOptions({ name: "TableColumnType" });
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ElButton, type DialogProps, ElMessage, type FormInstance, ElMessageBox } from "element-plus";
-import { ProForm, ProDialog, type ProFormProps, type FormColumn, type ProFormInstance } from "@/components";
-import { ref, computed, unref } from "vue";
-import { tableEnumMapKey } from "../interface";
+import type { DialogProps, FormInstance } from "element-plus";
+import type { ProFormProps, FormColumn, ProFormInstance } from "@/components";
+import { ref, computed, unref, useTemplateRef, inject } from "vue";
+import { ElButton, ElMessage, ElMessageBox } from "element-plus";
 import { deepClone } from "@/common/utils";
+import { ProForm, ProDialog } from "@/components";
+import { tableEnumMapKey } from "../interface";
 
 defineOptions({ name: "DialogForm" });
 

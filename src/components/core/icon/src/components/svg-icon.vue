@@ -1,9 +1,3 @@
-<template>
-  <svg :class="iconClass" aria-hidden="true">
-    <use :xlink:href="iconName" />
-  </svg>
-</template>
-
 <script setup lang="ts">
 import { computed } from "vue";
 
@@ -25,3 +19,9 @@ const iconClass = computed(() => {
   return "svg-icon";
 });
 </script>
+
+<template>
+  <svg :class="iconClass" aria-hidden="true">
+    <use :xlink:href="iconName" />
+  </svg>
+</template>

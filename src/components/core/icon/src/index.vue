@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { IconProps } from "./types";
 import { useSlots, computed, toRaw } from "vue";
-import { useNamespace } from "@/composables";
 import { addUnit, isObject, isString } from "@/common/utils";
+import { useNamespace } from "@/composables";
 import SvgIcon from "./components/svg-icon.vue";
 import FontIcon from "./components/font-icon.vue";
 import IconifyOffline from "./components/iconify-offline.vue";

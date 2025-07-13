@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { TextHoverEffectProps } from "./types";
 import { onMounted } from "vue";
 import { useNamespace } from "@/composables";
-import type { TextHoverEffectProps } from "./types";
 
 defineOptions({ name: "TextHoverEffect" });
 

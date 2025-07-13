@@ -20,6 +20,7 @@ export * from "./pro/pagination";
 export * from "./pro/search";
 export * from "./pro/table";
 export * from "./pro/tree-filter";
+export * from "./core/point-tag";
 
 // export * from "./pro/v1/pro-form";
 // export * from "./pro/v1/pro-table";
@@ -59,7 +60,6 @@ export * from "./page/draggable-item";
 export * from "./page/draggable-list";
 export * from "./page/highlight";
 export * from "./page/icon-picker";
-export * from "./page/point-tag";
 export * from "./page/qr-code";
 export * from "./page/seamless-scroll";
 export * from "./page/table-sort";

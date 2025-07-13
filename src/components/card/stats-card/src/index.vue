@@ -2,9 +2,9 @@
 <script setup lang="ts">
 import type { StatsCardProps } from "./types";
 import { ArrowRight } from "@element-plus/icons-vue";
+import { addUnit } from "@/common/utils";
 import { CountTo } from "@/components";
 import { useNamespace } from "@/composables";
-import { addUnit } from "@/common/utils";
 
 defineOptions({ name: "StatsCard" });
 

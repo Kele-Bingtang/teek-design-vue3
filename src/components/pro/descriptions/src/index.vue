@@ -2,11 +2,12 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp } from "./types";
-import { toValue } from "vue";
+import { computed, reactive, ref, toValue, unref, watch, watchEffect } from "vue";
+import { ElDescriptions, ElDescriptionsItem, ElButton } from "element-plus";
+import { isArray, isFunction } from "@/common/utils";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import { ElDisplay } from "@/components/pro/table";
-import { isArray, isFunction } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import DescriptionsEdit from "./edit.vue";
 

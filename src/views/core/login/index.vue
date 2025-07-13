@@ -1,12 +1,14 @@
 <script setup lang="ts" name="Login">
-import { SwitchDark } from "@/components";
-import LoginForm from "./loginForm.vue";
+import type { Component } from "vue";
+import { ref, provide } from "vue";
 import SystemConfig from "@/common/config";
+import { SwitchDark } from "@/components";
+import { useNamespace } from "@/composables";
+import LoginForm from "./loginForm.vue";
 import Phone from "./components/phone.vue";
 import QrCode from "./components/qrCode.vue";
 import Register from "./components/register.vue";
 import Forget from "./components/forget.vue";
-import { useNamespace } from "@/composables";
 
 const ns = useNamespace("login");
 

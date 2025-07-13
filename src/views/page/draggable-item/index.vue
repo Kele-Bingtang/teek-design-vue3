@@ -1,4 +1,5 @@
 <script setup lang="ts" name="DraggableItemDemo">
+import { ref } from "vue";
 import { DraggableItem } from "@/components";
 import { list1, list2, list3 } from "@/mock/page/drag-item";
 

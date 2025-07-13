@@ -1,4 +1,5 @@
 <script setup lang="ts" name="FixedHeaderTable">
+import { ref, watch } from "vue";
 import { simpleData } from "@/mock/table/common";
 
 const tableData = ref(simpleData);

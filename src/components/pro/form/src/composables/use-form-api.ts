@@ -1,4 +1,6 @@
+import type { Ref } from "vue";
 import type { FormColumn, ProFormNamespace } from "../types";
+import { ref, unref } from "vue";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 

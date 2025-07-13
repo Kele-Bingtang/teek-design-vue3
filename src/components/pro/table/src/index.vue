@@ -11,12 +11,14 @@ import type {
   TableScope,
   TableRow,
 } from "./types";
+import type { UseSelectState } from "./composables";
+import { ref, computed, watchEffect, onMounted, useTemplateRef, isRef, isReactive, reactive, unref } from "vue";
 import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { defaultPageInfo } from "@/components/pro/pagination";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { useTableApi, useTableState, type UseSelectState } from "./composables";
+import { useTableApi, useTableState } from "./composables";
 import { Environment, TableSizeEnum } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";

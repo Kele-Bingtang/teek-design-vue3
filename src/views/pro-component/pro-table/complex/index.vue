@@ -1,12 +1,12 @@
 <script setup lang="tsx" name="ComplexProTable">
 import type { TableColumn, TableScope, ProTableInstance } from "@/components";
 import type { ResUserList } from "../advanced/index.vue";
-import { ProTable } from "@/components";
-import { useConfirm } from "@/composables";
-import { ElButton, ElMessage, type TableColumnCtx } from "element-plus";
-import { genderType, tableData, userStatus } from "@/mock/pro-component/pro-table";
+import { ref, useTemplateRef } from "vue";
+import { ElButton, ElMessage } from "element-plus";
 import { CirclePlus, Delete, Pointer, Refresh } from "@element-plus/icons-vue";
-import { useNamespace } from "@/composables";
+import { ProTable } from "@/components";
+import { useConfirm, useNamespace } from "@/composables";
+import { genderType, tableData, userStatus } from "@/mock/pro-component/pro-table";
 
 const ns = useNamespace();
 const proTableInstance = useTemplateRef<ProTableInstance>("proTableInstance");
@@ -63,7 +63,7 @@ const setCurrent = () => {
 
 // 表尾合计行（自行根据条件计算）
 interface SummaryMethodProps<T = ResUserList> {
-  columns: TableColumnCtx<T>[];
+  columns: TableColumn[];
   data: T[];
 }
 const getSummaries = (param: SummaryMethodProps) => {
@@ -79,7 +79,7 @@ const getSummaries = (param: SummaryMethodProps) => {
 // 列合并
 interface SpanMethodProps {
   row: ResUserList;
-  column: TableColumnCtx<ResUserList>;
+  column: TableColumn<ResUserList>;
   rowIndex: number;
   columnIndex: number;
 }
@@ -98,7 +98,7 @@ const tableRowClassName = ({ rowIndex }: { row: ResUserList; rowIndex: number })
 };
 
 // 单击行
-const rowClick = (row: ResUserList, column: TableColumnCtx<ResUserList>) => {
+const rowClick = (row: ResUserList, column: TableColumn<ResUserList>) => {
   if (column.property === "radio" || column.property === "operation") return;
   console.log(row);
   ElMessage.success("当前行被点击了！");

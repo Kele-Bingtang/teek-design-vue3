@@ -1,5 +1,5 @@
-import { isPhone } from "@/common/utils";
 import type { FormRules } from "element-plus";
+import { isPhone } from "@/common/utils";
 
 /** 6位数字验证码正则 */
 export const REGEXP_SIX = /^\d{6}$/;

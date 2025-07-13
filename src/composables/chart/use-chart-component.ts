@@ -1,5 +1,6 @@
 import type { EChartsOption } from "echarts";
-import type { BaseChartProps, UseChartOptions } from "../types";
+import type { BaseChartProps, UseChartOptions } from "@/components/chart/types";
+import { computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { useChart } from "./use-chart";
 
 // 高级图表组件抽象

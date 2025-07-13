@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, watch, ref } from "vue";
+import { computed, watch, ref, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader } from "element-plus";
-import { useSettingStore, useRouteStore } from "@/pinia";
-import { useMenu, useRouteFn } from "@/composables";
 import SystemConfig, { HOME_URL } from "@/common/config";
-import { useNamespace } from "@/composables";
+import { useMenu, useRouteFn, useNamespace } from "@/composables";
+import { useSettingStore, useRouteStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
 import CollapseTrigger from "../components/header/components/collapse-trigger/index.vue";
 import Menu from "../components/menu/index.vue";

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TableInstance } from "element-plus";
 import type { TableHeadColumnSettingEmits, TableHeadColumnSettingProps } from "../types";
+import { useTemplateRef } from "vue";
 import { ElTable, ElTableColumn, ElDrawer, ElSwitch } from "element-plus";
 import { useNamespace } from "@/composables";
 import TableColumnDragSort from "../table-column/table-column-drag-sort.vue";
