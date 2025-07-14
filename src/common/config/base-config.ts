@@ -45,7 +45,11 @@ const themeConfig: ThemeConfig = {
 };
 
 const layoutConfig: LayoutConfig = {
-  errorLog: { showInHeader: true, env: [] },
+  errorLog: {
+    showInHeader: true,
+    printConsole: true,
+    env: [],
+  },
   moreRouteChildrenHideInMenuThenOnlyOne: false,
   tooltipEffect: isDark => (isDark ? "light" : "dark"),
   layoutSize: LayoutSizeEnum.Default,
@@ -69,6 +73,7 @@ const keyConfig: KeyConfig = {
   cacheDynamicRoutesKey: "dynamicRoutes",
   versionCacheKey: "version",
   tabExcludesUrlKey: ["layoutMode"],
+  cleanCacheWhenUpgrade: false,
 };
 
 export const createBaseConfig = (): SystemConfig => ({

@@ -65,7 +65,7 @@ const fontIconType = computed(() => {
 // 是否为 SVG 图标
 const isSvgIcon = computed(() => isString(icon) && (iconType === "svg" || icon.startsWith("svg-") || isString(icon)));
 // 是否为 SVG Html
-const isSvgIconHtml = computed(() => iconType?.includes("<svg"));
+const isSvgIconHtml = computed(() => isString(icon) && icon?.includes("<svg"));
 // 是否为 iconfont 图标
 const isFontIcon = computed(() => isString(icon) && fontIconType.value);
 // 是否为组件

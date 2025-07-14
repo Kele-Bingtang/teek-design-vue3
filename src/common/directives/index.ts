@@ -9,7 +9,7 @@ import waves from "./modules/waves";
 import role from "./modules/permission/role";
 import auth from "./modules/permission/auth";
 
-const directivesList: any = {
+const directivesList: Recordable = {
   // Custom directives
   copy,
   waterMarker,

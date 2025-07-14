@@ -45,7 +45,12 @@ export const useRouteFn = () => {
       else if (isBothMode) routeList = [...rolesRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
     }
 
-    if (routeList?.length) return loadDynamicRoutes(routeList, roles || []);
+    if (routeList?.length) {
+      // 缓存路由
+      if (cacheDynamicRoutes) cacheOperator.setDynamicRoutes(routeList);
+      // 加载路由
+      return loadDynamicRoutes(routeList, roles || []);
+    }
 
     ElNotification.warning({
       title: "无权限访问",
@@ -62,7 +67,6 @@ export const useRouteFn = () => {
    */
   const getDynamicRoutesFromStorage = () => {
     if (cacheDynamicRoutes) return cacheOperator.getDynamicRoutes();
-    cacheOperator.removeDynamicRoutes();
   };
 
   /**
@@ -72,9 +76,6 @@ export const useRouteFn = () => {
     const routeList = await api();
 
     if (!routeList) return [];
-    // 缓存路由
-    if (cacheDynamicRoutes) cacheOperator.setDynamicRoutes(routeList);
-
     return routeList;
   };
 
@@ -113,6 +114,9 @@ export const useRouteFn = () => {
 
   /**
    * 过滤出当前系统角色的路由权限
+   *
+   * @param routers 路由表
+   * @param roles 权限角色
    */
   const filterOnlyRolesRoutes = (routers: RouterConfigRaw[], roles: string[]) => {
     const rolesRoutes: RouterConfigRaw[] = [];
@@ -192,8 +196,8 @@ export const useRouteFn = () => {
       if (r.children?.length) {
         // 父级的 redirect 属性取值：如果子级存在且父级的 redirect 属性不存在，默认取第一个子级的 path；如果子级存在且父级的 redirect 属性存在，取存在的 redirect 属性，会覆盖默认值
         if (!r.redirect) r.redirect = (r.children[0].meta?._fullPath as string) || r.children[0].path;
-        // 父级的 name 属性取值：如果子级存在且父级的 name 属性不存在，默认取第一个子级的 name；如果子级存在且父级的 name 属性存在，取存在的 name 属性，会覆盖默认值（注意：测试中发现父级的 name 不能和子级 name 重复，如果重复会造成重定向无效（跳转 404），所以这里给父级的name起名的时候后面会自动加上 `Parent`，避免重复）
-        if (!r.name) r.name = (r.children[0].name as string) + "Parent";
+        // 父级的 name 属性取值：如果子级存在且父级的 name 属性不存在，默认取第一个子级的 name；如果子级存在且父级的 name 属性存在，取存在的 name 属性，会覆盖默认值（注意：测试中发现父级的 name 不能和子级 name 重复，如果重复会造成重定向无效（跳转 404），所以这里给父级的 name 起名的时候后面会自动加上 `Parent`，避免重复）
+        if (!r.name && r.children[0].name) r.name = (r.children[0].name as string) + "Parent";
       }
 
       if (r.meta?.iframeOpen && r.meta.iframeSrc && isValidURL(r.meta.iframeSrc)) r.path = r.meta.iframeSrc;

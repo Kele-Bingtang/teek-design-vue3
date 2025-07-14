@@ -9,4 +9,4 @@ const baseConfig = createBaseConfig();
  * 生产环境：production
  */
 export const envConfig: SystemConfig =
-  process.env.NODE_ENV === "development" ? { ...baseConfig, systemInfo: { name: "Teek Design Pro" } } : baseConfig;
+  import.meta.env.MODE === "development" ? { ...baseConfig, systemInfo: { name: "Teek Design Pro" } } : baseConfig;

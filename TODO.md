@@ -6,4 +6,7 @@
 
 ## 优化
 
+- Websocket Store 优化
+- 版本升级清除缓存功能
+
 ## Bug

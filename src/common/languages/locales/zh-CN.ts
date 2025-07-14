@@ -260,7 +260,7 @@ export default {
     titleModePage: "页面 Title",
     titlePlaceholder: "页面 Title",
     changeTheme: "正在修改主题色",
-    resetSettingTitle: "重置配置",
+    resetSettingTitle: "还原默认配置",
     resetSetting: "正在清除设置缓存并刷新，请稍候...",
   },
   _search: {

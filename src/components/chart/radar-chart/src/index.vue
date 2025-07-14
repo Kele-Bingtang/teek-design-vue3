@@ -1,5 +1,4 @@
 <!-- 雷达图 -->
-
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { RadarChartProps } from "../../types";

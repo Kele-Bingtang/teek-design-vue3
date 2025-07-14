@@ -1,17 +1,17 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import AutoImport from "unplugin-auto-import/vite";
 import { resolve } from "path";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-import eslintPlugin from "vite-plugin-eslint";
-import { configCompressPlugin } from "./compress";
-import { visualizer } from "rollup-plugin-visualizer";
-import ServerUrlCopy from "vite-plugin-url-copy";
-import progress from "vite-plugin-progress";
 import { createStyleImportPlugin, ElementPlusResolve } from "vite-plugin-style-import";
+import eslintPlugin from "vite-plugin-eslint";
+import progress from "vite-plugin-progress";
+import ServerUrlCopy from "vite-plugin-url-copy";
+import vueDevTools from "vite-plugin-vue-devtools";
+import { visualizer } from "rollup-plugin-visualizer";
+import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import vueDevTools from "vite-plugin-vue-devtools";
+import { configCompressPlugin } from "./compress";
 
 export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
   const lifecycle = process.env.npm_lifecycle_event;

@@ -21,6 +21,8 @@ export const checkNeed = () => {
 export const errorHandler = (error: any, vm: ComponentPublicInstance | null, info: string) => {
   if (!checkNeed()) return;
 
+  if (SystemConfig.layoutConfig.errorLog.printConsole) console.error(error);
+
   const errorStore = useErrorLogStore();
   errorStore.addErrorLog({
     id: useSimpleUuid(),
