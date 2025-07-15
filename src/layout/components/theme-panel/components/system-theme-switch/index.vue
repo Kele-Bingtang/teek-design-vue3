@@ -6,7 +6,7 @@ import lightTheme from "@/common/assets/images/system-theme/light.png";
 import darkTheme from "@/common/assets/images/system-theme/dark.png";
 import systemTheme from "@/common/assets/images/system-theme/system.png";
 import { useNamespace, useTheme } from "@/composables";
-import { SystemThemeEnum } from "@/common/enums/appEnum";
+import { SystemThemeEnum } from "@/common/enums";
 import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "SystemThemeSwitch" });

@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums/appEnum";
+import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums";
 import lightTheme from "@/common/assets/images/menu-theme/light.png";
 import darkTheme from "@/common/assets/images/menu-theme/dark.png";
 import { useNamespace } from "@/composables";

@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSettingStore } from "@/pinia";
-import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/common/enums/appEnum";
+import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/common/enums";
 import { useCommon, useNamespace } from "@/composables";
 
 defineOptions({ name: "BaseConfigSwitch" });

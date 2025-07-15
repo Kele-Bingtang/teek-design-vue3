@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProTableHeadNamespace, SizeStyle, TableColumn } from "./types";
-import { ref, computed, onMounted, defineExpose } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElPopover, ElCheckbox } from "element-plus";
 import { Coin, Operation, Download, Setting, Refresh } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";

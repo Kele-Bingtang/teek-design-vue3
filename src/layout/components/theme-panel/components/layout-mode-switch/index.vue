@@ -2,7 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { LayoutModeEnum } from "@/common/enums";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 

@@ -9,7 +9,7 @@ import {
   SystemThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
-} from "@/common/enums/appEnum";
+} from "@/common/enums";
 
 const systemInfo: SystemInfo = {
   name: "Teek Design Pro",

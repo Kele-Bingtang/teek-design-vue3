@@ -85,7 +85,7 @@ watch(
         v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
         theme="danger"
         v-bind="menuItem.meta.pointTagProps"
-        class="menu-item-tag"
+        class="menu-item-tag point-tag"
       />
     </template>
   </el-menu-item>
@@ -104,7 +104,7 @@ watch(
         type="danger"
         effect="dark"
         v-bind="menuItem.meta.tagProps"
-        class="sub-menu-item-tag"
+        class="menu-item-tag"
       >
         {{ menuItem.meta.tagText }}
       </el-tag>
@@ -112,12 +112,12 @@ watch(
         v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
         theme="danger"
         v-bind="menuItem.meta.pointTagProps"
-        class="sub-menu-item-tag"
+        class="menu-item-tag point-tag"
       />
     </template>
 
     <template v-if="menuItem.children">
-      <MenuItem v-for="child in menuItem.children" :key="child.path" :menu-item="child" />
+      <MenuItem v-for="child in menuItem.children" :key="child.path" :menu-item="child" :class="ns.is('child')" />
     </template>
   </el-sub-menu>
 </template>
@@ -140,10 +140,9 @@ watch(
   transform: translateY(-50%);
 }
 
-.sub-menu-item-tag {
-  position: absolute;
-  top: 50%;
-  right: 38px;
-  transform: translateY(-50%);
+.is-sub > .#{$el-namespace}-sub-menu__title {
+  .menu-item-tag {
+    right: 38px;
+  }
 }
 </style>

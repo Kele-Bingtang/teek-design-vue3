@@ -8,7 +8,7 @@ import type {
   SystemThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
-} from "@/common/enums/appEnum";
+} from "@/common/enums";
 
 export interface SystemConfig {
   systemInfo: SystemInfo;

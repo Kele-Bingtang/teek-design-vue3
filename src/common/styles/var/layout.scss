@@ -56,3 +56,18 @@
   --#{$admin-namespace}-layout-aside-icon-color: var(--#{$el-namespace}-text-color-regular);
   --#{$admin-namespace}-layout-aside-text-active-weight: 400;
 }
+
+// .#{$admin-namespace}-layout-aside {
+//   &.is-dark {
+//     --#{$admin-namespace}-layout-aside-bg-color: #1a1d26;
+//     --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
+//     --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);
+//     --#{$admin-namespace}-layout-aside-left-bg-color: var(--#{$admin-namespace}-color-primary);
+//     --#{$admin-namespace}-layout-aside-text-color: var(--#{$admin-namespace}-text-gray-700);
+//     --#{$admin-namespace}-layout-aside-text-active-color: var(--#{$admin-namespace}-color-primary);
+//     --#{$admin-namespace}-layout-aside-text-hover-color: var(--#{$admin-namespace}-color-primary);
+//     --#{$admin-namespace}-layout-aside-icon-color: var(--#{$admin-namespace}-text-gray-700);
+//     --#{$admin-namespace}-layout-aside-icon-active-color: var(--#{$admin-namespace}-color-primary);
+//     --#{$admin-namespace}-layout-aside-line: 1px solid var(--#{$admin-namespace}-border-color);
+//   }
+// }

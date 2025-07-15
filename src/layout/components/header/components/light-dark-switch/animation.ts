@@ -1,4 +1,4 @@
-import { SystemThemeEnum } from "@/common/enums/appEnum";
+import { SystemThemeEnum } from "@/common/enums";
 import { setCssVar } from "@/common/utils";
 import { useTheme } from "@/composables";
 import { useSettingStore } from "@/pinia";

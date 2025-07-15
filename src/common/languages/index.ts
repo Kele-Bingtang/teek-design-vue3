@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { LanguageEnum } from "@/common/enums/appEnum";
+import { LanguageEnum } from "@/common/enums";
 import { isObject, localStorageProxy } from "@/common/utils";
 import zhCN from "./locales/zh-CN";
 import enUS from "./locales/en-US";

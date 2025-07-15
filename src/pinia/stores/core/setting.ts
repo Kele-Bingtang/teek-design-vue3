@@ -7,7 +7,7 @@ import {
   PageTransitionEnum,
   SystemThemeEnum,
   TabNavModeEnum,
-} from "@/common/enums/appEnum";
+} from "@/common/enums";
 import SystemConfig from "@/common/config";
 import { cacheOperator, getCssVar, localStorageProxy } from "@/common/utils";
 import { useNamespace } from "@/composables";
