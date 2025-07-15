@@ -1,7 +1,7 @@
 <!-- 地图图表 -->
 <script setup lang="ts">
 import type { MapChartProps } from "../../types";
-import { computed, defineOptions, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import { storeToRefs } from "pinia";
 import * as echarts from "echarts";
 import { useSettingStore } from "@/pinia";

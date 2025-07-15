@@ -1,7 +1,6 @@
 import type { IFrame } from "@/layout/components/iframe/use-iframe";
 import type { Component } from "vue";
 import type { IconifyIcon } from "@iconify/vue";
-
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 import SystemConfig from "@/common/config";

@@ -1,4 +1,4 @@
-declare namespace http {
+declare namespace httpNs {
   interface Response<T = any> {
     /**
      * 状态码

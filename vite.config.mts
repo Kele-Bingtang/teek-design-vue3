@@ -1,7 +1,8 @@
+import type { ConfigEnv, UserConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from "vite";
-import { wrapperEnv } from "./node/getEnv";
 import { resolve } from "path";
+import { wrapperEnv } from "./node/getEnv";
 import { getPluginsList } from "./node/plugins";
 import { include, exclude } from "./node/optimize";
 import { getNowDate } from "./src/common/utils/core/date";
@@ -11,7 +12,7 @@ const { dependencies, devDependencies, name, version } = pkg;
 
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version }, // package.json 相关信息
-  lastBuildTime: getNowDate(), // 打包时间
+  lastBuildTime: getNowDate(), // 编译或打包时间
 };
 
 // https://vitejs.dev/config/
@@ -54,8 +55,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       // 跨域代理配置
       proxy: {
         "/api": {
-          target: "https://youngkbt.cn",
+          target: "https://vue3-design.teek.cn",
           changeOrigin: true,
+          secure: true, // 是否忽略 https 安全证书问题，true 不忽略，false 忽略
           rewrite: path => path.replace(/^\/api/, ""),
         },
       },

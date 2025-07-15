@@ -2,7 +2,7 @@ import { watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/pinia";
 import { addUnit, removeCssVar, setCssVar } from "@/common/utils";
-import { HeaderStyleEnum } from "@/common/enums/appEnum";
+import { HeaderStyleEnum } from "@/common/enums";
 import { useNamespace } from "./use-namespace";
 
 /**

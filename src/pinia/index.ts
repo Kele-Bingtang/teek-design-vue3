@@ -1,6 +1,7 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import { localStorageProxy, StorageManager } from "@/common/utils";
+import SystemConfig from "@/common/config";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";
@@ -41,12 +42,17 @@ const getStorageKey = (key: string) => {
   // 如果其他旧版本没有该 key，则返回当前版本 key
   if (!oldVersionKeys) return currentStoreKey;
 
+  // 如果需要清理所有缓存，则清理
+  if (SystemConfig.keyConfig.cleanCacheWhenUpgrade) {
+    localStorage.removeItem(oldVersionKeys);
+    return currentStoreKey;
+  }
+
   // 将旧版本数据合并到新版本里
   try {
-    const oldVersionData = JSON.parse(localStorage.getItem(oldVersionKeys) ?? "{}");
-    const { value: val } = oldVersionData;
+    const oldVersionData = localStorageProxy.getItem(oldVersionKeys);
+    localStorageProxy.setItem(currentStoreKey, oldVersionData);
 
-    localStorage.setItem(currentStoreKey, JSON.stringify({ _type: "Object", value: val }));
     console.info(`[Storage] 已合并旧版本数据: ${oldVersionKeys} → ${currentStoreKey}`);
     localStorage.removeItem(oldVersionKeys);
   } catch (error) {

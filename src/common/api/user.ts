@@ -15,11 +15,11 @@ export interface Token {
 export const UserService = {
   // 登录
   login(params: LoginParams) {
-    return request.post<http.Response<Token>>("/auth/login", params);
+    return request.post<httpNs.Response<Token>>("/auth/login", params);
   },
 
   // 获取用户信息
   getUserInfo() {
-    return request.get<http.Response<UserInfo>>("/auth/getUserInfo");
+    return request.get<httpNs.Response<UserInfo>>("/auth/getUserInfo");
   },
 };

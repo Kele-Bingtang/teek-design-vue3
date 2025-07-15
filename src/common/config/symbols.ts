@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref } from "vue";
-import type { LayoutSizeEnum } from "@/common/enums/appEnum";
+import type { LayoutSizeEnum } from "@/common/enums";
 import type { useWebSocketStore } from "@/pinia";
 
 interface GlobalConfig {

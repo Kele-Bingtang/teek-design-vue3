@@ -2,7 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from "element-plus";
-import type { LanguageEnum } from "@/common/enums/appEnum";
+import type { LanguageEnum } from "@/common/enums";
 import { useBrowserTitle } from "@/composables";
 import { useLayoutStore } from "@/pinia";
 

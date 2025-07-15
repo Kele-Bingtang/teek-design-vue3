@@ -30,6 +30,10 @@
  * @param meta.useI18n ==>  是否开启 i18n。默认读取全局的 routeUseI18n（src/config/base-config.ts）
  * @param meta.useTooltip ==> 菜单的文字超出后，是否使用 el-toolTip 提示，仅针二级路由及以上生效。默认读取全局的 routeUseTooltip（src/config/base-config.ts）
  * @param meta.render ==> 自定义 Render 菜单元素（TSX 语法）
+ * @param meta.tagText ==> 菜单标签，使用 ElTag 组件
+ * @param meta.tagProps ==> 菜单标签的属性，即 ElTag 组件的 props
+ * @param meta.pointTag ==> 是否显示点标记
+ * @param meta.pointTagProps ==> 点标记的属性，即 PointTag 组件的 props
  */
 
 import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";

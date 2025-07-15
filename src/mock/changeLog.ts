@@ -9,7 +9,7 @@ interface UpgradeLog {
   date: string;
   /** 更新内容 */
   detail?: string[];
-  /** 是否需要重新登录 */
+  /** 是否需要重新登录，默认 false */
   requireReLogin?: boolean;
 }
 

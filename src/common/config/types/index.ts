@@ -8,7 +8,7 @@ import type {
   SystemThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
-} from "@/common/enums/appEnum";
+} from "@/common/enums";
 
 export interface SystemConfig {
   systemInfo: SystemInfo;
@@ -24,6 +24,8 @@ export interface SystemInfo {
 }
 
 export interface ThemeConfig {
+  /** 主题色 */
+  primaryColor: string;
   /** 标题在浏览器标签上的多种模式 */
   titleMode: TitleModeEnum;
   /** 布局设置 */
@@ -66,8 +68,6 @@ export interface ThemeConfig {
   isGrey: boolean;
   /** PageContent 是否开启最大化，默认不开启（false） */
   maximize: boolean;
-  /** 主题色 */
-  primaryColor: string;
   /** 菜单宽度 */
   menuWidth: number;
   /** 顶部高度 */
@@ -80,8 +80,10 @@ export interface ThemeConfig {
 
 export interface LayoutConfig {
   errorLog: {
-    /** 设为 false 后不会在顶部显示错误日志徽标 */
+    /** 是否在顶部显示错误日志图标 */
     showInHeader: boolean;
+    /** 是否打印错误日志到控制台 */
+    printConsole: boolean;
     /** 日志收集的环境，对应 .evn.xxx，如 development、test、production */
     env: string[];
   };
@@ -134,4 +136,6 @@ export interface KeyConfig {
   tabExcludesUrlKey: string[];
   /** 缓存路由的 key */
   cacheDynamicRoutesKey: string;
+  /** 是否在升级时清理所有缓存，默认 false */
+  cleanCacheWhenUpgrade: boolean;
 }

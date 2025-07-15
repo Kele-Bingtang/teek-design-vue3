@@ -416,6 +416,9 @@ export const useChartStyleFn = () => {
   };
 };
 
+/**
+ * 使用 IntersectionObserver 监听元素是否可见
+ */
 export const useIntersectionObserver = (
   observerDom: MaybeRef<HTMLElement | null>,
   callback: (entries: IntersectionObserverEntry[]) => void,

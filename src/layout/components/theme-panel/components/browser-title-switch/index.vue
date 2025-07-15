@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ElSelect, ElOption } from "element-plus";
 import { useI18n } from "vue-i18n";
-import { TitleModeEnum } from "@/common/enums/appEnum";
+import { TitleModeEnum } from "@/common/enums";
 import { useNamespace, useBrowserTitle } from "@/composables";
 import { useSettingStore } from "@/pinia";
 

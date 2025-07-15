@@ -14,7 +14,7 @@ export interface BackstageMenuList {
 export const getMenuList = () => {
   // 模拟请求菜单
   return Promise.resolve([] as BackstageMenuList[]);
-  // return http.request<http.JsonResponse<BackstageMenuList[]>>({
+  // return http.request<httpNs.Response<BackstageMenuList[]>>({
   //   url: "/getMenuList",
   //   method: "get",
   // });

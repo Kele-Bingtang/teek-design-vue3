@@ -219,6 +219,7 @@ const processParamsType = (config: PlusAxiosRequestConfig) => {
 
   return config;
 };
+
 /**
  * 处理参数的数组
  *
@@ -248,16 +249,11 @@ const processArray = (config: PlusAxiosRequestConfig) => {
   config.params = {};
   return config;
 };
-/**
- * Axios 的错误提示和持久化处理
- *
- * @param error Axios 错误
- */
+
 /**
  * 处理 Axios 错误并格式化为错误日志对象
  *
  * @param error AxiosError 实例
- * @returns 错误日志对象
  */
 const processError = (error: AxiosError) => {
   // 直接从 error.config 取值，避免多余的 JSON 序列化/反序列化

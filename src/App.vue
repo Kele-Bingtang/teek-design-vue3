@@ -12,7 +12,7 @@ import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
-import { LanguageEnum } from "@/common/enums/appEnum";
+import { LanguageEnum } from "@/common/enums";
 import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/common/config";
 import { isFunction } from "@/common/utils";
 import { useNamespace, useBrowserTitle, useWatchCssVar, useTheme } from "@/composables";

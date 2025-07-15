@@ -1,4 +1,4 @@
-<!-- 基础横幅组件 -->
+<!-- 横幅卡片组件 -->
 <script setup lang="ts">
 import type { BannerCardEmits, BannerCardProps, Meteor } from "./types";
 import { onMounted, ref, computed } from "vue";

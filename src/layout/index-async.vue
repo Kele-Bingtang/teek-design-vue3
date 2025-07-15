@@ -16,7 +16,7 @@
 import type { Component } from "vue";
 import { defineAsyncComponent, watch } from "vue";
 import { storeToRefs } from "pinia";
-import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { LayoutModeEnum } from "@/common/enums";
 import { useCommon, useUpgrade } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import ThemePanel from "./components/theme-panel/index.vue";

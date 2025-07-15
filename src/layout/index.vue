@@ -9,7 +9,7 @@
 import type { Component } from "vue";
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
-import { LayoutModeEnum } from "@/common/enums/appEnum";
+import { LayoutModeEnum } from "@/common/enums";
 import { useCommon, useUpgrade } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import LockPanel from "./components/lock-panel/index.vue";

@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { tryOnScopeDispose } from "@vueuse/core";
-import { TitleModeEnum } from "@/common/enums/appEnum";
+import { TitleModeEnum } from "@/common/enums";
 import SystemConfig from "@/common/config";
 import { formatTitle } from "@/router/helper";
 import { useSettingStore, useUserStore } from "@/pinia";

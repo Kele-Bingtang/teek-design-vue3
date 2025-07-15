@@ -1,4 +1,4 @@
-<!-- k线图表 -->
+<!-- k 线图表 -->
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import type { KLineChartProps } from "../../types";
