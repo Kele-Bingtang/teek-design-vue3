@@ -25,7 +25,7 @@ interface RenderParams {
  */
 export interface DescriptionColumn
   extends Omit<Partial<DescriptionItemProps>, "label" | "width" | "minWidth" | "span" | "rowSpan" | "labelWidth">,
-    Omit<ElDisplayProps, "value"> {
+    Omit<ElDisplayProps, "originValue" | "displayValue" | "options"> {
   /**
    * 唯一键
    */

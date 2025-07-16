@@ -34,6 +34,11 @@ export type TableHyphenCaseComponentName = keyof typeof TableComponentEnum exten
  */
 export type TableElType = TablePascalCaseComponentName | TableHyphenCaseComponentName;
 
+/**
+ * el 组件 Props
+ */
+export type ElProps = LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable;
+
 export interface ElDisplayProps {
   /**
    * 指定组件进行修饰
@@ -42,13 +47,17 @@ export interface ElDisplayProps {
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRefOrGetter<LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable>;
+  elProps?: MaybeRefOrGetter<ElProps> | ((value: unknown) => ElProps);
   /**
    * 指定 el 组件的 options
    */
   options?: ElOption[];
   /**
-   * 显示的数据
+   * 没有经过格式化的原始数据
    */
-  value: unknown;
+  originValue?: unknown;
+  /**
+   * 格式化后的数据，用于显示
+   */
+  displayValue?: unknown;
 }

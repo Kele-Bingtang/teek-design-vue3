@@ -327,7 +327,13 @@ defineExpose({
           <!-- 自定义插槽，插槽名为 column.prop -->
           <slot v-else-if="$slots[column.prop || '']" :name="column.prop || ''" v-bind="getRenderParams(column)" />
           <!-- 自定义 el 组件 -->
-          <ElDisplay v-else-if="column.el" :value="getValue(column)" :el="column.el" :el-props="column.elProps">
+          <ElDisplay
+            v-else-if="column.el"
+            :origin-value="getProp(descriptionsData, column.prop || '')"
+            :display-value="getValue(column)"
+            :el="column.el"
+            :el-props="column.elProps"
+          >
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
               <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
             </template>

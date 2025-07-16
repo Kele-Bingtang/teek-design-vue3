@@ -66,11 +66,18 @@ export type TableRow<T extends string | number | symbol = any> = {
   /**
    * options 字典枚举
    */
-  _options: Recordable;
+  _options: Record<string, ElOption[]>;
   /**
    * 当前列的 option 相关配置，_getValue 里需要使用，因此需要提前缓存起来
    */
-  _optionProps: Recordable;
+  _optionProps: Record<
+    string,
+    {
+      optionField: TableColumn["optionField"];
+      transformOption: TableColumn["transformOption"];
+      ignoreOptionIfAbsent: TableColumn["ignoreOptionIfAbsent"];
+    }
+  >;
   /**
    * 获取单元格值
    */
@@ -168,7 +175,7 @@ export interface TableColumn<T extends Recordable = any>
   /**
    * 自定义当前 option 选项
    */
-  transformOption?: (value: unknown, options: ElOption[], row: Recordable) => ElOption;
+  transformOption?: (value: unknown, options: ElOption[], row: Recordable) => ElOption | undefined;
   /**
    * 自定义表头内容渲染（tsx 语法）
    */

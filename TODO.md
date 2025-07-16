@@ -10,6 +10,9 @@
 - 版本升级清除缓存功能
 - 分栏布局支持切换 tip 和 text
 - 菜单支持切换深色/浅色主题
+- ProTable 添加 PointTag 组件
+- ProTable 头部背景色调整，适配 border
+- ProTable 分页思考（支持外界后端分页）
 
 ## Bug
 

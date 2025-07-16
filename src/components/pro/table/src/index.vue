@@ -139,7 +139,7 @@ const { tableData, pageInfo, searchParams, searchInitParams, getTableList, searc
   useTableState(
     finalProps.value.requestApi,
     computed(() => unref(finalProps.value.defaultRequestParams)),
-    finalProps.value.pageInfo,
+    computed(() => finalProps.value.pageInfo),
     isServerPage,
     finalProps.value.beforeSearch,
     finalProps.value.transformData,

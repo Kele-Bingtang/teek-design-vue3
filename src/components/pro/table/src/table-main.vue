@@ -52,7 +52,7 @@ watchEffect(() => (pageInfo.value = { ...defaultPageInfo, ...props.pageInfo }));
 
 // 表格实际渲染的数据
 const tableData = computed(() => tryPagination(filterTableData.value ?? props.data));
-const tableDataTotal = computed(() => filterTableData.value?.length ?? props.data.length);
+const tableDataTotal = computed(() => pageInfo.value.total || (filterTableData.value?.length ?? props.data.length));
 
 // 数据发生改变，则清除过滤的数据
 watch(
@@ -94,13 +94,11 @@ const tryPagination = (data: Recordable[] = []) => {
  * 表格数据初始化相关逻辑
  */
 function useTableInit() {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-
   // 过滤有效的列配置项
   const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hidden)));
 
   // 在表格的数据的每一个 row 配置 _options 相关字典信息（如果配置了 options）
-  const initEnhanceFnInData = async (data: TableRow[], column: TableColumn) => {
+  const initEnhanceFnInData = (data: TableRow[], column: TableColumn) => {
     // 获取当前列的配置项，！获取的配置无法直接作用在 row._xx 里
     const {
       prop = "",
@@ -135,7 +133,7 @@ function useTableInit() {
           ? transformOption(value, options, row)
           : filterOptions(value, options, optionField);
 
-        const label = filterOptionsValue(option, optionField?.label || "label");
+        const label = option ? filterOptionsValue(option, optionField?.label || "label") : "";
 
         if ((!label || label === "--") && toValue(ignoreOptionIfAbsent)) return value;
         return label;
@@ -204,28 +202,16 @@ function useTableInit() {
     });
   };
 
-  // 清除定时器
-  const clearTimer = () => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-  };
-
   // 当 columns 发生改变时，重新初始化
   watch(
     availableColumns,
-    newValue => {
-      clearTimer();
-      // 防抖：防止初始化时连续执行
-      timer = setTimeout(async () => {
-        const flatColumns = flatColumnsFn(newValue);
-        // 异步但有序执行
-        for (const column of flatColumns) {
-          await initOptionsMap(column.options, column.prop || "");
-          initEnhanceFnInData(props.data as TableRow[], column);
-        }
-      }, 10);
+    async newValue => {
+      const flatColumns = flatColumnsFn(newValue);
+      // 异步但有序执行
+      for (const column of flatColumns) {
+        await initOptionsMap(column.options, column.prop || "");
+        initEnhanceFnInData(props.data as TableRow[], column);
+      }
     },
     { deep: true, flush: "post" }
   );
@@ -233,15 +219,12 @@ function useTableInit() {
   // 不对数据进行深度监听，当数据整体发生改变时，重新初始化
   watch(
     () => props.data,
-    newValue => {
-      clearTimer();
-      timer = setTimeout(async () => {
-        const flatColumns = flatColumnsFn(availableColumns.value);
-        for (const column of flatColumns) {
-          await initOptionsMap(column.options, column.prop || "");
-          initEnhanceFnInData(newValue as TableRow[], column);
-        }
-      }, 10);
+    async newValue => {
+      const flatColumns = flatColumnsFn(availableColumns.value);
+      for (const column of flatColumns) {
+        await initOptionsMap(column.options, column.prop || "");
+        initEnhanceFnInData(newValue as TableRow[], column);
+      }
     }
   );
 

@@ -21,7 +21,10 @@ const columns: TableColumn[] = [
     prop: "gender",
     label: "性别",
     el: "el-tag",
-    elProps: { type: "success" },
+    elProps: (value: number) => {
+      if (value === 1) return { type: "success" };
+      return { type: "danger" };
+    },
     options: async () => {
       return [
         { label: "男", value: 1 },

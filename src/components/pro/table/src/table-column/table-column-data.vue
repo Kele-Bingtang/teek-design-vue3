@@ -84,6 +84,7 @@ const getRenderParams = <T = RenderParams,>(scope: TableScope, column: TableColu
   return {
     ...scope,
     rowIndex: scope.$index,
+    column: { ...scope.column, ...column },
     value: getOriginValue(scope, column),
     options: scope.row?._options?.[prop(column)],
   } as T;
@@ -254,7 +255,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <!-- 自定义 el 组件 -->
       <ElDisplay
         v-else-if="column.el"
-        :value="getCellValue(scope, column)"
+        :origin-value="getProp(scope.row, column.prop || '')"
+        :display-value="getCellValue(scope, column)"
         :el="column.el"
         :el-props="column.elProps"
         :options="scope.row._options?.[prop(column)]"
