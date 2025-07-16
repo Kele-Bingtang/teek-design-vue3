@@ -1,5 +1,6 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(tree-filter) {
   width: 220px;
@@ -31,17 +32,15 @@
 
     :deep(.#{$el-namespace}-tree--highlight-current) {
       @include el-joins(tree-node) {
-        &.is-current {
-          @include el-joins(tree-node__content) {
-            background-color: cssVarEl(color-primary);
+        &.is-current > .#{$el-namespace}-tree-node__content {
+          background-color: cssVarEl(color-primary);
 
-            @include el-joins(tree-node__label, tree-node__expand-icon) {
-              color: #ffffff;
-            }
+          @include el-joins(tree-node__label, tree-node__expand-icon) {
+            color: #ffffff;
+          }
 
-            .is-leaf {
-              color: transparent;
-            }
+          .is-leaf {
+            color: transparent;
           }
         }
       }
