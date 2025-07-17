@@ -6,9 +6,17 @@ import type { TableColumnTypeEnum } from "../helper";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
 import type { ElDisplayProps } from "./el-display";
+import type { OperationNamespace } from "./table-column-operation";
 
 export interface RenderParams<T extends Recordable = any> extends TableScope<T> {
+  /**
+   * 传入的原始值
+   */
   value: unknown;
+  /**
+   * 渲染在单元格的值（大部分等于 value，少部分如使用 options 配置项时，则为 options 配置项的 label 值）
+   */
+  renderValue: unknown;
   /**
    * 字典枚举数据
    */
@@ -22,7 +30,7 @@ export interface RenderParams<T extends Recordable = any> extends TableScope<T> 
 /**
  * 表格行 Scope
  */
-export type TableScope<T extends Recordable = any> = {
+export type TableScope<T extends Recordable = TableRow> = {
   /**
    * 表格行索引
    */
@@ -30,7 +38,7 @@ export type TableScope<T extends Recordable = any> = {
   /**
    * 表格行数据
    */
-  row: T & TableRow;
+  row: TableRow;
   /**
    * 表格列数据
    */
@@ -121,7 +129,8 @@ export type TableRow<T extends string | number | symbol = any> = {
  */
 export interface TableColumn<T extends Recordable = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
-    Omit<ElDisplayProps, "value" | "options"> {
+    Omit<ElDisplayProps, "value" | "options">,
+    Omit<OperationNamespace.ExtraProp, "el"> {
   /**
    * 表头宽度
    */
@@ -180,6 +189,14 @@ export interface TableColumn<T extends Recordable = any>
    * 自定义表头内容渲染（tsx 语法）
    */
   headerRender?: (scope: RenderParams<T>) => RenderTypes;
+  /**
+   * 自定义表头内容渲染（返回 HTML），优先级低于 render，高于插槽
+   */
+  headerRenderHtml?: (scope: RenderParams<T>) => string;
+  /**
+   * 自定义表头内容
+   */
+  formatLabel?: (label: unknown, scope: RenderParams<T>) => string | number;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */

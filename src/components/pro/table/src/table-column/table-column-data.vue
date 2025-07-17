@@ -85,7 +85,8 @@ const getRenderParams = <T = RenderParams,>(scope: TableScope, column: TableColu
     ...scope,
     rowIndex: scope.$index,
     column: { ...scope.column, ...column },
-    value: getOriginValue(scope, column),
+    value: getOriginValue(scope, column), // 如果是 headerRender 函数，则不存在 row，因此为 undefined
+    renderValue: scope.row?._getValue?.(prop(column)) ?? getOriginValue(scope, column),
     options: scope.row?._options?.[prop(column)],
   } as T;
 };
@@ -156,6 +157,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
 
       <!-- 自定义表头的 Render 函数 -->
       <component v-if="column.headerRender" :is="column.headerRender(getRenderParams(scope, column))" />
+      <!-- 自定义 headerRenderHtml 函数渲染，返回 HTML 格式 -->
+      <span v-else-if="column.headerRenderHtml" v-html="column.headerRenderHtml(getRenderParams(scope, column))" />
       <!-- 自定义表头插槽 -->
       <slot
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
@@ -163,6 +166,11 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-bind="getRenderParams(scope, column)"
         :label="toValue(column.label)"
       />
+      <!-- 自定义表头内容渲染 -->
+      <template v-else-if="column.formatLabel">
+        {{ column.formatLabel(toValue(column.label), getRenderParams(scope, column)) }}
+      </template>
+      <!-- 默认表头内容渲染 -->
       <template v-else>{{ toValue(column.label) }}</template>
 
       <el-tooltip v-if="isString(column.tooltip)" placement="top" effect="dark" :content="column.tooltip">
@@ -243,7 +251,12 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       />
 
       <!-- 自定义 Render 函数渲染 -->
-      <component v-else-if="column.render" :is="column.render(getRenderParams(scope, column))" />
+      <component
+        v-else-if="column.render"
+        :is="column.render(getRenderParams(scope, column))"
+        v-bind="{ ...column.elProps }"
+      />
+
       <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
       <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(scope, column))" />
       <!-- 自定义插槽，插槽名为 column.prop -->
@@ -270,7 +283,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         </template>
       </ElDisplay>
 
-      <!-- 默认 -->
+      <!-- 默认单元格内容渲染 -->
       <template v-else>{{ formatValue(getCellValue(scope, column), scope, column) }}</template>
     </template>
   </el-table-column>

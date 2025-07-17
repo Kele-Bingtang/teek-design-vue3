@@ -1,6 +1,6 @@
-import type ProTable from "./index.vue";
-import type ProTableMain from "./table-main.vue";
-import type ProTableHead from "./table-head.vue";
+import type ProTable from "../index.vue";
+import type ProTableMain from "../table-main.vue";
+import type ProTableHead from "../table-head.vue";
 
 /**
  * ProTable 组件实例

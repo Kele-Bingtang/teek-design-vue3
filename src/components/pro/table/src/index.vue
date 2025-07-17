@@ -166,8 +166,8 @@ const {
   handleFilterReset,
   handleFormChange,
   handleButtonClick,
-  handleConfirm,
-  handleCancel,
+  handleButtonConfirm,
+  handleButtonCancel,
   handleLeaveCellEdit,
 } = useTableEmits();
 
@@ -300,15 +300,15 @@ function useTableEmits() {
   /**
    * 操作栏二次确认确定按钮触发事件
    */
-  const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("confirm", params);
+  const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonConfirm", params);
   };
 
   /**
    * 操作栏二次确认取消按钮触发事件
    */
-  const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("cancel", params);
+  const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonCancel", params);
   };
 
   /**
@@ -328,8 +328,8 @@ function useTableEmits() {
     handleFilterReset,
     handleFormChange,
     handleButtonClick,
-    handleConfirm,
-    handleCancel,
+    handleButtonConfirm,
+    handleButtonCancel,
     handleLeaveCellEdit,
   };
 }
@@ -411,8 +411,8 @@ defineExpose(expose);
       :page-info
       :size="tableSize"
       @button-click="handleButtonClick"
-      @confirm="handleConfirm"
-      @cancel="handleCancel"
+      @button-confirm="handleButtonConfirm"
+      @button-cancel="handleButtonCancel"
       @selection-change="handleSelectionChange"
       @pagination-change="handlePaginationChange"
       @drag-sort-end="handleDragSortEnd"

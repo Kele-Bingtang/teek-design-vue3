@@ -321,7 +321,11 @@ defineExpose({
           />
 
           <!-- 自定义 Render 函数渲染 -->
-          <component v-else-if="column.render" :is="column.render(getRenderParams(column))" />
+          <component
+            v-else-if="column.render"
+            :is="column.render(getRenderParams(column))"
+            v-bind="getRenderParams(column)"
+          />
           <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
           <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(column))" />
           <!-- 自定义插槽，插槽名为 column.prop -->

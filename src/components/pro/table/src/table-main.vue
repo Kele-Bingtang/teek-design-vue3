@@ -63,7 +63,7 @@ watch(
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useTableInit();
 const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
-const { getOperationProps, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
+const { getOperationProps, handleButtonClick, handleButtonConfirm, handleButtonCancel } = useTableOperation();
 const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
 
 // 表格选择
@@ -311,15 +311,15 @@ function useTableOperation() {
     emits("buttonClick", params);
   };
 
-  const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("confirm", params);
+  const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonConfirm", params);
   };
 
-  const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("cancel", params);
+  const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonCancel", params);
   };
 
-  return { getOperationProps, handleButtonClick, handleConfirm, handleCancel };
+  return { getOperationProps, handleButtonClick, handleButtonConfirm, handleButtonCancel };
 }
 
 /**
@@ -470,8 +470,8 @@ defineExpose(expose);
           :align="column.align || 'center'"
           :prop="operationProp"
           @button-click="handleButtonClick"
-          @confirm="handleConfirm"
-          @cancel="handleCancel"
+          @button-confirm="handleButtonConfirm"
+          @button-cancel="handleButtonCancel"
         >
           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />

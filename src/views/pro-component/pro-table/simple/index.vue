@@ -67,7 +67,7 @@ const columns: TableColumn[] = [
   { prop: "address", label: "居住地址" },
 ];
 
-const el = ref<OperationNamespace.Props["el"]>("ElLink");
+const el = ref<OperationNamespace.Props["el"]>("el-link");
 const buttons = ref<OperationNamespace.ButtonRaw[]>();
 
 buttons.value = [
@@ -101,7 +101,7 @@ buttons.value = [
     code: "delete",
     elProps: computed(() => ({ type: "danger" })),
     confirm: {
-      el: "ElMessageBox",
+      el: "el-messageBox",
       props: { options: { draggable: true } },
     },
     onConfirm: ({ row }) => {
@@ -123,11 +123,11 @@ const handleButtonClick = (params: OperationNamespace.ButtonsCallBackParams) => 
   console.log("buttonClick", params);
 };
 
-const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
   console.log("confirm", params);
 };
 
-const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
   console.log("cancel", params);
 };
 </script>
@@ -143,11 +143,11 @@ const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
     :operation-props="{
       buttons: buttons,
       el,
-      width: el === 'ElButton' ? 260 : el === 'ElIcon' ? 190 : 200,
+      width: el === 'el-button' ? 260 : el === 'el-icon' ? 190 : 200,
     }"
     @button-click="handleButtonClick"
-    @confirm="handleConfirm"
-    @cancel="handleCancel"
+    @button-confirm="handleButtonConfirm"
+    @button-cancel="handleButtonCancel"
     @form-change="handleFormChange"
     @leave-cell-edit="handleLeaveCellEdit"
   >

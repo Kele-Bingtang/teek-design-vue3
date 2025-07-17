@@ -13,6 +13,8 @@
 - ProTable 添加 PointTag 组件
 - ProTable 头部背景色调整，适配 border
 - ProTable 分页思考（支持外界后端分页）
+- 修复树形表格
+- ProTable 按钮的 `show` 配置支持传入 Vue 自定义指令
 
 ## Bug
 

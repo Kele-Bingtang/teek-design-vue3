@@ -8,6 +8,8 @@ import type { TableColumnTypeNamespace } from "./table-column-type";
 import type { UseSelectState } from "../composables";
 import type { Environment } from "../helper";
 
+export type SelectState = UnwrapRef<UseSelectState>;
+
 /**
  * TableMain 组件的类型命名空间
  */
@@ -88,7 +90,7 @@ export namespace ProTableMainNamespace {
     /**
      * 多选框勾选事件
      */
-    selectionChange: [useSelectReturn: UnwrapRef<UseSelectState>, index?: number];
+    selectionChange: [useSelectReturn: SelectState, index?: number];
     /**
      * 分页触发事件
      */

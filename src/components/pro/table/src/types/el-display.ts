@@ -1,7 +1,8 @@
-import type { MaybeRefOrGetter } from "vue";
+import type { MaybeRef, MaybeRefOrGetter } from "vue";
 import type { AvatarProps, ImageProps, LinkProps, ProgressProps, TagProps } from "element-plus";
 import type { ElOption } from "@/components/pro/form-item";
 import type { TableComponentEnum } from "../helper";
+import type { OperationNamespace } from "./table-column-operation";
 
 /**
  * el 字面量，转为 PascalCase 格式
@@ -43,11 +44,11 @@ export interface ElDisplayProps {
   /**
    * 指定组件进行修饰
    */
-  el?: TableElType;
+  el?: MaybeRefOrGetter<TableElType> | OperationNamespace.ExtraProp["el"];
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRefOrGetter<ElProps> | ((value: unknown) => ElProps);
+  elProps?: MaybeRef<ElProps> | ((value: unknown) => ElProps);
   /**
    * 指定 el 组件的 options
    */

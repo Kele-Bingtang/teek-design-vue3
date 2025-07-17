@@ -1,4 +1,4 @@
-import type { AppContext, Component, MaybeRef } from "vue";
+import type { AppContext, Component, MaybeRef, MaybeRefOrGetter } from "vue";
 import type {
   ButtonProps,
   ElMessageBoxOptions,
@@ -21,28 +21,47 @@ export type ButtonRowProps = Partial<ButtonProps & LinkProps & IconProps & Recor
 export type OperationElName = keyof typeof OperationEl extends infer K
   ? K extends string
     ? K extends `El${infer B}`
-      ? `el-${Lowercase<B>}`
+      ? `el-${Uncapitalize<B>}`
       : Lowercase<K>
     : never
   : never;
 
 /**
- * 操作按钮组件
+ * confirm el 字面量，转为 HyphenCase 格式
  */
-export type ButtonEl = OperationElName | `${OperationEl}`;
+export type OperationConformElName = keyof typeof OperationConfirmEl extends infer K
+  ? K extends string
+    ? K extends `El${infer B}`
+      ? `el-${Uncapitalize<B>}`
+      : Lowercase<K>
+    : never
+  : never;
+
+/**
+ * 操作按钮组件字面量
+ */
+export type ButtonEl = OperationElName | OperationEl | `${OperationEl}`;
+
+/**
+ * 二次操作按钮组件字面量
+ */
+export type ConformEl = OperationConformElName | OperationConfirmEl | `${OperationConfirmEl}`;
 
 export namespace OperationNamespace {
-  export interface Props extends Omit<TableColumn, "children"> {
+  /**
+   * 操作按钮独有 Props，会给 TableColumn 用
+   */
+  export interface ExtraProp {
     /**
      * 操作按钮集合
      */
-    buttons?: ButtonRaw[];
+    buttons?: MaybeRefOrGetter<ButtonRaw[]>;
     /**
      * 操作按钮类型
      *
      * @default 'ElLink'
      */
-    el?: ButtonEl;
+    el?: MaybeRefOrGetter<ButtonEl>;
     /**
      * 显示出来的按钮个数
      *
@@ -52,8 +71,13 @@ export namespace OperationNamespace {
     /**
      * 二次确认配置
      */
-    confirm?: boolean | Confirm<"ElPopconfirm"> | Confirm<"ElMessageBox">;
+    confirm?:
+      | boolean
+      | Confirm<OperationConfirmEl.ElPopconfirm | `${OperationConfirmEl.ElPopconfirm}`>
+      | Confirm<OperationConfirmEl.ElMessageBox | `${OperationConfirmEl.ElMessageBox}`>;
   }
+
+  export type Props = Omit<Partial<TableColumn>, "children" | "renderCell"> & ExtraProp;
 
   export interface Emits {
     /**
@@ -63,18 +87,26 @@ export namespace OperationNamespace {
     /**
      * 二次确认的确定按钮点击时触发
      */
-    confirm: [params: OperationNamespace.ButtonsCallBackParams];
+    buttonConfirm: [params: OperationNamespace.ButtonsCallBackParams];
     /**
      * 二次确认的取消按钮点击时触发
      */
-    cancel: [params: OperationNamespace.ButtonsCallBackParams];
+    buttonCancel: [params: OperationNamespace.ButtonsCallBackParams];
   }
 
   /**
    * 二次确认组件配置项
    */
   export type Confirm<T extends keyof ConfirmProps> = {
-    el: T;
+    /**
+     * 组件名称
+     *
+     * @default ElMessageBox
+     */
+    el?: MaybeRefOrGetter<ConformEl>;
+    /**
+     * 组件 props 属性
+     */
     props?: ConfirmProps[T];
   };
 
@@ -121,7 +153,7 @@ export namespace OperationNamespace {
      *
      * @default 'ElLink'
      */
-    el?: ButtonEl;
+    el?: MaybeRefOrGetter<ButtonEl>;
     /**
      * `@element-plus/icons-vue` 的图标名称，对 ElButton、ElLink、ElIcon 组件同时生效
      */
@@ -206,7 +238,7 @@ export interface OperationButtonProps {
   /**
    * 按钮类型
    */
-  el?: OperationEl | `${OperationEl}`;
+  el?: MaybeRefOrGetter<ButtonEl>;
   /**
    * 按钮组件 props
    */
@@ -222,7 +254,7 @@ export interface OperationButtonProps {
   /**
    * 二次确认组件
    */
-  confirmEl?: OperationConfirmEl | `${OperationConfirmEl}`;
+  confirmEl?: MaybeRefOrGetter<ConformEl>;
   /**
    * 二次确认组件 props
    */
@@ -230,8 +262,10 @@ export interface OperationButtonProps {
 }
 
 export interface OperationButtonEmits {
-  buttonClick: [event: MouseEvent];
-  buttonConfirmClick: [event: MouseEvent];
+  /** 按钮点击事件，包含二次确认按钮的点击事件 */
+  click: [event: MouseEvent];
+  /** 二次确认点击事件 */
   confirm: [event: MouseEvent];
+  /** 二次确认取消点击事件 */
   cancel: [event: MouseEvent];
 }
