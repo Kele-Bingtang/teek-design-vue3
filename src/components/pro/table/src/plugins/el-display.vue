@@ -22,9 +22,9 @@ const props = withDefaults(defineProps<ElDisplayProps>(), {
 const componentInfo = computed(() => tableElComponentsMap[toCamelCase(toValue(props.el)) as TableComponentEnum]);
 
 // 解析传来的 elProps
-const elPropsValue = computed(() => {
-  return isFunction(props.elProps) ? props.elProps(props.originValue) : unref(props.elProps);
-});
+const elPropsValue = computed(() =>
+  isFunction(props.elProps) ? props.elProps(props.originValue) : unref(props.elProps)
+);
 
 // 获取格式化后的值
 const formatValue = computed(() => {

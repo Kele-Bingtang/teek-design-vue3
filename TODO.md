@@ -15,6 +15,8 @@
 - ProTable 分页思考（支持外界后端分页）
 - 修复树形表格
 - ProTable 按钮的 `show` 配置支持传入 Vue 自定义指令
+- ProTable 支持修改后台分页键（pageNum、pageSize）
+- ProTable 内部的 `preventCellCloseClass` 支持 props？
 
 ## Bug
 

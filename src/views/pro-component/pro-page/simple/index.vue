@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { OperationNamespace, TableColumn } from "@components/pro/table";
+import type { OperationNamespace, TableColumn, TableScope } from "@components/pro/table";
 import type { PageColumn } from "@components/pro/page";
 import { ref, computed } from "vue";
 import { ElMessage } from "element-plus";
-import { Edit, Delete } from "@element-plus/icons-vue";
+import { Edit, Delete, Check } from "@element-plus/icons-vue";
 import { ProPage } from "@/components";
 import { tableData } from "@/mock/pro-component/pro-table";
 
@@ -25,6 +25,7 @@ const columns: PageColumn[] = [
   {
     prop: "username",
     label: "用户姓名",
+    el: "copy",
     search: {
       el: "el-input",
       beforeSearch: (searchValue, searchParams, column) => {
@@ -84,9 +85,10 @@ buttons.value = [
       type: "primary",
     }),
     icon: Edit,
-    show: row => !row._editable,
+    show: row => !row._isCellEdit(["username", "user.detail.age", "idCard"]),
     onClick: async ({ row }) => {
-      row._editable = !row._editable;
+      // row._editable = !row._editable;
+      row._openCellEdit(["username", "user.detail.age", "idCard"]);
     },
   },
   {
@@ -95,11 +97,14 @@ buttons.value = [
     elProps: () => ({
       type: "primary",
     }),
-    show: row => !!row._editable,
-    icon: Edit,
+    show: row => !!row._isCellEdit(["username", "user.detail.age", "idCard"]),
+    icon: Check,
     onClick: async ({ row }) => {
       const valid = await row._validateCellEdit();
-      if (valid) row._editable = !row._editable;
+      if (valid) {
+        // row._editable = !row._editable;
+        row._closeCellEdit(["username", "user.detail.age", "idCard"]);
+      }
     },
   },
   {
@@ -114,12 +119,12 @@ buttons.value = [
   },
 ];
 
-const handleFormChange = async (fromValue: unknown, prop: string, scope: Recordable) => {
+const handleFormChange = async (fromValue: unknown, prop: string, scope: TableScope) => {
   // setProp(data.value[scope.rowIndex], prop, fromValue);
 };
 
 const handleLeaveCellEdit = (row: Recordable, column: TableColumn) => {
-  ElMessage.success("退出编辑");
+  ElMessage.success(`退出了 ${column.prop}: ${row[column.prop!]} 编辑`);
 };
 
 const handleButtonClick = (params: OperationNamespace.ButtonsCallBackParams) => {

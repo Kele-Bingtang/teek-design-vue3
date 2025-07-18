@@ -5,6 +5,7 @@ export interface TableEditProps extends FormItemColumnProps {
    * 表单组件的值
    */
   value?: unknown;
+  elForms?: FormItemColumnProps["elProps"];
 }
 
 export interface TableEditEmits {

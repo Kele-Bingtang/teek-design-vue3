@@ -1,6 +1,7 @@
 import type { ShallowRef, Ref } from "vue";
 import type { FormValidationResult, TableInstance } from "element-plus";
 import type { ProTableNamespace, TableColumn, TableRow } from "../types";
+import { toValue } from "vue";
 
 /**
  * 表格单元格编辑相关方法
@@ -11,6 +12,7 @@ export const useTableCellEdit = (
   elTableInstance: ShallowRef<TableInstance | null>, // el-table 实例
   callbackFn: {
     preventCellEdit?: (column: TableColumn) => boolean; // 自定义阻止开启编辑逻辑
+    preventCellCloseClass?: string[]; //  阻止开启编辑的单元格类名
     leaveCellEdit?: (row: TableRow, column: TableColumn) => void; // 离开单元格编辑态回调
   } = {}
 ) => {
@@ -44,7 +46,7 @@ export const useTableCellEdit = (
     if (!currentColumn || currentColumn.type || callbackFn.preventCellEdit?.(currentColumn)) return;
 
     // 没有开启点击编辑功能
-    if (editable !== type) return;
+    if (toValue(editable) !== type) return;
 
     // 原先的单元格校验失败
     if (!(await validateCurrentCellEdit?.())) return;
@@ -82,7 +84,7 @@ export const useTableCellEdit = (
     if (closeCurrentCellEdit && elTableInstance.value) {
       const target = e?.target as HTMLElement;
 
-      if (target.classList.contains("el-icon")) return;
+      if (callbackFn.preventCellCloseClass?.some(className => target.classList.contains(className))) return;
 
       const contains = elTableInstance.value.$el?.contains(target);
 

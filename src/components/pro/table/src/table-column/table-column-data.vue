@@ -29,7 +29,11 @@ const emits = defineEmits<
 
 const ns = useNamespace("pro-table-column-data");
 
-const useEditable = computed(() => !isBoolean(props.editable) && ["click", "dblclick"].includes(props.editable));
+const useEditable = computed(() => {
+  const editableValue = toValue(props.editable);
+
+  return !isBoolean(editableValue) && ["click", "dblclick"].includes(editableValue);
+});
 
 /**
  * 获取 ProFormItem 的实例
@@ -238,8 +242,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           editable === true || // 表格整体编辑
           column.editable || // 单列整体编辑
           scope.row._editable || // 单行整体编辑
-          scope.row._editableCol?.[prop(column)] || // 单元格编辑
-          getProp(scope.row_editableCol, prop(column)) // 多级 prop 单元格编辑
+          getProp(scope.row?._editableCol, prop(column)) // 单元格编辑，支持多级 prop
         "
         :ref="(el: any) => registerProFormInstance(el, scope, prop(column))"
         v-bind="column.editProps"

@@ -3,7 +3,7 @@ import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
 import { toValue, ref, computed, watch, watchEffect, useTemplateRef, nextTick, unref } from "vue";
 import { ElTable, ElMessage } from "element-plus";
-import { isEmpty } from "@/common/utils";
+import { isArray, isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
 import {
   getProp,
@@ -69,10 +69,16 @@ const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = 
 // 表格选择
 const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
 // 表格单元格编辑
-const { handleCellEdit } = useTableCellEdit(availableColumns, props.editable, elTableInstance, {
-  preventCellEdit: column => column.prop === props.operationProp,
-  leaveCellEdit: (row, column) => emits("leaveCellEdit", row, column),
-});
+const { handleCellEdit } = useTableCellEdit(
+  availableColumns,
+  computed(() => toValue(props.editable)),
+  elTableInstance,
+  {
+    preventCellEdit: column => column.prop === props.operationProp,
+    preventCellCloseClass: ["el-cion"],
+    leaveCellEdit: (row, column) => emits("leaveCellEdit", row, column),
+  }
+);
 // 表格编辑态的表单相关实例注册和获取
 const { registerProFormInstance, getElFormInstance, getElFormItemInstance, getElInstance } = useTableFormInstance();
 
@@ -107,6 +113,7 @@ function useTableInit() {
       optionField,
       transformOption,
       ignoreOptionIfAbsent,
+      editable,
     } = column;
 
     const options = unref(optionsMap.value.get(optionsProp || prop));
@@ -146,28 +153,77 @@ function useTableInit() {
 
       // 初始化 _editableCol
       row._editableCol ??= {};
+      if (editable) setProp(row._editableCol, prop, true);
 
-      // 开启单元格编辑状态
-      row._openCellEdit ??= prop => {
-        if (prop) {
-          row._editableCol![prop] = true;
-          nextTick(() => {
-            // 焦点聚焦
-            (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus();
-          });
-        } else row._editable = true;
+      // 开启多个单元格编辑状态
+      row._openCellEdit ??= props => {
+        row._oldData ??= {};
+
+        if (props) {
+          // 开启指定单元格的编辑状态
+          const open = (prop: string) => {
+            // 编辑前缓存旧数据
+            setProp(row._oldData, prop, row._getValue(prop));
+
+            setProp(row._editableCol, prop, true);
+            nextTick(() => {
+              // 焦点聚焦
+              (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus?.();
+            });
+          };
+
+          if (isArray(props)) props.forEach(prop => open(prop));
+          else open(props);
+        } else {
+          row._editable = true;
+          row._oldData = { ...row._getData() };
+        }
       };
 
       // 关闭开启单元格编辑状态
-      row._closeCellEdit ??= prop => {
-        if (prop) row._editableCol![prop] = false;
-        else row._editable = false;
+      row._closeCellEdit ??= (props, reset = false) => {
+        if (props) {
+          // 关闭指定单元格的编辑状态
+          const close = (prop: string) => setProp(row._editableCol, prop, false);
+
+          if (isArray(props)) props.forEach(prop => close(prop));
+          else close(props);
+        } else row._editable = false;
+
+        reset && row._resetCellData(props);
+      };
+
+      // 还原编辑前的数据
+      row._resetCellData ??= props => {
+        row._oldData ??= {};
+        if (props) {
+          // 重置指定单元格数据
+          const reset = (prop: string) => {
+            const data = getProp(row._oldData, prop);
+            data && setProp(row, prop, data);
+          };
+
+          if (isArray(props)) props.forEach(reset);
+          else reset(props);
+        } else {
+          Object.entries(row._oldData).forEach(([prop, value]) => {
+            setProp(row, prop, value);
+          });
+        }
+        delete row._oldData;
       };
 
       // 判断当前单元格是否处于编辑状态
-      row._isCellEdit ??= prop => {
-        if (prop) return row._editableCol![prop] ?? false;
-        else return row._editable ?? false;
+      row._isCellEdit ??= (props, mode = "and") => {
+        if (props) {
+          if (isArray(props)) {
+            return mode === "and"
+              ? props.every(prop => getProp(row._editableCol, prop) ?? false)
+              : props.some(prop => getProp(row._editableCol, prop) ?? false);
+          }
+          return getProp(row._editableCol, prop) ?? false;
+        }
+        return row._editable ?? false;
       };
 
       // 编辑态行/单元格校验

@@ -1,3 +1,4 @@
+import type { MaybeRefOrGetter } from "vue";
 import type { TableColumn, TableScope } from "./table-column";
 
 export namespace TableColumnDataNamespace {
@@ -9,7 +10,7 @@ export namespace TableColumnDataNamespace {
     /**
      * 是否开启编辑功能，或指定编辑功能触发方式
      */
-    editable?: boolean | "click" | "dblclick";
+    editable?: MaybeRefOrGetter<boolean | "click" | "dblclick">;
   }
 
   export interface Emits {

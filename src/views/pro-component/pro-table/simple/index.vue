@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OperationNamespace, TableColumn } from "@/components/pro/table";
+import type { OperationNamespace, TableColumn, TableScope } from "@/components/pro/table";
 import { ref, computed } from "vue";
 import { ElMessage } from "element-plus";
 import { Edit, Delete } from "@element-plus/icons-vue";
@@ -111,12 +111,12 @@ buttons.value = [
   },
 ];
 
-const handleFormChange = async (fromValue: unknown, prop: string, scope: Recordable) => {
-  setProp(data.value[scope.rowIndex], prop, fromValue);
+const handleFormChange = async (fromValue: unknown, prop: string, scope: TableScope) => {
+  setProp(data.value[scope.rowIndex!], prop, fromValue);
 };
 
 const handleLeaveCellEdit = (row: Recordable, column: TableColumn) => {
-  ElMessage.success("退出编辑");
+  ElMessage.success(`退出了 ${column.prop}: ${row[column.prop!]} 编辑`);
 };
 
 const handleButtonClick = (params: OperationNamespace.ButtonsCallBackParams) => {

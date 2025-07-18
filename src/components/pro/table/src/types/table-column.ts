@@ -89,7 +89,7 @@ export type TableRow<T extends string | number | symbol = any> = {
   /**
    * 获取单元格值
    */
-  _getValue: (prop: string, column?: TableColumn) => unknown;
+  _getValue: (prop: string) => unknown;
   /**
    * 获取当前行的数据
    */
@@ -109,15 +109,23 @@ export type TableRow<T extends string | number | symbol = any> = {
   /**
    * 开启编辑态方法
    */
-  _openCellEdit: (prop?: string) => void;
+  _openCellEdit: (props?: string | string[]) => void;
   /**
    * 停止编辑态方法
+   *
+   * @reset 是否重置到编辑前的数据
    */
-  _closeCellEdit: (prop?: string) => void;
+  _closeCellEdit: (props?: string | string[], reset?: boolean) => void;
+  /**
+   * 重置到编辑前的数据，请先使用 _openCellEdit 后再使用该函数
+   */
+  _resetCellData: (props?: string | string[]) => void;
   /**
    * 是否处于编辑态方法
+   *
+   * @mode props 为数组时，可以指定匹配模式，默认 and
    */
-  _isCellEdit: (prop?: string) => boolean;
+  _isCellEdit: (props?: string | string[], mode?: "and" | "or") => boolean;
   /**
    * 校验编辑态表单方法
    */
