@@ -49,7 +49,7 @@ export namespace ProTableMainNamespace {
     /**
      * 分页信息
      */
-    pageInfo?: Partial<PageInfo & { total?: number }>;
+    pageInfo?: Partial<PageInfo>;
     /**
      * 是否开启分页功能，可以指定客户端（前端）分页还是服务端（后端）分页，当为 true 时，默认为客户端（前端）分页
      *

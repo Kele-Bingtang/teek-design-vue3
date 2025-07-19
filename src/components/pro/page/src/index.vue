@@ -225,11 +225,11 @@ const handleButtonClick = (params: OperationNamespace.ButtonsCallBackParams) => 
 };
 
 const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
-  emits("confirm", params);
+  emits("buttonConfirm", params);
 };
 
 const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
-  emits("cancel", params);
+  emits("buttonCancel", params);
 };
 
 const handleLeaveCellEdit = (row: TableRow, column: TableColumn) => {

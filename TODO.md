@@ -17,6 +17,9 @@
 - ProTable 按钮的 `show` 配置支持传入 Vue 自定义指令
 - ProTable 支持修改后台分页键（pageNum、pageSize）
 - ProTable 内部的 `preventCellCloseClass` 支持 props？
+- ProTable 搜索参数优化
+
+- 路由结构优化：核心路由、静态路由、角色路由、动态路由
 
 ## Bug
 

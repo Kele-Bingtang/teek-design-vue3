@@ -7,7 +7,12 @@ import type { TableSizeEnum, ToolButtonEnum } from "../helper";
 /**
  * 表格样式属性
  */
-export type SizeStyle = { rowStyle: CSSProperties; cellStyle: CSSProperties; headerCellStyle: CSSProperties };
+export type SizeStyle = {
+  rowStyle?: CSSProperties;
+  cellStyle?: CSSProperties;
+  headerRowStyle?: CSSProperties;
+  headerCellStyle?: CSSProperties;
+};
 
 /**
  * 表格列配置的配置项

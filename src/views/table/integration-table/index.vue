@@ -3,7 +3,7 @@ import type { FormInstance } from "element-plus";
 import type { PageInfo } from "@/components";
 import { ref, useTemplateRef, shallowRef, onMounted, nextTick, watch, reactive } from "vue";
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
-import { Search, Refresh, Plus, Check, EditPen, Delete } from "@element-plus/icons-vue";
+import { Search, Refresh, Plus, Check, EditPen, Delete, Star } from "@element-plus/icons-vue";
 import Sortable from "sortablejs";
 import { tableStatusFilter } from "@/common/config";
 import { Pagination, TableSort, defaultPageInfo } from "@/components";
@@ -373,7 +373,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
       </el-table-column>
       <el-table-column prop="priority" label="优先级" width="140" sortable="custom">
         <template #default="{ row }">
-          <Icon v-for="n in row.priority" :key="n" name="star" style="color: #606266" />
+          <Icon v-for="n in row.priority" :key="n" :icon="Star" style="color: #606266" />
         </template>
       </el-table-column>
 

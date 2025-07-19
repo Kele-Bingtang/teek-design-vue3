@@ -12,7 +12,7 @@ import type {
   TableRow,
 } from "./types";
 import type { UseSelectState } from "./composables";
-import { ref, computed, watchEffect, onMounted, useTemplateRef, isRef, isReactive, reactive, unref } from "vue";
+import { ref, computed, watchEffect, onMounted, useTemplateRef, isRef, isReactive, reactive, unref, watch } from "vue";
 import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { defaultPageInfo } from "@/components/pro/pagination";
@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   card: false,
   rowStyle: () => ({}),
   cellStyle: () => ({}),
+  headerRowStyle: () => ({}),
   headerCellStyle: () => ({}),
   border: false,
   stripe: false,
@@ -61,9 +62,6 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   sizeStyle: () => ({}),
   columnSetting: () => ({}),
   baseSetting: () => ({}),
-  isSelected: undefined,
-  selectedList: undefined,
-  selectedListIds: undefined,
 
   // TableMain 组件的 props（透传下去）
   rowKey: "id",
@@ -84,7 +82,6 @@ const emits = defineEmits<ProTableNamespace.Emits>();
 const ns = useNamespace("pro-table");
 
 const hideHead = ref(false);
-watchEffect(() => (hideHead.value = props.hideHead));
 
 // 最终的 props
 const finalProps = computed(() => {
@@ -171,6 +168,7 @@ const {
   handleLeaveCellEdit,
 } = useTableEmits();
 
+watchEffect(() => (hideHead.value = finalProps.value.hideHead));
 watchEffect(() => (searchParams.value = finalProps.value.requestParams));
 watchEffect(() => (searchInitParams.value = finalProps.value.initRequestParams));
 
@@ -179,16 +177,17 @@ watchEffect(() => (searchInitParams.value = finalProps.value.initRequestParams))
  */
 function useTableSize() {
   // 表格密度
-  const tableSize = ref<TableSizeEnum>((props.size as TableSizeEnum) || TableSizeEnum.Default);
+  const tableSize = ref(!props.size || props.size === TableSizeEnum.Mini ? TableSizeEnum.Default : props.size);
   // 表格密度样式
   const currentSizeStyle = ref<SizeStyle>();
 
   // 最终的 sizeStyle，即将 ProTable 内置的 sizeStyle 和传入的 sizeStyle 合并
   const finalSizeStyle = computed(() => {
-    const { rowStyle, cellStyle, headerCellStyle } = finalProps.value;
+    const { rowStyle, cellStyle, headerRowStyle, headerCellStyle } = finalProps.value;
     return {
       rowStyle: { ...rowStyle, ...currentSizeStyle.value?.rowStyle },
       cellStyle: { ...cellStyle, ...currentSizeStyle.value?.cellStyle },
+      headerRowStyle: { ...headerRowStyle, ...currentSizeStyle.value?.headerRowStyle },
       headerCellStyle: {
         ...headerCellStyle,
         ...currentSizeStyle.value?.headerCellStyle,
@@ -197,6 +196,9 @@ function useTableSize() {
     };
   });
 
+  /**
+   * 表格密度选择事件
+   */
   const handleSizeChange = (size: TableSizeEnum, style: SizeStyle) => {
     tableSize.value = size === TableSizeEnum.Mini ? TableSizeEnum.Default : size;
     currentSizeStyle.value = style;
@@ -283,7 +285,7 @@ function useTableEmits() {
    * 表单值发生改变事件
    */
   const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"] = "", scope: TableScope) => {
-    const { data, requestApi } = props;
+    const { data, requestApi } = finalProps.value;
     // 如果是请求方式获取数据，则自动更新值
     if (!data.length && requestApi) setProp(tableData.value[scope.$index], prop, fromValue);
 

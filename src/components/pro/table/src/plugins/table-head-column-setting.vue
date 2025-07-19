@@ -41,7 +41,7 @@ defineExpose({ open, close });
 </script>
 
 <template>
-  <el-drawer v-model="visible" title="列设置" :size="450" :class="ns.b()">
+  <el-drawer v-model="visible" title="列设置" :size="450" append-to-body :class="ns.b()">
     <el-table ref="elTableInstance" :data="columns" :border="true" row-key="prop" default-expand-all>
       <TableColumnDragSort
         v-if="!columnSetting.hideDragSort"

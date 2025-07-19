@@ -61,4 +61,8 @@ export interface PageInfo {
    * 一页显示多少条数据
    */
   pageSize: number;
+  /**
+   * 总条数
+   */
+  total?: number;
 }

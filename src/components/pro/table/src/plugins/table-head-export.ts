@@ -79,7 +79,12 @@ export const exportExcelByLabel = async (
   data: ProTableNamespace.Props["data"] = [],
   exportProps: ExportProps = {}
 ) => {
-  const { fileName = defaultFileName, title = defaultConfirmTitle, options, appContext } = exportProps;
+  const {
+    fileName = `${defaultFileName}-${new Date().getTime()}`,
+    title = defaultConfirmTitle,
+    options,
+    appContext,
+  } = exportProps;
   const exportColumns = columns.filter(item => !item.type && item.prop !== "operation");
   const exportLabel = ref<CheckboxGroupValueType>(exportColumns.map(item => toValue(item.label) || ""));
 
@@ -119,7 +124,12 @@ export const exportExcelByProp = async (
   data: ProTableNamespace.Props["data"] = [],
   exportProps: ExportProps = {}
 ) => {
-  const { fileName = defaultFileName, title = defaultConfirmTitle, options, appContext } = exportProps;
+  const {
+    fileName = `${defaultFileName}-${new Date().getTime()}`,
+    title = defaultConfirmTitle,
+    options,
+    appContext,
+  } = exportProps;
   const exportColumns = columns.filter(item => !item.type && item.prop !== "operation");
   const exportProp = ref<CheckboxGroupValueType>(exportColumns.map(item => item.prop || ""));
 
@@ -158,7 +168,12 @@ export const exportExcelByDataKey = async (
   data: ProTableNamespace.Props["data"] = [],
   exportProps: ExportProps = {}
 ) => {
-  const { fileName = defaultFileName, title = defaultConfirmTitle, options, appContext } = exportProps;
+  const {
+    fileName = `${defaultFileName}-${new Date().getTime()}`,
+    title = defaultConfirmTitle,
+    options,
+    appContext,
+  } = exportProps;
   const flatData = filterFlatData(data);
   const keys = getObjectKeys(flatData[0]).filter(key => !key.startsWith("_"));
   const exportItem = ref<CheckboxGroupValueType>(keys);
