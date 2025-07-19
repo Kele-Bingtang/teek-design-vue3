@@ -306,7 +306,7 @@ defineExpose(expose);
         <slot name="head-right-after" />
       </template>
 
-      <template v-for="slot in Object.keys($slots).filter(key => !key.includes('head-right-after'))" #[slot]="scope">
+      <template v-for="slot in Object.keys($slots).filter(key => !['head-right-after'].includes(key))" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>
     </ProTable>

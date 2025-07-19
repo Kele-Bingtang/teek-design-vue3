@@ -20,13 +20,11 @@ const columns: FormGroupColumn[] = [
     columns: [
       {
         label: "名称",
-        width: 120,
         prop: "name",
         tooltip: "名称最多显示6个字符",
       },
       {
         label: "状态",
-        width: 120,
         prop: "status",
         el: "el-select",
         options: [
@@ -42,10 +40,10 @@ const columns: FormGroupColumn[] = [
     title: "第二分组",
     icon: Calendar,
     columns: [
-      { label: "标签", width: 120, prop: "tag" },
-      { label: "执行进度", width: 200, prop: "progress" },
-      { label: "评分", width: 200, prop: "rate", el: "el-rate" },
-      { label: "是否显示", width: 100, prop: "switch", el: "el-switch" },
+      { label: "标签", prop: "tag" },
+      { label: "执行进度", prop: "progress" },
+      { label: "评分", prop: "rate", el: "el-rate" },
+      { label: "是否显示", prop: "switch", el: "el-switch" },
     ],
   },
   {
@@ -114,18 +112,9 @@ const columns: FormGroupColumn[] = [
         prop: "demand",
         el: "el-checkbox",
         options: [
-          {
-            label: "四六级",
-            value: "0",
-          },
-          {
-            label: "计算机二级证书",
-            value: "1",
-          },
-          {
-            label: "普通话证书",
-            value: "2",
-          },
+          { label: "四六级", value: "0" },
+          { label: "计算机二级证书", value: "1" },
+          { label: "普通话证书", value: "2" },
         ],
       },
       {
@@ -133,18 +122,9 @@ const columns: FormGroupColumn[] = [
         prop: "gift",
         el: "el-radio",
         options: [
-          {
-            label: "诗",
-            value: "0",
-          },
-          {
-            label: "远方",
-            value: "1",
-          },
-          {
-            label: "美食",
-            value: "2",
-          },
+          { label: "诗", value: "0" },
+          { label: "远方", value: "1" },
+          { label: "美食", value: "2" },
         ],
       },
       {

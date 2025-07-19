@@ -155,7 +155,7 @@ const handleSubmit = () => {
     <ProFormDrawer
       v-model:visible="drawerVisible"
       v-model="model"
-      :drawer="{ title: '表单标题', confirmLoading }"
+      :drawer="{ title: '抽屉标题', confirmLoading }"
       :form="{ elFormProps, columns }"
       @confirm="handleSubmit"
     />

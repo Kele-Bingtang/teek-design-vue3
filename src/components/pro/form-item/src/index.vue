@@ -43,6 +43,7 @@ const showLabelValue = computed(() => toValue(props.showLabel));
 const withValue = computed(() => addUnit(toValue(props.width)));
 const formItemPropsValue = computed(() => toValue(props.formItemProps));
 const editableValue = computed(() => toValue(props.editable));
+const tooltipValue = computed(() => toValue(props.tooltip));
 
 // 表单组件需要的 v-model
 const elModel = computed({
@@ -85,6 +86,9 @@ const childComponentMap: Record<string, { root: Component; child?: Component }> 
   [FormElComponentEnum.EL_CHECKBOX_GROUP]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
   [FormElComponentEnum.EL_CHECKBOX_BUTTON]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
 };
+
+// 更新 model 值
+const updateElModel = (value: unknown) => (elModel.value = value);
 
 // 获取标题样式
 const formatDividerTitle = (labelSize = "default") => {
@@ -205,23 +209,30 @@ defineExpose(expose);
     <template v-if="editableValue && showLabelValue" #label="{ label }">
       <!-- 自定义 label（h、JSX）渲染 -->
       <component v-if="renderLabel" :is="renderLabel(label, slotParams)" />
+      <!-- 自定义 headerRenderHtml 函数渲染，返回 HTML 格式 -->
+      <span v-else-if="renderLabelHtml" v-html="renderLabelHtml(label, slotParams)" />
       <!-- 自定义 label 插槽 -->
       <slot v-else-if="$slots[`${prop}-label`]" :name="`${prop}-label`" v-bind="slotParams" />
       <!-- 默认 Label -->
       <template v-else-if="label">{{ label }}</template>
 
-      <el-tooltip v-if="isString(tooltip)" placement="top" effect="dark" :content="tooltip">
+      <el-tooltip v-if="isString(tooltipValue)" placement="top" effect="dark" :content="tooltipValue">
         <slot name="tooltip-icon">
           <el-icon><QuestionFilled /></el-icon>
         </slot>
       </el-tooltip>
 
-      <el-tooltip v-else-if="tooltip" placement="top" effect="dark" v-bind="tooltip">
+      <el-tooltip
+        v-else-if="tooltipValue"
+        placement="top"
+        effect="dark"
+        v-bind="{ ...tooltipValue, render: undefined, contentRender: undefined }"
+      >
         <!-- ElToolTip 默认插槽 -->
-        <component v-if="tooltip.render" :is="tooltip.render" />
+        <component v-if="tooltipValue.render" :is="tooltipValue.render" />
         <!-- ElToolTip content 插槽 -->
-        <template v-if="tooltip.contentRender" #content>
-          <component v-if="tooltip.contentRender" :is="tooltip.contentRender()" />
+        <template v-if="tooltipValue.contentRender" #content>
+          <component :is="tooltipValue.contentRender()" />
         </template>
         <slot name="tooltip-icon">
           <el-icon><QuestionFilled /></el-icon>
@@ -231,7 +242,7 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="render" :is="render(model, slotParams)" />
+      <component v-if="render" :is="render(elModel, updateElModel, slotParams)" />
       <!-- 自定义表单组件插槽 -->
       <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
 
@@ -282,8 +293,16 @@ defineExpose(expose);
           v-model="elModel"
           :clearable
           v-bind="{ ...elPropsValue, ...placeholder }"
-          :data="formEl === FormElComponentEnum.EL_TREE_SELECT ? enums : []"
-          :options="[FormElComponentEnum.EL_CASCADER, FormElComponentEnum.EL_SELECT_V2].includes(formEl) ? enums : []"
+          :data="formEl === FormElComponentEnum.EL_TREE_SELECT ? enums : elPropsValue.data || []"
+          :options="
+            [
+              FormElComponentEnum.EL_CASCADER,
+              FormElComponentEnum.EL_SELECT_V2,
+              FormElComponentEnum.EL_SEGMENTED,
+            ].includes(formEl)
+              ? enums
+              : []
+          "
           :style="{ width: withValue }"
         >
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">

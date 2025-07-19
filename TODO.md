@@ -21,6 +21,16 @@
 
 - 路由结构优化：核心路由、静态路由、角色路由、动态路由
 
+文档独有属性：
+
+- ElTree 为自定义 Tree
+- ProTable Filter
+- 表单 width 属性示例说明
+- 表单操作 confirm 包类型不匹配
+- 表格表单 icon 插槽示例编写
+
+- 加强 toValue 和 MaybeRefOrGetter，所有对应的配置项支持 Promise 类型
+
 ## Bug
 
 ## 文档

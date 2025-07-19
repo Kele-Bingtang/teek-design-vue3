@@ -9,6 +9,10 @@ export interface FormGroupColumn {
    */
   title: MaybeRefOrGetter<string>;
   /**
+   * 当前分组表单唯一标识，可用于插槽
+   */
+  prop?: string;
+  /**
    * el-icon 组件的图标
    */
   icon?: Component;
@@ -21,7 +25,7 @@ export interface FormGroupColumn {
    *
    * @default false
    */
-  hide?: MaybeRefOrGetter<boolean>;
+  hidden?: MaybeRefOrGetter<boolean>;
   /**
    * 表单列配置
    */

@@ -1,7 +1,18 @@
 import type { Component, VNode } from "vue";
 import type { ElDisplayProps, TablePascalCaseComponentName } from "../types";
 import { withModifiers, h } from "vue";
-import { ElLink, ElTag, ElCheckTag, ElProgress, ElImage, ElAvatar, dayjs, ElIcon, ElMessage } from "element-plus";
+import {
+  ElLink,
+  ElTag,
+  ElCheckTag,
+  ElProgress,
+  ElImage,
+  ElAvatar,
+  dayjs,
+  ElIcon,
+  ElMessage,
+  ElText,
+} from "element-plus";
 import { DocumentCopy } from "@element-plus/icons-vue";
 import { isArray, isString, isEmpty } from "@/common/utils";
 
@@ -34,6 +45,7 @@ export interface ComponentConfig {
  * 组件名枚举，key 要求是大写和 PascalCase 格式（自动与 componentMap 映射），value 则是 el 的字面量（使用配置项的 el 时用到）
  */
 export enum TableComponentEnum {
+  El_TEXT = "ElText",
   EL_TAG = "ElTag",
   EL_CHECK_TAG = "ElCheckTag",
   EL_LINK = "ElLink",
@@ -52,6 +64,8 @@ const tableElComponentsMap: Record<
   TablePascalCaseComponentName,
   Omit<Component, keyof ComponentConfig> | ComponentConfig
 > = {
+  // 文本
+  ElText,
   // 标签
   ElTag: {
     is: ElTag,

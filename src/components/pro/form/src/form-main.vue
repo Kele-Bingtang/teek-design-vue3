@@ -167,7 +167,7 @@ const isHidden = (column: FormColumn) => {
 const getColProps = (column: FormColumn) => {
   const { colProps } = props;
   return {
-    span: 12, // 默认 2 个表单占满一行
+    span: 24, // 默认 2 个表单占满一行
     ...colProps,
     ...toValue(column.colProps),
   };
@@ -185,7 +185,7 @@ defineExpose(expose);
 
 <template>
   <slot :isHidden :setProFormItemInstance :optionsMap>
-    <el-row v-if="flexLayout" :gutter="20" v-bind="rowProps" style="width: 100%">
+    <el-row v-if="flexLayout" :gutter="20" v-bind="rowProps">
       <el-col
         v-for="column in availableColumns"
         :key="column.prop"

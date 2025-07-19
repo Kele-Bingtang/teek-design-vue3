@@ -202,6 +202,7 @@ export interface FormItemColumnProps {
    * 字典枚举数据
    */
   options?:
+    | string[]
     | MaybeRef<ElOption[]>
     | Promise<ElOption[]>
     | ((
@@ -228,7 +229,7 @@ export interface FormItemColumnProps {
    * Label 右侧 ElToolTip 提示
    */
   tooltip?:
-    | string
+    | MaybeRefOrGetter<string>
     | ({
         icon?: Component; // ElTooTip 绑定的元素图标
         render?: () => RenderTypes; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
@@ -243,9 +244,13 @@ export interface FormItemColumnProps {
    */
   renderLabel?: (label: string, scope: FormItemColumnProps) => RenderTypes;
   /**
+   * 自定义 Label 内容渲染（返回 HTML），优先级低于 render，高于插槽
+   */
+  renderLabelHtml?: (label: string, scope: FormItemColumnProps) => string;
+  /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  render?: (model: ModelBaseValueType, scope: FormItemColumnProps) => RenderTypes;
+  render?: (value: unknown, update: (value: unknown) => void, scope: FormItemColumnProps) => RenderTypes;
   /**
    * 是否为编辑态
    *

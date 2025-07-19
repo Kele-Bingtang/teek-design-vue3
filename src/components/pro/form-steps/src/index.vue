@@ -89,7 +89,7 @@ defineExpose(expose);
     <ProForm
       ref="proFormInstance"
       footer-align="left"
-      v-bind="columns[currentIndex]?.form"
+      :show-reset="active !== 1"
       @update:model-value="
         value => {
           const column = columns[currentIndex];
@@ -101,9 +101,12 @@ defineExpose(expose);
       @submit="next"
       @reset="pre"
       @change="handleChange"
+      v-bind="columns[currentIndex]?.form"
     >
+      <slot v-if="$slots[`step-${active}`]" :name="`step-${active}`" v-bind="columns[currentIndex]" />
+
       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-        <slot :name="slot" v-bind="scope" />
+        <slot :name="slot" v-bind="{ ...scope, ...columns[currentIndex] }" />
       </template>
     </ProForm>
   </div>

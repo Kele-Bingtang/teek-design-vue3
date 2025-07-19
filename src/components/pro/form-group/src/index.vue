@@ -145,10 +145,10 @@ defineExpose(defaultExpose);
   >
     <template #default="{ formMainProps }">
       <template v-for="(column, index) in columns" :key="toValue(column.title)">
-        <el-card v-if="!toValue(column.hide)" v-bind="column.cardProps || cardProps" :class="ns.e('card')">
+        <el-card v-if="!toValue(column.hidden)" v-bind="column.cardProps || cardProps" :class="ns.e('card')">
           <template #header>
             <slot
-              name="group-header"
+              name="header"
               :title="toValue(column.title)"
               :columns="column.columns"
               :icon="column.icon"
@@ -162,7 +162,10 @@ defineExpose(defaultExpose);
           </template>
 
           <template #default>
+            <slot v-if="column.prop && $slots[column.prop]" :name="column.prop" v-bind="column" :index="index" />
+
             <ProFormMain
+              v-else
               ref="proFormMainInstance"
               v-model="model"
               v-bind="formMainProps"
@@ -182,8 +185,8 @@ defineExpose(defaultExpose);
               </template>
 
               <!-- 其他通用插槽 -->
-              <template v-for="slot in Object.keys($slots).filter(key => !key.includes('form-main'))" #[slot]="scope">
-                <slot :name="slot" v-bind="scope" />
+              <template v-for="slot in Object.keys($slots).filter(key => !['form-main'].includes(key))" #[slot]="scope">
+                <slot :name="slot" v-bind="scope as Recordable" />
               </template>
             </ProFormMain>
           </template>
