@@ -19,6 +19,7 @@ defineOptions({ name: "TableColumnData" });
 
 const props = withDefaults(defineProps<TableColumnDataNamespace.Props>(), {
   editable: false,
+  optionsMap: undefined,
 });
 
 const emits = defineEmits<
@@ -116,14 +117,14 @@ const handleRegisterProFormInstance = (index: number, prop: string, instance: Pr
 /**
  * 执行过滤搜索
  */
-const handleFilter = (filterValue: unknown, prop: string | undefined) => {
+const handleFilter = (filterValue: unknown, prop: string) => {
   emits("filter", filterValue, prop);
 };
 
 /**
  * 执行过滤清除
  */
-const handleFilterClear = (prop: string | undefined) => {
+const handleFilterClear = (prop: string) => {
   emits("filterClear", prop);
 };
 
@@ -209,6 +210,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-if="column.filter"
         v-bind="column.filterProps"
         :prop="column.filterProps?.prop || column.prop"
+        :options="optionsMap?.get(prop(column))"
+        :option-field="column.optionField"
         @filter="handleFilter"
         @clear="handleFilterClear"
         @reset="handleFilterReset"
@@ -216,8 +219,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         <template v-if="$slots['filter-icon']" #filter-icon>
           <slot name="filter-icon" />
         </template>
-        <template v-if="$slots['filter-button']" #filter-button>
-          <slot name="filter-button" />
+        <template v-if="$slots['filter-button']" #filter-button="scope">
+          <slot name="filter-button" v-bind="scope" />
         </template>
       </TableFilter>
 

@@ -63,9 +63,9 @@ export namespace ProTableMainNamespace {
     /**
      * 过滤规则，可以指定客户端（前端）过滤还是服务端（后端）过滤，当为 true 时，默认为客户端（前端）过滤
      *
-     * @default false
+     * @default 'client'
      */
-    filterScope?: boolean | Environment | `${Environment}`;
+    filterScope?: Environment | `${Environment}`;
     /**
      * ElTable 的 headerCellStyle 配置项
      */
@@ -114,6 +114,6 @@ export namespace ProTableMainNamespace {
     /**
      * 过滤事件，返回输入的值以及 prop
      */
-    filter: [filterModel: Recordable, filterValue: unknown, prop: string | undefined];
+    filter: [filterModel: Recordable, filterValue: unknown, prop: string];
   }
 }

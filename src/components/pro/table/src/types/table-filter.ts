@@ -63,17 +63,27 @@ export interface TableFilterProps {
    * @default '重置'
    */
   resetText?: string;
+  /**
+   * 字典数据
+   */
+  options?: FormItemColumnProps["options"];
+  /**
+   * 字典指定 label && value && children 的 key 值
+   *
+   * @default '{ label: "label", value: "value", children: "children", disabled: "disabled" }'
+   */
+  optionField?: FormItemColumnProps["optionField"];
 }
 
 export interface TableFilterEmits {
   /**
    * 过滤事件，返回输入的值以及 prop
    */
-  filter: [filterValue: unknown, prop: string | undefined];
+  filter: [filterValue: unknown, prop: string];
   /**
    * 清空事件，返回输入的 prop
    */
-  clear: [prop: string | undefined];
+  clear: [prop: string];
   /**
    * 重置所有表单事件
    */

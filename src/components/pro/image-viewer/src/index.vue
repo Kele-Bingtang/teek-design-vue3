@@ -27,13 +27,34 @@ const layoutSize = computed(() => useLayoutStore().layoutSize);
 
 const visible = defineModel({ default: false });
 
-const close = () => (visible.value = false);
+const imageViewProps = computed(() => {
+  const newProps: any = { ...props };
+
+  // 需要手动删除这两个属性，否则控制台有警告
+  delete newProps.modelValue;
+  delete newProps.modelModifiers;
+
+  return newProps;
+});
+
+const close = () => {
+  const imageViewerDom = document.querySelector(`.${ns.joinEl("image-viewer__wrapper")}`);
+  if (imageViewerDom) {
+    // 添加 Element Plus 内置的 ImageViewer 离开动画
+    imageViewerDom.classList.add("viewer-fade-leave-active");
+    imageViewerDom.classList.add("viewer-fade-leave-to");
+
+    setTimeout(() => {
+      visible.value = false;
+    }, 300);
+  } else visible.value = false;
+};
 
 defineExpose({ close });
 </script>
 
 <template>
   <ElConfigProvider :namespace="ns.elNamespace" :size="layoutSize">
-    <ElImageViewer v-if="visible" v-bind="props" @close="close" />
+    <ElImageViewer v-if="visible" v-bind="imageViewProps" @close="close" />
   </ElConfigProvider>
 </template>

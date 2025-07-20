@@ -92,6 +92,7 @@ const handleFormChange = (value: unknown, prop: string) => {
       :descriptions-item-props="{ align: position, minWidth: '60px' }"
       :form-props="{ elFormProps }"
       edit-button
+      card
       @form-change="handleFormChange"
     >
       <template #title>
@@ -133,6 +134,7 @@ const handleFormChange = (value: unknown, prop: string) => {
       :descriptions-item-props="{ align: position, minWidth: '60px' }"
       :form-props="{ elFormProps }"
       edit-button
+      card
       @form-change="handleFormChange"
     />
   </div>

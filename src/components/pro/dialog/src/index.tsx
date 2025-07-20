@@ -28,11 +28,44 @@ const getFatherDom = (): Element => {
 };
 
 /**
+ * 关闭前的动画
+ */
+const removeWithTransition = (target: Element, end: () => void) => {
+  // ElementPlus 内置的 Dialog 消失动画 class
+  target.classList.add("dialog-fade-leave-active");
+
+  // 监听动画/过渡结束
+  function onTransitionEnd() {
+    // 动画结束后移除元素
+    end();
+    target.removeEventListener("animationend", onTransitionEnd);
+    target.removeEventListener("transitionend", onTransitionEnd);
+  }
+
+  target.addEventListener("animationend", onTransitionEnd);
+  target.addEventListener("transitionend", onTransitionEnd);
+
+  setTimeout(() => {
+    // 兼容没有 transition 的情况
+    onTransitionEnd();
+  }, 300);
+};
+
+/**
  * 关闭弹框
  */
 export const closeDialog = () => {
-  const vm = document.querySelector(`#${blockClass}-${id--}`) as HTMLElement;
-  vm && getFatherDom().removeChild(vm);
+  const overlayEl = document.querySelector(`#${blockClass}-${id} .${ns.elNamespace}-overlay`);
+  if (!overlayEl) return;
+
+  removeWithTransition(overlayEl, () => {
+    const vm = document.querySelector(`#${blockClass}-${id--}`);
+    vm && getFatherDom().removeChild(vm);
+  });
+
+  if (!document.querySelector(`.${blockClass}-overlay`)) {
+    document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);
+  }
 };
 
 /**
@@ -91,7 +124,7 @@ export const showDialog = (
 
   const toggleFullscreen = () => {
     const elDialogEl = document.querySelector(
-      `${`#${blockClass}-${id}`} .${blockClass}.${ns.elNamespace}-dialog`
+      `#${blockClass}-${id} .${blockClass}.${ns.elNamespace}-dialog`
     ) as HTMLElement;
 
     if (elDialogEl) elDialogEl.classList.toggle("is-fullscreen");
@@ -183,6 +216,7 @@ export const showDialog = (
 
   const container = document.createElement("div");
   container.id = `${blockClass}-${++id}`;
+  container.className = `${blockClass}-overlay`;
   getFatherDom().appendChild(container);
   render(vm, container);
 };

@@ -2,7 +2,9 @@
 import type { FilterEmits, TreeFilterProps } from "./types";
 import { ref, watch, onBeforeMount, useTemplateRef, nextTick } from "vue";
 import { ElInput, ElScrollbar, ElTree } from "element-plus";
+import { More } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
+import { isArray, isString } from "@/common/utils";
 
 defineOptions({ name: "TreeFilter" });
 
@@ -18,6 +20,7 @@ const props = withDefaults(defineProps<TreeFilterProps>(), {
   defaultValue: undefined,
   enableTotal: true,
   defaultFirst: false,
+  card: true,
 });
 
 const emit = defineEmits<FilterEmits>();
@@ -29,21 +32,34 @@ const defaultProps = {
   label: props.label,
 };
 
-const filterText = ref<string>("");
 const treeInstance = useTemplateRef<InstanceType<typeof ElTree>>("treeInstance");
 const treeData = ref<Recordable[]>([]);
 const treeAllData = ref<Recordable[]>([]);
+
 // 选中的值
 const selected = ref();
 
-onBeforeMount(async () => {
-  const { multiple, defaultValue } = props;
-  // 重新接收一下默认值
-  if (multiple) selected.value = Array.isArray(defaultValue) ? defaultValue : [defaultValue];
-  else selected.value = typeof defaultValue === "string" ? defaultValue : "";
+watch(
+  () => props.defaultValue,
+  () => nextTick(() => setSelected()),
+  { deep: true, immediate: true }
+);
 
-  initTreeData();
-});
+watch(
+  () => props.data,
+  () => {
+    if (props.data?.length) {
+      treeData.value = props.data;
+      treeAllData.value = [{ id: "", [props.label]: "全部" }, ...props.data];
+    }
+  },
+  { deep: true, immediate: true }
+);
+
+const setSelected = () => {
+  if (props.multiple) selected.value = isArray(props.defaultValue) ? props.defaultValue : [props.defaultValue];
+  else selected.value = isString(props.defaultValue) ? props.defaultValue : "";
+};
 
 /**
  * 初始化树形数据
@@ -77,8 +93,15 @@ const initTreeData = async () => {
   }
 };
 
+onBeforeMount(async () => {
+  setSelected();
+  initTreeData();
+});
+
+const filterText = ref("");
+
 watch(filterText, val => {
-  treeInstance.value!.filter(val);
+  treeInstance.value?.filter(val);
 });
 
 /**
@@ -98,6 +121,15 @@ const filterNode = (value: string, data: Recordable, node: any) => {
   return labels.some(label => label.indexOf(value) !== -1);
 };
 
+// 切换树节点的展开或折叠状态
+const toggleTreeNodes = (isExpand: boolean) => {
+  const nodes = treeInstance.value?.store.nodesMap;
+  if (!nodes) return;
+
+  Object.values(nodes).forEach((node: any) => {
+    node.expanded = isExpand;
+  });
+};
 /**
  * 单选
  */
@@ -117,12 +149,25 @@ defineExpose({ treeData, treeAllData, initTreeData });
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.join('card-minimal')]">
+  <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
     <slot name="title">
-      <h4 :class="`${ns.e('title')} sle`" v-if="title">{{ title }}</h4>
+      <h4 v-if="title" :class="`${ns.e('title')} sle`">{{ title }}</h4>
     </slot>
-    <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
-    <el-scrollbar :style="{ height: title ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
+
+    <div :class="ns.e('search')">
+      <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
+      <el-dropdown trigger="click">
+        <el-icon size="20"><More /></el-icon>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="toggleTreeNodes(true)">展开全部</el-dropdown-item>
+            <el-dropdown-item @click="toggleTreeNodes(false)">折叠全部</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
+
+    <el-scrollbar :style="{ height: title || $slots['title'] ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
       <el-tree
         ref="treeInstance"
         default-expand-all

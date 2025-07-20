@@ -16,8 +16,15 @@
     letter-spacing: 0.5px;
   }
 
-  @include el-joins(input) {
+  @include e(search) {
+    display: flex;
+    align-items: center;
     margin: 0 0 15px;
+
+    .el-icon {
+      cursor: pointer;
+      transform: rotate(90deg) translateY(-8px);
+    }
   }
 
   @include el-joins(scrollbar) {

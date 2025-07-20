@@ -91,21 +91,21 @@ const objectSpanMethod = ({ rowIndex, columnIndex }: SpanMethodProps) => {
 };
 
 // 设置列样式
-const tableRowClassName = ({ rowIndex }: { row: ResUserList; rowIndex: number }) => {
+const tableRowClassName = ({ rowIndex }: { row: TableColumn<ResUserList>; rowIndex: number }) => {
   if (rowIndex === 2) return "warning-row";
   if (rowIndex === 6) return "success-row";
   return "";
 };
 
 // 单击行
-const rowClick = (row: ResUserList, column: TableColumn<ResUserList>) => {
+const rowClick = (row: TableColumn<ResUserList>, column: TableColumn<ResUserList>) => {
   if (column.property === "radio" || column.property === "operation") return;
   console.log(row);
   ElMessage.success("当前行被点击了！");
 };
 
 // 删除用户信息
-const deleteAccount = async (params: ResUserList) => {
+const deleteAccount = async (params: TableColumn<ResUserList>) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => item.id !== params.id);
   }, `删除【${params.username}】用户`);
@@ -122,7 +122,7 @@ const batchDelete = async (id: string[]) => {
 };
 
 // 重置用户密码
-const resetPass = async (params: ResUserList) => {
+const resetPass = async (params: TableColumn<ResUserList>) => {
   await useConfirm(() => {}, `重置【${params.username}】用户密码`);
   proTableInstance.value?.getTableList();
 };
@@ -161,8 +161,12 @@ const resetPass = async (params: ResUserList) => {
     </template>
     <!-- 表格操作 -->
     <template #operation="scope">
-      <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row)">重置密码</el-button>
-      <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)">删除</el-button>
+      <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row as TableColumn<ResUserList>)">
+        重置密码
+      </el-button>
+      <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row as TableColumn<ResUserList>)">
+        删除
+      </el-button>
     </template>
     <template #append>
       <span :style="{ color: ns.cssVarEl('color-primary') }">

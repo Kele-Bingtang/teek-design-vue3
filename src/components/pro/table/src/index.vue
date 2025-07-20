@@ -70,7 +70,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   pageInfo: () => defaultPageInfo,
   pageScope: false,
   paginationProps: () => ({}),
-  filterScope: false,
+  filterScope: "client",
   editable: false,
   emptyText: "暂无数据",
   radioProps: () => ({}),
@@ -243,6 +243,7 @@ function useTableEmits() {
    * 点击刷新按钮事件
    */
   const handleRefresh = () => {
+    // 不需要更新查询参数，因此使用 getTableList 函数而不是 search 函数
     getTableList();
     emits("refresh");
   };
@@ -265,13 +266,14 @@ function useTableEmits() {
   /**
    * 执行列过滤搜索事件
    */
-  const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string | undefined) => {
+  const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string) => {
+    if (finalProps.value.pageScope === "server") search(filterModel);
     emits("filter", filterModel, filterValue, prop);
   };
   /**
    * 执行列过滤清除事件
    */
-  const handleFilterClear = (prop: string | undefined) => {
+  const handleFilterClear = (prop: string) => {
     emits("filterClear", prop);
   };
   /**

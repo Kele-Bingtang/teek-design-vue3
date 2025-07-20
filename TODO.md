@@ -6,6 +6,8 @@
 
 ## 优化
 
+- ProTable Filter 配置的 `formColumn` 改为本身
+
 - Websocket Store 优化
 - 版本升级清除缓存功能
 - 分栏布局支持切换 tip 和 text
@@ -19,6 +21,8 @@
 - ProTable 内部的 `preventCellCloseClass` 支持 props？
 - ProTable 搜索参数优化
 - ModelBaseValueType 替换 unknown
+
+- unknown 改为 any
 
 - 路由结构优化：核心路由、静态路由、角色路由、动态路由
 
