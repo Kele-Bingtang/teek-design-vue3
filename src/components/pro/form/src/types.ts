@@ -1,6 +1,6 @@
-import type { MaybeRef } from "vue";
+import type { MaybeRef, MaybeRefOrGetter } from "vue";
 import type { ColProps, FormInstance, FormItemProp, FormProps, FormValidateCallback, RowProps } from "element-plus";
-import type { FormItemColumnProps, ProFormItemEmits } from "@/components/pro/form-item";
+import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "@/components/pro/form-item";
 import type ProForm from "./index.vue";
 import type ProFormMain from "./form-main.vue";
 
@@ -16,7 +16,7 @@ export namespace ProFormNamespace {
     /**
      * ElForm props
      */
-    elFormProps?: ElFormProps;
+    elFormProps?: MaybeRefOrGetter<ElFormProps>;
     /**
      * 表单提交时，如果校验失败，是否使用 ElMessage 提示错误信息
      *
@@ -177,9 +177,9 @@ export interface FormColumn extends FormItemColumnProps {
    * 表单属性的默认值
    */
   defaultValue?:
-    | MaybeRef<unknown>
-    | Promise<unknown>
-    | ((model: Recordable, optionsMap: Map<string, Recordable>) => unknown | Promise<unknown>);
+    | MaybeRef<ModelBaseValueType>
+    | Promise<ModelBaseValueType>
+    | ((model: Recordable, optionsMap: Map<string, Recordable>) => ModelBaseValueType | Promise<ModelBaseValueType>);
   /**
    * 表单排序（从大到小）
    */

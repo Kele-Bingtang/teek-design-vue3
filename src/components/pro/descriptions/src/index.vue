@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
-import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp } from "./types";
+import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp, RenderParams } from "./types";
 import { computed, reactive, ref, toValue, unref, watch, watchEffect } from "vue";
-import { ElDescriptions, ElDescriptionsItem, ElButton } from "element-plus";
+import { ElDescriptions, ElDescriptionsItem, ElButton, formProps } from "element-plus";
 import { isArray, isFunction } from "@/common/utils";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
@@ -204,17 +204,37 @@ const getValue = (column: DescriptionColumn) => {
 const formatValue = (value: unknown, column: DescriptionColumn) => {
   const { formatValue } = column;
 
-  return formatValue?.(value, { value, column, data: descriptionsData }) ?? value ?? "--";
+  return (
+    formatValue?.(value, { value, column, label: toValue(column.label || ""), data: descriptionsData }) ?? value ?? "--"
+  );
 };
 
 /**
  * 获取 Render/插槽 的参数
  */
-const getRenderParams = (column: DescriptionColumn) => ({
-  value: getValue(column),
-  column,
-  data: descriptionsData,
-});
+const getRenderParams = (column: DescriptionColumn) =>
+  ({
+    value: getValue(column),
+    column,
+    label: toValue(column.label || ""),
+    data: descriptionsData,
+  }) as RenderParams;
+
+/**
+ * 判断表单是否开启校验
+ */
+const isRequired = (item: DescriptionColumn) => {
+  const elFormProps = toValue(toValue(props.formProps).elFormProps);
+  const formItemProps = toValue(toValue(item.formColumn)?.formItemProps);
+
+  if (formItemProps?.required) return true;
+
+  const rules: Record<string, any> =
+    Reflect.get(formItemProps?.rules || elFormProps?.rules || {}, item.prop || "") || {};
+
+  const isRequired = Object.values(rules).some(rule => rule.required);
+  return isRequired;
+};
 
 /**
  * 打开编辑态
@@ -286,16 +306,17 @@ defineExpose({
         <el-descriptions-item
           v-for="(column, index) in availableColumns"
           :key="index"
+          :class-name="(column.className || '') + ` ${ns.e('content')}`"
+          :label-class-name="
+            (column.labelClassName || '') + ` ${ns.e('label')}` + (isRequired(column) ? ' is-required' : '')
+          "
           v-bind="{ ...descriptionsItemProps, ...initColumn(column), formProps: undefined }"
           :label="toValue(column.label)"
         >
           <!-- 描述 label 插槽 -->
           <template #label>
             <!-- 自定义 label 的 Render 函数 -->
-            <component
-              v-if="column.renderLabel"
-              :is="column.renderLabel(toValue(column.label || ''), getRenderParams(column))"
-            />
+            <component v-if="column.renderLabel" :is="column.renderLabel(getRenderParams(column))" />
             <!-- 自定义 label 插槽 -->
             <slot
               v-else-if="$slots[`${column.prop}-label`]"
@@ -312,7 +333,8 @@ defineExpose({
             v-if="editable || column.editable"
             v-model="model"
             :ref="(el: any) => registerProFormInstance(el, column.prop || '')"
-            v-bind="column.form"
+            v-bind="toValue(column.formColumn)"
+            :form-props="{ ...toValue(props.formProps), ...toValue(column.formProps) }"
             :value="getProp(descriptionsData, column.prop || '')"
             :prop="column.prop || ''"
             :options="optionsMap.get(column.prop || '')"
@@ -321,13 +343,23 @@ defineExpose({
           />
 
           <!-- 自定义 Render 函数渲染 -->
-          <component v-else-if="column.render" :is="column.render(getRenderParams(column))" />
+          <component
+            v-else-if="column.render"
+            :is="column.render(getRenderParams(column))"
+            v-bind="{ ...column.elProps }"
+          />
           <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
           <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(column))" />
           <!-- 自定义插槽，插槽名为 column.prop -->
           <slot v-else-if="$slots[column.prop || '']" :name="column.prop || ''" v-bind="getRenderParams(column)" />
           <!-- 自定义 el 组件 -->
-          <ElDisplay v-else-if="column.el" :value="getValue(column)" :el="column.el" :el-props="column.elProps">
+          <ElDisplay
+            v-else-if="column.el"
+            :origin-value="getProp(descriptionsData, column.prop || '')"
+            :display-value="getValue(column)"
+            :el="column.el"
+            :el-props="column.elProps"
+          >
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
               <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
             </template>

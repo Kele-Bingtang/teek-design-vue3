@@ -90,7 +90,6 @@ watch(
     </template>
   </el-menu-item>
 
-  <!-- 子菜单 -->
   <el-sub-menu v-else :index="menuItem.meta._fullPath || menuItem.path" class="is-sub">
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />

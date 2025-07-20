@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ElMessageBoxProps, OperationButtonEmits, OperationButtonProps } from "../types";
-import { computed, toRaw } from "vue";
+import { computed, toRaw, toValue } from "vue";
 import { ElPopconfirm, ElTooltip, ElIcon, ElButton, ElLink, ElMessageBox } from "element-plus";
+import { toCamelCase } from "@/components/pro/helper";
 import { OperationConfirmEl, OperationEl } from "../helper";
 
 defineOptions({ name: "TableColumnOperationButton" });
@@ -22,13 +23,14 @@ const defaultTitle = "温馨提示";
 const defaultMessage = "确定执行本次操作?";
 
 const icon = computed(() => toRaw(props.icon));
+const confirmElValue = computed(() => toCamelCase(toValue(props.confirmEl)));
 
 const handleButtonClick = (event: MouseEvent) => {
-  emits("buttonClick", event);
+  emits("click", event);
 
-  const { confirmEl, confirmProps } = props;
+  const { confirmProps } = props;
 
-  if (confirmEl === OperationConfirmEl.ElMessageBox) {
+  if (confirmElValue.value === OperationConfirmEl.ElMessageBox) {
     const { title = defaultTitle, message = defaultMessage, options, appContext } = confirmProps as ElMessageBoxProps;
 
     ElMessageBox.confirm(message, title, { type: "warning", ...options }, appContext)
@@ -50,7 +52,7 @@ const handleCancel = (event: MouseEvent) => {
   <!-- Icon 类型按钮 -->
   <el-tooltip v-if="el === OperationEl.ElIcon" placement="top" :content="text" v-bind="tooltipProps">
     <!-- 带二次确认的图标按钮 -->
-    <span v-if="confirmEl === OperationConfirmEl.ElPopconfirm" class="el-icon">
+    <span v-if="confirmElValue === OperationConfirmEl.ElPopconfirm" class="el-icon">
       <el-popconfirm
         trigger="click"
         :title="defaultMessage"
@@ -76,7 +78,7 @@ const handleCancel = (event: MouseEvent) => {
   <template v-else>
     <!-- 带二次确认的按钮 -->
     <el-popconfirm
-      v-if="confirmEl === OperationConfirmEl.ElPopconfirm"
+      v-if="confirmElValue === OperationConfirmEl.ElPopconfirm"
       trigger="click"
       :title="defaultMessage"
       v-bind="confirmProps"

@@ -152,8 +152,11 @@
     flex: 1;
 
     @include el-joins(menu--horizontal) {
+      width: 100%;
+
       /* 水平菜单减去自身的 border，避免滚动条出现 */
       height: calc(cssVar(layout-header-height) - 1px);
+      overflow-x: hidden;
       background-color: cssVar(layout-header-bg-color);
 
       > .#{$el-namespace}-sub-menu {

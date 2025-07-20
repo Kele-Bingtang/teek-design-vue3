@@ -3,37 +3,21 @@ import type { DescriptionColumn } from "@/components";
 import { ref } from "vue";
 import { ProDescriptions } from "@/components";
 
-const DataServe = {
-  getList: async () => {
-    const index = Math.random() * 10;
-    const data = {
-      index,
-      id: index,
-      title: "序号" + (index + 1),
-      name: "name".repeat(10),
-      status: "1",
-      tag: index < 5 ? "success" : "danger",
-      progress: 30,
-      rate: index > 3 ? 2 : 3.5,
-      switch: index > 3,
-      indexColStyle:
-        index < 3
-          ? {
-              backgroundColor: "#314659",
-            }
-          : {
-              backgroundColor: "#979797",
-            },
-      time: new Date(),
-      code: `
+const border = ref(false);
+
+const data = {
+  name: "Teek",
+  status: 1,
+  tag: "success",
+  progress: 30,
+  rate: 3.5,
+  switch: true,
+  time: new Date(),
+  code: `
   const getData = async params => {
     const data = await getData(params)
     return { list: data.data, ...data }
   }`,
-    };
-
-    return { data };
-  },
 };
 
 const columns: DescriptionColumn[] = [
@@ -42,10 +26,10 @@ const columns: DescriptionColumn[] = [
     label: "状态",
     prop: "status",
     options: [
-      { label: "未解决", value: "0", color: "red" },
-      { label: "已解决", value: "1", color: "blue" },
-      { label: "解决中", value: "2", color: "yellow" },
-      { label: "失败", value: "3", color: "red" },
+      { label: "未解决", value: "0" },
+      { label: "已解决", value: "1" },
+      { label: "解决中", value: "2" },
+      { label: "失败", value: "3" },
     ],
   },
   { label: "标签", width: 120, prop: "tag", el: "el-tag" },
@@ -55,15 +39,14 @@ const columns: DescriptionColumn[] = [
   { label: "开关", width: 100, prop: "switch" },
   { label: "时间", width: 190, prop: "time" },
 ];
-const descriptionsData = ref<Recordable>({});
-const getList = async () => {
-  const { data } = await DataServe.getList();
-  descriptionsData.value = data || {};
-};
-
-getList();
 </script>
 
 <template>
-  <ProDescriptions title="基础使用" :column="3" :columns :data="descriptionsData" border card />
+  <div>
+    <el-button type="primary" @click="border = !border" style="margin-bottom: 20px">
+      {{ `${border ? "取消" : "打开"}边框` }}
+    </el-button>
+
+    <ProDescriptions title="基础使用" :column="3" :columns :data :border card />
+  </div>
 </template>

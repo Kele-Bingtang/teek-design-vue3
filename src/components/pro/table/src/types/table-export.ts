@@ -14,7 +14,8 @@ export interface ExportProps {
   mode?: ExportKey | `${ExportKey}`;
   /**
    * 导出的文件名
-   * @default 'export-table'
+   *
+   * @default 'export-table-时间戳'
    */
   fileName?: string;
   /**

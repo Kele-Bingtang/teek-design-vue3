@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   card: false,
   rowStyle: () => ({}),
   cellStyle: () => ({}),
+  headerRowStyle: () => ({}),
   headerCellStyle: () => ({}),
   border: false,
   stripe: false,
@@ -61,9 +62,6 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   sizeStyle: () => ({}),
   columnSetting: () => ({}),
   baseSetting: () => ({}),
-  isSelected: undefined,
-  selectedList: undefined,
-  selectedListIds: undefined,
 
   // TableMain 组件的 props（透传下去）
   rowKey: "id",
@@ -72,7 +70,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   pageInfo: () => defaultPageInfo,
   pageScope: false,
   paginationProps: () => ({}),
-  filterScope: false,
+  filterScope: "client",
   editable: false,
   emptyText: "暂无数据",
   radioProps: () => ({}),
@@ -84,7 +82,6 @@ const emits = defineEmits<ProTableNamespace.Emits>();
 const ns = useNamespace("pro-table");
 
 const hideHead = ref(false);
-watchEffect(() => (hideHead.value = props.hideHead));
 
 // 最终的 props
 const finalProps = computed(() => {
@@ -139,7 +136,7 @@ const { tableData, pageInfo, searchParams, searchInitParams, getTableList, searc
   useTableState(
     finalProps.value.requestApi,
     computed(() => unref(finalProps.value.defaultRequestParams)),
-    finalProps.value.pageInfo,
+    computed(() => finalProps.value.pageInfo),
     isServerPage,
     finalProps.value.beforeSearch,
     finalProps.value.transformData,
@@ -166,11 +163,12 @@ const {
   handleFilterReset,
   handleFormChange,
   handleButtonClick,
-  handleConfirm,
-  handleCancel,
+  handleButtonConfirm,
+  handleButtonCancel,
   handleLeaveCellEdit,
 } = useTableEmits();
 
+watchEffect(() => (hideHead.value = finalProps.value.hideHead));
 watchEffect(() => (searchParams.value = finalProps.value.requestParams));
 watchEffect(() => (searchInitParams.value = finalProps.value.initRequestParams));
 
@@ -179,16 +177,17 @@ watchEffect(() => (searchInitParams.value = finalProps.value.initRequestParams))
  */
 function useTableSize() {
   // 表格密度
-  const tableSize = ref<TableSizeEnum>((props.size as TableSizeEnum) || TableSizeEnum.Default);
+  const tableSize = ref(!props.size || props.size === TableSizeEnum.Mini ? TableSizeEnum.Default : props.size);
   // 表格密度样式
   const currentSizeStyle = ref<SizeStyle>();
 
   // 最终的 sizeStyle，即将 ProTable 内置的 sizeStyle 和传入的 sizeStyle 合并
   const finalSizeStyle = computed(() => {
-    const { rowStyle, cellStyle, headerCellStyle } = finalProps.value;
+    const { rowStyle, cellStyle, headerRowStyle, headerCellStyle } = finalProps.value;
     return {
       rowStyle: { ...rowStyle, ...currentSizeStyle.value?.rowStyle },
       cellStyle: { ...cellStyle, ...currentSizeStyle.value?.cellStyle },
+      headerRowStyle: { ...headerRowStyle, ...currentSizeStyle.value?.headerRowStyle },
       headerCellStyle: {
         ...headerCellStyle,
         ...currentSizeStyle.value?.headerCellStyle,
@@ -197,6 +196,9 @@ function useTableSize() {
     };
   });
 
+  /**
+   * 表格密度选择事件
+   */
   const handleSizeChange = (size: TableSizeEnum, style: SizeStyle) => {
     tableSize.value = size === TableSizeEnum.Mini ? TableSizeEnum.Default : size;
     currentSizeStyle.value = style;
@@ -241,6 +243,7 @@ function useTableEmits() {
    * 点击刷新按钮事件
    */
   const handleRefresh = () => {
+    // 不需要更新查询参数，因此使用 getTableList 函数而不是 search 函数
     getTableList();
     emits("refresh");
   };
@@ -263,13 +266,14 @@ function useTableEmits() {
   /**
    * 执行列过滤搜索事件
    */
-  const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string | undefined) => {
+  const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string) => {
+    if (finalProps.value.pageScope === "server") search(filterModel);
     emits("filter", filterModel, filterValue, prop);
   };
   /**
    * 执行列过滤清除事件
    */
-  const handleFilterClear = (prop: string | undefined) => {
+  const handleFilterClear = (prop: string) => {
     emits("filterClear", prop);
   };
   /**
@@ -283,7 +287,7 @@ function useTableEmits() {
    * 表单值发生改变事件
    */
   const handleFormChange = (fromValue: unknown, prop: TableColumn["prop"] = "", scope: TableScope) => {
-    const { data, requestApi } = props;
+    const { data, requestApi } = finalProps.value;
     // 如果是请求方式获取数据，则自动更新值
     if (!data.length && requestApi) setProp(tableData.value[scope.$index], prop, fromValue);
 
@@ -300,15 +304,15 @@ function useTableEmits() {
   /**
    * 操作栏二次确认确定按钮触发事件
    */
-  const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("confirm", params);
+  const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonConfirm", params);
   };
 
   /**
    * 操作栏二次确认取消按钮触发事件
    */
-  const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("cancel", params);
+  const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonCancel", params);
   };
 
   /**
@@ -328,8 +332,8 @@ function useTableEmits() {
     handleFilterReset,
     handleFormChange,
     handleButtonClick,
-    handleConfirm,
-    handleCancel,
+    handleButtonConfirm,
+    handleButtonCancel,
     handleLeaveCellEdit,
   };
 }
@@ -411,8 +415,8 @@ defineExpose(expose);
       :page-info
       :size="tableSize"
       @button-click="handleButtonClick"
-      @confirm="handleConfirm"
-      @cancel="handleCancel"
+      @button-confirm="handleButtonConfirm"
+      @button-cancel="handleButtonCancel"
       @selection-change="handleSelectionChange"
       @pagination-change="handlePaginationChange"
       @drag-sort-end="handleDragSortEnd"

@@ -3,7 +3,7 @@ import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
 import { toValue, ref, computed, watch, watchEffect, useTemplateRef, nextTick, unref } from "vue";
 import { ElTable, ElMessage } from "element-plus";
-import { isEmpty } from "@/common/utils";
+import { isArray, isEmpty } from "@/common/utils";
 import Pagination, { defaultPageInfo } from "@/components/pro/pagination";
 import {
   getProp,
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {
   pageInfo: () => defaultPageInfo,
   pageScope: false,
   paginationProps: () => ({}),
-  filterScope: false,
+  filterScope: "client",
   headerCellStyle: () => ({}),
   editable: false,
   emptyText: "暂无数据",
@@ -52,7 +52,7 @@ watchEffect(() => (pageInfo.value = { ...defaultPageInfo, ...props.pageInfo }));
 
 // 表格实际渲染的数据
 const tableData = computed(() => tryPagination(filterTableData.value ?? props.data));
-const tableDataTotal = computed(() => filterTableData.value?.length ?? props.data.length);
+const tableDataTotal = computed(() => pageInfo.value.total || (filterTableData.value?.length ?? props.data.length));
 
 // 数据发生改变，则清除过滤的数据
 watch(
@@ -63,16 +63,22 @@ watch(
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useTableInit();
 const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
-const { getOperationProps, handleButtonClick, handleConfirm, handleCancel } = useTableOperation();
+const { getOperationProps, handleButtonClick, handleButtonConfirm, handleButtonCancel } = useTableOperation();
 const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
 
 // 表格选择
 const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
 // 表格单元格编辑
-const { handleCellEdit } = useTableCellEdit(availableColumns, props.editable, elTableInstance, {
-  preventCellEdit: column => column.prop === props.operationProp,
-  leaveCellEdit: (row, column) => emits("leaveCellEdit", row, column),
-});
+const { handleCellEdit } = useTableCellEdit(
+  availableColumns,
+  computed(() => toValue(props.editable)),
+  elTableInstance,
+  {
+    preventCellEdit: column => column.prop === props.operationProp,
+    preventCellCloseClass: ["el-cion"],
+    leaveCellEdit: (row, column) => emits("leaveCellEdit", row, column),
+  }
+);
 // 表格编辑态的表单相关实例注册和获取
 const { registerProFormInstance, getElFormInstance, getElFormItemInstance, getElInstance } = useTableFormInstance();
 
@@ -94,13 +100,11 @@ const tryPagination = (data: Recordable[] = []) => {
  * 表格数据初始化相关逻辑
  */
 function useTableInit() {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-
   // 过滤有效的列配置项
   const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hidden)));
 
   // 在表格的数据的每一个 row 配置 _options 相关字典信息（如果配置了 options）
-  const initEnhanceFnInData = async (data: TableRow[], column: TableColumn) => {
+  const initEnhanceFnInData = (data: TableRow[], column: TableColumn) => {
     // 获取当前列的配置项，！获取的配置无法直接作用在 row._xx 里
     const {
       prop = "",
@@ -109,6 +113,7 @@ function useTableInit() {
       optionField,
       transformOption,
       ignoreOptionIfAbsent,
+      editable,
     } = column;
 
     const options = unref(optionsMap.value.get(optionsProp || prop));
@@ -135,7 +140,7 @@ function useTableInit() {
           ? transformOption(value, options, row)
           : filterOptions(value, options, optionField);
 
-        const label = filterOptionsValue(option, optionField?.label || "label");
+        const label = option ? filterOptionsValue(option, optionField?.label || "label") : "";
 
         if ((!label || label === "--") && toValue(ignoreOptionIfAbsent)) return value;
         return label;
@@ -148,28 +153,77 @@ function useTableInit() {
 
       // 初始化 _editableCol
       row._editableCol ??= {};
+      if (editable) setProp(row._editableCol, prop, true);
 
-      // 开启单元格编辑状态
-      row._openCellEdit ??= prop => {
-        if (prop) {
-          row._editableCol![prop] = true;
-          nextTick(() => {
-            // 焦点聚焦
-            (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus();
-          });
-        } else row._editable = true;
+      // 开启多个单元格编辑状态
+      row._openCellEdit ??= props => {
+        row._oldData ??= {};
+
+        if (props) {
+          // 开启指定单元格的编辑状态
+          const open = (prop: string) => {
+            // 编辑前缓存旧数据
+            setProp(row._oldData, prop, row._getValue(prop));
+
+            setProp(row._editableCol, prop, true);
+            nextTick(() => {
+              // 焦点聚焦
+              (row._proFormInstance?.[prop]?.getElInstance(prop) as HTMLElement)?.focus?.();
+            });
+          };
+
+          if (isArray(props)) props.forEach(prop => open(prop));
+          else open(props);
+        } else {
+          row._editable = true;
+          row._oldData = { ...row._getData() };
+        }
       };
 
       // 关闭开启单元格编辑状态
-      row._closeCellEdit ??= prop => {
-        if (prop) row._editableCol![prop] = false;
-        else row._editable = false;
+      row._closeCellEdit ??= (props, reset = false) => {
+        if (props) {
+          // 关闭指定单元格的编辑状态
+          const close = (prop: string) => setProp(row._editableCol, prop, false);
+
+          if (isArray(props)) props.forEach(prop => close(prop));
+          else close(props);
+        } else row._editable = false;
+
+        reset && row._resetCellData(props);
+      };
+
+      // 还原编辑前的数据
+      row._resetCellData ??= props => {
+        row._oldData ??= {};
+        if (props) {
+          // 重置指定单元格数据
+          const reset = (prop: string) => {
+            const data = getProp(row._oldData, prop);
+            data && setProp(row, prop, data);
+          };
+
+          if (isArray(props)) props.forEach(reset);
+          else reset(props);
+        } else {
+          Object.entries(row._oldData).forEach(([prop, value]) => {
+            setProp(row, prop, value);
+          });
+        }
+        delete row._oldData;
       };
 
       // 判断当前单元格是否处于编辑状态
-      row._isCellEdit ??= prop => {
-        if (prop) return row._editableCol![prop] ?? false;
-        else return row._editable ?? false;
+      row._isCellEdit ??= (props, mode = "and") => {
+        if (props) {
+          if (isArray(props)) {
+            return mode === "and"
+              ? props.every(prop => getProp(row._editableCol, prop) ?? false)
+              : props.some(prop => getProp(row._editableCol, prop) ?? false);
+          }
+          return getProp(row._editableCol, prop) ?? false;
+        }
+        return row._editable ?? false;
       };
 
       // 编辑态行/单元格校验
@@ -204,28 +258,16 @@ function useTableInit() {
     });
   };
 
-  // 清除定时器
-  const clearTimer = () => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-  };
-
   // 当 columns 发生改变时，重新初始化
   watch(
     availableColumns,
-    newValue => {
-      clearTimer();
-      // 防抖：防止初始化时连续执行
-      timer = setTimeout(async () => {
-        const flatColumns = flatColumnsFn(newValue);
-        // 异步但有序执行
-        for (const column of flatColumns) {
-          await initOptionsMap(column.options, column.prop || "");
-          initEnhanceFnInData(props.data as TableRow[], column);
-        }
-      }, 10);
+    async newValue => {
+      const flatColumns = flatColumnsFn(newValue);
+      // 异步但有序执行
+      for (const column of flatColumns) {
+        await initOptionsMap(column.options, column.prop || "");
+        initEnhanceFnInData(props.data as TableRow[], column);
+      }
     },
     { deep: true, flush: "post" }
   );
@@ -233,15 +275,12 @@ function useTableInit() {
   // 不对数据进行深度监听，当数据整体发生改变时，重新初始化
   watch(
     () => props.data,
-    newValue => {
-      clearTimer();
-      timer = setTimeout(async () => {
-        const flatColumns = flatColumnsFn(availableColumns.value);
-        for (const column of flatColumns) {
-          await initOptionsMap(column.options, column.prop || "");
-          initEnhanceFnInData(newValue as TableRow[], column);
-        }
-      }, 10);
+    async newValue => {
+      const flatColumns = flatColumnsFn(availableColumns.value);
+      for (const column of flatColumns) {
+        await initOptionsMap(column.options, column.prop || "");
+        initEnhanceFnInData(newValue as TableRow[], column);
+      }
     }
   );
 
@@ -328,15 +367,15 @@ function useTableOperation() {
     emits("buttonClick", params);
   };
 
-  const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("confirm", params);
+  const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonConfirm", params);
   };
 
-  const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
-    emits("cancel", params);
+  const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+    emits("buttonCancel", params);
   };
 
-  return { getOperationProps, handleButtonClick, handleConfirm, handleCancel };
+  return { getOperationProps, handleButtonClick, handleButtonConfirm, handleButtonCancel };
 }
 
 /**
@@ -351,7 +390,7 @@ function useTableFiler() {
   /**
    * 执行过滤搜索
    */
-  const handleFilter = (filterValue: unknown, prop: string | undefined) => {
+  const handleFilter = (filterValue: unknown, prop: string) => {
     if (prop) setProp(filterModel.value, prop, filterValue);
 
     // 后端过滤
@@ -378,7 +417,7 @@ function useTableFiler() {
   /**
    * 执行过滤清除
    */
-  const handleFilterClear = (prop: string | undefined) => {
+  const handleFilterClear = (prop: string) => {
     emits("filterClear", prop);
   };
   /**
@@ -469,6 +508,7 @@ defineExpose(expose);
           :label="toValue(column.label)"
           :align="column.align || 'center'"
           :editable
+          :options-map
           @register-pro-form-instance="registerProFormInstance"
           @form-change="handleFormChange"
           @filter="handleFilter"
@@ -487,8 +527,8 @@ defineExpose(expose);
           :align="column.align || 'center'"
           :prop="operationProp"
           @button-click="handleButtonClick"
-          @confirm="handleConfirm"
-          @cancel="handleCancel"
+          @button-confirm="handleButtonConfirm"
+          @button-cancel="handleButtonCancel"
         >
           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />

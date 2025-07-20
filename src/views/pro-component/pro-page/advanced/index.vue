@@ -158,7 +158,7 @@ const columns: PageColumn<ResUserList>[] = [
   {
     prop: "createTime",
     label: "创建时间",
-    headerRender: scope => {
+    renderHeader: scope => {
       return (
         <ElButton type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
           {scope.column.label}
@@ -180,7 +180,7 @@ const columns: PageColumn<ResUserList>[] = [
 ];
 
 // 删除用户信息
-const deleteAccount = async (params: ResUserList) => {
+const deleteAccount = async (params: TableRow<ResUserList>) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => item.id !== params.id);
   }, `删除【${params.username}】用户`);
@@ -197,13 +197,13 @@ const batchDelete = async (id: string[]) => {
 };
 
 // 重置用户密码
-const resetPass = async (params: ResUserList) => {
+const resetPass = async (params: TableRow<ResUserList>) => {
   await useConfirm(() => {}, `重置【${params.username}】用户密码`);
   proPageInstance.value?.proTableInstance?.getTableList();
 };
 
 // 切换用户状态
-const changeStatus = async (row: ResUserList) => {
+const changeStatus = async (row: TableRow<ResUserList>) => {
   await useConfirm(() => {
     row.status === 0 ? (row.status = 1) : (row.status = 0);
   }, `切换【${row.username}】用户状态`);
@@ -227,11 +227,11 @@ const handleFormChange = async (fromValue: unknown, prop: string, scope: Recorda
 };
 
 // 取消行内编辑
-const cancelEdit = (row: TableRow) => {
+const cancelEdit = (row: TableRow<ResUserList>) => {
   row._editable = false;
 };
 
-const confirmEdit = (row: TableRow) => {
+const confirmEdit = (row: TableRow<ResUserList>) => {
   row._validateCellEdit((isValid, invalidFields) => {
     if (isValid) {
       row._editable = false;
@@ -288,10 +288,42 @@ const confirmEdit = (row: TableRow) => {
       <el-button v-if="!row._editable" type="primary" link :icon="EditPen" @click="() => (row._editable = true)">
         编辑
       </el-button>
-      <el-button v-if="row._editable" type="primary" link :icon="EditPen" @click="cancelEdit(row)">取消</el-button>
-      <el-button v-if="row._editable" type="primary" link :icon="EditPen" @click="confirmEdit(row)">确定</el-button>
-      <el-button v-if="!row._editable" type="primary" link :icon="Refresh" @click="resetPass(row)">重置密码</el-button>
-      <el-button v-if="!row._editable" type="primary" link :icon="Delete" @click="deleteAccount(row)">删除</el-button>
+      <el-button
+        v-if="row._editable"
+        type="primary"
+        link
+        :icon="EditPen"
+        @click="cancelEdit(row as TableRow<ResUserList>)"
+      >
+        取消
+      </el-button>
+      <el-button
+        v-if="row._editable"
+        type="primary"
+        link
+        :icon="EditPen"
+        @click="confirmEdit(row as TableRow<ResUserList>)"
+      >
+        确定
+      </el-button>
+      <el-button
+        v-if="!row._editable"
+        type="primary"
+        link
+        :icon="Refresh"
+        @click="resetPass(row as TableRow<ResUserList>)"
+      >
+        重置密码
+      </el-button>
+      <el-button
+        v-if="!row._editable"
+        type="primary"
+        link
+        :icon="Delete"
+        @click="deleteAccount(row as TableRow<ResUserList>)"
+      >
+        删除
+      </el-button>
     </template>
   </ProPage>
 </template>

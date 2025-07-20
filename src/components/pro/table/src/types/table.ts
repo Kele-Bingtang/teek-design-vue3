@@ -8,7 +8,9 @@ import type { TableColumn } from "./table-column";
  * ProTable 组件的类型命名空间
  */
 export namespace ProTableNamespace {
-  export interface Props extends ProTableMainNamespace.Props, ProTableHeadNamespace.Props {
+  export interface Props
+    extends ProTableMainNamespace.Props,
+      Omit<ProTableHeadNamespace.Props, "isSelected" | "selectedList" | "selectedListIds"> {
     /**
      * 列配置项
      *
@@ -102,6 +104,10 @@ export namespace ProTableNamespace {
      */
     cellStyle?: TableProps<Recordable>["cellStyle"];
     /**
+     * ElTable 的 headerRowStyle
+     */
+    headerRowStyle?: TableProps<Recordable>["cellStyle"];
+    /**
      * ElTable 的 headerCellStyle
      */
     headerCellStyle?: TableProps<Recordable>["headerCellStyle"];
@@ -125,6 +131,8 @@ export namespace ProTableNamespace {
     headerBackground?: boolean;
     /**
      * ElTable 的 highlightCurrentRow
+     *
+     * @default true
      */
     highlightCurrentRow?: TableProps<Recordable>["highlightCurrentRow"];
     /**

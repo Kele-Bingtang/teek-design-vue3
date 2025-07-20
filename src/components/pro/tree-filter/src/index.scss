@@ -1,5 +1,6 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(tree-filter) {
   width: 220px;
@@ -15,8 +16,15 @@
     letter-spacing: 0.5px;
   }
 
-  @include el-joins(input) {
+  @include e(search) {
+    display: flex;
+    align-items: center;
     margin: 0 0 15px;
+
+    .el-icon {
+      cursor: pointer;
+      transform: rotate(90deg) translateY(-8px);
+    }
   }
 
   @include el-joins(scrollbar) {
@@ -31,17 +39,15 @@
 
     :deep(.#{$el-namespace}-tree--highlight-current) {
       @include el-joins(tree-node) {
-        &.is-current {
-          @include el-joins(tree-node__content) {
-            background-color: cssVarEl(color-primary);
+        &.is-current > .#{$el-namespace}-tree-node__content {
+          background-color: cssVarEl(color-primary);
 
-            @include el-joins(tree-node__label, tree-node__expand-icon) {
-              color: #ffffff;
-            }
+          @include el-joins(tree-node__label, tree-node__expand-icon) {
+            color: #ffffff;
+          }
 
-            .is-leaf {
-              color: transparent;
-            }
+          .is-leaf {
+            color: transparent;
           }
         }
       }

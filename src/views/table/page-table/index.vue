@@ -1,6 +1,7 @@
 <script setup lang="ts" name="pageTable">
 import type { PageInfo } from "@/components";
 import { ref, reactive, computed } from "vue";
+import { Star } from "@element-plus/icons-vue";
 import { tableStatusFilter } from "@/common/config";
 import { Pagination, defaultPageInfo } from "@/components";
 import { largeData } from "@/mock/table/common";
@@ -34,7 +35,7 @@ const handleSizeChange = (pagingParam: PageInfo) => {
       </el-table-column>
       <el-table-column prop="priority" label="优先级">
         <template #default="{ row }">
-          <Icon v-for="n in row.priority" :key="n" name="star" style="color: #606266" />
+          <Icon v-for="n in row.priority" :key="n" :icon="Star" style="color: #606266" />
         </template>
       </el-table-column>
     </el-table>

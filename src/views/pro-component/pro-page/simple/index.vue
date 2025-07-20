@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { OperationNamespace, TableColumn } from "@components/pro/table";
+import type { OperationNamespace, TableColumn, TableScope } from "@components/pro/table";
 import type { PageColumn } from "@components/pro/page";
 import { ref, computed } from "vue";
 import { ElMessage } from "element-plus";
-import { Edit, Delete } from "@element-plus/icons-vue";
+import { Edit, Delete, Check } from "@element-plus/icons-vue";
 import { ProPage } from "@/components";
 import { tableData } from "@/mock/pro-component/pro-table";
 
@@ -25,6 +25,7 @@ const columns: PageColumn[] = [
   {
     prop: "username",
     label: "用户姓名",
+    el: "copy",
     search: {
       el: "el-input",
       beforeSearch: (searchValue, searchParams, column) => {
@@ -73,7 +74,7 @@ const columns: PageColumn[] = [
   { prop: "address", label: "居住地址" },
 ];
 
-const el = ref<OperationNamespace.Props["el"]>("ElIcon");
+const el = ref<OperationNamespace.Props["el"]>("el-icon");
 const buttons = ref<OperationNamespace.ButtonRaw[]>();
 
 buttons.value = [
@@ -84,9 +85,10 @@ buttons.value = [
       type: "primary",
     }),
     icon: Edit,
-    show: row => !row._editable,
+    show: row => !row._isCellEdit(["username", "user.detail.age", "idCard"]),
     onClick: async ({ row }) => {
-      row._editable = !row._editable;
+      // row._editable = !row._editable;
+      row._openCellEdit(["username", "user.detail.age", "idCard"]);
     },
   },
   {
@@ -95,11 +97,14 @@ buttons.value = [
     elProps: () => ({
       type: "primary",
     }),
-    show: row => !!row._editable,
-    icon: Edit,
+    show: row => !!row._isCellEdit(["username", "user.detail.age", "idCard"]),
+    icon: Check,
     onClick: async ({ row }) => {
       const valid = await row._validateCellEdit();
-      if (valid) row._editable = !row._editable;
+      if (valid) {
+        // row._editable = !row._editable;
+        row._closeCellEdit(["username", "user.detail.age", "idCard"]);
+      }
     },
   },
   {
@@ -107,30 +112,30 @@ buttons.value = [
     code: "delete",
     elProps: computed(() => ({ type: "danger" })),
     confirm: {
-      el: "ElMessageBox",
+      el: "el-messageBox",
       props: { options: { draggable: true } },
     },
     icon: Delete,
   },
 ];
 
-const handleFormChange = async (fromValue: unknown, prop: string, scope: Recordable) => {
+const handleFormChange = async (fromValue: unknown, prop: string, scope: TableScope) => {
   // setProp(data.value[scope.rowIndex], prop, fromValue);
 };
 
 const handleLeaveCellEdit = (row: Recordable, column: TableColumn) => {
-  ElMessage.success("退出编辑");
+  ElMessage.success(`退出了 ${column.prop}: ${row[column.prop!]} 编辑`);
 };
 
 const handleButtonClick = (params: OperationNamespace.ButtonsCallBackParams) => {
   console.log("buttonClick", params);
 };
 
-const handleConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
+const handleButtonConfirm = (params: OperationNamespace.ButtonsCallBackParams) => {
   console.log("confirm", params);
 };
 
-const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
+const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
   console.log("cancel", params);
 };
 </script>
@@ -148,11 +153,11 @@ const handleCancel = (params: OperationNamespace.ButtonsCallBackParams) => {
     :operation-props="{
       buttons: buttons,
       el,
-      width: el === 'ElButton' ? 260 : el === 'ElIcon' ? 190 : 200,
+      width: el === 'el-button' ? 260 : el === 'el-icon' ? 190 : 200,
     }"
     @button-click="handleButtonClick"
-    @confirm="handleConfirm"
-    @cancel="handleCancel"
+    @button-confirm="handleButtonConfirm"
+    @button-cancel="handleButtonCancel"
     @form-change="handleFormChange"
     @leave-cell-edit="handleLeaveCellEdit"
   >

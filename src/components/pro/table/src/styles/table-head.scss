@@ -12,7 +12,7 @@
     gap: 12px;
     align-items: center;
 
-    @include el-joins(button) {
+    .head__tool-button {
       width: 32px;
       margin-left: 0;
       color: cssVar(gray-700);

@@ -28,11 +28,44 @@ const getFatherDom = (): Element => {
 };
 
 /**
+ * 关闭前的动画
+ */
+const removeWithTransition = (target: Element, end: () => void) => {
+  // ElementPlus 内置的 Dialog 消失动画 class
+  target.classList.add("dialog-fade-leave-active");
+
+  // 监听动画/过渡结束
+  function onTransitionEnd() {
+    // 动画结束后移除元素
+    end();
+    target.removeEventListener("animationend", onTransitionEnd);
+    target.removeEventListener("transitionend", onTransitionEnd);
+  }
+
+  target.addEventListener("animationend", onTransitionEnd);
+  target.addEventListener("transitionend", onTransitionEnd);
+
+  setTimeout(() => {
+    // 兼容没有 transition 的情况
+    onTransitionEnd();
+  }, 300);
+};
+
+/**
  * 关闭弹框
  */
 export const closeDialog = () => {
-  const vm = document.querySelector(`#${blockClass}-${id--}`) as HTMLElement;
-  vm && getFatherDom().removeChild(vm);
+  const overlayEl = document.querySelector(`#${blockClass}-${id} .${ns.elNamespace}-overlay`);
+  if (!overlayEl) return;
+
+  removeWithTransition(overlayEl, () => {
+    const vm = document.querySelector(`#${blockClass}-${id--}`);
+    vm && getFatherDom().removeChild(vm);
+  });
+
+  if (!document.querySelector(`.${blockClass}-overlay`)) {
+    document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);
+  }
 };
 
 /**
@@ -60,7 +93,7 @@ const handleCancel = async (dialogProps: ProUseDialogProps) => {
  * 方式 1：在第一个参数里写 render，即可实现 el-dialog 的内容渲染
  * 方式 2：第二个参数为组件，第三个参数为组件的 props
  *
- * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-dialog 的 header 和 footer
+ * 在第一个参数里写 renderHeader 和 renderFooter，可以自定义 el-dialog 的 header 和 footer
  */
 export const showDialog = (
   dialogProps: ProUseDialogProps = {},
@@ -91,7 +124,7 @@ export const showDialog = (
 
   const toggleFullscreen = () => {
     const elDialogEl = document.querySelector(
-      `${`#${blockClass}-${id}`} .${blockClass}.${ns.elNamespace}-dialog`
+      `#${blockClass}-${id} .${blockClass}.${ns.elNamespace}-dialog`
     ) as HTMLElement;
 
     if (elDialogEl) elDialogEl.classList.toggle("is-fullscreen");
@@ -105,8 +138,8 @@ export const showDialog = (
     onConfirm: undefined,
     onCancel: undefined,
     render: undefined,
-    headerRender: undefined,
-    footerRender: undefined,
+    renderHeader: undefined,
+    renderFooter: undefined,
   };
 
   const vm = (
@@ -131,7 +164,7 @@ export const showDialog = (
             );
           },
           header: (scope: unknown) => {
-            if (dialogProps.headerRender) return dialogProps.headerRender(scope);
+            if (dialogProps.renderHeader) return dialogProps.renderHeader(scope);
             return (
               <div style="display: flex">
                 <span class={`${ns.elNamespace}-dialog__title`} style="flex: 1">
@@ -154,7 +187,7 @@ export const showDialog = (
           },
           footer: dialogProps.showFooter
             ? () => {
-                if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
+                if (dialogProps.renderFooter) return dialogProps.renderFooter(closeDialog);
                 return (
                   <>
                     {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
@@ -183,6 +216,7 @@ export const showDialog = (
 
   const container = document.createElement("div");
   container.id = `${blockClass}-${++id}`;
+  container.className = `${blockClass}-overlay`;
   getFatherDom().appendChild(container);
   render(vm, container);
 };

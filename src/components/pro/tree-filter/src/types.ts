@@ -43,15 +43,25 @@ export interface TreeFilterProps {
   /**
    * 默认选中的值
    */
-  defaultValue?: unknown;
+  defaultValue?: TreeKey | TreeKey[];
   /**
    * 是否显示 全部 选项
+   *
+   * @default true
    */
   enableTotal?: boolean;
   /**
    * 是否默认选中第一个选项
+   *
+   * @default true
    */
   defaultFirst?: boolean;
+  /**
+   * 是否使用卡片样式
+   *
+   * @default true
+   */
+  card?: boolean;
 }
 
 export type FilterEmits = {

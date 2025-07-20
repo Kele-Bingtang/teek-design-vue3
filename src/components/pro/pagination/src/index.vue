@@ -1,3 +1,10 @@
+<!--
+基于 Element Plus 的分页组件进行封装（可配置）：
+  1、将当前页码、分页大小、页数选择器、总条数配置封装成一个对象，通过 v-mode 传入
+  2、分页后滚动到顶部
+  3、改变分页大小后自动切回第一页
+  4、提供 left、right 插槽，用于自定义分页组件的左侧和右侧内容
+ -->
 <script lang="ts">
 export const defaultPageInfo: PageInfo = {
   pageNum: 1,

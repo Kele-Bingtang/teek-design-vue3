@@ -8,6 +8,8 @@ import type { TableColumnTypeNamespace } from "./table-column-type";
 import type { UseSelectState } from "../composables";
 import type { Environment } from "../helper";
 
+export type SelectState = UnwrapRef<UseSelectState>;
+
 /**
  * TableMain 组件的类型命名空间
  */
@@ -61,9 +63,9 @@ export namespace ProTableMainNamespace {
     /**
      * 过滤规则，可以指定客户端（前端）过滤还是服务端（后端）过滤，当为 true 时，默认为客户端（前端）过滤
      *
-     * @default false
+     * @default 'client'
      */
-    filterScope?: boolean | Environment | `${Environment}`;
+    filterScope?: Environment | `${Environment}`;
     /**
      * ElTable 的 headerCellStyle 配置项
      */
@@ -88,7 +90,7 @@ export namespace ProTableMainNamespace {
     /**
      * 多选框勾选事件
      */
-    selectionChange: [useSelectReturn: UnwrapRef<UseSelectState>, index?: number];
+    selectionChange: [useSelectReturn: SelectState, index?: number];
     /**
      * 分页触发事件
      */
@@ -112,6 +114,6 @@ export namespace ProTableMainNamespace {
     /**
      * 过滤事件，返回输入的值以及 prop
      */
-    filter: [filterModel: Recordable, filterValue: unknown, prop: string | undefined];
+    filter: [filterModel: Recordable, filterValue: unknown, prop: string];
   }
 }

@@ -106,7 +106,7 @@ export const toCamelCase = (val?: string) => {
 
   return val
     .split(separator)
-    .map(word => (word ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() : ""))
+    .map(word => (word ? word.charAt(0).toUpperCase() + word.slice(1) : ""))
     .join("");
 };
 
@@ -213,12 +213,14 @@ export const getObjectKeys = (model: Recordable, prefix = ""): string[] => {
  */
 export const filterEmpty = <T extends Recordable>(obj: T) => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
-    if (!isEmpty(value)) {
-      if (isObject(value) && Object.keys(value).length) {
+    // 支持响应式变量
+    const valueConst = unref(value);
+    if (!isEmpty(valueConst)) {
+      if (isObject(valueConst) && Object.keys(valueConst).length) {
         // 如果是嵌套对象，递归处理
-        const nestedFiltered = filterEmpty(unref(value));
+        const nestedFiltered = filterEmpty(unref(valueConst));
         if (Object.keys(nestedFiltered).length) acc[key as keyof T] = nestedFiltered as T[keyof T];
-      } else acc[key as keyof T] = value;
+      } else acc[key as keyof T] = valueConst;
     }
     return acc;
   }, {} as T);
@@ -230,7 +232,11 @@ export const filterEmpty = <T extends Recordable>(obj: T) => {
  * @param columns 列配置
  * @param flatArr 扁平化后的列配置
  */
-export const flatColumnsFn = (columns: TableColumn[], flatArr: TableColumn[] = [], key = "children") => {
+export const flatColumnsFn = <T extends Record<string, any> = TableColumn>(
+  columns: T[],
+  flatArr: T[] = [],
+  key = "children"
+) => {
   columns.forEach(col => {
     if (col[key]?.length) flatArr.push(...flatColumnsFn(col[key], [], key));
     flatArr.push(col);

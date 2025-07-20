@@ -2,7 +2,7 @@ import type { MaybeRef } from "vue";
 import type { PageInfo } from "@/components/pro/pagination";
 import type { ProTableMainNamespace } from "../types";
 import { defaultPageInfo } from "@/components/pro/pagination";
-import { reactive, computed, toRefs, toValue } from "vue";
+import { reactive, computed, toRefs, toValue, watch } from "vue";
 import { isEmpty } from "@/common/utils";
 
 /**
@@ -35,7 +35,7 @@ export interface UseTableStateData {
 export const useTableState = (
   api?: (params: Recordable) => Promise<any>,
   defaultRequestParams: MaybeRef<Recordable> = {},
-  pageInfo?: ProTableMainNamespace.Props["pageInfo"],
+  pageInfo?: MaybeRef<ProTableMainNamespace.Props["pageInfo"]>,
   isServerPage?: MaybeRef<boolean>,
   beforeSearch?: (searchParam: Recordable) => boolean | Recordable,
   transformData?: (data: Recordable[], result: Recordable | Recordable[]) => Recordable[] | undefined,
@@ -45,7 +45,7 @@ export const useTableState = (
     // 表格数据
     tableData: [],
     // 分页数据
-    pageInfo: { ...defaultPageInfo, total: 0, ...pageInfo },
+    pageInfo: { ...defaultPageInfo, total: 0, ...unref(pageInfo) },
     // 查询参数（只包括查询）
     searchParams: {},
     // 初始化默认的查询参数，重置时候用到
@@ -62,6 +62,13 @@ export const useTableState = (
       // 如果服务端（后端）需要排序字段，则在这里添加
     };
   });
+
+  // 外界分页参数发送改变后，内部分页信息也需要改变
+  watch(
+    () => pageInfo,
+    () => (state.pageInfo = { ...defaultPageInfo, total: 0, ...unref(pageInfo) }),
+    { deep: true }
+  );
 
   /**
    * 获取表格数据

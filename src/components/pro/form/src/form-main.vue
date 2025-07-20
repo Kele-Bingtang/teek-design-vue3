@@ -5,7 +5,7 @@ import type { FormItemColumnProps, ModelBaseValueType, ProFormItemInstance } fro
 import type { FormColumn, FormMainNamespace } from "./types";
 import { computed, shallowRef, unref, watch, toValue } from "vue";
 import { ElRow, ElCol } from "element-plus";
-import { addUnit, isEmpty, isFunction } from "@/common/utils";
+import { isEmpty, isFunction } from "@/common/utils";
 import { formatValue, getProp, setProp, deleteProp, getObjectKeys } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import { ProFormItem } from "@/components/pro/form-item";
@@ -27,9 +27,6 @@ const props = withDefaults(defineProps<FormMainNamespace.Props>(), {
 const emits = defineEmits<FormMainNamespace.Emits>();
 
 const model = defineModel<Recordable>({ default: () => ({}) });
-
-const showLabelValue = computed(() => toValue(props.showLabel));
-const withValue = computed(() => addUnit(toValue(props.width)));
 
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns, destroyOrInit } = useFormInit();
@@ -167,7 +164,7 @@ const isHidden = (column: FormColumn) => {
 const getColProps = (column: FormColumn) => {
   const { colProps } = props;
   return {
-    span: 12, // 默认 2 个表单占满一行
+    span: 24, // 默认 2 个表单占满一行
     ...colProps,
     ...toValue(column.colProps),
   };
@@ -185,7 +182,7 @@ defineExpose(expose);
 
 <template>
   <slot :isHidden :setProFormItemInstance :optionsMap>
-    <el-row v-if="flexLayout" :gutter="20" v-bind="rowProps" style="width: 100%">
+    <el-row v-if="flexLayout" :gutter="20" v-bind="rowProps">
       <el-col
         v-for="column in availableColumns"
         :key="column.prop"
@@ -194,11 +191,11 @@ defineExpose(expose);
       >
         <ProFormItem
           :ref="el => setProFormItemInstance(el, column.prop)"
-          v-bind="column"
           v-model="model"
+          v-bind="column"
           :clearable="column.clearable ?? clearable"
-          :width="column.width ?? withValue"
-          :show-label="column.showLabel ?? showLabelValue"
+          :show-label="column.showLabel ?? showLabel"
+          :width="column.width ?? width"
           :options="optionsMap.get(column.optionsProp || column.prop)"
           @change="handleChange"
         >
@@ -211,13 +208,13 @@ defineExpose(expose);
 
     <template v-else v-for="column in availableColumns" :key="column.prop">
       <ProFormItem
+        v-show="!isHidden(column)"
         :ref="el => setProFormItemInstance(el, column.prop)"
         v-bind="column"
         v-model="model"
         :clearable="column.clearable ?? clearable"
-        :width="column.width ?? withValue"
-        :show-label="column.showLabel ?? showLabelValue"
-        v-show="!isHidden(column)"
+        :show-label="column.showLabel ?? showLabel"
+        :width="column.width ?? width"
         :options="optionsMap.get(column.optionsProp || column.prop)"
         @change="handleChange"
       >

@@ -59,11 +59,11 @@ export interface ProDrawerProps {
   /**
    * 自定义头部渲染
    */
-  headerRender?: (scope: any) => RenderTypes;
+  renderHeader?: (scope: any) => RenderTypes;
   /**
    * 自定义底部渲染
    */
-  footerRender?: (closeDrawer: () => void) => RenderTypes;
+  renderFooter?: (closeDrawer: () => void) => RenderTypes;
   /**
    * 确认按钮点击事件
    */

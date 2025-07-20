@@ -6,9 +6,17 @@ import type { TableColumnTypeEnum } from "../helper";
 import type { TableFilterProps } from "./table-filter";
 import type { TableEditProps } from "./table-edit";
 import type { ElDisplayProps } from "./el-display";
+import type { OperationNamespace } from "./table-column-operation";
 
-export interface RenderParams<T extends Recordable = any> extends TableScope<T> {
+export interface RenderParams<T extends Recordable = Recordable> extends TableScope<T> {
+  /**
+   * 传入的原始值
+   */
   value: unknown;
+  /**
+   * 渲染在单元格的值（大部分等于 value，少部分如使用 options 配置项时，则为 options 配置项的 label 值）
+   */
+  displayValue: unknown;
   /**
    * 字典枚举数据
    */
@@ -22,7 +30,7 @@ export interface RenderParams<T extends Recordable = any> extends TableScope<T> 
 /**
  * 表格行 Scope
  */
-export type TableScope<T extends Recordable = any> = {
+export type TableScope<T extends Recordable = Recordable> = {
   /**
    * 表格行索引
    */
@@ -30,7 +38,7 @@ export type TableScope<T extends Recordable = any> = {
   /**
    * 表格行数据
    */
-  row: T & TableRow;
+  row: TableRow<T>;
   /**
    * 表格列数据
    */
@@ -60,21 +68,26 @@ export type TableScope<T extends Recordable = any> = {
 /**
  * 表格行 row
  */
-export type TableRow<T extends string | number | symbol = any> = {
-  [key in T]: any;
-} & {
+export type TableRow<T = Recordable> = T & {
   /**
    * options 字典枚举
    */
-  _options: Recordable;
+  _options: Record<string, ElOption[]>;
   /**
    * 当前列的 option 相关配置，_getValue 里需要使用，因此需要提前缓存起来
    */
-  _optionProps: Recordable;
+  _optionProps: Record<
+    string,
+    {
+      optionField: TableColumn["optionField"];
+      transformOption: TableColumn["transformOption"];
+      ignoreOptionIfAbsent: TableColumn["ignoreOptionIfAbsent"];
+    }
+  >;
   /**
    * 获取单元格值
    */
-  _getValue: (prop: string, column?: TableColumn) => unknown;
+  _getValue: (prop: string) => unknown;
   /**
    * 获取当前行的数据
    */
@@ -94,15 +107,23 @@ export type TableRow<T extends string | number | symbol = any> = {
   /**
    * 开启编辑态方法
    */
-  _openCellEdit: (prop?: string) => void;
+  _openCellEdit: (props?: string | string[]) => void;
   /**
    * 停止编辑态方法
+   *
+   * @reset 是否重置到编辑前的数据
    */
-  _closeCellEdit: (prop?: string) => void;
+  _closeCellEdit: (props?: string | string[], reset?: boolean) => void;
+  /**
+   * 重置到编辑前的数据，请先使用 _openCellEdit 后再使用该函数
+   */
+  _resetCellData: (props?: string | string[]) => void;
   /**
    * 是否处于编辑态方法
+   *
+   * @mode props 为数组时，可以指定匹配模式，默认 and
    */
-  _isCellEdit: (prop?: string) => boolean;
+  _isCellEdit: (props?: string | string[], mode?: "and" | "or") => boolean;
   /**
    * 校验编辑态表单方法
    */
@@ -114,7 +135,8 @@ export type TableRow<T extends string | number | symbol = any> = {
  */
 export interface TableColumn<T extends Recordable = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
-    Omit<ElDisplayProps, "value" | "options"> {
+    Omit<ElDisplayProps, "value" | "options">,
+    Omit<OperationNamespace.ExtraProp, "el"> {
   /**
    * 表头宽度
    */
@@ -168,11 +190,19 @@ export interface TableColumn<T extends Recordable = any>
   /**
    * 自定义当前 option 选项
    */
-  transformOption?: (value: unknown, options: ElOption[], row: Recordable) => ElOption;
+  transformOption?: (value: unknown, options: ElOption[], row: Recordable) => ElOption | undefined;
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (scope: RenderParams<T>) => RenderTypes;
+  renderHeader?: (scope: RenderParams<T>) => RenderTypes;
+  /**
+   * 自定义表头内容渲染（返回 HTML），优先级低于 render，高于插槽
+   */
+  renderHeaderHTML?: (scope: RenderParams<T>) => string;
+  /**
+   * 自定义表头内容
+   */
+  formatLabel?: (label: unknown, scope: RenderParams<T>) => string | number;
   /**
    * 自定义单元格内容渲染（tsx 语法）
    */

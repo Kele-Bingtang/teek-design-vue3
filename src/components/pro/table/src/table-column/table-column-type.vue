@@ -83,7 +83,7 @@ const handleRadioChange = (row: Recordable, index: number) => {
   >
     <!-- 功能列 - 表头插槽 -->
     <template #header="scope">
-      <component v-if="column.headerRender" :is="column.headerRender" v-bind="scope"></component>
+      <component v-if="column.renderHeader" :is="column.renderHeader" v-bind="scope"></component>
       <slot v-else :name="`${column.type}-header`" v-bind="scope">{{ scope.column.label }}</slot>
     </template>
 

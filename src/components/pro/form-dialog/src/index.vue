@@ -65,24 +65,27 @@ defineExpose(expose);
     @confirm="handleConfirm"
     @close="handleCancel"
   >
-    <template v-if="$slots['header']" #header>
-      <slot name="header" />
+    <template v-if="$slots['dialog-footer']" #footer>
+      <slot name="dialog-footer" v-bind="{ handleConfirm, handleCancel }" />
     </template>
 
-    <template v-if="$slots['header-title']" #header-title>
-      <slot name="header-title" />
+    <template v-for="slot in Object.keys($slots).filter(key => !['footer'].includes(key))" #[slot]="scope">
+      <slot :name="slot" v-bind="scope" />
     </template>
 
-    <template v-if="$slots['fullscreen-icon']" #fullscreen-icon>
-      <slot name="fullscreen-icon" />
-    </template>
+    <ProForm
+      ref="proFormInstance"
+      v-model="model"
+      :row-props="{ gutter: 0 }"
+      :show-footer="false"
+      v-bind="form"
+      @change="handleChange"
+    >
+      <template v-if="$slots['form-footer']" #footer="{ submitForm, resetForm }">
+        <slot name="form-footer" v-bind="{ submitForm, resetForm }" />
+      </template>
 
-    <template v-if="$slots['footer']" #footer>
-      <slot name="footer" v-bind="{ handleConfirm, handleCancel }" />
-    </template>
-
-    <ProForm ref="proFormInstance" v-model="model" v-bind="form" :show-footer="false" @change="handleChange">
-      <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+      <template v-for="slot in Object.keys($slots).filter(key => !['footer'].includes(key))" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>
     </ProForm>

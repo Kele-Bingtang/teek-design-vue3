@@ -100,10 +100,10 @@ const showOrHiddenStripe = () => {
 const height = ref<string | number>("auto");
 const fixedHeaderOrAuto = () => {
   if (height.value === "auto") {
+    height.value = 300;
     setProps({
-      height: 600,
+      height: height.value,
     });
-    height.value = 600;
   } else {
     setProps({
       height: "auto",
@@ -163,7 +163,7 @@ const columns = reactive<TableColumn<ResUserList>[]>([
   {
     prop: "createTime",
     label: "创建时间",
-    headerRender: scope => {
+    renderHeader: scope => {
       return (
         <ElButton type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
           {scope.column.label}
@@ -197,8 +197,8 @@ const columns = reactive<TableColumn<ResUserList>[]>([
   <el-space fill style="width: 100%">
     <el-card shadow="never" header="UseTable 操作">
       <el-space wrap>
-        <el-button @click="showTableButton(false)">隐藏表格头部按钮</el-button>
-        <el-button @click="showTableButton(true)">显示表格头部按钮</el-button>
+        <el-button @click="showTableButton(false)">隐藏顶栏所有按钮</el-button>
+        <el-button @click="showTableButton(true)">显示顶栏所有按钮</el-button>
         <el-button @click="showSelections(true)">隐藏多选</el-button>
         <el-button @click="showSelections(false)">显示多选</el-button>
         <el-button @click="showPagination(false)">隐藏分页</el-button>

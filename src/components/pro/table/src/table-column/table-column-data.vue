@@ -19,6 +19,7 @@ defineOptions({ name: "TableColumnData" });
 
 const props = withDefaults(defineProps<TableColumnDataNamespace.Props>(), {
   editable: false,
+  optionsMap: undefined,
 });
 
 const emits = defineEmits<
@@ -29,7 +30,13 @@ const emits = defineEmits<
 
 const ns = useNamespace("pro-table-column-data");
 
-const useEditable = computed(() => !isBoolean(props.editable) && ["click", "dblclick"].includes(props.editable));
+const tooltipValue = computed(() => toValue(props.column.tooltip));
+
+const useEditable = computed(() => {
+  const editableValue = toValue(props.editable);
+
+  return !isBoolean(editableValue) && ["click", "dblclick"].includes(editableValue);
+});
 
 /**
  * 获取 ProFormItem 的实例
@@ -76,17 +83,20 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
 /**
  * 获取单元格值（如果存在 options，则返回根据 label 找对应的 value，如果不存在 options，则返回原始值）
  */
-const getCellValue = (scope: TableScope, column: TableColumn) => scope.row._getValue?.(prop(column));
+const getDisplayValue = (scope: TableScope, column: TableColumn) => scope.row._getValue?.(prop(column));
 /**
  * 获取 Render/插槽 的参数
  */
-const getRenderParams = <T = RenderParams,>(scope: TableScope, column: TableColumn): T => {
+const getRenderParams = (scope: TableScope, column: TableColumn) => {
   return {
     ...scope,
     rowIndex: scope.$index,
-    value: getOriginValue(scope, column),
+    column: { ...scope.column, ...column },
+    label: column.label,
+    value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
+    displayValue: getDisplayValue(scope, column) ?? getOriginValue(scope, column),
     options: scope.row?._options?.[prop(column)],
-  } as T;
+  } as RenderParams;
 };
 /**
  * 格式化单元格值
@@ -107,14 +117,14 @@ const handleRegisterProFormInstance = (index: number, prop: string, instance: Pr
 /**
  * 执行过滤搜索
  */
-const handleFilter = (filterValue: unknown, prop: string | undefined) => {
+const handleFilter = (filterValue: unknown, prop: string) => {
   emits("filter", filterValue, prop);
 };
 
 /**
  * 执行过滤清除
  */
-const handleFilterClear = (prop: string | undefined) => {
+const handleFilterClear = (prop: string) => {
   emits("filterClear", prop);
 };
 
@@ -154,7 +164,9 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <slot name="header-before" />
 
       <!-- 自定义表头的 Render 函数 -->
-      <component v-if="column.headerRender" :is="column.headerRender(getRenderParams(scope, column))" />
+      <component v-if="column.renderHeader" :is="column.renderHeader(getRenderParams(scope, column))" />
+      <!-- 自定义 renderHeaderHTML 函数渲染，返回 HTML 格式 -->
+      <span v-else-if="column.renderHeaderHTML" v-html="column.renderHeaderHTML(getRenderParams(scope, column))" />
       <!-- 自定义表头插槽 -->
       <slot
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
@@ -162,20 +174,30 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-bind="getRenderParams(scope, column)"
         :label="toValue(column.label)"
       />
+      <!-- 自定义表头内容渲染 -->
+      <template v-else-if="column.formatLabel">
+        {{ column.formatLabel(toValue(column.label), getRenderParams(scope, column)) }}
+      </template>
+      <!-- 默认表头内容渲染 -->
       <template v-else>{{ toValue(column.label) }}</template>
 
-      <el-tooltip v-if="isString(column.tooltip)" placement="top" effect="dark" :content="column.tooltip">
+      <el-tooltip v-if="isString(tooltipValue)" placement="top" effect="dark" :content="tooltipValue">
         <slot name="tooltip-icon">
           <el-icon><QuestionFilled /></el-icon>
         </slot>
       </el-tooltip>
 
-      <el-tooltip v-else-if="column.tooltip" placement="top" effect="dark" v-bind="column.tooltip">
+      <el-tooltip
+        v-else-if="tooltipValue"
+        placement="top"
+        effect="dark"
+        v-bind="{ ...tooltipValue, render: undefined, contentRender: undefined }"
+      >
         <!-- ElToolTip 默认插槽 -->
-        <component v-if="column.tooltip.render" :is="column.tooltip.render()" />
+        <component v-if="tooltipValue.render" :is="tooltipValue.render()" />
         <!-- ElToolTip content 插槽 -->
-        <template v-if="column.tooltip.contentRender" #content>
-          <component v-if="column.tooltip.contentRender" :is="column.tooltip.contentRender()" />
+        <template v-if="tooltipValue.contentRender" #content>
+          <component v-if="tooltipValue.contentRender" :is="tooltipValue.contentRender()" />
         </template>
         <!-- ElToolTip icon -->
         <slot name="tooltip-icon">
@@ -188,6 +210,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-if="column.filter"
         v-bind="column.filterProps"
         :prop="column.filterProps?.prop || column.prop"
+        :options="optionsMap?.get(prop(column))"
+        :option-field="column.optionField"
         @filter="handleFilter"
         @clear="handleFilterClear"
         @reset="handleFilterReset"
@@ -195,8 +219,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         <template v-if="$slots['filter-icon']" #filter-icon>
           <slot name="filter-icon" />
         </template>
-        <template v-if="$slots['filter-button']" #filter-button>
-          <slot name="filter-button" />
+        <template v-if="$slots['filter-button']" #filter-button="scope">
+          <slot name="filter-button" v-bind="scope" />
         </template>
       </TableFilter>
 
@@ -229,8 +253,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
           editable === true || // 表格整体编辑
           column.editable || // 单列整体编辑
           scope.row._editable || // 单行整体编辑
-          scope.row._editableCol?.[prop(column)] || // 单元格编辑
-          getProp(scope.row_editableCol, prop(column)) // 多级 prop 单元格编辑
+          getProp(scope.row?._editableCol, prop(column)) // 单元格编辑，支持多级 prop
         "
         :ref="(el: any) => registerProFormInstance(el, scope, prop(column))"
         v-bind="column.editProps"
@@ -242,7 +265,12 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       />
 
       <!-- 自定义 Render 函数渲染 -->
-      <component v-else-if="column.render" :is="column.render(getRenderParams(scope, column))" />
+      <component
+        v-else-if="column.render"
+        :is="column.render(getRenderParams(scope, column))"
+        v-bind="{ ...column.elProps }"
+      />
+
       <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
       <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(scope, column))" />
       <!-- 自定义插槽，插槽名为 column.prop -->
@@ -254,7 +282,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
       <!-- 自定义 el 组件 -->
       <ElDisplay
         v-else-if="column.el"
-        :value="getCellValue(scope, column)"
+        :origin-value="getProp(scope.row, column.prop || '')"
+        :display-value="getDisplayValue(scope, column)"
         :el="column.el"
         :el-props="column.elProps"
         :options="scope.row._options?.[prop(column)]"
@@ -268,8 +297,8 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         </template>
       </ElDisplay>
 
-      <!-- 默认 -->
-      <template v-else>{{ formatValue(getCellValue(scope, column), scope, column) }}</template>
+      <!-- 默认单元格内容渲染 -->
+      <template v-else>{{ formatValue(getDisplayValue(scope, column), scope, column) }}</template>
     </template>
   </el-table-column>
 </template>

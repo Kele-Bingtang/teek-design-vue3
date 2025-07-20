@@ -27,11 +27,49 @@ const getFatherDom = (): Element => {
   return document.querySelector("body") as HTMLBodyElement;
 };
 
-export const closeDrawer = () => {
-  const vm = document.querySelector(`#${blockClass}-${id--}`) as HTMLElement;
-  vm && getFatherDom().removeChild(vm);
+/**
+ * 关闭前的动画
+ */
+const removeWithTransition = (target: Element, end: () => void) => {
+  // ElementPlus 内置的 Drawer 消失动画 class
+  target.classList.add(ns.joinEl("drawer-fade-leave-active"));
+  target.classList.add(ns.joinEl("drawer-fade-leave-to"));
+
+  // 监听动画/过渡结束
+  function onTransitionEnd() {
+    // 动画结束后移除元素
+    end();
+    target.removeEventListener("transitionend", onTransitionEnd);
+  }
+
+  target.addEventListener("transitionend", onTransitionEnd);
+
+  setTimeout(() => {
+    // 兼容没有 transition 的情况
+    onTransitionEnd();
+  }, 300);
 };
 
+/**
+ * 关闭弹框
+ */
+export const closeDrawer = () => {
+  const overlayEl = document.querySelector(`#${blockClass}-${id} .${ns.elNamespace}-overlay`);
+  if (!overlayEl) return;
+
+  removeWithTransition(overlayEl, () => {
+    const vm = document.querySelector(`#${blockClass}-${id--}`);
+    vm && getFatherDom().removeChild(vm);
+  });
+
+  if (!document.querySelector(`.${blockClass}-overlay`)) {
+    document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);
+  }
+};
+
+/**
+ * 点击确认按钮回调
+ */
 const handleConfirm = async (drawerProps: ProUseDrawerProps) => {
   if (!drawerProps.onConfirm) return closeDrawer();
 
@@ -39,6 +77,9 @@ const handleConfirm = async (drawerProps: ProUseDrawerProps) => {
   if (result !== false) return closeDrawer();
 };
 
+/**
+ * 点击取消按钮回调
+ */
 const handleCancel = async (drawerProps: ProUseDrawerProps) => {
   if (!drawerProps.onCancel) return closeDrawer();
 
@@ -51,7 +92,7 @@ const handleCancel = async (drawerProps: ProUseDrawerProps) => {
  * 方式 1：在第一个参数里写 render，即可实现 el-drawer 的内容渲染
  * 方式 2：第二个参数为组件，第三个参数为组件的 props
  *
- * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-drawer 的 header 和 footer
+ * 在第一个参数里写 renderHeader 和 renderFooter，可以自定义 el-drawer 的 header 和 footer
  */
 export const showDrawer = (
   drawerProps: ProUseDrawerProps = {},
@@ -67,7 +108,7 @@ export const showDrawer = (
 
   const toggleFullscreen = () => {
     const elDrawerEl = document.querySelector(
-      `${`#${blockClass}-${id}`} .${blockClass}.${ns.elNamespace}-drawer`
+      `#${blockClass}-${id} .${blockClass}.${ns.elNamespace}-drawer`
     ) as HTMLElement;
 
     if (elDrawerEl) elDrawerEl.classList.toggle("is-fullscreen");
@@ -93,7 +134,7 @@ export const showDrawer = (
             return <component is={component} {...componentsProps}></component>;
           },
           header: (scope: unknown) => {
-            if (drawerProps.headerRender) return drawerProps.headerRender(scope);
+            if (drawerProps.renderHeader) return drawerProps.renderHeader(scope);
             return (
               <>
                 <span class={`${ns.elNamespace}-drawer__title`}>{drawerProps.title}</span>
@@ -113,7 +154,7 @@ export const showDrawer = (
           },
           footer: drawerProps.showFooter
             ? () => {
-                if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
+                if (drawerProps.renderFooter) return drawerProps.renderFooter(closeDrawer);
                 return (
                   <div class={ns.e("footer")} style={footerStyle.value}>
                     <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
@@ -138,6 +179,7 @@ export const showDrawer = (
 
   const container = document.createElement("div");
   container.id = `${blockClass}-${++id}`;
+  container.className = `${blockClass}-overlay`;
   getFatherDom().appendChild(container);
   render(vm, container);
 

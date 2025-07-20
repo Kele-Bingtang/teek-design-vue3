@@ -56,6 +56,7 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
+const elFormPropsValue = computed(() => toValue(finalProps.value.elFormProps));
 const showLabelValue = computed(() => toValue(finalProps.value.showLabel));
 const footerStyle = computed(() => ({
   display: "flex",
@@ -93,7 +94,10 @@ function useFormFooter() {
       return true;
     }
 
-    return await elFormInstance.value?.validate((isValid, invalidFields) => {
+    let valid = true;
+
+    await elFormInstance.value?.validate((isValid, invalidFields) => {
+      valid = isValid;
       if (isValid) return emits("submit", model.value);
 
       if (props.showErrorTip) {
@@ -102,6 +106,8 @@ function useFormFooter() {
       }
       emits("submitError", invalidFields);
     });
+
+    return valid;
   };
 
   const resetForm = () => {
@@ -156,9 +162,9 @@ defineExpose(expose);
   <el-form
     ref="elFormInstance"
     labelPosition="left"
-    v-bind="{ ...$attrs, ...finalProps.elFormProps }"
-    :label-width="showLabelValue ? finalProps.elFormProps.labelWidth : 0"
-    :label-suffix="showLabelValue ? finalProps.elFormProps.labelSuffix : ''"
+    v-bind="{ ...$attrs, ...elFormPropsValue }"
+    :label-width="showLabelValue ? elFormPropsValue.labelWidth : 0"
+    :label-suffix="showLabelValue ? elFormPropsValue.labelSuffix : ''"
     :model="model"
     :class="ns.b()"
     @validate="handleValidate"
@@ -170,7 +176,7 @@ defineExpose(expose);
         </template>
 
         <!-- 其他通用插槽 -->
-        <template v-for="slot in Object.keys($slots).filter(key => !key.includes('form-main'))" #[slot]="scope">
+        <template v-for="slot in Object.keys($slots).filter(key => !['form-main'].includes(key))" #[slot]="scope">
           <slot :name="slot" v-bind="scope" />
         </template>
       </FormMain>

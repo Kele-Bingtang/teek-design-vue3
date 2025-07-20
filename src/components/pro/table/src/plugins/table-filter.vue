@@ -18,6 +18,8 @@ const props = withDefaults(defineProps<TableFilterProps>(), {
   filterText: "过滤",
   clearText: "清空",
   resetText: "重置",
+  options: undefined,
+  optionField: undefined,
 });
 
 const emits = defineEmits<TableFilterEmits>();
@@ -31,14 +33,14 @@ const elProps = computed(() => ({ ...props.formColumn.elProps, teleported: false
 
 // 事件处理方法
 const handleFilter = () => {
-  emits("filter", model.value, prop.value);
+  emits("filter", model.value, prop.value ?? "");
 };
 
 const handleClear = () => {
   model.value = undefined;
 
   handleFilter();
-  emits("clear", prop.value);
+  emits("clear", prop.value ?? "");
 };
 
 const handleReset = () => {
@@ -65,9 +67,16 @@ const handleReset = () => {
 
     <!-- 过滤内容区域 -->
     <div class="filter-content">
-      <ProFormItem v-model="model" v-bind="formColumn" :prop :el :show-label="false" :el-props />
+      <ProFormItem
+        v-model="model"
+        v-bind="{ options, optionField, ...formColumn }"
+        :prop
+        :el
+        :show-label="false"
+        :el-props
+      />
 
-      <slot name="filter-button" v-bind="{ handleFilter, handleClear, handleReset }">
+      <slot name="filter-button" v-bind="{ handleFilter, handleClear, handleReset, resetText, clearText, filterText }">
         <div :class="ns.e('buttons')">
           <el-button @click="handleReset">{{ resetText }}</el-button>
           <div>

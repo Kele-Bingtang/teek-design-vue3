@@ -19,8 +19,6 @@ const ns = useNamespace("pro-search");
 const props = withDefaults(defineProps<ProSearchProps>(), {
   columns: () => [],
   position: "right",
-  searchCols: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
-  gap: () => [20, 0],
   showAction: true,
   showSearch: true,
   showReset: true,
@@ -29,12 +27,16 @@ const props = withDefaults(defineProps<ProSearchProps>(), {
   resetText: "重置",
   collapseText: "折叠",
   expandText: "展开",
+  searchCols: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
+  gap: () => [20, 0],
   collapse: true,
   showRow: 1,
   searchLoading: false,
   resetLoading: false,
   removeNoValue: true,
   validate: true,
+  showLabel: true,
+  form: () => ({}),
 });
 
 const emits = defineEmits<ProSearchEmits>();
@@ -67,16 +69,24 @@ const {
 
 // 搜索表单的配置项
 const searchColumns = computed(() =>
-  props.columns
-    .filter(item => {
-      return !(getProFormInstance()?.destroyOrInit(item) ?? item.destroy);
+  finalProps.value.columns
+    .filter((column, index) => {
+      // 设置表单排序默认值
+      column.order ??= index + 5;
+      return !(getProFormInstance()?.destroyOrInit(column) ?? column.destroy);
     })
-    .map((item, index) => {
-      item._index = index;
-      item.width = "100%";
+    .sort((a, b) => a.order! - b.order!)
+    .map((column, index) => {
+      // index 决定了表单的排序，因此现在上面进行排序
+      column._index = index;
+      column.width ??= "100%";
+
       // 如果不开启校验，则清空校验规则
-      if (!props.validate) item.formItemProps = { ...item.formItemProps, rules: undefined, required: undefined };
-      return item;
+      if (!finalProps.value.validate) {
+        column.formItemProps = { ...column.formItemProps, rules: undefined, required: undefined };
+      }
+
+      return column;
     })
 );
 
@@ -88,10 +98,10 @@ const rowSpan = computed(() => {
 
 // 判断是否显示 展开/折叠 按钮
 const showCollapseButton = computed(() => {
-  const { columns, searchCols } = finalProps.value;
+  const { searchCols } = finalProps.value;
 
   let show = false;
-  columns.reduce((prev, current) => {
+  searchColumns.value.reduce((prev, current) => {
     prev +=
       ((current.grid && current.grid[breakPoint.value]?.span) ?? current.grid?.span ?? 1) +
       ((current.grid && current.grid[breakPoint.value]?.offset) ?? current.grid?.offset ?? 0);
@@ -208,14 +218,14 @@ defineExpose(defaultExpose);
 
 <template>
   <div v-if="searchColumns.length" :class="[ns.b(), ns.join('card-minimal')]">
-    <ProForm ref="proFormInstance" :columns v-model="model" v-bind="$attrs" :show-footer="false">
+    <ProForm ref="proFormInstance" v-model="model" v-bind="$attrs" :show-footer="false">
       <template #form-main="{ isHidden, setProFormItemInstance, optionsMap }">
         <Grid
           ref="gridInstance"
-          :collapse="finalProps.showCollapse ? finalProps.collapse : false"
+          :collapse="finalProps.showCollapse && finalProps.collapse"
           :cols="finalProps.searchCols"
           :gap="finalProps.gap"
-          :showRow="finalProps.showRow"
+          :show-row="rowSpan === 1 ? finalProps.showRow + 1 : finalProps.showRow"
         >
           <GridItem
             v-for="column in searchColumns"
@@ -224,10 +234,13 @@ defineExpose(defaultExpose);
             :index="column._index"
           >
             <ProFormItem
+              v-show="!isHidden(column)"
               :ref="el => setProFormItemInstance(el, column.prop)"
               v-model="model"
               v-bind="column"
-              v-show="!isHidden(column)"
+              :clearable="column.clearable ?? form.clearable"
+              :show-label="column.showLabel ?? showLabel ?? form.showLabel"
+              :width="column.width ?? form.width"
               :options="optionsMap.get(column.optionsProp || column.prop)"
               @change="handleChange"
             >
@@ -243,8 +256,11 @@ defineExpose(defaultExpose);
               <slot
                 name="action"
                 :model="model"
-                :showCollapseButton="showCollapseButton"
-                :toggleCollapse="toggleCollapse"
+                :search="search"
+                :reset="reset"
+                :collapse="collapse"
+                :show-collapse-button="finalProps.showCollapse && showCollapseButton"
+                :toggle-collapse="toggleCollapse"
               >
                 <el-button
                   v-if="finalProps.showSearch"
@@ -255,9 +271,11 @@ defineExpose(defaultExpose);
                 >
                   {{ finalProps.searchText }}
                 </el-button>
+
                 <el-button v-if="finalProps.showReset" :icon="Delete" @click="reset" :loading="finalProps.resetLoading">
                   {{ finalProps.resetText }}
                 </el-button>
+
                 <el-button
                   v-if="finalProps.showCollapse && showCollapseButton"
                   type="primary"

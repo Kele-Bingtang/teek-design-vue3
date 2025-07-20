@@ -39,31 +39,29 @@ const tableSize = ref<TableSizeEnum>((props.size as TableSizeEnum) || TableSizeE
 
 // 密度样式 Map
 const sizeStyleMap = computed<Record<TableSizeEnum, SizeStyle>>(() => {
+  const getSizeStyles = (size: TableSizeEnum, defaultSizeStyle: SizeStyle = {}) => {
+    const { sizeStyle } = props;
+
+    return {
+      cellStyle: { ...defaultSizeStyle.cellStyle, ...sizeStyle[size]?.cellStyle },
+      rowStyle: { ...defaultSizeStyle.rowStyle, ...sizeStyle[size]?.rowStyle },
+      headerRowStyle: { ...defaultSizeStyle.headerRowStyle, ...sizeStyle[size]?.headerRowStyle },
+      headerCellStyle: { ...defaultSizeStyle.headerCellStyle, ...sizeStyle[size]?.headerCellStyle },
+    };
+  };
+
   return {
-    [TableSizeEnum.Default]: {
-      cellStyle: {},
-      rowStyle: {},
-      headerCellStyle: {},
-      ...props.sizeStyle[TableSizeEnum.Default],
-    },
-    [TableSizeEnum.Large]: {
-      cellStyle: {},
-      rowStyle: {},
-      headerCellStyle: {},
-      ...props.sizeStyle[TableSizeEnum.Large],
-    },
-    [TableSizeEnum.Small]: {
-      cellStyle: {},
+    [TableSizeEnum.Default]: getSizeStyles(TableSizeEnum.Default),
+    [TableSizeEnum.Large]: getSizeStyles(TableSizeEnum.Large),
+    [TableSizeEnum.Small]: getSizeStyles(TableSizeEnum.Small, {
       rowStyle: { height: "40px" },
       headerCellStyle: { height: "40px" },
-      ...props.sizeStyle[TableSizeEnum.Small],
-    },
-    [TableSizeEnum.Mini]: {
+    }),
+    [TableSizeEnum.Mini]: getSizeStyles(TableSizeEnum.Mini, {
       cellStyle: { padding: "0" },
       rowStyle: { height: "24px", fontSize: "12px" },
       headerCellStyle: { height: "24px", fontSize: "12px", padding: "0" },
-      ...props.sizeStyle[TableSizeEnum.Mini],
-    },
+    }),
   };
 });
 
@@ -261,102 +259,116 @@ defineExpose(expose);
 <template>
   <div :class="ns.b()">
     <div :class="ns.e('left')">
-      <slot
-        name="head-left"
-        :selected-list-ids="selectedListIds"
-        :selected-list="selectedList"
-        :is-selected="isSelected"
-      >
+      <slot name="head-left" v-bind="{ selectedListIds, selectedList, isSelected }">
         {{ title }}
       </slot>
     </div>
 
-    <div v-if="toolButton" :class="ns.e('right')">
+    <div :class="ns.e('right')">
       <slot name="head-right">
-        <slot name="head-right-before"></slot>
+        <slot
+          name="head-tool-before"
+          v-bind="{ tooltipProps, handleSizeCommand, handleRefresh, handleExport, toggleColumnSetting }"
+        />
 
-        <el-tooltip v-if="showToolButton(ToolButtonEnum.Refresh)" content="刷新" v-bind="tooltipProps">
-          <el-button
-            :disabled="disabledToolButton.includes(ToolButtonEnum.Refresh)"
-            :icon="Refresh"
-            @click="handleRefresh"
-          />
-        </el-tooltip>
+        <template v-if="toolButton">
+          <el-tooltip v-if="showToolButton(ToolButtonEnum.Refresh)" content="刷新" v-bind="tooltipProps">
+            <el-button
+              :disabled="disabledToolButton.includes(ToolButtonEnum.Refresh)"
+              :icon="Refresh"
+              @click="handleRefresh"
+              class="head__tool-button"
+            />
+          </el-tooltip>
 
-        <el-tooltip v-if="showToolButton(ToolButtonEnum.Size)" content="密度" v-bind="tooltipProps">
-          <el-dropdown @command="handleSizeCommand">
-            <el-button :disabled="disabledToolButton.includes(ToolButtonEnum.Size)" :icon="Coin" />
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item
-                  v-for="(value, key) in TableSizeEnum"
-                  :key
-                  :command="value"
-                  :disabled="tableSize === value"
-                >
-                  {{ key }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
+          <el-tooltip v-if="showToolButton(ToolButtonEnum.Size)" content="密度" v-bind="tooltipProps">
+            <el-dropdown @command="handleSizeCommand" :disabled="disabledToolButton.includes(ToolButtonEnum.Size)">
+              <el-button
+                :disabled="disabledToolButton.includes(ToolButtonEnum.Size)"
+                :icon="Coin"
+                class="head__tool-button"
+              />
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item
+                    v-for="(value, key) in TableSizeEnum"
+                    :key
+                    :command="value"
+                    :disabled="tableSize === value"
+                  >
+                    {{ key }}
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </el-tooltip>
+
+          <el-tooltip v-if="showToolButton(ToolButtonEnum.Export)" content="导出" v-bind="tooltipProps">
+            <el-button
+              :disabled="disabledToolButton.includes(ToolButtonEnum.Export)"
+              :icon="Download"
+              @click="handleExport"
+              class="head__tool-button"
+            />
+          </el-tooltip>
+
+          <el-tooltip
+            v-if="showToolButton(ToolButtonEnum.ColumnSetting) && columns.length"
+            content="列配置"
+            v-bind="tooltipProps"
+          >
+            <el-button
+              :disabled="disabledToolButton.includes(ToolButtonEnum.ColumnSetting)"
+              :icon="Operation"
+              @click="() => toggleColumnSetting()"
+              class="head__tool-button"
+            />
+          </el-tooltip>
+
+          <el-popover placement="bottom" trigger="click">
+            <template #reference>
+              <div>
+                <el-tooltip v-if="showToolButton(ToolButtonEnum.BaseSetting)" content="基础配置" v-bind="tooltipProps">
+                  <el-button
+                    :disabled="disabledToolButton.includes(ToolButtonEnum.BaseSetting)"
+                    :icon="Setting"
+                    class="head__tool-button"
+                  />
+                </el-tooltip>
+              </div>
             </template>
-          </el-dropdown>
-        </el-tooltip>
-
-        <el-tooltip v-if="showToolButton(ToolButtonEnum.Export)" content="导出" v-bind="tooltipProps">
-          <el-button
-            :disabled="disabledToolButton.includes(ToolButtonEnum.Export)"
-            :icon="Download"
-            @click="handleExport"
-          />
-        </el-tooltip>
-
-        <el-tooltip
-          v-if="showToolButton(ToolButtonEnum.ColumnSetting) && columns.length"
-          content="列配置"
-          v-bind="tooltipProps"
-        >
-          <el-button
-            :disabled="disabledToolButton.includes(ToolButtonEnum.ColumnSetting)"
-            :icon="Operation"
-            @click="columnSettingVisible = true"
-          />
-        </el-tooltip>
-
-        <el-popover placement="bottom" trigger="click">
-          <template #reference>
             <div>
-              <el-tooltip v-if="showToolButton(ToolButtonEnum.BaseSetting)" content="基础配置" v-bind="tooltipProps">
-                <el-button :disabled="disabledToolButton.includes(ToolButtonEnum.BaseSetting)" :icon="Setting" />
-              </el-tooltip>
+              <el-checkbox v-model="baseSetting.border" :value="true" :disabled="baseSetting.disabledBorder">
+                边框
+              </el-checkbox>
+              <el-checkbox v-model="baseSetting.stripe" :value="true" :disabled="baseSetting.disabledStripe">
+                斑马纹
+              </el-checkbox>
+              <el-checkbox v-model="baseSetting.showHeader" :value="true" :disabled="baseSetting.disabledShowHeader">
+                表头
+              </el-checkbox>
+              <el-checkbox
+                v-model="baseSetting.headerBackground"
+                :value="true"
+                :disabled="baseSetting.disabledHeaderBackground"
+              >
+                表头背景
+              </el-checkbox>
+              <el-checkbox
+                v-model="baseSetting.highlightCurrentRow"
+                :value="true"
+                :disabled="baseSetting.disabledHighlightCurrentRow"
+              >
+                单击行高亮
+              </el-checkbox>
             </div>
-          </template>
-          <div>
-            <el-checkbox v-model="baseSetting.border" :value="true" :disabled="baseSetting.disabledBorder">
-              边框
-            </el-checkbox>
-            <el-checkbox v-model="baseSetting.stripe" :value="true" :disabled="baseSetting.disabledStripe">
-              斑马纹
-            </el-checkbox>
-            <el-checkbox v-model="baseSetting.showHeader" :value="true" :disabled="baseSetting.disabledShowHeader">
-              表头
-            </el-checkbox>
-            <el-checkbox
-              v-model="baseSetting.headerBackground"
-              :value="true"
-              :disabled="baseSetting.disabledHeaderBackground"
-            >
-              表头背景
-            </el-checkbox>
-            <el-checkbox
-              v-model="baseSetting.highlightCurrentRow"
-              :value="true"
-              :disabled="baseSetting.disabledHighlightCurrentRow"
-            >
-              单击行高亮
-            </el-checkbox>
-          </div>
-        </el-popover>
+          </el-popover>
+        </template>
 
-        <slot name="head-right-after"></slot>
+        <slot
+          name="head-tool-after"
+          v-bind="{ tooltipProps, handleSizeCommand, handleRefresh, handleExport, toggleColumnSetting }"
+        />
       </slot>
     </div>
 

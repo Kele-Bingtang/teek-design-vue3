@@ -40,7 +40,7 @@ function useOperationButtonPropsGet() {
   const getButtons = (row: TableRow, index: number) => {
     const { buttons, showNumber } = props;
 
-    const data = buttons.filter(item => {
+    const data = toValue(buttons).filter(item => {
       if (!isFunction(item.show)) return unref(item.show) !== false;
       const isShow = item.show(row, index, item);
       return unref(isShow) !== false;
@@ -62,7 +62,8 @@ function useOperationButtonPropsGet() {
       : unref(buttonRaw.text);
   };
 
-  const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) => toCamelCase(buttonRaw.el || props.el) as OperationEl;
+  const getButtonEl = (buttonRaw: OperationNamespace.ButtonRaw) =>
+    toCamelCase(toValue(buttonRaw.el || props.el)) as OperationEl;
   /**
    * 获取按钮相关组件的 Props
    */
@@ -83,10 +84,14 @@ function useOperationConfirmPropsGet() {
    * 获取 confirm 弹窗组件
    */
   const getConfirmEl = (buttonRaw: OperationNamespace.ButtonRaw) => {
-    const confirm = buttonRaw.confirm ?? props.confirm;
-    if (!confirm) return;
-    if (confirm === true) return OperationConfirmEl.ElPopconfirm;
-    return confirm.el;
+    // 优先计算按钮级别的 confirmEl
+    if (buttonRaw.confirm === false) return;
+    if (buttonRaw.confirm === true) return OperationConfirmEl.ElPopconfirm;
+    if (buttonRaw.confirm?.el) return toValue(buttonRaw.confirm.el);
+
+    if (!props.confirm) return;
+    if (props.confirm === true) return OperationConfirmEl.ElPopconfirm;
+    return toValue(props.confirm.el) ?? "ElMessageBox"; // 默认使用 ElMessageBox
   };
 
   /**
@@ -166,7 +171,7 @@ function useOperationButtonEvent() {
     const callbackParams = getCallbackParams(buttonRaw, scope, event);
 
     if (isFunction(buttonRaw.onConfirm)) buttonRaw.onConfirm(callbackParams);
-    emits("confirm", callbackParams);
+    emits("buttonConfirm", callbackParams);
   };
 
   /**
@@ -176,7 +181,7 @@ function useOperationButtonEvent() {
     const callbackParams = getCallbackParams(buttonRaw, scope, event);
 
     if (isFunction(buttonRaw.onCancel)) buttonRaw.onCancel(callbackParams);
-    emits("cancel", callbackParams);
+    emits("buttonCancel", callbackParams);
   };
 
   return { hideOnClick, getCallbackParams, handleButtonClick, handleConfirm, handleCancel };
@@ -193,7 +198,7 @@ function useOperationButtonEvent() {
   >
     <!-- 表头插槽 - 表头内容 -->
     <template #header="scope">
-      <component v-if="headerRender" :is="headerRender(scope)" />
+      <component v-if="renderHeader" :is="renderHeader(scope)" />
       <slot v-else :name="`${lastProp(prop)}-header`" v-bind="scope">{{ scope.column.label }}</slot>
     </template>
 
@@ -213,7 +218,7 @@ function useOperationButtonEvent() {
             :tooltip-props="button.tooltipProps"
             :confirm-el="getConfirmEl(button)"
             :confirm-props="getConfirmProps(button, scope)"
-            @buttonClick="e => handleButtonClick(button, scope, e)"
+            @click="e => handleButtonClick(button, scope, e)"
             @confirm="e => handleConfirm(button, scope, e)"
             @cancel="e => handleCancel(button, scope, e)"
           />
@@ -243,7 +248,7 @@ function useOperationButtonEvent() {
                   :tooltip-props="button.tooltipProps"
                   :confirm-el="getConfirmEl(button)"
                   :confirm-props="getConfirmProps(button, scope)"
-                  @buttonClick="e => handleButtonClick(button, scope, e)"
+                  @click="e => handleButtonClick(button, scope, e)"
                   @confirm="e => handleConfirm(button, scope, e)"
                   @cancel="e => handleCancel(button, scope, e)"
                 />
