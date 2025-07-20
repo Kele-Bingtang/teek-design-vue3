@@ -56,6 +56,7 @@ const finalProps = computed(() => {
   return propsObj;
 });
 
+const elFormPropsValue = computed(() => toValue(finalProps.value.elFormProps));
 const showLabelValue = computed(() => toValue(finalProps.value.showLabel));
 const footerStyle = computed(() => ({
   display: "flex",
@@ -161,9 +162,9 @@ defineExpose(expose);
   <el-form
     ref="elFormInstance"
     labelPosition="left"
-    v-bind="{ ...$attrs, ...finalProps.elFormProps }"
-    :label-width="showLabelValue ? finalProps.elFormProps.labelWidth : 0"
-    :label-suffix="showLabelValue ? finalProps.elFormProps.labelSuffix : ''"
+    v-bind="{ ...$attrs, ...elFormPropsValue }"
+    :label-width="showLabelValue ? elFormPropsValue.labelWidth : 0"
+    :label-suffix="showLabelValue ? elFormPropsValue.labelSuffix : ''"
     :model="model"
     :class="ns.b()"
     @validate="handleValidate"

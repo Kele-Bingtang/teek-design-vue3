@@ -51,7 +51,7 @@ const handleCancel = async (drawerProps: ProUseDrawerProps) => {
  * 方式 1：在第一个参数里写 render，即可实现 el-drawer 的内容渲染
  * 方式 2：第二个参数为组件，第三个参数为组件的 props
  *
- * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-drawer 的 header 和 footer
+ * 在第一个参数里写 renderHeader 和 renderFooter，可以自定义 el-drawer 的 header 和 footer
  */
 export const showDrawer = (
   drawerProps: ProUseDrawerProps = {},
@@ -93,7 +93,7 @@ export const showDrawer = (
             return <component is={component} {...componentsProps}></component>;
           },
           header: (scope: unknown) => {
-            if (drawerProps.headerRender) return drawerProps.headerRender(scope);
+            if (drawerProps.renderHeader) return drawerProps.renderHeader(scope);
             return (
               <>
                 <span class={`${ns.elNamespace}-drawer__title`}>{drawerProps.title}</span>
@@ -113,7 +113,7 @@ export const showDrawer = (
           },
           footer: drawerProps.showFooter
             ? () => {
-                if (drawerProps.footerRender) return drawerProps.footerRender(closeDrawer);
+                if (drawerProps.renderFooter) return drawerProps.renderFooter(closeDrawer);
                 return (
                   <div class={ns.e("footer")} style={footerStyle.value}>
                     <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>

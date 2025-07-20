@@ -131,6 +131,8 @@ export namespace ProTableNamespace {
     headerBackground?: boolean;
     /**
      * ElTable 的 highlightCurrentRow
+     *
+     * @default true
      */
     highlightCurrentRow?: TableProps<Recordable>["highlightCurrentRow"];
     /**

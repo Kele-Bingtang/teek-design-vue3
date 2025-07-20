@@ -246,7 +246,7 @@ export interface FormItemColumnProps {
   /**
    * 自定义 Label 内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderLabelHtml?: (label: string, scope: FormItemColumnProps) => string;
+  renderLabelHTML?: (label: string, scope: FormItemColumnProps) => string;
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */

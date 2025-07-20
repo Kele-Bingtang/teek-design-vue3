@@ -5,7 +5,7 @@ import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pr
 import type ProDescriptions from "./index.vue";
 import type { ElDisplayProps } from "../../table";
 
-interface RenderParams {
+export interface RenderParams {
   /**
    * 当前值
    */
@@ -14,6 +14,10 @@ interface RenderParams {
    * 当前列配置
    */
   column: DescriptionColumn;
+  /**
+   * 当前描述列表标签
+   */
+  label: string;
   /**
    * 当前渲染数据
    */
@@ -85,7 +89,7 @@ export interface DescriptionColumn
   /**
    * 自定义 label 渲染
    */
-  renderLabel?: (label: string, scope: RenderParams) => RenderTypes;
+  renderLabel?: (scope: RenderParams) => RenderTypes;
   /**
    * 自定义内容渲染
    */
@@ -107,7 +111,27 @@ export interface DescriptionColumn
   /**
    * ProForm Props
    */
-  form?: Omit<FormItemColumnProps, "prop" | "label" | "options" | "optionField">;
+  formProps?: MaybeRefOrGetter<
+    Omit<
+      ProFormNamespace.Props,
+      | "columns"
+      | "flexLayout"
+      | "showLabel"
+      | "showFooter"
+      | "rowProps"
+      | "colProps"
+      | "showReset"
+      | "submitText"
+      | "resetText"
+      | "submitLoading"
+      | "footerAlign"
+      | "preventNativeSubmit"
+    >
+  >;
+  /**
+   * ProFormItem Props，等于 ProForm 的单个 column
+   */
+  formColumn?: MaybeRefOrGetter<Omit<FormItemColumnProps, "prop" | "label" | "options" | "optionField">>;
   /**
    * el 组件的插槽
    */
@@ -169,7 +193,7 @@ export interface ProDescriptionsProp {
   /**
    * ProForm Props
    */
-  formProps?: ProFormNamespace.Props;
+  formProps?: DescriptionColumn["formProps"];
   /**
    * 是否显示重置按钮
    *
@@ -243,6 +267,10 @@ export interface EditProps extends FormItemColumnProps {
    * 表单组件的值
    */
   value?: unknown;
+  /**
+   * ProForm Props
+   */
+  formProps?: DescriptionColumn["formProps"];
 }
 
 export interface EditEmits {

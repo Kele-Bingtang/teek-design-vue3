@@ -60,7 +60,7 @@ const handleCancel = async (dialogProps: ProUseDialogProps) => {
  * 方式 1：在第一个参数里写 render，即可实现 el-dialog 的内容渲染
  * 方式 2：第二个参数为组件，第三个参数为组件的 props
  *
- * 在第一个参数里写 headerRender 和 footerRender，可以自定义 el-dialog 的 header 和 footer
+ * 在第一个参数里写 renderHeader 和 renderFooter，可以自定义 el-dialog 的 header 和 footer
  */
 export const showDialog = (
   dialogProps: ProUseDialogProps = {},
@@ -105,8 +105,8 @@ export const showDialog = (
     onConfirm: undefined,
     onCancel: undefined,
     render: undefined,
-    headerRender: undefined,
-    footerRender: undefined,
+    renderHeader: undefined,
+    renderFooter: undefined,
   };
 
   const vm = (
@@ -131,7 +131,7 @@ export const showDialog = (
             );
           },
           header: (scope: unknown) => {
-            if (dialogProps.headerRender) return dialogProps.headerRender(scope);
+            if (dialogProps.renderHeader) return dialogProps.renderHeader(scope);
             return (
               <div style="display: flex">
                 <span class={`${ns.elNamespace}-dialog__title`} style="flex: 1">
@@ -154,7 +154,7 @@ export const showDialog = (
           },
           footer: dialogProps.showFooter
             ? () => {
-                if (dialogProps.footerRender) return dialogProps.footerRender(closeDialog);
+                if (dialogProps.renderFooter) return dialogProps.renderFooter(closeDialog);
                 return (
                   <>
                     {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}

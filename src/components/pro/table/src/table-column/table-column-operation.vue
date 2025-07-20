@@ -198,7 +198,7 @@ function useOperationButtonEvent() {
   >
     <!-- 表头插槽 - 表头内容 -->
     <template #header="scope">
-      <component v-if="headerRender" :is="headerRender(scope)" />
+      <component v-if="renderHeader" :is="renderHeader(scope)" />
       <slot v-else :name="`${lastProp(prop)}-header`" v-bind="scope">{{ scope.column.label }}</slot>
     </template>
 

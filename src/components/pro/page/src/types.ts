@@ -5,12 +5,12 @@ import type { ProSearchColumnProps, ProSearchEmits, ProSearchInstance, ProSearch
 import type { BreakPoint, Responsive } from "@/components/pro/grid";
 import type ProPage from "./index.vue";
 
-export interface PageColumn<T = any> extends TableColumn<T> {
+export interface PageColumn<T extends Recordable = any> extends TableColumn<T> {
   search?: {
     /**
-     * 搜索事件前置处理
+     * 搜索事件前置处理，可以返回新的搜索值
      */
-    beforeSearch?: (value: unknown, searchParams: Recordable, column: TableColumn) => unknown | false | undefined;
+    beforeSearch?: (value: any, searchParams: Recordable, column: TableColumn) => unknown | false | undefined;
     /**
      * 搜索项所占用的列数，默认为 1 列
      */
@@ -36,6 +36,10 @@ export interface ProPageProps extends ProTableNamespace.Props {
    * 初始化时是否显示搜索模块
    */
   initShowSearch?: MaybeRefOrGetter<boolean>;
+  /**
+   * 默认搜索参数，优先级低于 column.defaultValue
+   */
+  defaultValues?: Recordable;
 }
 
 export interface ProPageEmits extends Omit<ProTableNamespace.Emits, "register">, Omit<ProSearchEmits, "register"> {

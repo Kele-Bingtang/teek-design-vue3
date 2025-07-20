@@ -11,6 +11,7 @@ defineOptions({ name: "DescriptionsEdit" });
 const props = withDefaults(defineProps<EditProps>(), {
   prop: "",
   value: undefined,
+  formProps: () => ({}),
 });
 
 const emits = defineEmits<EditEmits>();
@@ -50,9 +51,7 @@ defineExpose({ proFormInstance });
     :show-label="false"
     :show-footer="false"
     :flex-layout="false"
-    :el-form-props="{
-      hideRequiredAsterisk: true,
-    }"
+    v-bind="formProps"
     @change="handleChange"
   />
 </template>

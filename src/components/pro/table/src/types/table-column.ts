@@ -16,7 +16,7 @@ export interface RenderParams<T extends Recordable = Recordable> extends TableSc
   /**
    * 渲染在单元格的值（大部分等于 value，少部分如使用 options 配置项时，则为 options 配置项的 label 值）
    */
-  renderValue: unknown;
+  displayValue: unknown;
   /**
    * 字典枚举数据
    */
@@ -194,11 +194,11 @@ export interface TableColumn<T extends Recordable = any>
   /**
    * 自定义表头内容渲染（tsx 语法）
    */
-  headerRender?: (scope: RenderParams<T>) => RenderTypes;
+  renderHeader?: (scope: RenderParams<T>) => RenderTypes;
   /**
    * 自定义表头内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  headerRenderHtml?: (scope: RenderParams<T>) => string;
+  renderHeaderHTML?: (scope: RenderParams<T>) => string;
   /**
    * 自定义表头内容
    */

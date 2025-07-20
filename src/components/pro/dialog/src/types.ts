@@ -75,7 +75,7 @@ export interface ProDialogProps {
   /**
    * 自定义头部渲染
    */
-  headerRender?: (scope: any) => RenderTypes;
+  renderHeader?: (scope: any) => RenderTypes;
   /**
    * 自定义底部上方渲染
    */
@@ -83,7 +83,7 @@ export interface ProDialogProps {
   /**
    * 自定义底部渲染
    */
-  footerRender?: (closeDialog: () => void) => RenderTypes;
+  renderFooter?: (closeDialog: () => void) => RenderTypes;
   /**
    * 确认按钮点击事件
    */

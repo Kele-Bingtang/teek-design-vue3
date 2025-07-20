@@ -87,7 +87,6 @@ const childComponentMap: Record<string, { root: Component; child?: Component }> 
   [FormElComponentEnum.EL_CHECKBOX_BUTTON]: { root: formELComponentsMap.ElCheckboxGroup, child: Checkbox },
 };
 
-// 更新 model 值
 const updateElModel = (value: unknown) => (elModel.value = value);
 
 // 获取标题样式
@@ -109,9 +108,9 @@ const emits = defineEmits<ProFormItemEmits>();
  */
 function useFormItemInitProps() {
   // 处理透传的 elProps
-  const elPropsValue = computed<Recordable>(() => {
+  const elPropsValue = computed<Record<string, any>>(() => {
     const { optionField, elProps } = props;
-    const elPropsValue = toValue(elProps) as Recordable;
+    const elPropsValue = toValue(elProps) as Record<string, any>;
     const label = optionField.label;
     const value = optionField.value;
     const children = optionField.children;
@@ -126,8 +125,12 @@ function useFormItemInitProps() {
     }
 
     if (formElConst === FormElComponentEnum.EL_DATE_PICKER) {
-      if (elPropsValue.type === "datetime") return { valueFormat: "YYYY-MM-DD HH:mm:ss", ...elPropsValue };
-      if (elPropsValue.type === "date") return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
+      const type = elPropsValue.type;
+
+      if (type === "datetime") return { valueFormat: "YYYY-MM-DD HH:mm:ss", ...elPropsValue };
+      if (type === "date") return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
+      if (["year", "years"].includes(type)) return { valueFormat: "YYYY", ...elPropsValue };
+      if (["month", "monthrange"].includes(type)) return { valueFormat: "YYYY-MM", ...elPropsValue };
 
       return { valueFormat: "YYYY-MM-DD", ...elPropsValue };
     }
@@ -155,7 +158,7 @@ function useFormItemInitProps() {
  * 表单字典枚举相关逻辑
  */
 function useFormItemOptions() {
-  const enums = ref<Recordable[]>([]);
+  const enums = ref<Record<string, any>[]>([]);
 
   const { initOptions } = useOptions();
 
@@ -166,7 +169,7 @@ function useFormItemOptions() {
 
     // el 为 select-v2 需单独处理
     if (formEl.value === FormElComponentEnum.EL_SELECT_V2) {
-      return value.map((item: Recordable) => ({
+      return value.map((item: Record<string, any>) => ({
         ...item,
         label: item[optionField.label!],
         value: item[optionField.value!],
@@ -209,8 +212,8 @@ defineExpose(expose);
     <template v-if="editableValue && showLabelValue" #label="{ label }">
       <!-- 自定义 label（h、JSX）渲染 -->
       <component v-if="renderLabel" :is="renderLabel(label, slotParams)" />
-      <!-- 自定义 headerRenderHtml 函数渲染，返回 HTML 格式 -->
-      <span v-else-if="renderLabelHtml" v-html="renderLabelHtml(label, slotParams)" />
+      <!-- 自定义 renderLabelHTML 函数渲染，返回 HTML 格式 -->
+      <span v-else-if="renderLabelHTML" v-html="renderLabelHTML(label, slotParams)" />
       <!-- 自定义 label 插槽 -->
       <slot v-else-if="$slots[`${prop}-label`]" :name="`${prop}-label`" v-bind="slotParams" />
       <!-- 默认 Label -->
@@ -242,9 +245,14 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="render" :is="render(elModel, updateElModel, slotParams)" />
+      <component
+        v-if="render"
+        :is="render(elModel, updateElModel, slotParams)"
+        v-model="elModel"
+        v-bind="elPropsValue"
+      />
       <!-- 自定义表单组件插槽 -->
-      <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
+      <slot v-else-if="$slots[prop]" :name="prop" v-bind="{ update: updateElModel, ...slotParams }" />
 
       <template v-else>
         <Tree
@@ -299,6 +307,7 @@ defineExpose(expose);
               FormElComponentEnum.EL_CASCADER,
               FormElComponentEnum.EL_SELECT_V2,
               FormElComponentEnum.EL_SEGMENTED,
+              FormElComponentEnum.CHECK_BOX_SELECT,
             ].includes(formEl)
               ? enums
               : []

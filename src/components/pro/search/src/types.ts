@@ -1,5 +1,5 @@
 import type { FormItemProp } from "element-plus";
-import type { BreakPoint, GridItemProps } from "@/components/pro/grid";
+import type { GridItemProps, GridProps } from "@/components/pro/grid";
 import type { FormColumn, ProFormNamespace } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type ProSearch from "./index.vue";
@@ -16,7 +16,7 @@ export type ProSearchColumnProps = FormColumn & {
   grid?: Partial<GridItemProps>;
 };
 
-export interface ProSearchProps extends ProFormNamespace.Props {
+export interface ProSearchProps {
   /**
    * 搜索配置列
    */
@@ -27,18 +27,6 @@ export interface ProSearchProps extends ProFormNamespace.Props {
    * @default right
    */
   position?: ActionPosition;
-  /**
-   * 响应式布局
-   *
-   * @default '{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }'
-   */
-  searchCols?: number | Record<BreakPoint, number>;
-  /**
-   * 行和列间距
-   *
-   * @default '[20, 0]''
-   */
-  gap?: [number, number] | number;
   /**
    * 是否展示操作按钮
    *
@@ -88,18 +76,6 @@ export interface ProSearchProps extends ProFormNamespace.Props {
    */
   expandText?: string;
   /**
-   * 是否默认折叠搜索项
-   *
-   * @default true
-   */
-  collapse?: boolean;
-  /**
-   * 超出指定行数后折叠
-   *
-   * @default 1
-   */
-  showRow?: number;
-  /**
    * 搜索按钮的 loading
    *
    * @default false
@@ -112,6 +88,30 @@ export interface ProSearchProps extends ProFormNamespace.Props {
    */
   resetLoading?: boolean;
   /**
+   * 响应式布局
+   *
+   * @default '{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }'
+   */
+  searchCols?: GridProps["cols"];
+  /**
+   * 行和列间距
+   *
+   * @default '[20, 0]''
+   */
+  gap?: GridProps["gap"];
+  /**
+   * 是否默认折叠搜索项
+   *
+   * @default true
+   */
+  collapse?: GridProps["collapse"];
+  /**
+   * 超出指定行数后折叠
+   *
+   * @default 1
+   */
+  showRow?: GridProps["showRow"];
+  /**
    * 是否自动去除表单数据的空值项
    *
    * @default true
@@ -123,6 +123,16 @@ export interface ProSearchProps extends ProFormNamespace.Props {
    * @default true
    */
   validate?: boolean;
+  /**
+   * 是否显示 label，优先级低于 FormItemColumnProps["showLabel"]
+   *
+   * @default true
+   */
+  showLabel?: ProFormNamespace.Props["showLabel"];
+  /**
+   * ProForm 组件 Props
+   */
+  form?: ProFormNamespace.Props;
 }
 
 export type ProSearchEmits = {

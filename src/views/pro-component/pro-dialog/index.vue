@@ -59,10 +59,10 @@ const againOpenDialog = () => {
 
       <el-descriptions title="dialogProps 配置 📚" :column="1" border style="margin-top: 10px">
         <el-descriptions-item label="render">内容区渲染 TSX。`() => VNode` 类型，默认 undefined</el-descriptions-item>
-        <el-descriptions-item label="headerRender">
+        <el-descriptions-item label="renderHeader">
           头部渲染 TSX，`(scope: any) => VNode` 类型，默认 undefined
         </el-descriptions-item>
-        <el-descriptions-item label="footerRender">
+        <el-descriptions-item label="renderFooter">
           底部渲染 TSX。`() => VNode` 类型，默认 undefined
         </el-descriptions-item>
         <el-descriptions-item label="showFooter">是否渲染底部。`boolean` 类型，默认 `true`</el-descriptions-item>

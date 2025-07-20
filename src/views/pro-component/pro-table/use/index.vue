@@ -163,7 +163,7 @@ const columns = reactive<TableColumn<ResUserList>[]>([
   {
     prop: "createTime",
     label: "创建时间",
-    headerRender: scope => {
+    renderHeader: scope => {
       return (
         <ElButton type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
           {scope.column.label}

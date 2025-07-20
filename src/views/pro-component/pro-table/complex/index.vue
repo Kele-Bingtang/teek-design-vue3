@@ -20,7 +20,7 @@ const columns: TableColumn<ResUserList>[] = [
     prop: "base",
     label: "基本信息",
     // 自定义渲染表头（使用tsx语法）
-    headerRender: (scope: TableScope<ResUserList>) => {
+    renderHeader: (scope: TableScope<ResUserList>) => {
       return (
         <ElButton type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
           {scope.column.label}
