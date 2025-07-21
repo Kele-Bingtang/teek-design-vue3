@@ -83,7 +83,8 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
 /**
  * 获取单元格值（如果存在 options，则返回根据 label 找对应的 value，如果不存在 options，则返回原始值）
  */
-const getDisplayValue = (scope: TableScope, column: TableColumn) => scope.row._getValue?.(prop(column));
+const getDisplayValue = (scope: TableScope, column: TableColumn) =>
+  scope.row._getValue?.(prop(column)) ?? getOriginValue(scope, column);
 /**
  * 获取 Render/插槽 的参数
  */
@@ -94,7 +95,7 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     column: { ...scope.column, ...column },
     label: column.label,
     value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
-    displayValue: getDisplayValue(scope, column) ?? getOriginValue(scope, column),
+    displayValue: getDisplayValue(scope, column),
     options: scope.row?._options?.[prop(column)],
   } as RenderParams;
 };
