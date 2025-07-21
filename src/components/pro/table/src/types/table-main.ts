@@ -84,6 +84,12 @@ export namespace ProTableMainNamespace {
      * 单选框 props
      */
     radioProps?: TableColumnTypeNamespace.Props["radioProps"];
+    /**
+     * 当单元格根元素存在某个 class 时，点击不会进入编辑模式
+     *
+     * @default 'el-icon'
+     */
+    preventCellEditClass?: string[];
   }
 
   export interface Emits extends Omit<TableColumnDataNamespace.Emits, "filter">, OperationNamespace.Emits {

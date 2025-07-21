@@ -4,6 +4,33 @@ import type { ProTableHeadNamespace } from "./table-head";
 import type { ProTableMainNamespace } from "./table-main";
 import type { TableColumn } from "./table-column";
 
+export interface PageField {
+  /**
+   * 当前页数字段
+   *
+   * @default 'pageNum'
+   */
+  pageNum?: string;
+  /**
+   * 每页数量字段
+   *
+   * @default 'pageSize'
+   */
+  pageSize?: string;
+  /**
+   * 分页选择器字段
+   *
+   * @default 'pageSizes'
+   */
+  pageSizes?: string;
+  /**
+   * 总页数字段
+   *
+   * @default 'total'
+   */
+  total?: string;
+}
+
 /**
  * ProTable 组件的类型命名空间
  */
@@ -85,6 +112,10 @@ export namespace ProTableNamespace {
      * 分页信息
      */
     pageInfo?: ProTableMainNamespace.Props["pageInfo"];
+    /**
+     * 分页信息 key 名配置
+     */
+    pageField?: PageField;
     /**
      * 是否开启分页功能，pageMode 可以指定客户端（前端）分页还是服务端（后端）分页，当为 true 时，默认为客户端（前端）分页
      *

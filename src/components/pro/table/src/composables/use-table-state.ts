@@ -1,46 +1,17 @@
-import type { MaybeRef } from "vue";
 import type { PageInfo } from "@/components/pro/pagination";
-import type { ProTableMainNamespace } from "../types";
+import type { UseTableStateData, UseTableStateOptions } from "../types/table-state";
+import { reactive, computed, toRefs, toValue, watch, unref } from "vue";
 import { defaultPageInfo } from "@/components/pro/pagination";
-import { reactive, computed, toRefs, toValue, watch } from "vue";
 import { isEmpty } from "@/common/utils";
-
-/**
- * 表格状态数据
- */
-export interface UseTableStateData {
-  /** 表格数据 */
-  tableData: Recordable[];
-  /** 分页信息 */
-  pageInfo: PageInfo & { total: number };
-  /** 查询参数 */
-  searchParams: Recordable;
-  /** 初始化查询参数 */
-  searchInitParams: Recordable;
-  /** 总参数 */
-  totalParams: Recordable;
-}
 
 /**
  * table 页面操作方法封装
  *
- * @param api 获取表格数据 api 方法
- * @param defaultRequestParams 获取数据初始化参数
- * @param pageInfo 分页信息
- * @param isServerPage 是否为后端分页
- * @param beforeSearch 查询前的回调函数
- * @param transformData 对后台返回的数据进行处理的方法
- * @param requestError 请求出错后的回调函数
+ * @param options 配置项
  */
-export const useTableState = (
-  api?: (params: Recordable) => Promise<any>,
-  defaultRequestParams: MaybeRef<Recordable> = {},
-  pageInfo?: MaybeRef<ProTableMainNamespace.Props["pageInfo"]>,
-  isServerPage?: MaybeRef<boolean>,
-  beforeSearch?: (searchParam: Recordable) => boolean | Recordable,
-  transformData?: (data: Recordable[], result: Recordable | Recordable[]) => Recordable[] | undefined,
-  requestError?: (error: unknown) => void
-) => {
+export const useTableState = (options: UseTableStateOptions) => {
+  const { api, apiParams, pageInfo, isServerPage, beforeSearch, transformData, requestError, pageField } = options;
+
   const state = reactive<UseTableStateData>({
     // 表格数据
     tableData: [],
@@ -54,11 +25,20 @@ export const useTableState = (
     totalParams: {},
   });
 
+  const pageFieldSate = computed(() => {
+    return {
+      pageNum: pageField?.pageNum ?? "pageNum",
+      pageSize: pageField?.pageSize ?? "pageSize",
+      pageSizes: pageField?.pageSizes ?? "pageSizes",
+      total: pageField?.pageSize ?? "total",
+    };
+  });
+
   // 分页查询参数（只包括分页和表格字段排序，其他排序方式可自行配置）
   const pageParams = computed(() => {
     return {
-      pageNum: state.pageInfo.pageNum,
-      pageSize: state.pageInfo.pageSize,
+      [pageFieldSate.value.pageNum]: state.pageInfo.pageNum,
+      [pageFieldSate.value.pageSize]: state.pageInfo.pageSize,
       // 如果服务端（后端）需要排序字段，则在这里添加
     };
   });
@@ -73,7 +53,7 @@ export const useTableState = (
   /**
    * 获取表格数据
    */
-  const getTableList = async (requestParams = defaultRequestParams) => {
+  const getTableList = async (requestParams = apiParams) => {
     if (!api) return;
 
     const isServerPageValue = toValue(isServerPage);
@@ -97,7 +77,12 @@ export const useTableState = (
 
       // 如果服务器（后端）返回分页信息，则解构获取（如果你的接口返回的不是如下格式，则进行修改）
       if (isServerPageValue) {
-        const { pageNum, pageSize, pageSizes, total } = data;
+        const {
+          [pageFieldSate.value.pageNum]: pageNum,
+          [pageFieldSate.value.pageSize]: pageSize,
+          [pageFieldSate.value.pageSizes]: pageSizes,
+          [pageFieldSate.value.total]: total,
+        } = data;
         handlePagination({ pageNum, pageSize, pageSizes }, false);
 
         state.pageInfo.total = total ?? data.length;

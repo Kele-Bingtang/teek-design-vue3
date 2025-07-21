@@ -4,8 +4,9 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader, ElScrollbar } from "element-plus";
 import SystemConfig, { HOME_URL } from "@/common/config";
+import { Fold, Expand } from "@element-plus/icons-vue";
 import { Tooltip } from "@/components";
-import { useMenu } from "@/composables";
+import { useCommon, useMenu } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 import PageContent from "../components/page-content/index.vue";
@@ -21,11 +22,13 @@ const route = useRoute();
 const router = useRouter();
 const settingStore = useSettingStore();
 const { menuList } = useMenu();
+const { getTitle } = useCommon();
 
 // 子菜单
 const menuItem = ref<RouterConfig[]>([]);
 // 菜单是否激活
 const active = ref<string>("");
+const showTitle = ref(true);
 
 const { isCollapse } = storeToRefs(settingStore);
 
@@ -80,25 +83,31 @@ const changeMenuItem = (item: RouterConfig) => {
 
       <el-scrollbar>
         <ul :class="ns.e('aside__list')">
-          <li
-            :class="[
-              ns.e('aside__list-item'),
-              ns.is('active', [active, `/${active.split('/')[1]}`].includes(item.path)),
-            ]"
-            class="flx-center"
-            v-for="item in menuList"
-            :key="item.path"
-            @click="changeMenuItem(item)"
-          >
-            <Icon v-if="item.meta?.icon" :icon="item.meta.icon" />
-            <div class="flx-center" style="width: 100%">
-              <Tooltip>
-                <span class="title">{{ item.meta?.title }}</span>
-              </Tooltip>
-            </div>
-          </li>
+          <template v-for="item in menuList" :key="item.path">
+            <el-tooltip :disabled="showTitle" effect="dark" placement="right" :content="getTitle(item).value">
+              <li
+                :class="[
+                  ns.e('aside__list-item'),
+                  ns.is('active', [active, `/${active.split('/')[1]}`].includes(item.path)),
+                  ns.no('title', !showTitle),
+                ]"
+                class="flx-center"
+                @click="changeMenuItem(item)"
+              >
+                <div class="flx-column-center">
+                  <Icon v-if="item.meta?.icon" :icon="item.meta.icon" />
+                  <Tooltip v-show="showTitle">
+                    <span class="title">{{ getTitle(item) }}</span>
+                  </Tooltip>
+                </div>
+              </li>
+            </el-tooltip>
+          </template>
         </ul>
       </el-scrollbar>
+      <div class="flx-center" :class="ns.e('collapse')" @click="showTitle = !showTitle">
+        <Icon><component :is="showTitle ? Fold : Expand"></component></Icon>
+      </div>
     </div>
 
     <el-aside :class="[ns.join('layout-aside'), { 'not-aside': !menuItem.length }]" class="flx-column">

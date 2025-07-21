@@ -51,6 +51,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   headerBackground: true,
   highlightCurrentRow: true,
   showHeader: true,
+  pageField: () => ({}),
 
   // TableHead 组件的 props（透传下去）
   toolButton: () => ["size", "export", "columnSetting", "baseSetting"],
@@ -73,8 +74,9 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   filterScope: "client",
   editable: false,
   emptyText: "暂无数据",
-  radioProps: () => ({}),
   selectedRadio: "",
+  radioProps: () => ({}),
+  preventCellEditClass: () => [],
 });
 
 const emits = defineEmits<ProTableNamespace.Emits>();
@@ -133,15 +135,16 @@ const isServerPage = computed(() => {
 });
 
 const { tableData, pageInfo, searchParams, searchInitParams, getTableList, search, reset, handlePagination } =
-  useTableState(
-    finalProps.value.requestApi,
-    computed(() => unref(finalProps.value.defaultRequestParams)),
-    computed(() => finalProps.value.pageInfo),
-    isServerPage,
-    finalProps.value.beforeSearch,
-    finalProps.value.transformData,
-    finalProps.value.requestError
-  );
+  useTableState({
+    api: finalProps.value.requestApi,
+    apiParams: computed(() => unref(finalProps.value.defaultRequestParams)),
+    pageInfo: computed(() => finalProps.value.pageInfo),
+    isServerPage: isServerPage,
+    beforeSearch: finalProps.value.beforeSearch,
+    transformData: finalProps.value.transformData,
+    requestError: finalProps.value.requestError,
+    pageField: finalProps.value.pageField,
+  });
 
 // 表格数据，传来的 data 大于 api 获取的数据
 const finalTableData = computed(() => {
