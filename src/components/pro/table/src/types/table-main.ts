@@ -17,7 +17,7 @@ export namespace ProTableMainNamespace {
   /**
    * TableMain 组件 Props
    */
-  export interface Props extends Omit<TableColumnDataNamespace.Props, "column" | "proFormItemInstances"> {
+  export interface Props extends Omit<TableColumnDataNamespace.Props, "column"> {
     /**
      * 表格数据
      *
@@ -69,7 +69,7 @@ export namespace ProTableMainNamespace {
     /**
      * ElTable 的 headerCellStyle 配置项
      */
-    headerCellStyle?: TableColumn["headerCellStyle"];
+    headerCellStyle?: TableProps<Recordable>["headerCellStyle"];
     /**
      * 表格无数据时显示的文字
      *
@@ -81,7 +81,7 @@ export namespace ProTableMainNamespace {
      */
     selectedRadio?: TableColumnTypeNamespace.Props["selectedRadio"];
     /**
-     * 单选框 props
+     * ElRadio 单选框 props
      */
     radioProps?: TableColumnTypeNamespace.Props["radioProps"];
     /**

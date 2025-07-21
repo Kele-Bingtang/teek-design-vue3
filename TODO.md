@@ -9,7 +9,6 @@
 - Websocket Store 优化
 - 菜单支持切换深色/浅色主题
 - ProTable 添加 PointTag 组件
-- 修复树形表格
 - ProTable 按钮的 `show` 配置支持传入 Vue 自定义指令
 - ModelBaseValueType 替换 unknown
 - unknown 改为 any
