@@ -351,11 +351,6 @@ onMounted(() => {
   emits("register", tableMainInstance.value?.$parent || null, tableMainInstance.value?.elTableInstance || null);
 });
 
-const getElTableInstance = () => tableMainInstance.value?.elTableInstance;
-const getElFormInstance = () => tableMainInstance.value?.getElFormInstance;
-const getElFormItemInstance = () => tableMainInstance.value?.getElFormItemInstance;
-const getElInstance = () => tableMainInstance.value?.getElInstance;
-
 const expose = {
   tableData: finalTableData,
   pageInfo,
@@ -372,10 +367,10 @@ const expose = {
 
   tableHeadInstance,
   tableMainInstance,
-  getElTableInstance,
-  getElFormInstance,
-  getElFormItemInstance,
-  getElInstance,
+  getElTableInstance: () => tableMainInstance.value?.elTableInstance,
+  getElFormInstance: () => tableMainInstance.value?.getElFormInstance,
+  getElFormItemInstance: () => tableMainInstance.value?.getElFormItemInstance,
+  getElInstance: () => tableMainInstance.value?.getElInstance,
 };
 
 defineExpose(expose);

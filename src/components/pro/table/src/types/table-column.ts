@@ -66,7 +66,7 @@ export type TableScope<T extends Recordable = Recordable> = {
 };
 
 /**
- * 表格行 row
+ * 表格行 Row
  */
 export type TableRow<T = Recordable> = T & {
   /**
@@ -135,7 +135,7 @@ export type TableRow<T = Recordable> = T & {
  */
 export interface TableColumn<T extends Recordable = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
-    Omit<ElDisplayProps, "value" | "options">,
+    Omit<ElDisplayProps, "originValue" | "displayValue" | "options">,
     Omit<OperationNamespace.ExtraProp, "el"> {
   /**
    * 表头宽度
@@ -270,9 +270,7 @@ export interface TableColumn<T extends Recordable = any>
   /**
    * el 组件的插槽
    */
-  elSlots?: {
-    [slotName: string]: (data: RenderParams) => RenderTypes;
-  };
+  elSlots?: { [slotName: string]: (data: RenderParams) => RenderTypes };
   /**
    * 其他扩展
    */

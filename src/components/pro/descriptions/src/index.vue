@@ -274,7 +274,7 @@ const handleSubmit = async () => {
   if (props.validate) {
     await Promise.all(
       getElFormInstance().map(async proFormInstance => {
-        await proFormInstance.submitForm();
+        await proFormInstance.handleSubmit();
       })
     );
   }
@@ -286,7 +286,7 @@ const handleSubmit = async () => {
  * 重置按钮点击事件
  */
 const handleReset = () => {
-  getElFormInstance().map(proFormInstance => proFormInstance.resetForm());
+  getElFormInstance().map(proFormInstance => proFormInstance.handleReset());
   emits("reset", model.value, closeEdited);
 };
 

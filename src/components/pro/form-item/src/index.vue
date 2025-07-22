@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   tooltip: undefined,
   renderLabel: undefined,
   render: undefined,
-  getFormat: undefined,
+  valueFormat: undefined,
   editable: true,
 });
 
@@ -48,9 +48,9 @@ const tooltipValue = computed(() => toValue(props.tooltip));
 // 表单组件需要的 v-model
 const elModel = computed({
   get: () => {
-    const { prop, getFormat } = props;
+    const { prop, valueFormat } = props;
     // 如果 model 是对象，则取到对应的 prop 值
-    if (isObject(model.value) && prop) return getProp(model.value, prop, getFormat);
+    if (isObject(model.value) && prop) return getProp(model.value, prop, valueFormat);
     return model.value;
   },
   set: val => {
@@ -64,7 +64,7 @@ const elModel = computed({
 });
 
 // 插槽参数
-const slotParams = computed(() => ({
+const slotParams = computed<Recordable>(() => ({
   ...props,
   value: elModel.value,
   model: model.value,
@@ -72,6 +72,7 @@ const slotParams = computed(() => ({
   options: enums.value,
   elProps: elPropsValue.value,
   formItemProps: formItemPropsValue.value,
+  update: updateElModel,
 }));
 
 watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
@@ -232,7 +233,7 @@ defineExpose(expose);
         v-bind="{ ...tooltipValue, render: undefined, contentRender: undefined }"
       >
         <!-- ElToolTip 默认插槽 -->
-        <component v-if="tooltipValue.render" :is="tooltipValue.render" />
+        <component v-if="tooltipValue.render" :is="tooltipValue.render()" />
         <!-- ElToolTip content 插槽 -->
         <template v-if="tooltipValue.contentRender" #content>
           <component :is="tooltipValue.contentRender()" />
@@ -252,7 +253,7 @@ defineExpose(expose);
         v-bind="elPropsValue"
       />
       <!-- 自定义表单组件插槽 -->
-      <slot v-else-if="$slots[prop]" :name="prop" v-bind="{ update: updateElModel, ...slotParams }" />
+      <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
 
       <template v-else>
         <Tree

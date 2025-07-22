@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { FormItemProp, FormValidateCallback } from "element-plus";
+import type { FormInstance, FormItemProp, FormValidateCallback } from "element-plus";
 import type { FormColumn } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormGroupProps, ProFormGroupEmits } from "./types";
-import { computed, onMounted, toValue } from "vue";
+import { computed, toValue } from "vue";
 import { ElCard, ElIcon } from "element-plus";
 import { ProForm, ProFormMain, useProFormFn, useProFormMainFn } from "@/components/pro/form";
 import { useNamespace } from "@/composables";
@@ -70,6 +70,13 @@ const { proFormMainInstance, getOptionsMap, getElFormItemInstance, getElInstance
 // ---------- 代理 ProForm 事件 ----------
 
 /**
+ * 注册 ProForm 组件实例和 elForm 实例
+ */
+const handleRegister = (proFormInstance: any, elFormInstance: FormInstance | null) => {
+  emits("register", proFormInstance, elFormInstance);
+};
+
+/**
  * 表单验证事件
  */
 const handleValidate = (prop: FormItemProp, isValid: boolean, message: string) => {
@@ -103,11 +110,6 @@ const handleChange = (value: unknown, model: Recordable, column: FormItemColumnP
   emits("change", value, model, column);
 };
 
-onMounted(() => {
-  // 往父类注册 ProForm 组件实例
-  emits("register", getProFormInstance()?.$parent || null);
-});
-
 const defaultExpose = {
   model,
   setProps,
@@ -118,8 +120,6 @@ const defaultExpose = {
   submitForm,
   resetForm,
 
-  proFormInstance,
-  proFormMainInstance,
   getOptionsMap,
   getProFormInstance,
   getProFormMainInstance,
@@ -137,6 +137,7 @@ defineExpose(defaultExpose);
     v-bind="{ ...$attrs, ...finalProps, cardProps: undefined }"
     v-model="model"
     :columns="proFormColumns"
+    @register="handleRegister"
     @validate="handleValidate"
     @submit="handleSubmit"
     @submit-error="handleSubmitError"
@@ -186,7 +187,7 @@ defineExpose(defaultExpose);
 
               <!-- 其他通用插槽 -->
               <template v-for="slot in Object.keys($slots).filter(key => !['form-main'].includes(key))" #[slot]="scope">
-                <slot :name="slot" v-bind="scope as Recordable" />
+                <slot :name="slot" v-bind="scope" />
               </template>
             </ProFormMain>
           </template>

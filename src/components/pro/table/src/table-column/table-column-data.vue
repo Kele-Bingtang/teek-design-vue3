@@ -93,7 +93,7 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     ...scope,
     rowIndex: scope.$index,
     column: { ...scope.column, ...column },
-    label: column.label,
+    label: toValue(column.label),
     value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
     displayValue: getDisplayValue(scope, column),
     options: scope.row?._options?.[prop(column)],
@@ -173,7 +173,6 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
         :name="`${lastProp(prop(column))}-header`"
         v-bind="getRenderParams(scope, column)"
-        :label="toValue(column.label)"
       />
       <!-- 自定义表头内容渲染 -->
       <template v-else-if="column.formatLabel">
@@ -198,7 +197,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         <component v-if="tooltipValue.render" :is="tooltipValue.render()" />
         <!-- ElToolTip content 插槽 -->
         <template v-if="tooltipValue.contentRender" #content>
-          <component v-if="tooltipValue.contentRender" :is="tooltipValue.contentRender()" />
+          <component :is="tooltipValue.contentRender()" />
         </template>
         <!-- ElToolTip icon -->
         <slot name="tooltip-icon">
@@ -271,7 +270,6 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :is="column.render(getRenderParams(scope, column))"
         v-bind="{ ...column.elProps }"
       />
-
       <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
       <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(scope, column))" />
       <!-- 自定义插槽，插槽名为 column.prop -->

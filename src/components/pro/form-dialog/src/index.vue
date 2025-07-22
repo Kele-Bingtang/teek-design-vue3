@@ -31,7 +31,7 @@ const handleChange = (value: unknown, model: Recordable, column: FormItemColumnP
  * 确认按钮点击事件
  */
 const handleConfirm = async () => {
-  const isValid = await proFormInstance.value?.submitForm();
+  const isValid = await proFormInstance.value?.handleSubmit();
   if (isValid) emits("confirm", model.value);
 };
 
@@ -81,8 +81,8 @@ defineExpose(expose);
       v-bind="form"
       @change="handleChange"
     >
-      <template v-if="$slots['form-footer']" #footer="{ submitForm, resetForm }">
-        <slot name="form-footer" v-bind="{ submitForm, resetForm }" />
+      <template v-if="$slots['form-footer']" #footer="{ handleSubmit, handleReset }">
+        <slot name="form-footer" v-bind="{ handleSubmit, handleReset }" />
       </template>
 
       <template v-for="slot in Object.keys($slots).filter(key => !['footer'].includes(key))" #[slot]="scope">

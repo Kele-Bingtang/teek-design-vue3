@@ -81,14 +81,14 @@ const formMainProps = computed(() => {
 });
 
 const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useFormApi(model, finalProps);
-const { submitForm, resetForm } = useFormFooter();
+const { handleSubmit, handleReset } = useFormFooter();
 const { proFormMainInstance, getOptionsMap, destroyOrInit, getElFormItemInstance, getElInstance } = useProFormMainFn();
 
 /**
  * 表单 Footer 按钮相关逻辑
  */
 function useFormFooter() {
-  const submitForm = async () => {
+  const handleSubmit = async () => {
     if (props.preventNativeSubmit) {
       emits("submit", model.value);
       return true;
@@ -110,12 +110,12 @@ function useFormFooter() {
     return valid;
   };
 
-  const resetForm = () => {
+  const handleReset = () => {
     elFormInstance.value?.resetFields();
     emits("reset", model.value);
   };
 
-  return { submitForm, resetForm };
+  return { handleSubmit, handleReset };
 }
 
 /**
@@ -144,8 +144,8 @@ const expose = {
   setColumn,
   addColumn,
   delColumn,
-  submitForm,
-  resetForm,
+  handleSubmit,
+  handleReset,
 
   elFormInstance,
   proFormMainInstance,
@@ -183,11 +183,11 @@ defineExpose(expose);
     </slot>
 
     <div v-if="showFooter" :style="footerStyle">
-      <slot name="footer" v-bind="{ submitForm, resetForm }">
-        <el-button v-if="showReset" @click="resetForm">
+      <slot name="footer" v-bind="{ handleSubmit, handleReset }">
+        <el-button v-if="showReset" @click="handleReset">
           {{ resetText }}
         </el-button>
-        <el-button type="primary" :loading="submitLoading" @click="submitForm">
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
           {{ submitText }}
         </el-button>
       </slot>

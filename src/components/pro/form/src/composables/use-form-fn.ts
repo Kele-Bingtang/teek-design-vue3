@@ -8,8 +8,8 @@ export const useProFormFn = (refName: string = "proFormInstance") => {
   const proFormInstance = useTemplateRef<ProFormInstance>(refName);
 
   const getOptionsMap = () => proFormInstance.value?.getOptionsMap();
-  const submitForm = () => proFormInstance.value?.submitForm();
-  const resetForm = () => proFormInstance.value?.resetForm();
+  const submitForm = () => proFormInstance.value?.handleSubmit();
+  const resetForm = () => proFormInstance.value?.handleReset();
   const getProFormInstance = () => proFormInstance.value;
   const getElFormInstance = () => proFormInstance.value?.elFormInstance;
   const getElFormItemInstance = (prop: FormColumn["prop"]) => proFormInstance.value?.getElFormItemInstance(prop);

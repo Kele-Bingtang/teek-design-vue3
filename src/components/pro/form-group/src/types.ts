@@ -43,12 +43,7 @@ export interface ProFormGroupProps extends Omit<ProFormNamespace.Props, "columns
   cardProps?: Partial<CardProps>;
 }
 
-export type ProFormGroupEmits = Omit<ProFormNamespace.Emits, "register"> & {
-  /**
-   * 注册 ProFormGroup 组件实例
-   */
-  register: [proFormGroupInstance: any];
-};
+export type ProFormGroupEmits = ProFormNamespace.Emits;
 
 export type ProFormGroupOnEmits = keyOnPrefix<ProFormGroupEmits>;
 

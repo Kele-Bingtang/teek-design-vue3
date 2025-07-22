@@ -5,11 +5,7 @@ import type { FormItemColumnProps } from "@/components/pro/form-item";
 
 export interface ProFormDialogProps {
   /**
-   * ElDialog 显示状态
-   */
-  visible?: boolean;
-  /**
-   * ElDialog 的 Props
+   * ProDialog 的 Props
    */
   dialog?: ProDialogProps & Partial<DialogProps>;
   /**

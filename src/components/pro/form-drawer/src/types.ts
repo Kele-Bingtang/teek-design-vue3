@@ -5,11 +5,7 @@ import type { FormItemColumnProps } from "@/components/pro/form-item";
 
 export interface ProFormDrawerProps {
   /**
-   * ElDrawer 显示状态
-   */
-  visible?: boolean;
-  /**
-   * ElDrawer 的 Props
+   * ProDrawer 的 Props
    */
   drawer?: ProDrawerProps & Partial<DrawerProps>;
   /**

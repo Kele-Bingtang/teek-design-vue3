@@ -27,7 +27,7 @@ export interface FormStepColumn {
 
 export interface ProFormStepsProps {
   /**
-   * 数据
+   * 步骤表单配置信息
    */
   columns?: FormStepColumn[];
   /**

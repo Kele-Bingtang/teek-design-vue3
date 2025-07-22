@@ -153,7 +153,7 @@ export namespace FormMainNamespace {
     /**
      * 注册 ProForm 组件实例和 elForm 实例
      */
-    register: [proFormRef: any, elFormRef: FormInstance | null];
+    register: [proFormInstance: any, elFormInstance: FormInstance | null];
     /**
      * 表单值改变事件
      */

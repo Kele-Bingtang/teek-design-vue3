@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import type { ProTableHeadNamespace, SizeStyle, TableColumn } from "./types";
 import { ref, computed, onMounted } from "vue";
-import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElPopover, ElCheckbox } from "element-plus";
+import {
+  ElTooltip,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElButton,
+  ElPopover,
+  ElCheckbox,
+  ElIcon,
+} from "element-plus";
 import { Coin, Operation, Download, Setting, Refresh } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
 import { TableColumnTypeEnum, TableSizeEnum, ToolButtonEnum } from "./helper";
@@ -265,7 +274,10 @@ defineExpose(expose);
     </div>
 
     <div :class="ns.e('right')">
-      <slot name="head-right">
+      <slot
+        name="head-right"
+        v-bind="{ tooltipProps, handleSizeCommand, handleRefresh, handleExport, toggleColumnSetting }"
+      >
         <slot
           name="head-tool-before"
           v-bind="{ tooltipProps, handleSizeCommand, handleRefresh, handleExport, toggleColumnSetting }"
@@ -275,19 +287,22 @@ defineExpose(expose);
           <el-tooltip v-if="showToolButton(ToolButtonEnum.Refresh)" content="刷新" v-bind="tooltipProps">
             <el-button
               :disabled="disabledToolButton.includes(ToolButtonEnum.Refresh)"
-              :icon="Refresh"
               @click="handleRefresh"
               class="head__tool-button"
-            />
+            >
+              <slot name="refresh-icon">
+                <el-icon><Refresh /></el-icon>
+              </slot>
+            </el-button>
           </el-tooltip>
 
           <el-tooltip v-if="showToolButton(ToolButtonEnum.Size)" content="密度" v-bind="tooltipProps">
             <el-dropdown @command="handleSizeCommand" :disabled="disabledToolButton.includes(ToolButtonEnum.Size)">
-              <el-button
-                :disabled="disabledToolButton.includes(ToolButtonEnum.Size)"
-                :icon="Coin"
-                class="head__tool-button"
-              />
+              <el-button :disabled="disabledToolButton.includes(ToolButtonEnum.Size)" class="head__tool-button">
+                <slot name="size-icon">
+                  <el-icon><Coin /></el-icon>
+                </slot>
+              </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item
@@ -306,10 +321,13 @@ defineExpose(expose);
           <el-tooltip v-if="showToolButton(ToolButtonEnum.Export)" content="导出" v-bind="tooltipProps">
             <el-button
               :disabled="disabledToolButton.includes(ToolButtonEnum.Export)"
-              :icon="Download"
               @click="handleExport"
               class="head__tool-button"
-            />
+            >
+              <slot name="export-icon">
+                <el-icon><Download /></el-icon>
+              </slot>
+            </el-button>
           </el-tooltip>
 
           <el-tooltip
@@ -319,10 +337,13 @@ defineExpose(expose);
           >
             <el-button
               :disabled="disabledToolButton.includes(ToolButtonEnum.ColumnSetting)"
-              :icon="Operation"
               @click="() => toggleColumnSetting()"
               class="head__tool-button"
-            />
+            >
+              <slot name="column-setting-icon">
+                <el-icon><Operation /></el-icon>
+              </slot>
+            </el-button>
           </el-tooltip>
 
           <el-popover placement="bottom" trigger="click">
@@ -331,9 +352,12 @@ defineExpose(expose);
                 <el-tooltip v-if="showToolButton(ToolButtonEnum.BaseSetting)" content="基础配置" v-bind="tooltipProps">
                   <el-button
                     :disabled="disabledToolButton.includes(ToolButtonEnum.BaseSetting)"
-                    :icon="Setting"
                     class="head__tool-button"
-                  />
+                  >
+                    <slot name="base-setting-icon">
+                      <el-icon><Setting /></el-icon>
+                    </slot>
+                  </el-button>
                 </el-tooltip>
               </div>
             </template>
