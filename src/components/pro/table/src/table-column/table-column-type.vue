@@ -122,6 +122,16 @@ const handleRadioChange = (row: Recordable, index: number) => {
       <template v-else>{{ toValue(column.label) }}</template>
     </template>
 
+    <!-- 功能列 - 默认插槽 -->
+    <template #default="scope">
+      <component v-if="column.render" :is="column.render(getRenderParams(scope, column))" />
+      <component
+        v-else-if="tableColumnTypeMap[column.type].render"
+        :is="tableColumnTypeMap[column.type].render?.(getRenderParams(scope, column))"
+      />
+      <slot v-else-if="$slots[column.type]" :name="column.type" v-bind="getRenderParams(scope, column)" />
+    </template>
+
     <!-- 功能列 - 自定义插槽 -->
     <template v-for="slot in tableColumnTypeMap[column.type].slots" #[slot]="scope">
       <slot :name="slot" v-bind="scope" />

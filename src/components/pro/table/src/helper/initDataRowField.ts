@@ -17,7 +17,7 @@ export const initDataRowField = (data: TableRow[], column: TableColumn, optionsM
     editable,
   } = column;
 
-  const options = unref(optionsMap.value.get(optionsProp || prop));
+  const options = unref(optionsMap.value.get(optionsProp ?? prop));
 
   // 初始化内置属性
   data.forEach(initEnhanceField);

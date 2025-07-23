@@ -278,6 +278,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :name="lastProp(prop(column))"
         v-bind="getRenderParams(scope, column)"
       />
+
       <!-- 自定义 el 组件 -->
       <ElDisplay
         v-else-if="column.el"
