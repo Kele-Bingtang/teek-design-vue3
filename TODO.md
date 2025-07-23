@@ -13,10 +13,7 @@
 - unknown 改为 any
 - 路由结构优化：核心路由、静态路由、角色路由、动态路由
 - 加强 toValue 和 MaybeRefOrGetter，所有对应的配置项支持 Promise 类型
-- 表格操作示例控制台警告
+- composables 返回的变量添加 readonly（尤其 Pro 组件）
+- axios 重构 `type: multi`，支持更多数组转换，如 `ids[]=1&ids[]=2&ids[]=3`，并支持数据返回方式配置（raw、body、data）
 
 ## Bug
-
-## 文档
-
-- 更新技术栈和功能

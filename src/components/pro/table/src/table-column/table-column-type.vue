@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TableColumnTypeInfo, TableColumnTypeNamespace } from "../types/table-column-type";
-import type { RenderParams, TableColumn, TableScope } from "../types";
+import type { TableRenderParams, TableColumn, TableScope } from "../types";
 import { ref, watch, toValue, h } from "vue";
 import { ElRadio, ElTableColumn } from "element-plus";
 import { isFunction } from "@/common/utils";
@@ -73,7 +73,7 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     value: "",
     displayValue: "",
     options: [],
-  } as RenderParams;
+  } as TableRenderParams;
 };
 
 /**

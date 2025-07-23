@@ -1,5 +1,5 @@
 <script setup lang="ts" name="SimpleProSearch">
-import type { ProSearchColumnProps } from "@/components";
+import type { ProSearchColumn } from "@/components";
 import { ref, onMounted } from "vue";
 import { ProSearch } from "@/components";
 
@@ -19,7 +19,7 @@ const createFilter = (queryString: string) => {
   };
 };
 
-const columns: ProSearchColumnProps[] = [
+const columns: ProSearchColumn[] = [
   {
     label: "姓名",
     prop: "name",

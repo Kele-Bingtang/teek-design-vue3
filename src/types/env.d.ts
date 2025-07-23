@@ -76,7 +76,7 @@ interface ImportMetaEnv {
   /**
    * 路由模式
    *
-   * @default 'H5'
+   * @default 'history'
    */
   VITE_ROUTER_MODE: string;
   /**
@@ -91,6 +91,10 @@ interface ImportMetaEnv {
    * 路由权限模式，默认前端 frontend
    */
   VITE_ROUTE_ACCESS_MODE: "frontend" | "backend" | "both";
+  /**
+   * 是否使用 Vue DevTools 插件
+   */
+  VITE_DEVTOOLS: boolean;
 }
 
 declare global {

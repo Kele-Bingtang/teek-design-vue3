@@ -52,7 +52,7 @@ const againOpenDrawer = () => {
         </el-descriptions-item>
       </el-descriptions>
 
-      <el-descriptions title="drawerProps 配置 📚" :column="1" border style="margin-top: 10px">
+      <el-descriptions title="drawerProps 独有配置 📚" :column="1" border style="margin-top: 10px">
         <el-descriptions-item label="render">内容区渲染 TSX。`() => VNode` 类型，默认 undefined</el-descriptions-item>
         <el-descriptions-item label="renderHeader">
           头部渲染 TSX，`(scope: any) => VNode` 类型，默认 undefined
@@ -60,7 +60,6 @@ const againOpenDrawer = () => {
         <el-descriptions-item label="renderFooter">
           底部渲染 TSX。`() => VNode` 类型，默认 undefined
         </el-descriptions-item>
-        <el-descriptions-item label="showFooter">是否渲染底部。`boolean` 类型，默认 `true`</el-descriptions-item>
         <el-descriptions-item label="onConfirm">
           点击确认按钮回调。`(closeDrawer: () => void) => void` 类型，默认 undefined。其中 closeDrawer
           为函数，触发后关闭 Drawer
@@ -69,19 +68,11 @@ const againOpenDrawer = () => {
           点击关闭按钮回调。`(closeDrawer: () => void) => void` 类型，默认 undefined。其中 closeDrawer
           为函数，触发后关闭 Drawer
         </el-descriptions-item>
-        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
-        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
-        <el-descriptions-item label="fullscreen">
-          是否以全屏进入 Drawer。`boolean` 类型，默认 `false`
-        </el-descriptions-item>
-        <el-descriptions-item label="fullscreenIcon">
-          是否渲染全屏图标。`boolean` 类型，默认 `true`
-        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
     <el-card shadow="never" class="tk-card-minimal">
-      <el-descriptions title="ProDrawer 组件配置项 📚" :column="1" border>
+      <el-descriptions title="ProDrawer 组件 && drawerProps 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Drawer。`boolean` 类型，必穿</el-descriptions-item>
         <el-descriptions-item label="title">Drawer 标题。`string` 类型，默认为 `""`</el-descriptions-item>
         <el-descriptions-item label="fullscreen">
@@ -90,8 +81,26 @@ const againOpenDrawer = () => {
         <el-descriptions-item label="fullscreenIcon">
           是否渲染全屏图标。`boolean` 类型，默认 `true`
         </el-descriptions-item>
+        <el-descriptions-item label="showFooter">是否渲染底部。`boolean` 类型，默认 `true`</el-descriptions-item>
+        <el-descriptions-item label="confirmLoading">
+          确认按钮 loading。`boolean` 类型，默认 `false`
+        </el-descriptions-item>
         <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
         <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
+        <el-descriptions-item label="...">`el-drawer` 更多配置项</el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions title="ProDrawer 组件插槽 📚" :column="1" border>
+        <el-descriptions-item label="cancel">取消按钮点击事件。`function`</el-descriptions-item>
+        <el-descriptions-item label="confirm">确认按钮点击事件。`function`</el-descriptions-item>
+        <el-descriptions-item label="fullscreen">全屏切换事件。`function`</el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions title="ProDrawer 组件插槽 📚" :column="1" border>
+        <el-descriptions-item label="header">自定义头部</el-descriptions-item>
+        <el-descriptions-item label="header-title">自定义头部标题</el-descriptions-item>
+        <el-descriptions-item label="fullscreen-icon">全屏切换事件</el-descriptions-item>
+        <el-descriptions-item label="footer">自定义底部</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TableColumnCtx } from "element-plus";
-import type { TableScope, TableColumn, TableColumnDataNamespace, RenderParams } from "../types";
+import type { TableScope, TableColumn, TableColumnDataNamespace, TableRenderParams } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
 import { toValue, computed, toRaw } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
@@ -97,7 +97,7 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
     displayValue: getDisplayValue(scope, column),
     options: scope.row?._options?.[prop(column)],
-  } as RenderParams;
+  } as TableRenderParams;
 };
 /**
  * 格式化单元格值

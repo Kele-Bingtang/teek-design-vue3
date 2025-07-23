@@ -52,10 +52,10 @@ function getHistoryMode(): RouterHistory {
 
   if (historyMode.length === 1) {
     if (leftMode === "hash") return createWebHashHistory(publicPath);
-    else if (leftMode === "h5") return createWebHistory(publicPath);
+    else if (leftMode === "history") return createWebHistory(publicPath);
   } else if (historyMode.length === 2) {
     if (leftMode === "hash") return createWebHashHistory(rightMode.trim());
-    else if (leftMode === "h5") return createWebHistory(rightMode.trim());
+    else if (leftMode === "history") return createWebHistory(rightMode.trim());
   }
 
   return createWebHistory(publicPath);

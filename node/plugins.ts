@@ -18,7 +18,7 @@ export function getPluginsList(command: string, viteEnv: ImportMetaEnv) {
   return [
     vue(),
     vueJsx(),
-    vueDevTools(),
+    viteEnv.VITE_DEVTOOLS && vueDevTools(),
     eslintPlugin({ cache: false }), // EsLint 报错信息显示在浏览器界面上
     ServerUrlCopy({
       qrcode: {

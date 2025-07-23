@@ -55,7 +55,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       // 跨域代理配置
       proxy: {
         "/api": {
-          target: "https://vue3-design.teek.cn",
+          target: "https://vue3-design.teek.top",
           changeOrigin: true,
           secure: true, // 是否忽略 https 安全证书问题，true 不忽略，false 忽略
           rewrite: path => path.replace(/^\/api/, ""),
