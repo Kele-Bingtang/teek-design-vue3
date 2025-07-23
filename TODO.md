@@ -16,6 +16,4 @@
 - composables 返回的变量添加 readonly（尤其 Pro 组件）
 - axios 重构 `type: multi`，支持更多数组转换，如 `ids[]=1&ids[]=2&ids[]=3`，并支持数据返回方式配置（raw、body、data）
 
-- optionsProp 渲染的值是没有枚举格式化的原始值
-
 ## Bug
