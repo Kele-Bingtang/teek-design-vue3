@@ -63,7 +63,7 @@ export const exportExcel = async (
   data: ProTableNamespace.Props["data"],
   exportProps: ExportProps = {}
 ) => {
-  const { mode = "dataKey" } = exportProps;
+  const { mode = "label" } = exportProps;
   if (mode === "label") return exportExcelByLabel(columns, data, exportProps);
   if (mode === "prop") return exportExcelByProp(columns, data, exportProps);
   if (mode === "dataKey") return exportExcelByDataKey(data, exportProps);

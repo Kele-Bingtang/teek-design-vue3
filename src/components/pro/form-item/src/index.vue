@@ -12,7 +12,6 @@ import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";
 import Select from "./components/select.vue";
-import Tree from "./components/tree.vue";
 
 defineOptions({ name: "ProFormItem" });
 
@@ -256,15 +255,7 @@ defineExpose(expose);
       <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
 
       <template v-else>
-        <Tree
-          v-if="formEl === FormElComponentEnum.EL_TREE"
-          :data="enums"
-          v-model="elModel"
-          v-bind="elPropsValue"
-          :style="{ width: withValue }"
-        />
-
-        <el-divider v-else-if="formEl === FormElComponentEnum.EL_DIVIDER" v-bind="elPropsValue">
+        <el-divider v-if="formEl === FormElComponentEnum.EL_DIVIDER" v-bind="elPropsValue">
           <span :style="formatDividerTitle(elPropsValue.labelSize)">
             {{ labelValue }}
           </span>
@@ -302,7 +293,11 @@ defineExpose(expose);
           v-model="elModel"
           :clearable
           v-bind="{ ...elPropsValue, ...placeholder }"
-          :data="formEl === FormElComponentEnum.EL_TREE_SELECT ? enums : elPropsValue.data || []"
+          :data="
+            [FormElComponentEnum.EL_TREE, FormElComponentEnum.EL_TREE_SELECT, FormElComponentEnum.Tree].includes(formEl)
+              ? enums
+              : elPropsValue.data || []
+          "
           :options="
             [
               FormElComponentEnum.EL_CASCADER,

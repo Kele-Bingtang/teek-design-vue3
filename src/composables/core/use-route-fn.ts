@@ -202,7 +202,7 @@ export const useRouteFn = () => {
 
       if (r.meta?.iframeOpen && r.meta.iframeSrc && isValidURL(r.meta.iframeSrc)) r.path = r.meta.iframeSrc;
       else {
-        if (r.meta?.iframeKeepAlive) r.component = IFrameBlank;
+        if (r.meta?.iframeKeepAlive && r.meta?.iframeSrc) r.component = IFrameBlank;
         else if (!r.meta?.iframeKeepAlive && r.meta?.iframeSrc) r.component = IFrameView;
         else {
           // 如果动态路由的 component 存在且为 string，则必须是 views 下的目录，以 / 分割，如果/home/index，则是 views/home/index.vue 组件，如果不存在 component，则读取 path 来获取 component
