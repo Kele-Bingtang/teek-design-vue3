@@ -11,7 +11,7 @@ export interface TreeProps {
   nodeKey?: string;
   /** v-model 返回的格式，keys 返回选中的节点 nodeKey，nodes 为返回选中的节点，默认 keys */
   checkBaseValueType?: "keys" | "nodes";
-  /** 初始化就有默认选中的节点时，是否展开选中节点的所有父节点，默认 false */
+  /** 初始化时存在默认选中的节点，是否展开选中节点的所有父节点，默认 false */
   expandSelected?: boolean;
   /** 是否开启工具栏，默认 false */
   checkbox?: boolean;

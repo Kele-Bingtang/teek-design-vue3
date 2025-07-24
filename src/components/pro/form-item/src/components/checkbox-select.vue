@@ -2,7 +2,7 @@
 import type { CheckboxValueType } from "element-plus";
 import type { ElOptionField, ElOption } from "../types";
 import { computed, ref, watch } from "vue";
-import { ElCheckbox } from "element-plus";
+import { ElCheckbox, ElCheckboxGroup, ElRadio, ElRadioGroup } from "element-plus";
 
 defineOptions({ name: "CheckBoxSelect" });
 
@@ -15,24 +15,30 @@ export interface CheckBoxSelectProps {
   multiple?: boolean;
 }
 
-type CheckBoxSelectType = CheckboxValueType | string[] | number[] | boolean[];
-
 const props = withDefaults(defineProps<CheckBoxSelectProps>(), {
   optionField: () => ({ label: "label", value: "value", disabled: "disabled" }),
   multiple: false,
 });
 
 const componentIs = computed(() => {
-  return props.multiple ? "checkbox" : "radio";
+  return props.multiple
+    ? {
+        parent: ElCheckboxGroup,
+        children: ElCheckbox,
+      }
+    : {
+        parent: ElRadioGroup,
+        children: ElRadio,
+      };
 });
 
 const checkAll = ref(false);
 // 设置不确定状态，仅负责样式控制
 const isIndeterminate = ref(false);
-const checkedValue = defineModel<CheckBoxSelectType>({ default: undefined });
+const checkedValue = defineModel<CheckboxValueType | CheckboxValueType[]>({ default: undefined });
 
 // 全选
-const handleCheckAllChange = (val: CheckBoxSelectType) => {
+const handleCheckAllChange = (val: CheckboxValueType) => {
   checkedValue.value = val ? props.options.map(item => item[props.optionField?.value || "value"]) : [];
   isIndeterminate.value = false;
 };
@@ -40,7 +46,7 @@ const handleCheckAllChange = (val: CheckBoxSelectType) => {
 /**
  *值改变
  */
-const handleCheckedChange = (value: CheckBoxSelectType) => {
+const handleCheckedChange = (value: CheckboxValueType | CheckboxValueType[]) => {
   // 单选不执行后续操作
   if (!props.multiple) return;
 
@@ -69,12 +75,12 @@ watch(
 
     <Component
       style="overflow: hidden auto"
-      :is="`el-${componentIs}-group`"
-      v-model="checkedValue"
+      :is="componentIs.parent"
+      v-model="checkedValue as CheckboxValueType"
       @change="handleCheckedChange"
     >
       <Component
-        :is="`el-${componentIs}`"
+        :is="componentIs.children"
         style="width: 100%"
         v-for="col in props.options"
         :key="col[optionField.value ?? 'value']"

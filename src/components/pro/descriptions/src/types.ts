@@ -5,7 +5,7 @@ import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pr
 import type ProDescriptions from "./index.vue";
 import type { ElDisplayProps } from "../../table";
 
-export interface RenderParams {
+export interface DescriptionsRenderParams {
   /**
    * 当前值
    */
@@ -89,19 +89,19 @@ export interface DescriptionColumn
   /**
    * 自定义 label 渲染
    */
-  renderLabel?: (scope: RenderParams) => RenderTypes;
+  renderLabel?: (scope: DescriptionsRenderParams) => RenderTypes;
   /**
    * 自定义内容渲染
    */
-  render?: (scope: RenderParams) => RenderTypes;
+  render?: (scope: DescriptionsRenderParams) => RenderTypes;
   /**
    * 自定义内容渲染（HTML 格式）
    */
-  renderHTML?: (scope: RenderParams) => string;
+  renderHTML?: (scope: DescriptionsRenderParams) => string;
   /**
    * 自定义内容
    */
-  formatValue?: (value: unknown, scope: RenderParams) => string | number;
+  formatValue?: (value: unknown, scope: DescriptionsRenderParams) => string | number;
   /**
    * 是否为编辑态
    *

@@ -27,14 +27,15 @@
 
 // 修改 el-pagination 大小
 .#{$el-namespace}-pagination--default {
-  --el-pagination-button-width: 32px;
-
-  .#{$el-namespace}-select--default .#{$el-namespace}-select__wrapper {
-    min-height: var(--el-pagination-button-width) !important;
+  & {
+    --el-pagination-button-width: 32px !important;
+    --el-pagination-button-height: var(--el-pagination-button-width) !important;
   }
 
-  .#{$el-namespace}-pagination__jump .#{$el-namespace}-input {
-    height: var(--el-pagination-button-width) !important;
+  @media (max-width: $device-ipad-pro) {
+    & {
+      --el-pagination-button-width: 28px !important;
+    }
   }
 }
 
@@ -211,7 +212,7 @@
 
     &::before {
       top: 6px !important;
-      height: 3px !important;
+      height: 4px !important;
       content: "";
       background-color: #ffffff !important;
       transform: scale(0.6) !important;

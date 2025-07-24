@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UnwrapRef } from "vue";
 import type { TableInstance } from "element-plus";
-import type { ProSearchColumnProps, ProSearchInstance } from "@/components/pro/search";
+import type { ProSearchColumn, ProSearchInstance } from "@/components/pro/search";
 import type {
   ProTableInstance,
   OperationNamespace,
@@ -90,7 +90,7 @@ function usePageSearchInit() {
   // 组装 ProSearch 配置项
   const searchColumns = computed(() => {
     const filterColumns = flatColumns.value.filter(item => item.search);
-    const searchColumns: ProSearchColumnProps[] = [];
+    const searchColumns: ProSearchColumn[] = [];
 
     filterColumns.forEach(async column => {
       // Table 默认查询参数初始化
@@ -103,7 +103,7 @@ function usePageSearchInit() {
       }
 
       // 组装搜索表单配置项
-      const searchColumn: ProSearchColumnProps = {
+      const searchColumn: ProSearchColumn = {
         ...column.search,
         el: column.search?.el || (column.search?.options ?? column.options) ? "ElSelect" : "ElInput",
         grid: {
@@ -212,13 +212,13 @@ const handleDragSortEnd = (newIndex: number, oldIndex: number) => {
 /**
  * 执行过滤搜索
  */
-const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string | undefined) => {
+const handleFilter = (filterModel: Recordable, filterValue: unknown, prop: string) => {
   emits("filter", filterModel, filterValue, prop);
 };
 /**
  * 执行过滤清除
  */
-const handleFilterClear = (prop: string | undefined) => {
+const handleFilterClear = (prop: string) => {
   emits("filterClear", prop);
 };
 /**

@@ -12,7 +12,7 @@ export const useTableCellEdit = (
   elTableInstance: ShallowRef<TableInstance | null>, // el-table 实例
   callbackFn: {
     preventCellEdit?: (column: TableColumn) => boolean; // 自定义阻止开启编辑逻辑
-    preventCellCloseClass?: string[]; //  阻止开启编辑的单元格类名
+    preventCellEditClass?: string[]; //  阻止开启编辑的单元格类名
     leaveCellEdit?: (row: TableRow, column: TableColumn) => void; // 离开单元格编辑态回调
   } = {}
 ) => {
@@ -84,7 +84,8 @@ export const useTableCellEdit = (
     if (closeCurrentCellEdit && elTableInstance.value) {
       const target = e?.target as HTMLElement;
 
-      if (callbackFn.preventCellCloseClass?.some(className => target.classList.contains(className))) return;
+      // 如果点击的单元格上存在 preventCellEditClass 的类名，则不关闭当前单元格编辑
+      if (callbackFn.preventCellEditClass?.some(className => target.classList.contains(className))) return;
 
       const contains = elTableInstance.value.$el?.contains(target);
 

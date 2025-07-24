@@ -69,6 +69,19 @@
           color: cssVarEl(menu-active-color);
         }
       }
+
+      @include no(title) {
+        width: 60px;
+      }
+    }
+
+    @include e(collapse) {
+      padding: 16px 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: cssVar(layout-aside-bg-hover-color);
+      }
     }
   }
 }

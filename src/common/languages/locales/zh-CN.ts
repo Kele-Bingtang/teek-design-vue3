@@ -76,7 +76,7 @@ export default {
     ProDialog: "ProDialog 弹框",
     ProDrawer: "ProDrawer 抽屉",
     ProImageViewer: "图片预览",
-    ProTreeFilter: "树形筛选",
+    TreeFilter: "树形筛选",
     ProSteps: "超级步骤条",
     SimpleProSteps: "简单 ProSteps",
     ProTransfer: "超级穿梭框",

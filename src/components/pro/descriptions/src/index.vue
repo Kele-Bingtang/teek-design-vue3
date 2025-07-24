@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
-import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp, RenderParams } from "./types";
+import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp, DescriptionsRenderParams } from "./types";
 import { computed, reactive, ref, toValue, unref, watch, watchEffect } from "vue";
-import { ElDescriptions, ElDescriptionsItem, ElButton, formProps } from "element-plus";
+import { ElDescriptions, ElDescriptionsItem, ElButton } from "element-plus";
 import { isArray, isFunction } from "@/common/utils";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
@@ -218,7 +218,7 @@ const getRenderParams = (column: DescriptionColumn) =>
     column,
     label: toValue(column.label || ""),
     data: descriptionsData,
-  }) as RenderParams;
+  }) as DescriptionsRenderParams;
 
 /**
  * 判断表单是否开启校验
@@ -274,7 +274,7 @@ const handleSubmit = async () => {
   if (props.validate) {
     await Promise.all(
       getElFormInstance().map(async proFormInstance => {
-        await proFormInstance.submitForm();
+        await proFormInstance.handleSubmit();
       })
     );
   }
@@ -286,7 +286,7 @@ const handleSubmit = async () => {
  * 重置按钮点击事件
  */
 const handleReset = () => {
-  getElFormInstance().map(proFormInstance => proFormInstance.resetForm());
+  getElFormInstance().map(proFormInstance => proFormInstance.handleReset());
   emits("reset", model.value, closeEdited);
 };
 

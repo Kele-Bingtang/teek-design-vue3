@@ -61,7 +61,7 @@ const handleAddLink = () => {
 };
 
 const handleConfirm = async () => {
-  const res = await formInstance.value?.submitForm();
+  const res = await formInstance.value?.handleSubmit();
 
   if (res) {
     const newItem = { ...form.value, selected: true, sort: 99 };

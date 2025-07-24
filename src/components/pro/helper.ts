@@ -12,7 +12,7 @@ import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/common/util
 export const getProp = (
   model: Recordable,
   prop: NonNullable<FormItemColumnProps["prop"]>,
-  valueFormat?: FormItemColumnProps["getFormat"]
+  valueFormat?: FormItemColumnProps["valueFormat"]
 ) => {
   if (!isObject(model)) return model;
 

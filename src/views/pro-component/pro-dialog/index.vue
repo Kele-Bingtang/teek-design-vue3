@@ -57,15 +57,17 @@ const againOpenDialog = () => {
         </el-descriptions-item>
       </el-descriptions>
 
-      <el-descriptions title="dialogProps 配置 📚" :column="1" border style="margin-top: 10px">
+      <el-descriptions title="dialogProps 独有配置 📚" :column="1" border style="margin-top: 10px">
         <el-descriptions-item label="render">内容区渲染 TSX。`() => VNode` 类型，默认 undefined</el-descriptions-item>
         <el-descriptions-item label="renderHeader">
           头部渲染 TSX，`(scope: any) => VNode` 类型，默认 undefined
         </el-descriptions-item>
+        <el-descriptions-item label="footerTopRender">
+          底部上方渲染 TSX。`() => VNode` 类型，默认 undefined
+        </el-descriptions-item>
         <el-descriptions-item label="renderFooter">
           底部渲染 TSX。`() => VNode` 类型，默认 undefined
         </el-descriptions-item>
-        <el-descriptions-item label="showFooter">是否渲染底部。`boolean` 类型，默认 `true`</el-descriptions-item>
         <el-descriptions-item label="onConfirm">
           点击确认按钮回调。`(closeDialog: () => void) => void` 类型，默认 undefined。其中 closeDialog
           为函数，触发后关闭 Dialog
@@ -74,25 +76,15 @@ const againOpenDialog = () => {
           点击关闭按钮回调。`(closeDialog: () => void) => void` 类型，默认 undefined。其中 closeDialog
           为函数，触发后关闭 Dialog
         </el-descriptions-item>
-        <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
-        <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
-        <el-descriptions-item label="fullscreen">
-          是否以全屏进入 Dialog。`boolean` 类型，默认 `false`
-        </el-descriptions-item>
-        <el-descriptions-item label="fullscreenIcon">
-          是否渲染全屏图标。`boolean` 类型，默认 `true`
-        </el-descriptions-item>
-        <el-descriptions-item label="maxHeight">
-          Dialog 内容区的高度。`string | number` 类型，默认 400px
-        </el-descriptions-item>
-        <el-descriptions-item label="height">
-          Dialog 内容区的最大高度。`string | number` 类型，默认 undefined
+        <el-descriptions-item label="onFullscreen">
+          点击全屏按钮回调。`(isFullscreen: boolean) => void` 类型，默认 undefined。其中 isFullscreen 为布尔值，true
+          表示全屏，false 表示取消全屏
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
     <el-card shadow="never" class="tk-card-minimal">
-      <el-descriptions title="ProDialog 组件配置项 📚" :column="1" border>
+      <el-descriptions title="ProDialog 组件 & dialogProps 配置项 📚" :column="1" border>
         <el-descriptions-item label="v-model">是否显示 Dialog。`boolean` 类型，必传</el-descriptions-item>
         <el-descriptions-item label="title">Dialog 标题。`string` 类型</el-descriptions-item>
         <el-descriptions-item label="fullscreen">
@@ -104,11 +96,36 @@ const againOpenDialog = () => {
         <el-descriptions-item label="height">
           Dialog 内容区的高度。`string | number` 类型，默认 400px
         </el-descriptions-item>
-        <el-descriptions-item label="height">
+        <el-descriptions-item label="maxHeight">
           Dialog 内容区的最大高度。`string | number` 类型，默认 undefined
+        </el-descriptions-item>
+        <el-descriptions-item label="heightOffsetInFullscreen">
+          全屏时内容高度偏移量。`number` 类型，默认 0
+        </el-descriptions-item>
+        <el-descriptions-item label="showFooter">是否渲染底部。`boolean` 类型，默认 `true`</el-descriptions-item>
+        <el-descriptions-item label="footerAlign">
+          底部对齐方式。`left | right | center` 类型，默认 right
+        </el-descriptions-item>
+        <el-descriptions-item label="confirmLoading">
+          确认按钮 loading。`boolean` 类型，默认 `false`
         </el-descriptions-item>
         <el-descriptions-item label="confirmLabel">确认按钮文字。`string` 类型，默认 确认</el-descriptions-item>
         <el-descriptions-item label="cancelLabel">关闭按钮文字。`string` 类型，默认 关闭</el-descriptions-item>
+        <el-descriptions-item label="...">`el-dialog` 更多配置项</el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions title="ProDialog 组件事件 📚" :column="1" border>
+        <el-descriptions-item label="cancel">取消按钮点击事件。`function`</el-descriptions-item>
+        <el-descriptions-item label="confirm">确认按钮点击事件。`function`</el-descriptions-item>
+        <el-descriptions-item label="fullscreen">全屏切换事件。`function`</el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions title="ProDialog 组件插槽 📚" :column="1" border>
+        <el-descriptions-item label="header">自定义头部</el-descriptions-item>
+        <el-descriptions-item label="header-title">自定义头部标题</el-descriptions-item>
+        <el-descriptions-item label="fullscreen-icon">全屏切换事件</el-descriptions-item>
+        <el-descriptions-item label="footer-top">全屏切换事件</el-descriptions-item>
+        <el-descriptions-item label="footer">自定义底部</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

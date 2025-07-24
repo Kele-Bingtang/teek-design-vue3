@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TableColumnCtx } from "element-plus";
-import type { TableScope, TableColumn, TableColumnDataNamespace, RenderParams } from "../types";
+import type { TableScope, TableColumn, TableColumnDataNamespace, TableRenderParams } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
 import { toValue, computed, toRaw } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
@@ -83,7 +83,8 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
 /**
  * 获取单元格值（如果存在 options，则返回根据 label 找对应的 value，如果不存在 options，则返回原始值）
  */
-const getDisplayValue = (scope: TableScope, column: TableColumn) => scope.row._getValue?.(prop(column));
+const getDisplayValue = (scope: TableScope, column: TableColumn) =>
+  scope.row._getValue?.(prop(column)) ?? getOriginValue(scope, column);
 /**
  * 获取 Render/插槽 的参数
  */
@@ -92,11 +93,11 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     ...scope,
     rowIndex: scope.$index,
     column: { ...scope.column, ...column },
-    label: column.label,
+    label: toValue(column.label),
     value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
-    displayValue: getDisplayValue(scope, column) ?? getOriginValue(scope, column),
+    displayValue: getDisplayValue(scope, column),
     options: scope.row?._options?.[prop(column)],
-  } as RenderParams;
+  } as TableRenderParams;
 };
 /**
  * 格式化单元格值
@@ -172,7 +173,6 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
         :name="`${lastProp(prop(column))}-header`"
         v-bind="getRenderParams(scope, column)"
-        :label="toValue(column.label)"
       />
       <!-- 自定义表头内容渲染 -->
       <template v-else-if="column.formatLabel">
@@ -197,7 +197,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         <component v-if="tooltipValue.render" :is="tooltipValue.render()" />
         <!-- ElToolTip content 插槽 -->
         <template v-if="tooltipValue.contentRender" #content>
-          <component v-if="tooltipValue.contentRender" :is="tooltipValue.contentRender()" />
+          <component :is="tooltipValue.contentRender()" />
         </template>
         <!-- ElToolTip icon -->
         <slot name="tooltip-icon">
@@ -270,7 +270,6 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :is="column.render(getRenderParams(scope, column))"
         v-bind="{ ...column.elProps }"
       />
-
       <!-- 自定义 RenderHtml 函数渲染，返回 HTML 格式 -->
       <span v-else-if="column.renderHTML" v-html="column.renderHTML(getRenderParams(scope, column))" />
       <!-- 自定义插槽，插槽名为 column.prop -->
@@ -279,6 +278,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :name="lastProp(prop(column))"
         v-bind="getRenderParams(scope, column)"
       />
+
       <!-- 自定义 el 组件 -->
       <ElDisplay
         v-else-if="column.el"

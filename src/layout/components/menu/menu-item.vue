@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { ElMenuItem, ElSubMenu } from "element-plus";
 import { isValidURL } from "@/common/utils";
 import { Tooltip, PointTag } from "@/components";
 import { useNamespace, useCommon } from "@/composables";
-import { formatTitle } from "@/router/helper";
-import { useLayoutStore, useSettingStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "AsideMenuItem" });
 
@@ -14,12 +12,8 @@ defineProps<{ menuItem: RouterConfig }>();
 
 const ns = useNamespace();
 const router = useRouter();
-const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
-const { isMobile } = useCommon();
-
-// 是否切换多语言
-const isSwitchLanguage = ref(false);
+const { isMobile, getTitle } = useCommon();
 
 /**
  * 菜单点击事件，跳转页面
@@ -31,27 +25,6 @@ const handleMenuClick = (menuItem: RouterConfig) => {
   if (isValidURL(menuItem.path)) return window.open(menuItem.path, "_blank");
   router.push(menuItem.meta._fullPath || menuItem.path || "");
 };
-
-/**
- * 获取菜单标题
- */
-const title = (menuItem: RouterConfig) => {
-  const title = formatTitle(menuItem, isSwitchLanguage.value);
-  menuItem.meta.title = title;
-  return title;
-};
-
-/**
- * 监听多语言切换
- */
-watch(
-  () => layoutStore.language,
-  async () => {
-    isSwitchLanguage.value = true;
-    await nextTick();
-    isSwitchLanguage.value = false;
-  }
-);
 </script>
 
 <template>
@@ -67,9 +40,9 @@ watch(
   >
     <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
     <template #title>
-      <span v-if="!menuItem.meta.useTooltip">{{ title(menuItem) }}</span>
+      <span v-if="!menuItem.meta.useTooltip">{{ getTitle(menuItem) }}</span>
       <Tooltip v-else :offset="-10" :try="1">
-        <span>{{ title(menuItem) }}</span>
+        <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
         v-if="menuItem.meta.tagText && !settingStore.isCollapse"
@@ -93,9 +66,9 @@ watch(
   <el-sub-menu v-else :index="menuItem.meta._fullPath || menuItem.path" class="is-sub">
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
-      <span v-if="!menuItem.meta.useTooltip">{{ title(menuItem) }}</span>
+      <span v-if="!menuItem.meta.useTooltip">{{ getTitle(menuItem) }}</span>
       <Tooltip v-else :offset="-10" :try="1">
-        <span>{{ title(menuItem) }}</span>
+        <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
         v-if="menuItem.meta.tagText && !settingStore.isCollapse"

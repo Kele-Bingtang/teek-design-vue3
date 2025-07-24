@@ -4,25 +4,40 @@ import type { ProTableHeadNamespace } from "./table-head";
 import type { ProTableMainNamespace } from "./table-main";
 import type { TableColumn } from "./table-column";
 
+export interface PageField {
+  /**
+   * 当前页数字段
+   *
+   * @default 'pageNum'
+   */
+  pageNum?: string;
+  /**
+   * 每页数量字段
+   *
+   * @default 'pageSize'
+   */
+  pageSize?: string;
+  /**
+   * 分页选择器字段
+   *
+   * @default 'pageSizes'
+   */
+  pageSizes?: string;
+  /**
+   * 总页数字段
+   *
+   * @default 'total'
+   */
+  total?: string;
+}
+
 /**
  * ProTable 组件的类型命名空间
  */
 export namespace ProTableNamespace {
   export interface Props
     extends ProTableMainNamespace.Props,
-      Omit<ProTableHeadNamespace.Props, "isSelected" | "selectedList" | "selectedListIds"> {
-    /**
-     * 列配置项
-     *
-     * @default '[]'
-     */
-    columns?: TableColumn<any>[];
-    /**
-     * table 数据
-     *
-     * @default '[]'
-     */
-    data?: Recordable[];
+      Omit<ProTableHeadNamespace.Props, "data" | "column" | "isSelected" | "selectedList" | "selectedListIds"> {
     /**
      * 请求表格数据的请求
      *
@@ -82,47 +97,43 @@ export namespace ProTableNamespace {
      */
     card?: boolean;
     /**
-     * 分页信息
+     * 分页信息 key 名配置
      */
-    pageInfo?: ProTableMainNamespace.Props["pageInfo"];
+    pageField?: PageField;
     /**
-     * 是否开启分页功能，pageMode 可以指定客户端（前端）分页还是服务端（后端）分页，当为 true 时，默认为客户端（前端）分页
-     *
-     * @default false
-     */
-    pageScope?: ProTableMainNamespace.Props["pageScope"];
-    /**
-     * 操作列 props
-     */
-    operationProps?: ProTableMainNamespace.Props["operationProps"];
-    /**
-     * ElTable 的 rowStyle
+     * ElTable 的 rowStyle 配置项
      */
     rowStyle?: TableProps<Recordable>["rowStyle"];
     /**
-     * ElTable 的 cellStyle
+     * ElTable 的 cellStyle 配置项
      */
     cellStyle?: TableProps<Recordable>["cellStyle"];
     /**
-     * ElTable 的 headerRowStyle
+     * ElTable 的 headerRowStyle 配置项
      */
     headerRowStyle?: TableProps<Recordable>["cellStyle"];
     /**
-     * ElTable 的 headerCellStyle
+     * ElTable 的 headerCellStyle 配置项
      */
     headerCellStyle?: TableProps<Recordable>["headerCellStyle"];
     /**
-     * ElTable 的 border
+     * ElTable 的 border 配置项
      */
     border?: TableProps<Recordable>["border"];
     /**
-     * ElTable 的 stripe
+     * ElTable 的 stripe 配置项
      */
     stripe?: TableProps<Recordable>["stripe"];
     /**
-     * ElTable 的 showHeader
+     * ElTable 的 showHeader 配置项
      */
     showHeader?: TableProps<Recordable>["showHeader"];
+    /**
+     * ElTable 的 highlightCurrentRow 配置项
+     *
+     * @default true
+     */
+    highlightCurrentRow?: TableProps<Recordable>["highlightCurrentRow"];
     /**
      * 是否显示表头背景
      *
@@ -130,13 +141,7 @@ export namespace ProTableNamespace {
      */
     headerBackground?: boolean;
     /**
-     * ElTable 的 highlightCurrentRow
-     *
-     * @default true
-     */
-    highlightCurrentRow?: TableProps<Recordable>["highlightCurrentRow"];
-    /**
-     * ElTable 的 props
+     * ElTable 的其他 props
      */
     [key: string]: any;
   }

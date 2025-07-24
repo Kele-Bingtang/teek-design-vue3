@@ -47,7 +47,7 @@ const proComponents: RouterConfigRaw = {
           meta: { title: "创建 ProTable" },
         },
         {
-          path: "tree-filter",
+          path: "tree-filter-table",
           component: () => import("@/views/pro-component/pro-table/tree-filter/index.vue"),
           name: "ProTreeTable",
           meta: { title: "使用 ProTreeTable" },
@@ -227,9 +227,9 @@ const proComponents: RouterConfigRaw = {
       meta: { title: "图片预览" },
     },
     {
-      path: "pro-tree-filter",
-      name: "ProTreeFilter",
-      component: () => import("@/views/pro-component/pro-tree-filter/index.vue"),
+      path: "tree-filter",
+      name: "TreeFilter",
+      component: () => import("@/views/pro-component/tree-filter/index.vue"),
       meta: { title: "树形筛选" },
     },
     // {

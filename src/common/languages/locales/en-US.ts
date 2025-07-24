@@ -76,7 +76,7 @@ export default {
     ProDialog: "Pro Dialog",
     ProDrawer: "Pro Drawer",
     ProImageViewer: "Pro ImageViewer",
-    ProTreeFilter: "Pro TreeFilter",
+    TreeFilter: "Pro TreeFilter",
     ProSteps: "Pro Steps",
     SimpleProSteps: "Simple ProSteps",
     ProTransfer: "Pro Transfer",

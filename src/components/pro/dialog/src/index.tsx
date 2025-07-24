@@ -61,11 +61,11 @@ export const closeDialog = () => {
   removeWithTransition(overlayEl, () => {
     const vm = document.querySelector(`#${blockClass}-${id--}`);
     vm && getFatherDom().removeChild(vm);
-  });
 
-  if (!document.querySelector(`.${blockClass}-overlay`)) {
-    document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);
-  }
+    if (!document.querySelector(`.${blockClass}-overlay`)) {
+      document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);
+    }
+  });
 };
 
 /**

@@ -117,14 +117,14 @@ export const useProForm = () => {
      */
     submitForm: async () => {
       const form = await getProForm();
-      return form?.submitForm();
+      return form?.handleSubmit();
     },
     /**
      * 重置表单
      */
     resetForm: async () => {
       const form = await getProForm();
-      return form?.resetForm();
+      return form?.handleReset();
     },
     /**
      * 获取字典枚举缓存 Map

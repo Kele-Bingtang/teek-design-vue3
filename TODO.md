@@ -6,30 +6,14 @@
 
 ## 优化
 
-- ProTable Filter 配置的 `formColumn` 改为本身
-
 - Websocket Store 优化
-- 版本升级清除缓存功能
-- 分栏布局支持切换 tip 和 text
 - 菜单支持切换深色/浅色主题
 - ProTable 添加 PointTag 组件
-- ProTable 头部背景色调整，适配 border
-- ProTable 分页思考（支持外界后端分页）
-- 修复树形表格
-- ProTable 按钮的 `show` 配置支持传入 Vue 自定义指令
-- ProTable 支持修改后台分页键（pageNum、pageSize）
-- ProTable 内部的 `preventCellCloseClass` 支持 props？
-- ProTable 搜索参数优化
 - ModelBaseValueType 替换 unknown
-
 - unknown 改为 any
-
 - 路由结构优化：核心路由、静态路由、角色路由、动态路由
-
 - 加强 toValue 和 MaybeRefOrGetter，所有对应的配置项支持 Promise 类型
+- composables 返回的变量添加 readonly（尤其 Pro 组件）
+- axios 重构 `type: multi`，支持更多数组转换，如 `ids[]=1&ids[]=2&ids[]=3`，并支持数据返回方式配置（raw、body、data）
 
 ## Bug
-
-## 文档
-
-- 更新技术栈和功能

@@ -205,10 +205,7 @@ export interface FormItemColumnProps {
     | string[]
     | MaybeRef<ElOption[]>
     | Promise<ElOption[]>
-    | ((
-        model: Recordable,
-        optionsMap?: Map<string, Recordable>
-      ) => ElOption[] | Promise<ElOption[]> | Promise<unknown>);
+    | ((model: Recordable, optionsMap?: Map<string, Recordable>) => ElOption[] | Promise<ElOption[]>);
   /**
    * 字典指定 label && value && children 的 key 值
    *
@@ -236,9 +233,9 @@ export interface FormItemColumnProps {
         contentRender?: () => RenderTypes; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
       } & Partial<ElTooltipProps>);
   /**
-   * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 value 值是 1 导致无法匹配，可以设置为 getFormat: "string" 解决
+   * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 value 值是 1 导致无法匹配，可以设置为 valueFormat: "string" 解决
    */
-  getFormat?: unknown | ((value: unknown) => unknown);
+  valueFormat?: "string" | "number" | "boolean" | ((value: unknown) => unknown);
   /**
    * 自定义 label 标题
    */
