@@ -14,5 +14,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <Icon :icon :style="{ outline: 'none' }" />
+  <Icon :icon :style="{ outline: 'none' }" v-bind="$attrs" />
 </template>

@@ -1,6 +1,6 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
-import { localStorageProxy, StorageManager } from "@/common/utils";
+import { localStorageProxy } from "@/common/utils";
 import SystemConfig from "@/common/config";
 
 export * from "./stores/core/layout";
@@ -28,7 +28,7 @@ const customStorage = {
  * 4. 如果其他旧版本没有该 key，则返回当前版本 key
  */
 const getStorageKey = (key: string) => {
-  const currentStoreKey = StorageManager.normalizeKey(key);
+  const currentStoreKey = localStorageProxy.normalizeKey(key);
 
   // 如果当前版本有该 key，则返回当前版本 key
   if (localStorage.getItem(currentStoreKey)) return currentStoreKey;
@@ -36,7 +36,7 @@ const getStorageKey = (key: string) => {
   // 如果当前版本没有该 key，则查找其他旧版本的 key
   const oldVersionKeys = Object.keys(localStorage).find(
     // 匹配旧版本数据 key，格式如 {cacheKeyPrefix}:vX.Y.Z:{key}
-    k => k.startsWith(`${StorageManager.cacheKeyPrefix}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
+    k => k.startsWith(`${localStorageProxy.getPrefix()}:v`) && k.endsWith(`:${key}`) && localStorage.getItem(k)
   );
 
   // 如果其他旧版本没有该 key，则返回当前版本 key
@@ -72,3 +72,15 @@ pinia.use(
 );
 
 export default pinia;
+
+export const resetAllStores = () => {
+  if (!pinia) {
+    console.error("Pinia is not installed");
+    return;
+  }
+
+  const allStores = (pinia as any)._s;
+  for (const [_key, store] of allStores) {
+    store.$reset();
+  }
+};

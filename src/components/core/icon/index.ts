@@ -9,6 +9,9 @@ export { SvgIcon, FontIcon, IconifyOnline, IconifyOffline };
 
 export type * from "./src/types";
 
+export * from "./src/create-icon";
+export { addCollection, addIcon, Icon as IconifyIcon, listIcons } from "@iconify/vue";
+
 export const Icon = useInstall(index);
 
 export default index;
