@@ -4,7 +4,7 @@ import { ElNotification } from "element-plus";
 import axios from "axios";
 import qs from "qs";
 import { LOGIN_URL } from "@/common/config";
-import { isArray, isValidURL, message, useSimpleUuid } from "@/common/utils";
+import { isValidURL, message, useSimpleUuid } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useErrorLogStore, useUserStore } from "@/pinia";
 import router from "@/router";
@@ -20,8 +20,29 @@ export interface PlusAxiosRequestConfig extends InternalAxiosRequestConfig {
   cancel?: boolean;
   /** 是否映射 url */
   mapping?: boolean;
-  /** 请求头 Content-Type 类型 */
-  type?: "form" | "file" | "json" | "info" | "multi";
+  /**
+   * 请求头 Content-Type 类型
+   * form: application/x-www-form-urlencoded;charset=UTF-8
+   * file: "application/form-data;charset=UTF-8"
+   * json: "application/json;charset=UTF-8"
+   * info: "multipart/form-data;charset=UTF-8"
+   */
+  contentType?: "form" | "file" | "json" | "info";
+  /**
+   * 参数类型
+   * brackets: ids[]=1&ids[]=2&ids[]=3
+   * comma: ids=1,2,3
+   * indices: ids[0]=1&ids[1]=2&ids[2]=3
+   * repeat: ids=1&ids=2&ids=3
+   */
+  paramsType?: "brackets" | "comma" | "indices" | "repeat";
+  /**
+   * 响应数据的返回方式
+   * raw: 原始的 AxiosResponse，包括 headers、status 等，不做是否成功请求的检查
+   * body: 返回响应数据的 Body 部分（只会根据 status 检查请求是否成功，忽略对 code 的判断，这种情况下应由调用方检查请求是否成功）
+   * data: 解构响应的 Body 数据，只返回其中的 data 节点数据（会检查 status 和 code 是否为成功状态）
+   */
+  response?: "raw" | "body" | "data";
 }
 
 // 请求配置
@@ -30,6 +51,32 @@ type AxiosRequestConfigProp<D = any> = AxiosRequestConfig<D> & {
 };
 
 const axiosCanceler = new AxiosCanceler();
+
+/**
+ * brackets: ids[]=1&ids[]=2&ids[]=3
+ * comma: ids=1,2,3
+ * indices: ids[0]=1&ids[1]=2&ids[2]=3
+ * repeat: ids=1&ids=2&ids=3
+ */
+const getParamsProcessor = (paramsType: PlusAxiosRequestConfig["paramsType"]) => {
+  switch (paramsType) {
+    case "brackets": {
+      return (params: any) => qs.stringify(params, { arrayFormat: "brackets" });
+    }
+    case "comma": {
+      return (params: any) => qs.stringify(params, { arrayFormat: "comma" });
+    }
+    case "indices": {
+      return (params: any) => qs.stringify(params, { arrayFormat: "indices" });
+    }
+    case "repeat": {
+      return (params: any) => qs.stringify(params, { arrayFormat: "repeat" });
+    }
+    default: {
+      return (params: any) => params;
+    }
+  }
+};
 
 /**
  * 当请求 url 携带的如下前缀（key），会替换为 http（value），如接口 url 为 /test/xx/xxx，则最终发送的请求为 https://youngkbt.cn/xx/xxx
@@ -71,8 +118,12 @@ class RequestHttp {
         // 处理 url 映射
         config.mapping && processMappingUrl(config);
         // 处理 ContentType
-        config.type && config.method?.toLocaleLowerCase() === "post" && processParamsType(config);
-        config.type === "multi" && processArray(config);
+        config.contentType && config.method?.toLocaleLowerCase() === "post" && processParamsType(config);
+        // 处理 get 请求的参数
+        if (config.method?.toLocaleLowerCase() === "get") {
+          const paramsProcessor = getParamsProcessor(config.paramsType);
+          config.params = paramsProcessor(config.params);
+        }
 
         // 请求头携带 Token
         config.headers.token = useUserStore().accessToken;
@@ -88,7 +139,11 @@ class RequestHttp {
      */
     this.service.interceptors.response.use(
       (response: AxiosResponse & { config: PlusAxiosRequestConfig }) => {
-        const { data, config } = response;
+        const { data, config, status } = response;
+
+        if (config.response === "raw") return response;
+        if (status < 200 && status >= 400) return Promise.reject(response);
+        if (config.response === "body") return data;
 
         // 在请求结束后，并关闭请求 loading
         config.loading && tryHideFullScreenLoading();
@@ -192,7 +247,7 @@ const processMappingUrl = (config: InternalAxiosRequestConfig) => {
  * @param config Axios 配置信息
  */
 const processParamsType = (config: PlusAxiosRequestConfig) => {
-  const type = config.type as string | undefined;
+  const type = config.contentType as string | undefined;
 
   switch (type) {
     case "form":
@@ -225,30 +280,30 @@ const processParamsType = (config: PlusAxiosRequestConfig) => {
  *
  * @param config Axios 配置信息
  */
-const processArray = (config: PlusAxiosRequestConfig) => {
-  const url = String(config.url);
-  const params = config.params || {};
-  const searchParams = new URLSearchParams();
+// const processArray = (config: PlusAxiosRequestConfig) => {
+//   const url = String(config.url);
+//   const params = config.params || {};
+//   const searchParams = new URLSearchParams();
 
-  Object.entries(params).forEach(([key, value]) => {
-    if (value === undefined) return;
-    if (isArray(value)) {
-      value.forEach(item => {
-        // null/undefined 跳过
-        if (item === undefined || item === null) return;
-        searchParams.append(key, item);
-      });
-    } else searchParams.append(key, String(value));
-  });
+//   Object.entries(params).forEach(([key, value]) => {
+//     if (value === undefined) return;
+//     if (isArray(value)) {
+//       value.forEach(item => {
+//         // null/undefined 跳过
+//         if (item === undefined || item === null) return;
+//         searchParams.append(key, item);
+//       });
+//     } else searchParams.append(key, String(value));
+//   });
 
-  // 拼接参数到 url
-  const hasQuery = url.includes("?");
-  const queryString = searchParams.toString();
+//   // 拼接参数到 url
+//   const hasQuery = url.includes("?");
+//   const queryString = searchParams.toString();
 
-  config.url = queryString ? url + (hasQuery ? "&" : "?") + queryString : url;
-  config.params = {};
-  return config;
-};
+//   config.url = queryString ? url + (hasQuery ? "&" : "?") + queryString : url;
+//   config.params = {};
+//   return config;
+// };
 
 /**
  * 处理 Axios 错误并格式化为错误日志对象

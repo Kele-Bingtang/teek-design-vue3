@@ -123,10 +123,16 @@ export const useRouteFn = () => {
    */
   const filterOnlyRolesRoutes = (routers: RouterConfigRaw[], roles: string[]) => {
     const rolesRoutes: RouterConfigRaw[] = [];
+    const notPermissionRoute = constantRoutes.find(route => route.name === "403");
+
     routers.forEach(router => {
       const r = { ...router };
-      if (hasPermission(r, roles)) {
-        if (r.children && r.children.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+      if (r.children?.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+
+      if (hasPermission(r, roles)) rolesRoutes.push(r);
+      else if (notPermissionRoute) {
+        // 如果没有权限，则组件改为 403 组件
+        r.component = notPermissionRoute.component;
         rolesRoutes.push(r);
       }
     });
