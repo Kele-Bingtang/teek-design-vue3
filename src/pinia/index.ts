@@ -16,7 +16,7 @@ export * from "./stores/websocket";
  */
 const customStorage = {
   getItem: (key: string) => localStorageProxy.getItem(key, false),
-  setItem: (key: string, value: string) => localStorageProxy.setItem(key, value, false),
+  setItem: (key: string, value: string) => localStorageProxy.setItem(key, JSON.parse(value), false),
 };
 
 /**

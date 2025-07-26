@@ -36,97 +36,49 @@
  * @param meta.pointTagProps ==> 点标记的属性，即 PointTag 组件的 props
  */
 
-import { User, Bell, Odometer, Discount, Document, Compass } from "@element-plus/icons-vue";
-import { HOME_URL, HOME_NAME, LOGIN_URL, LOGIN_NAME, LAYOUT_NAME, REDIRECT_NAME, NOT_FOUND } from "@/common/config";
-import pageRoutes from "./routes/page";
-import detailsRoutes from "./routes/details";
-import directiveRoutes from "./routes/directive";
-import errorRoutes from "./routes/error";
-import excelRoutes from "./routes/excel";
-import frameRoutes from "./routes/frame";
-import nestedRoutes from "./routes/nested";
-import outerChainRoutes from "./routes/outer-chain";
-import permissionRoutes from "./routes/permission";
-import tableRoutes from "./routes/table";
-import proComponentsRoutes from "./routes/pro-component";
-import toolsRoutes from "./routes/tool";
-import editorRoutes from "./routes/editor";
-import templateRoutes from "./routes/template";
-
-export const staticRoutes: RouterConfigRaw[] = [
-  // 建议把 LAYOUT_NAME 路由放在第一位
-  {
-    path: "/",
-    name: LAYOUT_NAME,
-    component: () => import("@/layout/index.vue"),
-    redirect: HOME_URL,
-    children: [
-      {
-        path: "/error-log",
-        name: "ErrorLog",
-        component: () => import("@/views/core/errorLog/index.vue"),
-        meta: { title: "错误日志", isKeepAlive: false },
-      },
-      {
-        path: "/profile",
-        name: "Profile",
-        component: () => import("@/views/profile/index.vue"),
-        meta: { title: "我的主页", icon: User },
-      },
-      {
-        path: "/message",
-        name: "Message",
-        component: () => import("@/views/message/index.vue"),
-        meta: { title: "我的消息", icon: Bell },
-      },
-    ],
-  },
-  {
-    path: LOGIN_URL,
-    name: LOGIN_NAME,
-    component: () => import("@/views/core/login/index.vue"),
-    meta: { title: "登录", hideInMenu: true },
-  },
-  {
-    path: "/redirect/:path(.*)",
-    name: REDIRECT_NAME,
-    meta: { hideInMenu: true },
-    component: () => import("@/layout/redirect.vue"),
-  },
-];
-
-export const errorRouter: RouterConfigRaw[] = [
-  {
-    path: "/403",
-    name: "403",
-    component: () => import("@/views/core/error/403.vue"),
-    meta: { title: "403 页面", hideInMenu: true, hideInBread: true, isFull: true },
-  },
-  {
-    path: "/404",
-    name: "404",
-    component: () => import("@/views/core/error/404.vue"),
-    meta: { title: "404 页面", hideInMenu: true, hideInBread: true, isFull: true },
-  },
-  {
-    path: "/500",
-    name: "500",
-    component: () => import("@/views/core/error/500.vue"),
-    meta: { title: "500 页面", hideInMenu: true, hideInBread: true, isFull: true },
-  },
-];
+import { Discount, Document, Compass } from "@element-plus/icons-vue";
+import { HOME_URL, HOME_NAME } from "@/common/config";
+import pageRoutes from "./dynamic/page";
+import detailsRoutes from "./dynamic/details";
+import directiveRoutes from "./dynamic/directive";
+import errorRoutes from "./dynamic/error";
+import excelRoutes from "./dynamic/excel";
+import frameRoutes from "./dynamic/frame";
+import nestedRoutes from "./dynamic/nested";
+import outerChainRoutes from "./dynamic/outer-chain";
+import permissionRoutes from "./dynamic/permission";
+import tableRoutes from "./dynamic/table";
+import proComponentsRoutes from "./dynamic/pro-component";
+import toolsRoutes from "./dynamic/tool";
+import editorRoutes from "./dynamic/editor";
+import templateRoutes from "./dynamic/template";
+import websocketRoutes from "./dynamic/websocket";
+import dashboardRoutes from "./dynamic/dashboard";
 
 /**
- * notFoundRouter(找不到路由)
+ * 扫描路由文件，获取默认暴露得路由信息
  */
-export const notFoundRouter = {
-  path: "/:pathMatch(.*)*",
-  name: NOT_FOUND,
-  meta: { hideInMenu: true, hideInBread: true, isFull: true },
-  redirect: { name: "404" },
-};
+// export const loadRoutes = (routeModules: Record<string, any>) => {
+//   const mergedRoutes: RouterConfigRaw[] = [];
 
-export const rolesRoutes: RouterConfigRaw[] = [
+//   for (const routeModule of Object.values(routeModules)) {
+//     const moduleRoutes = routeModule?.default ?? [];
+//     mergedRoutes.push(...moduleRoutes);
+//   }
+
+//   return mergedRoutes;
+// };
+
+/**
+ * 扫描 dynamic 目录下得路由文件
+ */
+// const dynamicRouteFiles = import.meta.glob("./dynamic/**/*.ts", {
+//   eager: true,
+// });
+// // 获取动态路由
+// export const dynamicRoutes = [...loadRoutes(dynamicRouteFiles)];
+
+export const dynamicRoutes: RouterConfigRaw[] = [
   {
     path: HOME_URL,
     name: HOME_NAME,
@@ -149,40 +101,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
       useI18n: false,
     },
   },
-  {
-    path: "dashboard",
-    name: "Dashboard",
-    meta: {
-      title: "仪表盘",
-      icon: Odometer,
-    },
-    children: [
-      {
-        path: "console",
-        name: "Console",
-        component: "/dashboard/console/index",
-        meta: {
-          title: "看板页",
-        },
-      },
-      {
-        path: "analysis",
-        name: "Analysis",
-        component: "/dashboard/analysis/index",
-        meta: {
-          title: "分析页",
-        },
-      },
-      {
-        path: "e-commerce",
-        name: "ECommerce",
-        component: "/dashboard/e-commerce/index",
-        meta: {
-          title: "电子商务",
-        },
-      },
-    ],
-  },
+  { ...dashboardRoutes },
   { ...proComponentsRoutes },
   { ...pageRoutes },
   { ...editorRoutes },
@@ -197,33 +116,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
   { ...frameRoutes },
   { ...outerChainRoutes },
   { ...detailsRoutes },
-  {
-    path: "/websocket",
-    name: "Websocket",
-    meta: {
-      title: "标签页操作",
-      icon: Discount,
-      tagText: "New",
-    },
-    children: [
-      {
-        path: "basic",
-        name: "WebsocketBasic",
-        component: "/websocket/index",
-        meta: {
-          title: "基础使用",
-        },
-      },
-      {
-        path: "advanced",
-        name: "WebsocketAdvanced",
-        component: "/websocket/advanced",
-        meta: {
-          title: "高级使用",
-        },
-      },
-    ],
-  },
+  { ...websocketRoutes },
   {
     path: "/tabs",
     name: "Tabs",

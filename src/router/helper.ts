@@ -32,7 +32,7 @@ export const formatTitle = (route: Route, reTranslate = false) => {
  * @param name 路由的 name
  * @param useI18n 是否使用 i18n
  */
-export const translateTitle = (title: string, name?: string, useI18n = false) => {
+export const translateTitle = (title: string, name?: string, useI18n = true) => {
   const { routeUseI18n } = SystemConfig.routerConfig;
   const finalTitle = title || name || "no-name";
 
@@ -46,9 +46,9 @@ export const translateTitle = (title: string, name?: string, useI18n = false) =>
   }
 
   if (name) {
-    const translateName = t(`_route.${name}`);
+    const translateName = t(`${SystemConfig.routerConfig.nameI18nPrefix}.${name}`);
     // 转换多语言后，如果还是 _route.${route.name}，代表没有配置多语言，直接返回 name
-    return translateName === `_route.${name}` ? name : translateName;
+    return translateName === `${SystemConfig.routerConfig.nameI18nPrefix}.${name}` ? name : translateName;
   }
 
   return finalTitle;

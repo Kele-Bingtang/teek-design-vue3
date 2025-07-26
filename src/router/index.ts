@@ -1,11 +1,9 @@
 import type { RouteRecordRaw, RouterHistory } from "vue-router";
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
-import { NProgress } from "@/common/utils";
 import { LOGIN_NAME } from "@/common/config";
 import { useRouteStore } from "@/pinia";
-import { staticRoutes } from "./routes-config";
-import { beforeEach } from "./guards/before-each";
-import { afterEach } from "./guards/after-each";
+import { createRouterGuard } from "./guards/";
+import { constantRoutes } from "./routes";
 
 /**
  * 初始化路由
@@ -13,22 +11,11 @@ import { afterEach } from "./guards/after-each";
 export const initRouter = () => {
   const router = createRouter({
     history: getHistoryMode(),
-    routes: [...staticRoutes] as RouteRecordRaw[],
+    routes: constantRoutes as RouteRecordRaw[],
     scrollBehavior: () => ({ left: 0, top: 0 }),
   });
 
-  // 路由前置守卫
-  beforeEach(router);
-  // 路由后置守卫
-  afterEach(router);
-
-  /**
-   * 路由跳转错误
-   **/
-  router.onError(error => {
-    NProgress.done();
-    console.warn("路由错误", error.message);
-  });
+  createRouterGuard(router);
 
   return router;
 };

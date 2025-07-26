@@ -15,7 +15,7 @@ import en from "element-plus/es/locale/lang/en";
 import { LanguageEnum } from "@/common/enums";
 import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/common/config";
 import { isFunction } from "@/common/utils";
-import { useNamespace, useBrowserTitle, useWatchCssVar, useTheme } from "@/composables";
+import { useNamespace, useWatchCssVar, useTheme } from "@/composables";
 import { useUserStore, useWebSocketStore, useLayoutStore } from "@/pinia";
 import { useIFrame } from "@/layout/components/iframe/use-iframe";
 
@@ -31,8 +31,6 @@ provide(GlobalConfigKey, { size: layoutSize });
 
 // 初始化主题配置
 useTheme().initTheme();
-// 浏览器标题
-useBrowserTitle();
 // 监听布局样式变量
 useWatchCssVar();
 // IFrame 通信

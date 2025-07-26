@@ -84,7 +84,7 @@ const changeMenuItem = (item: RouterConfig) => {
       <el-scrollbar>
         <ul :class="ns.e('aside__list')">
           <template v-for="item in menuList" :key="item.path">
-            <el-tooltip :disabled="showTitle" effect="dark" placement="right" :content="getTitle(item).value">
+            <el-tooltip :disabled="showTitle" effect="dark" placement="right" :content="getTitle(item)">
               <li
                 :class="[
                   ns.e('aside__list-item'),

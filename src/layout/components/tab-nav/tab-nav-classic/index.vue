@@ -3,8 +3,8 @@ import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import { useTabNav } from "../use-tab-nav";
 import MoreButton from "../components/more-button/index.vue";
 import RightMenu from "../components/right-menu/index.vue";
@@ -17,6 +17,7 @@ defineOptions({ name: "ClassicTabNav" });
 const { type = "classic" } = defineProps<{ type?: "simple" | "classic" }>();
 
 const ns = useNamespace("classic-tabs-nav");
+const { getTitle } = useCommon();
 const route = useRoute();
 const settingStore = useSettingStore();
 
@@ -184,7 +185,7 @@ onMounted(() => {
             :class="ns.em('tab', 'icon')"
           />
           <span class="dot" v-else-if="settingStore.showTabNavDot || !tab.meta.icon" />
-          <span>{{ tab.title }}</span>
+          <span>{{ getTitle(tab) }}</span>
           <Icon class="icon-close" v-if="tab.close && tabNavList.length !== 1" @click.prevent.stop="closeTab(tab)">
             <Close />
           </Icon>

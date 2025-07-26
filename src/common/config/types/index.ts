@@ -115,6 +115,8 @@ export interface RouterConfig {
   whiteList: string[];
   /** 「路由」布局是否使用国际化，默认为 false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字 */
   routeUseI18n: boolean;
+  /** 当使用路由国际化时，通过 name 属性读取国际化文本的前缀 */
+  nameI18nPrefix: string;
   /** 路由是否开启缓存 */
   isKeepAlive: boolean;
   /** 是否全屏，不渲染 Layout 布局，只渲染当前路由组件 */

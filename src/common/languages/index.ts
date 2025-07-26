@@ -49,7 +49,10 @@ export const t = (message: string | Record<string, string>, option?: Record<stri
     return formatTranslate(message[locale.value], option);
   }
 
-  return formatTranslate(i18n.global.t(message), option);
+  // 使用 te() 方法检查翻译键值是否存在，避免控制台警告
+  if (i18n.global.te(message)) return formatTranslate(i18n.global.t(message), option);
+  // 如果翻译键值不存在，则返回 message 的最后一个单词
+  return message.split(".").pop() || message;
 };
 
 /**
@@ -87,5 +90,11 @@ const i18n = createI18n({
 // };
 
 // setupI18n();
+
+export const setLocale = (locale: LanguageEnum | `${LanguageEnum}`) => {
+  i18n.global.locale.value = locale;
+};
+
+export const $t = i18n.global.t;
 
 export default i18n;

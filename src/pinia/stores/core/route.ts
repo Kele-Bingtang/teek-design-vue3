@@ -1,32 +1,23 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
-import { useRouteFn } from "@/composables";
-import { staticRoutes, errorRouter, notFoundRouter } from "@/router/routes-config";
-import { HOME_NAME } from "@/common/config";
 
 export const useRouteStore = defineStore("routeStore", () => {
   const loadedRouteList = ref<RouterConfig[]>([]);
   const flatRouteList = ref<RouterConfig[]>([]);
 
-  const { processRouteMeta, findRouteByName, filterFlatRoutes, ascending } = useRouteFn();
-
   // 路由里首页的 name 值，必须填且正确，默认为 Home
-  const homeRoute = computed(() => findRouteByName(loadedRouteList.value, HOME_NAME));
+  const homeRoute = ref<RouterConfig | null>(null);
 
-  /**
-   * 加载权限路由
-   *
-   * @param routers 路由配置
-   */
-  const loadPermissionRoutes = (routers: RouterConfig[]) => {
-    loadedRouteList.value = ascending(
-      processRouteMeta(staticRoutes).concat(routers).concat(errorRouter).concat(notFoundRouter)
-    );
-    flatRouteList.value = filterFlatRoutes(
-      processRouteMeta(staticRoutes).concat(routers).concat(errorRouter).concat(notFoundRouter) as RouterConfig[]
-    );
+  const setRoutes = (routers: RouterConfig[]) => {
+    loadedRouteList.value = routers;
+  };
 
-    return flatRouteList.value;
+  const setFlatRoutes = (routers: RouterConfig[]) => {
+    flatRouteList.value = routers;
+  };
+
+  const setHomeRoute = (route: RouterConfig | null) => {
+    homeRoute.value = route;
   };
 
   return {
@@ -34,6 +25,8 @@ export const useRouteStore = defineStore("routeStore", () => {
     homeRoute,
     flatRouteList,
 
-    loadPermissionRoutes,
+    setRoutes,
+    setFlatRoutes,
+    setHomeRoute,
   };
 });

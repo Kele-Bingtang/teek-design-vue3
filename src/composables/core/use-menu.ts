@@ -61,5 +61,5 @@ export const useMenu = () => {
     { immediate: true }
   );
 
-  return { menuList: readonly(menuList), getMenuList };
+  return { menuList, getMenuList };
 };

@@ -1,6 +1,5 @@
-import { ref, watch } from "vue";
+import { ref, readonly } from "vue";
 import { useRoute } from "vue-router";
-import { tryOnScopeDispose } from "@vueuse/core";
 import { TitleModeEnum } from "@/common/enums";
 import SystemConfig from "@/common/config";
 import { formatTitle } from "@/router/helper";
@@ -41,18 +40,14 @@ export const useBrowserTitle = () => {
   };
 
   /**
-   * 根据当前跳转的路由设置修改浏览器的页面标题
+   * 设置浏览器标题
+   *
+   * @param title 标题
    */
-  const stop = watch(
-    () => route.fullPath,
-    () => {
-      browserTitle.value = getBrowserTitle();
-      window.document.title = browserTitle.value;
-    },
-    { immediate: true }
-  );
+  const setBrowserTitle = (title?: string) => {
+    browserTitle.value = getBrowserTitle();
+    window.document.title = title || browserTitle.value;
+  };
 
-  tryOnScopeDispose(stop);
-
-  return { browserTitle: readonly(browserTitle), getBrowserTitle };
+  return { browserTitle: readonly(browserTitle), getBrowserTitle, setBrowserTitle };
 };

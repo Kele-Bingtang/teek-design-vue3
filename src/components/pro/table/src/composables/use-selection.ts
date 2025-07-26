@@ -1,5 +1,5 @@
 import type { ProTableMainNamespace } from "../types";
-import { ref } from "vue";
+import { ref, readonly } from "vue";
 import { isFunction } from "@/common/utils";
 
 /**

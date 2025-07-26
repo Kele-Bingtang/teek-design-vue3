@@ -1,6 +1,6 @@
 import type { Ref } from "vue";
 import type { DescriptionColumn, ProDescriptionsProp } from "../types";
-import { ref, unref } from "vue";
+import { ref, unref, readonly } from "vue";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 

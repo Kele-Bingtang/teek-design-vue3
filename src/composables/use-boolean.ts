@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, readonly } from "vue";
 
 export function useBoolean(initValue = false) {
   const bool = ref(initValue);

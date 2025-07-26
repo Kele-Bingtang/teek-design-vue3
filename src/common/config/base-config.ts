@@ -61,6 +61,7 @@ const layoutConfig: LayoutConfig = {
 const routerConfig: RouterConfig = {
   whiteList: [""],
   routeUseI18n: true,
+  nameI18nPrefix: "_route",
   isKeepAlive: false,
   isFull: false,
   cacheDynamicRoutes: false,

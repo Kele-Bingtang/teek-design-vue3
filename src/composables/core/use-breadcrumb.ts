@@ -1,5 +1,5 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, readonly } from "vue";
 import { tryOnScopeDispose } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
