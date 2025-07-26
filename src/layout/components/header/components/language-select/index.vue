@@ -1,15 +1,13 @@
 <script setup lang="ts" name="LanguageSelect">
+import type { LanguageEnum } from "@/common/enums";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from "element-plus";
-import type { LanguageEnum } from "@/common/enums";
+import { languageOptions } from "@/common/languages";
 import { useBrowserTitle } from "@/composables";
 import { useLayoutStore } from "@/pinia";
 
-const localList = [
-  { label: "中文简体", value: "zh-CN" },
-  { label: "English", value: "en-US" },
-];
+const localList = [...languageOptions];
 
 const i18n = useI18n();
 const layoutStore = useLayoutStore();

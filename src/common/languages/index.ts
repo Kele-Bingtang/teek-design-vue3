@@ -4,7 +4,7 @@ import { isObject, localStorageProxy } from "@/common/utils";
 import zhCN from "./locales/zh-CN";
 import enUS from "./locales/en-US";
 
-// 动态导入语言文件
+// 动态注册语言文件
 const messages = {
   [LanguageEnum.ZhCn]: zhCN,
   [LanguageEnum.EnUs]: enUS,
@@ -72,7 +72,7 @@ const i18n = createI18n({
   fallbackLocale: LanguageEnum.ZhCn,
 });
 
-// 异步加载语言文件（文件过大可采用）
+// 异步（远程）加载语言文件（文件过大可采用）
 // const loadLanguageAsync = async (lang: LanguageEnum) => {
 //   if (!messages[lang]) {
 //     const ms = await import(`./locales/${lang}.ts`);

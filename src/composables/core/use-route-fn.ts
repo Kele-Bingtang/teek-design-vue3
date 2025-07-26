@@ -35,14 +35,14 @@ export const useRouteFn = () => {
     if (!routeList) {
       const isFrontendMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "frontend";
       const isBackendMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "backend";
-      const isBothMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "both";
+      const isMixedMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "mixed";
 
       // 前端控制模式
       if (isFrontendMode) routeList = rolesRoutes;
       // 后端控制模式
       else if (isBackendMode) routeList = api ? await getDynamicRoutesFromBackend(api) : [];
       // 前后端控制模式
-      else if (isBothMode) routeList = [...rolesRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
+      else if (isMixedMode) routeList = [...rolesRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
     }
 
     if (routeList?.length) {
