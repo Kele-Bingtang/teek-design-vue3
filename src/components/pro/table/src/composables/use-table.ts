@@ -67,7 +67,7 @@ export const useProTable = () => {
      *
      * @param columnProps 需要设置的列
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: any }[]) => {
       const table = await getTable();
       table?.setColumn(columnProps);
     },

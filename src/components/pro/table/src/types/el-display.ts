@@ -56,7 +56,7 @@ export interface ElDisplayProps {
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRef<ElProps> | ((value: unknown) => ElProps);
+  elProps?: MaybeRef<ElProps> | ((value: any) => ElProps);
   /**
    * 指定 el 组件的 options
    */

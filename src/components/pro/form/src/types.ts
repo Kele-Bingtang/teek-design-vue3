@@ -157,7 +157,7 @@ export namespace FormMainNamespace {
     /**
      * 表单值改变事件
      */
-    change: [model: unknown, model: Recordable, column: FormItemColumnProps];
+    change: [model: any, model: Recordable, column: FormItemColumnProps];
   }
 }
 

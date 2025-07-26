@@ -79,7 +79,7 @@ export interface TableFilterEmits {
   /**
    * 过滤事件，返回输入的值以及 prop
    */
-  filter: [filterValue: unknown, prop: string];
+  filter: [filterValue: any, prop: string];
   /**
    * 清空事件，返回输入的 prop
    */

@@ -72,7 +72,7 @@ export const useProSearch = () => {
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: any }[]) => {
       const search = await getProSearch();
       search?.setColumn(columnProps);
     },

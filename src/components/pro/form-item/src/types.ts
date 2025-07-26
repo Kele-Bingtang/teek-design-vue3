@@ -298,7 +298,7 @@ export interface ProFormItemEmits {
   /**
    * 表单值改变事件
    */
-  change: [value: unknown, model: ModelBaseValueType, column: FormItemColumnProps];
+  change: [value: any, model: ModelBaseValueType, column: FormItemColumnProps];
 }
 
 /**

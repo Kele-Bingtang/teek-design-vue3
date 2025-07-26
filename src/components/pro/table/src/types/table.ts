@@ -69,7 +69,7 @@ export namespace ProTableNamespace {
     /**
      * 请求失败回调
      */
-    requestError?: (error: unknown) => void;
+    requestError?: (error: any) => void;
     /**
      * 对请求成功的数据进行处理
      */

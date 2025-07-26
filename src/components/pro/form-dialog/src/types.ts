@@ -18,7 +18,7 @@ export interface ProFormDialogEmits {
   /**
    * 表单值改变事件
    */
-  change: [value: unknown, model: Recordable, column: FormItemColumnProps];
+  change: [value: any, model: Recordable, column: FormItemColumnProps];
   /**
    * 确认按钮点击事件
    */

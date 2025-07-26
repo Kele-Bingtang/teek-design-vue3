@@ -36,7 +36,7 @@ export const useDescriptionsApi = (model: Ref<Recordable>, columnsProps: Ref<{ c
    *
    * @param columnSet 设置内容
    */
-  const setColumn = (columnSet: { prop: string; field: string; value: unknown }[]) => {
+  const setColumn = (columnSet: { prop: string; field: string; value: any }[]) => {
     const { columns } = columnsProps.value;
 
     for (const v of columns) {
