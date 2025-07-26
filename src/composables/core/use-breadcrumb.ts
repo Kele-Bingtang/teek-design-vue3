@@ -67,5 +67,5 @@ export const useBreadcrumbs = () => {
 
   tryOnScopeDispose(stop);
 
-  return { breadcrumbList, getBreadcrumbs };
+  return { breadcrumbList: readonly(breadcrumbList), getBreadcrumbs };
 };

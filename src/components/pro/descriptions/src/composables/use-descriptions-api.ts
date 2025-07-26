@@ -84,7 +84,7 @@ export const useDescriptionsApi = (model: Ref<Recordable>, columnsProps: Ref<{ c
   };
 
   return {
-    mergeProps,
+    mergeProps: readonly(mergeProps),
     setValues,
     setProps,
     setColumn,

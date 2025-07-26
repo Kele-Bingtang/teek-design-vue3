@@ -73,5 +73,5 @@ export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
     if (index > -1) columns.splice(index, 1);
   };
 
-  return { mergeProps, setProps, setColumn, addColumn, delColumn };
+  return { mergeProps: readonly(mergeProps), setProps, setColumn, addColumn, delColumn };
 };

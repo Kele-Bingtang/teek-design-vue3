@@ -54,5 +54,5 @@ export const useBrowserTitle = () => {
 
   tryOnScopeDispose(stop);
 
-  return { browserTitle, getBrowserTitle };
+  return { browserTitle: readonly(browserTitle), getBrowserTitle };
 };

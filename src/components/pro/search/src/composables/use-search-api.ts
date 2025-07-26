@@ -85,7 +85,7 @@ export const useSearchApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns
   };
 
   return {
-    mergeProps,
+    mergeProps: readonly(mergeProps),
     setValues,
     setProps,
     setColumn,

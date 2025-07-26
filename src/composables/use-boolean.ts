@@ -17,7 +17,7 @@ export function useBoolean(initValue = false) {
   }
 
   return {
-    bool,
+    bool: readonly(bool),
     setBool,
     setTrue,
     setFalse,
