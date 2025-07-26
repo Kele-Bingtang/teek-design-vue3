@@ -1,4 +1,4 @@
-## TODO
+# TODO
 
 ## 特性
 
@@ -6,7 +6,6 @@
 
 ## 优化
 
-- Websocket Store 优化
 - 菜单支持切换深色/浅色主题
 - ProTable 添加 PointTag 组件
 - ModelBaseValueType 替换 unknown

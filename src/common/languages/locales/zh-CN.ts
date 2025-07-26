@@ -155,6 +155,10 @@ export default {
     ChatTemplate: "聊天",
     PricingTemplate: "定价",
 
+    Websocket: "Websocket",
+    WebsocketBasic: "基础使用",
+    WebsocketAdvanced: "高级使用",
+
     Document: "使用文档",
   },
   _tabNav: {

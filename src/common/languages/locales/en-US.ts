@@ -154,6 +154,10 @@ export default {
     ChatTemplate: "Chat",
     PricingTemplate: "Pricing",
 
+    Websocket: "Websocket",
+    WebsocketBasic: "Basic",
+    WebsocketAdvanced: "Advanced",
+
     Document: "Document",
   },
   _tabNav: {

@@ -198,6 +198,32 @@ export const rolesRoutes: RouterConfigRaw[] = [
   { ...outerChainRoutes },
   { ...detailsRoutes },
   {
+    path: "/websocket",
+    name: "Websocket",
+    meta: {
+      title: "标签页操作",
+      icon: Discount,
+    },
+    children: [
+      {
+        path: "basic",
+        name: "WebsocketBasic",
+        component: "/websocket/index",
+        meta: {
+          title: "基础使用",
+        },
+      },
+      {
+        path: "advanced",
+        name: "WebsocketAdvanced",
+        component: "/websocket/advanced",
+        meta: {
+          title: "高级使用",
+        },
+      },
+    ],
+  },
+  {
     path: "/tabs",
     name: "Tabs",
     component: "/tabs/index",
