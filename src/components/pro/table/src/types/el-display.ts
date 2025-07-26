@@ -1,6 +1,6 @@
 import type { MaybeRef, MaybeRefOrGetter } from "vue";
 import type { AvatarProps, ImageProps, LinkProps, ProgressProps, TagProps } from "element-plus";
-import type { ElOption } from "@/components/pro/form-item";
+import type { ElOption, ElOptionField } from "@/components/pro/form-item";
 import type { TableComponentEnum } from "../helper";
 import type { OperationNamespace } from "./table-column-operation";
 
@@ -42,6 +42,14 @@ export type ElProps = LinkProps | TagProps | ProgressProps | ImageProps | Avatar
 
 export interface ElDisplayProps {
   /**
+   * 没有经过格式化的原始数据
+   */
+  originValue?: unknown;
+  /**
+   * 格式化后的数据，用于显示
+   */
+  displayValue?: unknown;
+  /**
    * 指定组件进行修饰
    */
   el?: MaybeRefOrGetter<TableElType> | OperationNamespace.ExtraProp["el"];
@@ -54,11 +62,7 @@ export interface ElDisplayProps {
    */
   options?: ElOption[];
   /**
-   * 没有经过格式化的原始数据
+   * 自定义字典的 key
    */
-  originValue?: unknown;
-  /**
-   * 格式化后的数据，用于显示
-   */
-  displayValue?: unknown;
+  optionField?: ElOptionField;
 }

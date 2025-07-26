@@ -7,6 +7,7 @@ const border = ref(false);
 
 const data = {
   name: "Teek",
+  gender: 1,
   status: 1,
   tag: "success",
   progress: 30,
@@ -23,13 +24,23 @@ const data = {
 const columns: DescriptionColumn[] = [
   { label: "名称", prop: "name", el: "Copy" },
   {
+    prop: "gender",
+    label: "性别",
+    el: "el-tag",
+    options: [
+      { label: "男", value: 1 },
+      { label: "女", value: 2 },
+    ],
+  },
+  {
     label: "状态",
     prop: "status",
+    el: "point-tag",
     options: [
-      { label: "未解决", value: "0" },
-      { label: "已解决", value: "1" },
-      { label: "解决中", value: "2" },
-      { label: "失败", value: "3" },
+      { label: "未解决", value: 0, tagColor: "red" },
+      { label: "已解决", value: 1, tagColor: "blue" },
+      { label: "解决中", value: 2, tagColor: "yellow" },
+      { label: "失败", value: 3, tagColor: "red" },
     ],
   },
   { label: "标签", width: 120, prop: "tag", el: "el-tag" },

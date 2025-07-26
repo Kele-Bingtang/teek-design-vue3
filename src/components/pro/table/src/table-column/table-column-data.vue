@@ -287,6 +287,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :el="column.el"
         :el-props="column.elProps"
         :options="scope.row._options?.[prop(column)]"
+        :option-field="column.optionField"
       >
         <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
           <component :is="slot" v-bind="{ ...getRenderParams(scope, column), ...data }" />

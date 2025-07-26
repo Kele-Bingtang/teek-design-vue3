@@ -56,7 +56,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
       </el-tag>
       <PointTag
         v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
-        theme="danger"
+        type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"
       />
@@ -82,7 +82,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
       </el-tag>
       <PointTag
         v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
-        theme="danger"
+        type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"
       />

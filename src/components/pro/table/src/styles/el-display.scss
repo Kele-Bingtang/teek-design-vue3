@@ -1,4 +1,4 @@
-.#{$el-namespace}-copy-icon {
+.#{$el-namespace}-cell-copy-icon {
   margin-inline-start: 4px;
   vertical-align: sub;
   text-decoration: none;
@@ -9,4 +9,8 @@
   &:hover {
     color: cssVarEl(color-primary);
   }
+}
+
+.#{$admin-namespace}-cell-point-tag {
+  vertical-align: 1px;
 }

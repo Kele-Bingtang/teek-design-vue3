@@ -7,7 +7,6 @@
 ## 优化
 
 - 菜单支持切换深色/浅色主题
-- ProTable 添加 PointTag 组件
 - ModelBaseValueType 替换 unknown
 - unknown 改为 any
 - 路由结构优化：核心路由、静态路由、角色路由、动态路由

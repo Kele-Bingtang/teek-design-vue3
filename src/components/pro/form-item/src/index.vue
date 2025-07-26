@@ -63,21 +63,20 @@ const elModel = computed({
 });
 
 // 插槽参数
-const slotParams = computed<Recordable>(
-  () =>
-    ({
-      value: elModel.value,
-      model: model.value,
-      label: labelValue.value,
-      options: enums.value,
-      elProps: elPropsValue.value,
-      formItemProps: formItemPropsValue.value,
-      update: updateElModel,
-      column: { ...props },
-    }) as FormItemRenderParams
-);
+const renderParams = computed<Recordable>(() => {
+  return {
+    value: elModel.value,
+    model: model.value,
+    label: labelValue.value,
+    options: enums.value,
+    elProps: elPropsValue.value,
+    formItemProps: formItemPropsValue.value,
+    update: updateElModel,
+    column: { ...props },
+  } as FormItemRenderParams;
+});
 
-watch(elModel, () => emits("change", elModel.value, model.value, slotParams.value));
+watch(elModel, () => emits("change", elModel.value, model.value, renderParams.value));
 
 // 有子组件的表单组件映射
 const childComponentMap: Record<string, { root: Component; child?: Component }> = {
@@ -214,11 +213,11 @@ defineExpose(expose);
   >
     <template v-if="editableValue && showLabelValue" #label="{ label }">
       <!-- 自定义 label（h、JSX）渲染 -->
-      <component v-if="renderLabel" :is="renderLabel(slotParams)" />
+      <component v-if="renderLabel" :is="renderLabel(renderParams)" />
       <!-- 自定义 renderLabelHTML 函数渲染，返回 HTML 格式 -->
-      <span v-else-if="renderLabelHTML" v-html="renderLabelHTML(slotParams)" />
+      <span v-else-if="renderLabelHTML" v-html="renderLabelHTML(renderParams)" />
       <!-- 自定义 label 插槽 -->
-      <slot v-else-if="$slots[`${prop}-label`]" :name="`${prop}-label`" v-bind="slotParams" />
+      <slot v-else-if="$slots[`${prop}-label`]" :name="`${prop}-label`" v-bind="renderParams" />
       <!-- 默认 Label -->
       <template v-else-if="label">{{ label }}</template>
 
@@ -248,9 +247,9 @@ defineExpose(expose);
 
     <template v-if="editableValue">
       <!-- 自定义表单组件（h、JSX）渲染-->
-      <component v-if="render" :is="render(slotParams)" v-model="elModel" v-bind="elPropsValue" />
+      <component v-if="render" :is="render(renderParams)" v-model="elModel" v-bind="elPropsValue" />
       <!-- 自定义表单组件插槽 -->
-      <slot v-else-if="$slots[prop]" :name="prop" v-bind="slotParams" />
+      <slot v-else-if="$slots[prop]" :name="prop" v-bind="renderParams" />
 
       <template v-else>
         <el-divider v-if="formEl === FormElComponentEnum.EL_DIVIDER" v-bind="elPropsValue">
@@ -268,7 +267,7 @@ defineExpose(expose);
           :style="{ width: withValue }"
         >
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">
-            <component :is="slot" v-bind="{ ...slotParams, ...data }" />
+            <component :is="slot" v-bind="{ ...renderParams, ...data }" />
           </template>
         </el-upload>
 
@@ -284,7 +283,7 @@ defineExpose(expose);
           <component :is="childComponentMap[formEl].child" :options="enums" :optionField :el="formEl" />
 
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">
-            <component :is="slot" v-bind="{ ...slotParams, ...data }" />
+            <component :is="slot" v-bind="{ ...renderParams, ...data }" />
           </template>
         </component>
 
@@ -313,7 +312,7 @@ defineExpose(expose);
           :style="{ width: withValue }"
         >
           <template v-for="(slot, key) in elSlots" :key="key" #[key]="data">
-            <component :is="slot" v-bind="{ ...slotParams, ...data }" />
+            <component :is="slot" v-bind="{ ...renderParams, ...data }" />
           </template>
         </component>
       </template>

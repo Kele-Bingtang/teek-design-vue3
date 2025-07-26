@@ -203,6 +203,7 @@ export const rolesRoutes: RouterConfigRaw[] = [
     meta: {
       title: "标签页操作",
       icon: Discount,
+      tagText: "New",
     },
     children: [
       {

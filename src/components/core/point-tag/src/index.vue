@@ -8,7 +8,7 @@ const ns = useNamespace("point-tag");
 
 withDefaults(defineProps<PointTagProps>(), {
   color: "",
-  theme: "primary",
+  type: "primary",
   size: 8,
   position: "left",
   offset: 4,
@@ -17,7 +17,7 @@ withDefaults(defineProps<PointTagProps>(), {
 
 <template>
   <i
-    :class="[ns.b(), ns.is(position), ns.is(theme, !color)]"
+    :class="[ns.b(), ns.is(position), ns.is(type, !color)]"
     :style="{ '--point-color': color, '--point-size': size, '--point-offset': offset }"
   />
 </template>

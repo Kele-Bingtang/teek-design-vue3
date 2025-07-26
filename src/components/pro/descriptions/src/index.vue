@@ -407,6 +407,8 @@ defineExpose({
             :display-value="getValue(column)"
             :el="column.el"
             :el-props="column.elProps"
+            :options="unref(optionsMap.get(column.prop || ''))"
+            :option-field="column.optionField"
           >
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
               <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
