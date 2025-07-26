@@ -5,6 +5,9 @@ import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pr
 import type ProDescriptions from "./index.vue";
 import type { ElDisplayProps } from "../../table";
 
+/**
+ * render、插槽参数类型
+ */
 export interface DescriptionsRenderParams {
   /**
    * 当前值
@@ -240,6 +243,10 @@ export interface ProDescriptionsProp {
  * ProDescriptions 事件
  */
 export interface ProDescriptionsEmits {
+  /**
+   * 注册事件
+   */
+  register: [proDescriptionsInstance: any];
   /**
    * 表单值改变事件
    */

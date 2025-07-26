@@ -24,21 +24,21 @@ export interface ComponentConfig {
   /**
    * 自定义函数渲染，与 is 二选一
    */
-  renderEl?: (value: unknown, props: Record<string, any>, formatValue: unknown) => VNode | Component;
+  renderEl?: (value: unknown, props: Recordable, formatValue: unknown) => VNode | Component;
   /**
    * 组件默认 Props，如果外界传入相同的配置，则会覆盖默认的配置
    */
   props?:
-    | Record<string, any>
-    | ((value: unknown, formatValue: unknown, options: ElDisplayProps["options"] | undefined) => Record<string, any>);
+    | Recordable
+    | ((value: unknown, formatValue: unknown, options: ElDisplayProps["options"] | undefined) => Recordable);
   /**
    * 格式化单元格数据
    */
-  format?: (value: unknown, props: Record<string, any>) => unknown;
+  format?: (value: unknown, props: Recordable) => unknown;
   /**
    * 是否隐藏单元格，默认不隐藏
    */
-  hidden?: (value: unknown, props: Record<string, any>) => boolean;
+  hidden?: (value: unknown, props: Recordable) => boolean;
 }
 
 /**
@@ -106,7 +106,7 @@ const tableElComponentsMap: Record<
   ElImage: {
     is: ElImage,
     props: value => {
-      const defaultProps: Record<string, any> = { fit: "cover", previewTeleported: true, src: "", previewSrcList: [] };
+      const defaultProps: Recordable = { fit: "cover", previewTeleported: true, src: "", previewSrcList: [] };
       if (isString(value)) {
         defaultProps.src = value;
         defaultProps.previewSrcList = [value];

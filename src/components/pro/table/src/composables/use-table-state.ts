@@ -30,7 +30,7 @@ export const useTableState = (options: UseTableStateOptions) => {
       pageNum: pageField?.pageNum ?? "pageNum",
       pageSize: pageField?.pageSize ?? "pageSize",
       pageSizes: pageField?.pageSizes ?? "pageSizes",
-      total: pageField?.pageSize ?? "total",
+      total: pageField?.total ?? "total",
     };
   });
 
@@ -82,7 +82,7 @@ export const useTableState = (options: UseTableStateOptions) => {
           [pageFieldSate.value.pageSize]: pageSize,
           [pageFieldSate.value.pageSizes]: pageSizes,
           [pageFieldSate.value.total]: total,
-        } = data;
+        } = result;
         handlePagination({ pageNum, pageSize, pageSizes }, false);
 
         state.pageInfo.total = total ?? data.length;

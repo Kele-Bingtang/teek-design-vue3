@@ -232,7 +232,7 @@ export const filterEmpty = <T extends Recordable>(obj: T) => {
  * @param columns 列配置
  * @param flatArr 扁平化后的列配置
  */
-export const flatColumnsFn = <T extends Record<string, any> = TableColumn>(
+export const flatColumnsFn = <T extends Recordable = TableColumn>(
   columns: T[],
   flatArr: T[] = [],
   key = "children"

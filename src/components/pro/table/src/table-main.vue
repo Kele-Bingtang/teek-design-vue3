@@ -108,7 +108,7 @@ function useTableInit() {
         initDataRowField(props.data as TableRow[], column, optionsMap);
       }
     },
-    { deep: true, flush: "post" }
+    { deep: true }
   );
 
   // 不对数据进行深度监听，当数据整体发生改变时，重新初始化

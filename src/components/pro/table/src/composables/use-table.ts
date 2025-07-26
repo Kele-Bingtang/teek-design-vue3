@@ -199,7 +199,7 @@ export const useProTable = () => {
     },
 
     /**
-     * 动态创建表格。使用该函数，控制台会有 warning： Slot "XXX" invoked outside of the render function，可以忽略
+     * 动态创建表格
      */
     createTable: async (
       el: MaybeRef<HTMLElement> | string,

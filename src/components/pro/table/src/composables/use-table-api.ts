@@ -53,11 +53,9 @@ export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
     const { columns = [] } = columnsProps.value;
 
     if (isString(propOrIndex)) {
-      return columns.forEach((column, i) => {
-        if (column.prop === propOrIndex) {
-          position === "after" ? columns.splice(i + 1, 0, column) : columns.splice(i, 0, column);
-        }
-      });
+      const index = columns.findIndex(item => item.prop === propOrIndex);
+      if (index !== -1) position === "after" ? columns.splice(index + 1, 0, column) : columns.splice(index, 0, column);
+      return;
     }
     if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
     return columns.push(column);

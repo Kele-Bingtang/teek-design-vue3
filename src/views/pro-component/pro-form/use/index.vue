@@ -397,7 +397,7 @@ const treeSelectData = [
 ];
 
 // 模拟远程加载
-const getTreeSelectData = () => {
+const getTreeSelectData = (): Promise<typeof treeSelectData> => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(treeSelectData);

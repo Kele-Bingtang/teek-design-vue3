@@ -36,8 +36,6 @@ const { setProFormItemInstance, getElFormItemInstance, getElInstance } = useForm
  * 表单数据初始化相关逻辑
  */
 function useFormInit() {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-
   // 计算属性：过滤掉需要销毁的表单项
   const availableColumns = computed(() => props.columns.filter(item => !destroyOrInit(item)) || []);
 
@@ -85,36 +83,30 @@ function useFormInit() {
   watch(
     availableColumns,
     columns => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
       // 防抖：防止初始化时连续执行
-      timer = setTimeout(() => {
-        const { cleanModel, notCleanModelKeys } = props;
+      const { cleanModel, notCleanModelKeys } = props;
 
-        columns.forEach((column, index) => {
-          // 初始化枚举数据
-          initOptionsMap(column.options, column.prop);
+      columns.forEach((column, index) => {
+        // 初始化枚举数据
+        initOptionsMap(column.options, column.prop);
 
-          // 设置表单排序默认值
-          column && (column.order = column.order ?? index + 5);
-          // 初始化值
-          initDefaultValue(column);
-        });
+        // 设置表单排序默认值
+        column && (column.order = column.order ?? index + 5);
+        // 初始化值
+        initDefaultValue(column);
+      });
 
-        // 排序表单项
-        columns.sort((a, b) => a.order! - b.order!);
+      // 排序表单项
+      columns.sort((a, b) => a.order! - b.order!);
 
-        if (!cleanModel) return;
-        // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
-        getObjectKeys(model.value).forEach(key => {
-          const isExist = columns.some(column => column.prop === key || notCleanModelKeys?.includes(key));
-          if (!isExist) deleteProp(model.value, key);
-        });
-      }, 10);
+      if (!cleanModel) return;
+      // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
+      getObjectKeys(model.value).forEach(key => {
+        const isExist = columns.some(column => column.prop === key || notCleanModelKeys?.includes(key));
+        if (!isExist) deleteProp(model.value, key);
+      });
     },
-    { immediate: true, deep: true }
+    { deep: true }
   );
 
   return { availableColumns, destroyOrInit };

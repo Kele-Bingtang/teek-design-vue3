@@ -8,6 +8,9 @@ import type { TableEditProps } from "./table-edit";
 import type { ElDisplayProps } from "./el-display";
 import type { OperationNamespace } from "./table-column-operation";
 
+/**
+ * render、插槽参数类型
+ */
 export interface TableRenderParams<T extends Recordable = Recordable> extends TableScope<T> {
   /**
    * 传入的原始值

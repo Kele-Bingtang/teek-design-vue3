@@ -1,17 +1,17 @@
 import type { Ref } from "vue";
-import type { FormColumn, ProFormNamespace } from "../types";
+import type { DescriptionColumn, ProDescriptionsProp } from "../types";
 import { ref, unref } from "vue";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
 /**
- * 使用 ProForm 的 API
+ * 使用 ProDescriptions 的 API
  *
  * @param model 表单数据
  * @param columnsProps 表单列配置
  */
-export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: FormColumn[] }>) => {
-  const mergeProps = ref<ProFormNamespace.Props>({});
+export const useDescriptionsApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: DescriptionColumn[] }>) => {
+  const mergeProps = ref<ProDescriptionsProp>({});
 
   /**
    * 设置 model 的值
@@ -23,11 +23,11 @@ export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: 
   };
 
   /**
-   * 设置 ProForm 组件的 props
+   * 设置 ProDescriptions 组件的 props
    *
-   * @param props 要添加的 ProForm props
+   * @param props 要添加的 ProDescriptions props
    */
-  const setProps = (props: ProFormNamespace.Props = {}) => {
+  const setProps = (props: ProDescriptionsProp = {}) => {
     mergeProps.value = Object.assign(unref(mergeProps), props);
   };
 
@@ -56,8 +56,8 @@ export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: 
    * @param position 添加的位置，before 或者 after
    */
   const addColumn = (
-    column: FormColumn,
-    propOrIndex?: FormColumn["prop"] | number,
+    column: DescriptionColumn,
+    propOrIndex?: DescriptionColumn["prop"] | number,
     position: "before" | "after" = "after"
   ) => {
     const { columns } = columnsProps.value;
@@ -76,11 +76,11 @@ export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: 
    *
    * @param prop prop
    */
-  const delColumn = (prop: FormColumn["prop"]) => {
+  const delColumn = (prop: DescriptionColumn["prop"]) => {
     const { columns } = columnsProps.value;
 
     const index = columns.findIndex(item => item.prop === prop);
-    if (index !== -1) columns.splice(index, 1);
+    if (index > -1) columns.splice(index, 1);
   };
 
   return {
