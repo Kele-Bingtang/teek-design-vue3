@@ -1,14 +1,13 @@
 import type { MaybeRef } from "vue";
 import type { TableInstance } from "element-plus";
-import type { ProTableInstance, ProTableNamespace, TableColumn } from "../types";
-import type { PageInfo } from "@/components/pro/pagination";
+import type { PageInfo, ProTableInstance, ProTableNamespace, TableColumn } from "../types";
 import type { RenderTypes } from "@/components/pro/form-item";
 import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
 import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProTable from "../index.vue";
 
 export const useProTable = () => {
@@ -19,8 +18,9 @@ export const useProTable = () => {
   const elTableInstance = ref<TableInstance | null>();
 
   const ns = useNamespace();
+  const settingStore = useSettingStore();
 
-  const { layoutSize } = storeToRefs(useLayoutStore());
+  const { layout } = storeToRefs(settingStore);
 
   const currentInstance = getCurrentInstance();
 
@@ -67,7 +67,7 @@ export const useProTable = () => {
      *
      * @param columnProps 需要设置的列
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: any }[]) => {
       const table = await getTable();
       table?.setColumn(columnProps);
     },
@@ -98,9 +98,9 @@ export const useProTable = () => {
     /**
      * 获取表格数据（调用接口）
      */
-    getTableList: async () => {
+    fetch: async () => {
       const table = await getTable();
-      return table?.getTableList();
+      return table?.fetch();
     },
     /**
      * 更新表格分页信息，从而更新表格数据
@@ -199,7 +199,7 @@ export const useProTable = () => {
     },
 
     /**
-     * 动态创建表格。使用该函数，控制台会有 warning： Slot "XXX" invoked outside of the render function，可以忽略
+     * 动态创建表格
      */
     createTable: async (
       el: MaybeRef<HTMLElement> | string,
@@ -209,7 +209,7 @@ export const useProTable = () => {
       const proTableInstance = createVNode(ProTable, { ...proTableProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proTableInstance }
       );
       await nextTick();

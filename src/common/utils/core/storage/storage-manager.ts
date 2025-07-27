@@ -1,22 +1,48 @@
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
+
+type StorageType = "localStorage" | "sessionStorage";
+
+interface StorageManagerOptions {
+  type?: StorageType;
+  prefix?: string;
+  version?: string;
+}
 
 export class StorageManager {
-  static readonly cacheKeyPrefix = SystemConfig.keyConfig.cacheKeyPrefix;
-  static readonly version = __APP_INFO__.pkg.version;
-
   private defaultExcludes = [""];
 
-  private type: "sessionStorage" | "localStorage" = "localStorage";
+  private type: StorageType;
+  private prefix: string;
+  private version: string;
 
-  constructor(type: "sessionStorage" | "localStorage" = "localStorage") {
+  constructor({ type = "localStorage", prefix = "", version = "" }: StorageManagerOptions) {
     this.type = type;
+    this.prefix = prefix;
+    this.version = version;
+  }
+
+  public getStorage() {
+    return window[this.type];
+  }
+
+  public getPrefix() {
+    return this.prefix;
+  }
+
+  public getVersion() {
+    return this.version;
   }
 
   /**
    * 获取规范化的 key 值
    */
-  static normalizeKey(key: string) {
-    return `${this.cacheKeyPrefix}:v${this.version}:${key}`;
+  public normalizeKey(key: string) {
+    let keyStr = "";
+
+    if (this.prefix) keyStr += `${this.prefix}:`;
+    if (this.version) keyStr += `v${this.version}:`;
+    keyStr += key;
+    return keyStr;
   }
 
   /**
@@ -30,7 +56,7 @@ export class StorageManager {
    * 获取存储的值
    */
   getItem<T = any>(key: string, normalizeKey = true): T | null {
-    const storageValue = window[this.type].getItem(normalizeKey ? StorageManager.normalizeKey(key) : key);
+    const storageValue = window[this.type].getItem(normalizeKey ? this.normalizeKey(key) : key);
     if (!storageValue) return null;
 
     const { value } = JSON.parse(storageValue);
@@ -42,24 +68,21 @@ export class StorageManager {
    */
   setItem(key: string, value: any, normalizeKey = true) {
     const valueType = this.getValueType(value);
-    window[this.type].setItem(
-      normalizeKey ? StorageManager.normalizeKey(key) : key,
-      JSON.stringify({ _type: valueType, value })
-    );
+    window[this.type].setItem(normalizeKey ? this.normalizeKey(key) : key, JSON.stringify({ _type: valueType, value }));
   }
 
   /**
    * 删除存储的值
    */
   removeItem(key: string, normalizeKey = true) {
-    window[this.type].removeItem(normalizeKey ? StorageManager.normalizeKey(key) : key);
+    window[this.type].removeItem(normalizeKey ? this.normalizeKey(key) : key);
   }
 
   /**
    * 删除多个存储的值
    */
   removeItems(keys: string[], normalizeKey = true) {
-    keys.forEach(key => window[this.type].removeItem(normalizeKey ? StorageManager.normalizeKey(key) : key));
+    keys.forEach(key => window[this.type].removeItem(normalizeKey ? this.normalizeKey(key) : key));
   }
 
   /**
@@ -68,11 +91,11 @@ export class StorageManager {
   clear(excludes?: string[], normalizeKey = true) {
     // 获取排除项
     const excludesArr = (excludes ? [...excludes, ...this.defaultExcludes] : this.defaultExcludes).map(key =>
-      normalizeKey ? StorageManager.normalizeKey(key) : key
+      normalizeKey ? this.normalizeKey(key) : key
     );
     const keys = Object.keys(window[this.type]);
     const includesKeys = excludesArr.length
-      ? keys.filter(key => !excludesArr.includes(key) && key.startsWith(StorageManager.cacheKeyPrefix))
+      ? keys.filter(key => !excludesArr.includes(key) && key.startsWith(this.prefix))
       : keys;
 
     // 排除项不清除
@@ -80,7 +103,17 @@ export class StorageManager {
   }
 }
 
-const localStorageProxy = new StorageManager("localStorage");
-const sessionStorageProxy = new StorageManager("sessionStorage");
+// 创建项目使用的存储管理器
+const localStorageProxy = new StorageManager({
+  type: "localStorage",
+  prefix: serviceConfig.cache.cacheKeyPrefix,
+  version: __APP_INFO__.pkg.version,
+});
+
+const sessionStorageProxy = new StorageManager({
+  type: "sessionStorage",
+  prefix: serviceConfig.cache.cacheKeyPrefix,
+  version: __APP_INFO__.pkg.version,
+});
 
 export { localStorageProxy, sessionStorageProxy };

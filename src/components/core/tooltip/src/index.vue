@@ -11,7 +11,7 @@ import { storeToRefs } from "pinia";
 import { ElTooltip } from "element-plus";
 import { useResizeObserver } from "@vueuse/core";
 import { useSettingStore } from "@/pinia";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { isFunction } from "@/common/utils";
 import type { TooltipProps } from "./types";
 
@@ -33,7 +33,7 @@ const attrs = useAttrs();
 const { isDark } = storeToRefs(useSettingStore());
 
 const effect = computed(() => {
-  const effect = SystemConfig.layoutConfig.tooltipEffect;
+  const effect = serviceConfig.layout.tooltipEffect;
   if (isFunction(effect)) return effect(isDark.value);
   return effect;
 });

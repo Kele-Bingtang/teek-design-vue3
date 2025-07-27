@@ -73,7 +73,7 @@ export namespace OperationNamespace {
      */
     confirm?:
       | boolean
-      | Record<string, any>
+      | Recordable
       | Confirm<OperationConfirmEl.ElPopconfirm | `${OperationConfirmEl.ElPopconfirm}`>
       | Confirm<OperationConfirmEl.ElMessageBox | `${OperationConfirmEl.ElMessageBox}`>;
   }

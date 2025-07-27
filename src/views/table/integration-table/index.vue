@@ -1,12 +1,12 @@
 <script setup lang="ts" name="IntegrationTable">
 import type { FormInstance } from "element-plus";
-import type { PageInfo } from "@/components";
+import type { PaginationInfo } from "@/components";
 import { ref, useTemplateRef, shallowRef, onMounted, nextTick, watch, reactive } from "vue";
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { Search, Refresh, Plus, Check, EditPen, Delete, Star } from "@element-plus/icons-vue";
 import Sortable from "sortablejs";
 import { tableStatusFilter } from "@/common/config";
-import { Pagination, TableSort, defaultPageInfo } from "@/components";
+import { Pagination, TableSort, defaultPaginationInfo } from "@/components";
 import { useNamespace } from "@/composables";
 import { largeData } from "@/mock/table/common";
 
@@ -78,7 +78,7 @@ const tableKey = ref(0);
 const showAddress = ref(false);
 const loading = ref(true);
 const tableData = ref(largeData);
-const paging = reactive(defaultPageInfo);
+const paging = reactive(defaultPaginationInfo);
 const singleSearchKey = ref("");
 const singleSearchValue = ref("");
 const multipleSearchParams = reactive({
@@ -281,7 +281,7 @@ const handleDelete = (row: any, index: number) => {
     .catch(() => {});
 };
 
-const handleSizeChange = (pagingParam: PageInfo) => {
+const handleSizeChange = (pagingParam: PaginationInfo) => {
   paging.pageNum = pagingParam.pageNum;
   paging.pageSize = pagingParam.pageSize;
 };

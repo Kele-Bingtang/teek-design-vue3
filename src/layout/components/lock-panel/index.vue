@@ -8,7 +8,7 @@ import { storeToRefs } from "pinia";
 import { ElDialog, ElForm, ElFormItem, ElButton, ElInput, ElIcon, ElMessage } from "element-plus";
 import { Unlock, Lock } from "@element-plus/icons-vue";
 import { mittBus } from "@/common/utils";
-import SystemConfig, { LOGIN_URL, OpenLockPanelKey } from "@/common/config";
+import { serviceConfig, LOGIN_URL, OpenLockPanelKey } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useUserStore } from "@/pinia";
 import { useDisableDevTools } from "./use-disabled-dev-tools";
@@ -127,7 +127,7 @@ const handleUnlock = async (formEl: FormInstance | null) => {
  * @param text 明文
  * @param key 密钥
  */
-const encrypt = (text: string, key = SystemConfig.layoutConfig.lockSecretKey) => {
+const encrypt = (text: string, key = serviceConfig.layout.lockSecretKey) => {
   let result = "";
   for (let i = 0; i < text.length; i++) {
     // 字符与密钥按位异或
@@ -143,7 +143,7 @@ const encrypt = (text: string, key = SystemConfig.layoutConfig.lockSecretKey) =>
  * @param encoded 加密后的字符串
  * @param key 密钥
  */
-const decrypt = (encoded: string, key = SystemConfig.layoutConfig.lockSecretKey) => {
+const decrypt = (encoded: string, key = serviceConfig.layout.lockSecretKey) => {
   const decoded = atob(encoded);
   let result = "";
   for (let i = 0; i < decoded.length; i++) {

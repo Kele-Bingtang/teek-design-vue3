@@ -90,7 +90,7 @@ interface ImportMetaEnv {
   /**
    * 路由权限模式，默认前端 frontend
    */
-  VITE_ROUTE_ACCESS_MODE: "frontend" | "backend" | "both";
+  VITE_ROUTE_ACCESS_MODE: "frontend" | "backend" | "mixed";
   /**
    * 是否使用 Vue DevTools 插件
    */

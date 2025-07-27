@@ -1,8 +1,7 @@
-import { ref, watch } from "vue";
+import { ref, readonly } from "vue";
 import { useRoute } from "vue-router";
-import { tryOnScopeDispose } from "@vueuse/core";
 import { TitleModeEnum } from "@/common/enums";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { formatTitle } from "@/router/helper";
 import { useSettingStore, useUserStore } from "@/pinia";
 
@@ -20,7 +19,7 @@ export const useBrowserTitle = () => {
    * 获取浏览器的页面预设标题
    */
   const getBrowserTitle = () => {
-    const { name } = SystemConfig.systemInfo;
+    const { name } = serviceConfig.layout;
     const { titleMode } = settingStore;
     const pageTitle = formatTitle(route);
 
@@ -41,18 +40,14 @@ export const useBrowserTitle = () => {
   };
 
   /**
-   * 根据当前跳转的路由设置修改浏览器的页面标题
+   * 设置浏览器标题
+   *
+   * @param title 标题
    */
-  const stop = watch(
-    () => route.fullPath,
-    () => {
-      browserTitle.value = getBrowserTitle();
-      window.document.title = browserTitle.value;
-    },
-    { immediate: true }
-  );
+  const setBrowserTitle = (title?: string) => {
+    browserTitle.value = getBrowserTitle();
+    window.document.title = title || browserTitle.value;
+  };
 
-  tryOnScopeDispose(stop);
-
-  return { browserTitle, getBrowserTitle };
+  return { browserTitle: readonly(browserTitle), getBrowserTitle, setBrowserTitle };
 };

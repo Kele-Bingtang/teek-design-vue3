@@ -2,7 +2,7 @@ export interface PointTagProps {
   /** 颜色 */
   color?: string;
   /** 主题，当传入 color 时，会覆盖主题 */
-  theme?: "primary" | "success" | "warning" | "danger" | "info" | "error" | "";
+  type?: "primary" | "success" | "warning" | "danger" | "info" | "error" | "";
   /** 大小 */
   size?: number | string;
   /** 位置 */

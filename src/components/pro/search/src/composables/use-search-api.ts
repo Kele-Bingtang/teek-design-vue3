@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 import type { FormColumn } from "@/components/pro/form";
 import type { ProSearchProps } from "../types";
-import { ref, unref } from "vue";
+import { ref, unref, readonly } from "vue";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
@@ -85,7 +85,7 @@ export const useSearchApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns
   };
 
   return {
-    mergeProps,
+    mergeProps: readonly(mergeProps),
     setValues,
     setProps,
     setColumn,

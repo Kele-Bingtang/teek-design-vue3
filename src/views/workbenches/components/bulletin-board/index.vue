@@ -63,7 +63,7 @@ const handleMore = () => {
             :class="[ns.e('item'), ns.has('read', item.hasRead)]"
             class="flx-align-center gap-10 sle"
           >
-            <PointTag v-if="!item.hasRead" theme="danger" :size="6" :offset="0" />
+            <PointTag v-if="!item.hasRead" type="danger" :size="6" :offset="0" />
             <el-tag type="info">{{ item.tag }}</el-tag>
             <Tooltip placement="top">
               <span class="title">{{ item.title }}</span>

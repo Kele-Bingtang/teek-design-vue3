@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
@@ -10,11 +10,13 @@ defineOptions({ name: "Watermark" });
 const ns = useNamespace("watermark");
 const settingStore = useSettingStore();
 
-const watermark = SystemConfig.systemInfo.name;
+const { layout } = storeToRefs(settingStore);
+
+const watermark = serviceConfig.layout.name;
 </script>
 
 <template>
-  <div v-if="settingStore.watermark" :class="ns.b()">
+  <div v-if="layout.watermark" :class="ns.b()">
     <el-watermark :content="watermark">
       <div style="height: 100vh"></div>
     </el-watermark>

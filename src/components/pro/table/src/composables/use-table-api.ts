@@ -1,6 +1,6 @@
 import type { Ref } from "vue";
 import type { ProTableNamespace, TableColumn } from "../types";
-import { ref, unref } from "vue";
+import { ref, unref, readonly } from "vue";
 import { isString } from "@/common/utils";
 import { setProp } from "@/components/pro/helper";
 
@@ -53,11 +53,9 @@ export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
     const { columns = [] } = columnsProps.value;
 
     if (isString(propOrIndex)) {
-      return columns.forEach((column, i) => {
-        if (column.prop === propOrIndex) {
-          position === "after" ? columns.splice(i + 1, 0, column) : columns.splice(i, 0, column);
-        }
-      });
+      const index = columns.findIndex(item => item.prop === propOrIndex);
+      if (index !== -1) position === "after" ? columns.splice(index + 1, 0, column) : columns.splice(index, 0, column);
+      return;
     }
     if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
     return columns.push(column);
@@ -75,5 +73,5 @@ export const useTableApi = (columnsProps: Ref<{ columns: TableColumn[] }>) => {
     if (index > -1) columns.splice(index, 1);
   };
 
-  return { mergeProps, setProps, setColumn, addColumn, delColumn };
+  return { mergeProps: readonly(mergeProps), setProps, setColumn, addColumn, delColumn };
 };

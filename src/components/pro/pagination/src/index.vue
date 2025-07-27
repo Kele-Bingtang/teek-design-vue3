@@ -6,7 +6,7 @@
   4、提供 left、right 插槽，用于自定义分页组件的左侧和右侧内容
  -->
 <script lang="ts">
-export const defaultPageInfo: PageInfo = {
+export const defaultPaginationInfo: PaginationInfo = {
   pageNum: 1,
   pageSizes: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
   pageSize: 20,
@@ -14,7 +14,7 @@ export const defaultPageInfo: PageInfo = {
 </script>
 
 <script setup lang="ts">
-import type { PaginationEmits, PaginationProps, PageInfo } from "./types";
+import type { PaginationEmits, PaginationProps, PaginationInfo } from "./types";
 import { nextTick, ref, watch } from "vue";
 import { ElPagination } from "element-plus";
 import { useNamespace } from "@/composables";
@@ -33,12 +33,12 @@ const props = withDefaults(defineProps<PaginationProps>(), {
 
 const emits = defineEmits<PaginationEmits>();
 
-const pageModel = defineModel<PageInfo>({ default: () => defaultPageInfo });
-const pageInfo = ref({ ...defaultPageInfo, ...pageModel.value });
+const pageModel = defineModel<PaginationInfo>({ default: () => defaultPaginationInfo });
+const pageInfo = ref({ ...defaultPaginationInfo, ...pageModel.value });
 
 watch(
   () => pageModel.value,
-  val => (pageInfo.value = { ...defaultPageInfo, ...val }),
+  val => (pageInfo.value = { ...defaultPaginationInfo, ...val }),
   { deep: true }
 );
 
@@ -77,7 +77,7 @@ const afterChange = async () => {
   }
 };
 
-defineExpose({ defaultPageInfo });
+defineExpose({ defaultPaginationInfo });
 </script>
 
 <template>

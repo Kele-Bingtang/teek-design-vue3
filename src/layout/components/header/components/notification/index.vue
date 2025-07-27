@@ -77,8 +77,8 @@ const noticeList: Notice[] = [
 const arList: Notice[] = [
   {
     id: "1",
-    title: "Kbt Vue3 Admin 版本发布",
-    description: "Kbt Vue3 Admin 版本发布",
+    title: "Teek Design Vue3 版本发布",
+    description: "Teek Design Vue3 版本发布",
     tag: [
       { name: "高", type: "danger" },
       { name: "已过期 7 天", type: "danger" },

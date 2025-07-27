@@ -1,6 +1,6 @@
 import type { Component, VNode } from "vue";
 import type { ElDisplayProps, TablePascalCaseComponentName } from "../types";
-import { withModifiers, h } from "vue";
+import { withModifiers, h, Fragment } from "vue";
 import {
   ElLink,
   ElTag,
@@ -15,6 +15,17 @@ import {
 } from "element-plus";
 import { DocumentCopy } from "@element-plus/icons-vue";
 import { isArray, isString, isEmpty } from "@/common/utils";
+import { PointTag } from "@/components/core/point-tag";
+import { useNamespace } from "@/composables";
+
+export interface ElRenderParams {
+  originValue: unknown;
+  displayValue: unknown;
+  formatValue: unknown;
+  props: Recordable;
+  options: ElDisplayProps["options"];
+  optionField: ElDisplayProps["optionField"];
+}
 
 export interface ComponentConfig {
   /**
@@ -24,21 +35,19 @@ export interface ComponentConfig {
   /**
    * 自定义函数渲染，与 is 二选一
    */
-  renderEl?: (value: unknown, props: Record<string, any>, formatValue: unknown) => VNode | Component;
+  renderEl?: (scope: ElRenderParams) => VNode | Component;
   /**
    * 组件默认 Props，如果外界传入相同的配置，则会覆盖默认的配置
    */
-  props?:
-    | Record<string, any>
-    | ((value: unknown, formatValue: unknown, options: ElDisplayProps["options"] | undefined) => Record<string, any>);
+  props?: Recordable | ((scope: ElRenderParams) => Recordable);
   /**
    * 格式化单元格数据
    */
-  format?: (value: unknown, props: Record<string, any>) => unknown;
+  format?: (value: unknown, props: Recordable) => unknown;
   /**
    * 是否隐藏单元格，默认不隐藏
    */
-  hidden?: (value: unknown, props: Record<string, any>) => boolean;
+  hidden?: (value: unknown, props: Recordable) => boolean;
 }
 
 /**
@@ -52,9 +61,10 @@ export enum TableComponentEnum {
   EL_PROGRESS = "ElProgress",
   EL_IMAGE = "ElImage",
   EL_AVATAR = "ElAvatar",
-  Date = "Date",
-  Money = "Money",
-  Copy = "Copy",
+  DATE = "Date",
+  MONEY = "Money",
+  COPY = "Copy",
+  POINT_TAG = "PointTag",
 }
 
 /**
@@ -70,10 +80,11 @@ const tableElComponentsMap: Record<
   ElTag: {
     is: ElTag,
     hidden: value => isEmpty(value),
-    props: (value, _, options) => {
-      const option = options?.find(item => item.label === value) || {};
-      const { tagType, tagEffect, tagColor, tagSize, tagRound, tagHit } = option;
+    props: ({ originValue, options, optionField }) => {
+      const option = findOption(originValue, options, optionField);
+      if (!option) return {};
 
+      const { tagType, tagEffect, tagColor, tagSize, tagRound, tagHit } = option;
       return {
         type: tagType,
         effect: tagEffect,
@@ -88,10 +99,11 @@ const tableElComponentsMap: Record<
   ElCheckTag: {
     is: ElCheckTag,
     hidden: value => isEmpty(value),
-    props: (value, _, options) => {
-      const option = options?.find(item => item.label === value) || {};
-      const { tagType, tagDisabled } = option;
+    props: ({ originValue, options, optionField }) => {
+      const option = findOption(originValue, options, optionField);
+      if (!option) return {};
 
+      const { tagType, tagDisabled } = option;
       return {
         type: tagType,
         disabled: tagDisabled,
@@ -101,24 +113,24 @@ const tableElComponentsMap: Record<
   // Link
   ElLink: { is: ElLink, hidden: value => isEmpty(value), props: { type: "primary" } },
   // 进度条
-  ElProgress: { is: ElProgress, props: value => ({ percentage: value }) },
+  ElProgress: { is: ElProgress, props: ({ displayValue }) => ({ percentage: displayValue }) },
   // 图片
   ElImage: {
     is: ElImage,
-    props: value => {
+    props: ({ displayValue }) => {
       const defaultProps: Record<string, any> = { fit: "cover", previewTeleported: true, src: "", previewSrcList: [] };
-      if (isString(value)) {
-        defaultProps.src = value;
-        defaultProps.previewSrcList = [value];
-      } else if (isArray(value)) {
-        defaultProps.src = value[0];
-        defaultProps.previewSrcList = value;
+      if (isString(displayValue)) {
+        defaultProps.src = displayValue;
+        defaultProps.previewSrcList = [displayValue];
+      } else if (isArray(displayValue)) {
+        defaultProps.src = displayValue[0];
+        defaultProps.previewSrcList = displayValue;
       }
       return defaultProps;
     },
   },
   // 头像
-  ElAvatar: { is: ElAvatar, props: value => ({ src: value }) },
+  ElAvatar: { is: ElAvatar, props: ({ displayValue }) => ({ src: displayValue }) },
   // 日期
   Date: {
     is: "span",
@@ -142,21 +154,52 @@ const tableElComponentsMap: Record<
   // 值复制
   Copy: {
     hidden: value => isEmpty(value),
-    renderEl: (value, props) =>
+    renderEl: ({ displayValue, props }) =>
       h("span", {}, [
-        h("span", {}, { default: () => value }),
+        h("span", {}, { default: () => displayValue }),
         h(
           ElIcon,
           {
             size: "16",
             ...props,
-            class: props.class ? `${props.class} el-copy-icon` : "el-copy-icon",
-            onClick: withModifiers(() => copy(value + ""), ["stop"]),
+            class: props.class ? `${props.class} el-cell-copy-icon` : "el-cell-copy-icon",
+            onClick: withModifiers(() => copy(displayValue + ""), ["stop"]),
           },
           { default: () => h(DocumentCopy) }
         ),
       ]),
   },
+  PointTag: {
+    hidden: value => isEmpty(value),
+    props: ({ originValue, options, optionField }) => {
+      const option = findOption(originValue, options, optionField);
+      if (!option) return {};
+
+      const { tagType, tagColor, tagSize, tagPosition, tagOffset } = option;
+      return {
+        type: tagType,
+        color: tagColor,
+        size: tagSize,
+        position: tagPosition,
+        offset: tagOffset,
+      };
+    },
+    renderEl: ({ displayValue, props }) => {
+      return h(Fragment, null, [
+        h(PointTag, {
+          ...props,
+          class: props.class
+            ? `${props.class} ${useNamespace().namespace}-cell-point-tag`
+            : `${useNamespace().namespace}-cell-point-tag`,
+        }),
+        h("span", {}, { default: () => displayValue }),
+      ]);
+    },
+  },
+};
+
+const findOption = (value: unknown, options: ElDisplayProps["options"], optionField: ElDisplayProps["optionField"]) => {
+  return options?.find(item => item[optionField?.value ?? "value"] === value);
 };
 
 const copy = async (str: string) => {

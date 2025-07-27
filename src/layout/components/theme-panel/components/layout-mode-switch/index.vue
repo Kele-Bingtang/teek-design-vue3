@@ -12,7 +12,7 @@ const ns = useNamespace("layout-mode-switch");
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
-const { layoutMode } = storeToRefs(settingStore);
+const { layout } = storeToRefs(settingStore);
 
 const layoutModeList = [
   {
@@ -51,7 +51,9 @@ const layoutModeList = [
  * 切换布局模式
  */
 const switchLayoutMode = (layoutMode: LayoutModeEnum) => {
-  settingStore.$patch({ layoutMode });
+  settingStore.$patch({
+    layout: { layoutMode },
+  });
 };
 </script>
 
@@ -59,10 +61,10 @@ const switchLayoutMode = (layoutMode: LayoutModeEnum) => {
   <div :class="ns.b()" class="flx-wrap gap-15">
     <div v-for="item in layoutModeList" :key="item.mode" :class="ns.e('item')" @click="switchLayoutMode(item.mode)">
       <div
-        :class="[ns.e('box'), ns.join(item.mode), ns.is('active', item.mode === layoutMode)]"
+        :class="[ns.e('box'), ns.join(item.mode), ns.is('active', item.mode === layout.layoutMode)]"
         v-html="item.content"
       ></div>
-      <Icon :class="ns.m('icon')" v-show="item.mode === layoutMode"><CircleCheckFilled /></Icon>
+      <Icon :class="ns.m('icon')" v-show="item.mode === layout.layoutMode"><CircleCheckFilled /></Icon>
       <p :class="ns.m('name')">{{ item.name }}</p>
     </div>
   </div>

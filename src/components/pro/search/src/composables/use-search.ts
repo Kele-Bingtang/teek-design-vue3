@@ -3,11 +3,11 @@ import type { FormInstance } from "element-plus";
 import type { FormColumn } from "@/components/pro/form";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { ProSearchInstance, ProSearchOnEmits, ProSearchProps } from "../types";
-import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
+import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProSearch from "../index.vue";
 
 type ProSearchPropsWithModel = ProSearchProps & { modelValue?: Recordable };
@@ -20,8 +20,9 @@ export const useProSearch = () => {
 
   const ns = useNamespace();
   const currentInstance = getCurrentInstance();
+  const settingStore = useSettingStore();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const { layout } = storeToRefs(settingStore);
 
   /**
    * @param proSearch ProSearch 实例
@@ -72,7 +73,7 @@ export const useProSearch = () => {
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: any }[]) => {
       const search = await getProSearch();
       search?.setColumn(columnProps);
     },
@@ -189,7 +190,7 @@ export const useProSearch = () => {
       const proSearchInstance = createVNode(ProSearch, { ...proSearchProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proSearchInstance }
       );
 

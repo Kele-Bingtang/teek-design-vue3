@@ -1,14 +1,13 @@
 import type { Router } from "vue-router";
-import SystemConfig, { LOGIN_URL } from "@/common/config";
-import { NProgress } from "@/common/utils";
+import { serviceConfig, LOGIN_URL } from "@/common/config";
 import { useRouteFn } from "@/composables";
 import { useRouteStore, useUserStore } from "@/pinia";
 import { resetRouter } from "..";
 
-export const beforeEach = (router: Router) => {
+export const createAuthGuard = (router: Router) => {
   /**
-   * 路由拦截 beforeEach
-   **/
+   * 路由跳转开始
+   */
   router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();
     const routeStore = useRouteStore();
@@ -16,9 +15,7 @@ export const beforeEach = (router: Router) => {
     const accessToken = userStore.accessToken;
 
     // 白名单
-    const whiteList = SystemConfig.routerConfig.whiteList;
-
-    NProgress.start();
+    const whiteList = serviceConfig.router.whiteList;
 
     // 判断是访问登陆页，有 Token 就在当前页面，没有 Token 重置路由并放行到登陆页
     if (to.path === LOGIN_URL) {

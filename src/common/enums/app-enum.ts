@@ -43,7 +43,7 @@ export enum LanguageEnum {
 }
 
 // 布局大小
-export enum LayoutSizeEnum {
+export enum ElementPlusSizeEnum {
   Default = "default",
   Small = "small",
   Large = "large",
@@ -64,4 +64,17 @@ export enum HeaderStyleEnum {
   Bg = "bg",
   Line = "line",
   BgLine = "bgLine",
+}
+
+// 顶部菜单位置
+export enum HeaderMenuAlignEnum {
+  Start = "start",
+  Center = "center",
+  End = "end",
+}
+
+// 主题面板触发按钮位置
+export enum ThemePanelTriggerPositionEnum {
+  Header = "header",
+  Fixed = "fixed",
 }

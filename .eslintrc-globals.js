@@ -111,6 +111,8 @@ export default {
   NodeListOf: "readonly",
   AppInfo: "readonly",
   __APP_INFO__: "readonly",
-  http: "readonly",
+  httpNs: "readonly",
   log: "readonly",
+  DeepPartial: "readonly",
+  DeepReadonly: "readonly",
 };

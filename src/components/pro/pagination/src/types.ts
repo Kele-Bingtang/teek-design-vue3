@@ -37,7 +37,7 @@ export type PaginationEmits = {
   /**
    * 分页改变事件
    */
-  change: [pageInfo: PageInfo];
+  change: [pageInfo: PaginationInfo];
   /**
    * 当前页码改变事件
    */
@@ -48,7 +48,7 @@ export type PaginationEmits = {
   sizeChange: [pageSize: number];
 };
 
-export interface PageInfo {
+export interface PaginationInfo {
   /**
    * 当前页
    */
@@ -61,8 +61,4 @@ export interface PageInfo {
    * 一页显示多少条数据
    */
   pageSize: number;
-  /**
-   * 总条数
-   */
-  total?: number;
 }

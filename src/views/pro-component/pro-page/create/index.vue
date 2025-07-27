@@ -98,7 +98,6 @@ const columns: PageColumn[] = [
   {
     // 多级 prop
     prop: "user.detail.age",
-    renderUseProp: ["minAge", "maxAge"],
     label: "年龄",
     filterProps: {
       formColumn: { width: 400 },
@@ -111,7 +110,7 @@ const columns: PageColumn[] = [
     search: {
       el: "el-input-number",
       // 自定义 search 显示内容
-      render: (model: any) => {
+      render: ({ model }) => {
         return (
           <div class="flx-center">
             <ElInput vModel_trim={model.minAge} placeholder="最小年龄" />

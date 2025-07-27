@@ -2,13 +2,26 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { DescriptionColumn, ProDescriptionsEmits, ProDescriptionsProp, DescriptionsRenderParams } from "./types";
-import { computed, reactive, ref, toValue, unref, watch, watchEffect } from "vue";
-import { ElDescriptions, ElDescriptionsItem, ElButton } from "element-plus";
+import {
+  computed,
+  isReactive,
+  isRef,
+  onMounted,
+  reactive,
+  ref,
+  toValue,
+  unref,
+  useTemplateRef,
+  watch,
+  watchEffect,
+} from "vue";
+import { ElDescriptions, ElDescriptionsItem, ElButton, type DescriptionInstance } from "element-plus";
 import { isArray, isFunction } from "@/common/utils";
 import { filterOptions, filterOptionsValue, getProp, setProp } from "@/components/pro/helper";
 import { useOptions } from "@/components/pro/use-options";
 import { ElDisplay } from "@/components/pro/table";
 import { useNamespace } from "@/composables";
+import { useDescriptionsApi } from "./composables";
 import DescriptionsEdit from "./edit.vue";
 
 import "./index.scss";
@@ -38,57 +51,67 @@ const props = withDefaults(defineProps<ProDescriptionsProp>(), {
 const emits = defineEmits<ProDescriptionsEmits>();
 
 const ns = useNamespace("pro-descriptions");
+const elDescriptionsInstance = useTemplateRef<DescriptionInstance>("elDescriptionsInstance");
 
-const model = defineModel<Recordable>({ default: () => reactive({}) });
+const model = defineModel<Recordable>({ default: () => ({}) });
 
 const editable = ref(false);
 
-watchEffect(() => (editable.value = props.editable));
+// 最终的 props
+const finalProps = computed(() => {
+  const propsObj = {
+    ...props,
+    columns:
+      isRef(props.columns) || isReactive(props.columns)
+        ? props.columns
+        : (reactive(unref(props.columns)) as DescriptionColumn[]),
+  };
+  Object.assign(propsObj, mergeProps.value);
+  return propsObj;
+});
 
-const footerStyle = computed(() => ({
-  marginTop: "20px",
-  ...props.footerStyle,
-  display: "flex",
-  justifyContent: props.footerAlign === "left" ? "flex-start" : props.footerAlign === "center" ? "center" : "flex-end",
-}));
+const footerStyle = computed(() => {
+  const { footerStyle, footerAlign } = finalProps.value;
 
+  return {
+    marginTop: "20px",
+    ...footerStyle,
+    display: "flex",
+    justifyContent: footerAlign === "left" ? "flex-start" : footerAlign === "center" ? "center" : "flex-end",
+  };
+});
+
+const { mergeProps, setValues, setProps, setColumn, addColumn, delColumn } = useDescriptionsApi(model, finalProps);
 const { data: descriptionsData, isRequestGetData } = useDescriptionsDataInit();
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns } = useDescriptionsInit();
-const { proFormInstances, registerProFormInstance, getElFormInstance } = useFormInstanceGet();
+const { proFormInstances, registerProFormInstance, getProFormInstances } = useFormInstanceGet();
 
 const isEditable = computed(() => editable.value || availableColumns.value.some(column => column.editable));
+
+watchEffect(() => (editable.value = finalProps.value.editable));
 
 /**
  * 描述列表列配置初始化
  */
 function useDescriptionsInit() {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-
   // 过滤掉需要隐藏的配置项
-  const availableColumns = computed(() => props.columns.filter(item => !item.hidden) || []);
+  const availableColumns = computed(() => finalProps.value.columns.filter(item => !item.hidden) || []);
 
   watch(
     availableColumns,
     columns => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
+      columns.forEach((column, index) => {
+        // 初始化枚举数据
+        initOptionsMap(column.options, column.prop || "");
+        // 设置配置项排序默认值
+        column && (column.order = column.order ?? index + 5);
+      });
 
-      timer = setTimeout(async () => {
-        columns.forEach((column, index) => {
-          // 初始化枚举数据
-          initOptionsMap(column.options, column.prop || "");
-          // 设置配置项排序默认值
-          column && (column.order = column.order ?? index + 5);
-        });
-
-        // 排序配置项
-        columns.sort((a, b) => a.order! - b.order!);
-      }, 10);
+      // 排序配置项
+      columns.sort((a, b) => a.order! - b.order!);
     },
-    { immediate: true, deep: true }
+    { deep: true, immediate: true }
   );
 
   return { availableColumns };
@@ -102,7 +125,7 @@ function useDescriptionsDataInit(immediate = true) {
   const isRequestGetData = ref(false);
 
   const data = computed(() => {
-    const { data } = props;
+    const { data } = finalProps.value;
 
     if (data && Object.keys(data).length) return data;
     return requestData.value;
@@ -112,7 +135,7 @@ function useDescriptionsDataInit(immediate = true) {
    * 描述列表数据初始化
    */
   const initDescriptionsData = async () => {
-    const { requestApi, defaultRequestParams, transformData } = props;
+    const { requestApi, defaultRequestParams, transformData } = finalProps.value;
 
     // 如果传入请求函数，则请求获取数据
     if (requestApi) {
@@ -144,9 +167,9 @@ function useFormInstanceGet() {
     setProp(proFormInstances.value, prop, el.proFormInstance);
   };
 
-  const getElFormInstance = () => Object.values(proFormInstances.value);
+  const getProFormInstances = () => Object.values(proFormInstances.value);
 
-  return { proFormInstances, registerProFormInstance, getElFormInstance };
+  return { proFormInstances, registerProFormInstance, getProFormInstances };
 }
 
 /**
@@ -224,13 +247,12 @@ const getRenderParams = (column: DescriptionColumn) =>
  * 判断表单是否开启校验
  */
 const isRequired = (item: DescriptionColumn) => {
-  const elFormProps = toValue(toValue(props.formProps).elFormProps);
+  const elFormProps = toValue(toValue(finalProps.value.formProps).elFormProps);
   const formItemProps = toValue(toValue(item.formColumn)?.formItemProps);
 
   if (formItemProps?.required) return true;
 
-  const rules: Record<string, any> =
-    Reflect.get(formItemProps?.rules || elFormProps?.rules || {}, item.prop || "") || {};
+  const rules: Recordable = Reflect.get(formItemProps?.rules || elFormProps?.rules || {}, item.prop || "") || {};
 
   const isRequired = Object.values(rules).some(rule => rule.required);
   return isRequired;
@@ -271,9 +293,9 @@ const handleEdited = () => {
  * 提交按钮点击事件
  */
 const handleSubmit = async () => {
-  if (props.validate) {
+  if (finalProps.value.validate) {
     await Promise.all(
-      getElFormInstance().map(async proFormInstance => {
+      getProFormInstances().map(async proFormInstance => {
         await proFormInstance.handleSubmit();
       })
     );
@@ -286,22 +308,48 @@ const handleSubmit = async () => {
  * 重置按钮点击事件
  */
 const handleReset = () => {
-  getElFormInstance().map(proFormInstance => proFormInstance.handleReset());
+  getProFormInstances().map(proFormInstance => proFormInstance.handleReset());
   emits("reset", model.value, closeEdited);
 };
 
+onMounted(() => {
+  // 注册实例
+  emits("register", elDescriptionsInstance.value?.$parent);
+});
+
 defineExpose({
+  model,
+  optionsMap,
   proFormInstances,
+  setValues,
+  setProps,
+  setColumn,
+  addColumn,
+  delColumn,
 
   openEdited,
   closeEdited,
-  getElFormInstance,
+  handleReset,
+  handleSubmit,
+  getProFormInstances,
+  getElFormInstance: (prop: string) => {
+    const proFormInstance = proFormInstances.value[prop];
+    return proFormInstance.elFormInstance;
+  },
+  getElFormItemInstance: (prop: string) => {
+    const proFormInstance = proFormInstances.value[prop];
+    return proFormInstance.proFormMainInstance?.getElFormItemInstance(prop);
+  },
+  getElInstance: (prop: string) => {
+    const proFormInstance = proFormInstances.value[prop];
+    return proFormInstance.proFormMainInstance?.getElInstance(prop);
+  },
 });
 </script>
 
 <template>
   <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
-    <el-descriptions v-bind="$attrs">
+    <el-descriptions ref="elDescriptionsInstance" v-bind="{ ...$attrs, ...mergeProps }">
       <slot>
         <el-descriptions-item
           v-for="(column, index) in availableColumns"
@@ -334,7 +382,7 @@ defineExpose({
             v-model="model"
             :ref="(el: any) => registerProFormInstance(el, column.prop || '')"
             v-bind="toValue(column.formColumn)"
-            :form-props="{ ...toValue(props.formProps), ...toValue(column.formProps) }"
+            :form-props="{ ...toValue(finalProps.formProps), ...toValue(column.formProps) }"
             :value="getProp(descriptionsData, column.prop || '')"
             :prop="column.prop || ''"
             :options="optionsMap.get(column.prop || '')"
@@ -359,6 +407,8 @@ defineExpose({
             :display-value="getValue(column)"
             :el="column.el"
             :el-props="column.elProps"
+            :options="unref(optionsMap.get(column.prop || ''))"
+            :option-field="column.optionField"
           >
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
               <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />

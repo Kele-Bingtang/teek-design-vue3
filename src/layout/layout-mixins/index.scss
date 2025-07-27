@@ -15,15 +15,17 @@
     height: calc(100% - cssVar(layout-header-height));
   }
 
-  @include el-joins(menu--horizontal) {
-    @include el-joins(menu-item, sub-menu) {
-      &:not(.is-child) {
-        .menu-item-tag:not(.point-tag) {
-          display: none;
-        }
+  @include joins(layout-header) {
+    @include el-joins(menu--horizontal) {
+      @include el-joins(menu-item, sub-menu) {
+        &:not(.is-child) {
+          .menu-item-tag:not(.point-tag) {
+            display: none;
+          }
 
-        .point-tag {
-          right: 2px;
+          .point-tag {
+            right: 2px;
+          }
         }
       }
     }

@@ -63,9 +63,9 @@ export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: 
     const { columns } = columnsProps.value;
 
     if (isString(propOrIndex)) {
-      return columns.forEach((s, i) => {
-        if (s.prop === propOrIndex) position === "after" ? column.splice(i + 1, 0, s) : column.splice(i, 0, s);
-      });
+      const index = columns.findIndex(item => item.prop === propOrIndex);
+      if (index !== -1) position === "after" ? columns.splice(index + 1, 0, column) : columns.splice(index, 0, column);
+      return;
     }
     if (propOrIndex !== undefined) return columns.splice(propOrIndex, 0, column);
     return columns.push(column);
@@ -80,7 +80,7 @@ export const useFormApi = (model: Ref<Recordable>, columnsProps: Ref<{ columns: 
     const { columns } = columnsProps.value;
 
     const index = columns.findIndex(item => item.prop === prop);
-    if (index > -1) columns.splice(index, 1);
+    if (index !== -1) columns.splice(index, 1);
   };
 
   return {

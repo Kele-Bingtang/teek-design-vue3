@@ -2,9 +2,9 @@ import type { RouteRecordRaw } from "vue-router";
 import { isProxy, toRaw } from "vue";
 import { ElNotification } from "element-plus";
 import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
-import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
+import { serviceConfig, HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
 import router from "@/router";
-import { notFoundRouter, rolesRoutes } from "@/router/routes-config";
+import { notFoundRoutes, authRoutes, constantRoutes } from "@/router/routes";
 import { translateTitle } from "@/router/helper";
 import { useRouteStore, useUserStore } from "@/pinia";
 
@@ -12,7 +12,7 @@ import { useRouteStore, useUserStore } from "@/pinia";
 type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
 
 export const useRouteFn = () => {
-  const { cacheDynamicRoutes } = SystemConfig.routerConfig;
+  const { cacheDynamicRoutes } = serviceConfig.router;
   const routeStore = useRouteStore();
   const userStore = useUserStore();
 
@@ -35,14 +35,14 @@ export const useRouteFn = () => {
     if (!routeList) {
       const isFrontendMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "frontend";
       const isBackendMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "backend";
-      const isBothMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "both";
+      const isMixedMode = import.meta.env.VITE_ROUTE_ACCESS_MODE === "mixed";
 
       // 前端控制模式
-      if (isFrontendMode) routeList = rolesRoutes;
+      if (isFrontendMode) routeList = authRoutes;
       // 后端控制模式
       else if (isBackendMode) routeList = api ? await getDynamicRoutesFromBackend(api) : [];
       // 前后端控制模式
-      else if (isBothMode) routeList = [...rolesRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
+      else if (isMixedMode) routeList = [...authRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
     }
 
     if (routeList?.length) {
@@ -88,11 +88,12 @@ export const useRouteFn = () => {
    */
   const loadDynamicRoutes = (routers: RouterConfigRaw[], roles: string[], r = router) => {
     const rolesRoutes = filterOnlyRolesRoutes(routers, roles);
-    const resolveRouters = processDynamicRoutes(processRouteMeta(rolesRoutes));
-    // 传到 routeStore 持久化，并拿到扁平化的路由数组（所有二级以上的路由拍成一级，keep-alive 只支持到二级缓存（Layout 默认是一级，加起来就是二级））
-    const flatRouteList = routeStore.loadPermissionRoutes(resolveRouters as RouterConfig[]);
+    const resolveRoutes = processDynamicRoutes(processRouteMeta(rolesRoutes));
+    const routes = ascending([...constantRoutes, ...resolveRoutes, notFoundRoutes]);
+    // 获取扁平化的路由数组：所有二级以上的路由拍成一级，keep-alive 只支持到二级缓存（Layout 默认是一级，加起来就是二级）
+    const flatRoutes = filterFlatRoutes(routes);
 
-    flatRouteList.forEach(flatRoute => {
+    flatRoutes.forEach(flatRoute => {
       // 解除响应式
       const item = { ...flatRoute };
 
@@ -108,8 +109,10 @@ export const useRouteFn = () => {
       }
     });
 
-    // 最后添加 notFoundRouter
-    if (!r.hasRoute(notFoundRouter.name)) router.addRoute(notFoundRouter as RouteRecordRaw);
+    // 传到 routeStore 持久化
+    routeStore.setRoutes(routes);
+    routeStore.setFlatRoutes(flatRoutes);
+    routeStore.setHomeRoute(findRouteByName(routes, HOME_NAME) as RouterConfig);
   };
 
   /**
@@ -120,10 +123,16 @@ export const useRouteFn = () => {
    */
   const filterOnlyRolesRoutes = (routers: RouterConfigRaw[], roles: string[]) => {
     const rolesRoutes: RouterConfigRaw[] = [];
+    const notPermissionRoute = constantRoutes.find(route => route.name === "403");
+
     routers.forEach(router => {
       const r = { ...router };
-      if (hasPermission(r, roles)) {
-        if (r.children && r.children.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+      if (r.children?.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+
+      if (hasPermission(r, roles)) rolesRoutes.push(r);
+      else if (notPermissionRoute) {
+        // 如果没有权限，则组件改为 403 组件
+        r.component = notPermissionRoute.component;
         rolesRoutes.push(r);
       }
     });
@@ -158,7 +167,7 @@ export const useRouteFn = () => {
           isKeepAlive: isKeepAliveGlobal,
           isFull: isFullGlobal,
           routeUseTooltip,
-        } = SystemConfig.routerConfig;
+        } = serviceConfig.router;
 
         route.meta._fullPath = fullPath;
         // 这两个顺序不能互换，因为 translateTitle 函数需要 route.meta.useI18n
@@ -238,9 +247,10 @@ export const useRouteFn = () => {
   const ascending = (routeList: any[]) => {
     routeList.forEach((r, index) => {
       if (!r.meta) r.meta = {};
-      // 当 rank 不存在时，根据顺序自动创建，首页路由永远在第一位
+      // 当 rank 不存在时，根据顺序自动创建，布局路由和首页路由分别在第一位和第二位
+      if (r.name === LAYOUT_NAME && !r.meta?.rank) r.meta.rank = -1;
       if (r.name === HOME_NAME && !r.meta?.rank) r.meta.rank = 0;
-      else if (handRank(r)) r.meta.rank = index + 5;
+      else if (needRank(r)) r.meta.rank = index + 5;
     });
     return routeList.sort((a: { meta: { rank: number } }, b: { meta: { rank: number } }) => {
       return a?.meta.rank - b?.meta.rank;
@@ -252,10 +262,12 @@ export const useRouteFn = () => {
    *
    * @param route 路由
    */
-  const handRank = (route: RouterConfigRaw) => {
-    const { name, path, meta } = route;
-    if (!meta?.rank || (meta?.rank === 0 && name !== HOME_NAME && path !== "/")) return true;
-    return false;
+  const needRank = (route: RouterConfigRaw) => {
+    const { name, path, meta = {} } = route;
+    if (meta.rank || (meta.rank === 0 && [LAYOUT_NAME, HOME_NAME].includes(name as string) && path === "/")) {
+      return false;
+    }
+    return true;
   };
 
   /**

@@ -15,7 +15,7 @@ export type ProUseDialogProps = ProDialogProps & Partial<DialogProps>;
 const ns = useNamespace("pro-dialog");
 const blockClass = ns.b();
 let appContextConst: AppContext | null;
-let layoutSize: ComputedRef<"default" | "small" | "large" | undefined>;
+let elementPlusSize: ComputedRef<"default" | "small" | "large" | undefined>;
 let id = 0;
 
 /**
@@ -143,7 +143,7 @@ export const showDialog = (
   };
 
   const vm = (
-    <ElConfigProvider namespace={ns.elNamespace} size={layoutSize.value}>
+    <ElConfigProvider namespace={ns.elNamespace} size={elementPlusSize.value}>
       <ElDialog
         modelValue
         title="弹框"
@@ -226,7 +226,7 @@ export const initDialog = (ctx?: ComponentInternalInstance) => {
   appContextConst = appContext;
 
   const globalConfig = inject(GlobalConfigKey);
-  layoutSize = computed(() => globalConfig?.size.value ?? "default");
+  elementPlusSize = computed(() => globalConfig?.size.value ?? "default");
 
   return { showDialog };
 };

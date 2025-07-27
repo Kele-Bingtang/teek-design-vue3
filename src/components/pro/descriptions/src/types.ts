@@ -5,11 +5,14 @@ import type { ElOption, FormItemColumnProps, RenderTypes } from "@/components/pr
 import type ProDescriptions from "./index.vue";
 import type { ElDisplayProps } from "../../table";
 
+/**
+ * render、插槽参数类型
+ */
 export interface DescriptionsRenderParams {
   /**
    * 当前值
    */
-  value: unknown;
+  value: any;
   /**
    * 当前列配置
    */
@@ -81,7 +84,7 @@ export interface DescriptionColumn
   /**
    * 自定义当前 option 选项
    */
-  transformOption?: (value: unknown, options: ElOption[], data: Recordable) => ElOption;
+  transformOption?: (value: any, options: ElOption[], data: Recordable) => ElOption;
   /**
    * 排序（从大到小）
    */
@@ -101,7 +104,7 @@ export interface DescriptionColumn
   /**
    * 自定义内容
    */
-  formatValue?: (value: unknown, scope: DescriptionsRenderParams) => string | number;
+  formatValue?: (value: any, scope: DescriptionsRenderParams) => string | number;
   /**
    * 是否为编辑态
    *
@@ -241,9 +244,13 @@ export interface ProDescriptionsProp {
  */
 export interface ProDescriptionsEmits {
   /**
+   * 注册事件
+   */
+  register: [proDescriptionsInstance: any];
+  /**
    * 表单值改变事件
    */
-  formChange: [value: unknown, prop: string, model: Recordable, column: FormItemColumnProps];
+  formChange: [value: any, prop: string, model: Recordable, column: FormItemColumnProps];
   /**
    * 进入编辑态事件
    */
@@ -266,7 +273,7 @@ export interface EditProps extends FormItemColumnProps {
   /**
    * 表单组件的值
    */
-  value?: unknown;
+  value?: any;
   /**
    * ProForm Props
    */
@@ -277,7 +284,7 @@ export interface EditEmits {
   /**
    * 表单值改变事件
    */
-  change: [value: unknown, model: Recordable, column: FormItemColumnProps];
+  change: [value: any, model: Recordable, column: FormItemColumnProps];
 }
 
 export type ProDescriptionsInstance = InstanceType<typeof ProDescriptions>;

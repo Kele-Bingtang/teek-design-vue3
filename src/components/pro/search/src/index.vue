@@ -218,7 +218,7 @@ defineExpose(defaultExpose);
 
 <template>
   <div v-if="searchColumns.length" :class="[ns.b(), ns.join('card-minimal')]">
-    <ProForm ref="proFormInstance" v-model="model" v-bind="$attrs" :show-footer="false">
+    <ProForm ref="proFormInstance" v-model="model" :columns v-bind="$attrs" :show-footer="false">
       <template #form-main="{ isHidden, setProFormItemInstance, optionsMap }">
         <Grid
           ref="gridInstance"

@@ -1,11 +1,16 @@
-import type { Ref } from "vue";
+import type { Ref, MaybeRef } from "vue";
+import type { ElOption } from "@/components/pro/form-item";
 import type { TableRow, TableColumn } from "../types/table-column";
 import { unref, toValue, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { isArray } from "@/common/utils";
 import { getProp, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 
-export const initDataRowField = (data: TableRow[], column: TableColumn, optionsMap: Ref<Map<string, any>>) => {
+export const initDataRowField = (
+  data: TableRow[],
+  column: TableColumn,
+  optionsMap: Ref<Map<string, MaybeRef<ElOption[]>>>
+) => {
   // 获取当前列的配置项，！获取的配置无法直接作用在 row._xx 里
   const {
     prop = "",

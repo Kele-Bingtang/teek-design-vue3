@@ -17,7 +17,7 @@ const { t } = useI18n();
 
 const { changeSystemTheme } = useTheme();
 
-const { systemThemeMode } = storeToRefs(settingStore);
+const { theme } = storeToRefs(settingStore);
 
 const systemThemeModeList = [
   { name: t("_setting.systemThemeModeSelect.light"), theme: SystemThemeEnum.Light, img: lightTheme },
@@ -34,10 +34,10 @@ const systemThemeModeList = [
       :class="ns.e('item')"
       @click="changeSystemTheme(item.theme)"
     >
-      <div :class="[ns.e('box'), ns.is('active', item.theme === systemThemeMode)]">
+      <div :class="[ns.e('box'), ns.is('active', item.theme === theme.systemThemeMode)]">
         <img :src="item.img" />
       </div>
-      <Icon :class="ns.m('icon')" v-show="item.theme === systemThemeMode"><CircleCheckFilled /></Icon>
+      <Icon :class="ns.m('icon')" v-show="item.theme === theme.systemThemeMode"><CircleCheckFilled /></Icon>
       <p :class="ns.m('name')">{{ item.name }}</p>
     </div>
   </div>

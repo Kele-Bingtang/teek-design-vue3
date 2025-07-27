@@ -41,7 +41,7 @@ export const isServer = (value: unknown) => {
  * @param value 初始化的值
  * @param initIfEmpty 值为空时是否依然初始化
  */
-export const initModel = (model: Record<string, any>, prop: string | string[], value: unknown, initIfEmpty = false) => {
+export const initModel = (model: Recordable, prop: string | string[], value: unknown, initIfEmpty = false) => {
   const init = (propArr: string[]) => {
     let currentLevel = model;
     propArr.forEach((prop, index) => {
@@ -78,11 +78,7 @@ export const strToDate = (data: string | number) => {
  * @param model 过滤条件
  * @param filterRule 过滤规则
  */
-export const filterData = (
-  data: Record<string, any>[],
-  model: Record<string, any>,
-  filterRule: Record<string, FilterRule>
-) => {
+export const filterData = (data: Recordable[], model: Recordable, filterRule: Record<string, FilterRule>) => {
   if (isEmpty(model)) return data;
 
   const modelKeys = getObjectKeys(model);

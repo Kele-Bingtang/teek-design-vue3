@@ -43,7 +43,7 @@ const expandDropdown = () => {
 };
 
 const useMaximize = () => {
-  settingStore.$patch({ maximize: true });
+  settingStore.$patch({ layout: { maximize: true } });
 };
 
 const dropdownMenuItem = [

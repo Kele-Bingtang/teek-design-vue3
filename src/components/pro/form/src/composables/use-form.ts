@@ -3,10 +3,10 @@ import type { FormInstance } from "element-plus";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { FormColumn, ProFormInstance, ProFormNamespace } from "../types";
 import { ElConfigProvider } from "element-plus";
-import { createVNode, getCurrentInstance, nextTick, ref, render, computed, toValue } from "vue";
+import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import { filterEmpty } from "@/components/pro/helper";
 import ProForm from "../index.vue";
 
@@ -25,7 +25,9 @@ export const useProForm = () => {
   const ns = useNamespace();
   const currentInstance = getCurrentInstance();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const settingStore = useSettingStore();
+
+  const { layout } = storeToRefs(settingStore);
 
   /**
    * @param proForm ProForm 实例
@@ -71,7 +73,7 @@ export const useProForm = () => {
      *
      * @param columnProps 需要设置的 columnProps
      */
-    setColumn: async (columnProps: { prop: string; field: string; value: unknown }[]) => {
+    setColumn: async (columnProps: { prop: string; field: string; value: any }[]) => {
       const form = await getProForm();
       form?.setColumn(columnProps);
     },
@@ -198,7 +200,7 @@ export const useProForm = () => {
     },
 
     /**
-     * 动态创建表单。使用该函数，控制台会有 warning： Slot "XXX" invoked outside of the render function，可以忽略
+     * 动态创建表单
      */
     createForm: async (
       el: MaybeRef<HTMLElement> | string,
@@ -208,7 +210,7 @@ export const useProForm = () => {
       const proFormInstance = createVNode(ProForm, { ...proFormProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proFormInstance }
       );
       await nextTick();

@@ -1,5 +1,5 @@
 import type { UserInfo } from "@/pinia";
-import request from "@/common/http";
+import { http } from "@/common/http";
 
 export interface LoginParams {
   username: string;
@@ -15,11 +15,11 @@ export interface Token {
 export const UserService = {
   // 登录
   login(params: LoginParams) {
-    return request.post<httpNs.Response<Token>>("/auth/login", params);
+    return http.post<httpNs.Response<Token>>("/auth/login", params);
   },
 
   // 获取用户信息
   getUserInfo() {
-    return request.get<httpNs.Response<UserInfo>>("/auth/getUserInfo");
+    return http.get<httpNs.Response<UserInfo>>("/auth/getUserInfo");
   },
 };

@@ -64,9 +64,9 @@ const initTableColumn = (column: TableColumn) => {
   column.width = toValue(column.width);
   column.label = toValue(column.label);
 
-  // 使用解构并排除 children 属性
+  // 使用解构并排除 children, renderHeader 属性
   // eslint-disable-next-line no-unused-vars
-  const { children, ...rest } = toRaw(column);
+  const { children, renderHeader, ...rest } = toRaw(column);
 
   return rest as unknown as TableColumnCtx<any>;
 };
@@ -84,7 +84,7 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
  * 获取单元格值（如果存在 options，则返回根据 label 找对应的 value，如果不存在 options，则返回原始值）
  */
 const getDisplayValue = (scope: TableScope, column: TableColumn) =>
-  scope.row._getValue?.(prop(column)) ?? getOriginValue(scope, column);
+  scope.row?._getValue?.(prop(column)) ?? getOriginValue(scope, column);
 /**
  * 获取 Render/插槽 的参数
  */
@@ -287,6 +287,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :el="column.el"
         :el-props="column.elProps"
         :options="scope.row._options?.[prop(column)]"
+        :option-field="column.optionField"
       >
         <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
           <component :is="slot" v-bind="{ ...getRenderParams(scope, column), ...data }" />

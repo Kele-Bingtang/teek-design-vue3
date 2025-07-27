@@ -78,3 +78,19 @@ declare type keyUppercase<T> = Uppercase<keyof T>;
 declare type keyOnPrefix<T> = {
   [K in keyof T as `on${Capitalize<K>}`]: T[K] extends readonly any[] ? (...t: T[K]) => void : never;
 };
+
+/**
+ * 深层递归所有属性为可选
+ */
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
+/**
+ * 深层递归所有属性为只读
+ */
+type DeepReadonly<T> = {
+  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
+};

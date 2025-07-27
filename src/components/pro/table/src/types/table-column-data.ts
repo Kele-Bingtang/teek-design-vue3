@@ -22,11 +22,11 @@ export namespace TableColumnDataNamespace {
     /**
      * 表单值改变事件
      */
-    formChange: [fromValue: unknown, prop: NonNullable<TableColumn["prop"]>, scope: TableScope];
+    formChange: [fromValue: any, prop: NonNullable<TableColumn["prop"]>, scope: TableScope];
     /**
      * 过滤事件，返回输入的值以及 prop
      */
-    filter: [filterValue: unknown, prop: string];
+    filter: [filterValue: any, prop: string];
     /**
      * 清空事件，返回输入的 prop
      */

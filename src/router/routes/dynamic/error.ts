@@ -11,29 +11,32 @@ const errorRoutes: RouterConfigRaw = {
   children: [
     {
       path: "403",
-      name: "403",
+      name: "403View",
       component: () => import("@/views/core/error/403.vue"),
       meta: {
-        title: "403 页面",
+        title: "403",
         icon: Star,
+        useI18n: false,
       },
     },
     {
       path: "404",
-      name: "404",
+      name: "404View",
       component: () => import("@/views/core/error/404.vue"),
       meta: {
-        title: "404 页面",
+        title: "404",
         icon: Star,
+        useI18n: false,
       },
     },
     {
       path: "500",
-      name: "500",
+      name: "500View",
       component: () => import("@/views/core/error/500.vue"),
       meta: {
-        title: "500 页面",
+        title: "500",
         icon: Star,
+        useI18n: false,
       },
     },
   ],

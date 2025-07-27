@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { TabProps } from "@/pinia";
 import { onMounted, watch, useTemplateRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext, type TabsInstance } from "element-plus";
 import { addUnit, removeUnit, isString } from "@/common/utils";
-import { useNamespace } from "@/composables";
+import { useCommon, useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
 import RightMenu from "../components/right-menu/index.vue";
@@ -14,9 +15,12 @@ import "./index.scss";
 defineOptions({ name: "ElTabNav" });
 
 const ns = useNamespace("el-tabs-nav");
+const { getTitle } = useCommon();
 const route = useRoute();
 const router = useRouter();
 const settingStore = useSettingStore();
+
+const { tabNav } = storeToRefs(settingStore);
 
 const {
   activeTab,
@@ -51,6 +55,12 @@ const tabClick = (tabItem: TabsPaneContext) => {
   router.push(path);
 };
 
+// Tab 鼠标中键点击回调
+const tabMiddleClick = (tab: TabProps) => {
+  if (tabNav.value.middleClickToOpen) return router.push(tab.path);
+  if (tabNav.value.middleClickToClose) tabRemove(tab.path);
+};
+
 // 删除一个 Tab
 const tabRemove = async (path: TabPaneName) => {
   const tab = tabNavList.value.find(item => item.path === path);
@@ -59,6 +69,8 @@ const tabRemove = async (path: TabPaneName) => {
 
 // 鼠标中键滚动回调
 const handleScrollOnDom = (e: MouseEvent & { wheelDelta: number }) => {
+  if (!tabNav.value.wheel) return;
+
   const type = e.type;
   let delta = 0;
   if (["DOMMouseScroll", "mousewheel"].includes(type)) {
@@ -107,7 +119,7 @@ const handleTouchMove = (event: TouchEvent) => {
 };
 
 onMounted(() => {
-  tabsDragSort(`.${ns.elNamespace}-tabs__nav`, `.${ns.elNamespace}-tabs__item`);
+  tabNav.value.draggable && tabsDragSort(`.${ns.elNamespace}-tabs__nav`, `.${ns.elNamespace}-tabs__item`);
   initAffixTabs();
   addTabByRoute();
 });
@@ -135,23 +147,23 @@ onMounted(() => {
           :closable="tab.close"
         >
           <template #label>
-            <div @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)">
+            <div @click.middle="tabMiddleClick(tab)" @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)">
               <Icon
                 v-if="
                   tab.meta.icon &&
-                  settingStore.showTabNavIcon &&
+                  tabNav.showTabNavIcon &&
                   (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
                 "
                 :icon="tab.meta.icon"
                 :class="ns.em('content', 'icon')"
               />
-              <span>{{ tab.title }}</span>
+              <span>{{ getTitle(tab) }}</span>
             </div>
           </template>
         </el-tab-pane>
       </el-tabs>
 
-      <MoreButton />
+      <MoreButton v-show="tabNav.showMore" />
     </div>
 
     <transition :name="`${ns.elNamespace}-zoom-in-top`">

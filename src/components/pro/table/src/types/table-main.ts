@@ -1,7 +1,7 @@
 import type { MaybeRef, UnwrapRef } from "vue";
 import type { PaginationProps, TableProps } from "element-plus";
-import type { PageInfo } from "@/components/pro/pagination";
 import type { TableColumn, TableRow } from "./table-column";
+import type { PageInfo } from "./table-state";
 import type { TableColumnDataNamespace } from "./table-column-data";
 import type { OperationNamespace } from "./table-column-operation";
 import type { TableColumnTypeNamespace } from "./table-column-type";
@@ -120,6 +120,6 @@ export namespace ProTableMainNamespace {
     /**
      * 过滤事件，返回输入的值以及 prop
      */
-    filter: [filterModel: Recordable, filterValue: unknown, prop: string];
+    filter: [filterModel: Recordable, filterValue: any, prop: string];
   }
 }

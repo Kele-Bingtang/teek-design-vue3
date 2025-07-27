@@ -1,6 +1,6 @@
 # Teek Design Vue3
 
-基于 Vue3、TypeScript、Vite、Pinia、Element-Plus 搭建的现代管理系统模板。
+Teek 是一个基于 [Vue3](https://github.com/vuejs/core)、[TypeScript](https://www.typescriptlang.org/)、[Vite](https://github.com/vitejs/vite)、[ElementPlus](https://element-plus.org/zh-CN) 构建的颜值强大、功能丰富、开箱即用的中后台管理系统解决方案。
 
 该仓库为完整版，有完整的使用实例代码。精简版请看 [Teek Design Vue3 Template](https://github.com/Kele-Bingtang/teek-design-vue3-template)。
 

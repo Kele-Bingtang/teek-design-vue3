@@ -66,5 +66,5 @@ export interface ProFormStepsEmits {
   /**
    * 表单值改变事件
    */
-  change: [value: unknown, model: Recordable, column: FormItemColumnProps];
+  change: [value: any, model: Recordable, column: FormItemColumnProps];
 }

@@ -124,27 +124,29 @@ function useInitData() {
 
 ## 类型引入规范
 
-1. 先引入所有 type 类型（按照导入规范顺序引入，不允许类型和函数的引入混杂在一起）
-2. 引入第三方依赖（Vue 相关生态优先，如 vue、vue-router、vuex、vue-i18n、vue-use，然后是组件库如 Element Plus，@element-plus/icons-vue，最后是第三方插件）
-3. 引入项目目录的其他依赖（@/路径，路径按照 src 目录结构顺序引入）
-4. 引入项目目录的其他组件（@/路径，路径按照 src 目录结构顺序引入）
-5. 引入相对路径的依赖（@/路径，路径按照 src 目录结构顺序引入）
-6. 引入相对路径的组件（@/路径，路径按照 src 目录结构顺序引入）
-7. 直接引入第三方库（如 import "vue-cropper/dist/index.css"）
-8. 直接引入绝对路径（如 import "@/common/styles/common/var.scss"）
-9. 直接引入相对路径（如 import "./index.scss"）
+1. 先引入所有 `type` 类型（按照导入规范顺序引入，不允许类型和函数的引入混杂在一起）
+2. 引入第三方依赖（`Vue` 相关生态优先，如 `vue`、`vue-router`、`pinia`、`vue-i18n`、`@vueuse`，然后是组件库如 `ElementPlus`，`@element-plus/icons-vue`，最后是第三方插件）
+3. 引入项目目录的其他依赖（如 `@/composables`，路径按照目录结构顺序引入）
+4. 引入项目目录的其他组件（如 `@/components/index.vue`，路径按照目录结构顺序引入）
+5. 引入相对路径的依赖（如 `./types`）
+6. 引入相对路径的组件（如 `./Demo.vue`）
+7. 直接引入第三方库（如 `import "vue-cropper/dist/index.css"`）
+8. 直接引入绝对路径（如 `import "@/common/styles/common/var.scss"`）
+9. 直接引入相对路径（如 `import "./index.scss"`）
+
+如：
 
 ```vue
 <script setup lang="ts">
-import type { xx } from "xx"; // 1.先引入所有 type 类型（按照导入规范顺序引入，不允许类型和函数的引入混杂在一起）
-import { xx } from "xx"; // 2. 引入第三方依赖（Vue 相关生态优先，如 vue、vue-router、vuex、vue-i18n、vue-use，然后是组件库如 Element Plus，@element-plus/icons-vue，最后是第三方插件）
-import { xx } from "@/xx"; // 3. 引入项目目录的其他依赖（@/路径，路径按照 src 目录结构顺序引入）
-import { xx } from "@/xx.vue"; // 4. 引入项目目录的其他组件（@/路径，路径按照 src 目录结构顺序引入）
-import { xx } from "../xx"; // 5. 引入相对路径的依赖（@/路径，路径按照 src 目录结构顺序引入）
-import { xx } from "../xx.vue"; // 6. 引入相对路径的组件（@/路径，路径按照 src 目录结构顺序引入）
+import type { xx } from "xx";
+import { xx } from "xx";
+import { xx } from "@/xx";
+import { xx } from "@/xx.vue";
+import { xx } from "../xx";
+import { xx } from "../xx.vue";
 
-import "xxx"; // 7. 直接引入第三方库（如 import "vue-cropper/dist/index.css"）
-import "@/xxx"; // 8. 直接引入绝对路径（如 import "@/common/styles/common/var.scss"）
-import "./xxx"; // 9. 直接引入相对路径（如 import "./index.scss"）
+import "xxx";
+import "@/xxx";
+import "./xxx";
 </script>
 ```

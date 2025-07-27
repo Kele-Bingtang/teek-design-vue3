@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/pinia";
-import { HeaderStyleEnum, PageTransitionEnum, TabNavModeEnum } from "@/common/enums";
+import {
+  HeaderMenuAlignEnum,
+  HeaderStyleEnum,
+  PageTransitionEnum,
+  TabNavModeEnum,
+  ThemePanelTriggerPositionEnum,
+} from "@/common/enums";
 import { useCommon, useNamespace } from "@/composables";
 
 defineOptions({ name: "BaseConfigSwitch" });
@@ -12,6 +19,8 @@ const ns = useNamespace("base-config-switch");
 const settingStore = useSettingStore();
 const { isMobile } = useCommon();
 const { t } = useI18n();
+
+const { layout, tabNav, menu, transition, theme, breadcrumb, logo, header } = storeToRefs(settingStore);
 
 /**
  * 标签栏模式选项
@@ -57,108 +66,185 @@ const customRadiusOptions = [
   { value: "1.75", label: "1.75" },
   { value: "2", label: "2" },
 ];
+
+const headerMenuAlignOptions = [
+  { value: HeaderMenuAlignEnum.Start, label: "Start" },
+  { value: HeaderMenuAlignEnum.Center, label: "Center" },
+  { value: HeaderMenuAlignEnum.End, label: "End" },
+];
+
+const themePanelTriggerPositionOptions = [
+  { value: ThemePanelTriggerPositionEnum.Header, label: t("_setting.themePanelTriggerPosition.header") },
+  { value: ThemePanelTriggerPositionEnum.Fixed, label: t("_setting.themePanelTriggerPosition.fixed") },
+];
 </script>
 
 <template>
   <div :class="ns.b()">
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.headerStyle") }}</span>
-      <el-select v-model="settingStore.headerStyle" placeholder="Select">
+      <el-select v-model="header.style" placeholder="Select">
         <el-option v-for="item in headerStyleOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNavMode") }}</span>
-      <el-select v-model="settingStore.tabNavMode" placeholder="Select">
+      <el-select v-model="tabNav.tabNavMode" placeholder="Select">
         <el-option v-for="item in tabNavModeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.headerHeight") }}</span>
-      <el-input-number v-model="settingStore.headerHeight" :min="35" :max="70" :step="2" controls-position="right" />
-      <!-- <el-slider v-model="settingStore.headerHeight" :min="30" :max="70" /> -->
+      <el-input-number v-model="header.height" :min="35" :max="70" :step="2" controls-position="right" />
+      <!-- <el-slider v-model="header.headerHeight" :min="30" :max="70" /> -->
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.menuWidth") }}</span>
-      <el-input-number v-model="settingStore.menuWidth" :min="100" :max="400" :step="10" controls-position="right" />
-      <!-- <el-slider v-model="settingStore.menuWidth" :min="100" :max="400" /> -->
+      <el-input-number v-model="menu.width" :min="100" :max="400" :step="10" controls-position="right" />
+      <!-- <el-slider v-model="header.width" :min="100" :max="400" /> -->
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavHeight") }}</span>
+      <el-input-number v-model="tabNav.height" :min="25" :max="50" :step="10" controls-position="right" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.pageTransition") }}</span>
-      <el-select v-model="settingStore.pageTransition" placeholder="Select">
+      <el-select v-model="transition.page" placeholder="Select">
         <el-option v-for="item in pageTransitionOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.radius") }}</span>
-      <el-select v-model="settingStore.radius" placeholder="Select">
+      <el-select v-model="theme.radius" placeholder="Select">
         <el-option v-for="item in customRadiusOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
     <div :class="ns.e('item')">
+      <span>{{ $t("_setting.headerMenuAlign") }}</span>
+      <el-select v-model="header.menuAlign" placeholder="Select">
+        <el-option v-for="item in headerMenuAlignOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.themePanelTriggerPosition.label") }}</span>
+      <el-select v-model="layout.themePanelTriggerPosition" placeholder="Select">
+        <el-option
+          v-for="item in themePanelTriggerPositionOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.showHeader") }}</span>
+      <el-switch v-model="header.enabled" />
+    </div>
+
+    <div :class="ns.e('item')">
       <span>{{ $t("_setting.collapseMenu") }}</span>
-      <el-switch v-model="settingStore.isCollapse" />
+      <el-switch v-model="menu.isCollapse" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.menuAccordion") }}</span>
-      <el-switch v-model="settingStore.menuAccordion" />
+      <el-switch v-model="menu.accordion" />
     </div>
 
     <div :class="ns.e('item')" v-if="!isMobile">
       <span>{{ $t("_setting.showBreadcrumb") }}</span>
-      <el-switch v-model="settingStore.showBreadcrumb" />
+      <el-switch v-model="breadcrumb.enabled" />
     </div>
 
     <div :class="ns.e('item')" v-if="!isMobile">
       <span>{{ $t("_setting.showBreadcrumbIcon") }}</span>
-      <el-switch v-model="settingStore.showBreadcrumbIcon" />
+      <el-switch v-model="breadcrumb.showIcon" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.showTabNav") }}</span>
-      <el-switch v-model="settingStore.showTabNav" />
+      <el-switch v-model="tabNav.enabled" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.showTabNavIcon") }}</span>
-      <el-switch v-model="settingStore.showTabNavIcon" />
+      <el-switch v-model="tabNav.showTabNavIcon" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.showTabNavDot") }}</span>
-      <el-switch v-model="settingStore.showTabNavDot" />
+      <el-switch v-model="tabNav.showTabNavDot" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.recordTabNav") }}</span>
-      <el-switch v-model="settingStore.recordTabNav" />
+      <el-switch v-model="tabNav.recordTabNav" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.fixTabNav") }}</span>
-      <el-switch v-model="settingStore.fixTabNav" />
+      <el-switch v-model="tabNav.fixTabNav" />
     </div>
 
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.showLayoutLogo") }}</span>
-      <el-switch v-model="settingStore.showLayoutLogo" />
+      <span>{{ $t("_setting.showLogo") }}</span>
+      <el-switch v-model="logo.enable" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_tabNav.maximize") }}</span>
-      <el-switch v-model="settingStore.maximize" />
+      <el-switch v-model="layout.maximize" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.watermark") }}</span>
-      <el-switch v-model="settingStore.watermark" />
+      <el-switch v-model="layout.watermark" />
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.showProgress") }}</span>
+      <el-switch v-model="transition.progress" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.breadcrumbHideOnlyOne") }}</span>
+      <el-switch v-model="breadcrumb.hideOnlyOne" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.breadcrumbShowHome") }}</span>
+      <el-switch v-model="breadcrumb.showHome" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.breadcrumbOnlyShowHomeIcon") }}</span>
+      <el-switch v-model="breadcrumb.onlyShowHomeIcon" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavDraggable") }}</span>
+      <el-switch v-model="tabNav.draggable" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavMiddleClickToClose") }}</span>
+      <el-switch v-model="tabNav.middleClickToClose" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavMiddleClickToOpen") }}</span>
+      <el-switch v-model="tabNav.middleClickToOpen" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavShowMore") }}</span>
+      <el-switch v-model="tabNav.showMore" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNavWheel") }}</span>
+      <el-switch v-model="tabNav.wheel" />
     </div>
   </div>
 </template>

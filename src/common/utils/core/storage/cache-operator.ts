@@ -1,14 +1,14 @@
 import type { TabProps } from "@/pinia";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { localStorageProxy } from "./storage-manager";
 
 class CacheOperator {
   // 标签页的 tabNav 缓存
-  readonly tabNavKey = SystemConfig.keyConfig.tabNavCacheKey;
+  readonly tabNavKey = serviceConfig.cache.tabNavCacheKey;
   // 路由缓存
-  readonly dynamicRoutesKey = SystemConfig.keyConfig.cacheDynamicRoutesKey;
+  readonly dynamicRoutesKey = serviceConfig.cache.cacheDynamicRoutesKey;
   // 版本号缓存
-  readonly versionKey = SystemConfig.keyConfig.versionCacheKey;
+  readonly versionKey = serviceConfig.cache.versionCacheKey;
 
   /**
    * 获取标签页的 tabNav 缓存
@@ -60,7 +60,7 @@ class CacheOperator {
    * 移除项目缓存
    */
   removeProjectsCache = () => {
-    const { tabNavCacheKey, cacheDynamicRoutesKey, versionCacheKey } = SystemConfig.keyConfig;
+    const { tabNavCacheKey, cacheDynamicRoutesKey, versionCacheKey } = serviceConfig.cache;
     localStorageProxy.removeItems([tabNavCacheKey, cacheDynamicRoutesKey, versionCacheKey]);
   };
 }

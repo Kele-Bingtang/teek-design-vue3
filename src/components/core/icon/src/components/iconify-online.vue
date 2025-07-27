@@ -7,5 +7,5 @@ defineProps<{ icon: string }>();
 </script>
 
 <template>
-  <Icon :icon="icon" :style="{ outline: 'none' }"></Icon>
+  <Icon :icon="icon" :style="{ outline: 'none' }" v-bind="$attrs" />
 </template>

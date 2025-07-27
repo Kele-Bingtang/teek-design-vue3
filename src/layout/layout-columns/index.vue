@@ -3,7 +3,7 @@ import { watch, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader, ElScrollbar } from "element-plus";
-import SystemConfig, { HOME_URL } from "@/common/config";
+import { serviceConfig, HOME_URL } from "@/common/config";
 import { Fold, Expand } from "@element-plus/icons-vue";
 import { Tooltip } from "@/components";
 import { useCommon, useMenu } from "@/composables";
@@ -30,7 +30,7 @@ const menuItem = ref<RouterConfig[]>([]);
 const active = ref<string>("");
 const showTitle = ref(true);
 
-const { isCollapse } = storeToRefs(settingStore);
+const { menu, logo, header } = storeToRefs(settingStore);
 
 watch(
   () => route.path,
@@ -75,16 +75,18 @@ const changeMenuItem = (item: RouterConfig) => {
 </script>
 
 <template>
-  <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
+  <el-container
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+  >
     <div :class="ns.e('aside')" class="flx-column">
       <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center" @click="router.push(HOME_URL)">
-        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
+        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
       </div>
 
       <el-scrollbar>
         <ul :class="ns.e('aside__list')">
           <template v-for="item in menuList" :key="item.path">
-            <el-tooltip :disabled="showTitle" effect="dark" placement="right" :content="getTitle(item).value">
+            <el-tooltip :disabled="showTitle" effect="dark" placement="right" :content="getTitle(item)">
               <li
                 :class="[
                   ns.e('aside__list-item'),
@@ -112,7 +114,7 @@ const changeMenuItem = (item: RouterConfig) => {
 
     <el-aside :class="[ns.join('layout-aside'), { 'not-aside': !menuItem.length }]" class="flx-column">
       <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center">
-        <span v-show="menuItem.length">{{ isCollapse ? "K" : SystemConfig.systemInfo.name }}</span>
+        <span v-show="menuItem.length">{{ menu.isCollapse ? "K" : serviceConfig.layout.name }}</span>
       </div>
 
       <el-scrollbar v-if="menuItem?.length">
@@ -125,7 +127,7 @@ const changeMenuItem = (item: RouterConfig) => {
     </el-aside>
 
     <el-container>
-      <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
+      <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>
       <PageContent />

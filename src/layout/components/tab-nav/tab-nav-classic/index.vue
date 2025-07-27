@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { TabProps } from "@/pinia";
 import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
-import { useNamespace } from "@/composables";
 import { useTabNav } from "../use-tab-nav";
 import MoreButton from "../components/more-button/index.vue";
 import RightMenu from "../components/right-menu/index.vue";
@@ -17,15 +18,19 @@ defineOptions({ name: "ClassicTabNav" });
 const { type = "classic" } = defineProps<{ type?: "simple" | "classic" }>();
 
 const ns = useNamespace("classic-tabs-nav");
+const { getTitle } = useCommon();
 const route = useRoute();
 const settingStore = useSettingStore();
+const router = useRouter();
 
 const tabBodyLeft = ref(0); // tabNav 滚动
+const hasScroll = ref(false); // 是否出现滚动条
 const tabNavInstance = useTemplateRef("tabNavInstance"); // 导航栏标签
 const scrollContainerInstance = useTemplateRef("scrollContainerInstance"); // 滚动栏标签
 const scrollBodyInstance = useTemplateRef("scrollBodyInstance"); // tabNav 滚动栏
-const tabsInstance = useTemplateRef<any>("tabsInstance"); // tab 标签
-const hasScroll = ref(false); // 是否出现滚动条
+const tabsInstance = useTemplateRef("tabsInstance"); // tab 标签
+
+const { tabNav } = storeToRefs(settingStore);
 
 const {
   rightMenuActiveTab,
@@ -59,9 +64,9 @@ const findTargetTab = async () => {
   await nextTick();
 
   if (!tabsInstance.value || !tabsInstance.value.length) return;
-  const targetTab = tabsInstance.value.find((tab: any) => route.path === tab?.to);
+  const targetTab = tabsInstance.value.find(tab => route.path === tab.getAttribute("to"));
 
-  moveToTargetTab(targetTab?.$el);
+  targetTab && moveToTargetTab(targetTab);
 };
 
 /**
@@ -98,8 +103,22 @@ const moveToTargetTab = (tabElement: HTMLElement) => {
   }
 };
 
-// 鼠标中键滚动回调
+// 鼠标点击回调
+const handleClick = (tab: TabProps, type: "left" | "middle") => {
+  // 鼠标左侧点击
+  if (type === "left") return router.push(tab.path);
+
+  // 鼠标中键点击
+  if (type === "middle") {
+    if (tabNav.value.middleClickToOpen) return router.push(tab.path);
+    if (tabNav.value.middleClickToClose) return closeTab(tab);
+  }
+};
+
+// 鼠标滚动回调
 const handleScrollOnDom = (e: MouseEvent & { wheelDelta: number }) => {
+  if (!tabNav.value.wheel) return;
+
   const type = e.type;
   let delta = 0;
   if (["DOMMouseScroll", "mousewheel"].includes(type)) {
@@ -142,9 +161,13 @@ const handleTouchMove = (event: TouchEvent) => {
 };
 
 onMounted(() => {
-  tabsDragSort(`.${ns.e("scroll-body")}`, `.${ns.e("tab")}`);
+  tabNav.value.draggable && tabsDragSort(`.${ns.e("scroll-body")}`, `.${ns.e("tab")}`);
   initAffixTabs();
   addTabByRoute();
+
+  const outerWidth = scrollContainerInstance.value?.offsetWidth || 0;
+  const bodyWidth = scrollBodyInstance.value?.offsetWidth || 0;
+  hasScroll.value = bodyWidth > outerWidth;
 });
 </script>
 
@@ -166,29 +189,31 @@ onMounted(() => {
         @touchstart="handleTouchStart"
         @touchmove="handleTouchMove"
       >
-        <router-link
+        <div
           ref="tabsInstance"
           v-for="(tab, index) in tabNavList"
           :key="index"
           :to="tab.path"
           :class="[ns.e('tab'), ns.is('active', isActive(tab))]"
+          @click.left="handleClick(tab, 'left')"
+          @click.middle="handleClick(tab, 'middle')"
           @contextmenu.prevent="openRightMenu($event, tab, tabNavInstance)"
         >
           <Icon
             v-if="
               tab.meta.icon &&
-              settingStore.showTabNavIcon &&
+              tabNav.showTabNavIcon &&
               (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
             "
             :icon="tab.meta.icon"
             :class="ns.em('tab', 'icon')"
           />
-          <span class="dot" v-else-if="settingStore.showTabNavDot || !tab.meta.icon" />
-          <span>{{ tab.title }}</span>
+          <span class="dot" v-else-if="tabNav.showTabNavDot || !tab.meta.icon" />
+          <span>{{ getTitle(tab) }}</span>
           <Icon class="icon-close" v-if="tab.close && tabNavList.length !== 1" @click.prevent.stop="closeTab(tab)">
             <Close />
           </Icon>
-        </router-link>
+        </div>
       </div>
     </div>
 
@@ -198,7 +223,7 @@ onMounted(() => {
       </el-button>
     </div>
 
-    <MoreButton />
+    <MoreButton v-show="tabNav.showMore" />
 
     <transition :name="`${ns.elNamespace}-zoom-in-top`">
       <RightMenu

@@ -65,11 +65,11 @@ export namespace ProTableNamespace {
     /**
      * 查询数据前的回调函数，可以对查询参数进行处理或禁止查询
      */
-    beforeSearch?: (searchParams: Recordable) => boolean | Recordable;
+    beforeSearch?: (searchParams: Recordable) => false | Recordable;
     /**
      * 请求失败回调
      */
-    requestError?: (error: unknown) => void;
+    requestError?: (error: any) => void;
     /**
      * 对请求成功的数据进行处理
      */

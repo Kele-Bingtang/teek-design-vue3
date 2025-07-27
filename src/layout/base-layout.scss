@@ -151,6 +151,18 @@
   @include joins(layout-menu) {
     flex: 1;
 
+    @include is(center) {
+      @include el-joins(menu--horizontal) {
+        justify-content: center;
+      }
+    }
+
+    @include is(end) {
+      @include el-joins(menu--horizontal) {
+        justify-content: end;
+      }
+    }
+
     @include el-joins(menu--horizontal) {
       width: 100%;
 

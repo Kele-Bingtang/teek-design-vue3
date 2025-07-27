@@ -1,7 +1,7 @@
 <script setup lang="ts" name="UserAvatar">
 import type { UserInfo } from "@/pinia";
 import { ref, toRefs } from "vue";
-import defaultAvatar from "@/common/assets/images/default.png";
+import { serviceConfig } from "@/common/config";
 import { Cropper } from "@/components";
 import { useNamespace } from "@/composables";
 
@@ -28,7 +28,7 @@ const uploadImage = (imgData: FormData) => {
     <div :class="ns.e('header')" @click="openDialog">
       <el-image :src="user.avatar" title="点击上传头像" :class="ns.e('avatar')" alt="头像">
         <template #error>
-          <el-image :src="defaultAvatar" :class="ns.e('avatar')" alt="头像" />
+          <el-image :src="serviceConfig.layout.avatar" :class="ns.e('avatar')" alt="头像" />
         </template>
       </el-image>
     </div>

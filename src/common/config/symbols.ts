@@ -1,9 +1,9 @@
 import type { InjectionKey, Ref } from "vue";
-import type { LayoutSizeEnum } from "@/common/enums";
+import type { ElementPlusSizeEnum } from "@/common/enums";
 import type { useWebSocketStore } from "@/pinia";
 
 interface GlobalConfig {
-  size: Ref<LayoutSizeEnum>;
+  size: Ref<ElementPlusSizeEnum>;
 }
 
 /** 全局配置 */

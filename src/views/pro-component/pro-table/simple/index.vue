@@ -40,6 +40,15 @@ const columns: TableColumn[] = [
     ],
   },
   {
+    prop: "status",
+    label: "状态",
+    el: "point-tag",
+    options: [
+      { label: "正常", value: 1, tagType: "success" },
+      { label: "禁用", value: 0, tagType: "danger" },
+    ],
+  },
+  {
     // 多级 prop
     prop: "user.detail.age",
     label: "年龄",

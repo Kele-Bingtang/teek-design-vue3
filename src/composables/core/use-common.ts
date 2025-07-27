@@ -1,3 +1,4 @@
+import type { TabProps } from "@/pinia";
 import { inject } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { mobileMaxWidthMedia, RefreshPageKey } from "@/common/config";
@@ -16,19 +17,17 @@ export const useCommon = () => {
   /**
    * 获取路由标题
    */
-  const getTitle = (menuItem: RouterConfig) => {
-    const title = ref(formatTitle(menuItem));
-    menuItem.meta.title = title.value;
+  const getTitle = (routeConfig: RouterConfig | TabProps) => {
+    routeConfig.meta.title = formatTitle(routeConfig);
 
     watch(
       () => layoutStore.language,
       () => {
-        title.value = formatTitle(menuItem, true);
-        menuItem.meta.title = title.value;
+        routeConfig.meta.title = formatTitle(routeConfig, true);
       }
     );
 
-    return title;
+    return routeConfig.meta.title;
   };
 
   return {

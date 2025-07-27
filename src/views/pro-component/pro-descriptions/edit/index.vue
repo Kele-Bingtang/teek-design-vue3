@@ -9,7 +9,7 @@ const model = ref({});
 
 const position = ref<"center" | "left" | "right">("right");
 const border = ref(true);
-const editable = ref(true);
+const editable = ref(false);
 const direction = ref("horizontal");
 
 const DataServe = {
@@ -46,10 +46,10 @@ const columns: DescriptionColumn[] = [
     label: "状态",
     prop: "status",
     options: [
-      { label: "未解决", value: "0" },
-      { label: "已解决", value: "1" },
-      { label: "解决中", value: "2" },
-      { label: "失败", value: "3" },
+      { label: "未解决", value: 0 },
+      { label: "已解决", value: 1 },
+      { label: "解决中", value: 2 },
+      { label: "失败", value: 3 },
     ],
     formColumn: { el: "el-select" },
   },

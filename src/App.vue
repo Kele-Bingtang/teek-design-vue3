@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :namespace="ns.elNamespace" :locale="i18nLocale" :button="config" :size="layoutSize">
+  <el-config-provider :namespace="ns.elNamespace" :locale="i18nLocale" :button="config" :size="layout.elementPlusSize">
     <router-view v-slot="{ Component }">
       <component :is="Component" />
     </router-view>
@@ -13,30 +13,30 @@ import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
 import { LanguageEnum } from "@/common/enums";
-import SystemConfig, { GlobalConfigKey, WebSocketKey } from "@/common/config";
+import { GlobalConfigKey, WebSocketKey, serviceConfig } from "@/common/config";
 import { isFunction } from "@/common/utils";
-import { useNamespace, useBrowserTitle, useWatchCssVar, useTheme } from "@/composables";
-import { useUserStore, useWebSocketStore, useLayoutStore } from "@/pinia";
+import { useNamespace, useWatchCssVar, useTheme } from "@/composables";
+import { useUserStore, useWebSocketStore, useSettingStore, useLayoutStore } from "@/pinia";
 import { useIFrame } from "@/layout/components/iframe/use-iframe";
 
 const ns = useNamespace();
 
+const settingStore = useSettingStore();
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
 
-const { layoutSize, language } = storeToRefs(layoutStore);
+const { layout } = storeToRefs(settingStore);
+const { language } = storeToRefs(layoutStore);
 
 // 自定义注入全局参数。ElConfigProvider 会自动使用 provide 全局注入它的 props 到项目里，可以通过 configProviderContextKey 来 inject 获取（先从 element-plus 引入，然后 const config = inject(configProviderContextKey)）
-provide(GlobalConfigKey, { size: layoutSize });
+provide(GlobalConfigKey, { size: computed(() => layout.value.elementPlusSize) });
 
 // 初始化主题配置
 useTheme().initTheme();
-// 浏览器标题
-useBrowserTitle();
 // 监听布局样式变量
 useWatchCssVar();
 // IFrame 通信
-useIFrame(SystemConfig.layoutConfig.watchFrame);
+useIFrame(serviceConfig.layout.watchFrame);
 
 // 配置 element 按钮文字中间是否有空格
 const config = reactive({ autoInsertSpace: false });

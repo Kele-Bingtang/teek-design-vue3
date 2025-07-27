@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouteStore } from "@/pinia";
-import SystemConfig, { LAYOUT_NAME } from "@/common/config";
+import { serviceConfig, LAYOUT_NAME } from "@/common/config";
 
 /**
  * 菜单管理
@@ -48,7 +48,7 @@ export const useMenu = () => {
      *
      * 如果您确保您的路由不会出现：多个子路由且只有一个 hideInMenu 不为 true，可以只过滤一次提升性能
      */
-    if (SystemConfig.layoutConfig.moreRouteChildrenHideInMenuThenOnlyOne)
+    if (serviceConfig.layout.moreRouteChildrenHideInMenuThenOnlyOne)
       return formatRoutesToMenu(formatRoutesToMenu(routes));
     else return formatRoutesToMenu(routes);
   };

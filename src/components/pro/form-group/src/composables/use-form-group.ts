@@ -3,11 +3,11 @@ import type { FormColumn } from "@/components/pro/form";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { ProFormGroupInstance, ProFormGroupOnEmits, ProFormGroupProps } from "../types";
 import { ElConfigProvider, type FormInstance } from "element-plus";
-import { createVNode, getCurrentInstance, nextTick, ref, render, computed, toValue } from "vue";
+import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
 import { isString } from "@/common/utils";
 import { filterEmpty } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProFormGroup from "../index.vue";
 
 type ProFormGroupPropsWithModel = ProFormGroupProps & { modelValue?: Recordable };
@@ -21,7 +21,9 @@ export const useProFormGroup = () => {
   const ns = useNamespace();
   const currentInstance = getCurrentInstance();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const settingStore = useSettingStore();
+
+  const { layout } = storeToRefs(settingStore);
 
   /**
    * @param ProFormGroup ProFormGroup 实例
@@ -212,7 +214,7 @@ export const useProFormGroup = () => {
       );
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proFormGroupInstance }
       );
       await nextTick();

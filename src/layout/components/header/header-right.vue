@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useErrorLogStore } from "@/pinia";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { useCommon, useNamespace } from "@/composables";
 import Fullscreen from "./components/fullscreen/index.vue";
 import LanguageSelect from "./components/language-select/index.vue";
@@ -41,7 +41,7 @@ const { isMobile } = useCommon();
       <LanguageSelect id="languageSelect" />
       <ErrorLog
         id="errorLog"
-        v-if="SystemConfig.layoutConfig.errorLog.showInHeader && errorCount > 0 && !isMobile"
+        v-if="serviceConfig.layout.errorLog.showInHeader && errorCount > 0 && !isMobile"
         :error-count="errorCount"
       />
       <LightDarkSwitch id="lightDarkSwitch" />

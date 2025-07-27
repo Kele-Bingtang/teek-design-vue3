@@ -11,8 +11,8 @@ import type {
   TableScope,
   TableSizeEnum,
   UseSelectState,
+  PageInfo,
 } from "@/components/pro/table";
-import type { PageInfo } from "@/components/pro/pagination";
 import type { ProPageEmits, ProPageProps } from "./types";
 import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
 import { ElTooltip, ElButton } from "element-plus";
@@ -135,20 +135,10 @@ function usePageSearchInit() {
     searchDefaultParams.value[prop] = value;
   };
 
-  let timer: ReturnType<typeof setTimeout> | null = null;
-
   watch(
     flatColumns,
     newValue => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-
-      // 防抖：防止初始化时连续执行
-      timer = setTimeout(() => {
-        for (const column of newValue) initOptionsMap(column.search?.options ?? column.options, column.prop || "");
-      }, 10);
+      for (const column of newValue) initOptionsMap(column.search?.options ?? column.options, column.prop || "");
     },
     { deep: true, immediate: true }
   );
@@ -260,7 +250,7 @@ const expose = {
   toggleCollapse: () => proSearchInstance.value?.toggleCollapse(),
   getTableData: () => proTableInstance.value?.tableData,
   getPageInfo: () => proTableInstance.value?.pageInfo,
-  setSearchParams: (params: Record<string, any>) => {
+  setSearchParams: (params: Recordable) => {
     Object.entries(params).forEach(([key, value]) => {
       setProp(searchParams.value, key, value);
     });

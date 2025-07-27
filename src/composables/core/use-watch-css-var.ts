@@ -12,16 +12,18 @@ export const useWatchCssVar = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { menuWidth, headerHeight, headerStyle, radius } = storeToRefs(settingStore);
+  const { menu, header, theme, tabNav } = storeToRefs(settingStore);
 
   // 展开菜单宽度变量
-  watchEffect(() => setCssVar(ns.cssVarName("layout-open-aside-width"), addUnit(menuWidth.value)));
+  watchEffect(() => setCssVar(ns.cssVarName("layout-open-aside-width"), addUnit(menu.value.width)));
   //  折叠菜单宽度变量
   watchEffect(() => setCssVar(ns.cssVarName("layout-close-aside-width"), "64px"));
   // 顶部高度变量
-  watchEffect(() => setCssVar(ns.cssVarName("layout-header-height"), addUnit(headerHeight.value)));
+  watchEffect(() => setCssVar(ns.cssVarName("layout-header-height"), addUnit(header.value.height)));
+  // 标签栏高度
+  watchEffect(() => setCssVar(ns.cssVarName("layout-tab-height"), addUnit(tabNav.value.height)));
   // 圆角变量
-  watchEffect(() => setCssVar(ns.cssVarName("radius"), addUnit(radius.value, "rem")));
+  watchEffect(() => setCssVar(ns.cssVarName("radius"), addUnit(theme.value.radius, "rem")));
   // 顶部和标签栏的背景色、线条变量
   watchEffect(() => {
     const headerBg = ns.cssVarName("layout-header-bg-color");
@@ -32,23 +34,23 @@ export const useWatchCssVar = () => {
     const tabLine = ns.cssVarName("layout-tab-line");
     const borderStyle = `1px solid ${ns.cssVar("card-border-color-primary")}`;
 
-    if (headerStyle.value === HeaderStyleEnum.Page) return removeCssVar([headerBg, tabBg, headerLine, tabLine]);
+    if (header.value.style === HeaderStyleEnum.Page) return removeCssVar([headerBg, tabBg, headerLine, tabLine]);
 
-    if (headerStyle.value === HeaderStyleEnum.Bg) {
+    if (header.value.style === HeaderStyleEnum.Bg) {
       removeCssVar([headerLine, tabLine]);
 
       setCssVar(headerBg, bgStyle);
       setCssVar(tabBg, bgStyle);
     }
 
-    if (headerStyle.value === HeaderStyleEnum.Line) {
+    if (header.value.style === HeaderStyleEnum.Line) {
       removeCssVar([headerBg, tabBg]);
 
       setCssVar(headerLine, borderStyle);
       setCssVar(tabLine, borderStyle);
     }
 
-    if (headerStyle.value === HeaderStyleEnum.BgLine) {
+    if (header.value.style === HeaderStyleEnum.BgLine) {
       setCssVar(headerBg, bgStyle);
       setCssVar(tabBg, bgStyle);
       setCssVar(headerLine, borderStyle);
