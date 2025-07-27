@@ -1,4 +1,4 @@
-import type { PlusAxiosRequestConfig } from ".";
+import type { InternalAxiosRequestConfig } from "axios";
 import qs from "qs";
 
 // 声明一个 Map 用于存储每个请求的标识 和 取消函数
@@ -12,9 +12,9 @@ const sortedStringify = (obj: any) => {
 };
 
 /**
- * 序列化参数
+ * 获取请求的唯一标识URL
  */
-export const getPendingUrl = (config: PlusAxiosRequestConfig) => {
+export const getPendingUrl = (config: InternalAxiosRequestConfig) => {
   return [config.method, config.url, sortedStringify(config.data), sortedStringify(config.params)].join("&");
 };
 
@@ -22,9 +22,9 @@ export class AxiosCanceler {
   /**
    * 添加请求
    *
-   * @param config
+   * @param config 请求配置
    */
-  addPending(config: PlusAxiosRequestConfig) {
+  addPending(config: InternalAxiosRequestConfig) {
     // 在请求开始前，对之前的请求做检查取消操作
     this.removePending(config);
     const url = getPendingUrl(config);
@@ -36,9 +36,9 @@ export class AxiosCanceler {
   /**
    * 移除请求
    *
-   * @param config
+   * @param config 请求配置
    */
-  removePending(config: PlusAxiosRequestConfig) {
+  removePending(config: InternalAxiosRequestConfig) {
     const url = getPendingUrl(config);
 
     // 如果在 pending 中存在当前请求标识，需要取消当前请求并删除条目
@@ -50,7 +50,7 @@ export class AxiosCanceler {
   }
 
   /**
-   * 清空所有 pending
+   * 清空所有 pending 请求
    */
   removeAllPending() {
     pendingMap.forEach(controller => {
@@ -60,7 +60,7 @@ export class AxiosCanceler {
   }
 
   /**
-   * 重置
+   * 重置请求缓存
    */
   reset() {
     pendingMap.clear();

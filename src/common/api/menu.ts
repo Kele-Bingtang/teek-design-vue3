@@ -1,4 +1,4 @@
-// import http from "@/common/http";
+// import { http } from "@/common/http";
 
 export interface BackstageMenuList {
   imageIcon: string;

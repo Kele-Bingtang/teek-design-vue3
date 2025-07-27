@@ -11,7 +11,7 @@ import { useNamespace } from "@/composables";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnType from "./table-column/table-column-type.vue";
-import { defaultPageInfo, useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
+import { defaultTablePageInfo, useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
 import { filterData, initModel, isServer, initDataRowField } from "./helper";
 
 defineOptions({ name: "TableMain" });
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {
   rowKey: "id",
   operationProp: "operation",
   operationProps: () => ({}),
-  pageInfo: () => defaultPageInfo,
+  pageInfo: () => defaultTablePageInfo,
   pageScope: false,
   paginationProps: () => ({}),
   filterScope: "client",
@@ -40,8 +40,8 @@ const ns = useNamespace("table-main");
 
 const elTableInstance = useTemplateRef<TableInstance>("elTableInstance");
 
-const pageInfo = ref({ ...defaultPageInfo, ...props.pageInfo });
-watchEffect(() => (pageInfo.value = { ...defaultPageInfo, ...props.pageInfo }));
+const pageInfo = ref({ ...defaultTablePageInfo, ...props.pageInfo });
+watchEffect(() => (pageInfo.value = { ...defaultTablePageInfo, ...props.pageInfo }));
 
 // 表格实际渲染的数据
 const tableData = computed(() => tryPagination(filterTableData.value ?? props.data));

@@ -84,11 +84,25 @@ export const useUserStore = defineStore(
             dept: "Teek 云科技技术部 - 智能全栈科",
             registerTime: "2022-10-01 19:07:27",
           });
-        });
+        }, 500);
       });
 
       setUserInfo(userInfo);
       return userInfo;
+    };
+
+    /**
+     * 刷新 token
+     */
+    const doRefreshToken = async () => {
+      return await new Promise<boolean>(resolve => {
+        setTimeout(() => {
+          const accessToken = "admin-token";
+          const refreshToken = "admin-refresh-token";
+          setToken(accessToken, refreshToken);
+          resolve(true);
+        }, 500);
+      });
     };
 
     /**
@@ -164,6 +178,7 @@ export const useUserStore = defineStore(
       login,
       logout,
       getUserInfo,
+      doRefreshToken,
       clearPermission,
       changeRoles,
       setUserInfo,

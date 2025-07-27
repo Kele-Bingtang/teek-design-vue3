@@ -5,7 +5,7 @@ let loadingInstance: ReturnType<typeof ElLoading.service>;
 
 /**
  * 开启 Loading
- * */
+ */
 const startLoading = () => {
   loadingInstance = ElLoading.service({
     fullscreen: true,
@@ -17,7 +17,7 @@ const startLoading = () => {
 
 /**
  * 结束 Loading
- * */
+ */
 const endLoading = () => {
   loadingInstance.close();
 };
@@ -26,7 +26,7 @@ let needLoadingRequestCount = 0;
 
 /**
  * 显示全屏加载
- * */
+ */
 export const showFullScreenLoading = () => {
   if (needLoadingRequestCount === 0) startLoading();
   needLoadingRequestCount++;
@@ -34,7 +34,7 @@ export const showFullScreenLoading = () => {
 
 /**
  * 隐藏全屏加载
- * */
+ */
 export const tryHideFullScreenLoading = () => {
   if (needLoadingRequestCount <= 0) return;
   needLoadingRequestCount--;

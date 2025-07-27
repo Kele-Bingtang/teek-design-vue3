@@ -1,9 +1,9 @@
 import type { ApiResponse, PageInfo, UseTableStateData, UseTableStateOptions } from "../types";
-import { reactive, computed, toRefs, toValue, watch, unref } from "vue";
+import { reactive, computed, toRefs, toValue, watch, unref, readonly, ref } from "vue";
 import { defaultPaginationInfo } from "@/components/pro/pagination";
 import { isArray, isEmpty, isNumber, isObject } from "@/common/utils";
 
-export const defaultPageInfo = { ...defaultPaginationInfo, total: 0 } as PageInfo;
+export const defaultTablePageInfo = { ...defaultPaginationInfo, total: 0 } as PageInfo;
 
 /**
  * table 页面操作方法封装
@@ -29,7 +29,7 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
     // 表格数据
     tableData: [],
     // 分页数据
-    pageInfo: { ...defaultPageInfo, ...unref(pageInfo) },
+    pageInfo: { ...defaultTablePageInfo, ...unref(pageInfo) },
     // 查询参数（只包括查询）
     searchParams: {},
     // 初始化默认的查询参数，重置时候用到
@@ -59,9 +59,10 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
   });
 
   // 外界分页参数发送改变后，内部分页信息也需要改变
+  // 修复 watch 函数，正确监听分页参数变化
   watch(
-    () => pageInfo,
-    () => (state.pageInfo = { ...defaultPageInfo, ...unref(pageInfo) }),
+    () => unref(pageInfo),
+    newPageInfo => (state.pageInfo = { ...defaultTablePageInfo, ...newPageInfo }),
     { deep: true }
   );
 
@@ -102,6 +103,8 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
       }
     } catch (error) {
       requestError?.(error);
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -174,8 +177,16 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
   const handlePagination = (pageInfo: Partial<PageInfo>, request = true) => {
     const { pageNum, pageSize, pageSizes } = pageInfo;
 
-    if (pageNum !== undefined) state.pageInfo.pageNum = pageNum <= 0 ? defaultPageInfo.pageNum : pageNum;
-    if (pageSize !== undefined) state.pageInfo.pageSize = pageSize <= 0 ? defaultPageInfo.pageSize : pageSize;
+    // 增强分页参数验证，确保参数有效
+    if (pageNum !== undefined) {
+      const pageNumValue = Number(pageNum);
+      state.pageInfo.pageNum = !isNaN(pageNumValue) && pageNumValue > 0 ? pageNumValue : defaultTablePageInfo.pageNum;
+    }
+    if (pageSize !== undefined) {
+      const pageSizeValue = Number(pageSize);
+      state.pageInfo.pageSize =
+        !isNaN(pageSizeValue) && pageSizeValue > 0 ? pageSizeValue : defaultTablePageInfo.pageSize;
+    }
     if (pageSizes) state.pageInfo.pageSizes = pageSizes;
 
     if (request && toValue(isServerPage)) requestData();
@@ -185,6 +196,7 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
 
   return {
     ...toRefs(state),
+    loading: readonly(loading),
     fetch: requestData,
     search,
     reset,
@@ -236,6 +248,10 @@ function extractField<T>(
   defaultValue: T,
   condition?: (field: unknown) => boolean
 ): T {
-  for (const field of fields) if (field in obj && condition?.(obj[field])) return obj[field] as T;
+  for (const field of fields) {
+    if (field in obj && condition?.(obj[field])) {
+      return obj[field] as T;
+    }
+  }
   return defaultValue;
 }

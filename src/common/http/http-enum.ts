@@ -1,19 +1,18 @@
 // 请求枚举配置
 /**
- * 请求配置
+ * 请求结果枚举
  */
 export enum ResultEnum {
   SUCCESS = 200,
-  ERROR = 500,
-  OVERDUE = 401,
+  LOGIN = 401,
   TIMEOUT = 10000,
   TYPE = "success",
 }
 
 /**
- * 请求方法
+ * 请求方法枚举
  */
-export enum RequestEnum {
+export enum RequestMethodEnum {
   GET = "GET",
   POST = "POST",
   PATCH = "PATCH",
@@ -35,4 +34,8 @@ export enum ContentTypeEnum {
   FILE_FORM_DATA = "application/form-data;charset=UTF-8",
   // 多文件 form-data 上传
   Multi_FILE_FORM_DATA = "multipart/form-data;charset=UTF-8",
+  // xml
+  XML = "application/xml;charset=UTF-8",
+  // octet-stream 二进制流数据
+  OCTET_STREAM = "application/octet-stream",
 }

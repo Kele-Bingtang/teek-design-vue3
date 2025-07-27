@@ -17,7 +17,7 @@ import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { defaultPageInfo, useTableApi, useTableState } from "./composables";
+import { defaultTablePageInfo, useTableApi, useTableState } from "./composables";
 import { Environment, TableSizeEnum } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";
@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   rowKey: "id",
   operationProp: "operation",
   operationProps: () => ({}),
-  pageInfo: () => defaultPageInfo,
+  pageInfo: () => defaultTablePageInfo,
   pageScope: false,
   paginationProps: () => ({}),
   filterScope: "client",
