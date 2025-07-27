@@ -21,7 +21,7 @@ const ns = useNamespace();
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
-const { tabNavMode, showTabNav, maximize, fixTabNav, pageTransition, layoutMode } = storeToRefs(settingStore);
+const { layout, tabNav, transition } = storeToRefs(settingStore);
 
 // 标签栏组件
 const TabNavComponents: Record<string, Component> = {
@@ -38,13 +38,13 @@ const topHeight = computed(() => {
   let tabHeight = 0;
 
   // 内容最大化时，顶部高度和标签栏高度都为 0
-  if (!maximize.value) {
+  if (!layout.value.maximize) {
     // 嵌入布局没有顶部
-    if (layoutMode.value !== LayoutModeEnum.IFrame) {
+    if (layout.value.layoutMode !== LayoutModeEnum.IFrame) {
       headerHeight = removeUnit(getCssVar(ns.cssVarName("layout-header-height"))) ?? 0;
     }
     // 隐藏标签栏时，标签栏高度为 0
-    if (showTabNav.value) {
+    if (tabNav.value.enabled) {
       tabHeight = removeUnit(getCssVar(ns.cssVarName("layout-tab-height"))) ?? 0;
     }
   }
@@ -81,7 +81,7 @@ watchEffect(() => {
   if (urlParams.get("_maximize")) {
     if (!app?.className.includes("page-maximize")) app?.classList.add("page-maximize");
   } else {
-    if (maximize.value) app?.classList.add("page-maximize");
+    if (layout.value.maximize) app?.classList.add("page-maximize");
     else app?.classList.remove("page-maximize");
   }
 });
@@ -90,21 +90,21 @@ watchEffect(() => {
  * 是否固定标签栏
  */
 const isFixTabNav = computed(() => {
-  if (fixTabNav.value) return "hidden auto";
+  if (tabNav.value.fixTabNav) return "hidden auto";
   return "";
 });
 </script>
 
 <template>
-  <Maximize v-if="maximize" />
+  <Maximize v-if="layout.maximize" />
   <el-main>
-    <component v-if="showTabNav" :is="TabNavComponents[tabNavMode]" />
+    <component v-if="tabNav.enabled" :is="TabNavComponents[tabNav.tabNavMode]" />
 
     <div class="page-content" :style="topHeight">
       <router-view v-slot="{ Component, route }">
         <transition
           v-bind="route.meta.transitionProps"
-          :name="route.meta.transitionProps?.name || pageTransition"
+          :name="route.meta.transitionProps?.name || transition.page"
           mode="out-in"
           appear
         >

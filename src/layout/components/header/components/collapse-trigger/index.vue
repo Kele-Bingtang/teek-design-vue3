@@ -8,7 +8,7 @@ defineOptions({ name: "CollapseTrigger" });
 
 const ns = useNamespace("collapse-trigger");
 const settingStore = useSettingStore();
-const { isCollapse } = storeToRefs(settingStore);
+const { menu } = storeToRefs(settingStore);
 
 /**
  * 切换侧边菜单
@@ -19,7 +19,7 @@ const toggleTrigger = () => settingStore.toggleSideMenu();
 <template>
   <div :class="ns.b()" class="flx-center" @click.stop="toggleTrigger">
     <Icon>
-      <component :is="isCollapse ? Expand : Fold" />
+      <component :is="menu.isCollapse ? Expand : Fold" />
     </Icon>
 
     <slot />

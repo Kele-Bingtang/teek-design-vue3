@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Login">
 import type { Component } from "vue";
 import { ref, provide } from "vue";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { SwitchDark } from "@/components";
 import { useNamespace } from "@/composables";
 import LoginForm from "./loginForm.vue";
@@ -39,8 +39,8 @@ provide("switchLoginMode", switchLoginMode);
 
       <div :class="ns.e('right')">
         <div :class="ns.e('right__header')" class="flx-center">
-          <img src="@/common/assets/images/logo.png" alt="" />
-          <h2 class="title">{{ SystemConfig.systemInfo.name }}</h2>
+          <img :src="serviceConfig.logo.source" alt="" />
+          <h2 class="title">{{ serviceConfig.layout.name }}</h2>
         </div>
 
         <component :is="formComponents[formMode]" />

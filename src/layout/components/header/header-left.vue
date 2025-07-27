@@ -9,7 +9,7 @@ defineOptions({ name: "HeaderLeft" });
 
 const ns = useNamespace("header-left");
 const settingStore = useSettingStore();
-const { showBreadcrumb } = storeToRefs(settingStore);
+const { breadcrumb } = storeToRefs(settingStore);
 
 const { isMobile } = useCommon();
 </script>
@@ -17,7 +17,7 @@ const { isMobile } = useCommon();
 <template>
   <div :class="ns.b()" class="flx-center">
     <CollapseTrigger />
-    <Breadcrumb v-if="showBreadcrumb && !isMobile" />
+    <Breadcrumb v-if="breadcrumb.enabled && !isMobile" />
   </div>
 </template>
 

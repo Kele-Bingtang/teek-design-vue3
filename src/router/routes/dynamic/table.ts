@@ -12,7 +12,7 @@ const tableRoutes: RouterConfigRaw = {
       path: "drag-table",
       name: "DragTable",
       component: () => import("@/views/table/drag-table/index.vue"),
-      meta: { title: "表格拖拽", icon: Star, roles: ["A"] },
+      meta: { title: "表格拖拽", icon: Star },
     },
     {
       path: "dynamic-table",

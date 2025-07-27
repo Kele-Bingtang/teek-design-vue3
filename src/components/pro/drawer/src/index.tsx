@@ -15,7 +15,7 @@ export type ProUseDrawerProps = ProDrawerProps & Partial<DrawerProps>;
 const ns = useNamespace("pro-drawer");
 const blockClass = ns.b();
 let appContextConst: AppContext | null;
-let layoutSize: ComputedRef<"default" | "small" | "large" | undefined>;
+let elementPlusSize: ComputedRef<"default" | "small" | "large" | undefined>;
 let id = 0;
 
 /**
@@ -118,7 +118,7 @@ export const showDrawer = (
   };
 
   const vm = (
-    <ElConfigProvider namespace={ns.elNamespace} size={layoutSize.value}>
+    <ElConfigProvider namespace={ns.elNamespace} size={elementPlusSize.value}>
       <ElDrawer
         modelValue
         title="抽屉"
@@ -193,7 +193,7 @@ export const initDrawer = (ctx?: ComponentInternalInstance) => {
   appContextConst = appContext;
 
   const globalConfig = inject(GlobalConfigKey);
-  layoutSize = computed(() => globalConfig?.size.value ?? "default");
+  elementPlusSize = computed(() => globalConfig?.size.value ?? "default");
 
   return { showDrawer };
 };

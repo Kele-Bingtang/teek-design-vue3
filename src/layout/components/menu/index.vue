@@ -24,11 +24,13 @@ const route = useRoute();
 const settingStore = useSettingStore();
 const { menuList: menuListRef } = useMenu();
 
+const { menu } = storeToRefs(settingStore);
+
 // 当前激活菜单
 const activeMenu = computed(() =>
   props.activeMenu ? props.activeMenu : route.meta.activeMenu || route.meta._fullPath || route.path
 );
-const isCollapse = computed(() => (props.isCollapse === undefined ? settingStore.isCollapse : props.isCollapse));
+const isCollapse = computed(() => (props.isCollapse === undefined ? menu.value.isCollapse : props.isCollapse));
 
 // 菜单列表
 const menuList = computed(() => {
@@ -42,7 +44,7 @@ const menuList = computed(() => {
     <el-menu
       :default-active="activeMenu"
       :collapse="isCollapse"
-      :unique-opened="settingStore.menuAccordion"
+      :unique-opened="menu.accordion"
       :collapse-transition="false"
       v-bind="{ ...$attrs, class: undefined }"
     >

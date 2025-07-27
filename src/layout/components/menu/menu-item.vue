@@ -15,6 +15,8 @@ const router = useRouter();
 const settingStore = useSettingStore();
 const { isMobile, getTitle } = useCommon();
 
+const { menu } = storeToRefs(settingStore);
+
 /**
  * 菜单点击事件，跳转页面
  */
@@ -45,7 +47,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
+        v-if="menuItem.meta.tagText && !menu.isCollapse"
         size="small"
         type="danger"
         effect="dark"
@@ -55,7 +57,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         {{ menuItem.meta.tagText }}
       </el-tag>
       <PointTag
-        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        v-if="menuItem.meta.pointTag && !menu.isCollapse"
         type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"
@@ -71,7 +73,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText && !settingStore.isCollapse"
+        v-if="menuItem.meta.tagText && !menu.isCollapse"
         size="small"
         type="danger"
         effect="dark"
@@ -81,7 +83,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         {{ menuItem.meta.tagText }}
       </el-tag>
       <PointTag
-        v-if="menuItem.meta.pointTag && !settingStore.isCollapse"
+        v-if="menuItem.meta.pointTag && !menu.isCollapse"
         type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"

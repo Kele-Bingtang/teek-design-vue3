@@ -1,7 +1,7 @@
 import { ref, readonly } from "vue";
 import { useRoute } from "vue-router";
 import { TitleModeEnum } from "@/common/enums";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { formatTitle } from "@/router/helper";
 import { useSettingStore, useUserStore } from "@/pinia";
 
@@ -19,7 +19,7 @@ export const useBrowserTitle = () => {
    * 获取浏览器的页面预设标题
    */
   const getBrowserTitle = () => {
-    const { name } = SystemConfig.systemInfo;
+    const { name } = serviceConfig.layout;
     const { titleMode } = settingStore;
     const pageTitle = formatTitle(route);
 

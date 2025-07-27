@@ -3,10 +3,10 @@ import type { FormInstance } from "element-plus";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { FormColumn, ProFormInstance, ProFormNamespace } from "../types";
 import { ElConfigProvider } from "element-plus";
-import { createVNode, getCurrentInstance, nextTick, ref, render, computed, toValue } from "vue";
+import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import { filterEmpty } from "@/components/pro/helper";
 import ProForm from "../index.vue";
 
@@ -25,7 +25,9 @@ export const useProForm = () => {
   const ns = useNamespace();
   const currentInstance = getCurrentInstance();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const settingStore = useSettingStore();
+
+  const { layout } = storeToRefs(settingStore);
 
   /**
    * @param proForm ProForm 实例
@@ -208,7 +210,7 @@ export const useProForm = () => {
       const proFormInstance = createVNode(ProForm, { ...proFormProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proFormInstance }
       );
       await nextTick();

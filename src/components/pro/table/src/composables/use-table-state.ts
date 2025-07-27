@@ -1,5 +1,5 @@
 import type { ApiResponse, PageInfo, UseTableStateData, UseTableStateOptions } from "../types";
-import { reactive, computed, toRefs, toValue, watch, unref, readonly, ref } from "vue";
+import { reactive, computed, toRefs, toValue, watch, unref } from "vue";
 import { defaultPaginationInfo } from "@/components/pro/pagination";
 import { isArray, isEmpty, isNumber, isObject } from "@/common/utils";
 
@@ -59,10 +59,9 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
   });
 
   // 外界分页参数发送改变后，内部分页信息也需要改变
-  // 修复 watch 函数，正确监听分页参数变化
   watch(
-    () => unref(pageInfo),
-    newPageInfo => (state.pageInfo = { ...defaultTablePageInfo, ...newPageInfo }),
+    () => pageInfo,
+    () => (state.pageInfo = { ...defaultTablePageInfo, ...unref(pageInfo) }),
     { deep: true }
   );
 
@@ -103,8 +102,6 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
       }
     } catch (error) {
       requestError?.(error);
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -177,16 +174,8 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
   const handlePagination = (pageInfo: Partial<PageInfo>, request = true) => {
     const { pageNum, pageSize, pageSizes } = pageInfo;
 
-    // 增强分页参数验证，确保参数有效
-    if (pageNum !== undefined) {
-      const pageNumValue = Number(pageNum);
-      state.pageInfo.pageNum = !isNaN(pageNumValue) && pageNumValue > 0 ? pageNumValue : defaultTablePageInfo.pageNum;
-    }
-    if (pageSize !== undefined) {
-      const pageSizeValue = Number(pageSize);
-      state.pageInfo.pageSize =
-        !isNaN(pageSizeValue) && pageSizeValue > 0 ? pageSizeValue : defaultTablePageInfo.pageSize;
-    }
+    if (pageNum !== undefined) state.pageInfo.pageNum = pageNum <= 0 ? defaultTablePageInfo.pageNum : pageNum;
+    if (pageSize !== undefined) state.pageInfo.pageSize = pageSize <= 0 ? defaultTablePageInfo.pageSize : pageSize;
     if (pageSizes) state.pageInfo.pageSizes = pageSizes;
 
     if (request && toValue(isServerPage)) requestData();
@@ -196,7 +185,6 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
 
   return {
     ...toRefs(state),
-    loading: readonly(loading),
     fetch: requestData,
     search,
     reset,
@@ -248,10 +236,6 @@ function extractField<T>(
   defaultValue: T,
   condition?: (field: unknown) => boolean
 ): T {
-  for (const field of fields) {
-    if (field in obj && condition?.(obj[field])) {
-      return obj[field] as T;
-    }
-  }
+  for (const field of fields) if (field in obj && condition?.(obj[field])) return obj[field] as T;
   return defaultValue;
 }

@@ -2,7 +2,10 @@
 
 // 布局主题变量
 :root {
+  --#{$admin-namespace}-radius: 0.75rem;
+
   // 顶部栏
+  --#{$admin-namespace}-layout-header-height: 55px;
   --#{$admin-namespace}-layout-header-bg-color: var(--#{$admin-namespace}-bg-color-page);
   --#{$admin-namespace}-layout-header-text-color: var(--#{$admin-namespace}-text-gray-600);
   --#{$admin-namespace}-layout-header-icon-size: 22px;
@@ -25,6 +28,8 @@
   --#{$admin-namespace}-layout-tab-dot-size: 11px;
 
   // 侧边栏
+  --#{$admin-namespace}-layout-open-aside-width: 240px;
+  --#{$admin-namespace}-layout-close-aside-width: 64px;
   --#{$admin-namespace}-layout-aside-bg-color: var(--#{$admin-namespace}-bg-color);
   --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
   --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);

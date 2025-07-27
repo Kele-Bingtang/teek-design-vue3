@@ -13,7 +13,7 @@ const settingStore = useSettingStore();
  * 退出最大化
  */
 const exitMaximize = () => {
-  settingStore.$patch({ maximize: false });
+  settingStore.$patch({ layout: { maximize: false } });
 };
 </script>
 

@@ -8,6 +8,7 @@
   @include e(link) {
     display: inline-flex;
     align-items: center;
+    height: 20px;
     color: cssVar(layout-header-breadcrumb-link-color);
 
     &:not(.no-click):hover {
@@ -25,6 +26,16 @@
 
     &.svg-icon {
       font-size: 12px;
+    }
+  }
+
+  @include e(home-icon) {
+    margin-right: 16px;
+    font-size: 20px;
+
+    &:not(.no-click):hover {
+      color: cssVar(color-primary);
+      cursor: pointer;
     }
   }
 }

@@ -11,7 +11,7 @@ export const useTheme = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { isDark, isGrey, isWeak, systemThemeMode, primaryColor } = storeToRefs(settingStore);
+  const { isDark, layout, theme: themeConfig } = storeToRefs(settingStore);
   const { Light, Dark } = SystemThemeEnum;
 
   const systemThemeStyle = {
@@ -40,11 +40,11 @@ export const useTheme = () => {
   /**
    * 修改系统主题
    */
-  const changeSystemTheme = (theme = systemThemeMode.value) => {
+  const changeSystemTheme = (theme = themeConfig.value.systemThemeMode) => {
     // 临时禁用过渡效果
     disableTransitions();
 
-    if (theme !== systemThemeMode.value) settingStore.$patch({ systemThemeMode: theme });
+    if (theme !== themeConfig.value.systemThemeMode) settingStore.$patch({ theme: { systemThemeMode: theme } });
 
     const currentTheme = systemThemeStyle[isDark.value ? Dark : Light];
     if (currentTheme) document.documentElement.setAttribute("class", currentTheme.className);
@@ -53,7 +53,9 @@ export const useTheme = () => {
     for (let i = 1; i <= 9; i++) {
       setCssVar(
         ns.cssVarNameEl(`color-primary-light-${i}`),
-        isDark.value ? `${getDarkColor(primaryColor.value, i / 10)}` : `${getLightColor(primaryColor.value, i / 10)}`
+        isDark.value
+          ? `${getDarkColor(themeConfig.value.primaryColor, i / 10)}`
+          : `${getLightColor(themeConfig.value.primaryColor, i / 10)}`
       );
     }
 
@@ -68,8 +70,8 @@ export const useTheme = () => {
   /**
    * 修改主题颜色
    */
-  const changePrimaryColor = (color = primaryColor.value) => {
-    if (color !== primaryColor.value) settingStore.$patch({ primaryColor: color });
+  const changePrimaryColor = (color = themeConfig.value.primaryColor) => {
+    if (color !== themeConfig.value.primaryColor) settingStore.$patch({ theme: { primaryColor: color } });
 
     // 兼容暗黑模式，自动计算主题颜色由深到浅的其他颜色
     setCssVar(ns.cssVarNameEl(`color-primary`), color);
@@ -109,8 +111,8 @@ export const useTheme = () => {
     changePrimaryColor();
     changeSystemTheme();
 
-    if (isGrey.value) changeGreyOrWeak(true, "grey");
-    if (isWeak.value) changeGreyOrWeak(true, "weak");
+    if (layout.value.isGrey) changeGreyOrWeak(true, "grey");
+    if (layout.value.isWeak) changeGreyOrWeak(true, "weak");
   };
 
   return {

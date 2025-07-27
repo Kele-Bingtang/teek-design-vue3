@@ -6,14 +6,16 @@ import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import { useProTable } from "@/components/pro/table";
 import { useProSearch } from "@/components/pro/search";
 import ProPage from "../index.vue";
 
 export const useProPage = () => {
   const ns = useNamespace();
-  const { layoutSize } = storeToRefs(useLayoutStore());
+  const settingStore = useSettingStore();
+
+  const { layout } = storeToRefs(settingStore);
 
   const currentInstance = getCurrentInstance();
 
@@ -54,7 +56,7 @@ export const useProPage = () => {
       );
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proPageInstance }
       );
       await nextTick();

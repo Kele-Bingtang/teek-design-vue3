@@ -5,8 +5,7 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
-import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
-import defaultAvatar from "@/common/assets/images/default.png";
+import { serviceConfig, LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useUserStore } from "@/pinia";
@@ -31,7 +30,7 @@ const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
-  { label: t("_headerBar.lock"), icon: Lock, click: OpenLockPanel },
+  { label: t("_headerBar.lock"), icon: Lock, click: openLockPanel },
   {
     label: "Github",
     click: () => window.open("https://github.com/Kele-Bingtang/teek-design-vue3"),
@@ -55,7 +54,7 @@ const openThemePanel = () => {
 /**
  * 锁屏
  */
-const OpenLockPanel = () => {
+const openLockPanel = () => {
   mittBus.emit(OpenLockPanelKey);
 };
 
@@ -91,7 +90,7 @@ const logout = async () => {
         <div class="flx-align-center gap-15" :class="ns.e('avatar-wrapper')">
           <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
             <template #error>
-              <el-image :src="defaultAvatar" />
+              <el-image :src="serviceConfig.layout.avatar" />
             </template>
           </el-image>
           <span v-if="name">{{ userInfo.username }}</span>
@@ -102,7 +101,7 @@ const logout = async () => {
         <div :class="ns.e('head')" class="flx-align-center">
           <el-image :src="userInfo.avatar" :class="ns.e('avatar')">
             <template #error>
-              <el-image :src="defaultAvatar" />
+              <el-image :src="serviceConfig.layout.avatar" />
             </template>
           </el-image>
 

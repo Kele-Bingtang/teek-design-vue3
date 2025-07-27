@@ -113,4 +113,6 @@ export default {
   __APP_INFO__: "readonly",
   httpNs: "readonly",
   log: "readonly",
+  DeepPartial: "readonly",
+  DeepReadonly: "readonly",
 };

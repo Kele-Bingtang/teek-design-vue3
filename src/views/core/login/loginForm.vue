@@ -4,7 +4,7 @@ import { ref, reactive, inject, useTemplateRef } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { ElNotification } from "element-plus";
 import { User, Lock, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
-import SystemConfig, { HOME_URL } from "@/common/config";
+import { serviceConfig, HOME_URL } from "@/common/config";
 import { getTimeState } from "@/common/utils";
 import { ImageVerifyCode } from "@/components";
 import { useNamespace } from "@/composables";
@@ -95,7 +95,7 @@ const login = () => {
       else router.push({ path, query: otherQuery });
 
       ElNotification.success({
-        title: `欢迎登录 ${SystemConfig.systemInfo.name}`,
+        title: `欢迎登录 ${serviceConfig.layout.name}`,
         message: getTimeState(),
         duration: 3000,
       });

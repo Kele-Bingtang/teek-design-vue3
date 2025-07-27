@@ -5,9 +5,8 @@ import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { ArrowDownBold, User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
-import { LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
+import { serviceConfig, LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
-import defaultAvatar from "@/common/assets/images/default.png";
 import { useNamespace } from "@/composables";
 import { useUserStore } from "@/pinia";
 
@@ -83,7 +82,7 @@ const logout = async () => {
       <template v-if="showAvatar">
         <el-image :src="userInfo.avatar" :class="ns.e('avatar')" alt="头像">
           <template #error>
-            <el-image :src="defaultAvatar" alt="头像" />
+            <el-image :src="serviceConfig.layout.avatar" alt="头像" />
           </template>
         </el-image>
 

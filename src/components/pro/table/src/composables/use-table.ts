@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia";
 import { ElConfigProvider } from "element-plus";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProTable from "../index.vue";
 
 export const useProTable = () => {
@@ -18,8 +18,9 @@ export const useProTable = () => {
   const elTableInstance = ref<TableInstance | null>();
 
   const ns = useNamespace();
+  const settingStore = useSettingStore();
 
-  const { layoutSize } = storeToRefs(useLayoutStore());
+  const { layout } = storeToRefs(settingStore);
 
   const currentInstance = getCurrentInstance();
 
@@ -208,7 +209,7 @@ export const useProTable = () => {
       const proTableInstance = createVNode(ProTable, { ...proTableProps, onRegister: register }, { ...slots });
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace, size: layoutSize.value },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proTableInstance }
       );
       await nextTick();

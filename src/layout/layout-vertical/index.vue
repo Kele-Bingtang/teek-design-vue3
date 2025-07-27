@@ -3,7 +3,7 @@ import { watch } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader } from "element-plus";
-import SystemConfig, { HOME_URL } from "@/common/config";
+import { serviceConfig, HOME_URL } from "@/common/config";
 import { useCommon, useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
@@ -18,7 +18,7 @@ const ns = useNamespace("vertical-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
 
-const { isCollapse } = storeToRefs(settingStore);
+const { menu, layout, logo, header } = storeToRefs(settingStore);
 const { isMobile } = useCommon();
 
 watch(isMobile, newVal => {
@@ -35,11 +35,13 @@ const handleClickOutSide = () => {
 </script>
 
 <template>
-  <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme)]" class="flx-column">
+  <el-container
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+  >
+    <el-aside :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
-        <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
+        <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
+        <span v-show="!menu.isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
 
       <Menu
@@ -48,10 +50,10 @@ const handleClickOutSide = () => {
       />
     </el-aside>
 
-    <div v-if="isMobile && !isCollapse" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
+    <div v-if="isMobile && !menu.isCollapse" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
 
     <el-container>
-      <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
+      <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>
       <PageContent />

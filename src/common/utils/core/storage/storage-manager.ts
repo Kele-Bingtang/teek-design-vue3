@@ -1,4 +1,4 @@
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 
 type StorageType = "localStorage" | "sessionStorage";
 
@@ -106,13 +106,13 @@ export class StorageManager {
 // 创建项目使用的存储管理器
 const localStorageProxy = new StorageManager({
   type: "localStorage",
-  prefix: SystemConfig.keyConfig.cacheKeyPrefix,
+  prefix: serviceConfig.cache.cacheKeyPrefix,
   version: __APP_INFO__.pkg.version,
 });
 
 const sessionStorageProxy = new StorageManager({
   type: "sessionStorage",
-  prefix: SystemConfig.keyConfig.cacheKeyPrefix,
+  prefix: serviceConfig.cache.cacheKeyPrefix,
   version: __APP_INFO__.pkg.version,
 });
 

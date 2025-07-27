@@ -5,7 +5,7 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import Sortable from "sortablejs";
 import { getUrlParams, isFunction, mittBus } from "@/common/utils";
-import SystemConfig, { HOME_URL, RefreshIFrameKey } from "@/common/config";
+import { serviceConfig, HOME_URL, RefreshIFrameKey } from "@/common/config";
 import { useCommon } from "@/composables";
 import beforeClose from "@/router/before-close";
 import { formatTitle } from "@/router/helper";
@@ -137,7 +137,7 @@ export const useTabNav = () => {
     const fullPath = r.fullPath ?? r.meta._fullPath;
     if (r.path !== route.path || r.path === HOME_URL) return fullPath;
 
-    const tabExcludesUrlKey = SystemConfig.keyConfig.tabExcludesUrlKey;
+    const tabExcludesUrlKey = serviceConfig.cache.tabExcludesUrlKey;
     if (tabExcludesUrlKey.includes("*")) return fullPath;
 
     const urlParams = getUrlParams();

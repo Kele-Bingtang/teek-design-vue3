@@ -3,7 +3,7 @@ import { computed, watch, ref, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside, ElHeader } from "element-plus";
-import SystemConfig, { HOME_URL } from "@/common/config";
+import { serviceConfig, HOME_URL } from "@/common/config";
 import { useMenu, useRouteFn, useNamespace } from "@/composables";
 import { useSettingStore, useRouteStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
@@ -28,7 +28,7 @@ const { menuList } = useMenu();
 const activeMenu = ref("");
 const childrenMenu = ref<RouterConfig[]>([]);
 
-const { isCollapse } = storeToRefs(settingStore);
+const { menu, layout, logo, header } = storeToRefs(settingStore);
 
 /**
  * 头部菜单
@@ -67,7 +67,7 @@ watch(
     else {
       childrenMenu.value = [];
       // 关闭菜单栏折叠功能
-      settingStore.$patch({ isCollapse: false });
+      settingStore.$patch({ menu: { isCollapse: false } });
     }
   },
   { immediate: true }
@@ -75,11 +75,13 @@ watch(
 </script>
 
 <template>
-  <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-header :class="ns.join('layout-header')" class="flx-align-center-between">
+  <el-container
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+  >
+    <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
-        <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
+        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
+        <span v-show="!menu.isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
 
       <CollapseTrigger :class="ns.has('trigger', !childrenMenu.length)" />
@@ -89,7 +91,7 @@ watch(
         :active-menu="activeMenu"
         mode="horizontal"
         :is-collapse="false"
-        :class="[ns.join('layout-menu'), ns.e('header-menu')]"
+        :class="[ns.join('layout-menu'), ns.e('header-menu'), ns.is(header.menuAlign)]"
         :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
       />
 
@@ -97,7 +99,7 @@ watch(
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme)]">
+      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]">
         <Menu
           :menu-list="childrenMenu"
           :class="[ns.join('layout-menu'), ns.e('aside-menu')]"

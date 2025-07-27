@@ -1,7 +1,7 @@
 <script setup lang="ts" name="UserCard">
 import type { UserInfo } from "@/pinia";
 import { computed } from "vue";
-import defaultAvatar from "@/common/assets/images/default.png";
+import { serviceConfig } from "@/common/config";
 import { useNamespace } from "@/composables";
 
 const ns = useNamespace("user-info");
@@ -29,7 +29,7 @@ const hobby = ["躺平", "专注开发", "热爱学习", "旅游"];
       <slot>
         <el-image :src="user.avatar" :class="ns.m('avatar')" alt="头像">
           <template #error>
-            <el-image :src="defaultAvatar" :class="ns.m('avatar')" alt="头像" />
+            <el-image :src="serviceConfig.layout.avatar" :class="ns.m('avatar')" alt="头像" />
           </template>
         </el-image>
       </slot>

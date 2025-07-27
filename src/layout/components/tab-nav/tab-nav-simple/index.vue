@@ -7,7 +7,9 @@ defineOptions({ name: "SimpleTabNav" });
 
 const settingStore = useSettingStore();
 
-const type = computed(() => settingStore.tabNavMode as "simple" | "classic");
+const { tabNav } = storeToRefs(settingStore);
+
+const type = computed(() => tabNav.value.tabNavMode as "simple" | "classic");
 </script>
 
 <template>

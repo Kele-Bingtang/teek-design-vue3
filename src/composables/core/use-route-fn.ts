@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from "vue-router";
 import { isProxy, toRaw } from "vue";
 import { ElNotification } from "element-plus";
 import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
-import SystemConfig, { HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
+import { serviceConfig, HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
 import router from "@/router";
 import { notFoundRoutes, authRoutes, constantRoutes } from "@/router/routes";
 import { translateTitle } from "@/router/helper";
@@ -12,7 +12,7 @@ import { useRouteStore, useUserStore } from "@/pinia";
 type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
 
 export const useRouteFn = () => {
-  const { cacheDynamicRoutes } = SystemConfig.routerConfig;
+  const { cacheDynamicRoutes } = serviceConfig.router;
   const routeStore = useRouteStore();
   const userStore = useUserStore();
 
@@ -167,7 +167,7 @@ export const useRouteFn = () => {
           isKeepAlive: isKeepAliveGlobal,
           isFull: isFullGlobal,
           routeUseTooltip,
-        } = SystemConfig.routerConfig;
+        } = serviceConfig.router;
 
         route.meta._fullPath = fullPath;
         // 这两个顺序不能互换，因为 translateTitle 函数需要 route.meta.useI18n

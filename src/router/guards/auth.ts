@@ -1,5 +1,5 @@
 import type { Router } from "vue-router";
-import SystemConfig, { LOGIN_URL } from "@/common/config";
+import { serviceConfig, LOGIN_URL } from "@/common/config";
 import { useRouteFn } from "@/composables";
 import { useRouteStore, useUserStore } from "@/pinia";
 import { resetRouter } from "..";
@@ -15,7 +15,7 @@ export const createAuthGuard = (router: Router) => {
     const accessToken = userStore.accessToken;
 
     // 白名单
-    const whiteList = SystemConfig.routerConfig.whiteList;
+    const whiteList = serviceConfig.router.whiteList;
 
     // 判断是访问登陆页，有 Token 就在当前页面，没有 Token 重置路由并放行到登陆页
     if (to.path === LOGIN_URL) {

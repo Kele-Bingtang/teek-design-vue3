@@ -43,7 +43,7 @@ export function useChart(options: UseChartOptions = {}) {
   const { initOptions, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = options;
 
   const settingStore = useSettingStore();
-  const { isDark, primaryColor, isCollapse, layoutMode } = storeToRefs(settingStore);
+  const { isDark, menu, theme } = storeToRefs(settingStore);
 
   const chartInstance = useTemplateRef<HTMLElement>(instanceName);
   const chart = shallowRef<echarts.ECharts | null>(null);
@@ -95,13 +95,19 @@ export function useChart(options: UseChartOptions = {}) {
   );
 
   // 收缩菜单时，重新计算图表大小
-  watch(isCollapse, () => multiDelayResize(RESIZE_DELAYS));
+  watch(
+    () => menu.value.isCollapse,
+    () => multiDelayResize(RESIZE_DELAYS)
+  );
 
   // 布局变化触发或主题色变化触发图表重新渲染
-  watch([layoutMode, primaryColor], () => {
-    nextTick(requestAnimationResize);
-    setTimeout(() => multiDelayResize(LAYOUT_RESIZE_DELAYS), 0);
-  });
+  watch(
+    () => theme.value.primaryColor,
+    () => {
+      nextTick(requestAnimationResize);
+      setTimeout(() => multiDelayResize(LAYOUT_RESIZE_DELAYS), 0);
+    }
+  );
 
   // 主题变化时重新设置图表选项
   if (autoTheme) {

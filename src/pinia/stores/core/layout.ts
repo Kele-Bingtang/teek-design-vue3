@@ -3,7 +3,7 @@ import type { Component } from "vue";
 import type { IconifyIcon } from "@iconify/vue";
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { cacheOperator } from "@/common/utils";
 import { useSettingStore } from "./setting";
 
@@ -27,8 +27,7 @@ export const useLayoutStore = defineStore(
   () => {
     const tabNavList = ref<TabProps[]>(cacheOperator.getCacheTabNavList() || []);
     const keepAliveName = ref<string[]>([]);
-    const layoutSize = ref(SystemConfig.layoutConfig.layoutSize);
-    const language = ref(SystemConfig.layoutConfig.language);
+    const language = ref(serviceConfig.layout.language);
     const iframeList = ref<IFrame[]>([]);
 
     /**
@@ -232,14 +231,16 @@ export const useLayoutStore = defineStore(
 
     const settingStore = useSettingStore();
 
+    const { tabNav } = storeToRefs(settingStore);
+
     watch(
-      () => settingStore.recordTabNav,
+      () => tabNav.value.recordTabNav,
       newValue => handleRecordTabNav(newValue)
     );
 
     watch(
       () => tabNavList.value,
-      () => handleRecordTabNav(settingStore.recordTabNav),
+      () => handleRecordTabNav(tabNav.value.recordTabNav),
       { deep: true }
     );
 
@@ -251,7 +252,6 @@ export const useLayoutStore = defineStore(
     return {
       tabNavList,
       keepAliveName,
-      layoutSize,
       language,
       iframeList,
 

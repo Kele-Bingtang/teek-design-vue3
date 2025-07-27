@@ -2,7 +2,7 @@
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElContainer, ElAside } from "element-plus";
-import SystemConfig, { HOME_URL } from "@/common/config";
+import { serviceConfig, HOME_URL } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
@@ -18,15 +18,17 @@ const ns = useNamespace("iframe-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
 
-const { isCollapse } = storeToRefs(settingStore);
+const { menu, layout, logo } = storeToRefs(settingStore);
+
+const isCollapse = computed(() => menu.value.isCollapse);
 </script>
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside :class="[ns.join('layout-aside'), ns.is(settingStore.menuTheme)]" class="flx-column">
+    <el-aside :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img src="@/common/assets/images/logo.png" alt="logo" v-if="settingStore.showLayoutLogo" />
-        <span v-show="!isCollapse">{{ SystemConfig.systemInfo.name }}</span>
+        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
+        <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
       <Menu
         :class="[ns.join('layout-menu'), ns.b('menu')]"

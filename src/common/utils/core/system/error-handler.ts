@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance } from "vue";
 import { ElNotification } from "element-plus";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 import { isArray, useSimpleUuid } from "@/common/utils";
 import { useErrorLogStore } from "@/pinia";
 
@@ -8,7 +8,7 @@ import { useErrorLogStore } from "@/pinia";
  * 检查当前环境是否符合错误日志的运行
  */
 export const checkNeed = () => {
-  const { env } = SystemConfig.layoutConfig.errorLog;
+  const { env } = serviceConfig.layout.errorLog;
   const nodeEnv = import.meta.env.MODE;
 
   if (isArray(env) && nodeEnv) return env.includes(nodeEnv);
@@ -21,7 +21,7 @@ export const checkNeed = () => {
 export const errorHandler = (error: any, vm: ComponentPublicInstance | null, info: string) => {
   if (!checkNeed()) return;
 
-  if (SystemConfig.layoutConfig.errorLog.printConsole) console.error(error);
+  if (serviceConfig.layout.errorLog.printConsole) console.error(error);
 
   const errorStore = useErrorLogStore();
   errorStore.addErrorLog({

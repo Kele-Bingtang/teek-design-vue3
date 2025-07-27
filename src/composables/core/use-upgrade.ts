@@ -1,6 +1,6 @@
 import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
-import SystemConfig, { LOGIN_NAME } from "@/common/config";
+import { serviceConfig, LOGIN_NAME } from "@/common/config";
 import { useUserStore } from "@/pinia";
 import { upgradeLogList } from "@/mock/changeLog";
 import { useCommon } from "./use-common";
@@ -22,7 +22,7 @@ export const useUpgrade = async () => {
   // 当前前端版本号
   const { version: currentVersion } = useCommon();
 
-  const { cacheKeyPrefix, versionCacheKey } = SystemConfig.keyConfig;
+  const { cacheKeyPrefix, versionCacheKey } = serviceConfig.cache;
 
   const versionStorageKey = `${cacheKeyPrefix}:${versionCacheKey}`;
 

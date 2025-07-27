@@ -14,6 +14,8 @@ const { t } = useI18n();
 const settingStore = useSettingStore();
 const { getBrowserTitle } = useBrowserTitle();
 
+const { layout } = storeToRefs(settingStore);
+
 /**
  * 选择标题模式事件
  */
@@ -36,7 +38,7 @@ const titleModeOptions = [
 <template>
   <div :class="ns.b()">
     <el-select
-      v-model="settingStore.titleMode"
+      v-model="layout.titleMode"
       :placeholder="$t('_setting.titlePlaceholder')"
       @change="handleTitleModeSelect"
     >
@@ -45,7 +47,7 @@ const titleModeOptions = [
         :key="item.value"
         :label="item.label"
         :value="item.value"
-        :disabled="item.value === settingStore.titleMode"
+        :disabled="item.value === layout.titleMode"
       ></el-option>
     </el-select>
   </div>

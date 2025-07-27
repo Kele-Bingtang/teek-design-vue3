@@ -2,64 +2,50 @@ import type {
   HeaderStyleEnum,
   LanguageEnum,
   LayoutModeEnum,
-  LayoutSizeEnum,
+  ElementPlusSizeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
   SystemThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
+  HeaderMenuAlignEnum,
+  ThemePanelTriggerPositionEnum,
 } from "@/common/enums";
 
-export interface SystemConfig {
-  systemInfo: SystemInfo;
-  themeConfig: ThemeConfig;
-  layoutConfig: LayoutConfig;
-  routerConfig: RouterConfig;
-  keyConfig: KeyConfig;
+export interface ServiceConfig {
+  /** 全局配置 */
+  layout: LayoutConfig;
+  /** 标签栏配置 */
+  tabNav: TabNavConfig;
+  /** 面包屑配置 */
+  breadcrumb: BreadcrumbConfig;
+  /** 顶栏配置 */
+  header: headerConfig;
+  /** 菜单栏配置 */
+  menu: MenuConfig;
+  /** 主题配置 */
+  theme: ThemeConfig;
+  /** Logo 配置 */
+  logo: LogoConfig;
+  /** 动画配置 */
+  transition: TransitionConfig;
+  /** 路由配置 */
+  router: RouterConfig;
+  /** 缓存配置 */
+  cache: CacheConfig;
 }
 
-export interface SystemInfo {
+export interface LayoutConfig {
   /** 系统名称 */
   name: string;
-}
-
-export interface ThemeConfig {
-  /** 主题色 */
-  primaryColor: string;
+  /** 默认头像 */
+  avatar: string;
   /** 标题在浏览器标签上的多种模式 */
   titleMode: TitleModeEnum;
   /** 布局设置 */
   layoutMode: LayoutModeEnum;
-  /** 标签页设置 */
-  tabNavMode: TabNavModeEnum;
   /** 侧边菜单栏的主题色，暗色和亮色，默认为暗色 */
   menuTheme: MenuThemeEnum;
-  /** 进入页面过渡动画 */
-  pageTransition: PageTransitionEnum;
-  /** 顶部样式 */
-  headerStyle: HeaderStyleEnum;
-  /** 系统主题 */
-  systemThemeMode: SystemThemeEnum;
-  /** 是否使用 Breadcrumb */
-  showBreadcrumb: boolean;
-  /** 是否使用 tagsNav */
-  showTabNav: boolean;
-  /** 是否显示布局 Logo */
-  showLayoutLogo: boolean;
-  /** 面包屑 Icon 是否显示 */
-  showBreadcrumbIcon: boolean;
-  /** 标签栏 Icon 是否显示 */
-  showTabNavIcon: boolean;
-  /** 标签栏 Dot 是否显示，优先级低于 showTabNavDot，仅在 tabNavMode 为 simple、classic 模式生效 */
-  showTabNavDot: boolean;
-  /** 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav */
-  recordTabNav: boolean;
-  /** 是否折叠菜单栏 */
-  isCollapse: boolean;
-  /** 是否开启菜单手风琴 */
-  menuAccordion: boolean;
-  /** 是否固定标签页 */
-  fixTabNav: boolean;
   /** 是否开启暗色主题 */
   isDark: boolean;
   /** 是否开启灰色主题 */
@@ -68,25 +54,10 @@ export interface ThemeConfig {
   isGrey: boolean;
   /** PageContent 是否开启最大化，默认不开启（false） */
   maximize: boolean;
-  /** 菜单宽度 */
-  menuWidth: number;
-  /** 顶部高度 */
-  headerHeight: number;
-  /** 圆角 */
-  radius: number;
   /** 是否开启水印 */
   watermark: boolean;
-}
-
-export interface LayoutConfig {
-  errorLog: {
-    /** 是否在顶部显示错误日志图标 */
-    showInHeader: boolean;
-    /** 是否打印错误日志到控制台 */
-    printConsole: boolean;
-    /** 日志收集的环境，对应 .evn.xxx，如 development、test、production */
-    env: string[];
-  };
+  /** El 组件尺寸 */
+  elementPlusSize: ElementPlusSizeEnum;
   /**
    * 这是路由和菜单呼应可能产生的问题而需要配置：alwaysShowRoot 为 false 情况（确保您了解路由的配置规则，如果不了解，前往 router/router-config 查看）
    * true：存在多个二级路由，但是只有一个二级路由 hideInMenu 为 false，举例：有 5 个二级路由，但是有 4 个二级路由 hideInMenu: true，则需要开启 true，确保菜单只渲染剩下的路由
@@ -98,12 +69,104 @@ export interface LayoutConfig {
   moreRouteChildrenHideInMenuThenOnlyOne: boolean;
   /** 布局的 el-toolTip 风格 */
   tooltipEffect: "light" | "dark" | ((isDark: boolean) => "light" | "dark");
-  layoutSize: LayoutSizeEnum;
+  /** 国际化 */
   language: LanguageEnum;
   /** 是否监听 IFrame 传来的通信，用于 Portal 门户系统，来监听门户所有 IFrame 嵌入系统的通信，比如 A 系统想打开 B 系统，则告诉 Portal 门户帮忙打开 */
   watchFrame: boolean;
   /** 锁屏密钥 */
   lockSecretKey: string;
+  errorLog: {
+    /** 是否在顶部显示错误日志图标 */
+    showInHeader: boolean;
+    /** 是否打印错误日志到控制台 */
+    printConsole: boolean;
+    /** 日志收集的环境，对应 .evn.xxx，如 development、test、production */
+    env: string[];
+  };
+  /** 主题面板触发按钮位置 */
+  themePanelTriggerPosition: ThemePanelTriggerPositionEnum;
+}
+
+export interface TabNavConfig {
+  /** 是否使用 tagsNav */
+  enabled: boolean;
+  /** 标签页模式设置 */
+  tabNavMode: TabNavModeEnum;
+  /** 标签栏 Icon 是否显示 */
+  showTabNavIcon: boolean;
+  /** 标签栏 Dot 是否显示，优先级低于 showTabNavDot，仅在 tabNavMode 为 simple、classic 模式生效 */
+  showTabNavDot: boolean;
+  /** 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav */
+  recordTabNav: boolean;
+  /** 是否固定标签页 */
+  fixTabNav: boolean;
+  /** 是否开启多标签页拖拽 */
+  draggable: boolean;
+  /** 标签页高度 */
+  height: number;
+  /** 是否点击中键时关闭标签，优先级低于 middleClickToOpen */
+  middleClickToClose: boolean;
+  /** 是否点击中建时新窗口打开标签页 */
+  middleClickToOpen: boolean;
+  /** 显示更多按钮 */
+  showMore: boolean;
+  /** 是否开启鼠标滚轮响应 */
+  wheel: boolean;
+}
+
+export interface BreadcrumbConfig {
+  /** 是否使用 Breadcrumb */
+  enabled: boolean;
+  /** 面包屑 Icon 是否显示 */
+  showIcon: boolean;
+  /** 面包屑是否只有一个时隐藏 */
+  hideOnlyOne: boolean;
+  /** 面包屑首页面包屑是否可见，当 onlyShowHomeIcon 为 true 则一定为 false */
+  showHome: boolean;
+  /** 是否只显示首页图标 */
+  onlyShowHomeIcon: boolean;
+}
+
+export interface headerConfig {
+  enabled: boolean;
+  /** 顶部样式 */
+  style: HeaderStyleEnum;
+  /** 顶部高度 */
+  height: number;
+  /** 顶部菜单样式 */
+  menuAlign: HeaderMenuAlignEnum;
+}
+
+export interface MenuConfig {
+  /** 菜单宽度 */
+  width: number;
+  /** 是否开启菜单手风琴 */
+  accordion: boolean;
+  /** 是否折叠菜单栏 */
+  isCollapse: boolean;
+}
+
+export interface ThemeConfig {
+  /** 主题色 */
+  primaryColor: string;
+  /** 圆角 */
+  radius: number;
+  /** 系统主题 */
+  systemThemeMode: SystemThemeEnum;
+}
+
+export interface LogoConfig {
+  /** 是否显示 Logo */
+  enable: boolean;
+  /** logo 地址 */
+  source: string;
+}
+
+export interface TransitionConfig {
+  /** 进入页面过渡动画 */
+  page: PageTransitionEnum;
+  /** 是否开启页面加载进度动画 */
+  progress: boolean;
 }
 
 export interface RouterConfig {
@@ -127,7 +190,7 @@ export interface RouterConfig {
   routeUseTooltip: boolean;
 }
 
-export interface KeyConfig {
+export interface CacheConfig {
   /** 缓存 key 前缀 */
   cacheKeyPrefix: string;
   /** 缓存标签页的 key */

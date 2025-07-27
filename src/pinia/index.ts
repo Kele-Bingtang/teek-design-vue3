@@ -1,7 +1,7 @@
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import { localStorageProxy } from "@/common/utils";
-import SystemConfig from "@/common/config";
+import { serviceConfig } from "@/common/config";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";
@@ -43,7 +43,7 @@ const getStorageKey = (key: string) => {
   if (!oldVersionKeys) return currentStoreKey;
 
   // 如果需要清理所有缓存，则清理
-  if (SystemConfig.keyConfig.cleanCacheWhenUpgrade) {
+  if (serviceConfig.cache.cleanCacheWhenUpgrade) {
     localStorage.removeItem(oldVersionKeys);
     return currentStoreKey;
   }
