@@ -1,14 +1,14 @@
 <script setup lang="ts" name="SortTable">
-import type { PageInfo } from "@/components";
+import type { PaginationInfo } from "@/components";
 import { ref, reactive, computed, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Search, EditPen, Delete } from "@element-plus/icons-vue";
-import { Pagination, defaultPageInfo, TableSort } from "@/components";
+import { Pagination, defaultPaginationInfo, TableSort } from "@/components";
 import { largeData } from "@/mock/table/common";
 
 const loading = ref(true);
 const tableData = ref(largeData);
-const paging = reactive(defaultPageInfo);
+const paging = reactive(defaultPaginationInfo);
 
 const data = computed(() =>
   tableData.value.slice((paging.pageNum - 1) * paging.pageSize, paging.pageNum * paging.pageSize)
@@ -57,7 +57,7 @@ const handleDelete = (row: any, index: number) => {
 /**
  * 分页大小改变
  */
-const handleSizeChange = (pagingParams: PageInfo) => {
+const handleSizeChange = (pagingParams: PaginationInfo) => {
   paging.pageNum = pagingParams.pageNum;
   paging.pageSize = pagingParams.pageSize;
 };

@@ -109,7 +109,7 @@ const deleteAccount = async (params: TableColumn<ResUserList>) => {
   await useConfirm(() => {
     data.value = data.value.filter(item => item.id !== params.id);
   }, `删除【${params.username}】用户`);
-  proTableInstance.value?.getTableList();
+  proTableInstance.value?.fetch();
 };
 
 // 批量删除用户信息
@@ -118,13 +118,13 @@ const batchDelete = async (id: string[]) => {
     data.value = data.value.filter(item => !id.includes(item.id));
   }, "删除所选用户信息");
   proTableInstance.value?.tableMainInstance?.clearSelection();
-  proTableInstance.value?.getTableList();
+  proTableInstance.value?.fetch();
 };
 
 // 重置用户密码
 const resetPass = async (params: TableColumn<ResUserList>) => {
   await useConfirm(() => {}, `重置【${params.username}】用户密码`);
-  proTableInstance.value?.getTableList();
+  proTableInstance.value?.fetch();
 };
 </script>
 

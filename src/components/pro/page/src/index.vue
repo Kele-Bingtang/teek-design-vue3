@@ -11,8 +11,8 @@ import type {
   TableScope,
   TableSizeEnum,
   UseSelectState,
+  PageInfo,
 } from "@/components/pro/table";
-import type { PageInfo } from "@/components/pro/pagination";
 import type { ProPageEmits, ProPageProps } from "./types";
 import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
 import { ElTooltip, ElButton } from "element-plus";

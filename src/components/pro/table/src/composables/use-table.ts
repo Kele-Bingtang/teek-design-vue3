@@ -1,7 +1,6 @@
 import type { MaybeRef } from "vue";
 import type { TableInstance } from "element-plus";
-import type { ProTableInstance, ProTableNamespace, TableColumn } from "../types";
-import type { PageInfo } from "@/components/pro/pagination";
+import type { PageInfo, ProTableInstance, ProTableNamespace, TableColumn } from "../types";
 import type { RenderTypes } from "@/components/pro/form-item";
 import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
 import { storeToRefs } from "pinia";
@@ -98,9 +97,9 @@ export const useProTable = () => {
     /**
      * 获取表格数据（调用接口）
      */
-    getTableList: async () => {
+    fetch: async () => {
       const table = await getTable();
-      return table?.getTableList();
+      return table?.fetch();
     },
     /**
      * 更新表格分页信息，从而更新表格数据

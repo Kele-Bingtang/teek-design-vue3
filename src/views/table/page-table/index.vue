@@ -1,19 +1,19 @@
 <script setup lang="ts" name="pageTable">
-import type { PageInfo } from "@/components";
+import type { PaginationInfo } from "@/components";
 import { ref, reactive, computed } from "vue";
 import { Star } from "@element-plus/icons-vue";
 import { tableStatusFilter } from "@/common/config";
-import { Pagination, defaultPageInfo } from "@/components";
+import { Pagination, defaultPaginationInfo } from "@/components";
 import { largeData } from "@/mock/table/common";
 
 const tableData = ref(largeData);
-const paging = reactive(defaultPageInfo);
+const paging = reactive(defaultPaginationInfo);
 
 const tablePageData = computed(() =>
   tableData.value.slice((paging.pageNum - 1) * paging.pageSize, paging.pageNum * paging.pageSize)
 );
 
-const handleSizeChange = (pagingParam: PageInfo) => {
+const handleSizeChange = (pagingParam: PaginationInfo) => {
   paging.pageNum = pagingParam.pageNum;
   paging.pageSize = pagingParam.pageSize;
 };
