@@ -9,8 +9,8 @@ import { ElDialog, ElForm, ElFormItem, ElButton, ElInput, ElIcon, ElMessage } fr
 import { Unlock, Lock } from "@element-plus/icons-vue";
 import { mittBus } from "@/common/utils";
 import { serviceConfig, LOGIN_URL, OpenLockPanelKey } from "@/common/config";
-import { useNamespace } from "@/composables";
-import { useUserStore } from "@/pinia";
+import { useKeyDown, useNamespace } from "@/composables";
+import { useSettingStore, useUserStore } from "@/pinia";
 import { useDisableDevTools } from "./use-disabled-dev-tools";
 
 defineOptions({ name: "LockPanel" });
@@ -36,9 +36,23 @@ const unlockForm = reactive({
 
 const { t } = useI18n();
 const userStore = useUserStore();
+const settingStore = useSettingStore();
 const { showDevToolsWarning, cleanup } = useDisableDevTools();
 
 const { userInfo, lockPassword, isLock } = storeToRefs(userStore);
+const { shortcutKey } = storeToRefs(settingStore);
+
+const { start } = useKeyDown({
+  watcher: computed(() => shortcutKey.value.lockScreen),
+  // 快捷键 ALT + L 锁屏
+  callback: event => {
+    if (event.altKey && event.key.toLowerCase() === "l") {
+      event.preventDefault();
+      dialogVisible.value = true;
+    }
+  },
+});
+start();
 
 // 监听锁屏状态变化
 watch(isLock, newValue => {
@@ -55,16 +69,6 @@ watch(isLock, newValue => {
 const rules = computed<FormRules>(() => ({
   password: [{ required: true, message: t("_lockScreen.inputPlaceholder"), trigger: "blur" }],
 }));
-
-/**
- * 快捷键打开锁屏
- */
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.altKey && event.key.toLowerCase() === "¬") {
-    event.preventDefault();
-    dialogVisible.value = true;
-  }
-};
 
 /**
  * 处理对话框打开事件
@@ -163,7 +167,6 @@ const toLogin = async () => {
 
 onMounted(() => {
   mittBus.on(OpenLockPanelKey, () => (dialogVisible.value = true));
-  document.addEventListener("keydown", handleKeydown);
 
   if (isLock.value) {
     dialogVisible.value = true;
@@ -174,7 +177,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  document.removeEventListener("keydown", handleKeydown);
   // 清理禁用开发者工具的事件监听器
   if (cleanup) cleanup();
 });

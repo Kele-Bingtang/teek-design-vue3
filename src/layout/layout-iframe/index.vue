@@ -20,12 +20,12 @@ const settingStore = useSettingStore();
 
 const { menu, layout, logo } = storeToRefs(settingStore);
 
-const isCollapse = computed(() => menu.value.isCollapse);
+const isCollapse = computed(() => menu.value.collapsed);
 </script>
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
+    <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
         <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>

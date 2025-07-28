@@ -5,7 +5,7 @@
  * 来监控文件上传和下载的进度
  */
 
-import { createRequest } from "./index";
+import { createRequest } from "@/common/http";
 import type { AxiosProgressEvent } from "axios";
 
 // 创建一个示例请求实例

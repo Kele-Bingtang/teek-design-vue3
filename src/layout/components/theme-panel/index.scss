@@ -10,20 +10,13 @@
   box-shadow: 0 0 30px rgb(0 0 0 / 10%);
   backdrop-filter: blur(25px);
 
-  @include e(divider) {
-    margin-top: 20px;
+  h3 {
+    margin: 20px 0;
+    font-weight: 600;
+    text-align: center;
 
-    > div {
-      width: 100%;
-      text-align: center;
-      background-color: transparent;
-    }
-
-    .icon {
-      position: relative;
-      top: 2px;
-      right: 5px;
-      font-size: 15px;
+    &:first-child {
+      margin-top: 0;
     }
   }
 

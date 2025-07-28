@@ -234,13 +234,13 @@ export const useLayoutStore = defineStore(
     const { tabNav } = storeToRefs(settingStore);
 
     watch(
-      () => tabNav.value.recordTabNav,
+      () => tabNav.value.persistence,
       newValue => handleRecordTabNav(newValue)
     );
 
     watch(
       () => tabNavList.value,
-      () => handleRecordTabNav(tabNav.value.recordTabNav),
+      () => handleRecordTabNav(tabNav.value.persistence),
       { deep: true }
     );
 

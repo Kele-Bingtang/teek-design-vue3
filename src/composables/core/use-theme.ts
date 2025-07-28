@@ -11,7 +11,7 @@ export const useTheme = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { isDark, layout, theme: themeConfig } = storeToRefs(settingStore);
+  const { isDark, theme: themeConfig } = storeToRefs(settingStore);
   const { Light, Dark } = SystemThemeEnum;
 
   const systemThemeStyle = {
@@ -95,15 +95,15 @@ export const useTheme = () => {
   };
 
   // 灰色和弱色切换
-  const changeGreyOrWeak = (value: boolean, type: string) => {
+  const changeGreyOrWeak = (value: boolean, type: "greyMode" | "weakMode") => {
     const body = document.body as HTMLElement;
 
     if (!value) return body.setAttribute("style", "");
-    if (type === "grey") body.setAttribute("style", "filter: grayscale(1) ");
-    if (type === "weak") body.setAttribute("style", "filter: invert(80%)");
+    if (type === "greyMode") body.setAttribute("style", "filter: grayscale(1) ");
+    if (type === "weakMode") body.setAttribute("style", "filter: invert(80%)");
 
-    const propName = type === "grey" ? "isWeak" : "isGrey";
-    settingStore.$patch({ [propName]: false });
+    const propName = type === "greyMode" ? "weakMode" : "greyMode";
+    settingStore.$patch({ theme: { [propName]: false } });
   };
 
   // 初始化 primaryColor 配置
@@ -111,8 +111,8 @@ export const useTheme = () => {
     changePrimaryColor();
     changeSystemTheme();
 
-    if (layout.value.isGrey) changeGreyOrWeak(true, "grey");
-    if (layout.value.isWeak) changeGreyOrWeak(true, "weak");
+    if (themeConfig.value.greyMode) changeGreyOrWeak(true, "greyMode");
+    if (themeConfig.value.weakMode) changeGreyOrWeak(true, "weakMode");
   };
 
   return {

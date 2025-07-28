@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import type { Component } from "vue";
 import { computed, ref, nextTick, provide, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { ElMain } from "element-plus";
 import { RefreshPageKey } from "@/common/config";
 import { getCssVar, getUrlParams, mittBus, removeUnit } from "@/common/utils";
-import { LayoutModeEnum, TabNavModeEnum } from "@/common/enums";
+import { LayoutModeEnum } from "@/common/enums";
+import { useNamespace } from "@/composables";
 import { useLayoutStore, useSettingStore } from "@/pinia";
-import SimpleTabNav from "../tab-nav/tab-nav-simple/index.vue";
-import ClassicTabNav from "../tab-nav/tab-nav-classic/index.vue";
-import ElTabNav from "../tab-nav/tab-nav-element/index.vue";
+import TabNav from "../tab-nav/index.vue";
 import Maximize from "./components/maximize.vue";
 import FrameLayout from "../iframe/index.vue";
-import { useNamespace } from "@/composables";
 
 defineOptions({ name: "MainContent" });
 
@@ -21,57 +18,105 @@ const ns = useNamespace();
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
-const { layout, tabNav, transition } = storeToRefs(settingStore);
+const { topHeight, topHeightStyle } = useTopHeight();
+const { isRefreshRoute } = useRefreshPage();
+// const { topState } = useWatchTop();
 
-// 标签栏组件
-const TabNavComponents: Record<string, Component> = {
-  [TabNavModeEnum.Simple]: SimpleTabNav,
-  [TabNavModeEnum.Classic]: ClassicTabNav,
-  [TabNavModeEnum.Element]: ElTabNav,
-};
+const { layout, tabNav, transition, header } = storeToRefs(settingStore);
 
-const isRefreshRoute = ref(true);
-
-// 计算非内容区高度
-const topHeight = computed(() => {
-  let headerHeight = 0;
-  let tabHeight = 0;
-
-  // 内容最大化时，顶部高度和标签栏高度都为 0
-  if (!layout.value.maximize) {
-    // 嵌入布局没有顶部
-    if (layout.value.layoutMode !== LayoutModeEnum.IFrame) {
-      headerHeight = removeUnit(getCssVar(ns.cssVarName("layout-header-height"))) ?? 0;
-    }
-    // 隐藏标签栏时，标签栏高度为 0
-    if (tabNav.value.enabled) {
-      tabHeight = removeUnit(getCssVar(ns.cssVarName("layout-tab-height"))) ?? 0;
-    }
-  }
-
-  return {
-    [ns.cssVarName("header-height")]: `${headerHeight}px`,
-    [ns.cssVarName("tab-height")]: `${tabHeight}px`,
-  };
+// 是否固定标签栏
+const isFixedTabNav = computed(() => {
+  if (tabNav.value.fixed) return "hidden auto";
+  return "";
 });
 
 /**
- * 刷新当前页面函数
+ * 顶部高度
  */
-const refreshPage = (value?: boolean) => {
-  if (value !== undefined) return (isRefreshRoute.value = value);
-  isRefreshRoute.value = false;
+function useTopHeight() {
+  const topHeight = computed(() => {
+    const { headerHeight, tabNavHeight } = getTopHeight();
+    return headerHeight + tabNavHeight;
+  });
 
-  nextTick(() => (isRefreshRoute.value = true));
-};
+  // 计算非内容区高度
+  const topHeightStyle = computed(() => {
+    const { headerHeight, tabNavHeight } = getTopHeight();
+
+    return {
+      [ns.cssVarName("header-height")]: `${headerHeight}px`,
+      [ns.cssVarName("tab-height")]: `${tabNavHeight}px`,
+    };
+  });
+
+  /**
+   * 获取顶部高度
+   */
+  const getTopHeight = () => {
+    let headerHeight = 0;
+    let tabNavHeight = 0;
+
+    // 内容最大化时，顶栏高度和标签栏高度都为 0
+    if (!layout.value.maximize) {
+      // 嵌入布局没有顶栏
+      if (layout.value.layoutMode !== LayoutModeEnum.IFrame && header.value.enabled) {
+        headerHeight = removeUnit(getCssVar(ns.cssVarName("layout-header-height"))) ?? 0;
+      }
+      // 隐藏标签栏时，标签栏高度为 0
+      if (tabNav.value.enabled) {
+        tabNavHeight = removeUnit(getCssVar(ns.cssVarName("layout-tab-height"))) ?? 0;
+      }
+    }
+    return {
+      headerHeight,
+      tabNavHeight,
+    };
+  };
+
+  return { topHeight, topHeightStyle };
+}
 
 /**
- * 往所有路径组件提供刷新当前页面函数
+ * 刷新页面
  */
-provide(RefreshPageKey, refreshPage);
+function useRefreshPage() {
+  const isRefreshRoute = ref(true);
 
-// 添加类型断言修复报错
-mittBus.on(RefreshPageKey as any, refreshPage as any);
+  /**
+   * 刷新当前页面函数
+   */
+  const refreshPage = (value?: boolean) => {
+    if (value !== undefined) return (isRefreshRoute.value = value);
+    isRefreshRoute.value = false;
+
+    nextTick(() => (isRefreshRoute.value = true));
+  };
+
+  /**
+   * 往所有路径组件提供刷新当前页面函数
+   */
+  provide(RefreshPageKey, refreshPage);
+
+  mittBus.on(RefreshPageKey, refreshPage as any);
+
+  return { isRefreshRoute, refreshPage };
+}
+
+// function useWatchTop() {
+//   const topState = ref(true);
+
+//   const { y: mouseY } = useMouse({ type: "client" });
+
+//   watch(
+//     () => mouseY.value,
+//     newValue => {
+//       if (newValue > topHeight.value) topState.value = false;
+//       else topState.value = true;
+//     }
+//   );
+
+//   return { topState };
+// }
 
 // 监听当前页是否最大化，动态添加 class
 watchEffect(() => {
@@ -86,25 +131,19 @@ watchEffect(() => {
   }
 });
 
-/**
- * 是否固定标签栏
- */
-const isFixTabNav = computed(() => {
-  if (tabNav.value.fixTabNav) return "hidden auto";
-  return "";
-});
+defineExpose({ topHeight });
 </script>
 
 <template>
   <Maximize v-if="layout.maximize" />
-  <el-main>
-    <component v-if="tabNav.enabled" :is="TabNavComponents[tabNav.tabNavMode]" />
+  <el-main ref="elMainInstance">
+    <TabNav />
 
-    <div class="page-content" :style="topHeight">
+    <div class="page-content" :style="topHeightStyle">
       <router-view v-slot="{ Component, route }">
         <transition
           v-bind="route.meta.transitionProps"
-          :name="route.meta.transitionProps?.name || transition.page"
+          :name="route.meta.transitionProps?.name || transition.pageEnter"
           mode="out-in"
           appear
         >
@@ -129,7 +168,11 @@ const isFixTabNav = computed(() => {
   .page-content {
     height: calc(100vh - cssVar(header-height) - cssVar(tab-height));
     padding: 10px 12px;
-    overflow: v-bind(isFixTabNav);
+    overflow: v-bind(isFixedTabNav);
+  }
+
+  :deep(.tk-classic-tabs-nav) {
+    transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 </style>

@@ -96,7 +96,7 @@ export function useChart(options: UseChartOptions = {}) {
 
   // 收缩菜单时，重新计算图表大小
   watch(
-    () => menu.value.isCollapse,
+    () => menu.value.collapsed,
     () => multiDelayResize(RESIZE_DELAYS)
   );
 

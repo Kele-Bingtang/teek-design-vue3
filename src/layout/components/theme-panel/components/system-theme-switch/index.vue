@@ -20,9 +20,9 @@ const { changeSystemTheme } = useTheme();
 const { theme } = storeToRefs(settingStore);
 
 const systemThemeModeList = [
-  { name: t("_setting.systemThemeModeSelect.light"), theme: SystemThemeEnum.Light, img: lightTheme },
-  { name: t("_setting.systemThemeModeSelect.dark"), theme: SystemThemeEnum.Dark, img: darkTheme },
-  { name: t("_setting.systemThemeModeSelect.system"), theme: SystemThemeEnum.System, img: systemTheme },
+  { name: t("_setting.theme.modeSelect.light"), theme: SystemThemeEnum.Light, img: lightTheme },
+  { name: t("_setting.theme.modeSelect.dark"), theme: SystemThemeEnum.Dark, img: darkTheme },
+  { name: t("_setting.theme.modeSelect.system"), theme: SystemThemeEnum.System, img: systemTheme },
 ];
 </script>
 

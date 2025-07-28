@@ -76,9 +76,9 @@ const changeMenuItem = (item: RouterConfig) => {
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
-    <div :class="ns.e('aside')" class="flx-column">
+    <div v-if="menu.enabled" :class="ns.e('aside')" class="flx-column">
       <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center" @click="router.push(HOME_URL)">
         <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
       </div>
@@ -112,9 +112,13 @@ const changeMenuItem = (item: RouterConfig) => {
       </div>
     </div>
 
-    <el-aside :class="[ns.join('layout-aside'), { 'not-aside': !menuItem.length }]" class="flx-column">
+    <el-aside
+      v-if="menu.enabled"
+      :class="[ns.join('layout-aside'), { 'not-aside': !menuItem.length }]"
+      class="flx-column"
+    >
       <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center">
-        <span v-show="menuItem.length">{{ menu.isCollapse ? "K" : serviceConfig.layout.name }}</span>
+        <span v-show="menuItem.length">{{ menu.collapsed ? "K" : serviceConfig.layout.name }}</span>
       </div>
 
       <el-scrollbar v-if="menuItem?.length">

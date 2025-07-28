@@ -24,7 +24,7 @@ const { menu, layout, logo, header } = storeToRefs(settingStore);
 <template>
   <!-- 布局：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧 -->
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
     <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
       <Header>
@@ -32,7 +32,7 @@ const { menu, layout, logo, header } = storeToRefs(settingStore);
           <div :class="ns.e('header-left')" class="flx-align-center">
             <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
               <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
-              <span v-show="!menu.isCollapse">{{ serviceConfig.layout.name }}</span>
+              <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
             </div>
             <HeaderLeft />
           </div>
@@ -41,7 +41,7 @@ const { menu, layout, logo, header } = storeToRefs(settingStore);
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]">
+      <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]">
         <Menu
           :class="[ns.join('layout-menu'), ns.b('menu')]"
           :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"

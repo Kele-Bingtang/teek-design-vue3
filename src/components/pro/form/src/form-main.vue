@@ -174,7 +174,7 @@ defineExpose(expose);
 
 <template>
   <slot :isHidden :setProFormItemInstance :optionsMap>
-    <el-row v-if="flexLayout" :gutter="20" v-bind="rowProps">
+    <el-row v-if="flexLayout" v-bind="rowProps">
       <el-col
         v-for="column in availableColumns"
         :key="column.prop"

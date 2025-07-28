@@ -16,32 +16,32 @@ const { layout } = storeToRefs(settingStore);
 
 const layoutModeList = [
   {
-    name: t("_setting.layoutModeSelect.vertical"),
+    name: t("_setting.layout.layoutModeSelect.vertical"),
     mode: LayoutModeEnum.Vertical,
     content: `<div class="dark"></div> <div class="container"> <div class="light"></div><div class="content"></div> </div>`,
   },
   {
-    name: t("_setting.layoutModeSelect.classic"),
+    name: t("_setting.layout.layoutModeSelect.classic"),
     mode: LayoutModeEnum.Classic,
     content: `<div class="dark"></div> <div class="container"> <div class="light"></div><div class="content"></div> </div>`,
   },
   {
-    name: t("_setting.layoutModeSelect.horizontal"),
+    name: t("_setting.layout.layoutModeSelect.horizontal"),
     mode: LayoutModeEnum.Horizontal,
     content: `<div class="dark"></div> <div class="content"></div>`,
   },
   {
-    name: t("_setting.layoutModeSelect.columns"),
+    name: t("_setting.layout.layoutModeSelect.columns"),
     mode: LayoutModeEnum.Columns,
     content: `<div class="dark"></div> <div class="light"></div> <div class="content"></div>`,
   },
   {
-    name: t("_setting.layoutModeSelect.mixins"),
+    name: t("_setting.layout.layoutModeSelect.mixins"),
     mode: LayoutModeEnum.Mixins,
     content: `<div class="dark"></div> <div class="container"> <div class="dark"></div><div class="content"></div> </div>`,
   },
   {
-    name: t("_setting.layoutModeSelect.iframe"),
+    name: t("_setting.layout.layoutModeSelect.iframe"),
     mode: LayoutModeEnum.IFrame,
     content: `<div class="dark"></div> <div class="content"></div>`,
   },

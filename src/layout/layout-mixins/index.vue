@@ -67,7 +67,7 @@ watch(
     else {
       childrenMenu.value = [];
       // 关闭菜单栏折叠功能
-      settingStore.$patch({ menu: { isCollapse: false } });
+      settingStore.$patch({ menu: { collapsed: false } });
     }
   },
   { immediate: true }
@@ -76,12 +76,12 @@ watch(
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
     <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
-        <span v-show="!menu.isCollapse">{{ serviceConfig.layout.name }}</span>
+        <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
       </div>
 
       <CollapseTrigger :class="ns.has('trigger', !childrenMenu.length)" />

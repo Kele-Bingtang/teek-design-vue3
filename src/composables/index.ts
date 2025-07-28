@@ -8,6 +8,7 @@ export * from "./core/use-namespace";
 export * from "./core/use-watch-css-var";
 export * from "./core/use-common";
 export * from "./core/use-upgrade";
+export * from "./core/use-key-down";
 
 export * from "./chart/use-chart";
 export * from "./chart/use-chart-component";

@@ -18,13 +18,13 @@ export const useWatchCssVar = () => {
   watchEffect(() => setCssVar(ns.cssVarName("layout-open-aside-width"), addUnit(menu.value.width)));
   //  折叠菜单宽度变量
   watchEffect(() => setCssVar(ns.cssVarName("layout-close-aside-width"), "64px"));
-  // 顶部高度变量
+  // 顶栏高度变量
   watchEffect(() => setCssVar(ns.cssVarName("layout-header-height"), addUnit(header.value.height)));
   // 标签栏高度
   watchEffect(() => setCssVar(ns.cssVarName("layout-tab-height"), addUnit(tabNav.value.height)));
   // 圆角变量
   watchEffect(() => setCssVar(ns.cssVarName("radius"), addUnit(theme.value.radius, "rem")));
-  // 顶部和标签栏的背景色、线条变量
+  // 顶栏和标签栏的背景色、线条变量
   watchEffect(() => {
     const headerBg = ns.cssVarName("layout-header-bg-color");
     const tabBg = ns.cssVarName("layout-tab-bg-color");

@@ -58,7 +58,7 @@ export enum PageTransitionEnum {
   SlideBottom = "slide-bottom",
 }
 
-// 顶部风格
+// 顶栏风格
 export enum HeaderStyleEnum {
   Page = "page",
   Bg = "bg",
@@ -66,7 +66,7 @@ export enum HeaderStyleEnum {
   BgLine = "bgLine",
 }
 
-// 顶部菜单位置
+// 顶栏菜单位置
 export enum HeaderMenuAlignEnum {
   Start = "start",
   Center = "center",

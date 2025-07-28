@@ -202,13 +202,13 @@ onMounted(() => {
           <Icon
             v-if="
               tab.meta.icon &&
-              tabNav.showTabNavIcon &&
+              tabNav.showIcon &&
               (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
             "
             :icon="tab.meta.icon"
             :class="ns.em('tab', 'icon')"
           />
-          <span class="dot" v-else-if="tabNav.showTabNavDot || !tab.meta.icon" />
+          <span class="dot" v-else-if="tabNav.showDot || !tab.meta.icon" />
           <span>{{ getTitle(tab) }}</span>
           <Icon class="icon-close" v-if="tab.close && tabNavList.length !== 1" @click.prevent.stop="closeTab(tab)">
             <Close />

@@ -3,7 +3,7 @@
   <ThemePanel />
   <LockPanel />
   <Watermark />
-  <el-button v-if="showThemePanelTrigger" type="primary" class="theme-panel__trigger">
+  <el-button v-if="showThemePanelTrigger" type="primary" class="theme-panel__trigger" @click="openThemePanel">
     <Icon :size="20"><Setting /></Icon>
   </el-button>
 </template>
@@ -14,6 +14,8 @@ import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import { Setting } from "@element-plus/icons-vue";
 import { LayoutModeEnum, ThemePanelTriggerPositionEnum } from "@/common/enums";
+import { mittBus } from "@/common/utils";
+import { OpenThemePanelKey } from "@/common/config";
 import { useCommon, useUpgrade } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import LockPanel from "./components/lock-panel/index.vue";
@@ -57,6 +59,13 @@ const showThemePanelTrigger = computed(() => {
 useUpgrade();
 
 const { isMobile } = useCommon();
+
+/**
+ * 打开主题面板
+ */
+const openThemePanel = () => {
+  mittBus.emit(OpenThemePanelKey);
+};
 
 // 移动端默认为 Vertical 布局
 watch(isMobile, () => {

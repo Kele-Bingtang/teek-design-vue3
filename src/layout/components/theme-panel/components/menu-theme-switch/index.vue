@@ -18,8 +18,8 @@ const { t } = useI18n();
 const { layout } = storeToRefs(settingStore);
 
 const menuThemeModeList = [
-  { name: t("_setting.menuThemeSelect.light"), theme: MenuThemeEnum.Light, img: lightTheme },
-  { name: t("_setting.menuThemeSelect.dark"), theme: MenuThemeEnum.Dark, img: darkTheme },
+  { name: t("_setting.menu.themeSelect.light"), theme: MenuThemeEnum.Light, img: lightTheme },
+  { name: t("_setting.menu.themeSelect.dark"), theme: MenuThemeEnum.Dark, img: darkTheme },
 ];
 
 const isDisable = computed(() => [LayoutModeEnum.Horizontal, LayoutModeEnum.Columns].includes(layout.value.layoutMode));

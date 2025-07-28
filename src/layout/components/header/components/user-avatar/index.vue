@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
@@ -7,8 +7,8 @@ import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
 import { serviceConfig, LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
-import { useNamespace } from "@/composables";
-import { useUserStore } from "@/pinia";
+import { useNamespace, useKeyDown } from "@/composables";
+import { useSettingStore, useUserStore } from "@/pinia";
 
 import "./index.scss";
 
@@ -18,19 +18,33 @@ withDefaults(defineProps<{ name?: boolean }>(), {
   name: true,
 });
 
-const ns = useNamespace("user-avatar");
-const userStore = useUserStore();
 const { t } = useI18n();
 const router = useRouter();
+const ns = useNamespace("user-avatar");
+const userStore = useUserStore();
+const settingStore = useSettingStore();
 
 const { userInfo } = storeToRefs(userStore);
+const { widget, shortcutKey } = storeToRefs(settingStore);
+
+const { start } = useKeyDown({
+  watcher: computed(() => shortcutKey.value.logout),
+  // 快捷键 ALT + Q 退出登录
+  callback: event => {
+    if (event.altKey && event.key.toLowerCase() === "q") {
+      event.preventDefault();
+      logout();
+    }
+  },
+});
+start();
 
 // 下拉菜单列表
 const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
-  { label: t("_headerBar.lock"), icon: Lock, click: openLockPanel },
+  { label: t("_headerBar.lock"), icon: Lock, click: openLockPanel, subLabel: "Alt L", show: widget.value.lockScreen },
   {
     label: "Github",
     click: () => window.open("https://github.com/Kele-Bingtang/teek-design-vue3"),
@@ -67,10 +81,11 @@ const logout = async () => {
   }).then(async () => {
     // 调用退出登录接口
     await userStore.logout();
+    ElMessage.success(t("_headerBar.logout.success"));
+
+    await nextTick();
     // 重定向到登陆页
     router.push(`${LOGIN_URL}?redirect=${router.currentRoute.value.path}`);
-
-    ElMessage.success(t("_headerBar.logout.success"));
   });
 };
 </script>
@@ -114,13 +129,21 @@ const logout = async () => {
         <el-divider />
 
         <ul :class="ns.e('menu')" class="flx-column">
-          <li class="flx-align-center" v-for="item in menuList" :key="item.label" @click="item.click">
-            <Icon :icon="item.icon || View" class="icon" />
-            <span class="label">{{ item.label }}</span>
-          </li>
+          <template v-for="item in menuList" :key="item.label">
+            <li v-if="item.show !== false" @click="item.click" class="flx-justify-between">
+              <div class="flx-align-center">
+                <Icon :icon="item.icon || View" class="icon" />
+                <span class="label">{{ item.label }}</span>
+              </div>
+              <span v-if="item.subLabel && shortcutKey.lockScreen">{{ item.subLabel }}</span>
+            </li>
+          </template>
 
           <el-divider />
-          <el-button plain :icon="Back" @click="logout">{{ t("_headerBar.logout.label") }}</el-button>
+          <el-button plain :icon="Back" @click="logout">
+            <span>{{ t("_headerBar.logout.label") }}</span>
+            <span v-if="shortcutKey.logout" style="margin-left: 6px">Alt Q</span>
+          </el-button>
         </ul>
       </div>
     </el-popover>
