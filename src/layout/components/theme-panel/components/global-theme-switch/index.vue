@@ -40,12 +40,12 @@ const customRadiusOptions = [
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.theme.greyMode") }}</span>
-      <el-switch v-model="theme.greyMode" @change="changeGreyOrWeak($event as boolean, 'grey')" />
+      <el-switch v-model="theme.greyMode" @change="changeGreyOrWeak($event as boolean, 'greyMode')" />
     </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.theme.weakMode") }}</span>
-      <el-switch v-model="theme.weakMode" @change="changeGreyOrWeak($event as boolean, 'weak')" />
+      <el-switch v-model="theme.weakMode" @change="changeGreyOrWeak($event as boolean, 'weakMode')" />
     </div>
 
     <div :class="ns.e('item')">

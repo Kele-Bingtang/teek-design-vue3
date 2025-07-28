@@ -95,7 +95,7 @@ export const useTheme = () => {
   };
 
   // 灰色和弱色切换
-  const changeGreyOrWeak = (value: boolean, type: string) => {
+  const changeGreyOrWeak = (value: boolean, type: "greyMode" | "weakMode") => {
     const body = document.body as HTMLElement;
 
     if (!value) return body.setAttribute("style", "");
@@ -103,7 +103,7 @@ export const useTheme = () => {
     if (type === "weakMode") body.setAttribute("style", "filter: invert(80%)");
 
     const propName = type === "greyMode" ? "weakMode" : "greyMode";
-    settingStore.$patch({ [propName]: false });
+    settingStore.$patch({ theme: { [propName]: false } });
   };
 
   // 初始化 primaryColor 配置
