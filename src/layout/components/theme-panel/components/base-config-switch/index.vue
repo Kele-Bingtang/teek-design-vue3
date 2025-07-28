@@ -178,7 +178,7 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.height") }}</span>
-      <el-input-number v-model="tabNav.height" :min="25" :max="50" :step="10" controls-position="right" />
+      <el-input-number v-model="tabNav.height" :min="25" :max="50" :step="2" controls-position="right" />
     </div>
 
     <div :class="ns.e('item')">
