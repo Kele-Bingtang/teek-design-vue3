@@ -30,7 +30,7 @@ const { menu } = storeToRefs(settingStore);
 const activeMenu = computed(() =>
   props.activeMenu ? props.activeMenu : route.meta.activeMenu || route.meta._fullPath || route.path
 );
-const isCollapse = computed(() => (props.isCollapse === undefined ? menu.value.isCollapse : props.isCollapse));
+const isCollapse = computed(() => (props.isCollapse === undefined ? menu.value.collapsed : props.isCollapse));
 
 // 菜单列表
 const menuList = computed(() => {

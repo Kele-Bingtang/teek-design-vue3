@@ -28,10 +28,10 @@ const handleTitleModeSelect = () => {
  * 标题模式选项
  */
 const titleModeOptions = [
-  { value: TitleModeEnum.ProjectPage, label: t("_setting.titleModeProjectPage") },
-  { value: TitleModeEnum.UsernamePage, label: t("_setting.titleModeUsernamePage") },
-  { value: TitleModeEnum.Project, label: t("_setting.titleModeProject") },
-  { value: TitleModeEnum.Page, label: t("_setting.titleModePage") },
+  { value: TitleModeEnum.ProjectPage, label: t("_setting.layout.titleModeSelect.projectPage") },
+  { value: TitleModeEnum.UsernamePage, label: t("_setting.layout.titleModeSelect.usernamePage") },
+  { value: TitleModeEnum.Project, label: t("_setting.layout.titleModeSelect.project") },
+  { value: TitleModeEnum.Page, label: t("_setting.layout.titleModeSelect.page") },
 ];
 </script>
 
@@ -39,7 +39,7 @@ const titleModeOptions = [
   <div :class="ns.b()">
     <el-select
       v-model="layout.titleMode"
-      :placeholder="$t('_setting.titlePlaceholder')"
+      :placeholder="$t('_setting.layout.titleModePlaceholder')"
       @change="handleTitleModeSelect"
     >
       <el-option

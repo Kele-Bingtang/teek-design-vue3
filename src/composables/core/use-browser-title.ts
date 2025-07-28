@@ -15,28 +15,30 @@ export const useBrowserTitle = () => {
 
   const browserTitle = ref("");
 
+  const { layout } = storeToRefs(settingStore);
+
   /**
    * 获取浏览器的页面预设标题
    */
   const getBrowserTitle = () => {
     const { name } = serviceConfig.layout;
-    const { titleMode } = settingStore;
     const pageTitle = formatTitle(route);
 
     // 展示标题的多种模式判断
-    if (titleMode === TitleModeEnum.ProjectPage) return pageTitle ? `${name} - ${pageTitle}` : name;
-    if (titleMode === TitleModeEnum.UsernamePage) {
+    if (layout.value.titleMode === TitleModeEnum.ProjectPage) return pageTitle ? `${name} - ${pageTitle}` : name;
+    if (layout.value.titleMode === TitleModeEnum.UsernamePage) {
       const { username } = userStore.userInfo;
 
       if (username && pageTitle) return `${username} - ${pageTitle}`;
       if (username) return `${name} - ${username}`;
       if (!pageTitle) return name;
-    } else if (titleMode === TitleModeEnum.Project) return name;
+    } else if (layout.value.titleMode === TitleModeEnum.Project) return name;
 
-    if (titleMode === TitleModeEnum.Page) return pageTitle + "";
+    if (layout.value.titleMode === TitleModeEnum.Page) return pageTitle + "";
 
     // 默认标题的模式
-    return pageTitle ? `${name} - ${pageTitle}` : name;
+    browserTitle.value = pageTitle ? `${name} - ${pageTitle}` : name;
+    return browserTitle.value;
   };
 
   /**

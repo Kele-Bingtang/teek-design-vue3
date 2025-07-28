@@ -27,7 +27,7 @@ const openSearchDialog = () => {
       <div :class="ns.e('keydown')">
         <span v-if="isWindows">Crtl</span>
         <Icon v-else icon="core-command" :size="13"></Icon>
-        <span>k</span>
+        <span>K</span>
       </div>
     </div>
   </div>

@@ -47,7 +47,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText && !menu.isCollapse"
+        v-if="menuItem.meta.tagText && !menu.collapsed"
         size="small"
         type="danger"
         effect="dark"
@@ -57,7 +57,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         {{ menuItem.meta.tagText }}
       </el-tag>
       <PointTag
-        v-if="menuItem.meta.pointTag && !menu.isCollapse"
+        v-if="menuItem.meta.pointTag && !menu.collapsed"
         type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"
@@ -73,7 +73,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText && !menu.isCollapse"
+        v-if="menuItem.meta.tagText && !menu.collapsed"
         size="small"
         type="danger"
         effect="dark"
@@ -83,7 +83,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         {{ menuItem.meta.tagText }}
       </el-tag>
       <PointTag
-        v-if="menuItem.meta.pointTag && !menu.isCollapse"
+        v-if="menuItem.meta.pointTag && !menu.collapsed"
         type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"

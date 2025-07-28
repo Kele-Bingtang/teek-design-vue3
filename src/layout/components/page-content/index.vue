@@ -37,9 +37,9 @@ const topHeight = computed(() => {
   let headerHeight = 0;
   let tabHeight = 0;
 
-  // 内容最大化时，顶部高度和标签栏高度都为 0
+  // 内容最大化时，顶栏高度和标签栏高度都为 0
   if (!layout.value.maximize) {
-    // 嵌入布局没有顶部
+    // 嵌入布局没有顶栏
     if (layout.value.layoutMode !== LayoutModeEnum.IFrame) {
       headerHeight = removeUnit(getCssVar(ns.cssVarName("layout-header-height"))) ?? 0;
     }
@@ -89,8 +89,8 @@ watchEffect(() => {
 /**
  * 是否固定标签栏
  */
-const isFixTabNav = computed(() => {
-  if (tabNav.value.fixTabNav) return "hidden auto";
+const isFixedTabNav = computed(() => {
+  if (tabNav.value.fixed) return "hidden auto";
   return "";
 });
 </script>
@@ -104,7 +104,7 @@ const isFixTabNav = computed(() => {
       <router-view v-slot="{ Component, route }">
         <transition
           v-bind="route.meta.transitionProps"
-          :name="route.meta.transitionProps?.name || transition.page"
+          :name="route.meta.transitionProps?.name || transition.pageEnter"
           mode="out-in"
           appear
         >
@@ -129,7 +129,7 @@ const isFixTabNav = computed(() => {
   .page-content {
     height: calc(100vh - cssVar(header-height) - cssVar(tab-height));
     padding: 10px 12px;
-    overflow: v-bind(isFixTabNav);
+    overflow: v-bind(isFixedTabNav);
   }
 }
 </style>

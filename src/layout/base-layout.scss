@@ -111,7 +111,7 @@
     }
   }
 
-  /* 顶部栏样式 */
+  /* 顶栏栏样式 */
   @include joins(layout-header) {
     height: cssVar(layout-header-height);
     padding-left: 0;

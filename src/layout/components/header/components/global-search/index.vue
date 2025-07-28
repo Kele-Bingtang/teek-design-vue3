@@ -6,9 +6,9 @@ import { useEventListener } from "@vueuse/core";
 import { ArrowUp, ArrowDown, Back, Close } from "@element-plus/icons-vue";
 import { isArray, mittBus } from "@/common/utils";
 import { OpenSearchDialogKey } from "@/common/config";
-import { useMenu, useNamespace } from "@/composables";
+import { useKeyDown, useMenu, useNamespace } from "@/composables";
 import { formatTitle } from "@/router/helper";
-import { useUserStore } from "@/pinia";
+import { useSettingStore, useUserStore } from "@/pinia";
 
 import "./index.scss";
 
@@ -17,6 +17,7 @@ defineOptions({ name: "GlobalSearch" });
 const router = useRouter();
 const ns = useNamespace("global-search");
 const userStore = useUserStore();
+const settingStore = useSettingStore();
 const { menuList } = useMenu();
 
 const showSearchDialog = ref(false);
@@ -28,13 +29,25 @@ const highlightedIndex = ref(0);
 const historyMaxLength = 10;
 const searchResult = ref<RouterConfig[]>([]);
 const { searchHistory } = storeToRefs(userStore);
+const { shortcutKey } = storeToRefs(settingStore);
 
 const searchInputInstance = useTemplateRef("searchInputInstance");
 const searchResultScrollbarInstance = useTemplateRef("searchResultScrollbarInstance");
 
-onMounted(() => {
-  mittBus.on(OpenSearchDialogKey, openSearchDialog);
+const { start } = useKeyDown({
+  watcher: computed(() => shortcutKey.value.search),
+  // 快捷键 ALT + Q 退出登录
+  callback: event => {
+    const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+    const isCommandKey = isMac ? event.metaKey : event.ctrlKey;
+    if (isCommandKey && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      showSearchDialog.value = true;
+      focusInput();
+    }
+  },
 });
+start();
 
 /**
  * 打开对话框
@@ -58,15 +71,6 @@ const closeSearchDialog = () => {
  * 键盘快捷键处理
  */
 const handleKeydown = (event: KeyboardEvent) => {
-  const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-  const isCommandKey = isMac ? event.metaKey : event.ctrlKey;
-
-  if (isCommandKey && event.key.toLowerCase() === "k") {
-    event.preventDefault();
-    showSearchDialog.value = true;
-    focusInput();
-  }
-
   // 当搜索对话框打开时，处理方向键和回车键
   if (showSearchDialog.value) {
     if (event.key === "ArrowUp") {
@@ -277,6 +281,10 @@ const deleteHistory = (index: number) => {
   searchHistory.value.splice(index, 1);
   updateHistory();
 };
+
+onMounted(() => {
+  mittBus.on(OpenSearchDialogKey, openSearchDialog);
+});
 </script>
 
 <template>

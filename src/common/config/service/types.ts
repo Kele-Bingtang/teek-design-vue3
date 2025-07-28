@@ -15,20 +15,24 @@ import type {
 export interface ServiceConfig {
   /** 全局配置 */
   layout: LayoutConfig;
-  /** 标签栏配置 */
-  tabNav: TabNavConfig;
-  /** 面包屑配置 */
-  breadcrumb: BreadcrumbConfig;
+  /** 主题配置 */
+  theme: ThemeConfig;
   /** 顶栏配置 */
   header: headerConfig;
   /** 菜单栏配置 */
   menu: MenuConfig;
-  /** 主题配置 */
-  theme: ThemeConfig;
+  /** 标签栏配置 */
+  tabNav: TabNavConfig;
+  /** 面包屑配置 */
+  breadcrumb: BreadcrumbConfig;
   /** Logo 配置 */
   logo: LogoConfig;
   /** 动画配置 */
   transition: TransitionConfig;
+  /** 小部件配置 */
+  widget: WidgetConfig;
+  /** 快捷键配置 */
+  shortcutKey: ShortcutKeyConfig;
   /** 路由配置 */
   router: RouterConfig;
   /** 缓存配置 */
@@ -46,12 +50,6 @@ export interface LayoutConfig {
   layoutMode: LayoutModeEnum;
   /** 侧边菜单栏的主题色，暗色和亮色，默认为暗色 */
   menuTheme: MenuThemeEnum;
-  /** 是否开启暗色主题 */
-  isDark: boolean;
-  /** 是否开启灰色主题 */
-  isWeak: boolean;
-  /** 是否开启色弱主题 */
-  isGrey: boolean;
   /** PageContent 是否开启最大化，默认不开启（false） */
   maximize: boolean;
   /** 是否开启水印 */
@@ -87,19 +85,56 @@ export interface LayoutConfig {
   themePanelTriggerPosition: ThemePanelTriggerPositionEnum;
 }
 
+export interface ThemeConfig {
+  /** 主题色 */
+  primaryColor: string;
+  /** 圆角 */
+  radius: number;
+  /** 系统主题 */
+  systemThemeMode: SystemThemeEnum;
+  /** 是否开启灰色主题 */
+  weakMode: boolean;
+  /** 是否开启色弱主题 */
+  greyMode: boolean;
+  /** 预设颜色 */
+  presetsColor: string[];
+}
+
+export interface headerConfig {
+  /** 是否使用顶栏 */
+  enabled: boolean;
+  /** 顶部样式 */
+  style: HeaderStyleEnum;
+  /** 顶部高度 */
+  height: number;
+  /** 顶部菜单样式 */
+  menuAlign: HeaderMenuAlignEnum;
+}
+
+export interface MenuConfig {
+  /** 是否使用菜单栏 */
+  enabled: boolean;
+  /** 菜单宽度 */
+  width: number;
+  /** 是否开启菜单手风琴 */
+  accordion: boolean;
+  /** 是否折叠菜单栏 */
+  collapsed: boolean;
+}
+
 export interface TabNavConfig {
   /** 是否使用 tagsNav */
   enabled: boolean;
   /** 标签页模式设置 */
   tabNavMode: TabNavModeEnum;
   /** 标签栏 Icon 是否显示 */
-  showTabNavIcon: boolean;
+  showIcon: boolean;
   /** 标签栏 Dot 是否显示，优先级低于 showTabNavDot，仅在 tabNavMode 为 simple、classic 模式生效 */
-  showTabNavDot: boolean;
+  showDot: boolean;
   /** 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav */
-  recordTabNav: boolean;
+  persistence: boolean;
   /** 是否固定标签页 */
-  fixTabNav: boolean;
+  fixed: boolean;
   /** 是否开启多标签页拖拽 */
   draggable: boolean;
   /** 标签页高度 */
@@ -127,34 +162,6 @@ export interface BreadcrumbConfig {
   onlyShowHomeIcon: boolean;
 }
 
-export interface headerConfig {
-  enabled: boolean;
-  /** 顶部样式 */
-  style: HeaderStyleEnum;
-  /** 顶部高度 */
-  height: number;
-  /** 顶部菜单样式 */
-  menuAlign: HeaderMenuAlignEnum;
-}
-
-export interface MenuConfig {
-  /** 菜单宽度 */
-  width: number;
-  /** 是否开启菜单手风琴 */
-  accordion: boolean;
-  /** 是否折叠菜单栏 */
-  isCollapse: boolean;
-}
-
-export interface ThemeConfig {
-  /** 主题色 */
-  primaryColor: string;
-  /** 圆角 */
-  radius: number;
-  /** 系统主题 */
-  systemThemeMode: SystemThemeEnum;
-}
-
 export interface LogoConfig {
   /** 是否显示 Logo */
   enable: boolean;
@@ -164,9 +171,37 @@ export interface LogoConfig {
 
 export interface TransitionConfig {
   /** 进入页面过渡动画 */
-  page: PageTransitionEnum;
+  pageEnter: PageTransitionEnum;
   /** 是否开启页面加载进度动画 */
   progress: boolean;
+}
+
+export interface WidgetConfig {
+  /** 是否显示菜单栏折叠 */
+  menuCollapse: boolean;
+  /** 是否显示搜索框 */
+  search: boolean;
+  /** 是否显示全屏图标 */
+  fullscreen: boolean;
+  /** 是否显示通知图标 */
+  notification: boolean;
+  /** 是否显示国际化图标 */
+  language: boolean;
+  /** 是否显示暗黑切换图标 */
+  theme: boolean;
+  /** 是否显示锁屏按钮 */
+  lockScreen: boolean;
+}
+
+export interface ShortcutKeyConfig {
+  /** 是否启用快捷键 */
+  enable: boolean;
+  /** 是否启用全局搜索快捷键 */
+  search: boolean;
+  /** 是否启用全局注销快捷键 */
+  logout: boolean;
+  /** 是否启用全局锁屏快捷键 */
+  lockScreen: boolean;
 }
 
 export interface RouterConfig {

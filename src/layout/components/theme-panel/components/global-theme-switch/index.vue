@@ -10,50 +10,48 @@ const ns = useNamespace("global-theme-select");
 const { changePrimaryColor, changeGreyOrWeak } = useTheme();
 const settingStore = useSettingStore();
 
-const { layout, theme } = storeToRefs(settingStore);
+const { theme } = storeToRefs(settingStore);
 
 // 预定义主题颜色
-const colorList = [
-  serviceConfig.theme.primaryColor,
-  "#DAA96E",
-  "#0C819F",
-  "#5D87FF",
-  "#27ae60",
-  "#ff5c93",
-  "#e74c3c",
-  "#fd726d",
-  "#f39c12",
-  "#9b59b6",
-];
+const colorList = [serviceConfig.theme.primaryColor, ...serviceConfig.theme.presetsColor];
 
-const sizeOptions = [
-  { label: "Large", value: "large" },
-  { label: "Default", value: "default" },
-  { label: "Small", value: "small" },
+/**
+ * 自定义圆角选项
+ */
+const customRadiusOptions = [
+  { value: "0", label: "0" },
+  { value: "0.25", label: "0.25" },
+  { value: "0.5", label: "0.5" },
+  { value: "0.75", label: "0.75" },
+  { value: "1", label: "1" },
+  { value: "1.25", label: "1.25" },
+  { value: "1.5", label: "1.5" },
+  { value: "1.75", label: "1.75" },
+  { value: "2", label: "2" },
 ];
 </script>
 
 <template>
   <div :class="ns.b()">
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.primaryColor") }}</span>
+      <span>{{ $t("_setting.theme.primaryColor") }}</span>
       <el-color-picker v-model="theme.primaryColor" :predefine="colorList" @change="changePrimaryColor()" />
     </div>
 
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.greyMode") }}</span>
-      <el-switch v-model="layout.isGrey" @change="changeGreyOrWeak($event as boolean, 'grey')" />
+      <span>{{ $t("_setting.theme.greyMode") }}</span>
+      <el-switch v-model="theme.greyMode" @change="changeGreyOrWeak($event as boolean, 'grey')" />
     </div>
 
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.weakMode") }}</span>
-      <el-switch v-model="layout.isWeak" @change="changeGreyOrWeak($event as boolean, 'weak')" />
+      <span>{{ $t("_setting.theme.weakMode") }}</span>
+      <el-switch v-model="theme.weakMode" @change="changeGreyOrWeak($event as boolean, 'weak')" />
     </div>
 
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.epSize") }}</span>
-      <el-select v-model="layout.elementPlusSize" placeholder="Select">
-        <el-option v-for="item in sizeOptions" :key="item.value" :label="item.label" :value="item.value" />
+      <span>{{ $t("_setting.theme.radius") }}</span>
+      <el-select v-model="theme.radius" placeholder="Select">
+        <el-option v-for="item in customRadiusOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
   </div>

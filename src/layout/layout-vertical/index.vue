@@ -36,12 +36,12 @@ const handleClickOutSide = () => {
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.isCollapse), ns.is('expand', !menu.isCollapse)]"
+    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
-    <el-aside :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
+    <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
-        <span v-show="!menu.isCollapse">{{ serviceConfig.layout.name }}</span>
+        <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
       </div>
 
       <Menu
@@ -50,7 +50,7 @@ const handleClickOutSide = () => {
       />
     </el-aside>
 
-    <div v-if="isMobile && !menu.isCollapse" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
+    <div v-if="isMobile && !menu.collapsed" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
 
     <el-container>
       <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">

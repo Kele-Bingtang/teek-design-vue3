@@ -13,46 +13,79 @@ export function copyObj<T>(obj: T): T {
  * @param hash WeakMap 用于处理循环引用
  */
 export function deepClone<T>(obj: T, hash = new WeakMap()): T {
+  // 处理 null、undefined 或基本数据类型
   if (obj === null || typeof obj !== "object") return obj;
 
-  if (Array.isArray(obj)) {
-    return obj.map(item => deepClone(item, hash)) as any;
-  }
-
+  // 处理循环引用
   if (hash.has(obj)) {
     return hash.get(obj);
   }
 
-  const Constructor = (obj as any).constructor;
+  // 处理内置对象类型
+  if (obj instanceof Date) return new Date(obj) as any;
+  if (obj instanceof RegExp) return new RegExp(obj) as any;
+  if (obj instanceof Map) {
+    const result = new Map();
+    hash.set(obj, result);
+    obj.forEach((value, key) => {
+      result.set(deepClone(key, hash), deepClone(value, hash));
+    });
+    return result as any;
+  }
+  if (obj instanceof Set) {
+    const result = new Set();
+    hash.set(obj, result);
+    obj.forEach(value => {
+      result.add(deepClone(value, hash));
+    });
+    return result as any;
+  }
 
-  // 处理特殊对象
-  if (Constructor === Date) return new Date(obj as any) as any;
-  if (Constructor === RegExp) return new RegExp(obj as any) as any;
-  if (Constructor === Map) return new Map(Array.from((obj as unknown as Map<any, any>).entries())) as any;
-  if (Constructor === Set) return new Set(Array.from((obj as unknown as Set<any>).values())) as any;
-  if (Constructor === Buffer && typeof Buffer.isBuffer === "function" && Buffer.isBuffer(obj)) {
+  // 处理 Buffer（Node.js 环境）
+  if (typeof Buffer !== "undefined" && Buffer.isBuffer && Buffer.isBuffer(obj)) {
     return Buffer.from(obj) as any;
   }
 
-  const newObj = new Constructor();
-  hash.set(obj, newObj);
-
-  // 处理对象属性
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      newObj[key] = deepClone((obj as any)[key], hash);
-    }
+  // 处理数组
+  if (isArray(obj)) {
+    const result: any[] = [];
+    hash.set(obj, result);
+    obj.forEach((item, index) => {
+      result[index] = deepClone(item, hash);
+    });
+    return result as any;
   }
 
-  // 处理 Symbol 属性键
-  const symbolKeys = Object.getOwnPropertySymbols(obj);
-  for (const key of symbolKeys) {
-    newObj[key] = deepClone((obj as any)[key], hash);
+  // 处理普通对象
+  if (isObject(obj)) {
+    // 保持原型链
+    const Constructor = obj.constructor;
+    let clonedObj: any;
+
+    // 尝试创建相同类型的对象
+    if (Constructor === Object) clonedObj = {};
+    else if (typeof Constructor === "function") {
+      try {
+        clonedObj = Object.create(Constructor.prototype);
+      } catch {
+        clonedObj = Object.create(Object.getPrototypeOf(obj));
+      }
+    } else clonedObj = Object.create(Object.getPrototypeOf(obj));
+
+    hash.set(obj, clonedObj);
+
+    // 复制所有可枚举属性（包括 Symbol 键）
+    [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)].forEach(key => {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        clonedObj[key] = deepClone((obj as any)[key], hash);
+      }
+    });
+
+    return clonedObj;
   }
 
-  return newObj;
+  return obj;
 }
-
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */

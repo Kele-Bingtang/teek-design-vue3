@@ -25,14 +25,14 @@ export const useSettingStore = defineStore(
       theme: themeConfig,
       logo: logoConfig,
       transition: transitionConfig,
+      widget: widgetConfig,
+      shortcutKey: shortcutKeyConfig,
     } = serviceConfig;
 
     const layout = reactive({
       titleMode: layoutConfig.titleMode,
       layoutMode: layoutConfig.layoutMode || LayoutModeEnum.Classic,
       menuTheme: layoutConfig.menuTheme || MenuThemeEnum.Light,
-      isWeak: layoutConfig.isWeak,
-      isGrey: layoutConfig.isGrey,
       maximize: layoutConfig.maximize,
       elementPlusSize: layoutConfig.elementPlusSize,
       watermark: layoutConfig.watermark,
@@ -43,39 +43,8 @@ export const useSettingStore = defineStore(
       primaryColor: themeConfig.primaryColor ?? getCssVar(useNamespace().cssVar("color-primary")),
       radius: themeConfig.radius,
       systemThemeMode: themeConfig.systemThemeMode || SystemThemeEnum.System,
-    });
-
-    const tabNav = reactive({
-      enabled: tabNavConfig.enabled,
-      tabNavMode: tabNavConfig.tabNavMode || TabNavModeEnum.Simple,
-      recordTabNav: tabNavConfig.recordTabNav,
-      showTabNavIcon: tabNavConfig.showTabNavIcon,
-      showTabNavDot: tabNavConfig.showTabNavDot,
-      fixTabNav: tabNavConfig.fixTabNav,
-      draggable: tabNavConfig.draggable,
-      height: tabNavConfig.height,
-      middleClickToClose: tabNavConfig.middleClickToClose,
-      middleClickToOpen: tabNavConfig.middleClickToOpen,
-      showMore: tabNavConfig.showMore,
-      wheel: tabNavConfig.wheel,
-    });
-
-    const logo = reactive({
-      enable: logoConfig.enable,
-    });
-
-    const breadcrumb = reactive({
-      enabled: breadcrumbConfig.enabled,
-      showIcon: breadcrumbConfig.showIcon,
-      hideOnlyOne: breadcrumbConfig.hideOnlyOne,
-      showHome: breadcrumbConfig.showHome,
-      onlyShowHomeIcon: breadcrumbConfig.onlyShowHomeIcon,
-    });
-
-    const menu = reactive({
-      width: menuConfig.width,
-      accordion: menuConfig.accordion,
-      isCollapse: menuConfig.isCollapse,
+      weakMode: themeConfig.weakMode,
+      greyMode: themeConfig.greyMode,
     });
 
     const header = reactive({
@@ -85,9 +54,59 @@ export const useSettingStore = defineStore(
       menuAlign: headerConfig.menuAlign || HeaderMenuAlignEnum.Start,
     });
 
+    const menu = reactive({
+      enabled: menuConfig.enabled,
+      width: menuConfig.width,
+      accordion: menuConfig.accordion,
+      collapsed: menuConfig.collapsed,
+    });
+
+    const tabNav = reactive({
+      enabled: tabNavConfig.enabled,
+      tabNavMode: tabNavConfig.tabNavMode || TabNavModeEnum.Simple,
+      persistence: tabNavConfig.persistence,
+      showIcon: tabNavConfig.showIcon,
+      showDot: tabNavConfig.showDot,
+      fixed: tabNavConfig.fixed,
+      draggable: tabNavConfig.draggable,
+      height: tabNavConfig.height,
+      middleClickToClose: tabNavConfig.middleClickToClose,
+      middleClickToOpen: tabNavConfig.middleClickToOpen,
+      showMore: tabNavConfig.showMore,
+      wheel: tabNavConfig.wheel,
+    });
+
+    const breadcrumb = reactive({
+      enabled: breadcrumbConfig.enabled,
+      showIcon: breadcrumbConfig.showIcon,
+      hideOnlyOne: breadcrumbConfig.hideOnlyOne,
+      showHome: breadcrumbConfig.showHome,
+      onlyShowHomeIcon: breadcrumbConfig.onlyShowHomeIcon,
+    });
+    const logo = reactive({
+      enable: logoConfig.enable,
+    });
+
     const transition = reactive({
-      page: transitionConfig.page || PageTransitionEnum.SlideLeft,
+      pageEnter: transitionConfig.pageEnter || PageTransitionEnum.SlideLeft,
       progress: transitionConfig.progress,
+    });
+
+    const widget = reactive({
+      menuCollapse: widgetConfig.menuCollapse,
+      search: widgetConfig.search,
+      fullscreen: widgetConfig.fullscreen,
+      notification: widgetConfig.notification,
+      language: widgetConfig.language,
+      theme: widgetConfig.theme,
+      lockScreen: widgetConfig.lockScreen,
+    });
+
+    const shortcutKey = reactive({
+      enable: shortcutKeyConfig.enable,
+      search: shortcutKeyConfig.search,
+      logout: shortcutKeyConfig.logout,
+      lockScreen: shortcutKeyConfig.lockScreen,
     });
 
     const isDark = computed(() => {
@@ -102,23 +121,23 @@ export const useSettingStore = defineStore(
     /**
      * 打开侧边菜单
      */
-    const openSideMenu = () => (menu.isCollapse = false);
+    const openSideMenu = () => (menu.collapsed = false);
     /**
      * 关闭侧边菜单
      */
-    const closeSideMenu = () => (menu.isCollapse = true);
+    const closeSideMenu = () => (menu.collapsed = true);
 
     /**
      * 切换侧边菜单
      */
-    const toggleSideMenu = () => (menu.isCollapse = !menu.isCollapse);
+    const toggleSideMenu = () => (menu.collapsed = !menu.collapsed);
 
     /**
      * 重置设置
      */
     const resetSetting = async () => {
       localStorageProxy.removeItem("settingStore");
-      if (!tabNav.recordTabNav) cacheOperator.removeCacheTabNavList();
+      if (!tabNav.persistence) cacheOperator.removeCacheTabNavList();
     };
 
     return {
@@ -130,6 +149,8 @@ export const useSettingStore = defineStore(
       menu,
       header,
       transition,
+      widget,
+      shortcutKey,
 
       isDark,
 

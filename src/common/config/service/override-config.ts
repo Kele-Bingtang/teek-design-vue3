@@ -46,6 +46,16 @@ export const defineServiceConfig = (overrideServiceConfig: DeepPartial<ServiceCo
       ...envServiceConfig?.transition,
       ...overrideServiceConfig.transition,
     },
+    widget: {
+      ...defaultServiceConfig.widget,
+      ...envServiceConfig?.widget,
+      ...overrideServiceConfig.widget,
+    },
+    shortcutKey: {
+      ...defaultServiceConfig.shortcutKey,
+      ...envServiceConfig?.shortcutKey,
+      ...overrideServiceConfig.shortcutKey,
+    },
     router: {
       ...defaultServiceConfig.router,
       ...envServiceConfig?.router,

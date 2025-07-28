@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useErrorLogStore } from "@/pinia";
+import { storeToRefs } from "pinia";
+import { useErrorLogStore, useSettingStore } from "@/pinia";
 import { serviceConfig } from "@/common/config";
 import { useCommon, useNamespace } from "@/composables";
 import Fullscreen from "./components/fullscreen/index.vue";
@@ -16,6 +17,8 @@ defineOptions({ name: "HeaderRight" });
 
 const ns = useNamespace("header-right");
 const errorLogStore = useErrorLogStore();
+const settingStore = useSettingStore();
+const { widget } = storeToRefs(settingStore);
 
 /**
  * 未读错误日志数量
@@ -35,16 +38,16 @@ const { isMobile } = useCommon();
     <GlobalSearch />
 
     <div :class="ns.e('btn')" :style="{ '--icon-size': ns.cssVar('layout-header-icon-size') }" class="flx-align-center">
-      <GlobalSearchInput id="menuSearch" v-if="!isMobile" />
-      <Fullscreen id="fullscreen" v-if="!isMobile" />
-      <Notification id="notification" />
-      <LanguageSelect id="languageSelect" />
+      <GlobalSearchInput v-if="!isMobile && widget.search" id="menuSearch" />
+      <Fullscreen v-if="!isMobile && widget.fullscreen" id="fullscreen" />
+      <Notification v-if="widget.notification" id="notification" />
+      <LanguageSelect v-if="widget.language" id="languageSelect" />
       <ErrorLog
-        id="errorLog"
         v-if="serviceConfig.layout.errorLog.showInHeader && errorCount > 0 && !isMobile"
+        id="errorLog"
         :error-count="errorCount"
       />
-      <LightDarkSwitch id="lightDarkSwitch" />
+      <LightDarkSwitch v-if="widget.theme" id="lightDarkSwitch" />
       <UserAvatar id="user" :name="false" />
     </div>
   </div>

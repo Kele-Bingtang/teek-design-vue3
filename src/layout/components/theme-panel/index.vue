@@ -1,12 +1,12 @@
-<script setup lang="tsx">
-import { ref, defineComponent } from "vue";
+<script setup lang="ts">
+import { ref, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
-import { ElButton, ElDivider, ElDrawer, ElMessage } from "element-plus";
-import { Notification, Menu, ColdDrink, Setting, Box, Refresh, Loading } from "@element-plus/icons-vue";
-import { OpenThemePanelKey } from "@/common/config";
+import { ElButton, ElDrawer, ElMessage, ElMessageBox } from "element-plus";
+import { Refresh } from "@element-plus/icons-vue";
+import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
 import { useCommon, useNamespace } from "@/composables";
-import { useSettingStore } from "@/pinia";
+import { useSettingStore, useUserStore } from "@/pinia";
 import {
   LayoutModeSwitch,
   MenuThemeSwitch,
@@ -17,30 +17,38 @@ import {
 } from "./components";
 
 import "./index.scss";
+import router from "@/router";
 
 defineOptions({ name: "ThemePanel" });
 
 const ns = useNamespace("theme-panel");
 
 const { t } = useI18n();
+const userStore = useUserStore();
 const settingStore = useSettingStore();
 
 const { isMobile } = useCommon();
 
-/**
- * 重置缓存
- */
 const resetSetting = () => {
-  let message = t("_setting.resetSetting");
-  message = message === "_setting.resetSetting" ? "正在清除设置缓存并刷新，请稍候..." : message;
-  ElMessage({
-    message: message,
-    duration: 1000,
-    icon: Loading,
-  });
+  settingStore.$reset();
+};
 
-  settingStore.resetSetting();
-  setTimeout(() => window.location.reload(), 1000);
+/**
+ * 退出登录
+ */
+const clearSettingCache = async () => {
+  ElMessageBox.confirm(t("_headerBar.logout.confirm"), t("_headerBar.logout.confirmTitle"), {
+    type: "warning",
+  }).then(async () => {
+    resetSetting();
+    // 调用退出登录接口
+    await userStore.logout();
+    ElMessage.success(t("_headerBar.logout.success"));
+
+    await nextTick();
+    // 重定向到登陆页
+    router.push(`${LOGIN_URL}?redirect=${router.currentRoute.value.path}`);
+  });
 };
 
 /**
@@ -48,28 +56,12 @@ const resetSetting = () => {
  */
 const drawerVisible = ref(false);
 mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
-
-/**
- * 分割线组件
- */
-const Divider = defineComponent({
-  setup(_, { slots }) {
-    return () => (
-      <>
-        <ElDivider class={ns.e("divider")} content-position="center">
-          {slots.title?.()}
-        </ElDivider>
-        {slots.default?.()}
-      </>
-    );
-  },
-});
 </script>
 
 <template>
   <el-drawer
     v-model="drawerVisible"
-    :size="300"
+    :size="360"
     :lock-scroll="false"
     :with-header="false"
     close-on-click-modal
@@ -78,61 +70,42 @@ const Divider = defineComponent({
   >
     <template v-if="!isMobile">
       <!-- 布局切换 -->
-      <Divider>
-        <template #title>
-          <Icon class="icon"><Notification /></Icon>
-          {{ $t("_setting.layoutMode") }}
-        </template>
+      <div>
+        <h3>{{ $t("_setting.layout.layoutMode") }}</h3>
 
         <LayoutModeSwitch />
-      </Divider>
+      </div>
     </template>
 
     <!-- 菜单主题切换 -->
-    <Divider>
-      <template #title>
-        <Icon class="icon"><Menu /></Icon>
-        {{ $t("_setting.menuTheme") }}
-      </template>
+    <h3>{{ $t("_setting.menu.theme") }}</h3>
 
-      <MenuThemeSwitch />
-    </Divider>
+    <MenuThemeSwitch />
 
     <!-- 全局主题 -->
-    <Divider>
-      <template #title>
-        <Icon class="icon"><ColdDrink /></Icon>
-        {{ $t("_setting.globalTheme") }}
-      </template>
+    <h3>{{ $t("_setting.theme.label") }}</h3>
 
-      <SystemThemeSwitch />
-      <GlobalThemeSwitch />
-    </Divider>
+    <SystemThemeSwitch />
+    <GlobalThemeSwitch />
 
     <!-- 界面设置 -->
-    <Divider>
-      <template #title>
-        <Icon class="icon"><Setting /></Icon>
-        {{ $t("_setting.baseConfig") }}
-      </template>
+    <!-- <h3>{{ $t("_setting.baseConfig") }}</h3> -->
 
-      <BaseConfigSwitch />
-    </Divider>
+    <BaseConfigSwitch />
 
     <!-- 标题设置 -->
-    <Divider>
-      <template #title>
-        <Icon class="icon"><Box /></Icon>
-        {{ $t("_setting.titleMode") }}
-      </template>
+    <h3>{{ $t("_setting.layout.titleMode") }}</h3>
 
-      <BrowserTitleSwitch />
-    </Divider>
+    <BrowserTitleSwitch />
 
-    <Divider />
+    <template #footer>
+      <el-button plain type="primary" :icon="Refresh" @click="resetSetting">
+        {{ $t("_setting.resetSetting") }}
+      </el-button>
 
-    <el-button plain :icon="Refresh" @click="resetSetting">
-      {{ $t("_setting.resetSettingTitle") }}
-    </el-button>
+      <el-button plain @click="clearSettingCache">
+        {{ $t("_setting.clearSettingCache") }}
+      </el-button>
+    </template>
   </el-drawer>
 </template>

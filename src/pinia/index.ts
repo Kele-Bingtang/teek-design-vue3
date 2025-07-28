@@ -2,6 +2,7 @@ import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import { localStorageProxy } from "@/common/utils";
 import { serviceConfig } from "@/common/config";
+import { resetSetupStore } from "./plugins";
 
 export * from "./stores/core/layout";
 export * from "./stores/core/route";
@@ -64,6 +65,8 @@ const getStorageKey = (key: string) => {
 };
 
 const pinia = createPinia();
+
+pinia.use(resetSetupStore);
 pinia.use(
   createPersistedState({
     key: key => getStorageKey(key),
