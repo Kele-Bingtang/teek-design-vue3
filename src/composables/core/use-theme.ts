@@ -1,6 +1,6 @@
 import { storeToRefs } from "pinia";
-import { getLightColor, getDarkColor, setCssVar, colorBlend } from "@/common/utils";
-import { SystemThemeEnum } from "@/common/enums";
+import { getLightColor, getDarkColor, setCssVar, colorBlend, getCssVar } from "@/common/utils";
+import { GlobalThemeEnum } from "@/common/enums";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 
@@ -12,11 +12,11 @@ export const useTheme = () => {
   const settingStore = useSettingStore();
 
   const { isDark, theme: themeConfig } = storeToRefs(settingStore);
-  const { Light, Dark } = SystemThemeEnum;
+  const { Light, Dark } = GlobalThemeEnum;
 
-  const systemThemeStyle = {
+  const globalThemeStyle = {
     [Light]: { className: "" },
-    [Dark]: { className: SystemThemeEnum.Dark },
+    [Dark]: { className: GlobalThemeEnum.Dark },
   };
 
   /**
@@ -38,26 +38,24 @@ export const useTheme = () => {
   };
 
   /**
-   * 修改系统主题
+   * 修改全局主题
    */
-  const changeSystemTheme = (theme = themeConfig.value.systemThemeMode) => {
+  const changeGlobalTheme = (theme = themeConfig.value.globalThemeMode) => {
     // 临时禁用过渡效果
     disableTransitions();
 
-    if (theme !== themeConfig.value.systemThemeMode) settingStore.$patch({ theme: { systemThemeMode: theme } });
+    if (theme !== themeConfig.value.globalThemeMode) settingStore.$patch({ theme: { globalThemeMode: theme } });
 
-    const currentTheme = systemThemeStyle[isDark.value ? Dark : Light];
-    if (currentTheme) document.documentElement.setAttribute("class", currentTheme.className);
+    const currentTheme = globalThemeStyle[isDark.value ? Dark : Light];
+    const oldTheme = globalThemeStyle[isDark.value ? Light : Dark];
+    const el = document.documentElement;
 
-    // 颜色加深或变浅
-    for (let i = 1; i <= 9; i++) {
-      setCssVar(
-        ns.cssVarNameEl(`color-primary-light-${i}`),
-        isDark.value
-          ? `${getDarkColor(themeConfig.value.primaryColor, i / 10)}`
-          : `${getLightColor(themeConfig.value.primaryColor, i / 10)}`
-      );
-    }
+    oldTheme.className && el.classList.remove(oldTheme.className);
+    currentTheme.className && el.classList.add(currentTheme.className);
+
+    // 获取主题切换后的主题色
+    const primaryColor = getCssVar(ns.cssVarNameEl(`color-primary`), el) || themeConfig.value.primaryColor;
+    if (primaryColor) deriveColorByPrimary(primaryColor, el);
 
     // 使用 requestAnimationFrame 确保在下一帧恢复过渡效果
     requestAnimationFrame(() => {
@@ -70,27 +68,35 @@ export const useTheme = () => {
   /**
    * 修改主题颜色
    */
-  const changePrimaryColor = (color = themeConfig.value.primaryColor) => {
+  const changePrimaryColor = (color = themeConfig.value.primaryColor, el = document.documentElement) => {
     if (color !== themeConfig.value.primaryColor) settingStore.$patch({ theme: { primaryColor: color } });
 
-    // 兼容暗黑模式，自动计算主题颜色由深到浅的其他颜色
-    setCssVar(ns.cssVarNameEl(`color-primary`), color);
+    const primaryColor = getCssVar(ns.cssVarNameEl(`color-primary`), el);
+    if (color !== primaryColor) setCssVar(ns.cssVarNameEl(`color-primary`), color, el);
 
+    deriveColorByPrimary(color, el);
+  };
+
+  /**
+   * 基于主题色衍生其他颜色
+   */
+  const deriveColorByPrimary = (color = themeConfig.value.primaryColor, el = document.documentElement) => {
     // 颜色加深或变浅
     for (let i = 1; i <= 9; i++) {
       setCssVar(
         ns.cssVarNameEl(`color-primary-light-${i}`),
-        isDark.value ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`
+        isDark.value ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`,
+        el
       );
     }
     for (let i = 1; i <= 9; i++) {
-      setCssVar(ns.cssVarNameEl(`color-primary-dark-${i}`), `${getDarkColor(color, i / 10)}`);
+      setCssVar(ns.cssVarNameEl(`color-primary-dark-${i}`), `${getDarkColor(color, i / 10)}`, el);
     }
 
     // 生成更淡的颜色
     for (let i = 1; i < 16; i++) {
       const itemColor = colorBlend(color, "#ffffff", i / 16);
-      if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor);
+      if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor, el);
     }
   };
 
@@ -106,10 +112,10 @@ export const useTheme = () => {
     settingStore.$patch({ theme: { [propName]: false } });
   };
 
-  // 初始化 primaryColor 配置
+  // 初始化主题配置
   const initTheme = () => {
+    changeGlobalTheme();
     changePrimaryColor();
-    changeSystemTheme();
 
     if (themeConfig.value.greyMode) changeGreyOrWeak(true, "greyMode");
     if (themeConfig.value.weakMode) changeGreyOrWeak(true, "weakMode");
@@ -119,6 +125,6 @@ export const useTheme = () => {
     initTheme,
     changePrimaryColor,
     changeGreyOrWeak,
-    changeSystemTheme,
+    changeGlobalTheme,
   };
 };

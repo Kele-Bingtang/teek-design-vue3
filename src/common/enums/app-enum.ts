@@ -16,7 +16,7 @@ export enum TabNavModeEnum {
 }
 
 // 系统主题
-export enum SystemThemeEnum {
+export enum GlobalThemeEnum {
   Dark = "dark",
   Light = "light",
   System = "system",
@@ -26,6 +26,13 @@ export enum SystemThemeEnum {
 export enum MenuThemeEnum {
   Dark = "dark",
   Light = "light",
+}
+
+// 菜单显示模式
+export enum MenuShowModeEnum {
+  Static = "static",
+  AutoCollapse = "autoCollapse",
+  AutoHidden = "autoHidden",
 }
 
 // 标题模式

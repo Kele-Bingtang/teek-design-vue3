@@ -12,6 +12,7 @@ import Menu from "../components/menu/index.vue";
 import HeaderRight from "../components/header/header-right.vue";
 
 import "./index.scss";
+import { useMenuAreaMouse } from "../use-area-mouse";
 
 defineOptions({ name: "LayoutMixins" });
 
@@ -20,6 +21,7 @@ const route = useRoute();
 const router = useRouter();
 const settingStore = useSettingStore();
 const routeStore = useRouteStore();
+const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 
 const { findParentRoutesByPath } = useRouteFn();
 const { menuList } = useMenu();
@@ -79,9 +81,9 @@ watch(
     :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
     <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
-      <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
-        <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
+      <div :class="[ns.join('layout-logo'), ns.no('collapse')]" class="flx-center" @click="router.push(HOME_URL)">
+        <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
+        <span>{{ serviceConfig.layout.name }}</span>
       </div>
 
       <CollapseTrigger :class="ns.has('trigger', !childrenMenu.length)" />
@@ -99,7 +101,11 @@ watch(
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]">
+      <el-aside
+        v-if="childrenMenu.length"
+        :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
+        :style="asideStyle"
+      >
         <Menu
           :menu-list="childrenMenu"
           :class="[ns.join('layout-menu'), ns.e('aside-menu')]"
@@ -107,7 +113,7 @@ watch(
         />
       </el-aside>
 
-      <PageContent />
+      <PageContent :style="rightContentStyle" />
     </el-container>
   </el-container>
 </template>

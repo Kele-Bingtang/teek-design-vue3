@@ -6,8 +6,9 @@ import {
   LayoutModeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
-  SystemThemeEnum,
+  GlobalThemeEnum,
   TabNavModeEnum,
+  MenuShowModeEnum,
 } from "@/common/enums";
 import { serviceConfig } from "@/common/config";
 import { cacheOperator, getCssVar, localStorageProxy } from "@/common/utils";
@@ -42,7 +43,7 @@ export const useSettingStore = defineStore(
     const theme = reactive({
       primaryColor: themeConfig.primaryColor ?? getCssVar(useNamespace().cssVar("color-primary")),
       radius: themeConfig.radius,
-      systemThemeMode: themeConfig.systemThemeMode || SystemThemeEnum.System,
+      globalThemeMode: themeConfig.globalThemeMode || GlobalThemeEnum.System,
       weakMode: themeConfig.weakMode,
       greyMode: themeConfig.greyMode,
     });
@@ -59,6 +60,10 @@ export const useSettingStore = defineStore(
       width: menuConfig.width,
       accordion: menuConfig.accordion,
       collapsed: menuConfig.collapsed,
+      collapseWidth: menuConfig.collapseWidth,
+      showMode: menuConfig.showMode || MenuShowModeEnum.Static,
+      autoActivateChild: menuConfig.autoActivateChild,
+      showModeAutoFixed: menuConfig.showModeAutoFixed,
     });
 
     const tabNav = reactive({
@@ -110,22 +115,22 @@ export const useSettingStore = defineStore(
     });
 
     const isDark = computed(() => {
-      if (theme.systemThemeMode === SystemThemeEnum.System) {
+      if (theme.globalThemeMode === GlobalThemeEnum.System) {
         // 自动识别系统主题
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
 
-      return theme.systemThemeMode === SystemThemeEnum.Dark;
+      return theme.globalThemeMode === GlobalThemeEnum.Dark;
     });
 
     /**
      * 打开侧边菜单
      */
-    const openSideMenu = () => (menu.collapsed = false);
+    const expandSideMenu = () => (menu.collapsed = false);
     /**
      * 关闭侧边菜单
      */
-    const closeSideMenu = () => (menu.collapsed = true);
+    const collapseSideMenu = () => (menu.collapsed = true);
 
     /**
      * 切换侧边菜单
@@ -154,8 +159,8 @@ export const useSettingStore = defineStore(
 
       isDark,
 
-      openSideMenu,
-      closeSideMenu,
+      expandSideMenu,
+      collapseSideMenu,
       toggleSideMenu,
       resetSetting,
     };

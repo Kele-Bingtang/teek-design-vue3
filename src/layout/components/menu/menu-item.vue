@@ -22,7 +22,7 @@ const { menu } = storeToRefs(settingStore);
  */
 const handleMenuClick = (menuItem: RouterConfig) => {
   // 移动端点击菜单时关闭菜单
-  if (isMobile.value) settingStore.closeSideMenu();
+  if (isMobile.value) settingStore.collapseSideMenu();
 
   if (isValidURL(menuItem.path)) return window.open(menuItem.path, "_blank");
   router.push(menuItem.meta._fullPath || menuItem.path || "");

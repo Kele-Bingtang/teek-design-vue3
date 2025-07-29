@@ -9,8 +9,11 @@ import MenuItem from "./menu-item.vue";
 defineOptions({ name: "AsideMenu" });
 
 interface MenuProps {
+  /** 菜单列表 */
   menuList?: RouterConfig[];
+  /** 默认激活的菜单 */
   activeMenu?: string;
+  /** 菜单是否默认折叠 */
   isCollapse?: boolean;
 }
 

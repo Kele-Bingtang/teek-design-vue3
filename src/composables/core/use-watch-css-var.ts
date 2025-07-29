@@ -2,7 +2,7 @@ import { watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/pinia";
 import { addUnit, removeCssVar, setCssVar } from "@/common/utils";
-import { HeaderStyleEnum } from "@/common/enums";
+import { HeaderStyleEnum, LayoutModeEnum } from "@/common/enums";
 import { useNamespace } from "./use-namespace";
 
 /**
@@ -12,18 +12,31 @@ export const useWatchCssVar = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { menu, header, theme, tabNav } = storeToRefs(settingStore);
+  const { header, menu, theme, tabNav, layout } = storeToRefs(settingStore);
 
-  // 展开菜单宽度变量
-  watchEffect(() => setCssVar(ns.cssVarName("layout-open-aside-width"), addUnit(menu.value.width)));
-  //  折叠菜单宽度变量
-  watchEffect(() => setCssVar(ns.cssVarName("layout-close-aside-width"), "64px"));
   // 顶栏高度变量
-  watchEffect(() => setCssVar(ns.cssVarName("layout-header-height"), addUnit(header.value.height)));
+  watchEffect(() =>
+    setCssVar(
+      ns.cssVarName("layout-header-height"),
+      header.value.enabled && layout.value.layoutMode !== LayoutModeEnum.IFrame ? addUnit(header.value.height) : "0px"
+    )
+  );
+  // 展开菜单宽度变量
+  watchEffect(() =>
+    setCssVar(ns.cssVarName("layout-expand-aside-width"), menu.value.enabled ? addUnit(menu.value.width) : "0px")
+  );
+  //  折叠菜单宽度变量
+  watchEffect(() =>
+    setCssVar(
+      ns.cssVarName("layout-collapse-aside-width"),
+      tabNav.value.enabled ? addUnit(menu.value.collapseWidth) : "0px"
+    )
+  );
   // 标签栏高度
   watchEffect(() => setCssVar(ns.cssVarName("layout-tab-height"), addUnit(tabNav.value.height)));
   // 圆角变量
   watchEffect(() => setCssVar(ns.cssVarName("radius"), addUnit(theme.value.radius, "rem")));
+
   // 顶栏和标签栏的背景色、线条变量
   watchEffect(() => {
     const headerBg = ns.cssVarName("layout-header-bg-color");

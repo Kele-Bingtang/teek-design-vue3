@@ -36,14 +36,13 @@ export const useChartOps = (): ChartThemeConfig => {
 
 // 常量定义
 const RESIZE_DELAYS = [50, 100, 200, 350] as const;
-const LAYOUT_RESIZE_DELAYS = [50, 100, 200] as const;
 const RESIZE_DEBOUNCE_DELAY = 100;
 
 export function useChart(options: UseChartOptions = {}) {
   const { initOptions, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = options;
 
   const settingStore = useSettingStore();
-  const { isDark, menu, theme } = storeToRefs(settingStore);
+  const { isDark, menu } = storeToRefs(settingStore);
 
   const chartInstance = useTemplateRef<HTMLElement>(instanceName);
   const chart = shallowRef<echarts.ECharts | null>(null);
@@ -60,8 +59,7 @@ export function useChart(options: UseChartOptions = {}) {
     getLegendStyle,
     getGridWithLegend,
   } = useChartStyleFn();
-  const { handleResize, clearTimers, requestAnimationResize, debouncedResize, multiDelayResize } =
-    useChartResize(chart);
+  const { handleResize, clearTimers, debouncedResize, multiDelayResize } = useChartResize(chart);
 
   const { createIntersectionObserver, cleanIntersectionObserver } = useIntersectionObserver(
     chartInstance,
@@ -98,15 +96,6 @@ export function useChart(options: UseChartOptions = {}) {
   watch(
     () => menu.value.collapsed,
     () => multiDelayResize(RESIZE_DELAYS)
-  );
-
-  // 布局变化触发或主题色变化触发图表重新渲染
-  watch(
-    () => theme.value.primaryColor,
-    () => {
-      nextTick(requestAnimationResize);
-      setTimeout(() => multiDelayResize(LAYOUT_RESIZE_DELAYS), 0);
-    }
   );
 
   // 主题变化时重新设置图表选项
@@ -266,9 +255,8 @@ export const useChartResize = (chart: ShallowRef<echarts.ECharts | null>) => {
 
   // 使用 requestAnimationFrame 优化 resize 处理
   const requestAnimationResize = () => {
-    if (resizeFrameId) {
-      cancelAnimationFrame(resizeFrameId);
-    }
+    if (resizeFrameId) cancelAnimationFrame(resizeFrameId);
+
     resizeFrameId = requestAnimationFrame(() => {
       handleResize();
       resizeFrameId = null;

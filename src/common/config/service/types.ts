@@ -5,11 +5,12 @@ import type {
   ElementPlusSizeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
-  SystemThemeEnum,
+  GlobalThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
   HeaderMenuAlignEnum,
   ThemePanelTriggerPositionEnum,
+  MenuShowModeEnum,
 } from "@/common/enums";
 
 export interface ServiceConfig {
@@ -91,7 +92,7 @@ export interface ThemeConfig {
   /** 圆角 */
   radius: number;
   /** 系统主题 */
-  systemThemeMode: SystemThemeEnum;
+  globalThemeMode: GlobalThemeEnum;
   /** 是否开启灰色主题 */
   weakMode: boolean;
   /** 是否开启色弱主题 */
@@ -120,6 +121,14 @@ export interface MenuConfig {
   accordion: boolean;
   /** 是否折叠菜单栏 */
   collapsed: boolean;
+  /** 侧边栏折叠宽度 */
+  collapseWidth: number;
+  /** 菜单显示模式 */
+  showMode: MenuShowModeEnum;
+  /** 点击目录时自动激活子菜单，在分栏布局生效 */
+  autoActivateChild: boolean;
+  /** 当菜单显示模式为 Auto 时，是否固定菜单栏 */
+  showModeAutoFixed: boolean;
 }
 
 export interface TabNavConfig {

@@ -27,12 +27,12 @@ const handleTitleModeSelect = () => {
 /**
  * 标题模式选项
  */
-const titleModeOptions = [
+const titleModeOptions = computed(() => [
   { value: TitleModeEnum.ProjectPage, label: t("_setting.layout.titleModeSelect.projectPage") },
   { value: TitleModeEnum.UsernamePage, label: t("_setting.layout.titleModeSelect.usernamePage") },
   { value: TitleModeEnum.Project, label: t("_setting.layout.titleModeSelect.project") },
   { value: TitleModeEnum.Page, label: t("_setting.layout.titleModeSelect.page") },
-];
+]);
 </script>
 
 <template>

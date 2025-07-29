@@ -7,9 +7,11 @@ import {
   HeaderMenuAlignEnum,
   HeaderStyleEnum,
   LanguageEnum,
+  MenuShowModeEnum,
   PageTransitionEnum,
   TabNavModeEnum,
   ThemePanelTriggerPositionEnum,
+  LayoutModeEnum,
 } from "@/common/enums";
 import { languageOptions } from "@/common/languages";
 import { useBrowserTitle, useCommon, useNamespace } from "@/composables";
@@ -63,16 +65,22 @@ const headerMenuAlignOptions = [
   { value: HeaderMenuAlignEnum.End, label: t("_setting.header.menuAlignSelect.end") },
 ];
 
-const sizeOptions = [
+const menuShowModeOptions = computed(() => [
+  { value: MenuShowModeEnum.Static, label: t("_setting.menu.showModeSelect.static") },
+  { value: MenuShowModeEnum.AutoCollapse, label: t("_setting.menu.showModeSelect.autoCollapse") },
+  { value: MenuShowModeEnum.AutoHidden, label: t("_setting.menu.showModeSelect.autoHidden") },
+]);
+
+const sizeOptions = computed(() => [
   { label: "Large", value: "large" },
   { label: "Default", value: "default" },
   { label: "Small", value: "small" },
-];
+]);
 
-const themePanelTriggerPositionOptions = [
+const themePanelTriggerPositionOptions = computed(() => [
   { value: ThemePanelTriggerPositionEnum.Header, label: t("_setting.layout.themePanelTriggerPositionSelect.header") },
   { value: ThemePanelTriggerPositionEnum.Fixed, label: t("_setting.layout.themePanelTriggerPositionSelect.fixed") },
-];
+]);
 
 /**
  * 切换语言
@@ -132,9 +140,26 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     </div>
 
     <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.autoActivateChild") }}</span>
+      <el-switch v-model="menu.autoActivateChild" :disabled="![LayoutModeEnum.Columns].includes(layout.layoutMode)" />
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.showModeAutoFixed") }}</span>
+      <el-switch v-model="menu.showModeAutoFixed" />
+    </div>
+
+    <div :class="ns.e('item')">
       <span>{{ $t("_setting.menu.width") }}</span>
       <el-input-number v-model="menu.width" :min="100" :max="400" :step="10" controls-position="right" />
       <!-- <el-slider v-model="menu.width" :min="100" :max="400" /> -->
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.showMode") }}</span>
+      <el-select v-model="menu.showMode" placeholder="Select">
+        <el-option v-for="item in menuShowModeOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
     </div>
 
     <h3>{{ $t("_setting.breadcrumb.label") }}</h3>

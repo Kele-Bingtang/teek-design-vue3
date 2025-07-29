@@ -1,16 +1,29 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+import { CircleCheckFilled } from "@element-plus/icons-vue";
 import { useNamespace, useTheme } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { serviceConfig } from "@/common/config";
+import { GlobalThemeEnum } from "@/common/enums";
+import lightTheme from "@/common/assets/images/system-theme/light.png";
+import darkTheme from "@/common/assets/images/system-theme/dark.png";
+import systemTheme from "@/common/assets/images/system-theme/system.png";
 
 defineOptions({ name: "GlobalThemeSwitch" });
 
 const ns = useNamespace("global-theme-select");
 
-const { changePrimaryColor, changeGreyOrWeak } = useTheme();
+const { changeGlobalTheme, changePrimaryColor, changeGreyOrWeak } = useTheme();
 const settingStore = useSettingStore();
+const { t } = useI18n();
 
 const { theme } = storeToRefs(settingStore);
+
+const globalThemeModeList = [
+  { name: computed(() => t("_setting.theme.modeSelect.light")), theme: GlobalThemeEnum.Light, img: lightTheme },
+  { name: computed(() => t("_setting.theme.modeSelect.dark")), theme: GlobalThemeEnum.Dark, img: darkTheme },
+  { name: computed(() => t("_setting.theme.modeSelect.system")), theme: GlobalThemeEnum.System, img: systemTheme },
+];
 
 // 预定义主题颜色
 const colorList = [serviceConfig.theme.primaryColor, ...serviceConfig.theme.presetsColor];
@@ -33,6 +46,21 @@ const customRadiusOptions = [
 
 <template>
   <div :class="ns.b()">
+    <div class="flx-wrap gap-15">
+      <div
+        v-for="item in globalThemeModeList"
+        :key="item.theme"
+        :class="ns.e('theme-item')"
+        @click="changeGlobalTheme(item.theme)"
+      >
+        <div :class="[ns.e('box'), ns.is('active', item.theme === theme.globalThemeMode)]">
+          <img :src="item.img" />
+        </div>
+        <Icon :class="ns.m('icon')" v-show="item.theme === theme.globalThemeMode"><CircleCheckFilled /></Icon>
+        <p :class="ns.m('name')">{{ item.name }}</p>
+      </div>
+    </div>
+
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.theme.primaryColor") }}</span>
       <el-color-picker v-model="theme.primaryColor" :predefine="colorList" @change="changePrimaryColor()" />

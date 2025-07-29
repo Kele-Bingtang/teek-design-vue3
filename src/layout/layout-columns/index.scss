@@ -20,10 +20,10 @@
     width: cssVar(layout-columns-aside-width);
     height: 100%;
     background-color: cssVar(layout-aside-bg-color);
-    border-right: 1px solid cssVar(layout-aside-line);
+    border-right: cssVar(layout-aside-line);
 
     @include e(logo) {
-      width: auto;
+      width: 100% !important;
 
       img {
         width: 45%;
@@ -78,6 +78,7 @@
     @include e(collapse) {
       padding: 16px 0;
       cursor: pointer;
+      user-select: none;
 
       &:hover {
         background-color: cssVar(layout-aside-bg-hover-color);

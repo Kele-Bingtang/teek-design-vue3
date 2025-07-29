@@ -20,3 +20,5 @@ export const OpenSearchDialogKey: InjectionKey<() => void> = Symbol("OpenSearchD
 export const OpenThemePanelKey: InjectionKey<() => void> = Symbol("OpenThemePanel");
 /** 打开锁屏面板 */
 export const OpenLockPanelKey: InjectionKey<() => void> = Symbol("OpenLockPanel");
+/** 修改菜单区域状态 */
+export const UpdateInMenuAreaStateKey: InjectionKey<(state?: boolean) => void> = Symbol("UpdateInMenuAreaStateKey");

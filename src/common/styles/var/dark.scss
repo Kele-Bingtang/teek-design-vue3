@@ -3,39 +3,38 @@
 // 深色模式主题变量
 :root.dark {
   // 主要色
-  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
   --#{$admin-namespace}-bg-color: #1a1d26;
   --#{$admin-namespace}-bg-color-page: #121520;
 
   // 主色系
-  --#{$admin-namespace}-primary-rgb: 95, 129, 255;
-  --#{$admin-namespace}-primary: #5f81ff;
-  --#{$admin-namespace}-primary-hover: #7996ff;
-  --#{$admin-namespace}-primary-muted: #3f4d99;
+  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
+  --#{$admin-namespace}-color-primary: #5f81ff;
+  --#{$admin-namespace}-color-primary-hover: #7996ff;
+  --#{$admin-namespace}-color-primary-muted: #3f4d99;
 
   // 功能色
-  --#{$admin-namespace}-success-rgb: 50, 192, 96;
-  --#{$admin-namespace}-success: #32c060;
-  --#{$admin-namespace}-success-hover: #2b9e58;
-  --#{$admin-namespace}-success-muted: #1e5c36;
-  --#{$admin-namespace}-warning-rgb: 255, 170, 50;
-  --#{$admin-namespace}-warning: #ffb332;
-  --#{$admin-namespace}-warning-hover: #e6951e;
-  --#{$admin-namespace}-warning-muted: #755a2e;
-  --#{$admin-namespace}-danger-rgb: 255, 106, 106;
-  --#{$admin-namespace}-danger: #ff6a6a;
-  --#{$admin-namespace}-danger-hover: #e64a4a;
-  --#{$admin-namespace}-danger-muted: #6a3434;
-  --#{$admin-namespace}-error-rgb: 255, 112, 56;
-  --#{$admin-namespace}-error: #ff7a38;
-  --#{$admin-namespace}-error-hover: #e85a2e;
-  --#{$admin-namespace}-error-muted: #6d3423;
+  --#{$admin-namespace}-color-success-rgb: 50, 192, 96;
+  --#{$admin-namespace}-color-success: #32c060;
+  --#{$admin-namespace}-color-success-hover: #2b9e58;
+  --#{$admin-namespace}-color-success-muted: #1e5c36;
+  --#{$admin-namespace}-color-warning-rgb: 255, 170, 50;
+  --#{$admin-namespace}-color-warning: #ffb332;
+  --#{$admin-namespace}-color-warning-hover: #e6951e;
+  --#{$admin-namespace}-color-warning-muted: #755a2e;
+  --#{$admin-namespace}-color-danger-rgb: 255, 106, 106;
+  --#{$admin-namespace}-color-danger: #ff6a6a;
+  --#{$admin-namespace}-color-danger-hover: #e64a4a;
+  --#{$admin-namespace}-color-danger-muted: #6a3434;
+  --#{$admin-namespace}-color-error-rgb: 255, 112, 56;
+  --#{$admin-namespace}-color-error: #ff7a38;
+  --#{$admin-namespace}-color-error-hover: #e85a2e;
+  --#{$admin-namespace}-color-error-muted: #6d3423;
 
   // 次级色
-  --#{$admin-namespace}-secondary-rgb: 100, 180, 255;
-  --#{$admin-namespace}-secondary: #64b4ff;
-  --#{$admin-namespace}-info: #3d8aff;
-  --#{$admin-namespace}-info-rgb: 61, 138, 255;
+  --#{$admin-namespace}-color-secondary-rgb: 100, 180, 255;
+  --#{$admin-namespace}-color-secondary: #64b4ff;
+  --#{$admin-namespace}-color-info: #3d8aff;
+  --#{$admin-namespace}-color-info-rgb: 61, 138, 255;
 
   // 基本色
   --#{$admin-namespace}-color: #1a1d26;
