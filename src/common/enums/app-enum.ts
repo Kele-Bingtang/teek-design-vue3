@@ -28,6 +28,13 @@ export enum MenuThemeEnum {
   Light = "light",
 }
 
+// 菜单显示模式
+export enum MenuShowModeEnum {
+  Static = "static",
+  AutoCollapse = "autoCollapse",
+  AutoHidden = "autoHidden",
+}
+
 // 标题模式
 export enum TitleModeEnum {
   ProjectPage = "projectPage",

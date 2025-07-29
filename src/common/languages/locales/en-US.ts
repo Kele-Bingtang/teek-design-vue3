@@ -267,7 +267,15 @@ export default {
       },
       collapse: "Collapse menu",
       accordion: "Menu accordion",
+      autoActivateChild: "Auto activate child menu",
+      showModeAutoFixed: "Fixed when showMode auto",
       width: "Menu width",
+      showMode: "Show mode",
+      showModeSelect: {
+        static: "Static",
+        autoCollapse: "Auto collapse",
+        autoHidden: "Auto hidden",
+      },
     },
     tabNav: {
       label: "Tab bar",

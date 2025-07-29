@@ -86,18 +86,20 @@
 
   @include is(expand) {
     @include joins(layout-aside) {
-      width: cssVar(layout-open-aside-width);
+      width: cssVar(layout-expand-aside-width);
       transition-duration: 0.3s;
     }
   }
 
   @include is(collapse) {
     @include joins(layout-logo) {
-      width: calc(cssVar(layout-close-aside-width) - 1px);
+      &:not(.no-collapse) {
+        width: calc(cssVar(layout-collapse-aside-width) - 1px);
+      }
     }
 
     @include joins(layout-aside) {
-      width: cssVar(layout-close-aside-width);
+      width: cssVar(layout-collapse-aside-width);
       transition-duration: 0.3s;
     }
 
@@ -130,7 +132,7 @@
 
   /* logo 栏样式 */
   @include joins(layout-logo) {
-    width: calc(cssVar(layout-open-aside-width) - 1px);
+    width: calc(cssVar(layout-expand-aside-width) - 1px);
     height: cssVar(layout-header-height);
     overflow: hidden;
     cursor: pointer;

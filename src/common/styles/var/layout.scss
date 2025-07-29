@@ -28,8 +28,8 @@
   --#{$admin-namespace}-layout-tab-dot-size: 11px;
 
   // 侧边栏
-  --#{$admin-namespace}-layout-open-aside-width: 240px;
-  --#{$admin-namespace}-layout-close-aside-width: 64px;
+  --#{$admin-namespace}-layout-expand-aside-width: 240px;
+  --#{$admin-namespace}-layout-collapse-aside-width: 64px;
   --#{$admin-namespace}-layout-aside-bg-color: var(--#{$admin-namespace}-bg-color);
   --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
   --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);

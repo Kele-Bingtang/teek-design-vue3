@@ -7,5 +7,6 @@
 ## 优化
 
 - ProTable 传入 API 后，自动显示 `refresh` 按钮
+- ProSearch 支持折叠动画
 
 ## Bug

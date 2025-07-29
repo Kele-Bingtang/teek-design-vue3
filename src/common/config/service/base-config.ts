@@ -11,6 +11,7 @@ import {
   TabNavModeEnum,
   ThemePanelTriggerPositionEnum,
   TitleModeEnum,
+  MenuShowModeEnum,
 } from "@/common/enums";
 
 export const defaultServiceConfig: ServiceConfig = {
@@ -54,6 +55,10 @@ export const defaultServiceConfig: ServiceConfig = {
     width: 240,
     accordion: false,
     collapsed: false,
+    collapseWidth: 64,
+    showMode: MenuShowModeEnum.Static,
+    autoActivateChild: true,
+    showModeAutoFixed: true,
   },
   tabNav: {
     enabled: true,

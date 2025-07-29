@@ -23,7 +23,7 @@ const { logo, header } = storeToRefs(settingStore);
   <el-container :class="[ns.join('layout'), ns.b()]">
     <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
+        <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span>{{ serviceConfig.layout.name }}</span>
       </div>
 

@@ -1,4 +1,4 @@
-import type { Ref, ShallowRef, ComputedRef } from "vue";
+import type { Ref, ShallowRef, ComputedRef, WatchStopHandle } from "vue";
 import { onScopeDispose } from "vue";
 import { useEventListener } from "@vueuse/core";
 
@@ -19,7 +19,7 @@ interface UseKeyDownOptions {
 export const useKeyDown = (options: UseKeyDownOptions) => {
   const { watcher, callback } = options;
   let clean = () => {};
-  let stopWatch: ReturnType<typeof watch> | null = null;
+  let stopWatch: WatchStopHandle | null = null;
 
   const start = () => {
     const watcherValue = unref(watcher);

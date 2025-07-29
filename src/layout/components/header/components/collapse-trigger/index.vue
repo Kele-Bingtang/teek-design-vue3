@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { Expand, Fold } from "@element-plus/icons-vue";
+import { UpdateInMenuAreaStateKey } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
@@ -10,18 +11,20 @@ const ns = useNamespace("collapse-trigger");
 const settingStore = useSettingStore();
 const { menu } = storeToRefs(settingStore);
 
+const updateInMenuAreaState = inject(UpdateInMenuAreaStateKey);
+
 /**
  * 切换侧边菜单
  */
-const toggleTrigger = () => settingStore.toggleSideMenu();
+const toggleTrigger = () => {
+  settingStore.toggleSideMenu();
+  updateInMenuAreaState?.();
+};
 </script>
 
 <template>
   <div :class="ns.b()" class="flx-center" @click.stop="toggleTrigger">
-    <Icon>
-      <component :is="menu.collapsed ? Expand : Fold" />
-    </Icon>
-
+    <Icon :icon="menu.collapsed ? Expand : Fold" />
     <slot />
   </div>
 </template>

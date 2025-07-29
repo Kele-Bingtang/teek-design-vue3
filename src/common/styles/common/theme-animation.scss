@@ -50,14 +50,3 @@ html {
     clip-path: circle(var(--r) at var(--x) var(--y));
   }
 }
-
-// body 相关样式
-body {
-  background-color: $bg-animation-color-light;
-}
-
-.dark {
-  body {
-    background-color: $bg-animation-color-dark;
-  }
-}

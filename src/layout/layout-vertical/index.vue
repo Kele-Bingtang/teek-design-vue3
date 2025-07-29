@@ -6,6 +6,7 @@ import { ElContainer, ElAside, ElHeader } from "element-plus";
 import { serviceConfig, HOME_URL } from "@/common/config";
 import { useCommon, useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
+import { useMenuAreaMouse } from "../use-area-mouse";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";
@@ -20,17 +21,18 @@ const settingStore = useSettingStore();
 
 const { menu, layout, logo, header } = storeToRefs(settingStore);
 const { isMobile } = useCommon();
+const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 
 watch(isMobile, newVal => {
-  if (newVal) settingStore.closeSideMenu();
-  else settingStore.openSideMenu();
+  if (newVal) settingStore.collapseSideMenu();
+  else settingStore.expandSideMenu();
 });
 
 /**
  * 点击外部区域关闭菜单
  */
 const handleClickOutSide = () => {
-  settingStore.closeSideMenu();
+  settingStore.collapseSideMenu();
 };
 </script>
 
@@ -38,7 +40,12 @@ const handleClickOutSide = () => {
   <el-container
     :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
-    <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
+    <el-aside
+      v-if="menu.enabled"
+      :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
+      class="flx-column"
+      :style="asideStyle"
+    >
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
@@ -52,7 +59,7 @@ const handleClickOutSide = () => {
 
     <div v-if="isMobile && !menu.collapsed" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
 
-    <el-container>
+    <el-container :style="rightContentStyle">
       <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>

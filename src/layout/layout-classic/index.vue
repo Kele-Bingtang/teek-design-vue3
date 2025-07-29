@@ -5,6 +5,7 @@ import { ElContainer, ElAside, ElHeader } from "element-plus";
 import { serviceConfig, HOME_URL } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
+import { useMenuAreaMouse } from "../use-area-mouse";
 import HeaderLeft from "../components/header/header-left.vue";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
@@ -17,6 +18,7 @@ defineOptions({ name: "LayoutClassic" });
 const ns = useNamespace("classic-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
+const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 
 const { menu, layout, logo, header } = storeToRefs(settingStore);
 </script>
@@ -30,9 +32,9 @@ const { menu, layout, logo, header } = storeToRefs(settingStore);
       <Header>
         <template #left>
           <div :class="ns.e('header-left')" class="flx-align-center">
-            <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-              <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
-              <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
+            <div :class="[ns.join('layout-logo'), ns.no('collapse')]" class="flx-center" @click="router.push(HOME_URL)">
+              <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
+              <span>{{ serviceConfig.layout.name }}</span>
             </div>
             <HeaderLeft />
           </div>
@@ -41,14 +43,14 @@ const { menu, layout, logo, header } = storeToRefs(settingStore);
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]">
+      <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" :style="asideStyle">
         <Menu
           :class="[ns.join('layout-menu'), ns.b('menu')]"
           :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
         />
       </el-aside>
 
-      <PageContent />
+      <PageContent :style="rightContentStyle" />
     </el-container>
   </el-container>
 </template>

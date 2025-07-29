@@ -269,7 +269,15 @@ export default {
       },
       collapse: "折叠菜单",
       accordion: "菜单手风琴",
+      autoActivateChild: "自动激活子菜单",
+      showModeAutoFixed: "固定菜单栏",
       width: "菜单宽度",
+      showMode: "菜单显示模式",
+      showModeSelect: {
+        static: "静态",
+        autoCollapse: "自动折叠",
+        autoHidden: "自动隐藏",
+      },
     },
     tabNav: {
       label: "标签栏",

@@ -3,7 +3,7 @@ import { computed, ref, nextTick, provide, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { ElMain } from "element-plus";
 import { RefreshPageKey } from "@/common/config";
-import { getCssVar, getUrlParams, mittBus, removeUnit } from "@/common/utils";
+import { getUrlParams, mittBus } from "@/common/utils";
 import { LayoutModeEnum } from "@/common/enums";
 import { useNamespace } from "@/composables";
 import { useLayoutStore, useSettingStore } from "@/pinia";
@@ -18,9 +18,8 @@ const ns = useNamespace();
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
-const { topHeight, topHeightStyle } = useTopHeight();
+const { topHeightStyle } = useTopHeight();
 const { isRefreshRoute } = useRefreshPage();
-// const { topState } = useWatchTop();
 
 const { layout, tabNav, transition, header } = storeToRefs(settingStore);
 
@@ -34,11 +33,6 @@ const isFixedTabNav = computed(() => {
  * 顶部高度
  */
 function useTopHeight() {
-  const topHeight = computed(() => {
-    const { headerHeight, tabNavHeight } = getTopHeight();
-    return headerHeight + tabNavHeight;
-  });
-
   // 计算非内容区高度
   const topHeightStyle = computed(() => {
     const { headerHeight, tabNavHeight } = getTopHeight();
@@ -60,20 +54,15 @@ function useTopHeight() {
     if (!layout.value.maximize) {
       // 嵌入布局没有顶栏
       if (layout.value.layoutMode !== LayoutModeEnum.IFrame && header.value.enabled) {
-        headerHeight = removeUnit(getCssVar(ns.cssVarName("layout-header-height"))) ?? 0;
+        headerHeight = header.value.height ?? 0;
       }
       // 隐藏标签栏时，标签栏高度为 0
-      if (tabNav.value.enabled) {
-        tabNavHeight = removeUnit(getCssVar(ns.cssVarName("layout-tab-height"))) ?? 0;
-      }
+      if (tabNav.value.enabled) tabNavHeight = tabNav.value.height ?? 0;
     }
-    return {
-      headerHeight,
-      tabNavHeight,
-    };
+    return { headerHeight, tabNavHeight };
   };
 
-  return { topHeight, topHeightStyle };
+  return { topHeightStyle };
 }
 
 /**
@@ -102,22 +91,6 @@ function useRefreshPage() {
   return { isRefreshRoute, refreshPage };
 }
 
-// function useWatchTop() {
-//   const topState = ref(true);
-
-//   const { y: mouseY } = useMouse({ type: "client" });
-
-//   watch(
-//     () => mouseY.value,
-//     newValue => {
-//       if (newValue > topHeight.value) topState.value = false;
-//       else topState.value = true;
-//     }
-//   );
-
-//   return { topState };
-// }
-
 // 监听当前页是否最大化，动态添加 class
 watchEffect(() => {
   const urlParams = getUrlParams();
@@ -130,13 +103,11 @@ watchEffect(() => {
     else app?.classList.remove("page-maximize");
   }
 });
-
-defineExpose({ topHeight });
 </script>
 
 <template>
   <Maximize v-if="layout.maximize" />
-  <el-main ref="elMainInstance">
+  <el-main v-bind="$attrs" ref="elMainInstance">
     <TabNav />
 
     <div class="page-content" :style="topHeightStyle">

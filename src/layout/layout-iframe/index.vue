@@ -11,12 +11,14 @@ import UserAvatar from "../components/header/components/user-avatar/index.vue";
 import CollapseTrigger from "../components/header/components/collapse-trigger/index.vue";
 
 import "./index.scss";
+import { useMenuAreaMouse } from "../use-area-mouse";
 
 defineOptions({ name: "LayoutIFrame" });
 
 const ns = useNamespace("iframe-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
+const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 
 const { menu, layout, logo } = storeToRefs(settingStore);
 
@@ -25,9 +27,14 @@ const isCollapse = computed(() => menu.value.collapsed);
 
 <template>
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]" class="flx-column">
+    <el-aside
+      v-if="menu.enabled"
+      :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
+      class="flx-column"
+      :asideStyle
+    >
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
-        <img :src="serviceConfig.logo.source" alt="logo" v-if="logo.enable" />
+        <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
       <Menu
@@ -47,7 +54,7 @@ const isCollapse = computed(() => menu.value.collapsed);
       </div>
     </el-aside>
 
-    <el-container>
+    <el-container :style="rightContentStyle">
       <PageContent />
     </el-container>
   </el-container>

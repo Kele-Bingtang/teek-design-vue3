@@ -10,6 +10,7 @@ import type {
   TitleModeEnum,
   HeaderMenuAlignEnum,
   ThemePanelTriggerPositionEnum,
+  MenuShowModeEnum,
 } from "@/common/enums";
 
 export interface ServiceConfig {
@@ -120,6 +121,14 @@ export interface MenuConfig {
   accordion: boolean;
   /** 是否折叠菜单栏 */
   collapsed: boolean;
+  /** 侧边栏折叠宽度 */
+  collapseWidth: number;
+  /** 菜单显示模式 */
+  showMode: MenuShowModeEnum;
+  /** 点击目录时自动激活子菜单，在分栏布局生效 */
+  autoActivateChild: boolean;
+  /** 当菜单显示模式为 Auto 时，是否固定菜单栏 */
+  showModeAutoFixed: boolean;
 }
 
 export interface TabNavConfig {
