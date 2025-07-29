@@ -7,7 +7,7 @@ import {
   LayoutModeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
-  SystemThemeEnum,
+  GlobalThemeEnum,
   TabNavModeEnum,
   ThemePanelTriggerPositionEnum,
   TitleModeEnum,
@@ -38,7 +38,7 @@ export const defaultServiceConfig: ServiceConfig = {
   theme: {
     primaryColor: "#395AE3",
     radius: 0.75,
-    systemThemeMode: SystemThemeEnum.System,
+    globalThemeMode: GlobalThemeEnum.System,
     weakMode: false,
     greyMode: false,
     presetsColor: ["#0b9e40", "#e68a00", "#d93126", "#42aaff", "#5f81ff", "#32c060", "#ffb332", "#ff6a6a", "#9b59b6"],

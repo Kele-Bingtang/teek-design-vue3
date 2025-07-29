@@ -171,9 +171,9 @@ defineExpose({ topHeight });
     overflow: v-bind(isFixedTabNav);
   }
 
-  :deep(.tk-classic-tabs-nav) {
-    transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  // :deep(.tk-classic-tabs-nav) {
+  //   transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  // }
 }
 </style>
 

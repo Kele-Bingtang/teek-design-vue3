@@ -20,7 +20,7 @@ const tableData = reactive([
     age: 22,
     percentage: 60,
     pro: 0,
-    color: `${ns.cssVar("primary")} !important`,
+    color: `${ns.cssVar("color-primary")} !important`,
     avatar: avatar1,
   },
   {
@@ -30,7 +30,7 @@ const tableData = reactive([
     age: 21,
     percentage: 20,
     pro: 0,
-    color: `${ns.cssVar("secondary")} !important`,
+    color: `${ns.cssVar("color-secondary")} !important`,
     avatar: avatar2,
   },
   {
@@ -40,7 +40,7 @@ const tableData = reactive([
     age: 23,
     percentage: 60,
     pro: 0,
-    color: `${ns.cssVar("warning")} !important`,
+    color: `${ns.cssVar("color-warning")} !important`,
     avatar: avatar3,
   },
   {
@@ -50,7 +50,7 @@ const tableData = reactive([
     age: 28,
     percentage: 50,
     pro: 0,
-    color: `${ns.cssVar("info")} !important`,
+    color: `${ns.cssVar("color-info")} !important`,
     avatar: avatar4,
   },
   {
@@ -60,7 +60,7 @@ const tableData = reactive([
     age: 26,
     percentage: 70,
     pro: 0,
-    color: `${ns.cssVar("error")} !important`,
+    color: `${ns.cssVar("color-error")} !important`,
     avatar: avatar5,
   },
   {
@@ -70,7 +70,7 @@ const tableData = reactive([
     age: 25,
     percentage: 90,
     pro: 0,
-    color: `${ns.cssVar("success")} !important`,
+    color: `${ns.cssVar("color-success")} !important`,
     avatar: avatar6,
   },
 ]);

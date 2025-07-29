@@ -198,7 +198,7 @@ export default {
   },
   _setting: {
     clearSettingCache: "清除缓存 & 重新登录",
-    clearSettingCacheMessage: "正在清除设置缓存并刷新，请稍候...",
+    clearSettingCacheMessage: "正在清除设置缓存并退出登录，请稍候...",
     resetSetting: "还原默认配置",
     commonLabel: "通用",
     layout: {

@@ -63,16 +63,16 @@ const headerMenuAlignOptions = [
   { value: HeaderMenuAlignEnum.End, label: t("_setting.header.menuAlignSelect.end") },
 ];
 
-const sizeOptions = [
+const sizeOptions = computed(() => [
   { label: "Large", value: "large" },
   { label: "Default", value: "default" },
   { label: "Small", value: "small" },
-];
+]);
 
-const themePanelTriggerPositionOptions = [
+const themePanelTriggerPositionOptions = computed(() => [
   { value: ThemePanelTriggerPositionEnum.Header, label: t("_setting.layout.themePanelTriggerPositionSelect.header") },
   { value: ThemePanelTriggerPositionEnum.Fixed, label: t("_setting.layout.themePanelTriggerPositionSelect.fixed") },
-];
+]);
 
 /**
  * 切换语言

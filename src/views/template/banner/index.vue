@@ -26,12 +26,12 @@ const presetBanners = {
     subtitle: "精选商品 48 小时闪购，最高享受 7 折优惠，数量有限！",
     titleColor: ns.cssVar("gray-900"),
     subtitleColor: ns.cssVar("gray-900"),
-    backgroundColor: `rgb(${ns.cssVar("success-rgb")}, 0.1)`,
+    backgroundColor: `rgb(${ns.cssVar("color-success-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {
       show: true,
       text: "立即抢购",
-      color: `rgb(${ns.cssVar("success-rgb")}, 0.9)`,
+      color: `rgb(${ns.cssVar("color-success-rgb")}, 0.9)`,
       textColor: "#fff",
     },
   },
@@ -40,12 +40,12 @@ const presetBanners = {
     subtitle: "您的高级服务将在 7 天后到期，请及时续费以继续享受完整功能。",
     titleColor: ns.cssVar("gray-900"),
     subtitleColor: ns.cssVar("gray-900"),
-    backgroundColor: `rgb(${ns.cssVar("primary-rgb")}, 0.1)`,
+    backgroundColor: `rgb(${ns.cssVar("color-primary-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {
       show: true,
       text: "立即续费",
-      color: `rgb(${ns.cssVar("secondary-rgb")}, 0.9)`,
+      color: `rgb(${ns.cssVar("color-secondary-rgb")}, 0.9)`,
       textColor: "#fff",
     },
   },
@@ -70,7 +70,7 @@ const presetBanners = {
             :buttonConfig="{
               show: true,
               text: '开始探索',
-              color: ns.cssVar('success'),
+              color: ns.cssVar('color-success'),
               textColor: '#fff',
               radius: '6px',
             }"
@@ -154,7 +154,7 @@ const presetBanners = {
             :button="{
               show: true,
               text: '查看详情',
-              color: ns.cssVar('warning'),
+              color: ns.cssVar('color-warning'),
               textColor: '#fff',
             }"
           />
@@ -167,7 +167,7 @@ const presetBanners = {
             :button="{
               show: true,
               text: '下载报告',
-              color: ns.cssVar('error'),
+              color: ns.cssVar('color-error'),
               textColor: '#fff',
             }"
           />
@@ -180,7 +180,7 @@ const presetBanners = {
             :button="{
               show: true,
               text: '立即更新',
-              color: ns.cssVar('primary'),
+              color: ns.cssVar('color-primary'),
               textColor: '#fff',
             }"
             :cancelButton="{

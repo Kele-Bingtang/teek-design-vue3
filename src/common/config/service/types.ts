@@ -5,7 +5,7 @@ import type {
   ElementPlusSizeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
-  SystemThemeEnum,
+  GlobalThemeEnum,
   TabNavModeEnum,
   TitleModeEnum,
   HeaderMenuAlignEnum,
@@ -91,7 +91,7 @@ export interface ThemeConfig {
   /** 圆角 */
   radius: number;
   /** 系统主题 */
-  systemThemeMode: SystemThemeEnum;
+  globalThemeMode: GlobalThemeEnum;
   /** 是否开启灰色主题 */
   weakMode: boolean;
   /** 是否开启色弱主题 */

@@ -13,7 +13,6 @@ import {
   GlobalThemeSwitch,
   BaseConfigSwitch,
   BrowserTitleSwitch,
-  SystemThemeSwitch,
 } from "./components";
 
 import "./index.scss";
@@ -85,11 +84,7 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
     <!-- 全局主题 -->
     <h3>{{ $t("_setting.theme.label") }}</h3>
 
-    <SystemThemeSwitch />
     <GlobalThemeSwitch />
-
-    <!-- 界面设置 -->
-    <!-- <h3>{{ $t("_setting.baseConfig") }}</h3> -->
 
     <BaseConfigSwitch />
 

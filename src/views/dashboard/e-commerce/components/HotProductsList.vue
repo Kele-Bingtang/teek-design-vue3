@@ -21,7 +21,7 @@ const tableData = reactive([
     sales: 423,
     percentage: 75,
     pro: 0,
-    color: `${ns.cssVar("primary")} !important`,
+    color: `${ns.cssVar("color-primary")} !important`,
     image: product1,
   },
   {
@@ -32,7 +32,7 @@ const tableData = reactive([
     sales: 652,
     percentage: 85,
     pro: 0,
-    color: `${ns.cssVar("success")} !important`,
+    color: `${ns.cssVar("color-success")} !important`,
     image: product2,
   },
   {
@@ -43,7 +43,7 @@ const tableData = reactive([
     sales: 238,
     percentage: 45,
     pro: 0,
-    color: `${ns.cssVar("warning")} !important`,
+    color: `${ns.cssVar("color-warning")} !important`,
     image: product3,
   },
   {
@@ -54,7 +54,7 @@ const tableData = reactive([
     sales: 126,
     percentage: 30,
     pro: 0,
-    color: `${ns.cssVar("error")} !important`,
+    color: `${ns.cssVar("color-error")} !important`,
     image: product4,
   },
   {
@@ -65,7 +65,7 @@ const tableData = reactive([
     sales: 321,
     percentage: 60,
     pro: 0,
-    color: `${ns.cssVar("info")} !important`,
+    color: `${ns.cssVar("color-info")} !important`,
     image: product5,
   },
   {
@@ -76,7 +76,7 @@ const tableData = reactive([
     sales: 489,
     percentage: 70,
     pro: 0,
-    color: `${ns.cssVar("secondary")} !important`,
+    color: `${ns.cssVar("color-secondary")} !important`,
     image: product6,
   },
 ]);
@@ -200,23 +200,23 @@ const addAnimation = () => {
   }
 
   .in-stock {
-    color: rgb(cssVar(success));
-    background-color: rgb(cssVar(success-rgb), 0.1);
+    color: rgb(cssVar(color-success));
+    background-color: rgb(cssVar(color-success-rgb), 0.1);
   }
 
   .medium-stock {
-    color: rgb(cssVar(info));
-    background-color: rgb(cssVar(info-rgb), 0.1);
+    color: rgb(cssVar(color-info));
+    background-color: rgb(cssVar(color-info-rgb), 0.1);
   }
 
   .low-stock {
-    color: rgb(cssVar(warning));
-    background-color: rgb(cssVar(warning-rgb), 0.1);
+    color: rgb(cssVar(color-warning));
+    background-color: rgb(cssVar(color-warning-rgb), 0.1);
   }
 
   .out-of-stock {
-    color: rgb(cssVar(error));
-    background-color: rgb(cssVar(error-rgb), 0.1);
+    color: rgb(cssVar(color-error));
+    background-color: rgb(cssVar(color-error-rgb), 0.1);
   }
 }
 </style>

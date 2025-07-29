@@ -14,7 +14,7 @@ const { t } = useI18n();
 
 const { layout } = storeToRefs(settingStore);
 
-const layoutModeList = [
+const layoutModeList = computed(() => [
   {
     name: t("_setting.layout.layoutModeSelect.vertical"),
     mode: LayoutModeEnum.Vertical,
@@ -45,7 +45,7 @@ const layoutModeList = [
     mode: LayoutModeEnum.IFrame,
     content: `<div class="dark"></div> <div class="content"></div>`,
   },
-];
+]);
 
 /**
  * 切换布局模式

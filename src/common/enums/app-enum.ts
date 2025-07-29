@@ -16,7 +16,7 @@ export enum TabNavModeEnum {
 }
 
 // 系统主题
-export enum SystemThemeEnum {
+export enum GlobalThemeEnum {
   Dark = "dark",
   Light = "light",
   System = "system",

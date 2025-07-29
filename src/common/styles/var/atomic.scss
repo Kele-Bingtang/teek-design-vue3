@@ -2,62 +2,62 @@
 
 /* 背景色原子类 */
 .#{$admin-namespace}-bg-primary {
-  color: var(--#{$admin-namespace}-primary) !important;
+  color: var(--#{$admin-namespace}-color-primary) !important;
   background-color: var(--#{$admin-namespace}-bg-primary) !important;
 }
 
 .#{$admin-namespace}-bg-secondary {
-  color: var(--#{$admin-namespace}-secondary) !important;
+  color: var(--#{$admin-namespace}-color-secondary) !important;
   background-color: var(--#{$admin-namespace}-bg-secondary) !important;
 }
 
 .#{$admin-namespace}-bg-warning {
-  color: var(--#{$admin-namespace}-warning) !important;
+  color: var(--#{$admin-namespace}-color-warning) !important;
   background-color: var(--#{$admin-namespace}-bg-warning) !important;
 }
 
 .#{$admin-namespace}-bg-error {
-  color: var(--#{$admin-namespace}-error) !important;
+  color: var(--#{$admin-namespace}-color-error) !important;
   background-color: var(--#{$admin-namespace}-bg-error) !important;
 }
 
 .#{$admin-namespace}-bg-success {
-  color: var(--#{$admin-namespace}-success) !important;
+  color: var(--#{$admin-namespace}-color-success) !important;
   background-color: var(--#{$admin-namespace}-bg-success) !important;
 }
 
 .#{$admin-namespace}-bg-danger {
-  color: var(--#{$admin-namespace}-danger) !important;
+  color: var(--#{$admin-namespace}-color-danger) !important;
   background-color: var(--#{$admin-namespace}-bg-danger) !important;
 }
 
 /* 主题文本原子类 */
 .#{$admin-namespace}-text-primary {
-  color: var(--#{$admin-namespace}-primary) !important;
+  color: var(--#{$admin-namespace}-color-primary) !important;
 }
 
 .#{$admin-namespace}-text-secondary {
-  color: var(--#{$admin-namespace}-secondary) !important;
+  color: var(--#{$admin-namespace}-color-secondary) !important;
 }
 
 .#{$admin-namespace}-text-error {
-  color: var(--#{$admin-namespace}-error) !important;
+  color: var(--#{$admin-namespace}-color-error) !important;
 }
 
 .#{$admin-namespace}-text-danger {
-  color: var(--#{$admin-namespace}-danger) !important;
+  color: var(--#{$admin-namespace}-color-danger) !important;
 }
 
 .#{$admin-namespace}-text-info {
-  color: var(--#{$admin-namespace}-info) !important;
+  color: var(--#{$admin-namespace}-color-info) !important;
 }
 
 .#{$admin-namespace}-text-success {
-  color: var(--#{$admin-namespace}-success) !important;
+  color: var(--#{$admin-namespace}-color-success) !important;
 }
 
 .#{$admin-namespace}-text-warning {
-  color: var(--#{$admin-namespace}-warning) !important;
+  color: var(--#{$admin-namespace}-color-warning) !important;
 }
 
 .#{$admin-namespace}-text-muted {

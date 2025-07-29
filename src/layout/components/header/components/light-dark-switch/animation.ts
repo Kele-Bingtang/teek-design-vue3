@@ -1,9 +1,9 @@
-import { SystemThemeEnum } from "@/common/enums";
+import { GlobalThemeEnum } from "@/common/enums";
 import { setCssVar } from "@/common/utils";
 import { useTheme } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
-const { Dark, Light } = SystemThemeEnum;
+const { Dark, Light } = GlobalThemeEnum;
 
 /**
  * 主题切换动画
@@ -27,8 +27,8 @@ export const switchThemeWithAnimation = (e: any) => {
  * 切换主题
  */
 const toggleTheme = () => {
-  const { changeSystemTheme } = useTheme();
+  const { changeGlobalTheme } = useTheme();
   const { isDark } = useSettingStore();
 
-  changeSystemTheme(isDark ? Light : Dark);
+  changeGlobalTheme(isDark ? Light : Dark);
 };

@@ -498,11 +498,11 @@ const style = computed(() => {
   const mergeCmAHighlightLineBgColor =
     props.mergeConfig?.highlightColor?.aHighlightLineBgColor || ns.cssVar("bg-danger");
   const mergeCmAHighlightTextBgColor =
-    props.mergeConfig?.highlightColor?.aHighlightTextBgColor || ns.cssVar("danger-muted");
+    props.mergeConfig?.highlightColor?.aHighlightTextBgColor || ns.cssVar("color-danger-muted");
   const mergeCmBHighlightLineBgColor =
     props.mergeConfig?.highlightColor?.bHighlightLineBgColor || ns.cssVar("bg-success");
   const mergeCmBHighlightTextBgColor =
-    props.mergeConfig?.highlightColor?.bHighlightTextBgColor || ns.cssVar("success-muted");
+    props.mergeConfig?.highlightColor?.bHighlightTextBgColor || ns.cssVar("color-success-muted");
 
   return {
     "--cm-width": codeMirrorWidth,

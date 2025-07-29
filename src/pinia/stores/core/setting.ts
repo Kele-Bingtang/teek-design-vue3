@@ -6,7 +6,7 @@ import {
   LayoutModeEnum,
   MenuThemeEnum,
   PageTransitionEnum,
-  SystemThemeEnum,
+  GlobalThemeEnum,
   TabNavModeEnum,
 } from "@/common/enums";
 import { serviceConfig } from "@/common/config";
@@ -42,7 +42,7 @@ export const useSettingStore = defineStore(
     const theme = reactive({
       primaryColor: themeConfig.primaryColor ?? getCssVar(useNamespace().cssVar("color-primary")),
       radius: themeConfig.radius,
-      systemThemeMode: themeConfig.systemThemeMode || SystemThemeEnum.System,
+      globalThemeMode: themeConfig.globalThemeMode || GlobalThemeEnum.System,
       weakMode: themeConfig.weakMode,
       greyMode: themeConfig.greyMode,
     });
@@ -110,12 +110,12 @@ export const useSettingStore = defineStore(
     });
 
     const isDark = computed(() => {
-      if (theme.systemThemeMode === SystemThemeEnum.System) {
+      if (theme.globalThemeMode === GlobalThemeEnum.System) {
         // 自动识别系统主题
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
 
-      return theme.systemThemeMode === SystemThemeEnum.Dark;
+      return theme.globalThemeMode === GlobalThemeEnum.Dark;
     });
 
     /**
