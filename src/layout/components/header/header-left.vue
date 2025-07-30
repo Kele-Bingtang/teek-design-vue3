@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/pinia";
 import { useCommon, useNamespace } from "@/composables";
 import Breadcrumb from "./components/breadcrumb/index.vue";
+import Refresh from "./components/refresh/index.vue";
 import CollapseTrigger from "./components/collapse-trigger/index.vue";
 
 defineOptions({ name: "HeaderLeft" });
@@ -17,6 +18,7 @@ const { isMobile } = useCommon();
 <template>
   <div :class="ns.b()" class="flx-center">
     <CollapseTrigger v-if="widget.menuCollapse" />
+    <Refresh v-if="widget.refresh" />
     <Breadcrumb v-if="breadcrumb.enabled && !isMobile" />
   </div>
 </template>

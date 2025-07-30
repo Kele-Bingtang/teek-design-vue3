@@ -9,10 +9,18 @@ export enum LayoutModeEnum {
 }
 
 // 标签栏模式
-export enum TabNavModeEnum {
+export enum TabNavElementModeEnum {
   Simple = "simple",
   Classic = "classic",
   Element = "element",
+}
+
+// 顶栏显示模式
+export enum HeaderShowModeEnum {
+  Static = "static",
+  Fixed = "fixed",
+  AutoHidden = "autoHidden",
+  ScrollHidden = "scrollHidden",
 }
 
 // 系统主题

@@ -1,0 +1,16 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+@use "@styles/mixins/namespace" as *;
+
+@include b(refresh) {
+  width: 45px;
+  height: 100%;
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color cssVarEl(transition-duration);
+
+  &:hover {
+    background-color: cssVar(gray-200);
+  }
+}

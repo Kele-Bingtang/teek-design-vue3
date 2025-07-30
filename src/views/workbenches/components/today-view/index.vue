@@ -21,7 +21,6 @@ const data = ref<TodayViewItem[]>(todayViewData.slice(0, limit));
 
 const handleClick = (item: TodayViewItem) => {
   item.hasRead = true;
-  console.log(item);
 };
 
 const handleMore = () => {

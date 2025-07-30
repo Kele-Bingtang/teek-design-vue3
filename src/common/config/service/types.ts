@@ -6,11 +6,12 @@ import type {
   MenuThemeEnum,
   PageTransitionEnum,
   GlobalThemeEnum,
-  TabNavModeEnum,
+  TabNavElementModeEnum,
   TitleModeEnum,
   HeaderMenuAlignEnum,
   ThemePanelTriggerPositionEnum,
   MenuShowModeEnum,
+  HeaderShowModeEnum,
 } from "@/common/enums";
 
 export interface ServiceConfig {
@@ -104,10 +105,12 @@ export interface ThemeConfig {
 export interface headerConfig {
   /** 是否使用顶栏 */
   enabled: boolean;
-  /** 顶部样式 */
-  style: HeaderStyleEnum;
   /** 顶部高度 */
   height: number;
+  /** 顶部样式 */
+  style: HeaderStyleEnum;
+  /** 菜单显示模式 */
+  showMode: HeaderShowModeEnum;
   /** 顶部菜单样式 */
   menuAlign: HeaderMenuAlignEnum;
 }
@@ -134,11 +137,11 @@ export interface MenuConfig {
 export interface TabNavConfig {
   /** 是否使用 tagsNav */
   enabled: boolean;
-  /** 标签页模式设置 */
-  tabNavMode: TabNavModeEnum;
+  /** 标签页元素模式设置 */
+  elementMode: TabNavElementModeEnum;
   /** 标签栏 Icon 是否显示 */
   showIcon: boolean;
-  /** 标签栏 Dot 是否显示，优先级低于 showTabNavDot，仅在 tabNavMode 为 simple、classic 模式生效 */
+  /** 标签栏 Dot 是否显示，优先级低于 showTabNavDot，仅在 elementMode 为 simple、classic 模式生效 */
   showDot: boolean;
   /** 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav */
   persistence: boolean;
@@ -190,6 +193,8 @@ export interface TransitionConfig {
 export interface WidgetConfig {
   /** 是否显示菜单栏折叠 */
   menuCollapse: boolean;
+  /** 是否显示刷新图标 */
+  refresh: boolean;
   /** 是否显示搜索框 */
   search: boolean;
   /** 是否显示全屏图标 */

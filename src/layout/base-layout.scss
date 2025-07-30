@@ -113,7 +113,14 @@
     }
   }
 
-  /* 顶栏栏样式 */
+  /* 顶部样式 */
+  @include joins(auto-top) {
+    transition:
+      height 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      min-height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 顶栏样式 */
   @include joins(layout-header) {
     height: cssVar(layout-header-height);
     padding-left: 0;
@@ -175,6 +182,17 @@
 
       > .#{$el-namespace}-sub-menu {
         padding: 0;
+      }
+    }
+  }
+
+  &,
+  .#{$el-namespace}-container {
+    &.header-static {
+      overflow: auto;
+
+      @include joins(page-content) {
+        overflow: initial;
       }
     }
   }

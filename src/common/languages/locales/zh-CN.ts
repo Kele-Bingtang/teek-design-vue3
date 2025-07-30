@@ -259,6 +259,13 @@ export default {
         center: "居中",
         end: "右侧",
       },
+      showMode: "顶栏显示模式",
+      showModeSelect: {
+        static: "静态",
+        fixed: "固定",
+        autoHidden: "自动隐藏",
+        scrollHidden: "滚动隐藏",
+      },
     },
     menu: {
       label: "菜单栏",
@@ -327,6 +334,7 @@ export default {
     widget: {
       label: "部件",
       menuCollapse: "启用菜单栏折叠",
+      refresh: "启用刷新",
       search: "启用全局搜索",
       fullscreen: "启用全屏",
       notification: "启用通知",

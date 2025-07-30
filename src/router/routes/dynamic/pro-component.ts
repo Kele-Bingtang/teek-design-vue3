@@ -8,7 +8,7 @@ const proComponents: RouterConfigRaw = {
     icon: Film,
     tagText: "Core",
     tagProps: {
-      type: "success",
+      type: "primary",
     },
   },
   children: [

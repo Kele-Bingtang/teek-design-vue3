@@ -9,9 +9,10 @@ import PageContent from "../components/page-content/index.vue";
 import Menu from "../components/menu/index.vue";
 import UserAvatar from "../components/header/components/user-avatar/index.vue";
 import CollapseTrigger from "../components/header/components/collapse-trigger/index.vue";
+import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
-import { useMenuAreaMouse } from "../use-area-mouse";
+import { useHeaderAreaMouse, useMenuAreaMouse } from "../use-area-mouse";
 
 defineOptions({ name: "LayoutIFrame" });
 
@@ -19,6 +20,7 @@ const ns = useNamespace("iframe-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse();
+const { heightStyle, staticClass } = useHeaderAreaMouse();
 
 const { menu, layout, logo } = storeToRefs(settingStore);
 
@@ -31,7 +33,7 @@ const isCollapse = computed(() => menu.value.collapsed);
       v-if="menu.enabled"
       :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
       class="flx-column"
-      :asideStyle
+      :style="asideStyle"
     >
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
@@ -54,7 +56,8 @@ const isCollapse = computed(() => menu.value.collapsed);
       </div>
     </el-aside>
 
-    <el-container :style="rightContentStyle">
+    <el-container direction="vertical" :class="staticClass" :style="rightContentStyle">
+      <TabNav :class="ns.join('auto-top')" :style="heightStyle" />
       <PageContent />
     </el-container>
   </el-container>

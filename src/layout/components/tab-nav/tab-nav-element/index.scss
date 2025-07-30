@@ -19,6 +19,7 @@ $btn-width: 28px;
     @include el-joins(tabs--card) {
       @include el-joins(tabs__header) {
         height: cssVar(layout-tab-height);
+        min-height: cssVar(layout-tab-height);
         margin: 0;
         border-bottom: none;
 

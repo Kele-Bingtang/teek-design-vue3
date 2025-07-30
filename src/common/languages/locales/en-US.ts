@@ -257,6 +257,13 @@ export default {
         center: "Center",
         end: "Right",
       },
+      showMode: "Show mode",
+      showModeSelect: {
+        static: "Static",
+        fixed: "Fixed",
+        autoHidden: "Auto hidden",
+        scrollHidden: "Scroll hidden",
+      },
     },
     menu: {
       label: "Menu",
@@ -325,6 +332,7 @@ export default {
     widget: {
       label: "Widgets",
       menuCollapse: "Enable menu collapse",
+      refresh: "Enable Refresh",
       search: "Enable global search",
       fullscreen: "Enable fullscreen",
       notification: "Enable notification",

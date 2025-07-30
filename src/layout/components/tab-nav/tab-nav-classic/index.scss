@@ -9,6 +9,7 @@ $btn-width: 28px;
   gap: 5px;
   width: 100%;
   height: cssVar(layout-tab-height);
+  min-height: cssVar(layout-tab-height);
   padding: 0 10px;
   white-space: nowrap;
   background-color: cssVar(layout-tab-bg-color);

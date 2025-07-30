@@ -9,12 +9,13 @@ import { Tooltip } from "@/components";
 import { useCommon, useMenu } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
+import { useMenuAreaMouse, useHeaderAreaMouse } from "../use-area-mouse";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";
+import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
-import { useMenuAreaMouse } from "../use-area-mouse";
 
 defineOptions({ name: "LayoutVertical" });
 
@@ -25,6 +26,7 @@ const settingStore = useSettingStore();
 const { menuList } = useMenu();
 const { getTitle } = useCommon();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse(72);
+const { topStyle, staticClass } = useHeaderAreaMouse();
 
 // 子菜单
 const menuItem = ref<RouterConfig[]>([]);
@@ -141,10 +143,14 @@ const changeMenuItem = (item: RouterConfig) => {
       </el-scrollbar>
     </el-aside>
 
-    <el-container :style="menuItem?.length ? rightContentStyle : {}">
-      <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
-        <Header />
-      </el-header>
+    <el-container direction="vertical" :class="staticClass" :style="menuItem?.length ? rightContentStyle : {}">
+      <div :class="ns.join('auto-top')" :style="topStyle">
+        <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
+          <Header />
+        </el-header>
+        <TabNav />
+      </div>
+
       <PageContent />
     </el-container>
   </el-container>
