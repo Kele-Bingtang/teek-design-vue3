@@ -7,7 +7,7 @@ import {
   MenuThemeEnum,
   PageTransitionEnum,
   GlobalThemeEnum,
-  TabNavModeEnum,
+  TabNavElementModeEnum,
   MenuShowModeEnum,
 } from "@/common/enums";
 import { serviceConfig } from "@/common/config";
@@ -50,9 +50,10 @@ export const useSettingStore = defineStore(
 
     const header = reactive({
       enabled: headerConfig.enabled,
-      style: headerConfig.style || HeaderStyleEnum.Page,
       height: headerConfig.height,
+      style: headerConfig.style || HeaderStyleEnum.Page,
       menuAlign: headerConfig.menuAlign || HeaderMenuAlignEnum.Start,
+      showMode: headerConfig.showMode,
     });
 
     const menu = reactive({
@@ -68,7 +69,7 @@ export const useSettingStore = defineStore(
 
     const tabNav = reactive({
       enabled: tabNavConfig.enabled,
-      tabNavMode: tabNavConfig.tabNavMode || TabNavModeEnum.Simple,
+      elementMode: tabNavConfig.elementMode || TabNavElementModeEnum.Simple,
       persistence: tabNavConfig.persistence,
       showIcon: tabNavConfig.showIcon,
       showDot: tabNavConfig.showDot,
@@ -77,6 +78,7 @@ export const useSettingStore = defineStore(
       height: tabNavConfig.height,
       middleClickToClose: tabNavConfig.middleClickToClose,
       middleClickToOpen: tabNavConfig.middleClickToOpen,
+      middleClickToOpenInNewWindow: tabNavConfig.middleClickToOpenInNewWindow,
       showMore: tabNavConfig.showMore,
       wheel: tabNavConfig.wheel,
     });
@@ -99,6 +101,7 @@ export const useSettingStore = defineStore(
 
     const widget = reactive({
       menuCollapse: widgetConfig.menuCollapse,
+      refresh: widgetConfig.refresh,
       search: widgetConfig.search,
       fullscreen: widgetConfig.fullscreen,
       notification: widgetConfig.notification,

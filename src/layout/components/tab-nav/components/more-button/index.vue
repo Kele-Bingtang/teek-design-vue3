@@ -7,6 +7,7 @@ import {
   ArrowDown,
   Refresh,
   FullScreen,
+  TopRight,
   Close,
   ArrowLeft,
   ArrowRight,
@@ -15,12 +16,14 @@ import {
   Lock,
   Unlock,
 } from "@element-plus/icons-vue";
+import { openRouteInNewWindow } from "@/common/utils";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../../use-tab-nav";
 
 defineOptions({ name: "TabNavButton" });
 
 const {
+  tabNavList,
   activeTab,
   contextMenuCondition: condition,
   initContextMenu,
@@ -42,7 +45,7 @@ const expandDropdown = () => {
   }, 100)();
 };
 
-const useMaximize = () => {
+const triggerMaximize = () => {
   settingStore.$patch({ layout: { maximize: true } });
 };
 
@@ -56,12 +59,18 @@ const dropdownMenuItem = [
   {
     label: computed(() => (activeTab.value.close ? t("_tabNav.fixed") : t("_tabNav.unfixed"))),
     icon: computed(() => (activeTab.value.close ? Lock : Unlock)),
+    disabled: computed(() => tabNavList.value.length <= 1),
     click: () => toggleFixed(activeTab.value.path),
   },
   {
     label: t("_tabNav.maximize"),
     icon: FullScreen,
-    click: useMaximize,
+    click: triggerMaximize,
+  },
+  {
+    label: t("_tabNav.openInNewTab"),
+    icon: TopRight,
+    click: () => openRouteInNewWindow(activeTab.value.path),
   },
   {
     label: t("_tabNav.closeCurrent"),

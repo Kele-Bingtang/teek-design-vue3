@@ -4,9 +4,9 @@ import { ref, reactive, nextTick, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import Sortable from "sortablejs";
-import { getUrlParams, isFunction, mittBus } from "@/common/utils";
-import { serviceConfig, HOME_URL, RefreshIFrameKey } from "@/common/config";
-import { useCommon } from "@/composables";
+import { getUrlParams, isFunction } from "@/common/utils";
+import { serviceConfig, HOME_URL } from "@/common/config";
+import { useCommon, useMittBus } from "@/composables";
 import beforeClose from "@/router/before-close";
 import { formatTitle } from "@/router/helper";
 import { useLayoutStore, useRouteStore } from "@/pinia";
@@ -72,6 +72,7 @@ export const useTabNav = () => {
   const { tabNavList } = storeToRefs(layoutStore);
 
   const { isMobile, refreshPage } = useCommon();
+  const { refreshIFrame } = useMittBus();
 
   /**
    * 标签栏拖拽排序
@@ -287,7 +288,7 @@ export const useTabNav = () => {
    * 刷新选中的 tab
    */
   const refreshSelectedTab = async (tab: TabProps) => {
-    if (tab.meta?.iframeSrc) mittBus.emit(RefreshIFrameKey);
+    if (tab.meta?.iframeSrc) refreshIFrame();
     else {
       layoutStore.removeKeepAliveName(tab.name);
 

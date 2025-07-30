@@ -1,7 +1,7 @@
 import type { WatchStopHandle } from "vue";
-import { useMouse } from "@vueuse/core";
+import { useMouse, useScroll } from "@vueuse/core";
 import { useSettingStore } from "@/pinia";
-import { MenuShowModeEnum } from "@/common/enums";
+import { HeaderShowModeEnum, MenuShowModeEnum } from "@/common/enums";
 import { UpdateInMenuAreaStateKey } from "@/common/config";
 import { addUnit } from "@/common/utils";
 
@@ -27,28 +27,36 @@ export const useMenuAreaMouse = (offset = 0) => {
 
     if (!enabled) return {};
 
-    // 开启固定菜单栏生效条件，前提菜单显示模式不能是静态模式
-    const defaultStyle =
-      showModeAutoFixed && showMode !== MenuShowModeEnum.Static ? { position: "fixed", zIndex: 99 } : {};
+    // 开启固定菜单栏生效样式
+    const defaultStyle = showModeAutoFixed ? { position: "fixed", left: 0, zIndex: 99 } : {};
 
-    // 自动折叠模式，需要移入区域打开菜单，移出区域收起菜单
-    if (showMode === MenuShowModeEnum.AutoCollapse) {
-      if (inMenuArea.value) {
-        settingStore.expandSideMenu();
-        return { ...defaultStyle };
-      }
+    // 菜单显示模式的样式创建工厂
+    const styleCreateFactory = {
+      [MenuShowModeEnum.Static]: {
+        active: () => ({}),
+        inactive: () => ({}),
+      },
+      // 自动折叠模式，需要移入区域打开菜单，移出区域收起菜单
+      [MenuShowModeEnum.AutoCollapse]: {
+        active: () => {
+          settingStore.expandSideMenu();
+          return { ...defaultStyle };
+        },
+        inactive: () => {
+          settingStore.collapseSideMenu();
+          return { ...defaultStyle, width: addUnit(collapseWidth) };
+        },
+      },
+      // 折叠隐藏模式，根据是否在菜单区域内决定宽度
+      [MenuShowModeEnum.AutoHidden]: {
+        active: () => ({ ...defaultStyle }),
+        inactive: () => ({ ...defaultStyle, width: 0 }),
+      },
+    };
 
-      settingStore.collapseSideMenu();
-      return { ...defaultStyle, width: addUnit(collapseWidth) };
-    }
+    const key = inMenuArea.value ? "active" : "inactive";
 
-    // 折叠隐藏模式，根据是否在菜单区域内决定宽度
-    if (showMode === MenuShowModeEnum.AutoHidden) {
-      if (inMenuArea.value) return { ...defaultStyle };
-      return { ...defaultStyle, width: 0 };
-    }
-
-    return { ...defaultStyle };
+    return styleCreateFactory[showMode][key]?.() ?? {};
   });
 
   // 非侧边栏（右侧内容区）样式
@@ -67,29 +75,29 @@ export const useMenuAreaMouse = (offset = 0) => {
    * 开启菜单区域鼠标移入移出监听
    */
   const start = () => {
-    menuStopWatcher = watch(
-      () => mouseX.value,
-      newValue => {
-        const { width, collapsed, collapseWidth, showMode } = menu.value;
-        let targetWidth = collapsed ? collapseWidth : width;
+    menuStopWatcher = watch(mouseX, newVal => {
+      const { width, collapsed, collapseWidth, showMode } = menu.value;
+      let targetWidth = collapsed ? collapseWidth : width;
 
-        // 如果是自动隐藏模式且当前菜单是折叠状态，则鼠标移到左侧 20px 触发菜单展开
-        if (showMode === MenuShowModeEnum.AutoHidden && !inMenuArea.value) {
-          if (collapsed) targetWidth = collapseWidth / 4;
-          else targetWidth = width / 4;
-        }
-
-        // 避免鼠标移到菜单外时菜单直接收起，这里添加 30 阈值，整合可以移到折叠菜单触发器位置
-        if (newValue > targetWidth + 30 + offset) inMenuArea.value = false;
-        else inMenuArea.value = true;
+      // 如果是自动隐藏模式且当前菜单是折叠状态，则鼠标移到左侧 20px 触发菜单展开
+      if (showMode === MenuShowModeEnum.AutoHidden && !inMenuArea.value) {
+        if (collapsed) targetWidth = collapseWidth / 4;
+        else targetWidth = width / 4;
       }
-    );
+
+      // 避免鼠标移到菜单外时菜单直接收起，这里添加 30 阈值，整合可以移到折叠菜单触发器位置
+      if (newVal > targetWidth + 30 + offset) inMenuArea.value = false;
+      else inMenuArea.value = true;
+    });
   };
 
   /**
    * 关闭菜单区域鼠标移入移出监听
    */
-  const stop = () => menuStopWatcher?.();
+  const stop = () => {
+    menuStopWatcher?.();
+    inMenuArea.value = true;
+  };
 
   watch(
     () => menu.value.showMode,
@@ -113,31 +121,100 @@ export const useMenuAreaMouse = (offset = 0) => {
  */
 export const useHeaderAreaMouse = () => {
   const inHeaderArea = ref(true);
+  // 内容区元素（支持滚动的元素）
+  const pageContentDom = ref<HTMLElement | null>(null);
 
   let headerStopWatcher: WatchStopHandle | null = null;
 
   const settingStore = useSettingStore();
   const { y: mouseY } = useMouse();
+  const { arrivedState, directions, isScrolling, y: scrollY } = useScroll(pageContentDom);
 
   const { header, tabNav } = storeToRefs(settingStore);
+
+  // 计算顶栏高度 = Header 高度 + 标签栏高度
+  const topStyle = computed(() => {
+    if (inHeaderArea.value) return { height: addUnit(header.value.height + tabNav.value.height) };
+    return { height: 0 };
+  });
+
+  // 计算 Header 高度或标签栏高度
+  const heightStyle = computed(() => {
+    // inHeaderArea 为 true 时不需要返回实际的高度，因为 class 对应的样式里已经默设置了
+    return inHeaderArea.value ? {} : { height: 0, minHeight: 0 };
+  });
+
+  const staticClass = computed(() => {
+    if (header.value.showMode === HeaderShowModeEnum.Static) return "header-static";
+    return "";
+  });
 
   /**
    * 开启顶栏区域鼠标移入移出监听
    */
   const start = () => {
-    headerStopWatcher = watch(
-      () => mouseY.value,
-      newValue => {
-        if (newValue > header.value.height + tabNav.value.height) inHeaderArea.value = false;
+    // 自动隐藏模式
+    if (header.value.showMode === HeaderShowModeEnum.AutoHidden) {
+      headerStopWatcher = watch(mouseY, newValue => {
+        const topHeight = header.value.height + tabNav.value.height;
+
+        // 鼠标移出顶栏，则顶栏区域状态为 false
+        if (newValue > topHeight) inHeaderArea.value = false;
         else inHeaderArea.value = true;
-      }
-    );
+      });
+      return;
+    }
+
+    // 滚动隐藏模式
+    if (header.value.showMode === HeaderShowModeEnum.ScrollHidden) {
+      onMounted(() => {
+        // 初始化监听滚动的元素
+        if (!pageContentDom.value) pageContentDom.value = document.querySelector(".page-content");
+      });
+
+      headerStopWatcher = watch(scrollY, newValue => {
+        if (!isScrolling.value) return;
+        const topHeight = header.value.height + tabNav.value.height;
+
+        // 如果滚动条高度小于顶栏高度、处于顶栏、向上滚动，则认为为激活顶栏区域状态
+        if (newValue < topHeight || arrivedState.top) inHeaderArea.value = true;
+        if (directions.top) inHeaderArea.value = true;
+        // 向下滚动则认为非顶栏区域状态
+        else if (directions.bottom) inHeaderArea.value = false;
+      });
+    }
   };
 
   /**
    * 关闭顶栏区域鼠标移入移出监听
    */
-  const stop = () => headerStopWatcher?.();
+  const stop = () => {
+    headerStopWatcher?.();
+    inHeaderArea.value = true;
+    // 移出滚动的元素从而取消监听功能
+    pageContentDom.value = null;
+  };
 
-  return { inHeaderArea: readonly(inHeaderArea), start, stop };
+  watch(
+    () => header.value.showMode,
+    newVal => {
+      // 切换顶栏显示模式立即取消之前的监听，然后根据新的顶栏显示模式选择是否开启
+      stop();
+      if (![HeaderShowModeEnum.Static, HeaderShowModeEnum.Fixed].includes(newVal)) start();
+    },
+    { immediate: true }
+  );
+
+  onScopeDispose(() => {
+    stop();
+  });
+
+  return {
+    inHeaderArea: readonly(inHeaderArea),
+    topStyle,
+    heightStyle,
+    staticClass,
+    start,
+    stop,
+  };
 };

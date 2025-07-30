@@ -6,10 +6,11 @@ import { ElContainer, ElAside, ElHeader } from "element-plus";
 import { serviceConfig, HOME_URL } from "@/common/config";
 import { useCommon, useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
-import { useMenuAreaMouse } from "../use-area-mouse";
+import { useMenuAreaMouse, useHeaderAreaMouse } from "../use-area-mouse";
 import PageContent from "../components/page-content/index.vue";
 import Header from "../components/header/index.vue";
 import Menu from "../components/menu/index.vue";
+import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
 
@@ -22,6 +23,7 @@ const settingStore = useSettingStore();
 const { menu, layout, logo, header } = storeToRefs(settingStore);
 const { isMobile } = useCommon();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse();
+const { topStyle, staticClass } = useHeaderAreaMouse();
 
 watch(isMobile, newVal => {
   if (newVal) settingStore.collapseSideMenu();
@@ -59,10 +61,14 @@ const handleClickOutSide = () => {
 
     <div v-if="isMobile && !menu.collapsed" :class="ns.e('drawer-model')" @click="handleClickOutSide" />
 
-    <el-container :style="rightContentStyle">
-      <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
-        <Header />
-      </el-header>
+    <el-container direction="vertical" :class="staticClass" :style="rightContentStyle">
+      <div :class="ns.join('auto-top')" :style="topStyle">
+        <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
+          <Header />
+        </el-header>
+
+        <TabNav />
+      </div>
       <PageContent />
     </el-container>
   </el-container>

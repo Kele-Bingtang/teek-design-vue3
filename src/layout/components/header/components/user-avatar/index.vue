@@ -5,9 +5,8 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { User, Bell, Setting, Back, View, Lock } from "@element-plus/icons-vue";
-import { serviceConfig, LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
-import { mittBus } from "@/common/utils";
-import { useNamespace, useKeyDown } from "@/composables";
+import { serviceConfig, LOGIN_URL } from "@/common/config";
+import { useNamespace, useKeyDown, useMittBus } from "@/composables";
 import { useSettingStore, useUserStore } from "@/pinia";
 
 import "./index.scss";
@@ -23,6 +22,7 @@ const router = useRouter();
 const ns = useNamespace("user-avatar");
 const userStore = useUserStore();
 const settingStore = useSettingStore();
+const { openThemePanel, openLockPanel } = useMittBus();
 
 const { userInfo } = storeToRefs(userStore);
 const { widget, shortcutKey } = storeToRefs(settingStore);
@@ -56,20 +56,6 @@ const menuList = computed(() => [
  */
 const toPage = (path: string) => {
   router.push(path);
-};
-
-/**
- * 打开主题面板
- */
-const openThemePanel = () => {
-  mittBus.emit(OpenThemePanelKey);
-};
-
-/**
- * 锁屏
- */
-const openLockPanel = () => {
-  mittBus.emit(OpenLockPanelKey);
 };
 
 /**

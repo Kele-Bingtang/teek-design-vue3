@@ -38,7 +38,6 @@ const tabs = ref<{ label: string; value: string; data: BulletinBoardItem[] }[]>(
 
 const handleClick = (item: BulletinBoardItem) => {
   item.hasRead = true;
-  console.log(item);
 };
 
 const handleMore = () => {

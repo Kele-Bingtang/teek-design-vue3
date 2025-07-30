@@ -6,13 +6,14 @@ import { ElContainer, ElAside, ElHeader } from "element-plus";
 import { serviceConfig, HOME_URL } from "@/common/config";
 import { useMenu, useRouteFn, useNamespace } from "@/composables";
 import { useSettingStore, useRouteStore } from "@/pinia";
+import { useMenuAreaMouse, useHeaderAreaMouse } from "../use-area-mouse";
 import PageContent from "../components/page-content/index.vue";
 import CollapseTrigger from "../components/header/components/collapse-trigger/index.vue";
 import Menu from "../components/menu/index.vue";
 import HeaderRight from "../components/header/header-right.vue";
+import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
-import { useMenuAreaMouse } from "../use-area-mouse";
 
 defineOptions({ name: "LayoutMixins" });
 
@@ -22,6 +23,7 @@ const router = useRouter();
 const settingStore = useSettingStore();
 const routeStore = useRouteStore();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse();
+const { heightStyle } = useHeaderAreaMouse();
 
 const { findParentRoutesByPath } = useRouteFn();
 const { menuList } = useMenu();
@@ -80,7 +82,12 @@ watch(
   <el-container
     :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
   >
-    <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
+    <el-header
+      v-if="header.enabled"
+      :class="[ns.join('layout-header'), ns.join('auto-top')]"
+      class="flx-align-center-between"
+      :style="heightStyle"
+    >
       <div :class="[ns.join('layout-logo'), ns.no('collapse')]" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span>{{ serviceConfig.layout.name }}</span>
@@ -113,7 +120,10 @@ watch(
         />
       </el-aside>
 
-      <PageContent :style="rightContentStyle" />
+      <div class="flx-1">
+        <TabNav :class="ns.join('auto-top')" :style="heightStyle" />
+        <PageContent :style="rightContentStyle" />
+      </div>
     </el-container>
   </el-container>
 </template>

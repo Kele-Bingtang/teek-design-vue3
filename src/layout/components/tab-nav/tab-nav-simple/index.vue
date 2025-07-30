@@ -9,7 +9,7 @@ const settingStore = useSettingStore();
 
 const { tabNav } = storeToRefs(settingStore);
 
-const type = computed(() => tabNav.value.tabNavMode as "simple" | "classic");
+const type = computed(() => tabNav.value.elementMode as "simple" | "classic");
 </script>
 
 <template>

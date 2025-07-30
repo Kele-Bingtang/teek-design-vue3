@@ -5,7 +5,7 @@ import { ElButton, ElDrawer, ElMessage, ElMessageBox } from "element-plus";
 import { Refresh } from "@element-plus/icons-vue";
 import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
-import { useCommon, useNamespace } from "@/composables";
+import { useCommon, useNamespace, useTheme } from "@/composables";
 import { useSettingStore, useUserStore } from "@/pinia";
 import {
   LayoutModeSwitch,
@@ -25,11 +25,13 @@ const ns = useNamespace("theme-panel");
 const { t } = useI18n();
 const userStore = useUserStore();
 const settingStore = useSettingStore();
+const { changeGlobalTheme } = useTheme();
 
 const { isMobile } = useCommon();
 
 const resetSetting = () => {
   settingStore.$reset();
+  changeGlobalTheme();
 };
 
 /**

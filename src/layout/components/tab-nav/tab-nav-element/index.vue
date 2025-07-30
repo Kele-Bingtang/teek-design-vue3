@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { TabPaneName, TabsPaneContext, TabsInstance } from "element-plus";
 import type { TabProps } from "@/pinia";
 import { onMounted, watch, useTemplateRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ElTabs, ElTabPane, type TabPaneName, type TabsPaneContext, type TabsInstance } from "element-plus";
-import { addUnit, removeUnit, isString } from "@/common/utils";
+import { ElTabs, ElTabPane } from "element-plus";
+import { addUnit, removeUnit, isString, openRouteInNewWindow } from "@/common/utils";
 import { useCommon, useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
@@ -57,6 +58,7 @@ const tabClick = (tabItem: TabsPaneContext) => {
 
 // Tab 鼠标中键点击回调
 const tabMiddleClick = (tab: TabProps) => {
+  if (tabNav.value.middleClickToOpenInNewWindow) return openRouteInNewWindow(tab.path);
   if (tabNav.value.middleClickToOpen) return router.push(tab.path);
   if (tabNav.value.middleClickToClose) tabRemove(tab.path);
 };
@@ -151,7 +153,7 @@ onMounted(() => {
               <Icon
                 v-if="
                   tab.meta.icon &&
-                  tabNav.showTabNavIcon &&
+                  tabNav.showIcon &&
                   (!isString(tab.meta.icon) && '__name' in tab.meta.icon ? 'setup' in tab.meta.icon : true)
                 "
                 :icon="tab.meta.icon"

@@ -13,7 +13,6 @@ const data = todayViewData.slice(0, limit);
 
 const handleClick = (item: (typeof todayViewData)[0]) => {
   item.hasRead = true;
-  console.log(item);
 };
 
 const handleMore = () => {

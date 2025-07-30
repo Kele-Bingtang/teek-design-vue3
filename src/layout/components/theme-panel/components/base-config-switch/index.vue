@@ -9,9 +9,10 @@ import {
   LanguageEnum,
   MenuShowModeEnum,
   PageTransitionEnum,
-  TabNavModeEnum,
+  TabNavElementModeEnum,
   ThemePanelTriggerPositionEnum,
   LayoutModeEnum,
+  HeaderShowModeEnum,
 } from "@/common/enums";
 import { languageOptions } from "@/common/languages";
 import { useBrowserTitle, useCommon, useNamespace } from "@/composables";
@@ -32,10 +33,10 @@ const { language } = storeToRefs(layoutStore);
 /**
  * 标签栏模式选项
  */
-const tabNavModeOptions = computed(() => [
-  { value: TabNavModeEnum.Simple, label: t("_setting.tabNav.modeSelect.simple") },
-  { value: TabNavModeEnum.Classic, label: t("_setting.tabNav.modeSelect.classic") },
-  { value: TabNavModeEnum.Element, label: t("_setting.tabNav.modeSelect.element") },
+const tabNavElementModeOptions = computed(() => [
+  { value: TabNavElementModeEnum.Simple, label: t("_setting.tabNav.modeSelect.simple") },
+  { value: TabNavElementModeEnum.Classic, label: t("_setting.tabNav.modeSelect.classic") },
+  { value: TabNavElementModeEnum.Element, label: t("_setting.tabNav.modeSelect.element") },
 ]);
 
 /**
@@ -71,6 +72,13 @@ const menuShowModeOptions = computed(() => [
   { value: MenuShowModeEnum.AutoHidden, label: t("_setting.menu.showModeSelect.autoHidden") },
 ]);
 
+const headerShowModeOptions = computed(() => [
+  { value: HeaderShowModeEnum.Static, label: t("_setting.header.showModeSelect.static") },
+  { value: HeaderShowModeEnum.Fixed, label: t("_setting.header.showModeSelect.fixed") },
+  { value: HeaderShowModeEnum.AutoHidden, label: t("_setting.header.showModeSelect.autoHidden") },
+  { value: HeaderShowModeEnum.ScrollHidden, label: t("_setting.header.showModeSelect.scrollHidden") },
+]);
+
 const sizeOptions = computed(() => [
   { label: "Large", value: "large" },
   { label: "Default", value: "default" },
@@ -103,6 +111,12 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     </div>
 
     <div :class="ns.e('item')">
+      <span>{{ $t("_setting.header.height") }}</span>
+      <el-input-number v-model="header.height" :min="35" :max="70" :step="2" controls-position="right" />
+      <!-- <el-slider v-model="header.height" :min="30" :max="70" /> -->
+    </div>
+
+    <div :class="ns.e('item')">
       <span>{{ $t("_setting.header.style") }}</span>
       <el-select v-model="header.style" placeholder="Select">
         <el-option v-for="item in headerStyleOptions" :key="item.value" :label="item.label" :value="item.value" />
@@ -110,9 +124,10 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     </div>
 
     <div :class="ns.e('item')">
-      <span>{{ $t("_setting.header.height") }}</span>
-      <el-input-number v-model="header.height" :min="35" :max="70" :step="2" controls-position="right" />
-      <!-- <el-slider v-model="header.height" :min="30" :max="70" /> -->
+      <span>{{ $t("_setting.header.showMode") }}</span>
+      <el-select v-model="header.showMode" placeholder="Select">
+        <el-option v-for="item in headerShowModeOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
     </div>
 
     <div :class="ns.e('item')">
@@ -196,8 +211,8 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.mode") }}</span>
-      <el-select v-model="tabNav.tabNavMode" placeholder="Select">
-        <el-option v-for="item in tabNavModeOptions" :key="item.value" :label="item.label" :value="item.value" />
+      <el-select v-model="tabNav.elementMode" placeholder="Select">
+        <el-option v-for="item in tabNavElementModeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
@@ -238,6 +253,10 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.middleClickToOpen") }}</span>
       <el-switch v-model="tabNav.middleClickToOpen" />
+    </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNav.middleClickToOpenInNewWindow") }}</span>
+      <el-switch v-model="tabNav.middleClickToOpenInNewWindow" />
     </div>
 
     <div :class="ns.e('item')">
@@ -318,6 +337,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.widget.menuCollapse") }}</span>
       <el-switch v-model="widget.menuCollapse" />
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.widget.refresh") }}</span>
+      <el-switch v-model="widget.refresh" />
     </div>
 
     <div :class="ns.e('item')">

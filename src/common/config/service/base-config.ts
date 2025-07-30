@@ -8,10 +8,11 @@ import {
   MenuThemeEnum,
   PageTransitionEnum,
   GlobalThemeEnum,
-  TabNavModeEnum,
+  TabNavElementModeEnum,
   ThemePanelTriggerPositionEnum,
   TitleModeEnum,
   MenuShowModeEnum,
+  HeaderShowModeEnum,
 } from "@/common/enums";
 
 export const defaultServiceConfig: ServiceConfig = {
@@ -46,9 +47,10 @@ export const defaultServiceConfig: ServiceConfig = {
   },
   header: {
     enabled: true,
-    style: HeaderStyleEnum.Page,
     height: 55,
+    style: HeaderStyleEnum.Page,
     menuAlign: HeaderMenuAlignEnum.Start,
+    showMode: HeaderShowModeEnum.Fixed,
   },
   menu: {
     enabled: true,
@@ -62,7 +64,7 @@ export const defaultServiceConfig: ServiceConfig = {
   },
   tabNav: {
     enabled: true,
-    tabNavMode: TabNavModeEnum.Simple,
+    elementMode: TabNavElementModeEnum.Simple,
     showIcon: true,
     showDot: true,
     persistence: false,
@@ -70,7 +72,8 @@ export const defaultServiceConfig: ServiceConfig = {
     draggable: true,
     height: 38,
     middleClickToClose: false,
-    middleClickToOpen: true,
+    middleClickToOpen: false,
+    middleClickToOpenInNewWindow: true,
     showMore: true,
     wheel: true,
   },
@@ -91,6 +94,7 @@ export const defaultServiceConfig: ServiceConfig = {
   },
   widget: {
     menuCollapse: true,
+    refresh: true,
     search: true,
     fullscreen: true,
     notification: true,
