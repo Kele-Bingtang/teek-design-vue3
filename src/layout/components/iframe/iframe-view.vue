@@ -37,18 +37,21 @@ const hideLoading = () => (loading.value = false);
 /**
  * 刷新 iframe
  */
-mittBus.on(RefreshIFrameKey, async () => {
-  if (route.name !== props.iframeName) return;
+mittBus.on(RefreshIFrameKey, () => {
+  if (props.iframeName && props.iframeName !== route.name) return;
 
   isRefresh.value = false;
-  await nextTick();
-  isRefresh.value = true;
+  nextTick(() => (isRefresh.value = true));
 });
 
 onMounted(() => {
   // 监听 iframe 加载完成
   if (route.meta?.iframeLoading !== false) useEventListener(iframeInstance, "load", hideLoading);
   else hideLoading();
+});
+
+onBeforeUnmount(() => {
+  mittBus.off(RefreshIFrameKey);
 });
 </script>
 

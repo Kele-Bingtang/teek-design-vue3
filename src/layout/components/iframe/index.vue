@@ -44,8 +44,8 @@ watch(
       <IFrameView
         v-if="iframe.src"
         v-show="isCurrentIFrame(iframe)"
-        :iframeSrc="iframe.src"
-        :iframeName="iframe.name"
+        :iframe-src="iframe.src"
+        :iframe-name="iframe.name"
       />
     </template>
   </div>

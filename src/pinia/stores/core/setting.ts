@@ -77,6 +77,7 @@ export const useSettingStore = defineStore(
       height: tabNavConfig.height,
       middleClickToClose: tabNavConfig.middleClickToClose,
       middleClickToOpen: tabNavConfig.middleClickToOpen,
+      middleClickToOpenInNewWindow: tabNavConfig.middleClickToOpenInNewWindow,
       showMore: tabNavConfig.showMore,
       wheel: tabNavConfig.wheel,
     });

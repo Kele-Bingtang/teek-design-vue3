@@ -4,13 +4,27 @@ import type { ContextMenuCondition } from "../../use-tab-nav";
 import { unref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useEventListener } from "@vueuse/core";
-import { Refresh, Close, ArrowLeft, ArrowRight, SemiSelect, CircleClose, Lock, Unlock } from "@element-plus/icons-vue";
+import {
+  Refresh,
+  FullScreen,
+  TopRight,
+  Close,
+  ArrowLeft,
+  ArrowRight,
+  SemiSelect,
+  CircleClose,
+  Lock,
+  Unlock,
+} from "@element-plus/icons-vue";
+import { openRouteInNewWindow } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../../use-tab-nav";
 
 defineOptions({ name: "RightMenu" });
 
 const ns = useNamespace("right-menu");
+const settingStore = useSettingStore();
 
 const {
   tabNavList,
@@ -40,6 +54,10 @@ const visible = defineModel({ default: false });
 
 const { t } = useI18n();
 
+const triggerMaximize = () => {
+  settingStore.$patch({ layout: { maximize: true } });
+};
+
 const rightMenuItem = [
   {
     label: t("_tabNav.refresh"),
@@ -52,6 +70,16 @@ const rightMenuItem = [
     icon: computed(() => (props.selectedTab.close ? Lock : Unlock)),
     disabled: computed(() => tabNavList.value.length <= 1),
     click: () => toggleFixed(props.selectedTab.path),
+  },
+  {
+    label: t("_tabNav.maximize"),
+    icon: FullScreen,
+    click: triggerMaximize,
+  },
+  {
+    label: t("_tabNav.openInNewTab"),
+    icon: TopRight,
+    click: () => openRouteInNewWindow(props.selectedTab.path),
   },
   {
     label: t("_tabNav.closeCurrent"),

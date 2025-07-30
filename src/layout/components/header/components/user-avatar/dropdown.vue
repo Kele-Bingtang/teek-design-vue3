@@ -5,9 +5,8 @@ import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElImage, ElMessage, ElMessageBox } from "element-plus";
 import { ArrowDownBold, User, Bell, Setting, Back, View } from "@element-plus/icons-vue";
-import { serviceConfig, LOGIN_URL, OpenThemePanelKey, OpenLockPanelKey } from "@/common/config";
-import { mittBus } from "@/common/utils";
-import { useNamespace } from "@/composables";
+import { serviceConfig, LOGIN_URL } from "@/common/config";
+import { useMittBus, useNamespace } from "@/composables";
 import { useUserStore } from "@/pinia";
 
 defineOptions({ name: "UserAvatarDropdown" });
@@ -18,10 +17,11 @@ withDefaults(defineProps<{ showAvatar?: boolean }>(), {
   showAvatar: true,
 });
 
-const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
+const userStore = useUserStore();
+const { openThemePanel, openLockPanel } = useMittBus();
 
 const { userInfo } = storeToRefs(userStore);
 
@@ -29,7 +29,7 @@ const menuList = computed(() => [
   { label: t("_headerBar.profile"), icon: User, click: () => toPage("/profile") },
   { label: t("_headerBar.messageCenter"), icon: Bell, click: () => toPage("/message-center") },
   { label: t("_headerBar.setting"), icon: Setting, click: openThemePanel },
-  { label: t("_headerBar.lock"), icon: Lock, click: OpenLockPanel },
+  { label: t("_headerBar.lock"), icon: Lock, click: openLockPanel },
   {
     label: "Github",
     click: () => window.open("https://github.com/Kele-Bingtang/teek-design-vue3"),
@@ -41,20 +41,6 @@ const menuList = computed(() => [
  */
 const toPage = (path: string) => {
   router.push(path);
-};
-
-/**
- * 打开主题面板
- */
-const openThemePanel = () => {
-  mittBus.emit(OpenThemePanelKey);
-};
-
-/**
- * 锁屏
- */
-const OpenLockPanel = () => {
-  mittBus.emit(OpenLockPanelKey);
 };
 
 /**

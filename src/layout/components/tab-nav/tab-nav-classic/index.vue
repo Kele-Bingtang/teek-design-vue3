@@ -4,6 +4,7 @@ import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { isString, openRouteInNewWindow } from "@/common/utils";
 import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
@@ -11,7 +12,6 @@ import MoreButton from "../components/more-button/index.vue";
 import RightMenu from "../components/right-menu/index.vue";
 
 import "./index.scss";
-import { isString } from "@/common/utils";
 
 defineOptions({ name: "ClassicTabNav" });
 
@@ -110,6 +110,7 @@ const handleClick = (tab: TabProps, type: "left" | "middle") => {
 
   // 鼠标中键点击
   if (type === "middle") {
+    if (tabNav.value.middleClickToOpenInNewWindow) return openRouteInNewWindow(tab.path);
     if (tabNav.value.middleClickToOpen) return router.push(tab.path);
     if (tabNav.value.middleClickToClose) return closeTab(tab);
   }

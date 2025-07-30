@@ -2,7 +2,7 @@
 import type { Message, Person } from "./types";
 import { ref, onMounted } from "vue";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { isString, mittBus } from "@/common/utils";
+import { isString } from "@/common/utils";
 import meAvatar from "@/common/assets/images/default.png";
 import aiAvatar from "@/common/assets/images/default.png";
 import avatar2 from "@/common/assets/images/default.png";
@@ -199,7 +199,6 @@ const sendMessage = (text?: string) => {
 };
 
 onMounted(() => {
-  mittBus.on("openChat", () => {});
   selectedPerson.value = personList.value[0];
 });
 </script>

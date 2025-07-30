@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { LayoutModeEnum, MenuThemeEnum, GlobalThemeEnum } from "@/common/enums";
+import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums";
 import lightTheme from "@/common/assets/images/menu-theme/light.png";
 import darkTheme from "@/common/assets/images/menu-theme/dark.png";
 import { useNamespace } from "@/composables";
@@ -15,7 +15,7 @@ const ns = useNamespace("menu-theme-switch");
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
-const { layout, theme } = storeToRefs(settingStore);
+const { layout, isDark } = storeToRefs(settingStore);
 
 const menuThemeModeList = computed(() => [
   {
@@ -31,9 +31,7 @@ const menuThemeModeList = computed(() => [
 ]);
 
 const isDisable = computed(
-  () =>
-    [LayoutModeEnum.Horizontal, LayoutModeEnum.Columns].includes(layout.value.layoutMode) ||
-    theme.value.globalThemeMode === GlobalThemeEnum.Dark
+  () => [LayoutModeEnum.Horizontal, LayoutModeEnum.Columns].includes(layout.value.layoutMode) || isDark.value
 );
 
 /**

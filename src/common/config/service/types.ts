@@ -150,8 +150,10 @@ export interface TabNavConfig {
   height: number;
   /** 是否点击中键时关闭标签，优先级低于 middleClickToOpen */
   middleClickToClose: boolean;
-  /** 是否点击中建时新窗口打开标签页 */
+  /** 是否点击中键时打开标签页，优先级低于 middleClickToOpenWindow */
   middleClickToOpen: boolean;
+  /** 是否点击中键时新窗口打开标签页 */
+  middleClickToOpenInNewWindow: boolean;
   /** 显示更多按钮 */
   showMore: boolean;
   /** 是否开启鼠标滚轮响应 */

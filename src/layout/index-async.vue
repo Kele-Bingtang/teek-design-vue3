@@ -23,7 +23,7 @@ import { storeToRefs } from "pinia";
 import { LayoutModeEnum, ThemePanelTriggerPositionEnum } from "@/common/enums";
 import { mittBus } from "@/common/utils";
 import { OpenThemePanelKey } from "@/common/config";
-import { useCommon, useUpgrade } from "@/composables";
+import { useCommon, useUpgrade, useMittBus } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import ThemePanel from "./components/theme-panel/index.vue";
 import Watermark from "./components/watermark/index.vue";
@@ -46,6 +46,12 @@ const LayoutComponents: Record<string, Component> = {
 const settingStore = useSettingStore();
 const { layout, header } = storeToRefs(settingStore);
 
+const { isMobile } = useCommon();
+const { openThemePanel } = useMittBus();
+
+// 系统版本升级
+useUpgrade();
+
 const showThemePanelTrigger = computed(() => {
   const { Header, Fixed } = ThemePanelTriggerPositionEnum;
   const { themePanelTriggerPosition } = layout.value;
@@ -55,18 +61,6 @@ const showThemePanelTrigger = computed(() => {
 
   return false;
 });
-
-// 系统版本升级
-useUpgrade();
-
-const { isMobile } = useCommon();
-
-/**
- * 打开主题面板
- */
-const openThemePanel = () => {
-  mittBus.emit(OpenThemePanelKey);
-};
 
 // 移动端默认为 Vertical 布局
 watch(isMobile, () => {

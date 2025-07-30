@@ -141,7 +141,7 @@ const changeMenuItem = (item: RouterConfig) => {
       </el-scrollbar>
     </el-aside>
 
-    <el-container :style="rightContentStyle">
+    <el-container :style="menuItem?.length ? rightContentStyle : {}">
       <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
         <Header />
       </el-header>

@@ -27,28 +27,36 @@ export const useMenuAreaMouse = (offset = 0) => {
 
     if (!enabled) return {};
 
-    // 开启固定菜单栏生效条件，前提菜单显示模式不能是静态模式
-    const defaultStyle =
-      showModeAutoFixed && showMode !== MenuShowModeEnum.Static ? { position: "fixed", zIndex: 99 } : {};
+    // 开启固定菜单栏生效样式
+    const defaultStyle = showModeAutoFixed ? { position: "fixed", left: 0, zIndex: 99 } : {};
 
-    // 自动折叠模式，需要移入区域打开菜单，移出区域收起菜单
-    if (showMode === MenuShowModeEnum.AutoCollapse) {
-      if (inMenuArea.value) {
-        settingStore.expandSideMenu();
-        return { ...defaultStyle };
-      }
+    // 菜单显示模式的样式创建工厂
+    const styleCreateFactory = {
+      [MenuShowModeEnum.Static]: {
+        active: () => ({}),
+        inactive: () => ({}),
+      },
+      // 自动折叠模式，需要移入区域打开菜单，移出区域收起菜单
+      [MenuShowModeEnum.AutoCollapse]: {
+        active: () => {
+          settingStore.expandSideMenu();
+          return { ...defaultStyle };
+        },
+        inactive: () => {
+          settingStore.collapseSideMenu();
+          return { ...defaultStyle, width: addUnit(collapseWidth) };
+        },
+      },
+      // 折叠隐藏模式，根据是否在菜单区域内决定宽度
+      [MenuShowModeEnum.AutoHidden]: {
+        active: () => ({ ...defaultStyle }),
+        inactive: () => ({ ...defaultStyle, width: 0 }),
+      },
+    };
 
-      settingStore.collapseSideMenu();
-      return { ...defaultStyle, width: addUnit(collapseWidth) };
-    }
+    const key = inMenuArea.value ? "active" : "inactive";
 
-    // 折叠隐藏模式，根据是否在菜单区域内决定宽度
-    if (showMode === MenuShowModeEnum.AutoHidden) {
-      if (inMenuArea.value) return { ...defaultStyle };
-      return { ...defaultStyle, width: 0 };
-    }
-
-    return { ...defaultStyle };
+    return styleCreateFactory[showMode][key]?.() ?? {};
   });
 
   // 非侧边栏（右侧内容区）样式
@@ -69,7 +77,7 @@ export const useMenuAreaMouse = (offset = 0) => {
   const start = () => {
     menuStopWatcher = watch(
       () => mouseX.value,
-      newValue => {
+      newVal => {
         const { width, collapsed, collapseWidth, showMode } = menu.value;
         let targetWidth = collapsed ? collapseWidth : width;
 
@@ -80,7 +88,7 @@ export const useMenuAreaMouse = (offset = 0) => {
         }
 
         // 避免鼠标移到菜单外时菜单直接收起，这里添加 30 阈值，整合可以移到折叠菜单触发器位置
-        if (newValue > targetWidth + 30 + offset) inMenuArea.value = false;
+        if (newVal > targetWidth + 30 + offset) inMenuArea.value = false;
         else inMenuArea.value = true;
       }
     );

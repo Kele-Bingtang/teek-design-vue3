@@ -5,6 +5,7 @@ import { isValidURL } from "@/common/utils";
 import { Tooltip, PointTag } from "@/components";
 import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
+import { LayoutModeEnum } from "@/common/enums";
 
 defineOptions({ name: "AsideMenuItem" });
 
@@ -15,7 +16,9 @@ const router = useRouter();
 const settingStore = useSettingStore();
 const { isMobile, getTitle } = useCommon();
 
-const { menu } = storeToRefs(settingStore);
+const { menu, layout } = storeToRefs(settingStore);
+
+const showTag = computed(() => layout.value.layoutMode === LayoutModeEnum.Mixins || !menu.value.collapsed);
 
 /**
  * 菜单点击事件，跳转页面
@@ -47,7 +50,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
-        v-if="menuItem.meta.tagText && !menu.collapsed"
+        v-if="menuItem.meta.tagText && showTag"
         size="small"
         type="danger"
         effect="dark"
@@ -57,7 +60,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
         {{ menuItem.meta.tagText }}
       </el-tag>
       <PointTag
-        v-if="menuItem.meta.pointTag && !menu.collapsed"
+        v-if="menuItem.meta.pointTag && showTag"
         type="danger"
         v-bind="menuItem.meta.pointTagProps"
         class="menu-item-tag point-tag"

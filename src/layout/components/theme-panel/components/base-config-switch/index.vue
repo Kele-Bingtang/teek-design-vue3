@@ -239,6 +239,10 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
       <span>{{ $t("_setting.tabNav.middleClickToOpen") }}</span>
       <el-switch v-model="tabNav.middleClickToOpen" />
     </div>
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNav.middleClickToOpenInNewWindow") }}</span>
+      <el-switch v-model="tabNav.middleClickToOpenInNewWindow" />
+    </div>
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.showMore") }}</span>
