@@ -166,5 +166,10 @@ export const initDataRowField = (
         return false;
       }
     };
+
+    // 重写 toJSON 方法，输出当前行数据时过滤掉 _ 开头的属性
+    row.toJSON = () => {
+      return Object.fromEntries(Object.entries(row).filter(([key]) => !key.startsWith("_")));
+    };
   }
 };

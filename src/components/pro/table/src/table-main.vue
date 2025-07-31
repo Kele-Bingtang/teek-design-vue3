@@ -82,7 +82,7 @@ const tryPagination = (data: Recordable[] = []) => {
   if (!data.length) return [];
 
   // 如果服务端（后端）分页，则不执行分页，需要后端返回已分页的 data
-  if (isServer(toValue(props.pageScope))) return data;
+  if (props.pageScope === false || isServer(toValue(props.pageScope))) return data;
 
   // 客户端（前端）分页
   const { pageNum, pageSize } = pageInfo.value;
@@ -99,12 +99,13 @@ function useTableInit() {
   // 当 columns 发生改变时，重新初始化
   watch(
     availableColumns,
-    async newValue => {
+    newValue => {
       const flatColumns = flatColumnsFn(newValue);
-      // 异步但有序执行
+      // 异步有序执行，减少因遍历过长导致主线程卡顿
       for (const column of flatColumns) {
-        await initOptionsMap(column.options, column.prop || "");
-        initDataRowField(props.data as TableRow[], column, optionsMap);
+        initOptionsMap(column.options, column.prop || "").then(() => {
+          initDataRowField(props.data as TableRow[], column, optionsMap);
+        });
       }
     },
     { deep: true }
@@ -113,11 +114,13 @@ function useTableInit() {
   // 不对数据进行深度监听，当数据整体发生改变时，重新初始化
   watch(
     () => props.data,
-    async newValue => {
+    newValue => {
       const flatColumns = flatColumnsFn(availableColumns.value);
       for (const column of flatColumns) {
-        await initOptionsMap(column.options, column.prop || "");
-        initDataRowField(newValue as TableRow[], column, optionsMap);
+        // 异步有序执行，减少因遍历过长导致主线程卡顿
+        initOptionsMap(column.options, column.prop || "").then(() => {
+          initDataRowField(newValue as TableRow[], column, optionsMap);
+        });
       }
     }
   );
@@ -318,6 +321,7 @@ defineExpose(expose);
     @selection-change="handleSelectionChange"
     @cell-click="handleClickCell"
     @cell-dblclick="handleDoubleClickCell"
+    v-loading="$attrs.loading ?? false"
   >
     <!-- 默认插槽 -->
     <slot name="default">

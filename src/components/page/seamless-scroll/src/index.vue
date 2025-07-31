@@ -299,8 +299,7 @@ const touchMove = (e: any) => {
  */
 const touchEnd = () => {
   if (!canTouchScroll.value) return;
-  // eslint-disable-next-line prefer-const
-  let timer: any;
+  let timer: ReturnType<typeof setTimeout> | null = null;
   const direction = options.value.direction;
   delay.value = 50;
   if (direction === "top") {

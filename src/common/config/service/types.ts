@@ -139,7 +139,7 @@ export interface MenuConfig {
 export interface TabNavConfig {
   /** 是否使用 tagsNav */
   enabled: boolean;
-  /** 标签页元素模式设置 */
+  /** 标签栏元素模式设置 */
   elementMode: TabNavElementModeEnum;
   /** 标签栏 Icon 是否显示 */
   showIcon: boolean;
@@ -147,11 +147,11 @@ export interface TabNavConfig {
   showDot: boolean;
   /** 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav */
   persistence: boolean;
-  /** 是否固定标签页 */
+  /** 是否固定标签栏 */
   fixed: boolean;
   /** 是否开启多标签页拖拽 */
   draggable: boolean;
-  /** 标签页高度 */
+  /** 标签栏高度 */
   height: number;
   /** 是否点击中键时关闭标签，优先级低于 middleClickToOpen */
   middleClickToClose: boolean;
@@ -248,11 +248,11 @@ export interface RouterConfig {
 export interface CacheConfig {
   /** 缓存 key 前缀 */
   cacheKeyPrefix: string;
-  /** 缓存标签页的 key */
+  /** 缓存标签栏的 key */
   tabNavCacheKey: string;
   /** 缓存版本号的 key */
   versionCacheKey: string;
-  /** 当 URL 携带参数时，标签页会出现多个重复且名字一样的 tab，该配置可指定忽略哪些参数生成新的 tab，如果为 * 则忽略所有参数 */
+  /** 当 URL 携带参数时，标签栏会出现多个重复且名字一样的 tab，该配置可指定忽略哪些参数生成新的 tab，如果为 * 则忽略所有参数 */
   tabExcludesUrlKey: string[];
   /** 缓存路由的 key */
   cacheDynamicRoutesKey: string;

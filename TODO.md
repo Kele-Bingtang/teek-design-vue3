@@ -6,6 +6,6 @@
 
 ## 优化
 
-- ProTable columns 过多速度优化
+- ProTable columns 数据过多速度优化
 
 ## Bug

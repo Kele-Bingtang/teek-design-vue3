@@ -145,17 +145,18 @@ const isServerPage = computed(() => {
   return pageScope === Environment.Server;
 });
 
-const { tableData, pageInfo, searchParams, searchInitParams, fetch, search, reset, handlePagination } = useTableState({
-  api: finalProps.value.requestApi,
-  apiParams: computed(() => unref(finalProps.value.defaultRequestParams)),
-  pageInfo: computed(() => finalProps.value.pageInfo),
-  isServerPage: isServerPage,
-  beforeSearch: finalProps.value.beforeSearch,
-  transformData: finalProps.value.transformData,
-  requestError: finalProps.value.requestError,
-  pageField: finalProps.value.pageField,
-  immediate: finalProps.value.requestImmediate,
-});
+const { tableData, pageInfo, searchParams, searchInitParams, fetch, search, reset, handlePagination, loading } =
+  useTableState({
+    api: finalProps.value.requestApi,
+    apiParams: computed(() => unref(finalProps.value.defaultRequestParams)),
+    pageInfo: computed(() => finalProps.value.pageInfo),
+    isServerPage: isServerPage,
+    beforeSearch: finalProps.value.beforeSearch,
+    transformData: finalProps.value.transformData,
+    requestError: finalProps.value.requestError,
+    pageField: finalProps.value.pageField,
+    immediate: finalProps.value.requestImmediate,
+  });
 
 // 表格数据，传来的 data 大于 api 获取的数据
 const finalTableData = computed(() => {
@@ -431,6 +432,7 @@ defineExpose(expose);
       @filter-clear="handleFilterClear"
       @filter-reset="handleFilterReset"
       @leave-cell-edit="handleLeaveCellEdit"
+      :loading
     >
       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />

@@ -186,6 +186,7 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
 
   return {
     ...toRefs(state),
+    loading: readonly(loading),
     fetch: requestData,
     search,
     reset,

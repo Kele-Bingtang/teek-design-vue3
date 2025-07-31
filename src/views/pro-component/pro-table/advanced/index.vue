@@ -206,11 +206,11 @@ const cancelEdit = (row: TableRow<ResUserList>) => {
 };
 
 const confirmEdit = (row: TableRow<ResUserList>) => {
-  row._validateCellEdit?.((isValid, invalidFields) => {
+  row._validateCellEdit((isValid, invalidFields) => {
     if (isValid) {
       row._editable = false;
       ElMessage.success({
-        message: `编辑成功，内容为 ${JSON.stringify(row._getData?.())}`,
+        message: `编辑成功，内容为 ${JSON.stringify(row._getData())}`,
         plain: true,
       });
     } else {

@@ -129,7 +129,7 @@ declare global {
      */
     iframeKeepAlive?: boolean;
     /**
-     * IFrame 页是否开新标签页打开（默认 false）
+     * IFrame 页是否开新标签栏打开（默认 false）
      *
      * @default false
      */
@@ -139,7 +139,7 @@ declare global {
      */
     transitionProps?: TransitionProps;
     /**
-     * 是否不添加到标签页
+     * 是否不添加到标签栏
      *
      * @default false
      */

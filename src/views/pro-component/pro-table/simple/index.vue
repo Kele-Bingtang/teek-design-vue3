@@ -7,8 +7,6 @@ import { setProp } from "@/components/pro/helper";
 import { ProTable } from "@/components/pro/table";
 import { tableData } from "@/mock/pro-component/pro-table";
 
-defineOptions({ name: "Test" });
-
 const data = ref(tableData);
 
 const columns: TableColumn[] = [

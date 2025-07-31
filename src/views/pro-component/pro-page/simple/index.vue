@@ -100,10 +100,10 @@ buttons.value = [
     show: row => !!row._isCellEdit?.(["username", "user.detail.age", "idCard"]),
     icon: Check,
     onClick: async ({ row }) => {
-      const valid = await row._validateCellEdit?.();
+      const valid = await row._validateCellEdit();
       if (valid) {
         // row._editable = !row._editable;
-        row._closeCellEdit?.(["username", "user.detail.age", "idCard"]);
+        row._closeCellEdit(["username", "user.detail.age", "idCard"]);
       }
     },
   },

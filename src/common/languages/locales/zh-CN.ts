@@ -291,13 +291,13 @@ export default {
     tabNav: {
       label: "标签栏",
       enabled: "显示标签栏",
-      mode: "标签页风格",
+      mode: "标签栏风格",
       height: "标签栏高度",
       maxCount: "最大标签数",
       showIcon: "显示标签栏图标",
       showDot: "显示标签栏圆圈",
-      persistence: "持久化标签页",
-      fixed: "固定标签页",
+      persistence: "持久化标签栏",
+      fixed: "固定标签栏",
       modeSelect: {
         simple: "简洁",
         classic: "经典",

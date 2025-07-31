@@ -75,11 +75,11 @@ export type TableRow<T = Recordable> = T & {
   /**
    * options 字典枚举
    */
-  _options?: Record<string, ElOption[]>;
+  _options: Record<string, ElOption[]>;
   /**
    * 当前列的 option 相关配置，_getValue 里需要使用，因此需要提前缓存起来
    */
-  _optionProps?: Record<
+  _optionProps: Record<
     string,
     {
       optionField: TableColumn["optionField"];
@@ -90,47 +90,47 @@ export type TableRow<T = Recordable> = T & {
   /**
    * 获取单元格值
    */
-  _getValue?: (prop: string) => any;
+  _getValue: (prop: string) => any;
   /**
    * 获取当前行的数据
    */
-  _getData?: () => Recordable;
+  _getData: () => Recordable;
   /**
    * 表格是否可编辑
    */
-  _editable?: boolean | undefined;
+  _editable: boolean | undefined;
   /**
    * 表格单元格是否可编辑
    */
-  _editableCol?: Record<string, boolean>;
+  _editableCol: Record<string, boolean>;
   /***
    * 编辑态的 ProForm 实例
    */
-  _proFormInstance?: Record<string, ProFormInstance>;
+  _proFormInstance: Record<string, ProFormInstance>;
   /**
    * 开启编辑态方法
    */
-  _openCellEdit?: (props?: string | string[]) => void;
+  _openCellEdit: (props?: string | string[]) => void;
   /**
    * 停止编辑态方法
    *
    * @reset 是否重置到编辑前的数据
    */
-  _closeCellEdit?: (props?: string | string[], reset?: boolean) => void;
+  _closeCellEdit: (props?: string | string[], reset?: boolean) => void;
   /**
    * 重置到编辑前的数据，请先使用 _openCellEdit 后再使用该函数
    */
-  _resetCellData?: (props?: string | string[]) => void;
+  _resetCellData: (props?: string | string[]) => void;
   /**
    * 是否处于编辑态方法
    *
    * @mode props 为数组时，可以指定匹配模式，默认 and
    */
-  _isCellEdit?: (props?: string | string[], mode?: "and" | "or") => boolean;
+  _isCellEdit: (props?: string | string[], mode?: "and" | "or") => boolean;
   /**
    * 校验编辑态表单方法
    */
-  _validateCellEdit?: (callback?: FormValidateCallback, prop?: string) => FormValidationResult | undefined;
+  _validateCellEdit: (callback?: FormValidateCallback, prop?: string) => FormValidationResult | undefined;
 };
 
 /**
