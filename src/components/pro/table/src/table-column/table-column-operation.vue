@@ -39,7 +39,6 @@ function useOperationButtonPropsGet() {
    */
   const getButtons = (row: TableRow, index: number) => {
     const { buttons, showNumber } = props;
-
     const data = toValue(buttons).filter(item => {
       if (!isFunction(item.show)) return unref(item.show) !== false;
       const isShow = item.show(row, index, item);

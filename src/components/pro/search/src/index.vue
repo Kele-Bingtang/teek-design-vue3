@@ -37,6 +37,8 @@ const props = withDefaults(defineProps<ProSearchProps>(), {
   validate: true,
   showLabel: true,
   form: () => ({}),
+  collapseTransition: true,
+  collapseDuration: 300,
 });
 
 const emits = defineEmits<ProSearchEmits>();
@@ -231,6 +233,8 @@ defineExpose(defaultExpose);
             v-for="column in searchColumns"
             :key="column.prop"
             v-bind="getResponsive(column)"
+            :collapse-transition="finalProps.collapseTransition"
+            :collapse-duration="finalProps.collapseDuration"
             :index="column._index"
           >
             <ProFormItem

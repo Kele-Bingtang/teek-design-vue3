@@ -6,7 +6,8 @@
 
 ## 优化
 
-- ProTable 传入 API 后，自动显示 `refresh` 按钮
-- ProSearch 支持折叠动画
+- ProTable columns 过多速度优化
+- 隐藏折叠图标右键隐藏菜单
+- 最大标签数
 
 ## Bug

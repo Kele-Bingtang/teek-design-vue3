@@ -7,7 +7,7 @@ import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isObject, isString } from "@/common/utils";
 import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
-import { formELComponentsMap, FormElComponentEnum } from "./helper";
+import { formELComponentsMap, FormElComponentEnum, defaultOptionField } from "./helper";
 import { useOptions } from "@/components/pro/use-options";
 import Checkbox from "./components/checkbox.vue";
 import Radio from "./components/radio.vue";
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   elProps: () => ({}),
   elSlots: () => ({}),
   options: () => [],
-  optionField: () => ({ label: "label", value: "value", children: "children", disabled: "disabled" }),
+  optionField: () => defaultOptionField,
   formItemProps: () => ({}),
   clearable: true,
   tooltip: undefined,

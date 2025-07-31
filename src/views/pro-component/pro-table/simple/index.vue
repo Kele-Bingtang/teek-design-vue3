@@ -101,7 +101,7 @@ buttons.value = [
     show: row => !!row._editable,
     icon: Edit,
     onClick: async ({ row }) => {
-      const valid = await row._validateCellEdit();
+      const valid = await row._validateCellEdit?.();
       if (valid) row._editable = !row._editable;
     },
   },

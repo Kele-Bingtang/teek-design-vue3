@@ -85,10 +85,10 @@ buttons.value = [
       type: "primary",
     }),
     icon: Edit,
-    show: row => !row._isCellEdit(["username", "user.detail.age", "idCard"]),
+    show: row => !row._isCellEdit?.(["username", "user.detail.age", "idCard"]),
     onClick: async ({ row }) => {
       // row._editable = !row._editable;
-      row._openCellEdit(["username", "user.detail.age", "idCard"]);
+      row._openCellEdit?.(["username", "user.detail.age", "idCard"]);
     },
   },
   {
@@ -97,13 +97,13 @@ buttons.value = [
     elProps: () => ({
       type: "primary",
     }),
-    show: row => !!row._isCellEdit(["username", "user.detail.age", "idCard"]),
+    show: row => !!row._isCellEdit?.(["username", "user.detail.age", "idCard"]),
     icon: Check,
     onClick: async ({ row }) => {
-      const valid = await row._validateCellEdit();
+      const valid = await row._validateCellEdit?.();
       if (valid) {
         // row._editable = !row._editable;
-        row._closeCellEdit(["username", "user.detail.age", "idCard"]);
+        row._closeCellEdit?.(["username", "user.detail.age", "idCard"]);
       }
     },
   },
