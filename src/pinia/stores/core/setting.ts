@@ -65,6 +65,7 @@ export const useSettingStore = defineStore(
       showMode: menuConfig.showMode || MenuShowModeEnum.Static,
       autoActivateChild: menuConfig.autoActivateChild,
       showModeAutoFixed: menuConfig.showModeAutoFixed,
+      rightClickMenuCollapseToClose: menuConfig.rightClickMenuCollapseToClose,
     });
 
     const tabNav = reactive({

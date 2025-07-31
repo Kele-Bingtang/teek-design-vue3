@@ -177,6 +177,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
       </el-select>
     </div>
 
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.rightClickMenuCollapseToClose") }}</span>
+      <el-switch v-model="menu.rightClickMenuCollapseToClose" />
+    </div>
+
     <h3>{{ $t("_setting.breadcrumb.label") }}</h3>
 
     <div :class="ns.e('item')" v-if="!isMobile">

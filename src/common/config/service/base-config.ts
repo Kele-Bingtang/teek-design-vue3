@@ -61,6 +61,7 @@ export const defaultServiceConfig: ServiceConfig = {
     showMode: MenuShowModeEnum.Static,
     autoActivateChild: true,
     showModeAutoFixed: true,
+    rightClickMenuCollapseToClose: true,
   },
   tabNav: {
     enabled: true,

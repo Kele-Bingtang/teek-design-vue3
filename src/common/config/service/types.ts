@@ -132,6 +132,8 @@ export interface MenuConfig {
   autoActivateChild: boolean;
   /** 当菜单显示模式为 Auto 时，是否固定菜单栏 */
   showModeAutoFixed: boolean;
+  /** 鼠标右键点击关闭菜单栏 */
+  rightClickMenuCollapseToClose: boolean;
 }
 
 export interface TabNavConfig {

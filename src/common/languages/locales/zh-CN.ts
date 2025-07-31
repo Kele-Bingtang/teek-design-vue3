@@ -286,6 +286,7 @@ export default {
         autoCollapse: "自动折叠",
         autoHidden: "自动隐藏",
       },
+      rightClickMenuCollapseToClose: "右键折叠图标关闭菜单",
     },
     tabNav: {
       label: "标签栏",

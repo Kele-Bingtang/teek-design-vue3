@@ -284,6 +284,7 @@ export default {
         autoCollapse: "Auto collapse",
         autoHidden: "Auto hidden",
       },
+      rightClickMenuCollapseToClose: "Right click menu collapse to close",
     },
     tabNav: {
       label: "Tab bar",
