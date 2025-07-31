@@ -4,7 +4,7 @@ const websocketRoutes: RouterConfigRaw = {
   path: "/websocket",
   name: "Websocket",
   meta: {
-    title: "标签页操作",
+    title: "Websocket",
     icon: Discount,
     tagText: "New",
   },

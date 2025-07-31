@@ -15,6 +15,12 @@ export interface TreeFilterProps {
    */
   defaultRequestParams?: Recordable;
   /**
+   * 是否立即执行请求
+   *
+   * @default true
+   */
+  requestImmediate?: boolean;
+  /**
    * 对请求成功的数据进行处理
    */
   transformData?: (data: Recordable[], result?: any) => any;

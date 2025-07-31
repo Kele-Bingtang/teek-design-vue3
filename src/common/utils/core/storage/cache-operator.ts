@@ -3,7 +3,7 @@ import { serviceConfig } from "@/common/config";
 import { localStorageProxy } from "./storage-manager";
 
 class CacheOperator {
-  // 标签页的 tabNav 缓存
+  // 标签栏的 tabNav 缓存
   readonly tabNavKey = serviceConfig.cache.tabNavCacheKey;
   // 路由缓存
   readonly dynamicRoutesKey = serviceConfig.cache.cacheDynamicRoutesKey;
@@ -11,17 +11,17 @@ class CacheOperator {
   readonly versionKey = serviceConfig.cache.versionCacheKey;
 
   /**
-   * 获取标签页的 tabNav 缓存
+   * 获取标签栏的 tabNav 缓存
    */
   getCacheTabNavList = () => localStorageProxy.getItem<TabProps[]>(this.tabNavKey) ?? [];
   /**
-   * 设置标签页的 tabNav 缓存
+   * 设置标签栏的 tabNav 缓存
    *
-   * @param tabNavList 标签页的 tabNav 缓存
+   * @param tabNavList 标签栏的 tabNav 缓存
    */
   setCacheTabNavList = (tabNavList: TabProps[]) => localStorageProxy.setItem(this.tabNavKey, tabNavList);
   /**
-   * 移除标签页的 tabNav 缓存
+   * 移除标签栏的 tabNav 缓存
    */
   removeCacheTabNavList = () => localStorageProxy.removeItem(this.tabNavKey);
 

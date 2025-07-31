@@ -3,6 +3,7 @@ import type { CheckboxValueType } from "element-plus";
 import type { ElOptionField, ElOption } from "../types";
 import { computed, ref, watch } from "vue";
 import { ElCheckbox, ElCheckboxGroup, ElRadio, ElRadioGroup } from "element-plus";
+import { defaultOptionField } from "../helper";
 
 defineOptions({ name: "CheckBoxSelect" });
 
@@ -16,7 +17,7 @@ export interface CheckBoxSelectProps {
 }
 
 const props = withDefaults(defineProps<CheckBoxSelectProps>(), {
-  optionField: () => ({ label: "label", value: "value", disabled: "disabled" }),
+  optionField: () => defaultOptionField,
   multiple: false,
 });
 

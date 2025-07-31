@@ -6,10 +6,10 @@ import { useWebSocketStore, SocketStatus } from "@/pinia/stores/websocket";
 // 初始化 WebSocket Store
 const webSocketStore = useWebSocketStore();
 
-// 连接URL
+// 连接 URL
 const connectionUrl = ref("wss://echo.websocket.org");
 
-// 活动标签页
+// 活动标签
 const activeTab = ref("normal");
 
 // 普通消息表单

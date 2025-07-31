@@ -83,6 +83,18 @@ export interface GridItemProps {
    * 宽度大于 1920px 时的 span
    */
   xl?: Responsive;
+  /**
+   * 是否开启折叠动画
+   *
+   * @default false
+   */
+  collapseTransition?: boolean;
+  /**
+   * 折叠动画持续时长(单位：ms)
+   *
+   * @default 300
+   */
+  collapseDuration?: number;
 }
 
 export type GridInstance = InstanceType<typeof Grid>;

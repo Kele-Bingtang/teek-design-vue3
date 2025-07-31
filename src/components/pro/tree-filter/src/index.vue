@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<TreeFilterProps>(), {
   data: () => [],
   requestApi: undefined,
   defaultRequestParams: () => ({}),
+  requestImmediate: true,
   transformData: undefined,
   title: "",
   id: "id",
@@ -65,7 +66,7 @@ const setSelected = () => {
  * 初始化树形数据
  */
 const initTreeData = async () => {
-  const { data, requestApi, transformData, id, label, enableTotal, defaultFirst } = props;
+  const { data, requestApi, requestImmediate, transformData, id, label, enableTotal, defaultFirst } = props;
 
   // 有数据就直接赋值，没有数据就执行请求函数
   if (data.length) {
@@ -74,7 +75,7 @@ const initTreeData = async () => {
     return;
   }
 
-  if (requestApi) {
+  if (requestImmediate && requestApi) {
     const result = await requestApi(props.defaultRequestParams);
     // 兼容常用数据格式
     let data = result?.data || result?.list || result?.data?.list || result;

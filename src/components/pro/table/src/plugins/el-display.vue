@@ -4,6 +4,7 @@ import type { ElRenderParams, TableComponentEnum } from "../helper";
 import { unref, computed, toValue } from "vue";
 import { isFunction } from "@/common/utils";
 import { toCamelCase } from "@/components/pro/helper";
+import { defaultOptionField } from "@/components/pro/form-item";
 import { tableElComponentsMap } from "../helper";
 
 import "../styles/el-display.scss";
@@ -16,7 +17,7 @@ const props = withDefaults(defineProps<ElDisplayProps>(), {
   el: undefined,
   elProps: () => ({}),
   options: () => [],
-  optionField: () => ({ label: "label", value: "value", children: "children", disabled: "disabled" }),
+  optionField: () => defaultOptionField,
 });
 
 const elRenderParams = computed<ElRenderParams>(() => {

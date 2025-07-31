@@ -20,10 +20,14 @@ const toggleTrigger = () => {
   settingStore.toggleSideMenu();
   updateInMenuAreaState?.();
 };
+
+const rightClick = () => {
+  if (menu.value.rightClickMenuCollapseToClose) menu.value.enabled = !menu.value.enabled;
+};
 </script>
 
 <template>
-  <div :class="ns.b()" class="flx-center" @click.stop="toggleTrigger">
+  <div :class="ns.b()" class="flx-center" @click.left="toggleTrigger" @click.right.prevent="rightClick">
     <Icon :icon="menu.collapsed ? Expand : Fold" />
     <slot />
   </div>

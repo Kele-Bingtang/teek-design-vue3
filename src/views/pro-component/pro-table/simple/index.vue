@@ -7,8 +7,6 @@ import { setProp } from "@/components/pro/helper";
 import { ProTable } from "@/components/pro/table";
 import { tableData } from "@/mock/pro-component/pro-table";
 
-defineOptions({ name: "Test" });
-
 const data = ref(tableData);
 
 const columns: TableColumn[] = [
@@ -101,7 +99,7 @@ buttons.value = [
     show: row => !!row._editable,
     icon: Edit,
     onClick: async ({ row }) => {
-      const valid = await row._validateCellEdit();
+      const valid = await row._validateCellEdit?.();
       if (valid) row._editable = !row._editable;
     },
   },

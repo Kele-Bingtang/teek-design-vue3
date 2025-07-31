@@ -13,7 +13,7 @@ import {
 } from "element-plus";
 import { Coin, Operation, Download, Setting, Refresh } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { TableColumnTypeEnum, TableSizeEnum, ToolButtonEnum } from "./helper";
+import { defaultToolButton, defaultTooltipProps, TableColumnTypeEnum, TableSizeEnum, ToolButtonEnum } from "./helper";
 import { exportExcel } from "./plugins/table-head-export";
 import TableHeadColumnSetting from "./plugins/table-head-column-setting.vue";
 
@@ -24,12 +24,12 @@ defineOptions({ name: "TableHead" });
 const props = withDefaults(defineProps<ProTableHeadNamespace.Props>(), {
   data: () => [],
   columns: () => [],
-  toolButton: () => ["size", "export", "columnSetting", "baseSetting"],
+  toolButton: () => defaultToolButton,
   disabledToolButton: () => [],
   size: () => TableSizeEnum.Default,
   title: "",
   exportProps: () => ({}),
-  tooltipProps: () => ({ placement: "top", effect: "light" }),
+  tooltipProps: () => defaultTooltipProps,
   sizeStyle: () => ({}),
   columnSetting: () => ({}),
   baseSetting: () => ({}),

@@ -18,7 +18,7 @@ import { Tools } from "@element-plus/icons-vue";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { defaultTablePageInfo, useTableApi, useTableState } from "./composables";
-import { Environment, TableSizeEnum } from "./helper";
+import { defaultToolButton, defaultTooltipProps, Environment, TableSizeEnum } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";
 
@@ -53,12 +53,12 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   pageField: () => ({}),
 
   // TableHead 组件的 props（透传下去）
-  toolButton: () => ["size", "export", "columnSetting", "baseSetting"],
+  toolButton: undefined,
   disabledToolButton: () => [],
   size: () => TableSizeEnum.Default,
   title: "",
   exportProps: undefined,
-  tooltipProps: () => ({ placement: "top", effect: "light" }),
+  tooltipProps: () => defaultTooltipProps,
   sizeStyle: () => ({}),
   columnSetting: () => ({}),
   baseSetting: () => ({}),
@@ -125,6 +125,18 @@ const tableMainProps = computed(() => {
   });
 });
 
+// head 右侧工具栏
+const toolButton = computed(() => {
+  const { toolButton, requestApi } = finalProps.value;
+
+  // 如果外面配置 toolButton，则返回
+  if (toolButton) return toolButton;
+  // 如果配置了 requestApi，则开启刷新按钮
+  if (requestApi) return true;
+  // 如果没用配置 requestApi，则默认隐藏刷新按钮
+  return defaultToolButton.filter(item => item !== "refresh");
+});
+
 // 是否为服务器（后端）分页
 const isServerPage = computed(() => {
   const { pageScope } = finalProps.value;
@@ -133,22 +145,22 @@ const isServerPage = computed(() => {
   return pageScope === Environment.Server;
 });
 
-const { tableData, pageInfo, searchParams, searchInitParams, fetch, search, reset, handlePagination } = useTableState({
-  api: finalProps.value.requestApi,
-  apiParams: computed(() => unref(finalProps.value.defaultRequestParams)),
-  pageInfo: computed(() => finalProps.value.pageInfo),
-  isServerPage: isServerPage,
-  beforeSearch: finalProps.value.beforeSearch,
-  transformData: finalProps.value.transformData,
-  requestError: finalProps.value.requestError,
-  pageField: finalProps.value.pageField,
-  immediate: finalProps.value.requestImmediate,
-});
+const { tableData, pageInfo, searchParams, searchInitParams, fetch, search, reset, handlePagination, loading } =
+  useTableState({
+    api: finalProps.value.requestApi,
+    apiParams: computed(() => unref(finalProps.value.defaultRequestParams)),
+    pageInfo: computed(() => finalProps.value.pageInfo),
+    isServerPage: isServerPage,
+    beforeSearch: finalProps.value.beforeSearch,
+    transformData: finalProps.value.transformData,
+    requestError: finalProps.value.requestError,
+    pageField: finalProps.value.pageField,
+    immediate: finalProps.value.requestImmediate,
+  });
 
 // 表格数据，传来的 data 大于 api 获取的数据
 const finalTableData = computed(() => {
   const { data } = finalProps.value;
-
   if (data.length) return data;
   return tableData.value;
 });
@@ -381,7 +393,7 @@ defineExpose(expose);
       ref="tableHeadInstance"
       :columns="finalProps.columns"
       :data="finalTableData"
-      :tool-button="finalProps.toolButton"
+      :tool-button
       :disabled-tool-button="finalProps.disabledToolButton"
       :size="finalProps.size"
       :title="finalProps.title"
@@ -420,6 +432,7 @@ defineExpose(expose);
       @filter-clear="handleFilterClear"
       @filter-reset="handleFilterReset"
       @leave-cell-edit="handleLeaveCellEdit"
+      :loading
     >
       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />

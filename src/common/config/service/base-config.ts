@@ -61,6 +61,7 @@ export const defaultServiceConfig: ServiceConfig = {
     showMode: MenuShowModeEnum.Static,
     autoActivateChild: true,
     showModeAutoFixed: true,
+    rightClickMenuCollapseToClose: true,
   },
   tabNav: {
     enabled: true,
@@ -76,6 +77,7 @@ export const defaultServiceConfig: ServiceConfig = {
     middleClickToOpenInNewWindow: true,
     showMore: true,
     wheel: true,
+    maxCount: 0,
   },
   breadcrumb: {
     enabled: true,

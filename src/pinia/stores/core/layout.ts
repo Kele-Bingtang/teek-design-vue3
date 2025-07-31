@@ -30,6 +30,12 @@ export const useLayoutStore = defineStore(
     const language = ref(serviceConfig.layout.language);
     const iframeList = ref<IFrame[]>([]);
 
+    const settingStore = useSettingStore();
+
+    const { tabNav } = storeToRefs(settingStore);
+
+    const closeTabNavList = computed(() => tabNavList.value.filter(t => t.close));
+
     /**
      * 根据路由路径找到 tab 信息
      * @param path 路径
@@ -57,15 +63,20 @@ export const useLayoutStore = defineStore(
 
       // 判断动态路由的可打开最大数量
       const dynamicLevel = tab.meta.dynamicLevel ?? -1;
+      const dynamicTabNavList = tabNavListValue.filter(t => t.path === tab.path || t.name === tab.name);
 
-      if (
-        dynamicLevel > 0 &&
-        tabNavListValue.filter(t => t.path === tab.path || t.name === tab.name).length >= dynamicLevel
-      ) {
+      if (dynamicLevel > 0 && dynamicTabNavList.length >= dynamicLevel) {
         const dynamicTabIndex = tabNavListValue.findIndex(t => t.path === tab.path || t.name === tab.name);
 
         // 如果当前已打开的动态路由数大于 dynamicLevel，则删除第一个动态路由 tab
         dynamicTabIndex !== -1 && tabNavListValue.splice(dynamicTabIndex, 1);
+      }
+
+      // 如果已打开的 tab 数量超过最大限制，则删除
+      if (tabNav.value.maxCount > 0 && closeTabNavList.value.length >= tabNav.value.maxCount) {
+        // 如果当前已打开的 tab大于 maxCount，则删除最先打开的非固定的 tab
+        const index = findCloseTabIndex();
+        index !== -1 && tabNavList.value.splice(index, closeTabNavList.value.length - tabNav.value.maxCount + 1);
       }
 
       const tabIndex = findTabIndex(tab.path);
@@ -228,10 +239,6 @@ export const useLayoutStore = defineStore(
     const setIFame = (iFameList: IFrame[] = []) => {
       iframeList.value = iFameList;
     };
-
-    const settingStore = useSettingStore();
-
-    const { tabNav } = storeToRefs(settingStore);
 
     watch(
       () => tabNav.value.persistence,

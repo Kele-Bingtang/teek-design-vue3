@@ -133,6 +133,18 @@ export interface ProSearchProps {
    * ProForm 组件 Props
    */
   form?: ProFormNamespace.Props;
+  /**
+   * 是否开启折叠动画
+   *
+   * @default true
+   */
+  collapseTransition?: GridItemProps["collapseTransition"];
+  /**
+   * 折叠动画持续时长(单位：ms)
+   *
+   * @default 300
+   */
+  collapseDuration?: GridItemProps["collapseDuration"];
 }
 
 export type ProSearchEmits = {

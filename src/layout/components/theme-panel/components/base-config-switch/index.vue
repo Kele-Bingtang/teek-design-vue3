@@ -177,6 +177,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
       </el-select>
     </div>
 
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.rightClickMenuCollapseToClose") }}</span>
+      <el-switch v-model="menu.rightClickMenuCollapseToClose" />
+    </div>
+
     <h3>{{ $t("_setting.breadcrumb.label") }}</h3>
 
     <div :class="ns.e('item')" v-if="!isMobile">
@@ -219,6 +224,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.height") }}</span>
       <el-input-number v-model="tabNav.height" :min="25" :max="50" :step="2" controls-position="right" />
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNav.maxCount") }}</span>
+      <el-input-number v-model="tabNav.maxCount" :min="0" :max="30" :step="5" controls-position="right" />
     </div>
 
     <div :class="ns.e('item')">

@@ -58,6 +58,15 @@ const proComponents: RouterConfigRaw = {
           name: "ComplexProTable",
           meta: { title: "复杂 ProTable" },
         },
+        {
+          path: "pressure",
+          component: () => import("@/views/pro-component/pro-table/pressure/index.vue"),
+          name: "PressureProTable",
+          meta: {
+            title: "压测 ProTable",
+            useI18n: false,
+          },
+        },
       ],
     },
     {

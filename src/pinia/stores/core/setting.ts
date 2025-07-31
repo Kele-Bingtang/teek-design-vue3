@@ -65,6 +65,7 @@ export const useSettingStore = defineStore(
       showMode: menuConfig.showMode || MenuShowModeEnum.Static,
       autoActivateChild: menuConfig.autoActivateChild,
       showModeAutoFixed: menuConfig.showModeAutoFixed,
+      rightClickMenuCollapseToClose: menuConfig.rightClickMenuCollapseToClose,
     });
 
     const tabNav = reactive({
@@ -81,6 +82,7 @@ export const useSettingStore = defineStore(
       middleClickToOpenInNewWindow: tabNavConfig.middleClickToOpenInNewWindow,
       showMore: tabNavConfig.showMore,
       wheel: tabNavConfig.wheel,
+      maxCount: tabNavConfig.maxCount,
     });
 
     const breadcrumb = reactive({

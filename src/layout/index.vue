@@ -14,8 +14,6 @@ import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import { Setting } from "@element-plus/icons-vue";
 import { LayoutModeEnum, ThemePanelTriggerPositionEnum } from "@/common/enums";
-import { mittBus } from "@/common/utils";
-import { OpenThemePanelKey } from "@/common/config";
 import { useCommon, useMittBus, useUpgrade } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import LockPanel from "./components/lock-panel/index.vue";
