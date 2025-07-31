@@ -82,6 +82,7 @@ export const useSettingStore = defineStore(
       middleClickToOpenInNewWindow: tabNavConfig.middleClickToOpenInNewWindow,
       showMore: tabNavConfig.showMore,
       wheel: tabNavConfig.wheel,
+      maxCount: tabNavConfig.maxCount,
     });
 
     const breadcrumb = reactive({

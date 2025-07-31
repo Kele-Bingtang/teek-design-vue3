@@ -227,6 +227,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
     </div>
 
     <div :class="ns.e('item')">
+      <span>{{ $t("_setting.tabNav.maxCount") }}</span>
+      <el-input-number v-model="tabNav.maxCount" :min="0" :max="30" :step="5" controls-position="right" />
+    </div>
+
+    <div :class="ns.e('item')">
       <span>{{ $t("_setting.tabNav.showIcon") }}</span>
       <el-switch v-model="tabNav.showIcon" />
     </div>

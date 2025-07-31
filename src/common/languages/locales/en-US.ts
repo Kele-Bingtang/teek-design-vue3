@@ -287,12 +287,13 @@ export default {
       rightClickMenuCollapseToClose: "Right click menu collapse to close",
     },
     tabNav: {
-      label: "Tab bar",
-      enabled: "Show tab bar",
+      label: "Tab nav",
+      enabled: "Show tab nav",
       mode: "Tab page style",
-      height: "Tab bar height",
-      showIcon: "Show tab bar icon",
-      showDot: "Show tab bar dot",
+      height: "Tab nav height",
+      maxCount: "Maximum number of tabs",
+      showIcon: "Show tab nav icon",
+      showDot: "Show tab nav dot",
       persistence: "Persistent tabs",
       fixed: "Fixed tab",
       modeSelect: {

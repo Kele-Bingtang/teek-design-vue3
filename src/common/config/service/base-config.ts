@@ -77,6 +77,7 @@ export const defaultServiceConfig: ServiceConfig = {
     middleClickToOpenInNewWindow: true,
     showMore: true,
     wheel: true,
+    maxCount: 0,
   },
   breadcrumb: {
     enabled: true,

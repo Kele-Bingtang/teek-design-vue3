@@ -163,6 +163,8 @@ export interface TabNavConfig {
   showMore: boolean;
   /** 是否开启鼠标滚轮响应 */
   wheel: boolean;
+  /** 最大标签数，超出后关闭最先打开的旧标签，0 表示不限制 */
+  maxCount: number;
 }
 
 export interface BreadcrumbConfig {

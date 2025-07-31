@@ -7,6 +7,5 @@
 ## 优化
 
 - ProTable columns 过多速度优化
-- 最大标签数
 
 ## Bug
