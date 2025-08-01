@@ -90,6 +90,12 @@ export namespace ProTableMainNamespace {
      * @default 'el-icon'
      */
     preventCellEditClass?: string[];
+    /**
+     * 是否初始化部分加强属性到 scope.row 里
+     *
+     * @default false
+     */
+    initNativeRowField?: boolean;
   }
 
   export interface Emits extends Omit<TableColumnDataNamespace.Emits, "filter">, OperationNamespace.Emits {

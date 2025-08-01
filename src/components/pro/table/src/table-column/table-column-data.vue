@@ -2,11 +2,11 @@
 import type { TableColumnCtx } from "element-plus";
 import type { TableScope, TableColumn, TableColumnDataNamespace, TableRenderParams } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
-import { toValue, computed, toRaw } from "vue";
+import { toValue, computed, toRaw, unref } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { isBoolean, isString } from "@/common/utils";
-import { getProp } from "@/components/pro/helper";
+import { isArray, isBoolean, isString } from "@/common/utils";
+import { filterOptions, filterOptionsValue, getProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { formatCellValue, lastProp } from "../helper";
 import TableFilter from "../plugins/table-filter.vue";
@@ -77,6 +77,34 @@ const initTableColumn = (column: TableColumn) => {
 const prop = (column: TableColumn) => column.prop || "";
 
 /**
+ *获取列的字典数据
+ */
+const getOptions = (column: TableColumn) => {
+  const { optionsProp } = column;
+  const p = prop(column);
+
+  return unref(props.optionsMap?.get(optionsProp ?? p));
+};
+
+/**
+ * 获取当前列的字典 label 值（通过 value 找 label）
+ */
+const getValue = (row: TableScope["row"], column: TableColumn) => {
+  const { optionField, transformOption, ignoreOptionIfAbsent } = column;
+  const p = prop(column);
+  const options = getOptions(column);
+  const value = getProp(row, p);
+
+  if (!options) return value;
+
+  const option = transformOption ? transformOption(value, options, row) : filterOptions(value, options, optionField);
+  const label = option ? filterOptionsValue(option, optionField?.label || "label") : "";
+
+  if ((!label || label === "--") && toValue(ignoreOptionIfAbsent)) return value;
+  return isArray(label) ? label.join(" / ") : label;
+};
+
+/**
  * 获取单元格值（原始值）
  */
 const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope.row, prop(column));
@@ -84,7 +112,7 @@ const getOriginValue = (scope: TableScope, column: TableColumn) => getProp(scope
  * 获取单元格值（如果存在 options，则返回根据 label 找对应的 value，如果不存在 options，则返回原始值）
  */
 const getDisplayValue = (scope: TableScope, column: TableColumn) =>
-  scope.row?._getValue?.(prop(column)) ?? getOriginValue(scope, column);
+  getValue(scope.row, column) ?? getOriginValue(scope, column);
 /**
  * 获取 Render/插槽 的参数
  */
@@ -93,10 +121,10 @@ const getRenderParams = (scope: TableScope, column: TableColumn) => {
     ...scope,
     rowIndex: scope.$index,
     column: { ...scope.column, ...column },
-    label: toValue(column.label),
+    label: column.label,
     value: getOriginValue(scope, column), // 如果是 renderHeader 函数，则不存在 row，因此为 undefined
     displayValue: getDisplayValue(scope, column),
-    options: scope.row?._options?.[prop(column)],
+    options: getOptions(column),
   } as TableRenderParams;
 };
 /**
@@ -173,6 +201,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-else-if="$slots[`${lastProp(prop(column))}-header`]"
         :name="`${lastProp(prop(column))}-header`"
         v-bind="getRenderParams(scope, column)"
+        :label="toValue(column.label)"
       />
       <!-- 自定义表头内容渲染 -->
       <template v-else-if="column.formatLabel">
@@ -197,7 +226,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         <component v-if="tooltipValue.render" :is="tooltipValue.render()" />
         <!-- ElToolTip content 插槽 -->
         <template v-if="tooltipValue.contentRender" #content>
-          <component :is="tooltipValue.contentRender()" />
+          <component v-if="tooltipValue.contentRender" :is="tooltipValue.contentRender()" />
         </template>
         <!-- ElToolTip icon -->
         <slot name="tooltip-icon">
@@ -259,7 +288,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         v-bind="column.editProps"
         :value="getOriginValue(scope, column)"
         :prop="column.editProps?.prop || prop(column)"
-        :options="column.editProps?.options || scope.row._options?.[prop(column)]"
+        :options="column.editProps?.options || getOptions(column)"
         :option-field="column.editProps?.optionField || column.optionField"
         @change="value => handleChange(value, scope, column)"
       />
@@ -286,7 +315,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :display-value="getDisplayValue(scope, column)"
         :el="column.el"
         :el-props="column.elProps"
-        :options="scope.row._options?.[prop(column)]"
+        :options="getOptions(column)"
         :option-field="column.optionField"
       >
         <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
@@ -298,7 +327,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         </template>
       </ElDisplay>
 
-      <!-- 默认单元格内容渲染 -->
+      <!-- 默认 -->
       <template v-else>{{ formatValue(getDisplayValue(scope, column), scope, column) }}</template>
     </template>
   </el-table-column>

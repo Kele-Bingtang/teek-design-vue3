@@ -38,6 +38,8 @@ const { setProFormItemInstance, getElFormItemInstance, getElInstance } = useForm
 function useFormInit() {
   // 计算属性：过滤掉需要销毁的表单项
   const availableColumns = computed(() => props.columns.filter(item => !destroyOrInit(item)) || []);
+  // 定时器
+  let timer: ReturnType<typeof setTimeout> | null = null;
 
   // 初始化默认值
   const initDefaultValue = async (column: FormColumn) => {
@@ -84,29 +86,34 @@ function useFormInit() {
     availableColumns,
     columns => {
       // 防抖：防止初始化时连续执行
-      const { cleanModel, notCleanModelKeys } = props;
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
 
-      columns.forEach((column, index) => {
-        // 初始化枚举数据
-        initOptionsMap(column.options, column.prop);
+      timer = setTimeout(() => {
+        const { cleanModel, notCleanModelKeys } = props;
 
-        // 设置表单排序默认值
-        column && (column.order = column.order ?? index + 5);
-        // 初始化值
-        initDefaultValue(column);
-      });
+        columns.forEach(column => {
+          // 初始化枚举数据
+          initOptionsMap(column.options, column.prop);
 
-      // 排序表单项
-      columns.sort((a, b) => a.order! - b.order!);
+          // 初始化值
+          initDefaultValue(column);
+        });
 
-      if (!cleanModel) return;
-      // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
-      getObjectKeys(model.value).forEach(key => {
-        const isExist = columns.some(column => column.prop === key || notCleanModelKeys?.includes(key));
-        if (!isExist) deleteProp(model.value, key);
-      });
+        // 排序表单项
+        columns.sort((a, b) => a.order! - b.order!);
+
+        if (!cleanModel) return;
+        // 如果 column 对应的 prop 不存在，则删除 model 中的对应的 prop
+        getObjectKeys(model.value).forEach(key => {
+          const isExist = columns.some(column => column.prop === key || notCleanModelKeys?.includes(key));
+          if (!isExist) deleteProp(model.value, key);
+        });
+      }, 1);
     },
-    { deep: true }
+    { deep: true, immediate: true }
   );
 
   return { availableColumns, destroyOrInit };

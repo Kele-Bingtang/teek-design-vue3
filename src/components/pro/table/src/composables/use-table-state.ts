@@ -90,8 +90,9 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
       let data = result.data;
 
       data = transformData?.(data, response) ?? data;
-
       if (data) state.tableData = data;
+
+      loading.value = false;
 
       // 如果服务器（后端）返回分页信息，则解构获取（如果你的接口返回的不是如下格式，则进行修改）
       if (isServerPageValue) {

@@ -2,6 +2,7 @@ import type { CSSProperties } from "vue";
 import type { ElTooltipProps } from "element-plus";
 import type { TableColumn } from "./table-column";
 import type { ExportProps } from "./table-export";
+import type { OptionsMapType } from "@/components/pro/use-options";
 import type { TableSizeEnum, ToolButtonEnum } from "../helper";
 
 /**
@@ -194,6 +195,12 @@ export namespace ProTableHeadNamespace {
      */
     baseSetting?: BaseSetting;
     /**
+     * 表格操作列的 prop
+     *
+     * @default 'operation'
+     */
+    operationProp?: string;
+    /**
      * 表格是否选中数据，head-left 插槽需要
      */
     isSelected?: boolean;
@@ -206,11 +213,9 @@ export namespace ProTableHeadNamespace {
      */
     selectedListIds?: string[];
     /**
-     * 表格操作列的 prop
-     *
-     * @default 'operation'
+     * 字典枚举
      */
-    operationProp?: string;
+    optionsMap?: OptionsMapType;
   }
 
   export interface Emits {

@@ -203,14 +203,19 @@ const startTest = async () => {
         title="ProTable"
         :page-scope="proTablePageScope"
         border
-        height="300"
+        height="calc(100vh - 136px - 121px - 58px - 20px - 34px - 170px)"
         class="pro-table-class"
       />
 
       <!-- ElTable -->
       <div v-else-if="tableType === 'elTable'">
-        <h4 style="margin: 11px">ElTable</h4>
-        <el-table :data="elTableData" v-loading="loading.elTable" border height="300">
+        <h4 style="margin-bottom: 11px">ElTable</h4>
+        <el-table
+          :data="elTableData"
+          v-loading="loading.elTable"
+          border
+          height="calc(100vh - 136px - 121px - 58px - 20px - 34px - 170px)"
+        >
           <el-table-column
             v-for="column in columns"
             :key="column.prop"

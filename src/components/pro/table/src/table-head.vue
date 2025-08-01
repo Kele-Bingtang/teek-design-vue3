@@ -33,10 +33,11 @@ const props = withDefaults(defineProps<ProTableHeadNamespace.Props>(), {
   sizeStyle: () => ({}),
   columnSetting: () => ({}),
   baseSetting: () => ({}),
+  operationProp: "operation",
   isSelected: undefined,
   selectedList: undefined,
   selectedListIds: undefined,
-  operationProp: "operation",
+  optionsMap: undefined,
 });
 
 const emits = defineEmits<ProTableHeadNamespace.Emits>();
@@ -236,7 +237,7 @@ const handleExport = () => {
   const { data, columns, exportProps } = props;
 
   if (exportProps.exportFile) return exportProps.exportFile(data);
-  exportExcel(columns, data, exportProps);
+  exportExcel({ columns, data, optionsMap: props.optionsMap, exportProps });
 };
 
 /**

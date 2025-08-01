@@ -76,6 +76,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   selectedRadio: "",
   radioProps: () => ({}),
   preventCellEditClass: () => [],
+  initNativeRowField: false,
 });
 
 const emits = defineEmits<ProTableNamespace.Emits>();
@@ -130,7 +131,7 @@ const toolButton = computed(() => {
   const { toolButton, requestApi } = finalProps.value;
 
   // 如果外面配置 toolButton，则返回
-  if (toolButton) return toolButton;
+  if (toolButton !== undefined) return toolButton;
   // 如果配置了 requestApi，则开启刷新按钮
   if (requestApi) return true;
   // 如果没用配置 requestApi，则默认隐藏刷新按钮
@@ -402,10 +403,11 @@ defineExpose(expose);
       :size-style="finalProps.sizeStyle"
       :column-setting="finalProps.columnSetting"
       :base-setting
+      :operation-prop="finalProps.operationProp"
       :is-selected="tableMainInstance?.isSelected"
       :selected-list="tableMainInstance?.selectedList"
       :selected-list-ids="tableMainInstance?.selectedListIds"
-      :operation-prop="finalProps.operationProp"
+      :options-map="tableMainInstance?.optionsMap"
       @refresh="handleRefresh"
       @size-change="handleSizeChange"
     >

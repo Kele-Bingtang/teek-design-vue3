@@ -197,8 +197,8 @@ const columns = reactive<TableColumn<ResUserList>[]>([
   <el-space fill style="width: 100%">
     <el-card shadow="never" header="UseTable 操作">
       <el-space wrap>
-        <el-button @click="showTableButton(false)">隐藏顶栏所有按钮</el-button>
-        <el-button @click="showTableButton(true)">显示顶栏所有按钮</el-button>
+        <el-button @click="showTableButton(false)">隐藏顶栏工具栏按钮</el-button>
+        <el-button @click="showTableButton(true)">显示顶栏工具栏按钮</el-button>
         <el-button @click="showSelections(true)">隐藏多选</el-button>
         <el-button @click="showSelections(false)">显示多选</el-button>
         <el-button @click="showPagination(false)">隐藏分页</el-button>

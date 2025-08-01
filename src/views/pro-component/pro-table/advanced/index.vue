@@ -224,7 +224,15 @@ const confirmEdit = (row: TableRow<ResUserList>) => {
 </script>
 
 <template>
-  <ProTable ref="proTableInstance" :data="data" :columns="columns" page-scope card @form-change="handleFormChange">
+  <ProTable
+    ref="proTableInstance"
+    :data="data"
+    :columns="columns"
+    page-scope
+    card
+    init-native-row-field
+    @form-change="handleFormChange"
+  >
     <template #head-left="scope">
       <el-button v-auth="'add'" type="primary" :icon="CirclePlus">新增用户</el-button>
       <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain>批量添加用户</el-button>

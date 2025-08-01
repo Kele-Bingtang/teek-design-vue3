@@ -1,5 +1,5 @@
 import type { MaybeRefOrGetter } from "vue";
-import type { ElOption } from "@/components/pro/form-item";
+import type { OptionsMapType } from "@/components/pro/use-options";
 import type { TableColumn, TableScope } from "./table-column";
 
 export namespace TableColumnDataNamespace {
@@ -15,7 +15,7 @@ export namespace TableColumnDataNamespace {
     /**
      * 字典枚举
      */
-    optionsMap?: Map<string, MaybeRef<ElOption[]>>;
+    optionsMap?: OptionsMapType;
   }
 
   export interface Emits {
