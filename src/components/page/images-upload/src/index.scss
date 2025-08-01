@@ -45,7 +45,7 @@
       overflow: hidden;
       border: 1px dashed cssVarEl(border-color-darker);
       border-radius: var(--image-upload-border-radius, 8px);
-      transition: cssVarEl(transition-duration-fast);
+      transition: cssVar(transition-duration-fast);
 
       &:hover {
         border-color: cssVarEl(color-primary);
@@ -103,7 +103,7 @@
     cursor: pointer;
     background: rgb(0 0 0 / 60%);
     opacity: 0;
-    transition: cssVarEl(transition-duration-fast);
+    transition: cssVar(transition-duration-fast);
 
     @include m(icon) {
       display: flex;

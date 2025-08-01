@@ -24,7 +24,7 @@
     cursor: pointer;
     user-select: none;
     border-radius: 4px;
-    transition: background-color cssVarEl(transition-duration-fast);
+    transition: background-color cssVar(transition-duration-fast);
 
     &:hover:not(.is-disabled) {
       color: cssVarEl(color-primary);

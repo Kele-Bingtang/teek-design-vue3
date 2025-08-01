@@ -4,7 +4,7 @@
   text-decoration: none;
   cursor: pointer;
   outline: none;
-  transition: color cssVarEl(transition-duration-fast);
+  transition: color cssVar(transition-duration-fast);
 
   &:hover {
     color: cssVarEl(color-primary);

@@ -40,7 +40,7 @@
       flex-direction: column;
       height: cssVar(layout-columns-aside-item-height);
       cursor: pointer;
-      transition: all cssVarEl(transition-duration) ease;
+      transition: all cssVar(transition-duration) ease;
 
       &:hover {
         background-color: cssVar(layout-aside-bg-hover-color);

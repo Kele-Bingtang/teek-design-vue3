@@ -63,7 +63,7 @@ const handleMore = () => {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
-    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
+    transition: all cssVar(transition-duration-fast) cssVar(easing);
 
     &:last-child {
       margin-bottom: 0;

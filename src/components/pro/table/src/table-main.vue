@@ -2,7 +2,7 @@
 import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
 import { toValue, ref, computed, watch, watchEffect, useTemplateRef } from "vue";
-import { ElTable } from "element-plus";
+import { ElTable, vLoading } from "element-plus";
 import { isEmpty } from "@/common/utils";
 import Pagination from "@/components/pro/pagination";
 import { setProp, getObjectKeys, flatColumnsFn } from "@/components/pro/helper";
@@ -12,7 +12,7 @@ import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnType from "./table-column/table-column-type.vue";
 import { defaultTablePageInfo, useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
-import { filterData, initModel, isServer, initDataRowField } from "./helper";
+import { filterData, initModel, isServer, initNativeRowField } from "./helper";
 
 defineOptions({ name: "TableMain" });
 
@@ -32,6 +32,7 @@ const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {
   selectedRadio: "",
   radioProps: () => ({}),
   preventCellEditClass: () => [],
+  initNativeRowField: false,
 });
 
 const emits = defineEmits<ProTableMainNamespace.Emits>();
@@ -95,34 +96,30 @@ const tryPagination = (data: Recordable[] = []) => {
 function useTableInit() {
   // 过滤有效的列配置项
   const availableColumns = computed(() => props.columns.filter(column => !toValue(column.hidden)));
-
-  // 当 columns 发生改变时，重新初始化
-  watch(
-    availableColumns,
-    newValue => {
-      const flatColumns = flatColumnsFn(newValue);
-      // 异步有序执行，减少因遍历过长导致主线程卡顿
-      for (const column of flatColumns) {
-        initOptionsMap(column.options, column.prop || "").then(() => {
-          initDataRowField(props.data as TableRow[], column, optionsMap);
-        });
-      }
-    },
-    { deep: true }
-  );
+  // 定时器
+  let timer: ReturnType<typeof setTimeout> | null;
 
   // 不对数据进行深度监听，当数据整体发生改变时，重新初始化
   watch(
     () => props.data,
     newValue => {
-      const flatColumns = flatColumnsFn(availableColumns.value);
-      for (const column of flatColumns) {
-        // 异步有序执行，减少因遍历过长导致主线程卡顿
-        initOptionsMap(column.options, column.prop || "").then(() => {
-          initDataRowField(newValue as TableRow[], column, optionsMap);
-        });
+      // 防抖：防止初始化时连续执行
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
       }
-    }
+
+      timer = setTimeout(() => {
+        const flatColumns = flatColumnsFn(availableColumns.value);
+        for (const column of flatColumns) {
+          // 异步有序执行，减少因遍历过长导致主线程卡顿
+          initOptionsMap(column.options, column.prop || "").then(() => {
+            props.initNativeRowField && initNativeRowField(newValue as TableRow[], column, optionsMap);
+          });
+        }
+      }, 1);
+    },
+    { immediate: true }
   );
 
   return { availableColumns };

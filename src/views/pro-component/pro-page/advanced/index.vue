@@ -249,7 +249,7 @@ const confirmEdit = (row: TableRow<ResUserList>) => {
 </script>
 
 <template>
-  <ProPage ref="proPageInstance" :columns :data page-scope @form-change="handleFormChange">
+  <ProPage ref="proPageInstance" :columns :data page-scope init-native-row-field @form-change="handleFormChange">
     <template #head-left="scope">
       <el-button type="primary" :icon="CirclePlus">新增用户</el-button>
       <el-button type="primary" :icon="Upload" plain>批量添加用户</el-button>

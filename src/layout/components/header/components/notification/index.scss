@@ -11,7 +11,7 @@
     @include el-joins(tabs__item) {
       padding: 0 15px;
       font-size: 13px;
-      transition: color cssVarEl(transition-duration);
+      transition: color cssVar(transition-duration);
 
       &:hover {
         color: cssVar(gray-900);
@@ -31,7 +31,7 @@
       padding: cssVarEl(popover-padding);
       cursor: pointer;
       border-radius: 6px;
-      transition: background-color cssVarEl(transition-duration);
+      transition: background-color cssVar(transition-duration);
 
       &:hover {
         background-color: rgb(cssVar(gray-200-rgb), 0.7);

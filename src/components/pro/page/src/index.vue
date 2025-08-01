@@ -84,6 +84,9 @@ function usePageSearchInit() {
   const searchParams = ref<Recordable>({});
   const searchDefaultParams = ref<Recordable>({});
 
+  // 定时器
+  let timer: ReturnType<typeof setTimeout> | null = null;
+
   // 扁平化 columns，为了过滤搜索配置项
   const flatColumns = computed(() => flatColumnsFn(props.columns));
 
@@ -138,7 +141,15 @@ function usePageSearchInit() {
   watch(
     flatColumns,
     newValue => {
-      for (const column of newValue) initOptionsMap(column.search?.options ?? column.options, column.prop || "");
+      // 防抖：防止初始化时连续执行
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+
+      timer = setTimeout(async () => {
+        for (const column of newValue) initOptionsMap(column.search?.options ?? column.options, column.prop || "");
+      }, 1);
     },
     { deep: true, immediate: true }
   );

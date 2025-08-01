@@ -32,7 +32,7 @@
         cursor: pointer;
         user-select: none;
         border-radius: 10px;
-        transition: all cssVarEl(transition-duration) cssVar(easing);
+        transition: all cssVar(transition-duration) cssVar(easing);
 
         &:hover {
           color: cssVar(color-primary);

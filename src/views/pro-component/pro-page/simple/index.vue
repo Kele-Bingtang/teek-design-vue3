@@ -150,6 +150,7 @@ const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) =>
       searchCols: { xs: 1, sm: 1, md: 2, lg: 4, xl: 4 },
     }"
     editable="click"
+    init-native-row-field
     :operation-props="{
       buttons: buttons,
       el,

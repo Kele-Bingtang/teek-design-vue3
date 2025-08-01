@@ -146,6 +146,7 @@ const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) =>
     title="支持单行/单元格编辑"
     page-scope
     card
+    init-native-row-field
     editable="click"
     :operation-props="{
       buttons: buttons,

@@ -1,16 +1,13 @@
-import type { Ref, MaybeRef } from "vue";
-import type { ElOption } from "@/components/pro/form-item";
+import type { MaybeRef } from "vue";
+import type { OptionsMapType } from "@/components/pro/use-options";
 import type { TableRow, TableColumn } from "../types/table-column";
 import { unref, toValue, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { isArray } from "@/common/utils";
 import { getProp, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 
-export const initDataRowField = (
-  data: TableRow[],
-  column: TableColumn,
-  optionsMap: Ref<Map<string, MaybeRef<ElOption[]>>>
-) => {
+export const initNativeRowField = (data: TableRow[], column: TableColumn, optionsMap: MaybeRef<OptionsMapType>) => {
+  if (!data.length) return;
   // 获取当前列的配置项，！获取的配置无法直接作用在 row._xx 里
   const {
     prop = "",
@@ -22,7 +19,7 @@ export const initDataRowField = (
     editable,
   } = column;
 
-  const options = unref(optionsMap.value.get(optionsProp ?? prop));
+  const options = unref(unref(optionsMap).get(optionsProp ?? prop));
 
   // 初始化内置属性
   data.forEach(initEnhanceField);
@@ -172,4 +169,6 @@ export const initDataRowField = (
       return Object.fromEntries(Object.entries(row).filter(([key]) => !key.startsWith("_")));
     };
   }
+
+  return true;
 };

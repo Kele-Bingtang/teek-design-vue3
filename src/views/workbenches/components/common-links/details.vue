@@ -185,7 +185,7 @@ defineExpose({
     padding: 6px 14px;
     cursor: pointer;
     border-radius: 16px;
-    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
+    transition: all cssVar(transition-duration-fast) cssVar(easing);
 
     &:hover {
       color: #ffffff;
@@ -208,7 +208,7 @@ defineExpose({
     cursor: pointer;
     background-color: cssVar(gray-100);
     border-radius: 8px;
-    transition: all cssVarEl(transition-duration-fast) cssVar(easing);
+    transition: all cssVar(transition-duration-fast) cssVar(easing);
 
     .drag-sort-icon {
       cursor: move;

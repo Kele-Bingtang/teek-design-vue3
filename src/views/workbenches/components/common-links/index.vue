@@ -138,7 +138,7 @@ const handleConfirm = () => {
       padding: 10px;
       cursor: pointer;
       border-radius: 8px;
-      transition: all cssVarEl(transition-duration-fast) cssVar(easing);
+      transition: all cssVar(transition-duration-fast) cssVar(easing);
 
       &:hover {
         color: cssVar(color-primary);

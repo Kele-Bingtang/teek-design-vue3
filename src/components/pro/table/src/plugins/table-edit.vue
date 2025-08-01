@@ -19,17 +19,17 @@ const model = ref<Recordable>({});
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 
-const columns = computed(() => {
+const columns = computed<FormColumn[]>(() => {
   const { options } = props;
   return [
     {
       ...props,
       el: options && !props.el ? "el-select" : props.el, // 当没有设置 el 且存在 options 时，默认是 el-select
-      options: options ? ref(options) : options,
+      options,
       value: undefined,
       editable: true,
     },
-  ] as FormColumn[];
+  ];
 });
 
 watch(
