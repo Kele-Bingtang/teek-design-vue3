@@ -25,8 +25,11 @@ export enum HeaderShowModeEnum {
 
 // 系统主题
 export enum GlobalThemeEnum {
-  Dark = "dark",
   Light = "light",
+  DarkBlue = "darkBlue",
+  DarkDeep = "darkDeep",
+  DarkMidnight = "darkMidnight",
+  DarkNeutral = "darkNeutral",
   System = "system",
 }
 

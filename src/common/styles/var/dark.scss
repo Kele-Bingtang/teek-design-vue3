@@ -1,110 +1,56 @@
+@use "sass:color";
+@use "sass:map";
+
 @use "../mixins/namespace" as *;
+@use "../mixins/color" as *;
 
-// 深色模式主题变量
+@forward "./dark-blue"; // 蓝深色
+@forward "./dark-deep"; // 暗深色
+@forward "./dark-midnight"; // 午夜深色
+@forward "./dark-neutral"; // 中性深色
+
+// 自定义全局暗色样式
 :root.dark {
-  // 主要色
-  --#{$admin-namespace}-bg-color: #1a1d26;
-  --#{$admin-namespace}-bg-color-page: #121520;
+  // === 基本色 ===
+  --#{$admin-namespace}-color: var(--#{$admin-namespace}-text-gray-800); // 主要文本色
+  --#{$admin-namespace}-light: var(--#{$admin-namespace}-gray-300); // 浅色背景
+  --#{$admin-namespace}-dark: var(--#{$admin-namespace}-gray-800); // 深色文本/元素
 
-  // 主色系
-  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
-  --#{$admin-namespace}-color-primary: #5f81ff;
-  --#{$admin-namespace}-color-primary-hover: #7996ff;
-  --#{$admin-namespace}-color-primary-muted: #3f4d99;
-
-  // 功能色
-  --#{$admin-namespace}-color-success-rgb: 50, 192, 96;
-  --#{$admin-namespace}-color-success: #32c060;
-  --#{$admin-namespace}-color-success-hover: #2b9e58;
-  --#{$admin-namespace}-color-success-muted: #1e5c36;
-  --#{$admin-namespace}-color-warning-rgb: 255, 170, 50;
-  --#{$admin-namespace}-color-warning: #ffb332;
-  --#{$admin-namespace}-color-warning-hover: #e6951e;
-  --#{$admin-namespace}-color-warning-muted: #755a2e;
-  --#{$admin-namespace}-color-danger-rgb: 255, 106, 106;
-  --#{$admin-namespace}-color-danger: #ff6a6a;
-  --#{$admin-namespace}-color-danger-hover: #e64a4a;
-  --#{$admin-namespace}-color-danger-muted: #6a3434;
-  --#{$admin-namespace}-color-error-rgb: 255, 112, 56;
-  --#{$admin-namespace}-color-error: #ff7a38;
-  --#{$admin-namespace}-color-error-hover: #e85a2e;
-  --#{$admin-namespace}-color-error-muted: #6d3423;
-
-  // 次级色
-  --#{$admin-namespace}-color-secondary-rgb: 100, 180, 255;
-  --#{$admin-namespace}-color-secondary: #64b4ff;
-  --#{$admin-namespace}-color-info: #3d8aff;
-  --#{$admin-namespace}-color-info-rgb: 61, 138, 255;
-
-  // 基本色
-  --#{$admin-namespace}-color: #1a1d26;
-  --#{$admin-namespace}-light: #0e1117;
-  --#{$admin-namespace}-dark: #eef1f7;
-
-  // 背景色
-  --#{$admin-namespace}-bg-primary: #12182f;
-  --#{$admin-namespace}-bg-primary-rgb: 18, 24, 47;
-  --#{$admin-namespace}-bg-secondary: #1a2638;
-  --#{$admin-namespace}-bg-secondary-rgb: 26, 38, 56;
-  --#{$admin-namespace}-bg-success: #1e3a23;
-  --#{$admin-namespace}-bg-success-rgb: 30, 58, 35;
-  --#{$admin-namespace}-bg-info: #17223a;
-  --#{$admin-namespace}-bg-info-rgb: 23, 34, 58;
-  --#{$admin-namespace}-bg-warning: #373119;
-  --#{$admin-namespace}-bg-warning-rgb: 55, 49, 25;
-  --#{$admin-namespace}-bg-danger: #351b1e;
-  --#{$admin-namespace}-bg-danger-rgb: 53, 27, 30;
-  --#{$admin-namespace}-bg-error: #3a221d;
-  --#{$admin-namespace}-bg-error-rgb: 58, 34, 29;
-  --#{$admin-namespace}-bg-neutral: #1e2129;
-  --#{$admin-namespace}-bg-neutral-rgb: 30, 33, 41;
-  --#{$admin-namespace}-bg-neutral-light: #252835;
-  --#{$admin-namespace}-bg-neutral-dark: #161920;
-
-  // 灰度色，适用于背景色 | 悬停色
-  --#{$admin-namespace}-text-muted: #7e85a0;
-  --#{$admin-namespace}-gray-100: #1a1d26;
-  --#{$admin-namespace}-gray-100-rgb: 26, 29, 38;
-  --#{$admin-namespace}-gray-200: #252835;
-  --#{$admin-namespace}-gray-200-rgb: 37, 40, 53;
-  --#{$admin-namespace}-gray-300: #313447;
-  --#{$admin-namespace}-gray-300-rgb: 49, 52, 71;
-  --#{$admin-namespace}-gray-400: #4a4e64;
-  --#{$admin-namespace}-gray-400-rgb: 74, 78, 100;
-  --#{$admin-namespace}-gray-500: #5a5f77;
-  --#{$admin-namespace}-gray-500-rgb: 90, 95, 119;
-  --#{$admin-namespace}-gray-600: #7a7f98;
-  --#{$admin-namespace}-gray-600-rgb: 122, 127, 152;
-  --#{$admin-namespace}-gray-700: #9ca0b5;
-  --#{$admin-namespace}-gray-700-rgb: 156, 160, 181;
-  --#{$admin-namespace}-gray-800: #c5c9d8;
-  --#{$admin-namespace}-gray-800-rgb: 197, 201, 216;
-  --#{$admin-namespace}-gray-900: #eef1f7;
-  --#{$admin-namespace}-gray-900-rgb: 238, 241, 247;
-
-  // 文本色
-  --#{$admin-namespace}-text-muted: #7e85a0;
-  --#{$admin-namespace}-text-gray-100: #1a1d26;
-  --#{$admin-namespace}-text-gray-200: #252835;
-  --#{$admin-namespace}-text-gray-300: #313447;
-  --#{$admin-namespace}-text-gray-400: #4a4e64;
-  --#{$admin-namespace}-text-gray-500: #5a5f77;
-  --#{$admin-namespace}-text-gray-600: #7a7f98;
-  --#{$admin-namespace}-text-gray-700: #9ca0b5;
-  --#{$admin-namespace}-text-gray-800: #c5c9d8;
-  --#{$admin-namespace}-text-gray-900: #eef1f7;
-
-  // 边框色
-  --#{$admin-namespace}-border-color: #363a4d;
-  --#{$admin-namespace}-border-dashed-color: #3b3e4f;
-
-  // 阴影效果
-  --#{$admin-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 15%);
-  --#{$admin-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 20%);
-  --#{$admin-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 25%);
-  --#{$admin-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 30%);
-
-  // 卡片效果
-  --#{$admin-namespace}-root-card-box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 20%);
-  --#{$admin-namespace}-root-card-border-color: #252835;
+  // 轻量文本色
+  --#{$admin-namespace}-text-muted: var(--#{$admin-namespace}-color-info-muted);
 }
+
+// ===== 通用深色模式灰度系统（如果你希望所有深色模式的灰度变量保持一致，请取消注释） =====
+// $dark-gray-brightness: (
+//   100: 15%,
+//   200: 10%,
+//   300: 25%,
+//   400: 30%,
+//   500: 35%,
+//   600: 45%,
+//   700: 60%,
+//   800: 80%,
+//   900: 95%,
+// );
+
+// @function generate-dark-gray($level) {
+//   $brightness: map.get($dark-gray-brightness, $level);
+
+//   @return hsl(0, 0%, $brightness);
+// }
+
+// :root.dark-blue,
+// :root.dark-deep,
+// :root.dark-neutral,
+// :root.dark-midnight {
+//   // === 通用灰度系统 ===
+//   --#{$admin-namespace}-gray-100: #{generate-dark-gray(100)};
+//   --#{$admin-namespace}-gray-200: #{generate-dark-gray(200)};
+//   --#{$admin-namespace}-gray-300: #{generate-dark-gray(300)};
+//   --#{$admin-namespace}-gray-400: #{generate-dark-gray(400)};
+//   --#{$admin-namespace}-gray-500: #{generate-dark-gray(500)};
+//   --#{$admin-namespace}-gray-600: #{generate-dark-gray(600)};
+//   --#{$admin-namespace}-gray-700: #{generate-dark-gray(700)};
+//   --#{$admin-namespace}-gray-800: #{generate-dark-gray(800)};
+//   --#{$admin-namespace}-gray-900: #{generate-dark-gray(900)};
+// }

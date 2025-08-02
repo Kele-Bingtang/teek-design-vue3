@@ -233,7 +233,10 @@ export default {
       primaryColor: "Primary color",
       modeSelect: {
         light: "Light",
-        dark: "Dark",
+        darkBlue: "Dark blue",
+        darkDeep: "Dark deep",
+        darkMidnight: "Dark midnight",
+        darkNeutral: "Dark neutral",
         system: "System",
       },
       radius: "Rounded corner size",

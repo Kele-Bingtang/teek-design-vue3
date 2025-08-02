@@ -1,68 +1,51 @@
 @use "../mixins/namespace" as *;
+@use "../mixins/color" as *;
 
 // 浅色主题变量
 :root {
-  // 主要色
+  // === 核心背景色 ===
   --#{$admin-namespace}-bg-color: #ffffff; // 元素级别背景色
   --#{$admin-namespace}-bg-color-page: #f6f8fc; // 页面级别背景颜色
 
-  // 主色系
-  --#{$admin-namespace}-color-primary-rgb: 57, 90, 227;
-  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
-  --#{$admin-namespace}-color-primary-hover: #577ae8;
-  --#{$admin-namespace}-color-primary-muted: #a4bffc;
+  // === 功能色 ===
+  @include generate-color-variants("primary", #395ae3);
+  @include generate-color-variants("success", #0b9e40);
+  @include generate-color-variants("warning", #e68a00);
+  @include generate-color-variants("danger", #d93126);
+  @include generate-color-variants("error", #dd5c27);
 
-  // 功能色
-  --#{$admin-namespace}-color-success-rgb: 11, 158, 64;
-  --#{$admin-namespace}-color-success: #0b9e40;
-  --#{$admin-namespace}-color-success-hover: #078538;
-  --#{$admin-namespace}-color-success-muted: #80e19a;
-  --#{$admin-namespace}-color-warning-rgb: 230, 138, 0;
-  --#{$admin-namespace}-color-warning: #e68a00;
-  --#{$admin-namespace}-color-warning-hover: #c47200;
-  --#{$admin-namespace}-color-warning-muted: #fdd692;
-  --#{$admin-namespace}-color-danger-rgb: 217, 49, 38;
-  --#{$admin-namespace}-color-danger: #d93126;
-  --#{$admin-namespace}-color-danger-hover: #b52a20;
-  --#{$admin-namespace}-color-danger-muted: #f9b19f;
-  --#{$admin-namespace}-color-error-rgb: 221, 92, 39;
-  --#{$admin-namespace}-color-error: #dd5c27;
-  --#{$admin-namespace}-color-error-hover: #b8491e;
-  --#{$admin-namespace}-color-error-muted: #ffc8b5;
+  // === 次级色 ===
+  @include generate-color-variants("info", #1890ff);
+  @include generate-color-variants("secondary", #42aaff);
 
-  // 次级色
-  --#{$admin-namespace}-color-secondary-rgb: 66, 170, 255;
-  --#{$admin-namespace}-color-secondary: #42aaff;
-  --#{$admin-namespace}-color-info: #1890ff;
-  --#{$admin-namespace}-color-info-rgb: 24, 144, 255;
-
-  // 基本色
+  // === 基本色 ===
   --#{$admin-namespace}-color: #ffffff;
   --#{$admin-namespace}-light: #f9f9f9;
   --#{$admin-namespace}-dark: #1e2129;
 
-  // 背景色
+  // === 背景色 ===
   --#{$admin-namespace}-bg-primary: #e6ecff;
   --#{$admin-namespace}-bg-primary-rgb: 230, 236, 255;
-  --#{$admin-namespace}-bg-secondary: #d5edfa;
-  --#{$admin-namespace}-bg-secondary-rgb: 213, 237, 250;
   --#{$admin-namespace}-bg-success: #e0f5d6;
   --#{$admin-namespace}-bg-success-rgb: 224, 245, 214;
-  --#{$admin-namespace}-bg-info: #e4ebff;
-  --#{$admin-namespace}-bg-info-rgb: 228, 235, 255;
   --#{$admin-namespace}-bg-warning: #fff2e0;
   --#{$admin-namespace}-bg-warning-rgb: 255, 242, 224;
   --#{$admin-namespace}-bg-danger: #ffe0d9;
   --#{$admin-namespace}-bg-danger-rgb: 255, 224, 217;
   --#{$admin-namespace}-bg-error: #ffe5d9;
   --#{$admin-namespace}-bg-error-rgb: 255, 229, 217;
+  --#{$admin-namespace}-bg-info: #e4ebff;
+  --#{$admin-namespace}-bg-info-rgb: 228, 235, 255;
+  --#{$admin-namespace}-bg-secondary: #d5edfa;
+  --#{$admin-namespace}-bg-secondary-rgb: 213, 237, 250;
+
+  // === 中性背景 ===
   --#{$admin-namespace}-bg-neutral: #f5f7fa;
   --#{$admin-namespace}-bg-neutral-rgb: 245, 247, 250;
   --#{$admin-namespace}-bg-neutral-light: #f9fafc;
   --#{$admin-namespace}-bg-neutral-dark: #eef0f5;
 
-  // 灰度色，适用于背景色 | 悬停色
-  --#{$admin-namespace}-text-muted: #99a1b7;
+  // === 灰度色，适用于背景色 | 悬停色 ===
   --#{$admin-namespace}-gray-100: #f0f0f2;
   --#{$admin-namespace}-gray-100-rgb: 240, 240, 242;
   --#{$admin-namespace}-gray-200: #e4e5eb;
@@ -82,33 +65,33 @@
   --#{$admin-namespace}-gray-900: #141721;
   --#{$admin-namespace}-gray-900-rgb: 20, 23, 33;
 
-  // 文本色
+  // === 文本色 ===
   --#{$admin-namespace}-text-muted: #99a1b7;
-  --#{$admin-namespace}-text-gray-100: #f0f0f2;
-  --#{$admin-namespace}-text-gray-200: #e4e5eb;
-  --#{$admin-namespace}-text-gray-300: #d7d9e0;
-  --#{$admin-namespace}-text-gray-400: #bfc1cc;
-  --#{$admin-namespace}-text-gray-500: #b1b3c1;
-  --#{$admin-namespace}-text-gray-600: #7d7f8d;
-  --#{$admin-namespace}-text-gray-700: #4d505e;
-  --#{$admin-namespace}-text-gray-800: #20222b;
-  --#{$admin-namespace}-text-gray-900: #141721;
+  --#{$admin-namespace}-text-gray-100: var(--#{$admin-namespace}-gray-100);
+  --#{$admin-namespace}-text-gray-200: var(--#{$admin-namespace}-gray-200);
+  --#{$admin-namespace}-text-gray-300: var(--#{$admin-namespace}-gray-300);
+  --#{$admin-namespace}-text-gray-400: var(--#{$admin-namespace}-gray-400);
+  --#{$admin-namespace}-text-gray-500: var(--#{$admin-namespace}-gray-500);
+  --#{$admin-namespace}-text-gray-600: var(--#{$admin-namespace}-gray-600);
+  --#{$admin-namespace}-text-gray-700: var(--#{$admin-namespace}-gray-700);
+  --#{$admin-namespace}-text-gray-800: var(--#{$admin-namespace}-gray-800);
+  --#{$admin-namespace}-text-gray-900: var(--#{$admin-namespace}-gray-900);
 
-  // 边框色
+  // === 边框色 ===
   --#{$admin-namespace}-border-color: #eaebf1;
   --#{$admin-namespace}-border-dashed-color: #dbdfe9;
 
-  // 阴影效果
+  // === 阴影色 ===
   --#{$admin-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 4%);
   --#{$admin-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%);
   --#{$admin-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 7.5%);
   --#{$admin-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 10%);
 
-  // 卡片效果
+  // === 卡片色 ===
   --#{$admin-namespace}-root-card-box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%);
   --#{$admin-namespace}-root-card-border-color: #f1f1f4;
 
-  // 动画效果
+  // === 动画色 ===
   --#{$admin-namespace}-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
   --#{$admin-namespace}-transition-duration-fast: var(--#{$el-namespace}-transition-duration-fast);
   --#{$admin-namespace}-transition-duration: var(--#{$el-namespace}-transition-duration);

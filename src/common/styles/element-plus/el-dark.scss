@@ -3,27 +3,46 @@
 // 自定义 ElementPlus 暗黑主题
 @forward "element-plus/theme-chalk/src/dark/var.scss" with (
   $colors: (
-    //
     "white": #ffffff,
     "black": #000000,
-    "primary": ("base": #5f81ff),
-    "success": ("base": #32c060),
-    "warning": ("base": #ffb332),
-    "danger": ("base": #ff6a6a),
-    "error": ("base": #ff7a38),
-    "info": ("base": #909399),
+    "primary": (
+      "base": #6d94e6,
+    ),
+    "success": (
+      "base": #4cd890,
+    ),
+    "warning": (
+      "base": #ffd166,
+    ),
+    "danger": (
+      "base": #ff7d7d,
+    ),
+    "error": (
+      "base": #ff9e6b,
+    ),
+    "info": (
+      "base": #909399,
+    ),
   )
 );
 
 @use "element-plus/theme-chalk/src/dark/css-vars.scss" as *;
 
 :root.dark {
-  --#{$el-namespace}-text-color-primary: var(--#{$admin-namespace}-text-gray-900);
-  --#{$el-namespace}-text-color-regular: var(--#{$admin-namespace}-text-gray-800);
-  --#{$el-namespace}-text-color-secondary: var(--#{$admin-namespace}-text-gray-700);
-  --#{$el-namespace}-text-color-placeholder: var(--#{$admin-namespace}-text-gray-600);
-  --#{$el-namespace}-text-color-disabled: var(--#{$admin-namespace}-text-gray-500);
-  --#{$el-namespace}-bg-color: var(--#{$admin-namespace}-bg-color);
-  --#{$el-namespace}-bg-color-overlay: var(--#{$admin-namespace}-bg-color);
-  --#{$el-namespace}-bg-color-page: var(--#{$admin-namespace}-bg-color-page);
+  --#{$el-namespace}-text-color-primary: var(--#{$admin-namespace}-text-gray-900) !important;
+  --#{$el-namespace}-text-color-regular: var(--#{$admin-namespace}-text-gray-800) !important;
+  --#{$el-namespace}-text-color-secondary: var(--#{$admin-namespace}-text-gray-700) !important;
+  --#{$el-namespace}-text-color-placeholder: var(--#{$admin-namespace}-text-gray-600) !important;
+  --#{$el-namespace}-text-color-disabled: var(--#{$admin-namespace}-text-gray-500) !important;
+  --#{$el-namespace}-bg-color: var(--#{$admin-namespace}-bg-color) !important;
+  --#{$el-namespace}-bg-color-overlay: var(--#{$admin-namespace}-bg-color) !important;
+  --#{$el-namespace}-bg-color-page: var(--#{$admin-namespace}-bg-color-page) !important;
+  --#{$el-namespace}-color-: var(--#{$admin-namespace}-bg-color-page) !important;
+
+  // 功能色覆盖
+  --#{$el-namespace}-color-primary: var(--#{$admin-namespace}-color-primary) !important;
+  --#{$el-namespace}-color-success: var(--#{$admin-namespace}-color-success) !important;
+  --#{$el-namespace}-color-warning: var(--#{$admin-namespace}-color-warning) !important;
+  --#{$el-namespace}-color-danger: var(--#{$admin-namespace}-color-danger) !important;
+  --#{$el-namespace}-color-error: var(--#{$admin-namespace}-color-error) !important;
 }

@@ -234,8 +234,11 @@ export default {
       label: "全局主题",
       primaryColor: "主题色",
       modeSelect: {
-        light: "亮色",
-        dark: "暗色",
+        light: "浅色",
+        darkBlue: "蓝深色",
+        darkDeep: "暗深色",
+        darkMidnight: "午夜深色",
+        darkNeutral: "中性深色",
         system: "系统",
       },
       radius: "圆角大小",

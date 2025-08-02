@@ -17,16 +17,32 @@ const { changeGlobalTheme, changePrimaryColor, changeGreyOrWeak } = useTheme();
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
-const { theme } = storeToRefs(settingStore);
+const { theme, primaryColor } = storeToRefs(settingStore);
 
 const globalThemeModeList = [
   { name: computed(() => t("_setting.theme.modeSelect.light")), theme: GlobalThemeEnum.Light, img: lightTheme },
-  { name: computed(() => t("_setting.theme.modeSelect.dark")), theme: GlobalThemeEnum.Dark, img: darkTheme },
+  { name: computed(() => t("_setting.theme.modeSelect.darkBlue")), theme: GlobalThemeEnum.DarkBlue, img: darkTheme },
+  { name: computed(() => t("_setting.theme.modeSelect.darkDeep")), theme: GlobalThemeEnum.DarkDeep, img: darkTheme },
+  {
+    name: computed(() => t("_setting.theme.modeSelect.darkMidnight")),
+    theme: GlobalThemeEnum.DarkMidnight,
+    img: darkTheme,
+  },
+  {
+    name: computed(() => t("_setting.theme.modeSelect.darkNeutral")),
+    theme: GlobalThemeEnum.DarkNeutral,
+    img: darkTheme,
+  },
   { name: computed(() => t("_setting.theme.modeSelect.system")), theme: GlobalThemeEnum.System, img: systemTheme },
 ];
 
 // 预定义主题颜色
-const colorList = [serviceConfig.theme.primaryColor, ...serviceConfig.theme.presetsColor];
+const colorList = computed(() => [
+  primaryColor.value,
+  ...serviceConfig.theme.presetsColor[
+    theme.value.globalThemeMode === GlobalThemeEnum.System ? theme.value.defaultDarkMode : theme.value.globalThemeMode
+  ],
+]);
 
 /**
  * 自定义圆角选项
@@ -63,7 +79,7 @@ const customRadiusOptions = [
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.theme.primaryColor") }}</span>
-      <el-color-picker v-model="theme.primaryColor" :predefine="colorList" @change="changePrimaryColor()" />
+      <el-color-picker v-model="primaryColor" :predefine="colorList" @change="val => val && changePrimaryColor(val)" />
     </div>
 
     <div :class="ns.e('item')">

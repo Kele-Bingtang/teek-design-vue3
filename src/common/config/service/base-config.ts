@@ -38,12 +38,86 @@ export const defaultServiceConfig: ServiceConfig = {
     themePanelTriggerPosition: ThemePanelTriggerPositionEnum.Header,
   },
   theme: {
-    primaryColor: "#395AE3",
-    radius: 0.75,
+    // 默认与 css var 一致，在这里配置一份，方便生成 1 - 9 的基础色
+    primaryColor: {
+      [GlobalThemeEnum.System]: "", // 跟随系统即自动获取系统预设的主题色
+      [GlobalThemeEnum.Light]: "#395ae3",
+      [GlobalThemeEnum.DarkBlue]: "#4a8fe1",
+      [GlobalThemeEnum.DarkDeep]: "#4a6bc5",
+      [GlobalThemeEnum.DarkMidnight]: "#3a7fdb",
+      [GlobalThemeEnum.DarkNeutral]: "#6d94e6",
+    },
     globalThemeMode: GlobalThemeEnum.System,
+    defaultDarkMode: GlobalThemeEnum.DarkNeutral,
+    globalThemeClassName: {
+      [GlobalThemeEnum.Light]: "",
+      [GlobalThemeEnum.System]: "",
+      [GlobalThemeEnum.DarkBlue]: "dark-blue",
+      [GlobalThemeEnum.DarkDeep]: "dark-deep",
+      [GlobalThemeEnum.DarkMidnight]: "dark-midnight",
+      [GlobalThemeEnum.DarkNeutral]: "dark-neutral",
+    },
+    radius: 0.75,
     weakMode: false,
     greyMode: false,
-    presetsColor: ["#0b9e40", "#e68a00", "#d93126", "#42aaff", "#5f81ff", "#32c060", "#ffb332", "#ff6a6a", "#9b59b6"],
+    presetsColor: {
+      [GlobalThemeEnum.System]: [],
+      [GlobalThemeEnum.Light]: [
+        "#4a6cf7", // 鲜艳蓝
+        "#ff6b6b", // 珊瑚粉
+        "#00bbf9", // 天蓝
+        "#00f5d4", // 蓝绿
+        "#708090", // 石板灰
+        "#f15bb5", // 粉红
+        "#8ac926", // 黄绿
+        "#ff9e6b", // 橙红
+        "#ffd166", // 浅黄
+      ],
+      [GlobalThemeEnum.DarkBlue]: [
+        "#5a8fe6", // 亮蓝
+        "#ff6b6b", // 珊瑚粉
+        "#1abc9c", // 蓝绿
+        "#708090", // 石板灰
+        "#f1c40f", // 明黄
+        "#2980b9", // 深蓝
+        "#ff69b4", // 热粉
+        "#d35400", // 深橙
+        "#9b59b6", // 紫色
+      ],
+      [GlobalThemeEnum.DarkDeep]: [
+        "#db7093", // 深蓝紫
+        "#8e44ad", // 紫罗兰
+        "#16a085", // 蓝绿
+        "#708090", // 石板灰
+        "#f1c40f", // 明黄
+        "#2c3e50", // 钢蓝
+        "#c0392b", // 深红
+        "#2980b9", // 深蓝
+        "#27ae60", // 绿松石
+      ],
+      [GlobalThemeEnum.DarkMidnight]: [
+        "#ff6b6b", // 珊瑚粉
+        "#1abc9c", // 蓝绿
+        "#708090", // 石板灰
+        "#f1c40f", // 明黄
+        "#2c3e50", // 钢蓝
+        "#ff69b4", // 热粉
+        "#d35400", // 深橙
+        "#2980b9", // 深蓝
+        "#27ae60", // 绿松石
+      ],
+      [GlobalThemeEnum.DarkNeutral]: [
+        "#ff6b6b", // 珊瑚粉
+        "#42aaff", // 中性天蓝
+        "#4cd890", // 中性蓝绿
+        "#708090", // 石板灰
+        "#ff9e6b", // 中性橙
+        "#ff69b4", // 热粉
+        "#5a7fd9", // 中性蓝紫
+        "#db7093", // 紫红
+        "#9b59b6", // 紫色
+      ],
+    },
   },
   header: {
     enabled: true,

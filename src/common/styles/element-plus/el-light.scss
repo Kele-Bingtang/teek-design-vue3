@@ -38,4 +38,11 @@
   --#{$el-namespace}-text-color-placeholder: var(--#{$admin-namespace}-text-gray-500) !important;
   --#{$el-namespace}-text-color-disabled: var(--#{$admin-namespace}-text-gray-400) !important;
   --#{$el-namespace}-bg-color: var(--#{$admin-namespace}-bg-color) !important;
+
+  // 功能色覆盖
+  --#{$el-namespace}-color-primary: var(--#{$admin-namespace}-color-primary) !important;
+  --#{$el-namespace}-color-success: var(--#{$admin-namespace}-color-success) !important;
+  --#{$el-namespace}-color-warning: var(--#{$admin-namespace}-color-warning) !important;
+  --#{$el-namespace}-color-danger: var(--#{$admin-namespace}-color-danger) !important;
+  --#{$el-namespace}-color-error: var(--#{$admin-namespace}-color-error) !important;
 }

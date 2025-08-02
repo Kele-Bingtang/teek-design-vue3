@@ -57,6 +57,17 @@
 
 // 深色布局主题变量
 :root.dark {
+  // 顶部栏
+  --#{$admin-namespace}-layout-header-text-color: var(--#{$admin-namespace}-text-gray-800);
+
+  // 顶部左侧面包屑
+  --#{$admin-namespace}-layout-header-breadcrumb-link-color: var(--#{$admin-namespace}-text-gray-600);
+  --#{$admin-namespace}-layout-header-breadcrumb-text-color: var(--#{$admin-namespace}-text-gray-800);
+
+  // 页签栏
+  --#{$admin-namespace}-layout-tab-text-color: var(--#{$admin-namespace}-text-gray-800);
+
+  // 侧边栏
   --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$admin-namespace}-gray-200);
   --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$admin-namespace}-gray-200);
   --#{$admin-namespace}-layout-aside-text-color: var(--#{$el-namespace}-text-color-regular);
@@ -64,20 +75,27 @@
   --#{$admin-namespace}-layout-aside-text-active-weight: 400;
 }
 
-// 菜单深色变量
+:root.dark-neutral {
+  --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$admin-namespace}-gray-300);
+  --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$admin-namespace}-gray-300);
+}
+
+// 菜单单独深色模式变量（与中性深色模式变量一致）
 .#{$admin-namespace}-layout-aside.is-dark {
-  --#{$el-namespace}-color-primary: #5f81ff;
+  --#{$el-namespace}-color-primary: #6d94e6;
   --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-bg-color: #1a1d26;
-  --#{$admin-namespace}-layout-aside-bg-active-color: #252835;
-  --#{$admin-namespace}-layout-aside-bg-hover-color: #252835;
+
+  // 侧边栏
+  --#{$admin-namespace}-layout-aside-bg-color: #1c1e23;
+  --#{$admin-namespace}-layout-aside-bg-active-color: #26282c;
+  --#{$admin-namespace}-layout-aside-bg-hover-color: #26282c;
   --#{$admin-namespace}-layout-aside-left-bg-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-text-color: #9ca0b5;
+  --#{$admin-namespace}-layout-aside-text-color: #d0d1d6;
   --#{$admin-namespace}-layout-aside-text-active-color: var(--#{$admin-namespace}-color-primary);
   --#{$admin-namespace}-layout-aside-text-hover-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-icon-color: #9ca0b5;
+  --#{$admin-namespace}-layout-aside-icon-color: #d0d1d6;
   --#{$admin-namespace}-layout-aside-icon-active-color: var(--#{$admin-namespace}-color-primary);
   --#{$admin-namespace}-layout-aside-line: 1px solid #363a4d;
-  --#{$admin-namespace}-layout-logo-title-color: #c5c9d8;
+  --#{$admin-namespace}-layout-logo-title-color: #d0d1d6;
   --#{$admin-namespace}-layout-aside-text-active-weight: 400;
 }
