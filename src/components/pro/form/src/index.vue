@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<ProFormNamespace.Props>(), {
   colProps: () => ({}),
   showLabel: true,
   clearable: true,
+  editable: true,
   width: "100%",
 });
 

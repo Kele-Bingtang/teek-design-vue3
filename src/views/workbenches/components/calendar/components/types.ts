@@ -1,18 +1,16 @@
 /**
  * 日程表单模型
  */
-export interface ScheduleFormModel {
-  title: string;
+export interface ScheduleFormModel extends Pick<ScheduleData, "title" | "location" | "appointed" | "createUser"> {
   date: string;
   time: string[];
-  location: string;
 }
 
 /**
  * 日程数据
  */
 export interface ScheduleData {
-  /** 日程id */
+  /** 日程 id */
   id: number | string;
   /** 日程标题 */
   title: string;
@@ -22,6 +20,22 @@ export interface ScheduleData {
   endTime: string;
   /** 地点 */
   location: string;
+  /** 预约人 */
+  appointed: string;
+  /** 创建人 */
+  createUser: string;
+  /** 创建时间 */
+  createTime: string;
+  /** 参会人 */
+  attendee: string[];
+  /** 会议号 */
+  number?: string;
+  /** 入会密码 */
+  password?: string;
+  /** 入会电话1 */
+  phone1?: string;
+  /** 入会电话2 */
+  phone2?: string;
 }
 
 /**

@@ -108,6 +108,10 @@
   text-align: center;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /* 清除浮动 */
 .clearfix {
   &::after {

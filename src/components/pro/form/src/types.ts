@@ -142,6 +142,12 @@ export namespace FormMainNamespace {
      */
     clearable?: FormItemColumnProps["clearable"];
     /**
+     * 是否允许编辑
+     *
+     * @default true
+     */
+    editable?: FormItemColumnProps["editable"];
+    /**
      * 表单组件宽度，优先级低于 FormItemColumnProps["width"]
      *
      * @default '100%'

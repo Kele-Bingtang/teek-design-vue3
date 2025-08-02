@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<FormMainNamespace.Props>(), {
   colProps: () => ({}),
   showLabel: true,
   clearable: true,
+  editable: true,
   width: "100%",
 });
 
@@ -195,6 +196,7 @@ defineExpose(expose);
           :clearable="column.clearable ?? clearable"
           :show-label="column.showLabel ?? showLabel"
           :width="column.width ?? width"
+          :editable="column.editable ?? editable"
           :options="optionsMap.get(column.optionsProp || column.prop)"
           @change="handleChange"
         >
@@ -214,6 +216,7 @@ defineExpose(expose);
         :clearable="column.clearable ?? clearable"
         :show-label="column.showLabel ?? showLabel"
         :width="column.width ?? width"
+        :editable="column.editable ?? editable"
         :options="optionsMap.get(column.optionsProp || column.prop)"
         @change="handleChange"
       >
