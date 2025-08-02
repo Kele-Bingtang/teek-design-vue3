@@ -1,0 +1,127 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:map";
+
+@use "./namespace" as *;
+
+// ===== 全局设置 =====
+$default-color-space: hsl;
+$light-theme-adjustment: 1;
+$dark-theme-adjustment: 1.2;
+
+// ===== 颜色变量生成器 =====
+@mixin generate-color-variants($name, $base-color, $is-dark: false) {
+  // 基础色
+  --#{$admin-namespace}-color-#{$name}: #{$base-color};
+
+  // 悬停色
+  --#{$admin-namespace}-color-#{$name}-hover: #{generate-hover-color($base-color, $is-dark)};
+
+  // 柔和色
+  --#{$admin-namespace}-color-#{$name}-muted: #{generate-muted-color($base-color, $is-dark)};
+
+  // 深色
+  --#{$admin-namespace}-color-#{$name}-deep: #{generate-deep-color($base-color, $is-dark)};
+
+  // 浅色（比基础色更亮）
+  --#{$admin-namespace}-color-#{$name}-light: #{generate-light-color($base-color, $is-dark)};
+
+  // RGB 版本
+  --#{$admin-namespace}-color-#{$name}-rgb: #{color-to-rgb($base-color)};
+}
+
+// ===== 核心颜色处理函数 =====
+
+// 生成悬停色
+@function generate-hover-color($base-color, $is-dark: false) {
+  $h: color.channel($base-color, "hue", $space: hsl);
+  $s: color.channel($base-color, "saturation", $space: hsl);
+  $l: color.channel($base-color, "lightness", $space: hsl);
+
+  @if $is-dark {
+    // 暗色模式
+    $new-l: math.min($l + 25%, 100%);
+    $new-s: math.min($s + 15%, 100%);
+
+    @return hsl($h, $new-s, $new-l);
+  } @else {
+    // 亮色模式
+    $new-l: math.max($l - 20%, 0%);
+    $new-s: math.min($s + 15%, 100%);
+
+    @return hsl($h, $new-s, $new-l);
+  }
+}
+
+// 生成柔和色
+@function generate-muted-color($base-color, $is-dark: false) {
+  $h: color.channel($base-color, "hue", $space: hsl);
+  $s: color.channel($base-color, "saturation", $space: hsl);
+  $l: color.channel($base-color, "lightness", $space: hsl);
+
+  // 适度降低饱和度
+  $new-s: math.max($s - 30%, 0%);
+
+  @if $is-dark {
+    // 暗色模式
+    $new-l: math.min($l + 15%, 100%);
+
+    @return hsl($h, $new-s, $new-l);
+  } @else {
+    // 亮色模式
+    $new-l: math.max($l - 15%, 0%);
+
+    @return hsl($h, $new-s, $new-l);
+  }
+}
+
+// 生成深色
+@function generate-deep-color($base-color, $is-dark: false) {
+  $h: color.channel($base-color, "hue", $space: hsl);
+  $s: color.channel($base-color, "saturation", $space: hsl);
+  $l: color.channel($base-color, "lightness", $space: hsl);
+
+  @if $is-dark {
+    // 暗色模式
+    $new-l: math.max($l - 30%, 0%);
+    $new-s: math.min($s + 15%, 100%);
+
+    @return hsl($h, $new-s, $new-l);
+  } @else {
+    // 亮色模式
+    $new-l: math.max($l - 20%, 0%);
+    $new-s: math.min($s + 20%, 100%);
+
+    @return hsl($h, $new-s, $new-l);
+  }
+}
+
+// 生成浅色
+@function generate-light-color($base-color, $is-dark: false) {
+  $h: color.channel($base-color, "hue", $space: hsl);
+  $s: color.channel($base-color, "saturation", $space: hsl);
+  $l: color.channel($base-color, "lightness", $space: hsl);
+
+  @if $is-dark {
+    // 暗色模式
+    $new-l: math.min($l + 30%, 100%);
+    $new-s: math.max($s - 10%, 0%);
+
+    @return hsl($h, $new-s, $new-l);
+  } @else {
+    // 亮色模式
+    $new-l: math.min($l + 30%, 100%);
+    $new-s: math.max($s - 15%, 0%);
+
+    @return hsl($h, $new-s, $new-l);
+  }
+}
+
+// 转换为 RGB 格式
+@function color-to-rgb($color) {
+  $r: math.round(color.channel($color, "red", $space: rgb));
+  $g: math.round(color.channel($color, "green", $space: rgb));
+  $b: math.round(color.channel($color, "blue", $space: rgb));
+
+  @return #{$r}, #{$g}, #{$b};
+}

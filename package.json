@@ -3,7 +3,7 @@
   "version": "1.5.1",
   "private": true,
   "description": "Teek Design Vue3 后台管理系统",
-  "author": "Teek <2456019588@qq.com>",
+  "author": "Teeker <2456019588@qq.com>",
   "license": "MIT",
   "type": "module",
   "scripts": {

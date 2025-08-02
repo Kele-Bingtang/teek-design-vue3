@@ -84,8 +84,6 @@ export const useTheme = () => {
 
     // el-color-primary = tk-color-primary，因此只需要改 tk-color-primary 的颜色
     const pc = getCssVar(ns.cssVarName(`color-primary`), el);
-    console.log(pc);
-    console.log(color);
     if (pc && color !== pc) setCssVar(ns.cssVarName(`color-primary`), color, el);
 
     color && deriveColorByPrimary(color, el);

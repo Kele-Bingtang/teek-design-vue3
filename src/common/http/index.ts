@@ -13,8 +13,4 @@ export * from "./request";
 export * from "./types";
 
 // 导出预设实例
-export * from "./instance/default-request";
-export * from "./instance/mock-request";
-export * from "./instance/upload-request";
-export * from "./instance/external-request";
-export * from "./instance/configured-request";
+export * from "./instance";

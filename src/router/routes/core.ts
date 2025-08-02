@@ -1,25 +1,35 @@
 import { User, Bell } from "@element-plus/icons-vue";
-import { HOME_URL, LAYOUT_NAME, NOT_FOUND } from "@/common/config";
+import {
+  HOME_URL,
+  LAYOUT_NAME,
+  NOT_FOUND,
+  FORBIDDEN_NAME,
+  FORBIDDEN_URL,
+  SERVER_ERROR_NAME,
+  SERVER_ERROR_URL,
+  GATEWAY_TIMEOUT_NAME,
+  GATEWAY_TIMEOUT_URL,
+} from "@/common/config";
 
 // 错误提示路由
 const errorRouter: RouterConfigRaw[] = [
   {
-    path: "/403",
-    name: "403",
+    path: FORBIDDEN_URL,
+    name: FORBIDDEN_NAME,
     component: () => import("@/views/core/error/403.vue"),
-    meta: { title: "403 页面", hideInMenu: true, hideInBread: true, isFull: true },
+    meta: { title: "403", hideInMenu: true, hideInBread: true, isFull: true },
   },
   {
-    path: "/404",
-    name: "404",
+    path: SERVER_ERROR_URL,
+    name: SERVER_ERROR_NAME,
     component: () => import("@/views/core/error/404.vue"),
-    meta: { title: "404 页面", hideInMenu: true, hideInBread: true, isFull: true },
+    meta: { title: "404", hideInMenu: true, hideInBread: true, isFull: true },
   },
   {
-    path: "/500",
-    name: "500",
+    path: GATEWAY_TIMEOUT_URL,
+    name: GATEWAY_TIMEOUT_NAME,
     component: () => import("@/views/core/error/500.vue"),
-    meta: { title: "500 页面", hideInMenu: true, hideInBread: true, isFull: true },
+    meta: { title: "500", hideInMenu: true, hideInBread: true, isFull: true },
   },
 ];
 
@@ -61,5 +71,5 @@ export const notFoundRoutes = {
   path: "/:pathMatch(.*)*",
   name: NOT_FOUND,
   meta: { hideInMenu: true },
-  redirect: { name: "404" },
+  redirect: { name: SERVER_ERROR_NAME },
 };

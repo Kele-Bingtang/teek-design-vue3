@@ -1,21 +1,28 @@
-import { HOME_NAME, LOGIN_NAME, LAYOUT_NAME } from "@/common/config/constant";
+import {
+  HOME_NAME,
+  LOGIN_NAME,
+  LAYOUT_NAME,
+  REDIRECT_NAME,
+  FORBIDDEN_NAME,
+  SERVER_ERROR_NAME,
+  GATEWAY_TIMEOUT_NAME,
+} from "@/common/config/constant";
 
 export default {
   _route: {
-    [HOME_NAME]: "工作台",
-    Dashboard: "仪表盘",
     [LOGIN_NAME]: "登录",
-    Redirect: "重定向",
+    [REDIRECT_NAME]: "重定向",
     [LAYOUT_NAME]: "布局",
-    Error: "错误页面",
-    403: "403 页面",
-    404: "404 页面",
-    500: "500 页面",
+    [FORBIDDEN_NAME]: "403",
+    [SERVER_ERROR_NAME]: "404",
+    [GATEWAY_TIMEOUT_NAME]: "500",
+    [HOME_NAME]: "工作台",
 
     ErrorLog: "错误日志",
     Profile: "我的主页",
     Message: "我的消息",
 
+    Dashboard: "仪表盘",
     Console: "看板页",
     Analysis: "分析页",
     ECommerce: "电子商务",
@@ -119,6 +126,8 @@ export default {
     "Menu1-3-1": "菜单 1-3-1",
     "Menu1-3-2": "菜单 1-3-2",
     Menu2: "菜单 2",
+
+    Error: "错误页面",
 
     Directives: "自定义指令",
     Copy: "复制指令",
