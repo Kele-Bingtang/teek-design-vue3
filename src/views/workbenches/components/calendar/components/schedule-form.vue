@@ -2,7 +2,7 @@
 import type { FormColumn } from "@/components";
 import { ProForm } from "@/components";
 
-withDefaults(defineProps<{ disabled?: boolean }>(), {
+const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
   disabled: false,
 });
 
@@ -45,6 +45,24 @@ const columns: FormColumn[] = [
     label: "地点",
     prop: "location",
     el: "el-input",
+  },
+  {
+    label: "预约人",
+    prop: "appointed",
+    el: "el-input",
+    defaultValue: "Teeker",
+  },
+  {
+    label: "创建人",
+    prop: "createUser",
+    el: "el-input",
+    destroy: computed(() => !props.disabled),
+  },
+  {
+    label: "创建时间",
+    prop: "createTime",
+    el: "el-input",
+    destroy: computed(() => !props.disabled),
   },
 ];
 </script>

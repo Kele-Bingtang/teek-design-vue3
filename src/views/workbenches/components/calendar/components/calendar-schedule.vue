@@ -2,10 +2,10 @@
 import type { CalendarDateType, CalendarInstance } from "element-plus";
 import type { CalendarScheduleEmits, CalendarScheduleProps, ScheduleData, ScheduleFormModel } from "./types";
 import { computed, useTemplateRef, useId } from "vue";
-import { dayjs } from "element-plus";
-import { Plus, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { dayjs, ElMessage } from "element-plus";
+import { Plus, ArrowLeft, ArrowRight, CopyDocument, VideoCamera } from "@element-plus/icons-vue";
 import { useDialog, PointTag } from "@/components";
-import { useNamespace } from "@/composables";
+import { useClipboard, useNamespace } from "@/composables";
 import ScheduleForm from "./schedule-form.vue";
 
 const ns = useNamespace("calendar-schedule");
@@ -16,6 +16,15 @@ const props = withDefaults(defineProps<CalendarScheduleProps>(), {
 
 const emits = defineEmits<CalendarScheduleEmits>();
 
+const meetingText = `邀请您参加正在进行的会议 主题: {subject}
+点击链接加入会议: {link}
+
+使用会议号入会:
+会议号: {number}
+会议密码: {password}
+
+电话语音入会: 拨打 {phone1}（中文）或{phone2}（中英双语），按照语音提示，输入会议号{number}，按键输入7#静音，8#解除静音`;
+
 const calendarInstance = useTemplateRef<CalendarInstance>("calendarInstance");
 
 // 当前日历选择的日期
@@ -23,6 +32,7 @@ const currentTime = defineModel<Date>({ default: () => new Date() });
 // 日程表单模型
 const scheduleModel = defineModel<ScheduleFormModel>("form", { default: () => ({}) });
 
+const { copy } = useClipboard();
 const { open } = useDialog();
 
 // 当前日期的日程列表
@@ -51,6 +61,26 @@ const isToday = (dateStr: string): boolean => {
 };
 
 /**
+ * 根据日程的开始时间和结束时间判断所处状态
+ */
+const getStatus = (schedule: ScheduleData) => {
+  const now = dayjs();
+  const today = dayjs(currentTime.value).format("YYYY-MM-DD");
+  const scheduleDate = today;
+  const start = dayjs(`${scheduleDate} ${schedule.startTime}`);
+  const end = dayjs(`${scheduleDate} ${schedule.endTime}`);
+
+  if (now.isAfter(end)) {
+    return "info";
+  } else if (now.isBefore(start)) {
+    // 距离开始时间小于等于 2 小时
+    if (start.diff(now, "hour", true) <= 2) return "warning";
+    return "success";
+  } else {
+    return "primary";
+  }
+};
+/**
  * 新增日程
  */
 const handleAddSchedule = () => {
@@ -59,7 +89,7 @@ const handleAddSchedule = () => {
   open({
     title: "新增日程",
     width: 550,
-    height: 250,
+    height: 270,
     render: () => <ScheduleForm v-model={scheduleModel.value} />,
     onConfirm: async () => {
       const startTime = scheduleModel.value.time[0];
@@ -86,7 +116,15 @@ const handleAddSchedule = () => {
         return false;
       } else emits("validate", true);
 
-      const newSchedule = { ...scheduleModel.value, startTime, endTime, id: useId() };
+      const newSchedule = {
+        ...scheduleModel.value,
+        startTime,
+        endTime,
+        id: useId(),
+        createUser: "Teeker",
+        createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        attendee: ["Teeker", "张三", "李四", "王五"],
+      };
 
       emits("confirm", newSchedule);
     },
@@ -96,23 +134,51 @@ const handleAddSchedule = () => {
   });
 };
 
-const handleClickSchedule = (item: ScheduleData) => {
-  emits("open", item, "edit");
+const handleClickSchedule = (schedule: ScheduleData) => {
+  emits("open", schedule, "edit");
 
   const formModel = {
-    title: item.title,
+    title: schedule.title,
     date: dayjs(currentTime.value).format("YYYY-MM-DD"),
-    time: [item.startTime, item.endTime],
-    location: item.location,
+    time: [schedule.startTime, schedule.endTime],
+    location: schedule.location,
+    appointed: schedule.appointed,
+    createUser: schedule.createUser,
+    createTime: schedule.createTime,
   };
 
   open({
-    title: "编辑日程",
+    title: "查看日程",
     width: 550,
-    height: 250,
+    height: 380,
     showFooter: false,
     render: () => <ScheduleForm v-model={formModel} disabled={true} />,
   });
+};
+
+/**
+ * 复制会议信息
+ */
+const handleCopy = (schedule: ScheduleData) => {
+  const copyText = meetingText
+    .replaceAll("{subject}", schedule.title)
+    .replaceAll("{link}", `https://vue3-design.teek.top//#/m/${schedule.id}`)
+    .replaceAll("{number}", schedule.number || "")
+    .replaceAll("{password}", schedule.password || "")
+    .replaceAll("{phone1}", schedule.phone1 || "")
+    .replaceAll("{phone2}", schedule.phone2 || "");
+
+  copy(copyText)
+    .then(() => {
+      ElMessage.success("复制会议信息成功");
+    })
+    .catch(() => {
+      ElMessage.error("复制会议信息失败");
+    });
+};
+
+const handleJump = (schedule: ScheduleData) => {
+  window.open(`https://vue3-design.teek.top//#/m/${schedule.id}`);
 };
 </script>
 
@@ -157,14 +223,33 @@ const handleClickSchedule = (item: ScheduleData) => {
           :key="item.id"
           :timestamp="item.startTime"
           :hide-timestamp="true"
+          :type="getStatus(item)"
           :class="ns.e('list-item')"
-          @click="handleClickSchedule(item)"
         >
-          <div class="title flx-align-center">
-            <span>{{ item.startTime }} - {{ item.endTime }}</span>
-            <span class="sle flx-1">{{ item.title }}</span>
+          <div class="flx-justify-between">
+            <div class="cursor-pointer" @click="handleClickSchedule(item)">
+              <div class="title flx-align-center">
+                <span>{{ item.startTime }} - {{ item.endTime }}</span>
+                <span class="sle flx-1">{{ item.title }}</span>
+              </div>
+              <div class="location sle">{{ item.location }}</div>
+            </div>
+
+            <div class="flx-align-center gap-10">
+              <Icon
+                :icon="CopyDocument"
+                :size="17"
+                class="cursor-pointer primary-color-hover"
+                @click="handleCopy(item)"
+              />
+              <Icon
+                :icon="VideoCamera"
+                :size="17"
+                class="cursor-pointer primary-color-hover"
+                @click="handleJump(item)"
+              />
+            </div>
           </div>
-          <div class="location sle">{{ item.location }}</div>
         </el-timeline-item>
       </el-timeline>
 

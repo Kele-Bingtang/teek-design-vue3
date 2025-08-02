@@ -3,6 +3,7 @@ export * from "./core/image-verify-code";
 export * from "./core/permission";
 export * from "./core/switch-dark";
 export * from "./core/tooltip";
+export * from "./core/point-tag";
 
 export * from "./pro/dialog";
 export * from "./pro/drawer";
@@ -20,7 +21,6 @@ export * from "./pro/pagination";
 export * from "./pro/search";
 export * from "./pro/table";
 export * from "./pro/tree-filter";
-export * from "./core/point-tag";
 
 // export * from "./pro/v1/pro-form";
 // export * from "./pro/v1/pro-table";

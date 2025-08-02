@@ -11,8 +11,7 @@ import {
   MenuShowModeEnum,
 } from "@/common/enums";
 import { serviceConfig } from "@/common/config";
-import { cacheOperator, getCssVar, localStorageProxy } from "@/common/utils";
-import { useNamespace } from "@/composables";
+import { cacheOperator, localStorageProxy } from "@/common/utils";
 
 export const useSettingStore = defineStore(
   "settingStore",
@@ -41,9 +40,10 @@ export const useSettingStore = defineStore(
     });
 
     const theme = reactive({
-      primaryColor: themeConfig.primaryColor ?? getCssVar(useNamespace().cssVar("color-primary")),
-      radius: themeConfig.radius,
+      primaryColor: themeConfig.primaryColor,
       globalThemeMode: themeConfig.globalThemeMode || GlobalThemeEnum.System,
+      defaultDarkMode: themeConfig.defaultDarkMode,
+      radius: themeConfig.radius,
       weakMode: themeConfig.weakMode,
       greyMode: themeConfig.greyMode,
     });
@@ -125,7 +125,20 @@ export const useSettingStore = defineStore(
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
 
-      return theme.globalThemeMode === GlobalThemeEnum.Dark;
+      return theme.globalThemeMode.startsWith("dark");
+    });
+
+    const primaryColor = computed({
+      get: () => {
+        return theme.primaryColor[
+          theme.globalThemeMode === GlobalThemeEnum.System ? theme.defaultDarkMode : theme.globalThemeMode
+        ];
+      },
+      set: value => {
+        theme.primaryColor[
+          theme.globalThemeMode === GlobalThemeEnum.System ? theme.defaultDarkMode : theme.globalThemeMode
+        ] = value;
+      },
     });
 
     /**
@@ -163,6 +176,7 @@ export const useSettingStore = defineStore(
       shortcutKey,
 
       isDark,
+      primaryColor,
 
       expandSideMenu,
       collapseSideMenu,

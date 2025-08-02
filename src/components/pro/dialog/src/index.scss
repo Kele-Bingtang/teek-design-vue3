@@ -1,14 +1,22 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(pro-dialog) {
-  &.#{$el-namespace}-dialog.is-fullscreen {
-    --#{$el-namespace}-dialog-width: 100% !important;
-    --#{$el-namespace}-dialog-margin-top: 0 !important;
+  &.#{$el-namespace}-dialog {
+    // 全屏动画
+    transition:
+      width cssVarEl(transition-duration) ease,
+      margin-top cssVarEl(transition-duration) ease;
 
-    height: 100%;
-    margin-bottom: 0;
-    overflow: auto;
+    &.is-fullscreen {
+      --#{$el-namespace}-dialog-width: 100% !important;
+      --#{$el-namespace}-dialog-margin-top: 0 !important;
+
+      height: 100%;
+      margin-bottom: 0;
+      overflow: auto;
+    }
   }
 
   @include e(footer) {

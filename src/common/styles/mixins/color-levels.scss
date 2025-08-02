@@ -1,0 +1,200 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:meta";
+@use "sass:map";
+
+@use "./namespace" as *;
+
+// ===== 全局变量 =====
+// 使用 map 数据结构作为缓存，避免重复计算
+$prefix: #{$admin-namespace};
+$color-cache: () !default;
+
+// ===== 颜色工具函数 =====
+
+/**
+ * 验证颜色值有效性
+ * @param $color 需要验证的颜色
+ * @return 是否为有效颜色
+ */
+@function is-valid-color($color) {
+  @return meta.type-of($color) == "color";
+}
+
+/**
+ * 获取缓存颜色通道值
+ * @param $color 基础颜色
+ * @param $channel 通道名称
+ * @param $space 颜色空间
+ * @return 通道值
+ */
+@function get-cached-channel($color, $channel, $space) {
+  // 创建唯一的缓存键
+  $key: "#{inspect($color)}-#{$channel}-#{$space}";
+
+  // 如果缓存中不存在该键，则计算并存储
+  @if not map.has-key($color-cache, $key) {
+    $value: color.channel($color, $channel, $space: $space);
+
+    // 使用内置函数更新缓存而不是直接修改全局变量
+    $color-cache: map.merge(
+      $color-cache,
+      (
+        $key: $value,
+      )
+    ) !global;
+  }
+
+  @return map.get($color-cache, $key);
+}
+
+// ===== 颜色级别生成器 =====
+
+/**
+ * 生成 1-9 级颜色序列
+ */
+@mixin generate-color-levels($name, $base-color, $is-dark: false, $levels: 9) {
+  // 验证基础颜色
+  @if not is-valid-color($base-color) {
+    @error "Invalid base color for #{$name}: #{$base-color}";
+  }
+
+  // 主序列
+  @for $i from 1 through $levels {
+    $level-color: generate-color-level($base-color, $i, $levels, $is-dark);
+
+    --#{$prefix}-color-#{$name}-light-#{$i}: #{$level-color};
+  }
+
+  // 专门的加深颜色变体
+  @for $i from 1 through $levels {
+    $dark-level-color: get-dark-color($base-color, $i / 10);
+
+    --#{$prefix}-color-#{$name}-dark-#{$i}: #{$dark-level-color};
+  }
+
+  // 生成更淡的颜色系列
+  @include generate-lighter-colors($name, $base-color);
+}
+
+/**
+ * 生成单级颜色
+ */
+@function generate-color-level($base-color, $level, $total-levels: 9, $is-dark: false) {
+  $ratio: $level / $total-levels;
+
+  @if $is-dark {
+    // 暗色模式：级别越高越亮（1 级最暗，9 级最亮）
+    @return get-light-color($base-color, $ratio);
+  } @else {
+    // 亮色模式：级别越高越暗（1 级最亮，9 级最暗）
+    @return get-dark-color($base-color, $ratio);
+  }
+}
+
+// ===== 核心颜色处理函数 =====
+
+/**
+ * 生成加深颜色
+ */
+@function get-dark-color($color, $level) {
+  // 使用缓存获取 RGB 通道值
+  $red: get-cached-channel($color, "red", rgb);
+  $green: get-cached-channel($color, "green", rgb);
+  $blue: get-cached-channel($color, "blue", rgb);
+
+  // 计算加深后的颜色值（添加范围保护）
+  $new-red: math.clamp(0, math.round(20.5 * $level + $red * (1 - $level)), 255);
+  $new-green: math.clamp(0, math.round(20.5 * $level + $green * (1 - $level)), 255);
+  $new-blue: math.clamp(0, math.round(20.5 * $level + $blue * (1 - $level)), 255);
+
+  @return rgb($new-red, $new-green, $new-blue);
+}
+
+/**
+ * 生成变浅颜色
+ */
+@function get-light-color($color, $level) {
+  // 使用缓存获取 RGB 通道值
+  $red: get-cached-channel($color, "red", rgb);
+  $green: get-cached-channel($color, "green", rgb);
+  $blue: get-cached-channel($color, "blue", rgb);
+
+  // 计算变浅后的颜色值（添加范围保护）
+  $new-red: math.clamp(0, math.round(255 * $level + $red * (1 - $level)), 255);
+  $new-green: math.clamp(0, math.round(255 * $level + $green * (1 - $level)), 255);
+  $new-blue: math.clamp(0, math.round(255 * $level + $blue * (1 - $level)), 255);
+
+  @return rgb($new-red, $new-green, $new-blue);
+}
+
+/**
+ * 混合两种颜色（HSL 混合优化）
+ */
+@function color-blend($color1, $color2, $ratio) {
+  // 处理极端值
+  @if $ratio <= 0 {
+    @return $color1;
+  }
+
+  @if $ratio >= 1 {
+    @return $color2;
+  }
+
+  // 使用缓存获取 HSL 通道值
+  $h1: get-cached-channel($color1, "hue", hsl);
+  $s1: get-cached-channel($color1, "saturation", hsl);
+  $l1: get-cached-channel($color1, "lightness", hsl);
+  $h2: get-cached-channel($color2, "hue", hsl);
+  $s2: get-cached-channel($color2, "saturation", hsl);
+  $l2: get-cached-channel($color2, "lightness", hsl);
+
+  // 计算混合后的 HSL 值
+  $h: _interpolate-hue($h1, $h2, $ratio);
+  $s: ($s1 * (1 - $ratio) + $s2 * $ratio);
+  $l: ($l1 * (1 - $ratio) + $l2 * $ratio);
+
+  @return hsl($h, $s, $l);
+}
+
+/**
+ * 色相插值优化（处理色相环绕）
+ */
+@function _interpolate-hue($h1, $h2, $ratio) {
+  // 计算最短弧
+  $diff: math.abs($h1 - $h2);
+  $short-arc: $diff > 180;
+
+  @if $short-arc {
+    @if $h1 < $h2 {
+      $h1: $h1 + 360;
+    } @else {
+      $h2: $h2 + 360;
+    }
+  }
+
+  $h: $h1 * (1 - $ratio) + $h2 * $ratio;
+
+  // 规范化到 0-360 范围
+  @while $h < 0 {
+    $h: $h + 360;
+  }
+
+  @while $h >= 360 {
+    $h: $h - 360;
+  }
+
+  @return $h;
+}
+
+/**
+ * 生成更淡的颜色系列
+ */
+@mixin generate-lighter-colors($name, $base-color) {
+  @for $i from 1 through 15 {
+    $ratio: $i / 15;
+    $lighter-color: color-blend($base-color, white, $ratio);
+
+    --#{$prefix}-color-#{$name}-lighter-#{$i}: #{$lighter-color};
+  }
+}

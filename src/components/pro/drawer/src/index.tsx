@@ -117,6 +117,15 @@ export const showDrawer = (
     drawerProps.onFullscreen?.(isFullscreen.value);
   };
 
+  const finalDialogProps = {
+    ...drawerProps,
+    onConfirm: undefined,
+    onCancel: undefined,
+    render: undefined,
+    renderHeader: undefined,
+    renderFooter: undefined,
+  };
+
   const vm = (
     <ElConfigProvider namespace={ns.elNamespace} size={elementPlusSize.value}>
       <ElDrawer
@@ -125,7 +134,7 @@ export const showDrawer = (
         size="30%"
         close-on-click-modal={false}
         before-close={() => handleCancel(drawerProps)}
-        {...drawerProps}
+        {...finalDialogProps}
         class={blockClass}
       >
         {{

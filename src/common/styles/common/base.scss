@@ -13,6 +13,12 @@ h5 {
 }
 
 // 主题色悬停样式
-.theme-color-hover:hover {
+.primary-color-hover:hover {
   color: var(--#{$el-namespace}-color-primary);
+}
+
+html.dark {
+  body {
+    color: var(--#{$admin-namespace}-text-gray-800);
+  }
 }

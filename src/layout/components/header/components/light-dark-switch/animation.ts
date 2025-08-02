@@ -3,7 +3,7 @@ import { setCssVar } from "@/common/utils";
 import { useTheme } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
-const { Dark, Light } = GlobalThemeEnum;
+const { Light } = GlobalThemeEnum;
 
 /**
  * 主题切换动画
@@ -28,7 +28,7 @@ export const switchThemeWithAnimation = (e: any) => {
  */
 const toggleTheme = () => {
   const { changeGlobalTheme } = useTheme();
-  const { isDark } = useSettingStore();
+  const { isDark, theme } = useSettingStore();
 
-  changeGlobalTheme(isDark ? Light : Dark);
+  changeGlobalTheme(isDark ? Light : theme.defaultDarkMode);
 };

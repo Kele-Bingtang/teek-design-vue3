@@ -90,12 +90,12 @@ const getOptions = (column: TableColumn) => {
  * 获取当前列的字典 label 值（通过 value 找 label）
  */
 const getValue = (row: TableScope["row"], column: TableColumn) => {
-  const { optionField, transformOption, ignoreOptionIfAbsent } = column;
+  const { optionField, transformOption, ignoreOptionIfAbsent, isFilterOptions = true } = column;
   const p = prop(column);
   const options = getOptions(column);
   const value = getProp(row, p);
 
-  if (!options) return value;
+  if (!options || !toValue(isFilterOptions)) return value;
 
   const option = transformOption ? transformOption(value, options, row) : filterOptions(value, options, optionField);
   const label = option ? filterOptionsValue(option, optionField?.label || "label") : "";

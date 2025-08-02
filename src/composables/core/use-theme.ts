@@ -1,5 +1,6 @@
 import { storeToRefs } from "pinia";
 import { getLightColor, getDarkColor, setCssVar, colorBlend, getCssVar } from "@/common/utils";
+import { serviceConfig } from "@/common/config";
 import { GlobalThemeEnum } from "@/common/enums";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
@@ -11,13 +12,8 @@ export const useTheme = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { isDark, theme: themeConfig } = storeToRefs(settingStore);
-  const { Light, Dark } = GlobalThemeEnum;
-
-  const globalThemeStyle = {
-    [Light]: { className: "" },
-    [Dark]: { className: GlobalThemeEnum.Dark },
-  };
+  const { isDark, theme: themeConfig, primaryColor } = storeToRefs(settingStore);
+  const { System } = GlobalThemeEnum;
 
   /**
    * 禁用过渡效果
@@ -44,18 +40,26 @@ export const useTheme = () => {
     // 临时禁用过渡效果
     disableTransitions();
 
-    if (theme !== themeConfig.value.globalThemeMode) settingStore.$patch({ theme: { globalThemeMode: theme } });
+    const { globalThemeClassName } = serviceConfig.theme;
+    const { globalThemeMode, defaultDarkMode } = themeConfig.value;
 
-    const currentTheme = globalThemeStyle[isDark.value ? Dark : Light];
-    const oldTheme = globalThemeStyle[isDark.value ? Light : Dark];
+    if (theme !== globalThemeMode) settingStore.$patch({ theme: { globalThemeMode: theme } });
+
+    const currentThemeClassName = globalThemeClassName[theme];
     const el = document.documentElement;
 
-    oldTheme.className && el.classList.remove(oldTheme.className);
-    currentTheme.className && el.classList.add(currentTheme.className);
+    // 删除所有主题 class，然后添加切换后的主题 class
+    Object.values(globalThemeClassName).forEach(item => item && el.classList.remove(item));
+    currentThemeClassName && el.classList.add(currentThemeClassName);
+
+    // 兼容 ElementPlus 暗黑模式 class
+    isDark.value ? el.classList.add("dark") : el.classList.remove("dark");
+
+    // 暗黑模式的跟随系统默认为 defaultDarkMode 指定的主题
+    theme === System && isDark.value && el.classList.add(globalThemeClassName[defaultDarkMode]);
 
     // 获取主题切换后的主题色
-    const primaryColor = getCssVar(ns.cssVarNameEl(`color-primary`), el) || themeConfig.value.primaryColor;
-    if (primaryColor) deriveColorByPrimary(primaryColor, el);
+    if (primaryColor.value) changePrimaryColor(primaryColor.value, el);
 
     // 使用 requestAnimationFrame 确保在下一帧恢复过渡效果
     requestAnimationFrame(() => {
@@ -68,19 +72,27 @@ export const useTheme = () => {
   /**
    * 修改主题颜色
    */
-  const changePrimaryColor = (color = themeConfig.value.primaryColor, el = document.documentElement) => {
-    if (color !== themeConfig.value.primaryColor) settingStore.$patch({ theme: { primaryColor: color } });
+  const changePrimaryColor = (color = primaryColor.value, el = document.documentElement) => {
+    const primaryColor = themeConfig.value.primaryColor;
+    const globalThemeMode = themeConfig.value.globalThemeMode;
+    const defaultColor = primaryColor[globalThemeMode];
 
-    const primaryColor = getCssVar(ns.cssVarNameEl(`color-primary`), el);
-    if (color !== primaryColor) setCssVar(ns.cssVarNameEl(`color-primary`), color, el);
+    if (defaultColor && color !== defaultColor) {
+      primaryColor[globalThemeMode] = color;
+      settingStore.$patch({ theme: { primaryColor } });
+    }
 
-    deriveColorByPrimary(color, el);
+    // el-color-primary = tk-color-primary，因此只需要改 tk-color-primary 的颜色
+    const pc = getCssVar(ns.cssVarName(`color-primary`), el);
+    if (pc && color !== pc) setCssVar(ns.cssVarName(`color-primary`), color, el);
+
+    color && deriveColorByPrimary(color, el);
   };
 
   /**
    * 基于主题色衍生其他颜色
    */
-  const deriveColorByPrimary = (color = themeConfig.value.primaryColor, el = document.documentElement) => {
+  const deriveColorByPrimary = (color = primaryColor.value, el = document.documentElement) => {
     // 颜色加深或变浅
     for (let i = 1; i <= 9; i++) {
       setCssVar(
@@ -115,7 +127,6 @@ export const useTheme = () => {
   // 初始化主题配置
   const initTheme = () => {
     changeGlobalTheme();
-    changePrimaryColor();
 
     if (themeConfig.value.greyMode) changeGreyOrWeak(true, "greyMode");
     if (themeConfig.value.weakMode) changeGreyOrWeak(true, "weakMode");

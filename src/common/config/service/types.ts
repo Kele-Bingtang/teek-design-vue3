@@ -89,17 +89,21 @@ export interface LayoutConfig {
 
 export interface ThemeConfig {
   /** 主题色 */
-  primaryColor: string;
-  /** 圆角 */
-  radius: number;
+  primaryColor: Recordable<GlobalThemeEnum, string>;
   /** 系统主题 */
   globalThemeMode: GlobalThemeEnum;
+  /** 指定当切换为暗色模式（html class 为 dark）或跟随系统时，使用的实际暗色模式 */
+  defaultDarkMode: GlobalThemeEnum;
+  /** 不同主题模式在 html 的 className */
+  globalThemeClassName: Recordable<GlobalThemeEnum, string>;
+  /** 圆角 */
+  radius: number;
   /** 是否开启灰色主题 */
   weakMode: boolean;
   /** 是否开启色弱主题 */
   greyMode: boolean;
   /** 预设颜色 */
-  presetsColor: string[];
+  presetsColor: Recordable<GlobalThemeEnum, string[]>;
 }
 
 export interface headerConfig {

@@ -1,1 +1,1 @@
-export * from "./app-enum";
+export * from "./service-enum";

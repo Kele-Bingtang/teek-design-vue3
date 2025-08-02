@@ -74,8 +74,8 @@
   }
 
   @include e(schedule) {
-    height: calc(100% - 360px);
     padding: 0 20px;
+    overflow: hidden;
 
     @include e(schedule-header) {
       margin-bottom: 16px;
@@ -83,7 +83,7 @@
     }
 
     @include e(schedule-list) {
-      height: calc(100% - 37px);
+      height: calc(100% - 34px);
       padding-left: 1px;
       overflow: hidden auto;
 
@@ -93,8 +93,6 @@
       }
 
       @include e(list-item, true) {
-        cursor: pointer;
-
         .title {
           gap: 6px;
           font-size: 14px;

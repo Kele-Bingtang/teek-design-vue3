@@ -54,7 +54,6 @@
     "persistedstate",
     "sortablejs",
     "vuedraggable",
-    "rushstack",
     "cssnano",
     "cloc",
     "antd",
@@ -69,6 +68,7 @@
     "cascader",
     "popconfirm",
     "teek",
+    "teeker",
     "axios"
   ]
 }

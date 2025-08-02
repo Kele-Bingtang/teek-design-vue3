@@ -1,21 +1,28 @@
-import { HOME_NAME, LOGIN_NAME, LAYOUT_NAME } from "@/common/config/constant";
+import {
+  HOME_NAME,
+  LOGIN_NAME,
+  LAYOUT_NAME,
+  REDIRECT_NAME,
+  FORBIDDEN_NAME,
+  SERVER_ERROR_NAME,
+  GATEWAY_TIMEOUT_NAME,
+} from "@/common/config/constant";
 
 export default {
   _route: {
-    [HOME_NAME]: "Workbenches",
-    Dashboard: "Dashboard",
     [LOGIN_NAME]: "Login",
-    Redirect: "Redirect",
+    [REDIRECT_NAME]: "Redirect",
     [LAYOUT_NAME]: "Layout",
-    Error: "Error",
-    403: "403",
-    404: "404",
-    500: "500",
+    [FORBIDDEN_NAME]: "403",
+    [SERVER_ERROR_NAME]: "404",
+    [GATEWAY_TIMEOUT_NAME]: "500",
+    [HOME_NAME]: "Workbenches",
 
     ErrorLog: "Error Logger",
     Profile: "My Profile",
     Message: "Message Center",
 
+    Dashboard: "Dashboard",
     Console: "Console",
     Analysis: "Analysis",
     ECommerce: "ECommerce",
@@ -118,6 +125,8 @@ export default {
     "Menu1-3-1": "menu 1-3-1",
     "Menu1-3-2": "menu 1-3-2",
     Menu2: "menu 2",
+
+    Error: "错误页面",
 
     Directives: "Directives",
     Copy: "Copy Directive",
@@ -233,7 +242,10 @@ export default {
       primaryColor: "Primary color",
       modeSelect: {
         light: "Light",
-        dark: "Dark",
+        darkBlue: "Dark blue",
+        darkDeep: "Dark deep",
+        darkMidnight: "Dark midnight",
+        darkNeutral: "Dark neutral",
         system: "System",
       },
       radius: "Rounded corner size",
