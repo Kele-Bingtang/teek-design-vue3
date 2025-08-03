@@ -1,8 +1,9 @@
 @use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
 @use "@styles/mixins/function" as *;
 
 @include b(lock-panel) {
-  :deep(.el-dialog) {
+  :deep(.#{$el-namespace}-dialog) {
     border-radius: 10px;
   }
 
@@ -72,11 +73,11 @@
       color: cssVar(gray-800);
     }
 
-    .el-form {
+    .#{$el-namespace}-form {
       width: 90%;
     }
 
-    .el-input {
+    .#{$el-namespace}-input {
       width: 100%;
       margin-top: 35px;
     }
@@ -122,12 +123,12 @@
       color: cssVar(gray-800);
     }
 
-    .el-form {
+    .#{$el-namespace}-form {
       width: 100%;
       padding: 0 10px !important;
     }
 
-    .el-input {
+    .#{$el-namespace}-input {
       margin-top: 20px;
       color: cssVar(gray-800);
     }

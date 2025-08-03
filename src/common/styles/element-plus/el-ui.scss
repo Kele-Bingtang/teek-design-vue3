@@ -28,13 +28,13 @@
 // 修改 el-pagination 大小
 .#{$el-namespace}-pagination--default {
   & {
-    --el-pagination-button-width: 32px !important;
-    --el-pagination-button-height: var(--el-pagination-button-width) !important;
+    --#{$el-namespace}-pagination-button-width: 32px !important;
+    --#{$el-namespace}-pagination-button-height: var(--#{$el-namespace}-pagination-button-width) !important;
   }
 
   @media (max-width: $device-ipad-pro) {
     & {
-      --el-pagination-button-width: 28px !important;
+      --#{$el-namespace}-pagination-button-width: 28px !important;
     }
   }
 }
@@ -52,7 +52,7 @@
 }
 
 // 修改全屏 loading 背景色
-// .el-loading-mask {
+// .#{$el-namespace}-loading-mask {
 //   background-color: var(--#{$admin-namespace}-bg-color) !important  ;
 // }
 

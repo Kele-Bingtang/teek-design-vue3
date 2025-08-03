@@ -399,7 +399,7 @@ const reset = () => {
     text-align: center;
   }
 
-  .el-row {
+  .#{$el-namespace}-row {
     row-gap: 10px;
   }
 

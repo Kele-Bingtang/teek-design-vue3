@@ -111,10 +111,10 @@ const handleConfirm = () => {
     }
   }
 
-  .el-tabs {
+  .#{$el-namespace}-tabs {
     height: calc(100% - 27px);
 
-    :deep(.el-tabs__content) {
+    :deep(.#{$el-namespace}-tabs__content) {
       overflow: auto;
 
       // 滚动条隐藏
@@ -124,7 +124,7 @@ const handleConfirm = () => {
     }
   }
 
-  .el-tab-pane {
+  .#{$el-namespace}-tab-pane {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

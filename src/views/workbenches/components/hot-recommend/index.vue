@@ -73,7 +73,7 @@ const handleMore = () => {
       color: cssVar("color-primary");
       background-color: cssVar("gray-100");
 
-      .el-tag {
+      .#{$el-namespace}-tag {
         color: cssVar("color-primary");
         background-color: cssVar("gray-200");
       }

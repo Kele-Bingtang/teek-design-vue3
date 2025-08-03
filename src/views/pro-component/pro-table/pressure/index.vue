@@ -3,6 +3,9 @@ import type { TableColumn } from "@/components/pro/table";
 import { toValue } from "vue";
 import { ElTable, ElTableColumn } from "element-plus";
 import { ProTable } from "@/components/pro/table";
+import { useNamespace } from "@/composables";
+
+const ns = useNamespace();
 
 // 压测配置
 const config = reactive({
@@ -134,7 +137,7 @@ const startTest = async () => {
 
     // 测试 ElTable 渲染时间
     else if (tableType.value === "elTable") {
-      waitForTableRender(".el-table")
+      waitForTableRender(`.${ns.elNamespace}-table`)
         .then(() => {
           testResult.elTableTime = performance.now() - startTime + dataGenTime;
           loading.elTable = false;

@@ -225,7 +225,7 @@ $yellow: #ffb350;
     flex-wrap: wrap;
     column-gap: 10px;
 
-    .el-button {
+    .#{$el-namespace}-button {
       margin-left: 0;
     }
   }

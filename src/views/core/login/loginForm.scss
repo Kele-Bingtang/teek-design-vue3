@@ -24,7 +24,7 @@
       width: 100%;
       cursor: pointer;
 
-      .tk-icon:hover {
+      .#{$admin-namespace}-icon:hover {
         color: cssVarEl(color-primary);
       }
     }

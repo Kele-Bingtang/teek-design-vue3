@@ -200,7 +200,7 @@ const presetBanners = {
 
 <style lang="scss" scoped>
 .banners {
-  .el-row {
+  .#{$el-namespace}-row {
     row-gap: 20px;
   }
 
