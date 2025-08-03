@@ -103,7 +103,7 @@ const handleMore = () => {
       color: cssVar("color-primary");
       background-color: cssVar("gray-100");
 
-      .el-tag {
+      .#{$el-namespace}-tag {
         color: cssVar("color-primary");
         background-color: cssVar("gray-200");
       }
@@ -117,7 +117,7 @@ const handleMore = () => {
     @include has(read) {
       color: cssVar("text-gray-500");
 
-      .el-tag {
+      .#{$el-namespace}-tag {
         color: cssVar("text-gray-500");
       }
     }

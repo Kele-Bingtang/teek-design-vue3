@@ -7,7 +7,7 @@ $bem-e: null;
 
 /* Block 块 */
 @mixin b($block) {
-  $bem-b: $admin-namespace + $common-separator + $block !global;
+  $bem-b: $teek-namespace + $common-separator + $block !global;
 
   .#{$bem-b} {
     @content;
@@ -121,7 +121,7 @@ $bem-e: null;
 
 /* 多个元素 */
 @mixin joins($element...) {
-  $b: $admin-namespace + $common-separator;
+  $b: $teek-namespace + $common-separator;
   $selector: "";
 
   /* 拼接逗号 */

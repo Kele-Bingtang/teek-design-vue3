@@ -1,7 +1,7 @@
 @use "../mixins/namespace" as *;
 
 body {
-  color: var(--#{$admin-namespace}-text-gray-700);
+  color: var(--#{$teek-namespace}-text-gray-700);
 }
 
 h1,
@@ -9,7 +9,7 @@ h2,
 h3,
 h4,
 h5 {
-  color: var(--#{$admin-namespace}-text-gray-800);
+  color: var(--#{$teek-namespace}-text-gray-800);
 }
 
 // 主题色悬停样式
@@ -19,6 +19,6 @@ h5 {
 
 html.dark {
   body {
-    color: var(--#{$admin-namespace}-text-gray-800);
+    color: var(--#{$teek-namespace}-text-gray-800);
   }
 }

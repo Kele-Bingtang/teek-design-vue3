@@ -34,7 +34,7 @@
     }
   }
 
-  .el-row {
+  .#{$el-namespace}-row {
     row-gap: 20px;
   }
 

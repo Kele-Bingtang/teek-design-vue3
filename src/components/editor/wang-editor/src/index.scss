@@ -14,37 +14,37 @@ $border-radius: 6px;
 /* 富文本组件样式 */
 @include b(wang-editor) {
   /* 激活颜色 */
-  --w-e-toolbar-active-color: var(--#{$admin-namespace}-gray-900);
+  --w-e-toolbar-active-color: var(--#{$teek-namespace}-gray-900);
 
   /* 激活背景颜色 */
-  --w-e-toolbar-active-bg-color: rgb(var(--#{$admin-namespace}-gray-200-rgb), 0.4);
+  --w-e-toolbar-active-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.4);
 
   /* 表格选中时候的边框颜色 */
-  --w-e-textarea-selected-border-color: var(--#{$admin-namespace}-color-primary);
+  --w-e-textarea-selected-border-color: var(--#{$teek-namespace}-color-primary);
 
   /* 表格头背景颜色 */
-  --w-e-textarea-slight-bg-color: rgb(var(--#{$admin-namespace}-gray-200-rgb), 0.4);
+  --w-e-textarea-slight-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.4);
 
   // 工具栏背景颜色
-  --w-e-toolbar-bg-color: var(--#{$admin-namespace}-bg-color);
+  --w-e-toolbar-bg-color: var(--#{$teek-namespace}-bg-color);
 
   // 输入区域背景颜色
-  --w-e-textarea-bg-color: var(--#{$admin-namespace}-bg-color);
+  --w-e-textarea-bg-color: var(--#{$teek-namespace}-bg-color);
 
   // 工具栏文字颜色
-  --w-e-toolbar-color: var(--#{$admin-namespace}-text-gray-800);
+  --w-e-toolbar-color: var(--#{$teek-namespace}-text-gray-800);
 
   // 弹窗边框颜色
-  --w-e-toolbar-border-color: var(--#{$admin-namespace}-border-dashed-color);
+  --w-e-toolbar-border-color: var(--#{$teek-namespace}-border-dashed-color);
 
   // 分割线颜色
-  --w-e-textarea-border-color: var(--#{$admin-namespace}-border-dashed-color);
+  --w-e-textarea-border-color: var(--#{$teek-namespace}-border-dashed-color);
 
   // 链接输入框边框颜色
-  --w-e-modal-button-border-color: var(--#{$admin-namespace}-border-dashed-color);
+  --w-e-modal-button-border-color: var(--#{$teek-namespace}-border-dashed-color);
 
   // 按钮背景颜色
-  --w-e-modal-button-bg-color: var(--#{$admin-namespace}-color);
+  --w-e-modal-button-bg-color: var(--#{$teek-namespace}-color);
 
   z-index: 1100;
   width: 100%;

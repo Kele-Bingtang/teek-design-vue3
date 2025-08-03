@@ -1,0 +1,87 @@
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
+
+// 暗黑深色模式主题变量
+:root.dark-deep {
+  // === 核心背景色 ===
+  --#{$teek-namespace}-bg-color: #0f1117;
+  --#{$teek-namespace}-bg-color-page: #0a0c10;
+
+  // === 功能色 ===
+  @include generate-color-variants("primary", #4a6bc5, true);
+  @include generate-color-variants("success", #27ae60, true);
+  @include generate-color-variants("warning", #f39c12, true);
+  @include generate-color-variants("danger", #c0392b, true);
+  @include generate-color-variants("error", #a04000, true);
+
+  // === 次级色 ===
+  @include generate-color-variants("info", #5a5f77, true);
+  @include generate-color-variants("secondary", #7a7f98, true);
+
+  // === 背景色 ===
+  --#{$teek-namespace}-bg-primary: #0f1428;
+  --#{$teek-namespace}-bg-primary-rgb: 15, 20, 40;
+  --#{$teek-namespace}-bg-success: #0d2a18;
+  --#{$teek-namespace}-bg-success-rgb: 13, 42, 24;
+  --#{$teek-namespace}-bg-warning: #2d230f;
+  --#{$teek-namespace}-bg-warning-rgb: 45, 35, 15;
+  --#{$teek-namespace}-bg-danger: #2a0f12;
+  --#{$teek-namespace}-bg-danger-rgb: 42, 15, 18;
+  --#{$teek-namespace}-bg-error: #2d180f;
+  --#{$teek-namespace}-bg-error-rgb: 45, 24, 15;
+  --#{$teek-namespace}-bg-info: #1a142f;
+  --#{$teek-namespace}-bg-info-rgb: 26, 20, 47;
+  --#{$teek-namespace}-bg-secondary: #1a1e30;
+  --#{$teek-namespace}-bg-secondary-rgb: 26, 30, 48;
+
+  // === 中性背景 ===
+  --#{$teek-namespace}-bg-neutral: #12151c;
+  --#{$teek-namespace}-bg-neutral-rgb: 18, 21, 28;
+  --#{$teek-namespace}-bg-neutral-light: #181b24;
+  --#{$teek-namespace}-bg-neutral-dark: #0c0e12;
+
+  // === 灰度色，适用于背景色 | 悬停色 ===
+  --#{$teek-namespace}-gray-100: #0e1015;
+  --#{$teek-namespace}-gray-100-rgb: 14, 16, 21;
+  --#{$teek-namespace}-gray-200: #161820;
+  --#{$teek-namespace}-gray-200-rgb: 22, 24, 32;
+  --#{$teek-namespace}-gray-300: #1e2028;
+  --#{$teek-namespace}-gray-300-rgb: 30, 32, 40;
+  --#{$teek-namespace}-gray-400: #282a35;
+  --#{$teek-namespace}-gray-400-rgb: 40, 42, 53;
+  --#{$teek-namespace}-gray-500: #363947;
+  --#{$teek-namespace}-gray-500-rgb: 54, 57, 71;
+  --#{$teek-namespace}-gray-600: #4a4d5d;
+  --#{$teek-namespace}-gray-600-rgb: 74, 77, 93;
+  --#{$teek-namespace}-gray-700: #6a6d7f;
+  --#{$teek-namespace}-gray-700-rgb: 106, 109, 127;
+  --#{$teek-namespace}-gray-800: #d0d1d6;
+  --#{$teek-namespace}-gray-800-rgb: 208, 209, 214;
+  --#{$teek-namespace}-gray-900: #f5f7ff;
+  --#{$teek-namespace}-gray-900-rgb: 245, 247, 255;
+
+  // === 文本色 ===
+  --#{$teek-namespace}-text-gray-100: var(--#{$teek-namespace}-gray-100);
+  --#{$teek-namespace}-text-gray-200: var(--#{$teek-namespace}-gray-200);
+  --#{$teek-namespace}-text-gray-300: var(--#{$teek-namespace}-gray-300);
+  --#{$teek-namespace}-text-gray-400: var(--#{$teek-namespace}-gray-400);
+  --#{$teek-namespace}-text-gray-500: var(--#{$teek-namespace}-gray-500);
+  --#{$teek-namespace}-text-gray-600: var(--#{$teek-namespace}-gray-600);
+  --#{$teek-namespace}-text-gray-700: var(--#{$teek-namespace}-gray-700);
+  --#{$teek-namespace}-text-gray-800: var(--#{$teek-namespace}-gray-800);
+  --#{$teek-namespace}-text-gray-900: var(--#{$teek-namespace}-gray-900);
+
+  // === 边框色 ===
+  --#{$teek-namespace}-border-color: #1d1f2a;
+  --#{$teek-namespace}-border-dashed-color: #222431;
+
+  // === 阴影色 ===
+  --#{$teek-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 22%);
+  --#{$teek-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 26%);
+  --#{$teek-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 30%);
+  --#{$teek-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 34%);
+
+  // === 卡片色 ===
+  --#{$teek-namespace}-root-card-box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 26%);
+  --#{$teek-namespace}-root-card-border-color: #151720;
+}

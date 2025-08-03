@@ -5,7 +5,10 @@
 @include b(pro-descriptions) {
   @include el-joins(descriptions) {
     // label 背景色
-    --el-descriptions-item-bordered-label-background: rgb(var(--#{$admin-namespace}-gray-200-rgb), 0.3) !important;
+    --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(
+      var(--#{$teek-namespace}-gray-200-rgb),
+      0.3
+    ) !important;
   }
 
   @include e(label) {

@@ -56,7 +56,10 @@ export const useTheme = () => {
     isDark.value ? el.classList.add("dark") : el.classList.remove("dark");
 
     // 暗黑模式的跟随系统默认为 defaultDarkMode 指定的主题
-    theme === System && isDark.value && el.classList.add(globalThemeClassName[defaultDarkMode]);
+    theme === System &&
+      isDark.value &&
+      globalThemeClassName[defaultDarkMode] &&
+      el.classList.add(globalThemeClassName[defaultDarkMode]);
 
     // 获取主题切换后的主题色
     if (primaryColor.value) changePrimaryColor(primaryColor.value, el);

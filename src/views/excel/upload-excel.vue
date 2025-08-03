@@ -48,7 +48,7 @@ const handleSuccess = ({ results, header }: ExcelData) => {
 .upload-excel-container {
   height: 100%;
 
-  .el-radio-group {
+  .#{$el-namespace}-radio-group {
     margin-bottom: 16px;
   }
 }

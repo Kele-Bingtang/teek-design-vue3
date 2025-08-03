@@ -392,7 +392,7 @@ const handleMore = () => {};
 
 <style lang="scss" scoped>
 .card {
-  .el-row {
+  .#{$el-namespace}-row {
     row-gap: 20px;
   }
 

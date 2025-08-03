@@ -52,7 +52,7 @@
 
 html.dark {
   .antd-message {
-    background-color: var(--#{$admin-namespace}-gray-200) !important;
+    background-color: var(--#{$teek-namespace}-gray-200) !important;
     background-image: initial !important;
     box-shadow:
       rgb(13 13 13 / 12%) 0 3px 6px -4px,
@@ -68,7 +68,7 @@ html.dark {
     .#{$el-namespace}-message__closeBtn {
       &:hover {
         color: var(--#{$el-namespace}-text-color-regular);
-        background-color: var(--#{$admin-namespace}-gray-400);
+        background-color: var(--#{$teek-namespace}-gray-400);
         border-radius: 50%;
       }
     }

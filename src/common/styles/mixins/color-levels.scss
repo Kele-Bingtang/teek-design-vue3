@@ -7,7 +7,7 @@
 
 // ===== 全局变量 =====
 // 使用 map 数据结构作为缓存，避免重复计算
-$prefix: #{$admin-namespace};
+$prefix: #{$teek-namespace};
 $color-cache: () !default;
 
 // ===== 颜色工具函数 =====

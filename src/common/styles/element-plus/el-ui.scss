@@ -9,8 +9,8 @@
   --#{$el-namespace}-component-size: var(--#{$el-namespace}-component-height) !important;
 
   // 边框、按钮圆角
-  --#{$el-namespace}-border-radius-base: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
-  --#{$el-namespace}-card-border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
+  --#{$el-namespace}-border-radius-base: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
+  --#{$el-namespace}-card-border-radius: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
 }
 
 // 修改 el-button 高度
@@ -28,13 +28,13 @@
 // 修改 el-pagination 大小
 .#{$el-namespace}-pagination--default {
   & {
-    --el-pagination-button-width: 32px !important;
-    --el-pagination-button-height: var(--el-pagination-button-width) !important;
+    --#{$el-namespace}-pagination-button-width: 32px !important;
+    --#{$el-namespace}-pagination-button-height: var(--#{$el-namespace}-pagination-button-width) !important;
   }
 
   @media (max-width: $device-ipad-pro) {
     & {
-      --el-pagination-button-width: 28px !important;
+      --#{$el-namespace}-pagination-button-width: 28px !important;
     }
   }
 }
@@ -52,8 +52,8 @@
 }
 
 // 修改全屏 loading 背景色
-// .el-loading-mask {
-//   background-color: var(--#{$admin-namespace}-bg-color) !important  ;
+// .#{$el-namespace}-loading-mask {
+//   background-color: var(--#{$teek-namespace}-bg-color) !important  ;
 // }
 
 .#{$el-namespace}-popover {
@@ -61,7 +61,7 @@
 }
 
 .#{$el-namespace}-popper {
-  border-radius: calc(var(--#{$admin-namespace}-radius) / 3 + 2px) !important;
+  border-radius: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
 }
 
 .#{$el-namespace}-popper.clear-radius {
@@ -114,7 +114,7 @@
 
 // el-message 样式优化
 .#{$el-namespace}-message {
-  background-color: var(--#{$admin-namespace}-bg-color) !important;
+  background-color: var(--#{$teek-namespace}-bg-color) !important;
 }
 
 // 修改 el-dropdown 样式
@@ -126,8 +126,8 @@
     // 修改鼠标悬停和选中样式
     // &:not(.is-disabled):hover,
     // &:not(.is-disabled):focus {
-    //   color: var(--#{$admin-namespace}-text-gray-900) !important;
-    //   background-color: var(--#{$admin-namespace}-gray-100) !important;
+    //   color: var(--#{$teek-namespace}-text-gray-900) !important;
+    //   background-color: var(--#{$teek-namespace}-gray-200) !important;
     // }
   }
 }
@@ -239,13 +239,13 @@
 .#{$el-namespace}-dialog__headerbtn .#{$el-namespace}-dialog__close {
   width: 26px;
   height: 26px;
-  color: var(--#{$admin-namespace}-text-gray-500);
+  color: var(--#{$teek-namespace}-text-gray-500);
   border-radius: 6px !important;
   transition: all 0.3s !important;
 
   &:hover {
-    color: var(--#{$admin-namespace}-text-gray-800) !important;
-    background-color: var(--#{$admin-namespace}-gray-100) !important;
+    color: var(--#{$teek-namespace}-text-gray-800) !important;
+    background-color: var(--#{$teek-namespace}-gray-200) !important;
   }
 }
 
@@ -337,12 +337,12 @@
       &.is-selected {
         margin-bottom: 4px !important;
         font-weight: 400 !important;
-        color: var(--#{$admin-namespace}-text-gray-900) !important;
-        background-color: var(--#{$admin-namespace}-gray-100) !important;
+        color: var(--#{$teek-namespace}-text-gray-900) !important;
+        background-color: var(--#{$teek-namespace}-gray-200) !important;
       }
 
       &:hover {
-        background-color: var(--#{$admin-namespace}-gray-100) !important;
+        background-color: var(--#{$teek-namespace}-gray-200) !important;
       }
     }
 
@@ -364,7 +364,7 @@
         border-radius: 6px !important;
 
         &:hover {
-          background-color: var(--#{$admin-namespace}-gray-100) !important;
+          background-color: var(--#{$teek-namespace}-gray-200) !important;
         }
       }
     }

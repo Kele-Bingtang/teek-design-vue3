@@ -113,7 +113,7 @@
       padding: 0 6%;
       color: aliceblue;
 
-      :deep(.el-icon) {
+      :deep(.#{$el-namespace}-icon) {
         margin-bottom: 40%;
         font-size: 130%;
         line-height: 130%;
@@ -144,7 +144,7 @@
     line-height: 30px;
     color: cssVarEl(color-info);
 
-    :deep(.el-icon) {
+    :deep(.#{$el-namespace}-icon) {
       font-size: 28px;
       color: cssVarEl(text-color-secondary);
     }

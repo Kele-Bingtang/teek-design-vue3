@@ -4,42 +4,42 @@
 /* ===== 滚动条主题 ===== */
 :root {
   // 亮色主题滚动条变量
-  --#{$admin-namespace}-scrollbar-width: 8px;
-  --#{$admin-namespace}-scrollbar-track-color: var(--#{$admin-namespace}-gray-100);
-  --#{$admin-namespace}-scrollbar-thumb-color: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.4);
-  --#{$admin-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.8);
-  --#{$admin-namespace}-scrollbar-border-radius: 4px;
-  --#{$admin-namespace}-transition-duration: 0.3s;
-  --#{$admin-namespace}-scrollbar-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --#{$teek-namespace}-scrollbar-width: 8px;
+  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-gray-100);
+  --#{$teek-namespace}-scrollbar-thumb-color: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.4);
+  --#{$teek-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$teek-namespace}-gray-500-rgb), 0.8);
+  --#{$teek-namespace}-scrollbar-border-radius: 4px;
+  --#{$teek-namespace}-transition-duration: 0.3s;
+  --#{$teek-namespace}-scrollbar-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 :root.dark {
   // 暗色主题滚动条变量
-  --#{$admin-namespace}-scrollbar-track-color: var(--#{$admin-namespace}-gray-800);
-  --#{$admin-namespace}-scrollbar-thumb-color: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.5);
-  --#{$admin-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.8);
+  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-gray-800);
+  --#{$teek-namespace}-scrollbar-thumb-color: rgb(var(--#{$teek-namespace}-gray-500-rgb), 0.5);
+  --#{$teek-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.8);
 }
 
 /* ===== 统一滚动条样式 ===== */
 ::-webkit-scrollbar {
-  width: var(--#{$admin-namespace}-scrollbar-width);
-  height: var(--#{$admin-namespace}-scrollbar-width);
+  width: var(--#{$teek-namespace}-scrollbar-width);
+  height: var(--#{$teek-namespace}-scrollbar-width);
 }
 
 // 滚动条的轨道
 ::-webkit-scrollbar-track {
-  background-color: var(--#{$admin-namespace}-scrollbar-track-color);
-  border-radius: var(--#{$admin-namespace}-scrollbar-border-radius);
+  background-color: var(--#{$teek-namespace}-scrollbar-track-color);
+  border-radius: var(--#{$teek-namespace}-scrollbar-border-radius);
 }
 
 // 滚动条的滑块按钮
 ::-webkit-scrollbar-thumb {
-  background-color: var(--#{$admin-namespace}-scrollbar-thumb-color);
-  border-radius: var(--#{$admin-namespace}-scrollbar-border-radius);
-  transition: all var(--#{$admin-namespace}-transition-duration) var(--#{$admin-namespace}-scrollbar-easing);
+  background-color: var(--#{$teek-namespace}-scrollbar-thumb-color);
+  border-radius: var(--#{$teek-namespace}-scrollbar-border-radius);
+  transition: all var(--#{$teek-namespace}-transition-duration) var(--#{$teek-namespace}-scrollbar-easing);
 
   &:hover {
-    background-color: var(--#{$admin-namespace}-scrollbar-thumb-hover-color);
+    background-color: var(--#{$teek-namespace}-scrollbar-thumb-hover-color);
   }
 }
 

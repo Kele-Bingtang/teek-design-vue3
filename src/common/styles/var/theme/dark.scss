@@ -1,0 +1,56 @@
+@use "sass:color";
+@use "sass:map";
+
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
+
+@forward "./dark-blue"; // 深蓝深色
+@forward "./dark-deep"; // 暗黑深色
+@forward "./dark-midnight"; // 午夜深色
+@forward "./dark-neutral"; // 中性深色
+
+// 自定义全局暗色样式
+:root.dark {
+  // === 基本色 ===
+  --#{$teek-namespace}-color: var(--#{$teek-namespace}-text-gray-800); // 主要文本色
+  --#{$teek-namespace}-light: var(--#{$teek-namespace}-gray-300); // 浅色背景
+  --#{$teek-namespace}-dark: var(--#{$teek-namespace}-gray-800); // 深色文本/元素
+
+  // 轻量文本色
+  --#{$teek-namespace}-text-muted: var(--#{$teek-namespace}-color-info-muted);
+}
+
+// ===== 通用深色模式灰度系统（如果你希望所有深色模式的灰度变量保持一致，请取消注释） =====
+// $dark-gray-brightness: (
+//   100: 15%,
+//   200: 10%,
+//   300: 25%,
+//   400: 30%,
+//   500: 35%,
+//   600: 45%,
+//   700: 60%,
+//   800: 80%,
+//   900: 95%,
+// );
+
+// @function generate-dark-gray($level) {
+//   $brightness: map.get($dark-gray-brightness, $level);
+
+//   @return hsl(0, 0%, $brightness);
+// }
+
+// :root.dark-blue,
+// :root.dark-deep,
+// :root.dark-neutral,
+// :root.dark-midnight {
+//   // === 通用灰度系统 ===
+//   --#{$teek-namespace}-gray-100: #{generate-dark-gray(100)};
+//   --#{$teek-namespace}-gray-200: #{generate-dark-gray(200)};
+//   --#{$teek-namespace}-gray-300: #{generate-dark-gray(300)};
+//   --#{$teek-namespace}-gray-400: #{generate-dark-gray(400)};
+//   --#{$teek-namespace}-gray-500: #{generate-dark-gray(500)};
+//   --#{$teek-namespace}-gray-600: #{generate-dark-gray(600)};
+//   --#{$teek-namespace}-gray-700: #{generate-dark-gray(700)};
+//   --#{$teek-namespace}-gray-800: #{generate-dark-gray(800)};
+//   --#{$teek-namespace}-gray-900: #{generate-dark-gray(900)};
+// }

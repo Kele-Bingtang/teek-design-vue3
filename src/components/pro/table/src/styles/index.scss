@@ -8,7 +8,7 @@
       width: 100%;
 
       thead {
-        color: var(--#{$admin-namespace}-text-gray-700);
+        color: var(--#{$teek-namespace}-text-gray-700);
 
         th {
           font-size: 15px;
@@ -22,7 +22,7 @@
 
       tbody {
         // 单元格字体颜色
-        // color: var(--#{$admin-namespace}-text-gray-800);
+        // color: var(--#{$teek-namespace}-text-gray-800);
       }
     }
   }

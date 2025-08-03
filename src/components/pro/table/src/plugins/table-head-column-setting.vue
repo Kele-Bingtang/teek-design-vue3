@@ -112,7 +112,7 @@ defineExpose({ open, close });
 
 <style lang="scss" scoped>
 // 有 children 的列，不显示缩进
-:deep(.el-table__indent) {
+:deep(.#{$el-namespace}-table__indent) {
   display: none;
 }
 </style>

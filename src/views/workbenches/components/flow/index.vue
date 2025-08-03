@@ -85,7 +85,7 @@ const handleClick = (type: FlowType) => {
       color: cssVar(color-primary);
     }
 
-    .el-icon {
+    .#{$el-namespace}-icon {
       margin-left: 4px;
     }
   }

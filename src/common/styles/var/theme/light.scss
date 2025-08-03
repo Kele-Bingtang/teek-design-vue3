@@ -1,0 +1,99 @@
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
+@use "../../mixins/color-levels" as *;
+
+// 浅色主题变量
+:root {
+  // === 核心背景色 ===
+  --#{$teek-namespace}-bg-color: #ffffff; // 元素级别背景色
+  --#{$teek-namespace}-bg-color-page: #f6f8fc; // 页面级别背景颜色
+
+  // === 功能色 ===
+  @include generate-color-variants("primary", #395ae3);
+  @include generate-color-variants("success", #0b9e40);
+  @include generate-color-variants("warning", #e68a00);
+  @include generate-color-variants("danger", #d93126);
+  @include generate-color-variants("error", #dd5c27);
+
+  // === 次级色 ===
+  @include generate-color-variants("info", #1890ff);
+  @include generate-color-variants("secondary", #42aaff);
+
+  // === 基本色 ===
+  --#{$teek-namespace}-color: #ffffff;
+  --#{$teek-namespace}-light: #f9f9f9;
+  --#{$teek-namespace}-dark: #1e2129;
+
+  // === 背景色 ===
+  --#{$teek-namespace}-bg-primary: #e6ecff;
+  --#{$teek-namespace}-bg-primary-rgb: 230, 236, 255;
+  --#{$teek-namespace}-bg-success: #e0f5d6;
+  --#{$teek-namespace}-bg-success-rgb: 224, 245, 214;
+  --#{$teek-namespace}-bg-warning: #fff2e0;
+  --#{$teek-namespace}-bg-warning-rgb: 255, 242, 224;
+  --#{$teek-namespace}-bg-danger: #ffe0d9;
+  --#{$teek-namespace}-bg-danger-rgb: 255, 224, 217;
+  --#{$teek-namespace}-bg-error: #ffe5d9;
+  --#{$teek-namespace}-bg-error-rgb: 255, 229, 217;
+  --#{$teek-namespace}-bg-info: #e4ebff;
+  --#{$teek-namespace}-bg-info-rgb: 228, 235, 255;
+  --#{$teek-namespace}-bg-secondary: #d5edfa;
+  --#{$teek-namespace}-bg-secondary-rgb: 213, 237, 250;
+
+  // === 中性背景 ===
+  --#{$teek-namespace}-bg-neutral: #f5f7fa;
+  --#{$teek-namespace}-bg-neutral-rgb: 245, 247, 250;
+  --#{$teek-namespace}-bg-neutral-light: #f9fafc;
+  --#{$teek-namespace}-bg-neutral-dark: #eef0f5;
+
+  // === 灰度色，适用于背景色 | 悬停色 ===
+  --#{$teek-namespace}-gray-100: #f0f0f2;
+  --#{$teek-namespace}-gray-100-rgb: 240, 240, 242;
+  --#{$teek-namespace}-gray-200: #e4e5eb;
+  --#{$teek-namespace}-gray-200-rgb: 228, 229, 235;
+  --#{$teek-namespace}-gray-300: #d7d9e0;
+  --#{$teek-namespace}-gray-300-rgb: 215, 217, 224;
+  --#{$teek-namespace}-gray-400: #bfc1cc;
+  --#{$teek-namespace}-gray-400-rgb: 191, 193, 204;
+  --#{$teek-namespace}-gray-500: #b1b3c1;
+  --#{$teek-namespace}-gray-500-rgb: 177, 179, 193;
+  --#{$teek-namespace}-gray-600: #7d7f8d;
+  --#{$teek-namespace}-gray-600-rgb: 125, 127, 141;
+  --#{$teek-namespace}-gray-700: #4d505e;
+  --#{$teek-namespace}-gray-700-rgb: 77, 80, 94;
+  --#{$teek-namespace}-gray-800: #20222b;
+  --#{$teek-namespace}-gray-800-rgb: 32, 34, 43;
+  --#{$teek-namespace}-gray-900: #141721;
+  --#{$teek-namespace}-gray-900-rgb: 20, 23, 33;
+
+  // === 文本色 ===
+  --#{$teek-namespace}-text-muted: #99a1b7;
+  --#{$teek-namespace}-text-gray-100: var(--#{$teek-namespace}-gray-100);
+  --#{$teek-namespace}-text-gray-200: var(--#{$teek-namespace}-gray-200);
+  --#{$teek-namespace}-text-gray-300: var(--#{$teek-namespace}-gray-300);
+  --#{$teek-namespace}-text-gray-400: var(--#{$teek-namespace}-gray-400);
+  --#{$teek-namespace}-text-gray-500: var(--#{$teek-namespace}-gray-500);
+  --#{$teek-namespace}-text-gray-600: var(--#{$teek-namespace}-gray-600);
+  --#{$teek-namespace}-text-gray-700: var(--#{$teek-namespace}-gray-700);
+  --#{$teek-namespace}-text-gray-800: var(--#{$teek-namespace}-gray-800);
+  --#{$teek-namespace}-text-gray-900: var(--#{$teek-namespace}-gray-900);
+
+  // === 边框色 ===
+  --#{$teek-namespace}-border-color: #eaebf1;
+  --#{$teek-namespace}-border-dashed-color: #dbdfe9;
+
+  // === 阴影色 ===
+  --#{$teek-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 4%);
+  --#{$teek-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%);
+  --#{$teek-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem rgb(0 0 0 / 7.5%);
+  --#{$teek-namespace}-box-shadow-lg: 0 1rem 2rem 1rem rgb(0 0 0 / 10%);
+
+  // === 卡片色 ===
+  --#{$teek-namespace}-root-card-box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%);
+  --#{$teek-namespace}-root-card-border-color: #f1f1f4;
+
+  // === 动画色 ===
+  --#{$teek-namespace}-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --#{$teek-namespace}-transition-duration-fast: var(--#{$el-namespace}-transition-duration-fast);
+  --#{$teek-namespace}-transition-duration: var(--#{$el-namespace}-transition-duration);
+}
