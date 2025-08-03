@@ -1,7 +1,7 @@
 @use "../../mixins/namespace" as *;
 @use "../../mixins/color-variants" as *;
 
-// 中性暗黑模式主题
+// 午夜暗黑模式主题
 :root.dark-midnight {
   // === 核心背景色 ===
   --#{$teek-namespace}-bg-color: #141518;

@@ -244,8 +244,8 @@ export default {
       primaryColor: "主题色",
       modeSelect: {
         light: "浅色",
-        darkBlue: "蓝深色",
-        darkDeep: "暗深色",
+        darkBlue: "深蓝深色",
+        darkDeep: "暗黑深色",
         darkMidnight: "午夜深色",
         darkNeutral: "中性深色",
         system: "系统",

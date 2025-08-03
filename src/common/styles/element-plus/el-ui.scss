@@ -127,7 +127,7 @@
     // &:not(.is-disabled):hover,
     // &:not(.is-disabled):focus {
     //   color: var(--#{$teek-namespace}-text-gray-900) !important;
-    //   background-color: var(--#{$teek-namespace}-gray-100) !important;
+    //   background-color: var(--#{$teek-namespace}-gray-200) !important;
     // }
   }
 }
@@ -245,7 +245,7 @@
 
   &:hover {
     color: var(--#{$teek-namespace}-text-gray-800) !important;
-    background-color: var(--#{$teek-namespace}-gray-100) !important;
+    background-color: var(--#{$teek-namespace}-gray-200) !important;
   }
 }
 
@@ -338,11 +338,11 @@
         margin-bottom: 4px !important;
         font-weight: 400 !important;
         color: var(--#{$teek-namespace}-text-gray-900) !important;
-        background-color: var(--#{$teek-namespace}-gray-100) !important;
+        background-color: var(--#{$teek-namespace}-gray-200) !important;
       }
 
       &:hover {
-        background-color: var(--#{$teek-namespace}-gray-100) !important;
+        background-color: var(--#{$teek-namespace}-gray-200) !important;
       }
     }
 
@@ -364,7 +364,7 @@
         border-radius: 6px !important;
 
         &:hover {
-          background-color: var(--#{$teek-namespace}-gray-100) !important;
+          background-color: var(--#{$teek-namespace}-gray-200) !important;
         }
       }
     }
