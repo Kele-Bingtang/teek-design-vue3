@@ -1,5 +1,5 @@
-@use "../mixins/namespace" as *;
-@use "../mixins/color-variants" as *;
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
 
 :root.dark-neutral {
   // === 核心背景色 ===

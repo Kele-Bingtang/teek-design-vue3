@@ -1,6 +1,6 @@
-@use "../mixins/namespace" as *;
-@use "../mixins/color-variants" as *;
-@use "../mixins/color-levels" as *;
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
+@use "../../mixins/color-levels" as *;
 
 // 浅色主题变量
 :root {

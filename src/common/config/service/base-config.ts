@@ -51,7 +51,6 @@ export const defaultServiceConfig: ServiceConfig = {
     defaultDarkMode: GlobalThemeEnum.DarkNeutral,
     globalThemeClassName: {
       [GlobalThemeEnum.Light]: "",
-      [GlobalThemeEnum.System]: "",
       [GlobalThemeEnum.DarkBlue]: "dark-blue",
       [GlobalThemeEnum.DarkDeep]: "dark-deep",
       [GlobalThemeEnum.DarkMidnight]: "dark-midnight",
@@ -61,7 +60,6 @@ export const defaultServiceConfig: ServiceConfig = {
     weakMode: false,
     greyMode: false,
     presetsColor: {
-      [GlobalThemeEnum.System]: [],
       [GlobalThemeEnum.Light]: [
         "#4a6cf7", // 鲜艳蓝
         "#ff6b6b", // 珊瑚粉

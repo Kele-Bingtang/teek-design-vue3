@@ -37,7 +37,7 @@ const handleClick = (type: FlowType) => {
 
     <div>
       <div class="tk-card-minimal welcome">
-        <h2 class="title">欢迎使用 Teek 工作台</h2>
+        <h2 class="title">欢迎使用 Teek 工作台（本内容待完善）</h2>
         <p class="time">当前时间：{{ getNowDate() }}</p>
       </div>
     </div>

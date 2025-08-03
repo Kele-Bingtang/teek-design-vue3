@@ -1,5 +1,5 @@
-@use "../mixins/namespace" as *;
-@use "../mixins/color-variants" as *;
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
 
 // 中性暗黑模式主题
 :root.dark-midnight {

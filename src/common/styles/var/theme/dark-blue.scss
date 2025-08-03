@@ -1,5 +1,5 @@
-@use "../mixins/namespace" as *;
-@use "../mixins/color-variants" as *;
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
 
 // 偏蓝深色模式主题变量
 :root.dark-blue {

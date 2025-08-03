@@ -1,8 +1,8 @@
 @use "sass:color";
 @use "sass:map";
 
-@use "../mixins/namespace" as *;
-@use "../mixins/color-variants" as *;
+@use "../../mixins/namespace" as *;
+@use "../../mixins/color-variants" as *;
 
 @forward "./dark-blue"; // 蓝深色
 @forward "./dark-deep"; // 暗深色

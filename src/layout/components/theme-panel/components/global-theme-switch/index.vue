@@ -39,9 +39,9 @@ const globalThemeModeList = [
 // 预定义主题颜色
 const colorList = computed(() => [
   primaryColor.value,
-  ...serviceConfig.theme.presetsColor[
+  ...(serviceConfig.theme.presetsColor[
     theme.value.globalThemeMode === GlobalThemeEnum.System ? theme.value.defaultDarkMode : theme.value.globalThemeMode
-  ],
+  ] ?? []),
 ]);
 
 /**
