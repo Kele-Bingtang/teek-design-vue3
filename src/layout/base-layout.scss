@@ -3,15 +3,15 @@
 
 /* 公共侧边栏样式（包含弹框菜单） */
 @include joins(layout-menu, layout-menu-popper) {
-  --#{$el-namespace}-menu-bg-color: var(--#{$admin-namespace}-layout-aside-bg-color);
-  --#{$el-namespace}-menu-text-color: var(--#{$admin-namespace}-layout-aside-text-color);
-  --#{$el-namespace}-menu-active-color: var(--#{$admin-namespace}-layout-aside-text-active-color);
-  --#{$el-namespace}-menu-hover-bg-color: var(--#{$admin-namespace}-layout-aside-bg-hover-color);
-  --#{$el-namespace}-menu-item-height: var(--#{$admin-namespace}-layout-aside-item-height);
-  --#{$el-namespace}-menu-sub-item-height: var(--#{$admin-namespace}-layout-aside-sub-item-height);
-  --#{$el-namespace}-menu-item-font-size: var(--#{$admin-namespace}-layout-aside-text-size);
-  --#{$el-namespace}-menu-icon-width: var(--#{$admin-namespace}-layout-aside-icon-size);
-  --#{$el-namespace}-menu-item-hover-fill: var(--#{$admin-namespace}-layout-aside-text-hover-color);
+  --#{$el-namespace}-menu-bg-color: var(--#{$teek-namespace}-layout-aside-bg-color);
+  --#{$el-namespace}-menu-text-color: var(--#{$teek-namespace}-layout-aside-text-color);
+  --#{$el-namespace}-menu-active-color: var(--#{$teek-namespace}-layout-aside-text-active-color);
+  --#{$el-namespace}-menu-hover-bg-color: var(--#{$teek-namespace}-layout-aside-bg-hover-color);
+  --#{$el-namespace}-menu-item-height: var(--#{$teek-namespace}-layout-aside-item-height);
+  --#{$el-namespace}-menu-sub-item-height: var(--#{$teek-namespace}-layout-aside-sub-item-height);
+  --#{$el-namespace}-menu-item-font-size: var(--#{$teek-namespace}-layout-aside-text-size);
+  --#{$el-namespace}-menu-icon-width: var(--#{$teek-namespace}-layout-aside-icon-size);
+  --#{$el-namespace}-menu-item-hover-fill: var(--#{$teek-namespace}-layout-aside-text-hover-color);
   --#{$el-namespace}-menu-base-level-padding: 20px;
   --#{$el-namespace}-menu-level-padding: 20px;
   --#{$el-namespace}-menu-horizontal-height: 60px;

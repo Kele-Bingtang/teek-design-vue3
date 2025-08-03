@@ -70,7 +70,7 @@ const dataList = reactive([
 .card-list {
   background-color: transparent !important;
 
-  .#{$admin-namespace}-card-minimal {
+  .#{$teek-namespace}-card-minimal {
     position: relative;
     display: flex;
     flex-direction: column;

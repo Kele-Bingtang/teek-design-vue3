@@ -3,33 +3,33 @@
 /* ===== 卡片主题变量 ===== */
 :root {
   // 卡片边框（primary > accent > regular > base）
-  --#{$admin-namespace}-card-border-color-primary: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.9);
-  --#{$admin-namespace}-card-border-color-accent: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.7);
-  --#{$admin-namespace}-card-border-color-regular: rgb(var(--#{$admin-namespace}-gray-400-rgb), 0.5);
-  --#{$admin-namespace}-card-border-color-base: var(--#{$admin-namespace}-border-color);
-  --#{$admin-namespace}-card-border-color-dashed: var(--#{$admin-namespace}-border-dashed-color);
+  --#{$teek-namespace}-card-border-color-primary: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.9);
+  --#{$teek-namespace}-card-border-color-accent: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.7);
+  --#{$teek-namespace}-card-border-color-regular: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.5);
+  --#{$teek-namespace}-card-border-color-base: var(--#{$teek-namespace}-border-color);
+  --#{$teek-namespace}-card-border-color-dashed: var(--#{$teek-namespace}-border-dashed-color);
 
   // 阴影与悬停（hover > select > base > root > mini）
-  --#{$admin-namespace}-card-shadow-hover: var(--#{$admin-namespace}-box-shadow-lg);
-  --#{$admin-namespace}-card-shadow-select: var(--#{$admin-namespace}-box-shadow-md);
-  --#{$admin-namespace}-card-shadow-base: var(--#{$admin-namespace}-card-box-shadow-md);
-  --#{$admin-namespace}-card-shadow-root: var(--#{$admin-namespace}-root-card-box-shadow);
-  --#{$admin-namespace}-card-shadow-mini: 0px 0px 4px 0px rgb(0 0 0 / 4%);
+  --#{$teek-namespace}-card-shadow-hover: var(--#{$teek-namespace}-box-shadow-lg);
+  --#{$teek-namespace}-card-shadow-select: var(--#{$teek-namespace}-box-shadow-md);
+  --#{$teek-namespace}-card-shadow-base: var(--#{$teek-namespace}-card-box-shadow-md);
+  --#{$teek-namespace}-card-shadow-root: var(--#{$teek-namespace}-root-card-box-shadow);
+  --#{$teek-namespace}-card-shadow-mini: 0px 0px 4px 0px rgb(0 0 0 / 4%);
 
   // 悬停增强效果
-  --#{$admin-namespace}-card-transform-hover: translateY(-4px);
-  --#{$admin-namespace}-card-transition-duration: var(--#{$el-namespace}-transition-duration, 0.3s);
-  --#{$admin-namespace}-card-easing: var(--#{$admin-namespace}-easing);
+  --#{$teek-namespace}-card-transform-hover: translateY(-4px);
+  --#{$teek-namespace}-card-transition-duration: var(--#{$el-namespace}-transition-duration, 0.3s);
+  --#{$teek-namespace}-card-easing: var(--#{$teek-namespace}-easing);
 }
 
 :root.dark {
   // 卡片边框
-  --#{$admin-namespace}-card-border-color-primary: rgb(var(--#{$admin-namespace}-gray-700-rgb), 0.85);
-  --#{$admin-namespace}-card-border-color-accent: rgb(var(--#{$admin-namespace}-gray-600-rgb), 0.75);
-  --#{$admin-namespace}-card-border-color-regular: rgb(var(--#{$admin-namespace}-gray-500-rgb), 0.6);
+  --#{$teek-namespace}-card-border-color-primary: rgb(var(--#{$teek-namespace}-gray-700-rgb), 0.85);
+  --#{$teek-namespace}-card-border-color-accent: rgb(var(--#{$teek-namespace}-gray-600-rgb), 0.75);
+  --#{$teek-namespace}-card-border-color-regular: rgb(var(--#{$teek-namespace}-gray-500-rgb), 0.6);
 
   // 阴影与悬停
-  --#{$admin-namespace}-card-shadow-mini: 0px 0px 6px 0px rgb(0 0 0 / 15%);
+  --#{$teek-namespace}-card-shadow-mini: 0px 0px 6px 0px rgb(0 0 0 / 15%);
 }
 
 /* ===== 卡片组件系统 ===== */
@@ -37,15 +37,15 @@
 // 边框混合宏
 @mixin card-border($type: "base") {
   @if $type == "base" {
-    border: 1px solid var(--#{$admin-namespace}-card-border-color-base);
+    border: 1px solid var(--#{$teek-namespace}-card-border-color-base);
   } @else if $type == "dashed" {
-    border: 1px dashed var(--#{$admin-namespace}-card-border-color-dashed);
+    border: 1px dashed var(--#{$teek-namespace}-card-border-color-dashed);
   } @else if $type == "primary" {
-    border: 1px solid var(--#{$admin-namespace}-card-border-color-primary);
+    border: 1px solid var(--#{$teek-namespace}-card-border-color-primary);
   } @else if $type == "regular" {
-    border: 1px solid var(--#{$admin-namespace}-card-border-color-regular);
+    border: 1px solid var(--#{$teek-namespace}-card-border-color-regular);
   } @else if $type == "accent" {
-    border: 1px solid var(--#{$admin-namespace}-card-border-color-accent);
+    border: 1px solid var(--#{$teek-namespace}-card-border-color-accent);
   } @else if $type == "none" {
     border: none;
   }
@@ -54,23 +54,23 @@
 // 阴影混合宏
 @mixin card-shadow($type: "base") {
   @if $type == "base" {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-base);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-base);
   } @else if $type == "xs" {
-    box-shadow: var(--#{$admin-namespace}-box-shadow-xs);
+    box-shadow: var(--#{$teek-namespace}-box-shadow-xs);
   } @else if $type == "sm" {
-    box-shadow: var(--#{$admin-namespace}-box-shadow-sm);
+    box-shadow: var(--#{$teek-namespace}-box-shadow-sm);
   } @else if $type == "md" {
-    box-shadow: var(--#{$admin-namespace}-box-shadow-md);
+    box-shadow: var(--#{$teek-namespace}-box-shadow-md);
   } @else if $type == "lg" {
-    box-shadow: var(--#{$admin-namespace}-box-shadow-lg);
+    box-shadow: var(--#{$teek-namespace}-box-shadow-lg);
   } @else if $type == "hover" {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-hover);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-hover);
   } @else if $type == "root" {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-root);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-root);
   } @else if $type == "mini" {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-mini);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-mini);
   } @else if $type == "select" {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-select);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-select);
   } @else if $type == "none" {
     box-shadow: none;
   }
@@ -79,11 +79,11 @@
 // 卡片基础效果占位符
 %card-base {
   box-sizing: border-box;
-  background-color: var(--#{$admin-namespace}-bg-color);
+  background-color: var(--#{$teek-namespace}-bg-color);
 
   // 添加响应式圆角，最小为 2px，最大为 12px
-  border-radius: clamp(2px, calc(var(--#{$admin-namespace}-radius) * 0.5 + 2px), 12px) !important;
-  transition: all var(--#{$admin-namespace}-card-transition-duration) ease !important;
+  border-radius: clamp(2px, calc(var(--#{$teek-namespace}-radius) * 0.5 + 2px), 12px) !important;
+  transition: all var(--#{$teek-namespace}-card-transition-duration) ease !important;
 
   // 悬停效果整合
   &.hover {
@@ -94,7 +94,7 @@
   &:focus-visible {
     z-index: 5;
     outline: none;
-    box-shadow: var(--#{$admin-namespace}-card-shadow-select);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-select);
   }
 
   // 当与 el-card 组件同时使用时，去除 el-card 的 padding
@@ -116,12 +116,12 @@
 %card-hover {
   cursor: pointer;
   transition:
-    transform var(--#{$admin-namespace}-card-transition-duration) var(--#{$admin-namespace}-card-easing),
-    box-shadow var(--#{$admin-namespace}-card-transition-duration) var(--#{$admin-namespace}-card-easing);
+    transform var(--#{$teek-namespace}-card-transition-duration) var(--#{$teek-namespace}-card-easing),
+    box-shadow var(--#{$teek-namespace}-card-transition-duration) var(--#{$teek-namespace}-card-easing);
 
   &:hover {
-    box-shadow: var(--#{$admin-namespace}-card-shadow-hover);
-    transform: var(--#{$admin-namespace}-card-transform-hover);
+    box-shadow: var(--#{$teek-namespace}-card-shadow-hover);
+    transform: var(--#{$teek-namespace}-card-transform-hover);
   }
 }
 
@@ -224,7 +224,7 @@
 /* ===== 预设卡片类型 ===== */
 
 // 标准卡片
-.#{$admin-namespace}-card-standard {
+.#{$teek-namespace}-card-standard {
   @extend %card-base;
   @include card-border("regular");
   @include card-shadow("root");
@@ -235,7 +235,7 @@
 }
 
 // 突出卡片
-.#{$admin-namespace}-card-elevated {
+.#{$teek-namespace}-card-elevated {
   @extend %card-base;
   @include card-border("none"); // 无边框突出阴影效果
   @include card-shadow("default");
@@ -246,7 +246,7 @@
 }
 
 // 极简卡片（默认卡片）
-.#{$admin-namespace}-card-minimal {
+.#{$teek-namespace}-card-minimal {
   @extend %card-base;
   @include card-border("base");
   @include card-shadow("mini");
@@ -257,7 +257,7 @@
 }
 
 // 紧凑卡片
-.#{$admin-namespace}-card-compact {
+.#{$teek-namespace}-card-compact {
   @extend %card-base;
   @include card-border("none");
   @include card-shadow("mini");
@@ -269,7 +269,7 @@
 }
 
 // 禁用卡片
-.#{$admin-namespace}-card-disabled {
+.#{$teek-namespace}-card-disabled {
   position: relative;
   pointer-events: none;
   opacity: 0.5;

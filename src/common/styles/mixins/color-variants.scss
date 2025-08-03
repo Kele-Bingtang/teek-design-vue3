@@ -12,22 +12,22 @@ $dark-theme-adjustment: 1.2;
 // ===== 颜色变量生成器 =====
 @mixin generate-color-variants($name, $base-color, $is-dark: false) {
   // 基础色
-  --#{$admin-namespace}-color-#{$name}: #{$base-color};
+  --#{$teek-namespace}-color-#{$name}: #{$base-color};
 
   // 悬停色
-  --#{$admin-namespace}-color-#{$name}-hover: #{generate-hover-color($base-color, $is-dark)};
+  --#{$teek-namespace}-color-#{$name}-hover: #{generate-hover-color($base-color, $is-dark)};
 
   // 柔和色
-  --#{$admin-namespace}-color-#{$name}-muted: #{generate-muted-color($base-color, $is-dark)};
+  --#{$teek-namespace}-color-#{$name}-muted: #{generate-muted-color($base-color, $is-dark)};
 
   // 深色
-  --#{$admin-namespace}-color-#{$name}-deep: #{generate-deep-color($base-color, $is-dark)};
+  --#{$teek-namespace}-color-#{$name}-deep: #{generate-deep-color($base-color, $is-dark)};
 
   // 浅色（比基础色更亮）
-  --#{$admin-namespace}-color-#{$name}-light: #{generate-light-color($base-color, $is-dark)};
+  --#{$teek-namespace}-color-#{$name}-light: #{generate-light-color($base-color, $is-dark)};
 
   // RGB 版本
-  --#{$admin-namespace}-color-#{$name}-rgb: #{color-to-rgb($base-color)};
+  --#{$teek-namespace}-color-#{$name}-rgb: #{color-to-rgb($base-color)};
 }
 
 // ===== 核心颜色处理函数 =====

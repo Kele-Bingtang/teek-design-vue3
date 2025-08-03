@@ -335,7 +335,7 @@ defineExpose(defaultExpose);
 </template>
 
 <style lang="scss" scoped>
-$prefix-class: #{$admin-namespace}-search-form;
+$prefix-class: #{$teek-namespace}-search-form;
 
 .#{$prefix-class} {
   padding: 18px 18px 0;

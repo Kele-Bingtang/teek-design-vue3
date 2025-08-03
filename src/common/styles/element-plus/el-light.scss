@@ -32,17 +32,17 @@
 @use "element-plus/theme-chalk/src/index.scss" as *;
 
 :root {
-  --#{$el-namespace}-text-color-primary: var(--#{$admin-namespace}-text-gray-800) !important;
-  --#{$el-namespace}-text-color-regular: var(--#{$admin-namespace}-text-gray-700) !important;
-  --#{$el-namespace}-text-color-secondary: var(--#{$admin-namespace}-text-gray-600) !important;
-  --#{$el-namespace}-text-color-placeholder: var(--#{$admin-namespace}-text-gray-500) !important;
-  --#{$el-namespace}-text-color-disabled: var(--#{$admin-namespace}-text-gray-400) !important;
-  --#{$el-namespace}-bg-color: var(--#{$admin-namespace}-bg-color) !important;
+  --#{$el-namespace}-text-color-primary: var(--#{$teek-namespace}-text-gray-800) !important;
+  --#{$el-namespace}-text-color-regular: var(--#{$teek-namespace}-text-gray-700) !important;
+  --#{$el-namespace}-text-color-secondary: var(--#{$teek-namespace}-text-gray-600) !important;
+  --#{$el-namespace}-text-color-placeholder: var(--#{$teek-namespace}-text-gray-500) !important;
+  --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-text-gray-400) !important;
+  --#{$el-namespace}-bg-color: var(--#{$teek-namespace}-bg-color) !important;
 
   // 功能色覆盖
-  --#{$el-namespace}-color-primary: var(--#{$admin-namespace}-color-primary) !important;
-  --#{$el-namespace}-color-success: var(--#{$admin-namespace}-color-success) !important;
-  --#{$el-namespace}-color-warning: var(--#{$admin-namespace}-color-warning) !important;
-  --#{$el-namespace}-color-danger: var(--#{$admin-namespace}-color-danger) !important;
-  --#{$el-namespace}-color-error: var(--#{$admin-namespace}-color-error) !important;
+  --#{$el-namespace}-color-primary: var(--#{$teek-namespace}-color-primary) !important;
+  --#{$el-namespace}-color-success: var(--#{$teek-namespace}-color-success) !important;
+  --#{$el-namespace}-color-warning: var(--#{$teek-namespace}-color-warning) !important;
+  --#{$el-namespace}-color-danger: var(--#{$teek-namespace}-color-danger) !important;
+  --#{$el-namespace}-color-error: var(--#{$teek-namespace}-color-error) !important;
 }

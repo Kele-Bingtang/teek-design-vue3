@@ -2,100 +2,100 @@
 
 // 布局主题变量
 :root {
-  --#{$admin-namespace}-radius: 0.75rem;
+  --#{$teek-namespace}-radius: 0.75rem;
 
   // 顶部栏
-  --#{$admin-namespace}-layout-header-height: 55px;
-  --#{$admin-namespace}-layout-header-bg-color: var(--#{$admin-namespace}-bg-color-page);
-  --#{$admin-namespace}-layout-header-text-color: var(--#{$admin-namespace}-text-gray-600);
-  --#{$admin-namespace}-layout-header-icon-size: 22px;
-  --#{$admin-namespace}-layout-header-line: none;
+  --#{$teek-namespace}-layout-header-height: 55px;
+  --#{$teek-namespace}-layout-header-bg-color: var(--#{$teek-namespace}-bg-color-page);
+  --#{$teek-namespace}-layout-header-text-color: var(--#{$teek-namespace}-text-gray-600);
+  --#{$teek-namespace}-layout-header-icon-size: 22px;
+  --#{$teek-namespace}-layout-header-line: none;
 
   // 顶部左侧面包屑
-  --#{$admin-namespace}-layout-header-breadcrumb-link-color: var(--#{$admin-namespace}-text-gray-500);
-  --#{$admin-namespace}-layout-header-breadcrumb-text-color: var(--#{$admin-namespace}-text-gray-700);
-  --#{$admin-namespace}-layout-logo-title-color: var(--#{$admin-namespace}-text-gray-800);
+  --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-gray-500);
+  --#{$teek-namespace}-layout-header-breadcrumb-text-color: var(--#{$teek-namespace}-text-gray-700);
+  --#{$teek-namespace}-layout-logo-title-color: var(--#{$teek-namespace}-text-gray-800);
 
   // 页签栏
-  --#{$admin-namespace}-layout-tab-bg-color: var(--#{$admin-namespace}-bg-color-page);
-  --#{$admin-namespace}-layout-tab-item-bg-color: var(--#{$admin-namespace}-bg-color);
-  --#{$admin-namespace}-layout-tab-item-border-color: var(--#{$admin-namespace}-border-color);
-  --#{$admin-namespace}-layout-tab-height: 38px;
-  --#{$admin-namespace}-layout-tab-text-color: var(--#{$admin-namespace}-text-gray-600);
-  --#{$admin-namespace}-layout-tab-line: none;
-  --#{$admin-namespace}-layout-tab-text-size: 13px;
-  --#{$admin-namespace}-layout-tab-icon-size: 14px;
-  --#{$admin-namespace}-layout-tab-dot-size: 11px;
+  --#{$teek-namespace}-layout-tab-bg-color: var(--#{$teek-namespace}-bg-color-page);
+  --#{$teek-namespace}-layout-tab-item-bg-color: var(--#{$teek-namespace}-bg-color);
+  --#{$teek-namespace}-layout-tab-item-border-color: var(--#{$teek-namespace}-border-color);
+  --#{$teek-namespace}-layout-tab-height: 38px;
+  --#{$teek-namespace}-layout-tab-text-color: var(--#{$teek-namespace}-text-gray-600);
+  --#{$teek-namespace}-layout-tab-line: none;
+  --#{$teek-namespace}-layout-tab-text-size: 13px;
+  --#{$teek-namespace}-layout-tab-icon-size: 14px;
+  --#{$teek-namespace}-layout-tab-dot-size: 11px;
 
   // 侧边栏
-  --#{$admin-namespace}-layout-expand-aside-width: 240px;
-  --#{$admin-namespace}-layout-collapse-aside-width: 64px;
-  --#{$admin-namespace}-layout-aside-bg-color: var(--#{$admin-namespace}-bg-color);
-  --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
-  --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);
-  --#{$admin-namespace}-layout-aside-left-bg-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-text-color: var(--#{$admin-namespace}-text-gray-700);
-  --#{$admin-namespace}-layout-aside-text-active-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-text-hover-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-icon-color: var(--#{$admin-namespace}-text-gray-700);
-  --#{$admin-namespace}-layout-aside-icon-active-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-line: 1px solid var(--#{$admin-namespace}-border-color);
-  --#{$admin-namespace}-layout-aside-text-active-weight: 700;
-  --#{$admin-namespace}-layout-aside-text-size: 14px;
-  --#{$admin-namespace}-layout-aside-icon-size: 20px;
-  --#{$admin-namespace}-layout-aside-arrow-size: 13px;
-  --#{$admin-namespace}-layout-aside-item-height: 46px;
-  --#{$admin-namespace}-layout-aside-sub-item-height: 40px;
+  --#{$teek-namespace}-layout-expand-aside-width: 240px;
+  --#{$teek-namespace}-layout-collapse-aside-width: 64px;
+  --#{$teek-namespace}-layout-aside-bg-color: var(--#{$teek-namespace}-bg-color);
+  --#{$teek-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
+  --#{$teek-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);
+  --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-gray-700);
+  --#{$teek-namespace}-layout-aside-text-active-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-text-hover-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-icon-color: var(--#{$teek-namespace}-text-gray-700);
+  --#{$teek-namespace}-layout-aside-icon-active-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-line: 1px solid var(--#{$teek-namespace}-border-color);
+  --#{$teek-namespace}-layout-aside-text-active-weight: 700;
+  --#{$teek-namespace}-layout-aside-text-size: 14px;
+  --#{$teek-namespace}-layout-aside-icon-size: 20px;
+  --#{$teek-namespace}-layout-aside-arrow-size: 13px;
+  --#{$teek-namespace}-layout-aside-item-height: 46px;
+  --#{$teek-namespace}-layout-aside-sub-item-height: 40px;
 
   // columns 布局侧边栏
-  --#{$admin-namespace}-layout-columns-aside-width: 72px;
-  --#{$admin-namespace}-layout-columns-aside-item-height: 72px;
+  --#{$teek-namespace}-layout-columns-aside-width: 72px;
+  --#{$teek-namespace}-layout-columns-aside-item-height: 72px;
 
   // 内容区
-  --#{$admin-namespace}-layout-page-bg-color: var(--#{$admin-namespace}-bg-color-page);
+  --#{$teek-namespace}-layout-page-bg-color: var(--#{$teek-namespace}-bg-color-page);
 }
 
 // 深色布局主题变量
 :root.dark {
   // 顶部栏
-  --#{$admin-namespace}-layout-header-text-color: var(--#{$admin-namespace}-text-gray-800);
+  --#{$teek-namespace}-layout-header-text-color: var(--#{$teek-namespace}-text-gray-800);
 
   // 顶部左侧面包屑
-  --#{$admin-namespace}-layout-header-breadcrumb-link-color: var(--#{$admin-namespace}-text-gray-600);
-  --#{$admin-namespace}-layout-header-breadcrumb-text-color: var(--#{$admin-namespace}-text-gray-800);
+  --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-gray-600);
+  --#{$teek-namespace}-layout-header-breadcrumb-text-color: var(--#{$teek-namespace}-text-gray-800);
 
   // 页签栏
-  --#{$admin-namespace}-layout-tab-text-color: var(--#{$admin-namespace}-text-gray-800);
+  --#{$teek-namespace}-layout-tab-text-color: var(--#{$teek-namespace}-text-gray-800);
 
   // 侧边栏
-  --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$admin-namespace}-gray-200);
-  --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$admin-namespace}-gray-200);
-  --#{$admin-namespace}-layout-aside-text-color: var(--#{$el-namespace}-text-color-regular);
-  --#{$admin-namespace}-layout-aside-icon-color: var(--#{$el-namespace}-text-color-regular);
-  --#{$admin-namespace}-layout-aside-text-active-weight: 400;
+  --#{$teek-namespace}-layout-aside-bg-active-color: var(--#{$teek-namespace}-gray-200);
+  --#{$teek-namespace}-layout-aside-bg-hover-color: var(--#{$teek-namespace}-gray-200);
+  --#{$teek-namespace}-layout-aside-text-color: var(--#{$el-namespace}-text-color-regular);
+  --#{$teek-namespace}-layout-aside-icon-color: var(--#{$el-namespace}-text-color-regular);
+  --#{$teek-namespace}-layout-aside-text-active-weight: 400;
 }
 
 :root.dark-neutral {
-  --#{$admin-namespace}-layout-aside-bg-active-color: var(--#{$admin-namespace}-gray-300);
-  --#{$admin-namespace}-layout-aside-bg-hover-color: var(--#{$admin-namespace}-gray-300);
+  --#{$teek-namespace}-layout-aside-bg-active-color: var(--#{$teek-namespace}-gray-300);
+  --#{$teek-namespace}-layout-aside-bg-hover-color: var(--#{$teek-namespace}-gray-300);
 }
 
 // 菜单单独深色模式变量（与中性深色模式变量一致）
-.#{$admin-namespace}-layout-aside.is-dark {
+.#{$teek-namespace}-layout-aside.is-dark {
   --#{$el-namespace}-color-primary: #6d94e6;
-  --#{$admin-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
+  --#{$teek-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
 
   // 侧边栏
-  --#{$admin-namespace}-layout-aside-bg-color: #1c1e23;
-  --#{$admin-namespace}-layout-aside-bg-active-color: #26282c;
-  --#{$admin-namespace}-layout-aside-bg-hover-color: #26282c;
-  --#{$admin-namespace}-layout-aside-left-bg-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-text-color: #d0d1d6;
-  --#{$admin-namespace}-layout-aside-text-active-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-text-hover-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-icon-color: #d0d1d6;
-  --#{$admin-namespace}-layout-aside-icon-active-color: var(--#{$admin-namespace}-color-primary);
-  --#{$admin-namespace}-layout-aside-line: 1px solid #363a4d;
-  --#{$admin-namespace}-layout-logo-title-color: #d0d1d6;
-  --#{$admin-namespace}-layout-aside-text-active-weight: 400;
+  --#{$teek-namespace}-layout-aside-bg-color: #1c1e23;
+  --#{$teek-namespace}-layout-aside-bg-active-color: #26282c;
+  --#{$teek-namespace}-layout-aside-bg-hover-color: #26282c;
+  --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-text-color: #d0d1d6;
+  --#{$teek-namespace}-layout-aside-text-active-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-text-hover-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-icon-color: #d0d1d6;
+  --#{$teek-namespace}-layout-aside-icon-active-color: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-layout-aside-line: 1px solid #363a4d;
+  --#{$teek-namespace}-layout-logo-title-color: #d0d1d6;
+  --#{$teek-namespace}-layout-aside-text-active-weight: 400;
 }

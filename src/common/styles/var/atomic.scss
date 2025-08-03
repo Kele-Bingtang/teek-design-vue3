@@ -1,98 +1,98 @@
 @use "../mixins/namespace" as *;
 
 /* 背景色原子类 */
-.#{$admin-namespace}-bg-primary {
-  color: var(--#{$admin-namespace}-color-primary) !important;
-  background-color: var(--#{$admin-namespace}-bg-primary) !important;
+.#{$teek-namespace}-bg-primary {
+  color: var(--#{$teek-namespace}-color-primary) !important;
+  background-color: var(--#{$teek-namespace}-bg-primary) !important;
 }
 
-.#{$admin-namespace}-bg-secondary {
-  color: var(--#{$admin-namespace}-color-secondary) !important;
-  background-color: var(--#{$admin-namespace}-bg-secondary) !important;
+.#{$teek-namespace}-bg-secondary {
+  color: var(--#{$teek-namespace}-color-secondary) !important;
+  background-color: var(--#{$teek-namespace}-bg-secondary) !important;
 }
 
-.#{$admin-namespace}-bg-warning {
-  color: var(--#{$admin-namespace}-color-warning) !important;
-  background-color: var(--#{$admin-namespace}-bg-warning) !important;
+.#{$teek-namespace}-bg-warning {
+  color: var(--#{$teek-namespace}-color-warning) !important;
+  background-color: var(--#{$teek-namespace}-bg-warning) !important;
 }
 
-.#{$admin-namespace}-bg-error {
-  color: var(--#{$admin-namespace}-color-error) !important;
-  background-color: var(--#{$admin-namespace}-bg-error) !important;
+.#{$teek-namespace}-bg-error {
+  color: var(--#{$teek-namespace}-color-error) !important;
+  background-color: var(--#{$teek-namespace}-bg-error) !important;
 }
 
-.#{$admin-namespace}-bg-success {
-  color: var(--#{$admin-namespace}-color-success) !important;
-  background-color: var(--#{$admin-namespace}-bg-success) !important;
+.#{$teek-namespace}-bg-success {
+  color: var(--#{$teek-namespace}-color-success) !important;
+  background-color: var(--#{$teek-namespace}-bg-success) !important;
 }
 
-.#{$admin-namespace}-bg-danger {
-  color: var(--#{$admin-namespace}-color-danger) !important;
-  background-color: var(--#{$admin-namespace}-bg-danger) !important;
+.#{$teek-namespace}-bg-danger {
+  color: var(--#{$teek-namespace}-color-danger) !important;
+  background-color: var(--#{$teek-namespace}-bg-danger) !important;
 }
 
 /* 主题文本原子类 */
-.#{$admin-namespace}-text-primary {
-  color: var(--#{$admin-namespace}-color-primary) !important;
+.#{$teek-namespace}-text-primary {
+  color: var(--#{$teek-namespace}-color-primary) !important;
 }
 
-.#{$admin-namespace}-text-secondary {
-  color: var(--#{$admin-namespace}-color-secondary) !important;
+.#{$teek-namespace}-text-secondary {
+  color: var(--#{$teek-namespace}-color-secondary) !important;
 }
 
-.#{$admin-namespace}-text-error {
-  color: var(--#{$admin-namespace}-color-error) !important;
+.#{$teek-namespace}-text-error {
+  color: var(--#{$teek-namespace}-color-error) !important;
 }
 
-.#{$admin-namespace}-text-danger {
-  color: var(--#{$admin-namespace}-color-danger) !important;
+.#{$teek-namespace}-text-danger {
+  color: var(--#{$teek-namespace}-color-danger) !important;
 }
 
-.#{$admin-namespace}-text-info {
-  color: var(--#{$admin-namespace}-color-info) !important;
+.#{$teek-namespace}-text-info {
+  color: var(--#{$teek-namespace}-color-info) !important;
 }
 
-.#{$admin-namespace}-text-success {
-  color: var(--#{$admin-namespace}-color-success) !important;
+.#{$teek-namespace}-text-success {
+  color: var(--#{$teek-namespace}-color-success) !important;
 }
 
-.#{$admin-namespace}-text-warning {
-  color: var(--#{$admin-namespace}-color-warning) !important;
+.#{$teek-namespace}-text-warning {
+  color: var(--#{$teek-namespace}-color-warning) !important;
 }
 
-.#{$admin-namespace}-text-muted {
-  color: var(--#{$admin-namespace}-text-muted) !important;
+.#{$teek-namespace}-text-muted {
+  color: var(--#{$teek-namespace}-text-muted) !important;
 }
 
 // 灰度文本原子类
 @for $i from 1 through 9 {
   $level: $i * 100;
-  .#{$admin-namespace}-text-gray-#{$level} {
-    color: var(--#{$admin-namespace}-text-gray-#{$level}) !important;
+  .#{$teek-namespace}-text-gray-#{$level} {
+    color: var(--#{$teek-namespace}-text-gray-#{$level}) !important;
   }
 }
 
 /* 边框原子类 */
-.#{$admin-namespace}-border {
-  border: 1px solid var(--#{$admin-namespace}-border-color) !important;
+.#{$teek-namespace}-border {
+  border: 1px solid var(--#{$teek-namespace}-border-color) !important;
 }
 
-.#{$admin-namespace}-border-dashed {
-  border: 1px dashed var(--#{$admin-namespace}-border-dashed-color) !important;
+.#{$teek-namespace}-border-dashed {
+  border: 1px dashed var(--#{$teek-namespace}-border-dashed-color) !important;
 }
 
-.#{$admin-namespace}-shadow-xs {
-  box-shadow: var(--#{$admin-namespace}-box-shadow-xs) !important;
+.#{$teek-namespace}-shadow-xs {
+  box-shadow: var(--#{$teek-namespace}-box-shadow-xs) !important;
 }
 
-.#{$admin-namespace}-shadow-sm {
-  box-shadow: var(--#{$admin-namespace}-box-shadow-sm) !important;
+.#{$teek-namespace}-shadow-sm {
+  box-shadow: var(--#{$teek-namespace}-box-shadow-sm) !important;
 }
 
-.#{$admin-namespace}-shadow {
-  box-shadow: var(--#{$admin-namespace}-box-shadow) !important;
+.#{$teek-namespace}-shadow {
+  box-shadow: var(--#{$teek-namespace}-box-shadow) !important;
 }
 
-.#{$admin-namespace}-shadow-lg {
-  box-shadow: var(--#{$admin-namespace}-box-shadow-lg) !important;
+.#{$teek-namespace}-shadow-lg {
+  box-shadow: var(--#{$teek-namespace}-box-shadow-lg) !important;
 }

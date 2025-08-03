@@ -54,7 +54,7 @@
 
 /* 合并变量名：joinVar(('button', 'text-color')) => '--tk-button-text-color' */
 @function joinVar($list) {
-  $name: "--" + $admin-namespace;
+  $name: "--" + $teek-namespace;
 
   @each $item in $list {
     @if $item != "" {
@@ -82,7 +82,7 @@
 
 /* createBem('block', 'element', 'modifier') => 'tk-block__element--modifier' */
 @function createBem($block, $element: "", $modifier: "") {
-  $name: $admin-namespace + $common-separator + $block;
+  $name: $teek-namespace + $common-separator + $block;
 
   @if $element != "" {
     $name: $name + $element-separator + $element;

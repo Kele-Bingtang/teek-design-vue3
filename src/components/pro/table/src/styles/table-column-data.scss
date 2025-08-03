@@ -25,7 +25,7 @@ tbody {
 thead {
   @include b(pro-table-column-data) {
     // 表头过滤图标激活时，表头文字颜色为 primary 色
-    .cell:has(.#{$admin-namespace}-pro-table-filter-icon.is-active) {
+    .cell:has(.#{$teek-namespace}-pro-table-filter-icon.is-active) {
       color: cssVar(color-primary);
     }
   }
