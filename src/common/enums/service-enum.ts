@@ -39,6 +39,12 @@ export enum MenuThemeEnum {
   Light = "light",
 }
 
+// 菜单风格
+export enum MenuStyleEnum {
+  Simple = "simple",
+  Round = "round",
+}
+
 // 菜单显示模式
 export enum MenuShowModeEnum {
   Static = "static",

@@ -9,6 +9,7 @@ import {
   GlobalThemeEnum,
   TabNavElementModeEnum,
   MenuShowModeEnum,
+  MenuStyleEnum,
 } from "@/common/enums";
 import { serviceConfig } from "@/common/config";
 import { cacheOperator, localStorageProxy } from "@/common/utils";
@@ -32,7 +33,6 @@ export const useSettingStore = defineStore(
     const layout = reactive({
       titleMode: layoutConfig.titleMode,
       layoutMode: layoutConfig.layoutMode || LayoutModeEnum.Classic,
-      menuTheme: layoutConfig.menuTheme || MenuThemeEnum.Light,
       maximize: layoutConfig.maximize,
       elementPlusSize: layoutConfig.elementPlusSize,
       watermark: layoutConfig.watermark,
@@ -62,6 +62,8 @@ export const useSettingStore = defineStore(
       accordion: menuConfig.accordion,
       collapsed: menuConfig.collapsed,
       collapseWidth: menuConfig.collapseWidth,
+      theme: menuConfig.theme || MenuThemeEnum.Light,
+      style: menuConfig.style || MenuStyleEnum.Simple,
       showMode: menuConfig.showMode || MenuShowModeEnum.Static,
       autoActivateChild: menuConfig.autoActivateChild,
       showModeAutoFixed: menuConfig.showModeAutoFixed,

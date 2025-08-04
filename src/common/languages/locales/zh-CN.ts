@@ -287,6 +287,11 @@ export default {
         light: "亮色",
         dark: "暗色",
       },
+      style: "风格",
+      styleSelect: {
+        simple: "朴素",
+        round: "圆润",
+      },
       collapse: "折叠菜单",
       accordion: "菜单手风琴",
       autoActivateChild: "自动激活子菜单",

@@ -12,6 +12,7 @@ import type {
   ThemePanelTriggerPositionEnum,
   MenuShowModeEnum,
   HeaderShowModeEnum,
+  MenuStyleEnum,
 } from "@/common/enums";
 
 export interface ServiceConfig {
@@ -50,8 +51,6 @@ export interface LayoutConfig {
   titleMode: TitleModeEnum;
   /** 布局设置 */
   layoutMode: LayoutModeEnum;
-  /** 侧边菜单栏的主题色，暗色和亮色，默认为暗色 */
-  menuTheme: MenuThemeEnum;
   /** PageContent 是否开启最大化，默认不开启（false） */
   maximize: boolean;
   /** 是否开启水印 */
@@ -128,8 +127,12 @@ export interface MenuConfig {
   accordion: boolean;
   /** 是否折叠菜单栏 */
   collapsed: boolean;
-  /** 侧边栏折叠宽度 */
+  /** 菜单栏折叠宽度 */
   collapseWidth: number;
+  /** 菜单栏的主题色，暗色和亮色，默认为暗色 */
+  theme: MenuThemeEnum;
+  /** 菜单样式，朴素和圆润，默认为朴素 */
+  style: MenuStyleEnum;
   /** 菜单显示模式 */
   showMode: MenuShowModeEnum;
   /** 点击目录时自动激活子菜单，在分栏布局生效 */

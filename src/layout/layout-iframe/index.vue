@@ -22,7 +22,7 @@ const settingStore = useSettingStore();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 const { heightStyle, staticClass } = useHeaderAreaMouse();
 
-const { menu, layout, logo } = storeToRefs(settingStore);
+const { menu, logo } = storeToRefs(settingStore);
 
 const isCollapse = computed(() => menu.value.collapsed);
 </script>
@@ -31,7 +31,7 @@ const isCollapse = computed(() => menu.value.collapsed);
   <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
     <el-aside
       v-if="menu.enabled"
-      :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
+      :class="[ns.join('layout-aside'), ns.is(menu.theme)]"
       class="flx-column"
       :style="asideStyle"
     >
@@ -40,8 +40,8 @@ const isCollapse = computed(() => menu.value.collapsed);
         <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
       <Menu
-        :class="[ns.join('layout-menu'), ns.b('menu')]"
-        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
+        :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
+        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
       />
 
       <!-- 菜单底部 -->

@@ -32,7 +32,7 @@ const { menuList } = useMenu();
 const activeMenu = ref("");
 const childrenMenu = ref<RouterConfig[]>([]);
 
-const { menu, layout, logo, header } = storeToRefs(settingStore);
+const { menu, logo, header } = storeToRefs(settingStore);
 
 /**
  * 头部菜单
@@ -108,15 +108,11 @@ watch(
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside
-        v-if="childrenMenu.length"
-        :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
-        :style="asideStyle"
-      >
+      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(menu.theme)]" :style="asideStyle">
         <Menu
           :menu-list="childrenMenu"
-          :class="[ns.join('layout-menu'), ns.e('aside-menu')]"
-          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
+          :class="[ns.join('layout-menu'), ns.e('aside-menu'), ns.is(menu.style)]"
+          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
         />
       </el-aside>
 

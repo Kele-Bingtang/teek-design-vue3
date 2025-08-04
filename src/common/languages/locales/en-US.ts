@@ -290,6 +290,11 @@ export default {
       autoActivateChild: "Auto activate child menu",
       showModeAutoFixed: "Fixed when showMode auto",
       width: "Menu width",
+      style: "Style",
+      styleSelect: {
+        simple: "Simple",
+        round: "Round",
+      },
       showMode: "Show mode",
       showModeSelect: {
         static: "Static",

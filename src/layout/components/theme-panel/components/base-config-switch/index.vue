@@ -13,6 +13,7 @@ import {
   ThemePanelTriggerPositionEnum,
   LayoutModeEnum,
   HeaderShowModeEnum,
+  MenuStyleEnum,
 } from "@/common/enums";
 import { languageOptions } from "@/common/languages";
 import { useBrowserTitle, useCommon, useNamespace } from "@/composables";
@@ -65,6 +66,11 @@ const headerMenuAlignOptions = [
   { value: HeaderMenuAlignEnum.Center, label: t("_setting.header.menuAlignSelect.center") },
   { value: HeaderMenuAlignEnum.End, label: t("_setting.header.menuAlignSelect.end") },
 ];
+
+const menuStyleOptions = computed(() => [
+  { value: MenuStyleEnum.Simple, label: t("_setting.menu.styleSelect.simple") },
+  { value: MenuStyleEnum.Round, label: t("_setting.menu.styleSelect.round") },
+]);
 
 const menuShowModeOptions = computed(() => [
   { value: MenuShowModeEnum.Static, label: t("_setting.menu.showModeSelect.static") },
@@ -168,6 +174,13 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
       <span>{{ $t("_setting.menu.width") }}</span>
       <el-input-number v-model="menu.width" :min="100" :max="400" :step="10" controls-position="right" />
       <!-- <el-slider v-model="menu.width" :min="100" :max="400" /> -->
+    </div>
+
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.menu.style") }}</span>
+      <el-select v-model="menu.style" placeholder="Select">
+        <el-option v-for="item in menuStyleOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
     </div>
 
     <div :class="ns.e('item')">

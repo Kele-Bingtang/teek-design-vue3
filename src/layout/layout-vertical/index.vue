@@ -20,7 +20,7 @@ const ns = useNamespace("vertical-layout");
 const router = useRouter();
 const settingStore = useSettingStore();
 
-const { menu, layout, logo, header } = storeToRefs(settingStore);
+const { menu, logo, header } = storeToRefs(settingStore);
 const { isMobile } = useCommon();
 const { asideStyle, rightContentStyle } = useMenuAreaMouse();
 const { topStyle, staticClass } = useHeaderAreaMouse();
@@ -44,7 +44,7 @@ const handleClickOutSide = () => {
   >
     <el-aside
       v-if="menu.enabled"
-      :class="[ns.join('layout-aside'), ns.is(layout.menuTheme)]"
+      :class="[ns.join('layout-aside'), ns.is(menu.theme)]"
       class="flx-column"
       :style="asideStyle"
     >
@@ -54,8 +54,8 @@ const handleClickOutSide = () => {
       </div>
 
       <Menu
-        :class="[ns.join('layout-menu'), ns.b('menu')]"
-        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
+        :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
+        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
       />
     </el-aside>
 

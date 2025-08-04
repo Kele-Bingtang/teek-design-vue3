@@ -19,7 +19,7 @@ const router = useRouter();
 const settingStore = useSettingStore();
 const { topStyle, staticClass } = useHeaderAreaMouse();
 
-const { logo, header } = storeToRefs(settingStore);
+const { logo, header, menu } = storeToRefs(settingStore);
 </script>
 
 <template>
@@ -34,8 +34,8 @@ const { logo, header } = storeToRefs(settingStore);
         <Menu
           mode="horizontal"
           :is-collapse="false"
-          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(header.menuAlign)]"
-          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
+          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(header.menuAlign), ns.is(menu.style)]"
+          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
         />
         <HeaderRight />
       </el-header>

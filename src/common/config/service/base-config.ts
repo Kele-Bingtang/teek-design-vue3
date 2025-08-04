@@ -13,6 +13,7 @@ import {
   TitleModeEnum,
   MenuShowModeEnum,
   HeaderShowModeEnum,
+  MenuStyleEnum,
 } from "@/common/enums";
 
 export const defaultServiceConfig: ServiceConfig = {
@@ -21,7 +22,6 @@ export const defaultServiceConfig: ServiceConfig = {
     avatar: "/avatar.png",
     titleMode: TitleModeEnum.ProjectPage,
     layoutMode: LayoutModeEnum.Vertical,
-    menuTheme: MenuThemeEnum.Light,
     maximize: false,
     watermark: false,
     moreRouteChildrenHideInMenuThenOnlyOne: false,
@@ -130,6 +130,8 @@ export const defaultServiceConfig: ServiceConfig = {
     accordion: false,
     collapsed: false,
     collapseWidth: 64,
+    theme: MenuThemeEnum.Light,
+    style: MenuStyleEnum.Simple,
     showMode: MenuShowModeEnum.Static,
     autoActivateChild: true,
     showModeAutoFixed: true,

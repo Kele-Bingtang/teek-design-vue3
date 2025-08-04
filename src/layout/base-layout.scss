@@ -76,6 +76,21 @@
       font-size: cssVar(layout-aside-arrow-size);
     }
   }
+
+  // 菜单圆润风格
+  @include is(round) {
+    .el-menu:not(.el-menu--horizontal) {
+      @include el-joins(menu-item, sub-menu__title) {
+        width: calc(100% - 16px);
+        margin-left: 8px;
+        border-radius: 6px;
+      }
+
+      .is-active.is-only::before {
+        content: none !important;
+      }
+    }
+  }
 }
 
 /* 非弹框侧边栏样式 */
