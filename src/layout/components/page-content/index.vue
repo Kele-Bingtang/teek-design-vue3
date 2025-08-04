@@ -7,6 +7,7 @@ import { getUrlParams, mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useLayoutStore, useSettingStore } from "@/pinia";
 import Maximize from "./components/maximize.vue";
+import Loading from "../loading/index.vue";
 import FrameLayout from "../iframe/index.vue";
 
 defineOptions({ name: "MainContent" });
@@ -63,6 +64,8 @@ watchEffect(() => {
   <Maximize v-if="layout.maximize" />
   <el-main :class="ns.b()" class="page-content" v-bind="$attrs">
     <router-view v-slot="{ Component, route }">
+      <Loading v-if="transition.loading" route />
+
       <transition
         v-bind="route.meta.transitionProps"
         :name="route.meta.transitionProps?.name || transition.pageEnter"
@@ -74,6 +77,7 @@ watchEffect(() => {
         </keep-alive>
       </transition>
     </router-view>
+
     <FrameLayout />
   </el-main>
 </template>
@@ -84,6 +88,7 @@ watchEffect(() => {
 
 @include b(page-content) {
   // 配置项 headerShowMode 为 autoHidden、scrollHidden 时，通过 z-index 确保内容区的层级大于顶栏
+  position: relative;
   z-index: 1;
   height: 100%;
   padding: 10px 12px;

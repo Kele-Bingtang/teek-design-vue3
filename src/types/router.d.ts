@@ -178,5 +178,11 @@ declare global {
      * 点标记的属性，即 PointTag 组件的 props
      */
     pointTagProps?: PointTagProps;
+    /**
+     * 菜单可以看到，但是访问会被重定向到 403
+     *
+     * @default false
+     */
+    menuVisibleWithForbidden?: boolean;
   }
 }

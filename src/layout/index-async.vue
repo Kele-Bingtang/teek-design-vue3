@@ -21,8 +21,6 @@ import type { Component } from "vue";
 import { defineAsyncComponent, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { LayoutModeEnum, ThemePanelTriggerPositionEnum } from "@/common/enums";
-import { mittBus } from "@/common/utils";
-import { OpenThemePanelKey } from "@/common/config";
 import { useCommon, useUpgrade, useMittBus } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import ThemePanel from "./components/theme-panel/index.vue";

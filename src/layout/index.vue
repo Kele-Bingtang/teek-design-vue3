@@ -3,6 +3,7 @@
   <ThemePanel />
   <LockPanel />
   <Watermark />
+
   <el-button v-if="showThemePanelTrigger" type="primary" class="theme-panel__trigger" @click="openThemePanel">
     <Icon :size="20"><Setting /></Icon>
   </el-button>

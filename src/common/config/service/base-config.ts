@@ -13,15 +13,15 @@ import {
   TitleModeEnum,
   MenuShowModeEnum,
   HeaderShowModeEnum,
+  MenuStyleEnum,
 } from "@/common/enums";
 
 export const defaultServiceConfig: ServiceConfig = {
   layout: {
-    name: "Teek Design Pro",
+    name: "Teek Design Vue3",
     avatar: "/avatar.png",
     titleMode: TitleModeEnum.ProjectPage,
     layoutMode: LayoutModeEnum.Vertical,
-    menuTheme: MenuThemeEnum.Light,
     maximize: false,
     watermark: false,
     moreRouteChildrenHideInMenuThenOnlyOne: false,
@@ -130,6 +130,8 @@ export const defaultServiceConfig: ServiceConfig = {
     accordion: false,
     collapsed: false,
     collapseWidth: 64,
+    theme: MenuThemeEnum.Light,
+    style: MenuStyleEnum.Simple,
     showMode: MenuShowModeEnum.Static,
     autoActivateChild: true,
     showModeAutoFixed: true,
@@ -165,6 +167,7 @@ export const defaultServiceConfig: ServiceConfig = {
   transition: {
     pageEnter: PageTransitionEnum.SlideLeft,
     progress: true,
+    loading: true,
   },
   widget: {
     menuCollapse: true,

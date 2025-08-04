@@ -1,4 +1,5 @@
 <template>
+  <Loading />
   <el-config-provider :namespace="ns.elNamespace" :locale="i18nLocale" :button="config" :size="layout.elementPlusSize">
     <router-view v-slot="{ Component }">
       <component :is="Component" />
@@ -18,6 +19,7 @@ import { isFunction } from "@/common/utils";
 import { useNamespace, useWatchCssVar, useTheme } from "@/composables";
 import { useUserStore, useWebSocketStore, useSettingStore, useLayoutStore } from "@/pinia";
 import { useIFrame } from "@/layout/components/iframe/use-iframe";
+import Loading from "@/layout/components/loading/index.vue";
 
 const ns = useNamespace();
 
@@ -59,5 +61,5 @@ if (import.meta.env.VITE_WEBSOCKET === "true") {
   provide(WebSocketKey, webSocketStore);
 }
 
-if (isFunction(log.success)) log.success(__APP_INFO__.pkg.version, "欢迎使用 Teek Design Pro 系统");
+if (isFunction(log.success)) log.success(__APP_INFO__.pkg.version, "欢迎使用 Teek Design Vue3 系统");
 </script>

@@ -17,7 +17,7 @@ const outerChainRoutes: RouterConfigRaw = {
       },
     },
     {
-      path: "https://vue2-admin.youngkbt.cn/",
+      path: "https://vue2-design.teek.top/",
       name: "Vue2Admin",
       meta: {
         title: "Kbt Vue2 Admin",
@@ -25,7 +25,7 @@ const outerChainRoutes: RouterConfigRaw = {
       },
     },
     {
-      path: "https://notes.youngkbt.cn/",
+      path: "https://notes.teek.top/",
       name: "Notes",
       meta: {
         title: "我的博客",

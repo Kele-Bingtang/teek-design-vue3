@@ -290,6 +290,11 @@ export default {
       autoActivateChild: "Auto activate child menu",
       showModeAutoFixed: "Fixed when showMode auto",
       width: "Menu width",
+      style: "Style",
+      styleSelect: {
+        simple: "Simple",
+        round: "Round",
+      },
       showMode: "Show mode",
       showModeSelect: {
         static: "Static",
@@ -342,6 +347,7 @@ export default {
         slideBottom: "Slide from bottom",
       },
       progress: "Show progress bar on page transition",
+      loading: "Show loading on page transition",
     },
     widget: {
       label: "Widgets",

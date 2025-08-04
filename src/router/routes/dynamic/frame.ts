@@ -14,7 +14,7 @@ const frameRoutes: RouterConfigRaw = {
       meta: {
         title: "Kbt Vue2 Admin（新标签打开）",
         icon: HotWater,
-        iframeSrc: "https://vue2-admin.youngkbt.cn/",
+        iframeSrc: "https://vue2-design.teek.top/",
         iframeOpen: true,
         useTooltip: true,
       },
@@ -25,7 +25,7 @@ const frameRoutes: RouterConfigRaw = {
       meta: {
         title: "Kbt Vue2 Admin",
         icon: HotWater,
-        iframeSrc: "https://vue2-admin.youngkbt.cn/",
+        iframeSrc: "https://vue2-design.teek.top/",
       },
     },
     {
