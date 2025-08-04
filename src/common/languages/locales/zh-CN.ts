@@ -344,6 +344,7 @@ export default {
         slideBottom: "底部滑入",
       },
       progress: "页面切换显示进度条",
+      loading: "页面切换显示 Loading",
     },
     widget: {
       label: "部件",

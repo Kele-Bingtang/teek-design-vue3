@@ -17,7 +17,7 @@ import {
 
 export const defaultServiceConfig: ServiceConfig = {
   layout: {
-    name: "Teek Design Pro",
+    name: "Teek Design Vue3",
     avatar: "/avatar.png",
     titleMode: TitleModeEnum.ProjectPage,
     layoutMode: LayoutModeEnum.Vertical,
@@ -165,6 +165,7 @@ export const defaultServiceConfig: ServiceConfig = {
   transition: {
     pageEnter: PageTransitionEnum.SlideLeft,
     progress: true,
+    loading: true,
   },
   widget: {
     menuCollapse: true,

@@ -342,6 +342,7 @@ export default {
         slideBottom: "Slide from bottom",
       },
       progress: "Show progress bar on page transition",
+      loading: "Show loading on page transition",
     },
     widget: {
       label: "Widgets",

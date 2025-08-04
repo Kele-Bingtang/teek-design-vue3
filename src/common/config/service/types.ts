@@ -196,6 +196,8 @@ export interface TransitionConfig {
   pageEnter: PageTransitionEnum;
   /** 是否开启页面加载进度动画 */
   progress: boolean;
+  /** 是否开启页面加载动画 */
+  loading: boolean;
 }
 
 export interface WidgetConfig {

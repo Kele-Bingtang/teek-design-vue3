@@ -99,6 +99,7 @@ export const useSettingStore = defineStore(
     const transition = reactive({
       pageEnter: transitionConfig.pageEnter || PageTransitionEnum.SlideLeft,
       progress: transitionConfig.progress,
+      loading: transitionConfig.loading,
     });
 
     const widget = reactive({
