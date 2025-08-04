@@ -127,7 +127,7 @@ export const dynamicRoutes: RouterConfigRaw[] = [
     },
   },
   {
-    path: "https://vue3-docs.youngkbt.cn/",
+    path: "https://vue3-design.teek.top/",
     name: "Document",
     meta: {
       title: "使用文档",
