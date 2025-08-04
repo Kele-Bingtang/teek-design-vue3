@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from "vue-router";
 import { isProxy, toRaw } from "vue";
 import { ElNotification } from "element-plus";
 import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
-import { serviceConfig, HOME_NAME, LAYOUT_NAME, LOGIN_URL } from "@/common/config";
+import { serviceConfig, HOME_NAME, LAYOUT_NAME, LOGIN_URL, FORBIDDEN_NAME } from "@/common/config";
 import router from "@/router";
 import { notFoundRoutes, authRoutes, constantRoutes } from "@/router/routes";
 import { translateTitle } from "@/router/helper";
@@ -123,17 +123,25 @@ export const useRouteFn = () => {
    */
   const filterOnlyRolesRoutes = (routers: RouterConfigRaw[], roles: string[]) => {
     const rolesRoutes: RouterConfigRaw[] = [];
-    const notPermissionRoute = constantRoutes.find(route => route.name === "403");
+    const notPermissionRoute = constantRoutes.find(route => route.name === FORBIDDEN_NAME);
 
     routers.forEach(router => {
       const r = { ...router };
-      if (r.children?.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+      if (r.meta?.menuVisibleWithForbidden) {
+        if (r.children?.length) r.children = filterOnlyRolesRoutes(r.children, roles);
 
-      if (hasPermission(r, roles)) rolesRoutes.push(r);
-      else if (notPermissionRoute) {
-        // 如果没有权限，则组件改为 403 组件
-        r.component = notPermissionRoute.component;
-        rolesRoutes.push(r);
+        if (hasPermission(r, roles)) rolesRoutes.push(r);
+        else if (notPermissionRoute) {
+          // 如果没有权限，则组件改为 403 组件
+          r.component = notPermissionRoute.component;
+          rolesRoutes.push(r);
+        }
+      } else {
+        // 如果没权限，则不去遍历 children
+        if (hasPermission(r, roles)) {
+          if (r.children && r.children.length) r.children = filterOnlyRolesRoutes(r.children, roles);
+          rolesRoutes.push(r);
+        }
       }
     });
     return rolesRoutes;

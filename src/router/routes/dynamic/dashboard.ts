@@ -14,6 +14,7 @@ const dashboardRoutes: RouterConfigRaw = {
       component: "/dashboard/console/index",
       meta: {
         title: "{{ _route.Console }}",
+        roles: ["1"],
       },
     },
     {

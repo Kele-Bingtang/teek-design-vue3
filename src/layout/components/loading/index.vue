@@ -12,18 +12,24 @@ const props = defineProps<{ route?: boolean }>();
 const ns = useNamespace("layout-loading");
 const router = useRouter();
 
+const loadedPaths = new Set<string>();
+
 // 页面首次加载状态
 const isFirstLoad = ref(!props.route);
 // 路由切换加载状态
 const routeLoading = ref(false);
 
 // 监听路由导航事件，控制加载状态
-router.beforeEach((_to, _from, next) => {
-  if (props.route) routeLoading.value = true;
+router.beforeEach((to, _from, next) => {
+  if (props.route && !loadedPaths.has(to.path)) {
+    routeLoading.value = true;
+  }
   next();
 });
 
-router.afterEach(() => {
+router.afterEach(to => {
+  loadedPaths.add(to.path);
+
   hideLoading();
 });
 
@@ -40,6 +46,7 @@ const hideLoading = () => {
 
 // 检测热重载情况
 onMounted(() => {
+  if (!loadedPaths.has(router.currentRoute.value.fullPath)) loadedPaths.add(router.currentRoute.value.fullPath);
   // 如果是热重载，自动关闭首次加载状态
   if (import.meta.hot) {
     if (isFirstLoad.value) isFirstLoad.value = false;
