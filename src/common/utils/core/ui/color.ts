@@ -9,7 +9,7 @@
  *
  * @param hex 颜色值字符串（支持 #fff/#ffffff）
  */
-export function hexToRgbArray(hex: string): [number, number, number] | null {
+export function hexToRgb(hex: string): [number, number, number] | null {
   let cleanHex = hex.trim().replace(/^#/, "");
 
   if (!/^([\da-fA-F]{3}|[\da-fA-F]{6})$/.test(cleanHex)) {
@@ -74,7 +74,7 @@ export function getDarkColor(color: string, level: number): string | null {
   let rgb: [number, number, number] | null = null;
 
   if (color.startsWith("#")) {
-    rgb = hexToRgbArray(color);
+    rgb = hexToRgb(color);
   } else if (color.startsWith("rgb")) {
     const arr = parseRgbString(color);
     if (arr) rgb = [arr[0], arr[1], arr[2]];
@@ -99,7 +99,7 @@ export function getLightColor(color: string, level: number): string | null {
   let rgb: [number, number, number] | null = null;
 
   if (color.startsWith("#")) {
-    rgb = hexToRgbArray(color);
+    rgb = hexToRgb(color);
   } else if (color.startsWith("rgb")) {
     const arr = parseRgbString(color);
     if (arr) rgb = [arr[0], arr[1], arr[2]];
@@ -122,8 +122,8 @@ export function getLightColor(color: string, level: number): string | null {
  * @param ratio 混合比例 0-1
  */
 export function colorBlend(c1: string, c2: string, ratio: number): string | null {
-  const rgb1 = hexToRgbArray(c1);
-  const rgb2 = hexToRgbArray(c2);
+  const rgb1 = hexToRgb(c1);
+  const rgb2 = hexToRgb(c2);
 
   if (!rgb1 || !rgb2) return null;
 
@@ -144,7 +144,7 @@ export function hexToRgba(
   hex: string,
   opacity: number
 ): { red: number; green: number; blue: number; rgba: string } | null {
-  const rgb = hexToRgbArray(hex);
+  const rgb = hexToRgb(hex);
   if (!rgb) return null;
   const validOpacity = Math.max(0, Math.min(1, opacity));
   const rgba = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${validOpacity.toFixed(2)})`;
