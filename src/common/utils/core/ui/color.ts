@@ -1,7 +1,7 @@
 /**
  * 颜色工具函数
  * 支持 hex/rgb/rgba 互转、加深/变浅、混合、hex转rgba
- * 类型安全，支持 3 位 hex，支持 rgb/rgba 字符串解析
+ * 支持 3 位 hex，支持 rgb/rgba 字符串解析
  */
 
 /**
@@ -9,7 +9,7 @@
  *
  * @param hex 颜色值字符串（支持 #fff/#ffffff）
  */
-export function hexToRgb(hex: string): [number, number, number] | null {
+export function hexToRgbArray(hex: string): [number, number, number] | null {
   let cleanHex = hex.trim().replace(/^#/, "");
 
   if (!/^([\da-fA-F]{3}|[\da-fA-F]{6})$/.test(cleanHex)) {
@@ -36,11 +36,10 @@ export function hexToRgb(hex: string): [number, number, number] | null {
  * @param b 蓝色 0-255
  */
 export function rgbToHex(r: number, g: number, b: number): string {
-  const toHex = (n: number) => {
-    const h = n.toString(16);
-    return h.length === 1 ? "0" + h : h;
-  };
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  const clamp = (value: number) => Math.min(255, Math.max(0, Math.round(value)));
+  return `#${clamp(r).toString(16).padStart(2, "0")}${clamp(g).toString(16).padStart(2, "0")}${clamp(b)
+    .toString(16)
+    .padStart(2, "0")}`;
 }
 
 /**
@@ -75,7 +74,7 @@ export function getDarkColor(color: string, level: number): string | null {
   let rgb: [number, number, number] | null = null;
 
   if (color.startsWith("#")) {
-    rgb = hexToRgb(color);
+    rgb = hexToRgbArray(color);
   } else if (color.startsWith("rgb")) {
     const arr = parseRgbString(color);
     if (arr) rgb = [arr[0], arr[1], arr[2]];
@@ -100,7 +99,7 @@ export function getLightColor(color: string, level: number): string | null {
   let rgb: [number, number, number] | null = null;
 
   if (color.startsWith("#")) {
-    rgb = hexToRgb(color);
+    rgb = hexToRgbArray(color);
   } else if (color.startsWith("rgb")) {
     const arr = parseRgbString(color);
     if (arr) rgb = [arr[0], arr[1], arr[2]];
@@ -123,8 +122,8 @@ export function getLightColor(color: string, level: number): string | null {
  * @param ratio 混合比例 0-1
  */
 export function colorBlend(c1: string, c2: string, ratio: number): string | null {
-  const rgb1 = hexToRgb(c1);
-  const rgb2 = hexToRgb(c2);
+  const rgb1 = hexToRgbArray(c1);
+  const rgb2 = hexToRgbArray(c2);
 
   if (!rgb1 || !rgb2) return null;
 
@@ -140,13 +139,12 @@ export function colorBlend(c1: string, c2: string, ratio: number): string | null
  *
  * @param hex 颜色值字符串（支持 #fff/#ffffff）
  * @param opacity 透明度 0-1
- * @returns { red, green, blue, rgba }
  */
 export function hexToRgba(
   hex: string,
   opacity: number
 ): { red: number; green: number; blue: number; rgba: string } | null {
-  const rgb = hexToRgb(hex);
+  const rgb = hexToRgbArray(hex);
   if (!rgb) return null;
   const validOpacity = Math.max(0, Math.min(1, opacity));
   const rgba = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${validOpacity.toFixed(2)})`;

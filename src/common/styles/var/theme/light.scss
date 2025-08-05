@@ -16,8 +16,8 @@
   @include generate-color-variants("error", #dd5c27);
 
   // === 次级色 ===
-  @include generate-color-variants("info", #1890ff);
-  @include generate-color-variants("secondary", #42aaff);
+  @include generate-color-variants("info", #8a96a3);
+  @include generate-color-variants("secondary", #a3adbb);
 
   // === 基本色 ===
   --#{$teek-namespace}-color: #ffffff;

@@ -15,8 +15,8 @@
   @include generate-color-variants("error", #a04000, true);
 
   // === 次级色 ===
-  @include generate-color-variants("info", #5a5f77, true);
-  @include generate-color-variants("secondary", #7a7f98, true);
+  @include generate-color-variants("info", #a3adbb, true);
+  @include generate-color-variants("secondary", #7a8296, true);
 
   // === 背景色 ===
   --#{$teek-namespace}-bg-primary: #0f1428;
