@@ -23,6 +23,7 @@ declare global {
     mozRequestAnimationFrame;
     oRequestAnimationFrame;
     msRequestAnimationFrame;
+    __HMR_FIRST_UPDATE__: boolean;
     log: Log;
   }
 

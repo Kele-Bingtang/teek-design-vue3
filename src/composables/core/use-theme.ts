@@ -1,5 +1,5 @@
 import { storeToRefs } from "pinia";
-import { getLightColor, getDarkColor, setCssVar, colorBlend, getCssVar } from "@/common/utils";
+import { getLightColor, getDarkColor, setCssVar, getCssVar } from "@/common/utils";
 import { serviceConfig } from "@/common/config";
 import { GlobalThemeEnum } from "@/common/enums";
 import { useSettingStore } from "@/pinia";
@@ -109,10 +109,10 @@ export const useTheme = () => {
     }
 
     // 生成更淡的颜色
-    for (let i = 1; i < 16; i++) {
-      const itemColor = colorBlend(color, "#ffffff", i / 16);
-      if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor, el);
-    }
+    // for (let i = 1; i < 16; i++) {
+    //   const itemColor = colorBlend(color, "#ffffff", i / 16);
+    //   if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor, el);
+    // }
   };
 
   // 灰色和弱色切换

@@ -69,6 +69,14 @@
   }
 }
 
+html.dark {
+  @include b(user-avatar) {
+    .email {
+      color: cssVar(gray-700);
+    }
+  }
+}
+
 html.dark-neutral {
   @include e(menu) {
     li:hover {

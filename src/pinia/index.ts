@@ -51,8 +51,8 @@ const getStorageKey = (key: string) => {
 
   // 将旧版本数据合并到新版本里
   try {
-    const oldVersionData = localStorageProxy.getItem(oldVersionKeys);
-    localStorageProxy.setItem(currentStoreKey, oldVersionData);
+    const oldVersionData = localStorageProxy.getItem(oldVersionKeys, false);
+    oldVersionData && localStorageProxy.setItem(currentStoreKey, oldVersionData, false);
 
     console.info(`[Storage] 已合并旧版本数据: ${oldVersionKeys} → ${currentStoreKey}`);
     localStorage.removeItem(oldVersionKeys);
