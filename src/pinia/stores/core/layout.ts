@@ -281,7 +281,7 @@ export const useLayoutStore = defineStore(
   },
   {
     persist: {
-      pick: ["layoutSize", "language", "device"],
+      pick: ["language", "device"],
     },
   }
 );
