@@ -184,5 +184,9 @@ declare global {
      * @default false
      */
     menuVisibleWithForbidden?: boolean;
+    /**
+     * 查询参数，Teek 不做任何处理，自行取出处理
+     */
+    query?: Recordable;
   }
 }

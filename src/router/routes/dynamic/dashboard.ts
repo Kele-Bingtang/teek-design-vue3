@@ -1,4 +1,5 @@
 import { Odometer } from "@element-plus/icons-vue";
+import { t } from "@/common/languages";
 
 const dashboardRoutes: RouterConfigRaw = {
   path: "dashboard",
@@ -13,8 +14,7 @@ const dashboardRoutes: RouterConfigRaw = {
       name: "Console",
       component: "/dashboard/console/index",
       meta: {
-        title: "{{ _route.Console }}",
-        roles: ["1"],
+        title: t("_route.Console"),
       },
     },
     {

@@ -47,10 +47,11 @@ const hideLoading = () => {
 // 检测热重载情况
 onMounted(() => {
   if (!loadedPaths.has(router.currentRoute.value.fullPath)) loadedPaths.add(router.currentRoute.value.fullPath);
-  // 如果是热重载，自动关闭首次加载状态
-  if (import.meta.hot) {
-    if (isFirstLoad.value) isFirstLoad.value = false;
-  }
+  // 真正发生热更新时自动关闭首次加载状态
+  if (import.meta.hot && window.__HMR_FIRST_UPDATE__) if (isFirstLoad.value) isFirstLoad.value = false;
+
+  // 标记首次更新已完成
+  if (import.meta.hot) window.__HMR_FIRST_UPDATE__ = true;
 });
 </script>
 
