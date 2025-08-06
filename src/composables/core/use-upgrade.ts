@@ -1,9 +1,9 @@
 import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
 import { serviceConfig, LOGIN_NAME } from "@/common/config";
+import { cacheOperator } from "@/common/utils";
 import { useUserStore } from "@/pinia";
 import { upgradeLogList } from "@/mock/changeLog";
-import { useCommon } from "./use-common";
 import { useNamespace } from "./use-namespace";
 
 /**
@@ -20,26 +20,13 @@ export const useUpgrade = async () => {
   const ns = useNamespace();
 
   // 当前前端版本号
-  const { version: currentVersion } = useCommon();
-
-  const { cacheKeyPrefix, versionCacheKey } = serviceConfig.cache;
-
-  const versionStorageKey = `${cacheKeyPrefix}:${versionCacheKey}`;
+  const currentVersion = __APP_INFO__.pkg.version;
+  const { cacheKeyPrefix } = serviceConfig.cache;
 
   /**
    * 移除前缀 'v'
    */
   const normalizeVersion = (version: string): string => version.replace(/^v/, "");
-
-  /**
-   * 获取存储的版本号
-   */
-  const getStoredVersion = () => localStorage.getItem(versionStorageKey);
-
-  /**
-   * 设置存储的版本号
-   */
-  const setStoredVersion = (version: string) => localStorage.setItem(versionStorageKey, version);
 
   /**
    * 查找旧版本号的数据 key，以 cacheKeyPrefix:v 开头，且不能是当前版本号数据
@@ -52,11 +39,11 @@ export const useUpgrade = async () => {
   };
 
   // 获取旧版本
-  const oldVersion = getStoredVersion();
+  const oldVersion = cacheOperator.getStoredVersion();
 
   // 如果不存在旧版本，则不需要显示升级通知
   if (!oldVersion) {
-    setStoredVersion(`v${currentVersion}`);
+    cacheOperator.setStoredVersion(`v${currentVersion}`);
     console.info("[Upgrade] 首次访问，已设置当前版本");
     return;
   }
@@ -72,7 +59,7 @@ export const useUpgrade = async () => {
 
   const oldVersionDataKeys = findOldVersionDataKeys();
   if (oldVersionDataKeys.length === 0) {
-    setStoredVersion(`v${currentVersion}`);
+    cacheOperator.setStoredVersion(`v${currentVersion}`);
     console.info("[Upgrade] 无旧数据，已更新版本号");
     return;
   }
@@ -113,12 +100,16 @@ export const useUpgrade = async () => {
 
   // 清除旧版本的缓存
   oldVersionDataKeys.forEach(key => {
+    // 旧版迁移至新版
+    // const value = localStorage.getItem(key);
+    // value && localStorage.setItem(key.replace(normalizeOldVersion, normalizeFrontendVersion), value);
+
     localStorage.removeItem(key);
     console.info(`[Upgrade] 已清理旧存储: ${key}`);
   });
 
   // 更新版本信息
-  setStoredVersion(`v${currentVersion}`);
+  cacheOperator.setStoredVersion(`v${currentVersion}`);
 
   // 如果需要重新登录，则登出
   if (requireReLogin) {

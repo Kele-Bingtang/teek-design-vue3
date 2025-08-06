@@ -3,8 +3,11 @@ import { serviceConfig } from "@/common/config";
 type StorageType = "localStorage" | "sessionStorage";
 
 interface StorageManagerOptions {
+  /** Storage 类型 */
   type?: StorageType;
+  /** 缓存前缀 */
   prefix?: string;
+  /** 缓存版本号 */
   version?: string;
 }
 
@@ -21,22 +24,22 @@ export class StorageManager {
     this.version = version;
   }
 
-  public getStorage() {
+  getStorage() {
     return window[this.type];
   }
 
-  public getPrefix() {
+  getPrefix() {
     return this.prefix;
   }
 
-  public getVersion() {
+  getVersion() {
     return this.version;
   }
 
   /**
    * 获取规范化的 key 值
    */
-  public normalizeKey(key: string) {
+  normalizeKey(key: string) {
     let keyStr = "";
 
     if (this.prefix) keyStr += `${this.prefix}:`;
@@ -50,6 +53,16 @@ export class StorageManager {
    */
   private getValueType(value: any) {
     return Object.prototype.toString.call(value).slice(8, -1);
+  }
+
+  /**
+   * 发送自定义 storage 事件，实现数据变化后通知（数据响应式）
+   */
+  private dispatchWriteEvent(key: string, oldValue: string | null, newValue: string | null) {
+    if (window) {
+      const payload = { key, oldValue, newValue, storageArea: this.getStorage() };
+      window.dispatchEvent(new StorageEvent("storage", payload));
+    }
   }
 
   /**
@@ -67,8 +80,12 @@ export class StorageManager {
    * 设置存储的值
    */
   setItem(key: string, value: any, normalizeKey = true) {
+    const oldValue = window[this.type].getItem(key);
     const valueType = this.getValueType(value);
+
     window[this.type].setItem(normalizeKey ? this.normalizeKey(key) : key, JSON.stringify({ _type: valueType, value }));
+
+    this.dispatchWriteEvent(key, oldValue, value);
   }
 
   /**
