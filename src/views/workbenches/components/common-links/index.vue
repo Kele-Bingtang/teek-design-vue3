@@ -163,7 +163,7 @@ const handleConfirm = () => {
 
       .desc {
         font-size: 12px;
-        color: cssVar(gray-500);
+        color: cssVar(text-gray-500);
 
         &:hover {
           color: cssVar(color-primary);
