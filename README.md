@@ -1,5 +1,7 @@
 # Teek Design Vue3
 
+[Github](https://github.com/Kele-Bingtang/teek-design-vue3) ｜ [Gitee](https://gitee.com/kele-bingtang/teek-design-vue3) ｜ [Preview](https://vue3-design.teek.top/) ｜[Docs](https://vue3-design-docs.teek.top/)
+
 <p align="center">
   <a title="Github release" target="_blank" href="https://github.com/Kele-Bingtang/teek-design-vue3/releases">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Kele-Bingtang/teek-design-vue3?logo=github">
