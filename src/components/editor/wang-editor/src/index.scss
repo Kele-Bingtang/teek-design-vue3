@@ -83,11 +83,11 @@ $border-radius: 6px;
     border-radius: $border-radius;
 
     &:hover {
-      background-color: cssVar(gray-100);
+      background-color: cssVar(gray-200);
     }
 
     &.selected {
-      background-color: cssVar(gray-100);
+      background-color: cssVar(gray-200);
 
       /** 隐藏勾选图标 */
       svg {

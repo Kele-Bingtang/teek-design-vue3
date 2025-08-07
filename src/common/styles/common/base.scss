@@ -1,7 +1,7 @@
 @use "../mixins/namespace" as *;
 
 body {
-  color: var(--#{$teek-namespace}-text-gray-700);
+  color: var(--#{$teek-namespace}-text-gray-800);
 }
 
 h1,
@@ -15,10 +15,4 @@ h5 {
 // 主题色悬停样式
 .primary-color-hover:hover {
   color: var(--#{$el-namespace}-color-primary);
-}
-
-html.dark {
-  body {
-    color: var(--#{$teek-namespace}-text-gray-800);
-  }
 }

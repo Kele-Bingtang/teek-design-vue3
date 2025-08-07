@@ -76,7 +76,7 @@ const { isMobile } = useCommon();
         background-color cssVar(transition-duration);
 
       &:hover {
-        background-color: cssVar(gray-200);
+        background-color: rgb(cssVar(gray-300-rgb), 0.5);
       }
     }
 

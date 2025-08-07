@@ -41,24 +41,24 @@
   --#{$teek-namespace}-bg-neutral-dark: #0c0e12;
 
   // === 灰度色，适用于背景色 | 悬停色 ===
-  --#{$teek-namespace}-gray-100: #0e1015;
-  --#{$teek-namespace}-gray-100-rgb: 14, 16, 21;
-  --#{$teek-namespace}-gray-200: #161820;
-  --#{$teek-namespace}-gray-200-rgb: 22, 24, 32;
-  --#{$teek-namespace}-gray-300: #1e2028;
-  --#{$teek-namespace}-gray-300-rgb: 30, 32, 40;
-  --#{$teek-namespace}-gray-400: #282a35;
-  --#{$teek-namespace}-gray-400-rgb: 40, 42, 53;
-  --#{$teek-namespace}-gray-500: #363947;
-  --#{$teek-namespace}-gray-500-rgb: 54, 57, 71;
-  --#{$teek-namespace}-gray-600: #4a4d5d;
-  --#{$teek-namespace}-gray-600-rgb: 74, 77, 93;
-  --#{$teek-namespace}-gray-700: #6a6d7f;
-  --#{$teek-namespace}-gray-700-rgb: 106, 109, 127;
-  --#{$teek-namespace}-gray-800: #d0d1d6;
-  --#{$teek-namespace}-gray-800-rgb: 208, 209, 214;
-  --#{$teek-namespace}-gray-900: #f5f7ff;
-  --#{$teek-namespace}-gray-900-rgb: 245, 247, 255;
+  --#{$teek-namespace}-gray-100: #15171d;
+  --#{$teek-namespace}-gray-100-rgb: 21, 23, 29;
+  --#{$teek-namespace}-gray-200: #25272d;
+  --#{$teek-namespace}-gray-200-rgb: 37, 39, 45;
+  --#{$teek-namespace}-gray-300: #35373d;
+  --#{$teek-namespace}-gray-300-rgb: 53, 55, 61;
+  --#{$teek-namespace}-gray-400: #45474d;
+  --#{$teek-namespace}-gray-400-rgb: 69, 71, 77;
+  --#{$teek-namespace}-gray-500: #55575d;
+  --#{$teek-namespace}-gray-500-rgb: 85, 87, 93;
+  --#{$teek-namespace}-gray-600: #75777d;
+  --#{$teek-namespace}-gray-600-rgb: 117, 119, 125;
+  --#{$teek-namespace}-gray-700: #95979d;
+  --#{$teek-namespace}-gray-700-rgb: 149, 151, 157;
+  --#{$teek-namespace}-gray-800: #c5c7cc;
+  --#{$teek-namespace}-gray-800-rgb: 197, 199, 204;
+  --#{$teek-namespace}-gray-900: #e5e5e5;
+  --#{$teek-namespace}-gray-900-rgb: 229, 229, 229;
 
   // === 文本色 ===
   --#{$teek-namespace}-text-gray-100: var(--#{$teek-namespace}-gray-100);
@@ -72,8 +72,8 @@
   --#{$teek-namespace}-text-gray-900: var(--#{$teek-namespace}-gray-900);
 
   // === 边框色 ===
-  --#{$teek-namespace}-border-color: #1d1f2a;
-  --#{$teek-namespace}-border-dashed-color: #222431;
+  --#{$teek-namespace}-border-color: #3a3c48;
+  --#{$teek-namespace}-border-dashed-color: #3f414d;
 
   // === 阴影色 ===
   --#{$teek-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem rgb(0 0 0 / 22%);

@@ -311,7 +311,7 @@ defineExpose(expose);
     ref="elTableInstance"
     show-overflow-tooltip
     v-bind="$attrs"
-    :header-cell-style="{ backgroundColor: `rgb(${ns.cssVar('gray-100-rgb')}, 0.6)`, ...headerCellStyle }"
+    :header-cell-style="{ backgroundColor: `rgb(${ns.cssVar('gray-200-rgb')}, 0.6)`, ...headerCellStyle }"
     :data="tableData"
     :row-key
     :class="ns.b()"

@@ -71,11 +71,11 @@ const handleMore = () => {
 
     &:hover {
       color: cssVar("color-primary");
-      background-color: cssVar("gray-100");
+      background-color: cssVar("gray-200");
 
       .#{$el-namespace}-tag {
         color: cssVar("color-primary");
-        background-color: cssVar("gray-200");
+        background-color: cssVar("gray-300");
       }
     }
 

@@ -47,27 +47,27 @@
   --#{$teek-namespace}-bg-neutral-dark: #eef0f5;
 
   // === 灰度色，适用于背景色 | 悬停色 ===
-  --#{$teek-namespace}-gray-100: #f0f0f2;
-  --#{$teek-namespace}-gray-100-rgb: 240, 240, 242;
-  --#{$teek-namespace}-gray-200: #e4e5eb;
-  --#{$teek-namespace}-gray-200-rgb: 228, 229, 235;
-  --#{$teek-namespace}-gray-300: #d7d9e0;
-  --#{$teek-namespace}-gray-300-rgb: 215, 217, 224;
-  --#{$teek-namespace}-gray-400: #bfc1cc;
-  --#{$teek-namespace}-gray-400-rgb: 191, 193, 204;
-  --#{$teek-namespace}-gray-500: #b1b3c1;
-  --#{$teek-namespace}-gray-500-rgb: 177, 179, 193;
-  --#{$teek-namespace}-gray-600: #7d7f8d;
-  --#{$teek-namespace}-gray-600-rgb: 125, 127, 141;
-  --#{$teek-namespace}-gray-700: #4d505e;
-  --#{$teek-namespace}-gray-700-rgb: 77, 80, 94;
-  --#{$teek-namespace}-gray-800: #20222b;
-  --#{$teek-namespace}-gray-800-rgb: 32, 34, 43;
-  --#{$teek-namespace}-gray-900: #141721;
-  --#{$teek-namespace}-gray-900-rgb: 20, 23, 33;
+  --#{$teek-namespace}-gray-100: #f9f9f9;
+  --#{$teek-namespace}-gray-100-rgb: 249, 249, 249;
+  --#{$teek-namespace}-gray-200: #f0f0f4;
+  --#{$teek-namespace}-gray-200-rgb: 240, 240, 244;
+  --#{$teek-namespace}-gray-300: #e1e2e8;
+  --#{$teek-namespace}-gray-300-rgb: 225, 226, 232;
+  --#{$teek-namespace}-gray-400: #c8cad3;
+  --#{$teek-namespace}-gray-400-rgb: 200, 202, 211;
+  --#{$teek-namespace}-gray-500: #9fa1b0;
+  --#{$teek-namespace}-gray-500-rgb: 159, 161, 176;
+  --#{$teek-namespace}-gray-600: #7d8093;
+  --#{$teek-namespace}-gray-600-rgb: 125, 128, 147;
+  --#{$teek-namespace}-gray-700: #53576d;
+  --#{$teek-namespace}-gray-700-rgb: 83, 87, 109;
+  --#{$teek-namespace}-gray-800: #2a2e3f;
+  --#{$teek-namespace}-gray-800-rgb: 42, 46, 63;
+  --#{$teek-namespace}-gray-900: #131726;
+  --#{$teek-namespace}-gray-900-rgb: 19, 23, 38;
 
   // === 文本色 ===
-  --#{$teek-namespace}-text-muted: #99a1b7;
+  --#{$teek-namespace}-text-muted: var(--#{$teek-namespace}-color-info-muted);
   --#{$teek-namespace}-text-gray-100: var(--#{$teek-namespace}-gray-100);
   --#{$teek-namespace}-text-gray-200: var(--#{$teek-namespace}-gray-200);
   --#{$teek-namespace}-text-gray-300: var(--#{$teek-namespace}-gray-300);
