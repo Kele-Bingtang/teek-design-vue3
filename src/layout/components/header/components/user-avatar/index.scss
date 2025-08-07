@@ -68,19 +68,3 @@
     margin: 10px 0;
   }
 }
-
-html.dark {
-  @include b(user-avatar) {
-    .email {
-      color: cssVar(gray-700);
-    }
-  }
-}
-
-html.dark-neutral {
-  @include e(menu) {
-    li:hover {
-      background-color: rgb(cssVar(gray-300-rgb));
-    }
-  }
-}

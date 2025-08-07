@@ -13,6 +13,8 @@ const scheduleModel = ref<ScheduleFormModel>({
   date: "",
   time: [],
   location: "",
+  appointed: "",
+  createUser: "",
 });
 
 watch(currentTime, (newVal, oldVal) => {

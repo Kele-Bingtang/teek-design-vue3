@@ -51,10 +51,15 @@ export const useUpgrade = async () => {
   const normalizeFrontendVersion = normalizeVersion(currentVersion);
   const normalizeOldVersion = normalizeVersion(oldVersion);
 
-  // 如果当前版本小于等于旧版本，则不需要显示升级通知（也可改成版本相同不需要通知）
-  if (normalizeFrontendVersion <= normalizeOldVersion) {
-    console.debug("[Upgrade] 版本低于或等于旧版本，无需升级");
+  // 如果当前版本等于旧版本，则不需要显示升级通知
+  if (normalizeFrontendVersion === normalizeOldVersion) {
+    console.debug("[Upgrade] 版本等于旧版本，无需升级");
     return;
+  }
+
+  if (normalizeFrontendVersion <= normalizeOldVersion) {
+    cacheOperator.setStoredVersion(`v${currentVersion}`);
+    console.debug("[Upgrade] 版本低于旧版本，只需更新版本号");
   }
 
   const oldVersionDataKeys = findOldVersionDataKeys();
@@ -81,7 +86,9 @@ export const useUpgrade = async () => {
   // 系统升级公告
   const message = [
     `<p style="color: ${ns.cssVar("gray-text-800")}; padding-bottom: 5px;">`,
-    `系统已升级到 ${currentVersion} 版本，此次更新带来了以下改进：`,
+    normalizeFrontendVersion > normalizeOldVersion
+      ? `系统已升级至 ${currentVersion} 版本，此次更新带来了以下改进：`
+      : `系统已降级至 ${currentVersion} 版本，此次降级的原因如下：`,
     `</p>`,
     upgradeInfo.value[0].title,
     requireReLogin

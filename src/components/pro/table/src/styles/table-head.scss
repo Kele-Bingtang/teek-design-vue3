@@ -17,26 +17,11 @@
       margin-left: 0;
       color: cssVar(gray-700);
       outline: none;
-      background-color: cssVar(gray-100);
+      background-color: cssVar(gray-200);
       border: none;
 
       &:hover {
-        background-color: cssVar(gray-200);
-      }
-    }
-  }
-}
-
-html.dark {
-  @include b(pro-table-head) {
-    @include e(right) {
-      .head__tool-button {
-        color: cssVar(gray-800);
-        background-color: cssVar(gray-200);
-
-        &:hover {
-          background-color: cssVar(gray-300);
-        }
+        background-color: cssVar(gray-300);
       }
     }
   }

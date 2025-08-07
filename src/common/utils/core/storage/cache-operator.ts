@@ -29,7 +29,9 @@ class CacheOperator {
    * 先获取当前存储版本的缓存，如果不存在，则尝试获取最新版本的缓存
    */
   getItem(key: string) {
+    // 获取当前存储的版本号
     const storedVersion = this.getStoredVersion();
+    // 获取当前项目的版本号
     const currentVersionKey = localStorageProxy.normalizeKey(key);
 
     if (storedVersion) {

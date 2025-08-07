@@ -38,6 +38,8 @@
   --#{$el-namespace}-text-color-placeholder: var(--#{$teek-namespace}-text-gray-500) !important;
   --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-text-gray-400) !important;
   --#{$el-namespace}-bg-color: var(--#{$teek-namespace}-bg-color) !important;
+  --#{$el-namespace}-bg-color-overlay: var(--#{$teek-namespace}-bg-color) !important;
+  --#{$el-namespace}-bg-color-page: var(--#{$teek-namespace}-bg-color-page) !important;
 
   // 功能色覆盖
   --#{$el-namespace}-color-primary: var(--#{$teek-namespace}-color-primary) !important;

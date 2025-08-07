@@ -142,7 +142,7 @@ const handleConfirm = () => {
 
       &:hover {
         color: cssVar(color-primary);
-        background-color: cssVar(gray-100);
+        background-color: cssVar(gray-200);
 
         @include e(icon) {
           color: cssVar(color-primary);
@@ -163,7 +163,7 @@ const handleConfirm = () => {
 
       .desc {
         font-size: 12px;
-        color: cssVar(gray-500);
+        color: cssVar(text-gray-500);
 
         &:hover {
           color: cssVar(color-primary);
@@ -174,7 +174,7 @@ const handleConfirm = () => {
     @include e(icon) {
       width: 36px;
       height: 36px;
-      background-color: cssVar(gray-200);
+      background-color: cssVar(gray-300);
       border-radius: 50%;
     }
 

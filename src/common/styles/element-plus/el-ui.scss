@@ -370,3 +370,11 @@
     }
   }
 }
+
+// 修改 el-descriptions 样式
+.#{$el-namespace}-descriptions {
+  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(
+    var(--#{$teek-namespace}-gray-200-rgb),
+    0.6
+  ) !important;
+}

@@ -10,9 +10,9 @@
   // === 功能色 ===
   @include generate-color-variants("primary", #6d94e6, true);
   @include generate-color-variants("success", #4cd890, true);
-  @include generate-color-variants("warning", #ffd166, true);
-  @include generate-color-variants("danger", #ff7d7d, true);
-  @include generate-color-variants("error", #ff9e6b, true);
+  @include generate-color-variants("warning", #ffe066, true);
+  @include generate-color-variants("danger", #e66b6b, true);
+  @include generate-color-variants("error", #ff6b6b, true);
 
   // === 次级色 ===
   @include generate-color-variants("info", #a3adbb, true);
@@ -23,12 +23,12 @@
   --#{$teek-namespace}-bg-primary-rgb: 26, 31, 45;
   --#{$teek-namespace}-bg-success: #1e2a22;
   --#{$teek-namespace}-bg-success-rgb: 30, 42, 34;
-  --#{$teek-namespace}-bg-warning: #2d230f;
-  --#{$teek-namespace}-bg-warning-rgb: 45, 35, 15;
-  --#{$teek-namespace}-bg-danger: #2a1d1f;
-  --#{$teek-namespace}-bg-danger-rgb: 42, 29, 31;
-  --#{$teek-namespace}-bg-error: #2c211e;
-  --#{$teek-namespace}-bg-error-rgb: 44, 33, 30;
+  --#{$teek-namespace}-bg-warning: #2d250f;
+  --#{$teek-namespace}-bg-warning-rgb: 45, 37, 15;
+  --#{$teek-namespace}-bg-danger: #2a1f1f;
+  --#{$teek-namespace}-bg-danger-rgb: 42, 31, 31;
+  --#{$teek-namespace}-bg-error: #2c2222;
+  --#{$teek-namespace}-bg-error-rgb: 44, 34, 34;
   --#{$teek-namespace}-bg-info: #1a2230;
   --#{$teek-namespace}-bg-info-rgb: 26, 34, 48;
   --#{$teek-namespace}-bg-secondary: #24262b;
@@ -39,24 +39,24 @@
   --#{$teek-namespace}-bg-neutral-rgb: 26, 28, 32;
 
   // === 灰度色，适用于背景色 | 悬停色 ===
-  --#{$teek-namespace}-gray-100: #1a1c20;
-  --#{$teek-namespace}-gray-100-rgb: 26, 28, 32;
-  --#{$teek-namespace}-gray-200: #202225;
-  --#{$teek-namespace}-gray-200-rgb: 32, 34, 37;
-  --#{$teek-namespace}-gray-300: #26282c;
-  --#{$teek-namespace}-gray-300-rgb: 38, 40, 44;
-  --#{$teek-namespace}-gray-400: #2e3035;
-  --#{$teek-namespace}-gray-400-rgb: 46, 48, 53;
-  --#{$teek-namespace}-gray-500: #36383d;
-  --#{$teek-namespace}-gray-500-rgb: 54, 56, 61;
-  --#{$teek-namespace}-gray-600: #4a4c52;
-  --#{$teek-namespace}-gray-600-rgb: 74, 76, 82;
-  --#{$teek-namespace}-gray-700: #6a6c74;
-  --#{$teek-namespace}-gray-700-rgb: 106, 108, 116;
-  --#{$teek-namespace}-gray-800: #d0d1d6;
-  --#{$teek-namespace}-gray-800-rgb: 208, 209, 214;
-  --#{$teek-namespace}-gray-900: #f5f7ff;
-  --#{$teek-namespace}-gray-900-rgb: 245, 247, 255;
+  --#{$teek-namespace}-gray-100: #1a1b21;
+  --#{$teek-namespace}-gray-100-rgb: 26, 27, 33;
+  --#{$teek-namespace}-gray-200: #2a2b31;
+  --#{$teek-namespace}-gray-200-rgb: 42, 43, 49;
+  --#{$teek-namespace}-gray-300: #3a3b41;
+  --#{$teek-namespace}-gray-300-rgb: 58, 59, 65;
+  --#{$teek-namespace}-gray-400: #4a4b51;
+  --#{$teek-namespace}-gray-400-rgb: 74, 75, 81;
+  --#{$teek-namespace}-gray-500: #5a5b61;
+  --#{$teek-namespace}-gray-500-rgb: 90, 91, 97;
+  --#{$teek-namespace}-gray-600: #7a7b81;
+  --#{$teek-namespace}-gray-600-rgb: 122, 123, 129;
+  --#{$teek-namespace}-gray-700: #9a9b9d;
+  --#{$teek-namespace}-gray-700-rgb: 154, 155, 157;
+  --#{$teek-namespace}-gray-800: #cacbcc;
+  --#{$teek-namespace}-gray-800-rgb: 202, 203, 204;
+  --#{$teek-namespace}-gray-900: #f5f5f5;
+  --#{$teek-namespace}-gray-900-rgb: 245, 245, 245;
 
   // === 文本色 ===
   --#{$teek-namespace}-text-gray-100: var(--#{$teek-namespace}-gray-100);

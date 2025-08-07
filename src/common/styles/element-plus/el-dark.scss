@@ -12,13 +12,13 @@
       "base": #4cd890,
     ),
     "warning": (
-      "base": #ffd166,
+      "base": #ffe066,
     ),
     "danger": (
-      "base": #ff7d7d,
+      "base": #e66b6b,
     ),
     "error": (
-      "base": #ff9e6b,
+      "base": #ff6b6b,
     ),
     "info": (
       "base": #a3adbb,
@@ -33,11 +33,13 @@
   --#{$el-namespace}-text-color-regular: var(--#{$teek-namespace}-text-gray-800) !important;
   --#{$el-namespace}-text-color-secondary: var(--#{$teek-namespace}-text-gray-700) !important;
   --#{$el-namespace}-text-color-placeholder: var(--#{$teek-namespace}-text-gray-600) !important;
-  --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-text-gray-500) !important;
+  --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-text-gray-400) !important;
   --#{$el-namespace}-bg-color: var(--#{$teek-namespace}-bg-color) !important;
   --#{$el-namespace}-bg-color-overlay: var(--#{$teek-namespace}-bg-color) !important;
   --#{$el-namespace}-bg-color-page: var(--#{$teek-namespace}-bg-color-page) !important;
-  --#{$el-namespace}-color-: var(--#{$teek-namespace}-bg-color-page) !important;
+
+  // --#{$el-namespace}-fill-color: rgb(var(--#{$teek-namespace}-gray-300-rgb), 0.6) !important;
+  // --#{$el-namespace}-fill-color-light: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6) !important;
 
   // 功能色覆盖
   --#{$el-namespace}-color-primary: var(--#{$teek-namespace}-color-primary) !important;
