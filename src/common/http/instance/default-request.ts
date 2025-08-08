@@ -1,4 +1,4 @@
-import { isValidURL, message, useSimpleUuid } from "@/common/utils";
+import { isValidURL, message, createSimpleUuid } from "@/common/utils";
 import { useUserStore } from "@/pinia";
 import router from "@/router";
 import { useErrorLogStore } from "@/pinia/stores/error-log";
@@ -90,7 +90,7 @@ const processError = (error: AxiosError) => {
   error.message = message;
 
   return {
-    id: useSimpleUuid(),
+    id: createSimpleUuid(),
     error,
     vm: null,
     info: "axios 请求错误",

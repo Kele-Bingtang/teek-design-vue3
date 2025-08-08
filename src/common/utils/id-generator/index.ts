@@ -4,14 +4,14 @@ import snowflake from "./snowflakes";
 /**
  * 雪花算法 ID
  */
-export const useSnowflakeId = () => {
+export const createSnowflakeId = () => {
   return snowflake.nextId();
 };
 
 /**
  * 生成唯一 uuid，带有 -
  */
-export const useUuid = () => {
+export const createUuid = () => {
   if (isObject(crypto)) {
     if (isFunction(crypto.randomUUID)) return crypto.randomUUID();
     if (isFunction(crypto.getRandomValues) && isFunction(Uint8Array)) {
@@ -42,8 +42,8 @@ export const useUuid = () => {
 /**
  * 没有 `-` 的 uuid
  */
-export const useSimpleUuid = () => {
-  return useUuid().replace(/-/g, "");
+export const createSimpleUuid = () => {
+  return createUuid().replace(/-/g, "");
 };
 
 /**
