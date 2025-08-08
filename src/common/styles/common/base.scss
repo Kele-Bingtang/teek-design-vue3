@@ -2,6 +2,9 @@
 
 body {
   color: var(--#{$teek-namespace}-text-gray-800);
+
+  // 全局背景色同步（开启解决全弄适白色背景问题）
+  background-color: var(--#{$teek-namespace}-bg-color-page);
 }
 
 h1,

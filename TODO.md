@@ -6,6 +6,5 @@
 
 - activeMenu 支持函数式，参数为当前路由信息
 - 添加 IFrame Demo（门户通信）
-- 隐藏标签页出现白边
 
 ## Bug
