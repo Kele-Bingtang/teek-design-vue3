@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { ElScrollbar, ElMenu } from "element-plus";
+import { isFunction } from "@/common/utils";
 import { useMenu } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import MenuItem from "./menu-item.vue";
@@ -30,9 +31,14 @@ const { menuList: menuListRef } = useMenu();
 const { menu } = storeToRefs(settingStore);
 
 // 当前激活菜单
-const activeMenu = computed(() =>
-  props.activeMenu ? props.activeMenu : route.meta.activeMenu || route.meta._fullPath || route.path
-);
+const activeMenu = computed(() => {
+  if (props.activeMenu) return props.activeMenu;
+
+  const { activeMenu, _fullPath } = route.meta;
+
+  return isFunction(activeMenu) ? activeMenu(route) : route.meta.activeMenu || _fullPath || route.path;
+});
+
 const isCollapse = computed(() => (props.isCollapse === undefined ? menu.value.collapsed : props.isCollapse));
 
 // 菜单列表
