@@ -10,9 +10,9 @@
   // === 功能色 ===
   @include generate-color-variants("primary", #6d94e6, true);
   @include generate-color-variants("success", #4cd890, true);
-  @include generate-color-variants("warning", #ffe066, true);
-  @include generate-color-variants("danger", #e66b6b, true);
-  @include generate-color-variants("error", #ff6b6b, true);
+  @include generate-color-variants("warning", #f5d76e, true);
+  @include generate-color-variants("danger", #e85454, true);
+  @include generate-color-variants("error", #ff7e5f, true);
 
   // === 次级色 ===
   @include generate-color-variants("info", #a3adbb, true);

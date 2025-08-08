@@ -12,7 +12,7 @@
   @include generate-color-variants("success", #2ecc71, true);
   @include generate-color-variants("warning", #f1c40f, true);
   @include generate-color-variants("danger", #e74c3c, true);
-  @include generate-color-variants("error", #e67e22, true);
+  @include generate-color-variants("error", #f39c12, true);
 
   // === 次级色 ===
   @include generate-color-variants("info", #a3adbb, true);

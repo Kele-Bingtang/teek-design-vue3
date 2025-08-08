@@ -134,7 +134,14 @@ export const useHeaderAreaMouse = () => {
 
   // 计算顶栏高度 = Header 高度 + 标签栏高度
   const topStyle = computed(() => {
-    if (inHeaderArea.value) return { height: addUnit(header.value.height + tabNav.value.height) };
+    if (inHeaderArea.value) {
+      let headerHeight = 0;
+      let tabNavHeight = 0;
+      if (header.value.enabled) headerHeight = header.value.height;
+      if (tabNav.value.enabled) tabNavHeight = tabNav.value.height;
+
+      return { height: addUnit(headerHeight + tabNavHeight) };
+    }
     return { height: 0 };
   });
 

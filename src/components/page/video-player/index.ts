@@ -1,6 +1,6 @@
 import type { VideoPlayerViewerProps } from "./src/types";
 import { createVNode, render } from "vue";
-import { useSimpleUuid } from "@/common/utils";
+import { createSimpleUuid } from "@/common/utils";
 import { useInstall } from "@/common/utils";
 import index from "./src/index.vue";
 import VideoPlayerViewer from "./src/video-player-viewer.vue";
@@ -21,7 +21,7 @@ export const createVideoViewer = (options: { url: string; poster?: string; show?
 
   const propsData: Partial<VideoPlayerViewerProps> = {};
   const container = document.createElement("div");
-  const id = useSimpleUuid();
+  const id = createSimpleUuid();
 
   container.id = id;
   propsData.url = url;

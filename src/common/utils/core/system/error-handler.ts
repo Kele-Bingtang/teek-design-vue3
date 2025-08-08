@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from "vue";
 import { ElNotification } from "element-plus";
 import { serviceConfig } from "@/common/config";
-import { isArray, useSimpleUuid } from "@/common/utils";
+import { isArray, createSimpleUuid } from "@/common/utils";
 import { useErrorLogStore } from "@/pinia";
 
 /**
@@ -25,7 +25,7 @@ export const errorHandler = (error: any, vm: ComponentPublicInstance | null, inf
 
   const errorStore = useErrorLogStore();
   errorStore.addErrorLog({
-    id: useSimpleUuid(),
+    id: createSimpleUuid(),
     error,
     vm,
     info,

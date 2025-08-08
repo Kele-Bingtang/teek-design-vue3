@@ -99,7 +99,7 @@ declare global {
     /**
      * Restful 路由搭配使用，当前路由为详情页时，需要高亮的菜单
      */
-    activeMenu?: string;
+    activeMenu?: string | ((route: RouteLocationNormalizedLoaded) => string);
     /**
      * 关闭路由前的回调，如果返回 false 则不关闭当前标签页
      */
