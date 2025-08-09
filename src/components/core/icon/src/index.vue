@@ -91,7 +91,7 @@ const isImage = computed(
 </script>
 
 <template>
-  <i v-if="!isFontIcon && !isImage" :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()">
+  <i v-if="!isFontIcon && !isImage && !isSvgIconHtml" :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()">
     <slot v-if="slot.default" />
     <component v-else-if="isComponent" :is="finalIcon" :size />
     <IconifyOffline v-else-if="isIconifyOffline" :icon="finalIcon" />
@@ -99,7 +99,7 @@ const isImage = computed(
     <SvgIcon v-else-if="isSvgIcon" :icon="finalIcon" />
   </i>
 
-  <i v-else-if="isSvgIconHtml" v-html="icon" />
+  <i v-else-if="isSvgIconHtml" v-html="icon" :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()" />
 
   <FontIcon
     v-else-if="isFontIcon"

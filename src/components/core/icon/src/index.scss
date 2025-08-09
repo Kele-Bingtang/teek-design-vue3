@@ -1,5 +1,4 @@
 @use "@styles/mixins/bem" as *;
-@use "@styles/mixins/namespace" as *;
 @use "@styles/mixins/function" as *;
 
 @include b(icon) {
