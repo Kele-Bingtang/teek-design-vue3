@@ -63,6 +63,7 @@ const showThemePanelTrigger = computed(() => {
 // 移动端默认为 Vertical 布局
 watch(isMobile, () => {
   settingStore.$patch({ layout: { layoutMode: LayoutModeEnum.Vertical } });
+  settingStore.collapseSideMenu();
 });
 </script>
 
