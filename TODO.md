@@ -16,5 +16,8 @@
 - ProForm 增加空白占位
 - ProForm 的 `el-text` 支持 options
 - ProForm 默认禁用表单项的标签点击事件，支持配置项打开
+- ProTable 过滤功能新增 `checkbox-select` 组件使用
+- ProTable 当使用 `options` 时，单元格为空不显示 `-` 而是空白，可以参考超级表格文档示例的 `options` 配置
+- 常用链接弹框左下角添加灰色提示语：感叹号图标 拖拽可调整常用链接展示顺序
 
 ## Bug

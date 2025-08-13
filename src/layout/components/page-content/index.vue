@@ -73,7 +73,7 @@ watchEffect(() => {
         appear
       >
         <keep-alive :max="10" :include="layoutStore.keepAliveName">
-          <component v-if="isRefreshRoute" :is="Component" :key="route.path" />
+          <component v-if="isRefreshRoute" :is="Component" :key="route.fullPath" />
         </keep-alive>
       </transition>
     </router-view>
