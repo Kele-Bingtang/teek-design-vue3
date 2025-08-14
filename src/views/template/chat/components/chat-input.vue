@@ -43,8 +43,8 @@ const handleSend = () => {
 
     <div :class="ns.e('input-actions')">
       <div :class="ns.e('left')">
-        <i class="iconfont-sys">&#xe634;</i>
-        <i class="iconfont-sys">&#xe809;</i>
+        <i class="iconfont">&#xe634;</i>
+        <i class="iconfont">&#xe809;</i>
       </div>
       <el-button type="primary" @click="handleSend" v-waves>发送</el-button>
     </div>

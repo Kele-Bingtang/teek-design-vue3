@@ -49,7 +49,9 @@ const fontIconType = computed(() => {
 
   const caseIconName = icon.toLowerCase();
 
-  if (caseIconName.startsWith("if-") || caseIconName.startsWith("iconfont")) return "iconfont";
+  console.log(caseIconName);
+
+  if (caseIconName.startsWith("if-") || caseIconName.startsWith("icon-")) return "iconfont";
   if (
     caseIconName.startsWith("uni-") ||
     /^&#x[\da-f]+/i.test(icon) ||

@@ -1,8 +1,8 @@
 {
   "id": "1000000",
   "name": "Teek Design Vue3",
-  "font_family": "iconfont-sys",
-  "css_prefix_text": "iconfont-sys-",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-sys-",
   "description": "",
   "glyphs": [
     {
