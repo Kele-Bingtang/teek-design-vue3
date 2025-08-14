@@ -12,8 +12,8 @@ function extractIconFromRule(rule: CSSRule): IconfontType | null {
   if (!(rule instanceof CSSStyleRule)) return null;
 
   const { selectorText, style } = rule;
-  // 只处理以 .iconfont-sys- 开头且包含 ::before 的选择器
-  if (!selectorText?.startsWith(".iconfont-sys-") || !selectorText.includes("::before")) return null;
+  // 只处理以 .icon-sys- 开头且包含 ::before 的选择器
+  if (!selectorText?.startsWith(".icon-sys-") || !selectorText.includes("::before")) return null;
 
   const className = selectorText.substring(1, selectorText.indexOf("::before"));
   const content = style.getPropertyValue("content");
