@@ -1,0 +1,9 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/namespace" as *;
+
+@include b(table-main) {
+  @include e(empty) {
+    margin: 16px 0;
+    line-height: 30px;
+  }
+}

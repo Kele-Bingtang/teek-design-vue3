@@ -25,6 +25,7 @@ export const columns: FormColumn[] = [
     prop: "title",
     elProps: { clearable: true, placeholder: "请输入 TicketDesc" },
   },
+  { label: "", prop: "empty", el: "empty" },
   {
     label: "EventStarTime",
     prop: "eventStarTime",

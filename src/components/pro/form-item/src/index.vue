@@ -38,7 +38,10 @@ const model = defineModel<ModelBaseValueType>({ required: false });
 
 const formEl = computed(() => toCamelCase(toValue(props.el)) as FormElComponentEnum);
 const labelValue = computed(() => toValue(props.label));
-const showLabelValue = computed(() => toValue(props.showLabel));
+const showLabelValue = computed(() => {
+  if ([FormElComponentEnum.EMPTY, FormElComponentEnum.EL_DIVIDER].includes(formEl.value)) return false;
+  return toValue(props.showLabel);
+});
 const withValue = computed(() => addUnit(toValue(props.width)));
 const formItemPropsValue = computed(() => toValue(props.formItemProps));
 const editableValue = computed(() => toValue(props.editable));
@@ -304,7 +307,7 @@ defineExpose(expose);
               FormElComponentEnum.EL_CASCADER,
               FormElComponentEnum.EL_SELECT_V2,
               FormElComponentEnum.EL_SEGMENTED,
-              FormElComponentEnum.CHECK_BOX_SELECT,
+              FormElComponentEnum.CHECKBOX_SELECT,
             ].includes(formEl)
               ? enums
               : []

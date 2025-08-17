@@ -113,6 +113,7 @@ export const useSettingStore = defineStore(
       language: widgetConfig.language,
       theme: widgetConfig.theme,
       lockScreen: widgetConfig.lockScreen,
+      searchIcon: widgetConfig.searchIcon,
     });
 
     const shortcutKey = reactive({

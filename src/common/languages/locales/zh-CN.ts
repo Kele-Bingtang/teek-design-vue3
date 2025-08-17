@@ -361,6 +361,7 @@ export default {
       language: "启用语言切换",
       theme: "启用主题切换",
       lockScreen: "启用锁屏",
+      searchIcon: "切换为搜索图标",
     },
     shortcutKey: {
       label: "快捷键",

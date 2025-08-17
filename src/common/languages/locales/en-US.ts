@@ -366,6 +366,7 @@ export default {
       search: "Global search",
       logout: "Logout",
       lockScreen: "Lock screen",
+      searchIcon: "Search icon",
     },
   },
   _search: {
