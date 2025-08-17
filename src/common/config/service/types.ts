@@ -220,6 +220,8 @@ export interface WidgetConfig {
   theme: boolean;
   /** 是否显示锁屏按钮 */
   lockScreen: boolean;
+  /** 是否使用搜索图标替换搜索框 */
+  searchIcon: boolean;
 }
 
 export interface ShortcutKeyConfig {

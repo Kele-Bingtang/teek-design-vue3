@@ -401,6 +401,11 @@ const handleSelectLanguage = (lang: LanguageEnum) => {
       <el-switch v-model="widget.lockScreen" />
     </div>
 
+    <div :class="ns.e('item')">
+      <span>{{ $t("_setting.widget.searchIcon") }}</span>
+      <el-switch v-model="widget.searchIcon" />
+    </div>
+
     <h3>{{ $t("_setting.shortcutKey.label") }}</h3>
 
     <div :class="ns.e('item')">

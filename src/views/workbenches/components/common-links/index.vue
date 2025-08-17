@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CommonLink, CommonLinkTab } from "./types";
 import { ref } from "vue";
-import { Link, Edit } from "@element-plus/icons-vue";
+import { Link, Edit, Warning } from "@element-plus/icons-vue";
 import { ProDialog } from "@/components";
 import { useNamespace } from "@/composables";
 import { systemLinks, flowLinks, otherLinks } from "./data";
@@ -90,6 +90,12 @@ const handleConfirm = () => {
       @confirm="handleConfirm"
     >
       <CommonLinksDetails ref="commonLinksDetailsInstance" />
+      <template #footer-top>
+        <div class="tip flx-align-center">
+          <Icon><Warning /></Icon>
+          <span>拖拽可调整常用链接展示顺序</span>
+        </div>
+      </template>
     </ProDialog>
   </div>
 </template>
@@ -181,6 +187,11 @@ const handleConfirm = () => {
     @include e(empty) {
       width: 100%;
     }
+  }
+
+  .tip {
+    gap: 6px;
+    padding-top: 3px;
   }
 }
 </style>
