@@ -98,7 +98,7 @@ const getValue = (row: TableScope["row"], column: TableColumn) => {
   if (!options || !toValue(isFilterOptions)) return value;
 
   const option = transformOption ? transformOption(value, options, row) : filterOptions(value, options, optionField);
-  const label = option ? filterOptionsValue(option, optionField?.label || "label") : "";
+  const label = option ? filterOptionsValue(option, optionField?.label || "label") : "--";
 
   if ((!label || label === "--") && toValue(ignoreOptionIfAbsent)) return value;
   return isArray(label) ? label.join(" / ") : label;

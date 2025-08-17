@@ -1,5 +1,6 @@
 import type { Component } from "vue";
 import type { FormPascalCaseComponentName } from "../types";
+import { defineComponent } from "vue";
 import {
   ElCascader,
   ElCheckbox,
@@ -29,7 +30,7 @@ import {
   ElText,
 } from "element-plus";
 import Tree from "../components/tree.vue";
-import CheckBoxSelect from "../components/checkbox-select.vue";
+import CheckboxSelect from "../components/checkbox-select.vue";
 import WangEditor from "@/components/editor/wang-editor/index";
 import Tinymce from "@/components/editor/tinymce/index";
 import IconPicker from "@/components/page/icon-picker/index";
@@ -67,7 +68,8 @@ export enum FormElComponentEnum {
   EL_SEGMENTED = "ElSegmented",
   EL_TEXT = "ElText",
   Tree = "Tree",
-  CHECK_BOX_SELECT = "CheckBoxSelect",
+  CHECKBOX_SELECT = "CheckboxSelect",
+  EMPTY = "Empty",
   WANG_EDITOR = "WangEditor",
   TINYMCE = "Tinymce",
   ICON_PICKER = "IconPicker",
@@ -106,7 +108,10 @@ const formELComponentsMap: Record<FormPascalCaseComponentName, Component> = {
   ElSegmented,
   ElText,
   Tree,
-  CheckBoxSelect,
+  CheckboxSelect,
+  Empty: defineComponent({
+    render: () => null,
+  }),
   WangEditor,
   Tinymce,
   IconPicker,

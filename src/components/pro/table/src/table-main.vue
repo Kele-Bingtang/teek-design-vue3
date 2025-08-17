@@ -14,6 +14,8 @@ import TableColumnType from "./table-column/table-column-type.vue";
 import { defaultTablePageInfo, useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
 import { filterData, initModel, isServer, initNativeRowField } from "./helper";
 
+import "./styles/table-main.scss";
+
 defineOptions({ name: "TableMain" });
 
 const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {

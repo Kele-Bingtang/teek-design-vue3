@@ -178,7 +178,7 @@ export const findItemNested = (
  * 根据枚举列表查询当需要的 label 数据
  */
 export const filterOptionsValue = (options: Recordable | Recordable[], keyName = "label", defaultValue = "--") => {
-  if (!isArray(options)) return options ? options[keyName] : defaultValue;
+  if (!isArray(options)) return options ? (options[keyName] ?? defaultValue) : defaultValue;
 
   const filterDataArray: string[] = [];
   options.forEach(item => filterDataArray.push(item[keyName]));
