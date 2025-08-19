@@ -82,7 +82,7 @@ const changeMenuItem = (item: RouterConfig) => {
   }
 
   menuItem.value = [];
-  router.push(item.meta._fullPath || item.path || "");
+  router.push(item.meta._fullPath || item.path);
 };
 </script>
 
