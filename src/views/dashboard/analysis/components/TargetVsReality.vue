@@ -25,7 +25,7 @@ const revenueData = ref([
     <div class="card-footer">
       <div class="total-item">
         <div class="label">
-          <Icon class="icon-sys" :icon="Handbag" />
+          <Icon class="icon-teek" :icon="Handbag" />
           <div class="label-text">
             <span>实际销售额</span>
             <span>全球</span>
@@ -36,7 +36,7 @@ const revenueData = ref([
 
       <div class="total-item">
         <div class="label">
-          <Icon class="icon-sys" :icon="Coin" />
+          <Icon class="icon-teek" :icon="Coin" />
           <div class="label-text">
             <span>目标销售额</span>
             <span>商业</span>
@@ -58,12 +58,12 @@ const revenueData = ref([
       margin-bottom: 20px;
       text-align: center;
 
-      &:first-of-type .label .icon-sys {
+      &:first-of-type .label .icon-teek {
         color: #2b8dfa !important;
         background-color: #e6f7ff !important;
       }
 
-      &:last-of-type .label .icon-sys {
+      &:last-of-type .label .icon-teek {
         color: #1cb8fc !important;
         background-color: #e6f7ff !important;
       }
@@ -76,7 +76,7 @@ const revenueData = ref([
         font-size: 14px;
         color: #606266;
 
-        .icon-sys {
+        .icon-teek {
           width: 40px;
           height: 40px;
           margin-right: 12px;
@@ -127,11 +127,11 @@ const revenueData = ref([
   .target-vs-reality {
     .card-footer {
       .total-item {
-        &:first-of-type .label .icon-sys {
+        &:first-of-type .label .icon-teek {
           background-color: #222222 !important;
         }
 
-        &:last-of-type .label .icon-sys {
+        &:last-of-type .label .icon-teek {
           background-color: #222222 !important;
         }
       }

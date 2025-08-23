@@ -20,7 +20,7 @@ import { BarChart } from "@/components";
     <div class="icon-text-widget">
       <div class="item">
         <div class="icon">
-          <Icon :icon="Money" class="icon-sys" />
+          <Icon :icon="Money" class="icon-teek" />
         </div>
         <div class="content">
           <p>¥200,858</p>
@@ -29,7 +29,7 @@ import { BarChart } from "@/components";
       </div>
       <div class="item">
         <div class="icon">
-          <Icon :icon="Sell" class="icon-sys" />
+          <Icon :icon="Sell" class="icon-teek" />
         </div>
         <div class="content">
           <p>¥102,927</p>

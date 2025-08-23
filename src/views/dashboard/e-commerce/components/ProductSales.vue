@@ -11,7 +11,7 @@ const ns = useNamespace();
     <div class="card-header">
       <p class="title" style="font-size: 24px">
         14.5k
-        <Icon :icon="TopRight" class="icon-sys" :class="ns.join('text-success')" />
+        <Icon :icon="TopRight" class="icon-teek" :class="ns.join('text-success')" />
       </p>
       <p class="subtitle">销售量</p>
     </div>
