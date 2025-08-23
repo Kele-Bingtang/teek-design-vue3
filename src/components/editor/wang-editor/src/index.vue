@@ -178,7 +178,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="[ns.b(), { disabled }]">
+  <div :class="[ns.b(), ns.is('disabled', disabled)]">
     <Toolbar
       :class="ns.e('toolbar')"
       :editor="editorRef"

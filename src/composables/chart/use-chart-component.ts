@@ -23,7 +23,7 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
   const { props, generateOptions, checkEmpty, watchSources = [], onVisible, chartOptions = {} } = options;
 
   const chart = useChart(chartOptions);
-  const { chartInstance, initChart, isDark } = chart;
+  const { chartInstance, initChart, isDark, emptyStateManager } = chart;
 
   // 检查是否为空数据
   const isEmpty = computed(() => {
@@ -34,7 +34,18 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
 
   // 更新图表
   const updateChart = () => {
-    if (!isEmpty.value) initChart(generateOptions());
+    nextTick(() => {
+      if (isEmpty.value) {
+        // 处理空数据情况 - 显示自定义空状态
+        if (chart.getChartInstance()) chart.getChartInstance().value?.clear();
+
+        // emptyStateManager.create();
+      } else {
+        // 有数据时移除空状态并初始化图表
+        // emptyStateManager.remove();
+        initChart(generateOptions());
+      }
+    });
   };
 
   // 处理图表进入可视区域时的逻辑
@@ -49,7 +60,10 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
     if (watchSources.length > 0) watch(watchSources, updateChart, { deep: true });
 
     // 监听主题变化
-    watch(isDark, updateChart);
+    watch(isDark, () => {
+      emptyStateManager.updateStyle();
+      updateChart();
+    });
   };
 
   // 设置生命周期
@@ -64,6 +78,8 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
     onBeforeUnmount(() => {
       // 清理事件监听器
       if (chartInstance.value) chartInstance.value.removeEventListener("chartVisible", handleChartVisible);
+      // 清理空状态div
+      emptyStateManager.remove();
     });
   };
 
