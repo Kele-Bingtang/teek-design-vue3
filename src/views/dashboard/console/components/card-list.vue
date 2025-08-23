@@ -58,7 +58,7 @@ const dataList = reactive([
             {{ item.change }}
           </span>
         </div>
-        <Icon class="icon-sys" :icon="item.icon"></Icon>
+        <Icon class="icon-teek" :icon="item.icon"></Icon>
       </div>
     </el-col>
   </el-row>
@@ -83,7 +83,7 @@ const dataList = reactive([
 
     $icon-size: 52px;
 
-    .icon-sys {
+    .icon-teek {
       position: absolute;
       top: 0;
       right: 20px;
@@ -138,7 +138,7 @@ const dataList = reactive([
 .dark {
   .card-list {
     .tk-card-minimal {
-      .icon-sys {
+      .icon-teek {
         background-color: #232323 !important;
       }
     }

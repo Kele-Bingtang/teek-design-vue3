@@ -25,7 +25,7 @@ import { RingChart } from "@/components";
     <div class="icon-text-widget">
       <div class="item">
         <div class="icon">
-          <Icon :icon="Money" class="icon-sys" />
+          <Icon :icon="Money" class="icon-teek" />
         </div>
         <div class="content">
           <p>¥500,458</p>
@@ -34,7 +34,7 @@ import { RingChart } from "@/components";
       </div>
       <div class="item">
         <div class="icon">
-          <Icon :icon="Sell" class="icon-sys" />
+          <Icon :icon="Sell" class="icon-teek" />
         </div>
         <div class="content">
           <p>¥130,580</p>

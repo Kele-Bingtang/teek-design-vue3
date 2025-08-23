@@ -46,7 +46,7 @@ const salesData = ref([
         <span class="subtitle">销售总结</span>
       </div>
       <div class="export-btn">
-        <Icon :icon="Download" class="icon-sys" />
+        <Icon :icon="Download" class="icon-teek" />
         <span>导出</span>
       </div>
     </div>
@@ -54,7 +54,7 @@ const salesData = ref([
       <el-row :gutter="20">
         <el-col :span="6" :xs="24" v-for="(item, index) in salesData" :key="index">
           <div :class="['sales-card']">
-            <Icon class="icon-sys" :icon="item.icon"></Icon>
+            <Icon class="icon-teek" :icon="item.icon"></Icon>
             <h2>
               <CountTo class="number box-title" :endVal="item.value" :duration="1" separator=""></CountTo>
             </h2>
@@ -95,7 +95,7 @@ const salesData = ref([
       border-color: cssVar(color-primary);
     }
 
-    .icon-sys {
+    .icon-teek {
       margin-right: 5px;
       font-size: 10px;
     }
@@ -118,7 +118,7 @@ const salesData = ref([
       border: 1px solid cssVar(border-color) !important;
       border-radius: calc(cssVar(radius) / 2 + 4px) !important;
 
-      .icon-sys {
+      .icon-teek {
         width: 48px;
         height: 48px;
         font-size: 20px;
@@ -157,7 +157,7 @@ const salesData = ref([
   .today-sales {
     .sales-summary {
       .sales-card {
-        .icon-sys {
+        .icon-teek {
           &.red,
           &.yellow,
           &.green,

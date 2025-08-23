@@ -34,7 +34,7 @@ const handleMore = () => emit("more");
     <el-scrollbar :style="{ height: maxHeight }">
       <div v-for="(item, index) in list" :key="index" :class="ns.e('item')" class="flx-align-center">
         <div v-if="item.icon" :class="[ns.em('item', 'icon'), item.class]" class="flx-center">
-          <Icon :icon="item.icon" :size="20" class="icon-sys" />
+          <Icon :icon="item.icon" :size="20" class="icon-teek" />
         </div>
 
         <div :class="ns.e('item-content')" class="flx-1">
