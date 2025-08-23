@@ -2,7 +2,7 @@
 @use "@styles/mixins/function" as *;
 @use "@styles/mixins/namespace" as *;
 
-$border-radius: 6px;
+$border-radius: calc(cssVar(radius) / 2 + 2px);
 
 /* 富文本组件校验失败样式 */
 .is-error {
@@ -50,10 +50,10 @@ $border-radius: 6px;
   width: 100%;
   height: 100%;
   border: 1px solid cssVar(gray-300);
-  border-radius: calc(cssVar(radius) / 2 + 2px);
+  border-radius: $border-radius;
 
   /* 富文本组件禁用样式 */
-  &.disabled {
+  @include is(disabled) {
     cursor: not-allowed;
   }
 

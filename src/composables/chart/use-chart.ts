@@ -49,6 +49,7 @@ export function useChart(options: UseChartOptions = {}) {
   let pendingOptions: EChartsOption | null = null;
   let isDestroyed = false;
 
+  const emptyStateManager = createEmptyStateManager(chartInstance);
   const {
     getAxisLineStyle,
     getSplitLineStyle,
@@ -101,10 +102,13 @@ export function useChart(options: UseChartOptions = {}) {
   // 主题变化时重新设置图表选项
   if (autoTheme) {
     watch(isDark, () => {
-      if (chart.value) {
+      // 更新空状态样式
+      // emptyStateManager.updateStyle();
+
+      if (chart.value && !isDestroyed) {
         // 使用 requestAnimationFrame 优化主题更新
         requestAnimationFrame(() => {
-          if (chart.value) {
+          if (chart.value && !isDestroyed) {
             const currentOptions = chart.value.getOption();
             if (currentOptions) updateChart(currentOptions as EChartsOption);
           }
@@ -129,12 +133,21 @@ export function useChart(options: UseChartOptions = {}) {
   };
 
   // 初始化图表
-  const initChart = (options: EChartsOption = {}) => {
+  const initChart = (options: EChartsOption = {}, isEmpty: boolean = false) => {
     if (!chartInstance.value || isDestroyed) return;
 
     const mergedOptions = { ...initOptions, ...options };
 
     try {
+      if (isEmpty) {
+        // 处理空数据情况 - 显示自定义空状态div
+        if (chart.value) chart.value.clear();
+        // emptyStateManager.create();
+        return;
+      }
+      // 有数据时移除空状态
+      // else emptyStateManager.remove();
+
       if (isContainerVisible(chartInstance.value)) {
         // 容器可见，正常初始化
         if (initDelay > 0) {
@@ -182,6 +195,8 @@ export function useChart(options: UseChartOptions = {}) {
       }
     }
 
+    // 清理空状态
+    // emptyStateManager.remove();
     clearTimers();
     cleanIntersectionObserver();
     pendingOptions = null;
@@ -214,6 +229,7 @@ export function useChart(options: UseChartOptions = {}) {
     destroyChart,
     getChartInstance,
     isChartInitialized,
+    emptyStateManager,
     getAxisLineStyle,
     getSplitLineStyle,
     getAxisLabelStyle,
@@ -438,4 +454,67 @@ export const useIntersectionObserver = (
   };
 
   return { createIntersectionObserver, cleanIntersectionObserver };
+};
+
+/**
+ * 创建空状态管理器
+ */
+
+export const createEmptyStateManager = (chartInstance: ShallowRef<HTMLElement | null>) => {
+  const settingStore = useSettingStore();
+  const { isDark } = storeToRefs(settingStore);
+
+  let emptyStateDiv: HTMLElement | null = null;
+
+  return {
+    create: () => {
+      if (!chartInstance.value || emptyStateDiv) return;
+
+      emptyStateDiv = document.createElement("div");
+      emptyStateDiv.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: ${isDark.value ? "#666" : "#999"};
+        background: transparent;
+        z-index: 10;
+        gap: 8px;
+      `;
+      emptyStateDiv.innerHTML = `
+        <i class="iconfont" style="font-size: 48px; color: ${isDark.value ? "#555" : "#ccc"};">&#xe6da;</i>
+        <span>暂无数据</span>
+      `;
+
+      // 确保父容器有相对定位
+      if (chartInstance.value.style.position !== "relative" && chartInstance.value.style.position !== "absolute") {
+        chartInstance.value.style.position = "relative";
+      }
+
+      chartInstance.value.appendChild(emptyStateDiv);
+    },
+
+    remove: () => {
+      if (emptyStateDiv && chartInstance.value) {
+        chartInstance.value.removeChild(emptyStateDiv);
+        emptyStateDiv = null;
+      }
+    },
+
+    updateStyle: () => {
+      if (emptyStateDiv) {
+        emptyStateDiv.style.color = isDark.value ? "#666" : "#999";
+        const iconElement = emptyStateDiv.querySelector("i.iconfont-sys");
+        if (iconElement) {
+          (iconElement as HTMLElement).style.color = isDark.value ? "#555" : "#ccc";
+        }
+      }
+    },
+  };
 };
