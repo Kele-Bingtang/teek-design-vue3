@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.0...v2.0.1) (2025-08-23)
+
+### Features
+
+- **form-item:** 新增空白组件并优化选项过滤 ([8f5a3a2](https://github.com/Kele-Bingtang/teek-design-vue3/commit/8f5a3a2cd847f1e3130010e3d073226e55ba7fb5))
+- **icon:** 🚀 更新 TODO.md 并优化 icon 组件 ([70f6a38](https://github.com/Kele-Bingtang/teek-design-vue3/commit/70f6a38d1c37daffeaaf5c5cf1a6868eaff2798a))
+- **menu:** 支持 activeMenu 函数式定义 ([2c9b86c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2c9b86c43d880602abdfd74ab42cb769a56f0adb))
+- **widget:** 添加搜索图标配置项 ([9870ef6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/9870ef6d05197294dfbb8fd089a1a8bbe1344615))
+
+### Bug Fixes
+
+- 🐞 iconfont-sys 改为 icon-sys ([cc11907](https://github.com/Kele-Bingtang/teek-design-vue3/commit/cc119076e7851b4d174f328e1e23e737b1d7d484))
+- layout-columns布局workbenches-full跳转到404 ([41fe0f1](https://github.com/Kele-Bingtang/teek-design-vue3/commit/41fe0f1e4a9c30b5f2b3d9b0e19fb289c69bbb24))
+- **layout:** 🐞 优化页面布局和主题切换 ([feb015a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/feb015afdc6999f22a8e213abc5dcf025b8b1e91))
+
+### Docs
+
+- 更新 README 文件 ([79e7575](https://github.com/Kele-Bingtang/teek-design-vue3/commit/79e75756d87f7d65b3a9b09c804ef12bbd1b8e60))
+- **README:** 更新项目文档和首页内容 ([d776d41](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d776d4142b91e5c245e0587490413fbe9b354318))
+
+### Code Refactoring
+
+- **layout:** 优化顶部栏高度计算并调整全局背景色 ([b9ea706](https://github.com/Kele-Bingtang/teek-design-vue3/commit/b9ea706342ae6bdead89a0dbbb73f4382fb2b8a5))
+- **storage:** 优化缓存管理并支持数据迁移 ([b2807ae](https://github.com/Kele-Bingtang/teek-design-vue3/commit/b2807ae6295164981e4c0f2bcae700ce80e617d8))
+- **storage:** 优化数据持久化和主题样式 ([a4486f9](https://github.com/Kele-Bingtang/teek-design-vue3/commit/a4486f98e56fc0c595beded5ac51ab6f3b294b90))
+- **utils:** 重构 ID 生成相关函数并优化颜色配置 ([0dc8b1a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/0dc8b1a1c3b5e591c07cab0e64936d455c287bbc))
+
+### Build System
+
+- **deps:** 📦️ 更新项目依赖版本 ([3f8c21a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/3f8c21add5c5bd536ee6b5ec3592b27aec250e71))
+
+### Styling
+
+- 🎨 优化 iconfont 图标和部分代码格式 ([0310bd1](https://github.com/Kele-Bingtang/teek-design-vue3/commit/0310bd1a0179ab1843d334090d51e02fa31c9a90))
+- **dark:** 优化主题样式和颜色 ([99ad21b](https://github.com/Kele-Bingtang/teek-design-vue3/commit/99ad21becd8ec465e857478e1e401f915397ec8a))
+
 ## [2.0.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v1.5.1...v2.0.0) (2025-08-05)
 
 ### Features
