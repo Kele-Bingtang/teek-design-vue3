@@ -12,7 +12,7 @@
   // 阴影与悬停（hover > select > base > root > mini）
   --#{$teek-namespace}-card-shadow-hover: var(--#{$teek-namespace}-box-shadow-lg);
   --#{$teek-namespace}-card-shadow-select: var(--#{$teek-namespace}-box-shadow-md);
-  --#{$teek-namespace}-card-shadow-base: var(--#{$teek-namespace}-card-box-shadow-md);
+  --#{$teek-namespace}-card-shadow-base: var(--#{$teek-namespace}-box-shadow-md);
   --#{$teek-namespace}-card-shadow-root: var(--#{$teek-namespace}-root-card-box-shadow);
   --#{$teek-namespace}-card-shadow-mini: 0px 0px 4px 0px rgb(0 0 0 / 4%);
 
