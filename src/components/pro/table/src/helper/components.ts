@@ -19,11 +19,17 @@ import { PointTag } from "@/components/core/point-tag";
 import { useNamespace } from "@/composables";
 
 export interface ElRenderParams {
+  /** 未经过处理的原始值 */
   originValue: unknown;
+  /** 经过处理的单元格值，如 originValue 为 0，displayValue 为男 */
   displayValue: unknown;
+  /** format 函数处理后的值 */
   formatValue: unknown;
+  /** 置项的 elProps */
   props: Recordable;
+  /** 配置项的 options（已经处理拿到的实际值） */
   options: ElDisplayProps["options"];
+  /** 配置项的 optionField */
   optionField: ElDisplayProps["optionField"];
 }
 
@@ -67,13 +73,15 @@ export enum TableComponentEnum {
   POINT_TAG = "PointTag",
 }
 
+type TableElComponentsMap = Record<
+  TablePascalCaseComponentName,
+  Omit<Component, keyof ComponentConfig> | ComponentConfig
+>;
+
 /**
  * 这里可以注册其他组件，先需要在 TablePascalCaseComponentName 里添加 el 名，再在这里进行组件映射
  */
-const tableElComponentsMap: Record<
-  TablePascalCaseComponentName,
-  Omit<Component, keyof ComponentConfig> | ComponentConfig
-> = {
+const tableElComponentsMap: TableElComponentsMap = {
   // 文本
   ElText,
   // 标签
