@@ -108,7 +108,7 @@ function usePageSearchInit() {
       // 组装搜索表单配置项
       const searchColumn: ProSearchColumn = {
         ...column.search,
-        el: column.search?.el || (column.search?.options ?? column.options) ? "ElSelect" : "ElInput",
+        el: column.search?.el || ((column.search?.options ?? column.options) ? "ElSelect" : "ElInput"),
         grid: {
           offset: column.search?.offset,
           span: column.search?.span,

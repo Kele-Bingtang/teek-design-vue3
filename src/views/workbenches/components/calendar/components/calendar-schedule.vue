@@ -70,15 +70,12 @@ const getStatus = (schedule: ScheduleData) => {
   const start = dayjs(`${scheduleDate} ${schedule.startTime}`);
   const end = dayjs(`${scheduleDate} ${schedule.endTime}`);
 
-  if (now.isAfter(end)) {
-    return "info";
-  } else if (now.isBefore(start)) {
+  if (now.isAfter(end)) return "success";
+  else if (now.isBefore(start)) {
     // 距离开始时间小于等于 2 小时
     if (start.diff(now, "hour", true) <= 2) return "warning";
-    return "success";
-  } else {
-    return "primary";
-  }
+    return "warning";
+  } else return "primary";
 };
 /**
  * 新增日程
