@@ -27,15 +27,11 @@
 
 // 修改 el-pagination 大小
 .#{$el-namespace}-pagination--default {
-  & {
-    --#{$el-namespace}-pagination-button-width: 32px !important;
-    --#{$el-namespace}-pagination-button-height: var(--#{$el-namespace}-pagination-button-width) !important;
-  }
+  --#{$el-namespace}-pagination-button-width: 32px !important;
+  --#{$el-namespace}-pagination-button-height: var(--#{$el-namespace}-pagination-button-width) !important;
 
   @media (max-width: $device-ipad-pro) {
-    & {
-      --#{$el-namespace}-pagination-button-width: 28px !important;
-    }
+    --#{$el-namespace}-pagination-button-width: 28px !important;
   }
 }
 
@@ -297,14 +293,12 @@
 
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
 @keyframes dialog-close {
   0% {
     opacity: 1;
-    transform: scale(1);
   }
 
   100% {

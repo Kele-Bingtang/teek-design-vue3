@@ -78,7 +78,7 @@ export enum PageTransitionEnum {
   None = "",
   Fade = "fade",
   SlideLeft = "slide-left",
-  SlideTop = "Slide-top",
+  SlideTop = "slide-top",
   SlideBottom = "slide-bottom",
 }
 
