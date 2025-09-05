@@ -31,6 +31,7 @@ const getFatherDom = (): Element => {
  * 关闭前的动画
  */
 const removeWithTransition = (target: Element, end: () => void) => {
+  let isTriggerEnd = false;
   // ElementPlus 内置的 Drawer 消失动画 class
   target.classList.add(ns.joinEl("drawer-fade-leave-active"));
   target.classList.add(ns.joinEl("drawer-fade-leave-to"));
@@ -39,6 +40,7 @@ const removeWithTransition = (target: Element, end: () => void) => {
   function onTransitionEnd() {
     // 动画结束后移除元素
     end();
+    isTriggerEnd = true;
     target.removeEventListener("transitionend", onTransitionEnd);
   }
 
@@ -46,7 +48,7 @@ const removeWithTransition = (target: Element, end: () => void) => {
 
   setTimeout(() => {
     // 兼容没有 transition 的情况
-    onTransitionEnd();
+    !isTriggerEnd && onTransitionEnd();
   }, 300);
 };
 

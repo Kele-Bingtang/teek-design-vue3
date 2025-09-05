@@ -39,25 +39,25 @@ $fade-easing: ease; // 淡入淡出专用的缓动函数
     $distance-y: $distance;
   }
 
-  &-enter-active,
-  &-leave-active {
+  @at-root &-enter-active,
+    &-leave-active {
     transition:
       opacity $duration $easing,
       transform $duration $easing;
     will-change: opacity, transform;
   }
 
-  &-enter-from {
+  @at-root &-enter-from {
     opacity: 0;
     transform: translate3d($distance-x, $distance-y, 0);
   }
 
-  &-enter-to {
+  @at-root &-enter-to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 
-  &-leave-to {
+  @at-root &-leave-to {
     opacity: 0;
     transform: translate3d(-$distance-x, -$distance-y, 0);
   }
