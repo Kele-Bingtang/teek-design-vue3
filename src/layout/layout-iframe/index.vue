@@ -46,7 +46,7 @@ const isCollapse = computed(() => menu.value.collapsed);
 
       <!-- 菜单底部 -->
       <div :class="[ns.e('menu-footer'), ns.is('collapse', isCollapse)]" class="flx-column gap-10">
-        <UserAvatar placement="right" :offset="isCollapse ? 6 : 30" />
+        <UserAvatar placement="right" />
 
         <el-tooltip placement="right" :content="isCollapse ? '菜单展开' : '菜单折叠'" :disabled="!isCollapse">
           <CollapseTrigger>
