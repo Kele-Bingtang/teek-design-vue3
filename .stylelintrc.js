@@ -42,6 +42,7 @@ export default {
     ],
     "function-no-unknown": null, // 忽略未知函数的错误
     "scss/at-function-pattern": null, // scss 的 @function 命名允许大写
+    "nesting-selector-no-missing-scoping-root": null, // 允许嵌套选择器缺少作用域根
   },
   ignoreFiles: [
     "**/*.js",
