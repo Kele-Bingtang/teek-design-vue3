@@ -110,8 +110,8 @@ export const useRouteFn = () => {
     });
 
     // 传到 routeStore 持久化
-    routeStore.setRoutes(routes);
-    routeStore.setFlatRoutes(flatRoutes);
+    routeStore.addRoutes(routes);
+    routeStore.addFlatRoutes(flatRoutes);
     routeStore.setHomeRoute(findRouteByName(routes, HOME_NAME) as RouterConfig);
   };
 

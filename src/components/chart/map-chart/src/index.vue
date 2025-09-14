@@ -82,7 +82,7 @@ const createChartOption = (mapData: any[]) => {
       map: "china",
       zoom: 1,
       show: true,
-      roam: "move",
+      roam: "scale",
       scaleLimit: {
         min: 0.8,
         max: 3,

@@ -91,7 +91,7 @@ export const useTabNav = () => {
       draggable: dragClassName,
       animation: 300,
       onEnd({ newIndex, oldIndex }) {
-        const tabsList = [...tabNavList.value];
+        const tabsList = [...tabNavList.value] as TabProps[];
         const currRow = tabsList.splice(oldIndex as number, 1)[0];
 
         tabsList.splice(newIndex as number, 0, currRow);

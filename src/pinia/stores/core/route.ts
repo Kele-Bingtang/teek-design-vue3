@@ -12,8 +12,16 @@ export const useRouteStore = defineStore("routeStore", () => {
     loadedRouteList.value = routers;
   };
 
+  const addRoutes = (routers: RouterConfig[]) => {
+    loadedRouteList.value = loadedRouteList.value.concat(routers);
+  };
+
   const setFlatRoutes = (routers: RouterConfig[]) => {
     flatRouteList.value = routers;
+  };
+
+  const addFlatRoutes = (routers: RouterConfig[]) => {
+    flatRouteList.value = flatRouteList.value.concat(routers);
   };
 
   const setHomeRoute = (route: RouterConfig | null) => {
@@ -26,7 +34,9 @@ export const useRouteStore = defineStore("routeStore", () => {
     flatRouteList,
 
     setRoutes,
+    addRoutes,
     setFlatRoutes,
+    addFlatRoutes,
     setHomeRoute,
   };
 });

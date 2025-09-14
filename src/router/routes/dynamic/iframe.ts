@@ -1,11 +1,12 @@
 import { HotWater, Link } from "@element-plus/icons-vue";
 
-const frameRoutes: RouterConfigRaw = {
+export const iframeRoutes: RouterConfigRaw = {
   path: "/iframe",
   name: "IFrame",
   meta: {
     icon: Link,
-    title: "外部页面",
+    title: "页面嵌入",
+    pointTag: true,
   },
   children: [
     {
@@ -38,26 +39,6 @@ const frameRoutes: RouterConfigRaw = {
       },
     },
     {
-      path: "vue3",
-      name: "FrameVue",
-      meta: {
-        title: "Vue3 文档",
-        icon: HotWater,
-        iframeSrc: "https://cn.vuejs.org/",
-        iframeKeepAlive: true,
-      },
-    },
-    {
-      path: "vite",
-      name: "FrameVite",
-      meta: {
-        title: "Vite 文档",
-        icon: HotWater,
-        iframeSrc: "https://cn.vitejs.dev/",
-        iframeLoading: false,
-      },
-    },
-    {
       path: "pinia",
       name: "FramePinia",
       meta: {
@@ -75,7 +56,29 @@ const frameRoutes: RouterConfigRaw = {
         iframeSrc: "https://router.vuejs.org/zh/",
       },
     },
+    {
+      path: "iframe-page",
+      name: "IFramePage",
+      meta: {
+        title: "IFrame 通信",
+        icon: HotWater,
+        iframeSrc: "/iframe-signal-page",
+        useI18n: false,
+        iframeKeepAlive: true,
+        tagText: "New",
+      },
+    },
   ],
 };
 
-export default frameRoutes;
+export const iframeSignalRoutes: RouterConfigRaw = {
+  path: "/iframe-signal-page",
+  name: "IFrameSignalPage",
+  component: "/iframe/page",
+  meta: {
+    title: "通信页面",
+    useI18n: false,
+    isFull: true,
+    hideInMenu: true, // 不显示在菜单，而是通过嵌入的方式显示
+  },
+};

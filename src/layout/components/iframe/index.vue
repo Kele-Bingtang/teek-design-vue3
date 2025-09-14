@@ -3,17 +3,22 @@ import type { IFrame } from "./use-iframe";
 import { watch } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import { useNamespace } from "@/composables";
 import { useLayoutStore } from "@/pinia";
-import { useIFrame } from "./use-iframe";
 import IFrameView from "./iframe-view.vue";
 
 defineOptions({ name: "IFrameLayout" });
 
+const ns = useNamespace("iframe-container");
 const route = useRoute();
 const layoutStore = useLayoutStore();
-const { isCurrentIFrame } = useIFrame();
 
 const { iframeList } = storeToRefs(layoutStore);
+
+/**
+ * 判断是否是当前 iframe
+ */
+const isCurrentIFrame = (item: IFrame) => item.name === route.name;
 
 /**
  * frame 是否已经缓存
@@ -39,7 +44,7 @@ watch(
 </script>
 
 <template>
-  <div v-if="iframeList.length > 0">
+  <div :class="ns.b()" v-if="iframeList.length > 0">
     <template v-for="iframe in iframeList" :key="iframe.src">
       <IFrameView
         v-if="iframe.src"
@@ -50,3 +55,12 @@ watch(
     </template>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@use "@styles/mixins/bem" as *;
+
+@include b(iframe-container) {
+  width: 100%;
+  height: 100%;
+}
+</style>

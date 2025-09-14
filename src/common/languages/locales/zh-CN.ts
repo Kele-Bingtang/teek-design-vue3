@@ -143,7 +143,7 @@ export default {
 
     Tabs: "标签页操作",
 
-    IFrame: "外部页面",
+    IFrame: "页面嵌入",
     FrameEp: "Element Plus 文档",
     FrameVue: "Vue3 文档",
     FrameVite: "Vite 文档",
