@@ -10,11 +10,7 @@ export const defineEnvServiceConfig = (): DeepPartial<ServiceConfig> => {
 
   // 本地环境
   if (isDev) {
-    return {
-      layout: {
-        watchFrame: true, // 开启 IFrame 通信
-      },
-    } as DeepPartial<ServiceConfig>;
+    return {} as DeepPartial<ServiceConfig>;
   }
 
   // 测试环境
