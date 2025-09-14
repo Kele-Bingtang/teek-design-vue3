@@ -1,11 +1,12 @@
 import { useRouter } from "vue-router";
 import { useEventListener } from "@vueuse/core";
-import { isObject, isString } from "@/common/utils";
-import { useLayoutStore } from "@/pinia";
+import { useRouteFn } from "@/composables";
+import { isArray, isObject, isString } from "@/common/utils";
+import { useLayoutStore, useUserStore } from "@/pinia";
 import { useTabNav } from "../tab-nav/use-tab-nav";
 
-const IFrameView = () => import("./iframe-view.vue");
-const IFrameBlank = () => import("./iframe-blank.vue");
+// 通信时操作路由的行为
+type IFrameActon = "open" | "close" | "refresh" | "add";
 
 export interface IFrame {
   /** iframe 地址 */
@@ -16,73 +17,85 @@ export interface IFrame {
   show: boolean;
 }
 
-export interface IFrameMessage {
-  /** 路由 name */
-  name: string;
-  /** iframe 地址 */
-  iframeSrc: string;
-  /** 关闭的路由 name */
-  closeName: string;
-  /** 刷新的路由 name */
-  refreshName: string;
+/**
+ * 通信信息
+ */
+export interface IFrameMessage extends Partial<RouterConfigRaw> {
+  /** 通信动作 */
+  action: IFrameActon;
+  /** 新增的路由，仅当 action 为 add 相关值时有效（必传） */
+  routes?: RouterConfigRaw[];
 }
 
 /**
  * 接收 iframe 传来的消息，并进行逻辑处理
  */
 export const useIFrame = (immediate = true) => {
-  const layoutStore = useLayoutStore();
+  const isStart = ref(false);
+
   const { closeSelectedTab } = useTabNav();
+  const { loadDynamicRoutes } = useRouteFn();
+  const layoutStore = useLayoutStore();
+  const userStore = useUserStore();
 
   const router = useRouter();
 
   let cleanup: ReturnType<typeof useEventListener>;
 
   /**
-   * 判断是否是当前 iframe
-   */
-  const isCurrentIFrame = (item: IFrame) => item.name === router.currentRoute.value.name;
-
-  /**
-   * 接收 iframe 传来的消息，执行该消息（如果把 admin 作为门户来嵌入各个系统，则用到）
+   * 接收 iframe 传来的消息，执行该消息（场景：把 teek 作为门户来嵌入各个系统）
    *
    * @param evt 通信数据
    */
   const watchFrameMessage = (evt: MessageEvent) => {
     const { data } = evt;
-    let message: typeof data;
+    let message = data;
 
     if (isString(message)) message = JSON.parse(data);
-    else if (isObject(message)) message = data;
-    else return;
 
-    const { name, iframeSrc, closeName, refreshName } = message;
+    if (isObject(message)) processFrameMessage(message as IFrameMessage);
+    else if (isArray(message)) message.forEach(processFrameMessage);
+  };
 
-    // 打开一个新的页面
-    if (iframeSrc) {
-      // 如果是 iframe，则传入一个路由格式数据
-      const route = { ...message };
+  /**
+   * 处理 iframe 接收的消息
+   *
+   * @param message iframe 发送的消息
+   */
+  const processFrameMessage = (message: IFrameMessage) => {
+    const { action = "", name, path, routes = [] } = message;
 
-      route.component = route.meta.iframeKeepAlive ? IFrameBlank : IFrameView;
-      router.addRoute("Layout", route);
-      return router.push({ name: route.name });
+    // 打开一个路由
+    if (action === "open") {
+      if (name && router.hasRoute(name)) return router.push({ name });
+      if (path) return router.push(path);
     }
 
-    // 打开系统路由
-    if (name && router.hasRoute(name)) return router.push({ name });
-    // 关闭一个路由
-    if (closeName) return closeFrame(closeName);
-    // 刷新一个路由，如果一个路由被关闭，则直接打开该路由
-    if (refreshName) {
-      closeFrame(refreshName);
-      return router.push({ name: refreshName });
+    // 关闭路由，支持关闭多个路由
+    if (action === "close" && name) {
+      if (isArray(name)) return name.forEach(closeFrame);
+      return closeFrame(name);
+    }
+
+    // 刷新一个路由：先关闭后打开路由
+    if (action === "refresh" && name) {
+      closeFrame(name);
+      setTimeout(() => router.push({ name }), 1);
+      return;
+    }
+
+    // 新增路由并跳转第一个路由
+    if (action === "add") {
+      loadDynamicRoutes(routes, userStore.roles);
+
+      if (routes.length) router.push({ name: routes[0].name });
     }
   };
 
   /**
    * 关闭 iframe
    */
-  const closeFrame = (name: string) => {
+  const closeFrame = (name: string | symbol) => {
     const tab = layoutStore.tabNavList.find(tab => tab.name === name);
     tab && closeSelectedTab(tab);
   };
@@ -91,7 +104,9 @@ export const useIFrame = (immediate = true) => {
    * 开始监听 iframe 消息
    */
   const start = () => {
+    if (isStart.value) return;
     cleanup = useEventListener("message", watchFrameMessage);
+    isStart.value = true;
   };
 
   /**
@@ -103,9 +118,5 @@ export const useIFrame = (immediate = true) => {
 
   if (immediate) start();
 
-  return {
-    start,
-    stop,
-    isCurrentIFrame,
-  };
+  return { start, stop };
 };

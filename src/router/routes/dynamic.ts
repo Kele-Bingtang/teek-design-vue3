@@ -45,7 +45,7 @@ import detailsRoutes from "./dynamic/details";
 import directiveRoutes from "./dynamic/directive";
 import errorRoutes from "./dynamic/error";
 import excelRoutes from "./dynamic/excel";
-import frameRoutes from "./dynamic/frame";
+import { iframeRoutes, iframeSignalRoutes } from "./dynamic/iframe";
 import nestedRoutes from "./dynamic/nested";
 import outerChainRoutes from "./dynamic/outer-chain";
 import permissionRoutes from "./dynamic/permission";
@@ -118,7 +118,8 @@ export const dynamicRoutes: RouterConfigRaw[] = [
   { ...directiveRoutes },
   { ...nestedRoutes },
   { ...errorRoutes },
-  { ...frameRoutes },
+  { ...iframeRoutes },
+  { ...iframeSignalRoutes },
   { ...outerChainRoutes },
   { ...detailsRoutes },
   { ...websocketRoutes },

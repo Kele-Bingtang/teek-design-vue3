@@ -18,14 +18,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 46px;
+    padding: 43px;
 
     .dot {
       position: relative;
       box-sizing: border-box;
       display: inline-block;
-      width: 64px;
-      height: 64px;
+      width: 56px;
+      height: 56px;
       font-size: 32px;
       transform: rotate(45deg);
       animation: ant-rotate 1.2s infinite linear;
@@ -34,8 +34,8 @@
     .dot i {
       position: absolute;
       display: block;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       background-color: cssVar(color-primary);
       border-radius: 100%;
       opacity: 0.3;

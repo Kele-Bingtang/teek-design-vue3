@@ -56,6 +56,13 @@ watch(
     findTargetTab();
   }
 );
+watch(
+  () => tabNavList,
+  () => {
+    findTargetTab();
+  },
+  { deep: true }
+);
 
 /**
  * 找出访问的目标 tab
