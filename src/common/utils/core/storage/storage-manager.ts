@@ -1,5 +1,3 @@
-import { serviceConfig } from "@/common/config";
-
 type StorageType = "localStorage" | "sessionStorage";
 
 interface StorageManagerOptions {
@@ -119,18 +117,3 @@ export class StorageManager {
     includesKeys.forEach(key => window[this.type].removeItem(key));
   }
 }
-
-// 创建项目使用的存储管理器
-const localStorageProxy = new StorageManager({
-  type: "localStorage",
-  prefix: serviceConfig.cache.cacheKeyPrefix,
-  version: __APP_INFO__.pkg.version,
-});
-
-const sessionStorageProxy = new StorageManager({
-  type: "sessionStorage",
-  prefix: serviceConfig.cache.cacheKeyPrefix,
-  version: __APP_INFO__.pkg.version,
-});
-
-export { localStorageProxy, sessionStorageProxy };
