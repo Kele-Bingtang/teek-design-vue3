@@ -36,7 +36,7 @@ const activeMenu = computed(() => {
 
   const { activeMenu, _fullPath } = route.meta;
 
-  return isFunction(activeMenu) ? activeMenu(route) : route.meta.activeMenu || _fullPath || route.path;
+  return isFunction(activeMenu) ? activeMenu(route) : activeMenu || _fullPath || route.path;
 });
 
 const isCollapse = computed(() => (props.isCollapse === undefined ? menu.value.collapsed : props.isCollapse));
