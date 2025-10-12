@@ -1,3 +1,4 @@
+import type { I18nOptions } from "vue-i18n";
 import { createI18n } from "vue-i18n";
 import { LanguageEnum } from "@/common/enums";
 import { isObject, localStorageProxy } from "@/common/utils";
@@ -14,7 +15,7 @@ const messages = {
 export const languageOptions = [
   { value: LanguageEnum.ZhCn, label: "简体中文" },
   { value: LanguageEnum.EnUs, label: "English" },
-];
+] as I18nOptions["messages"];
 
 /**
  * 获取默认语言
