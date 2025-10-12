@@ -88,6 +88,7 @@ function useOperationConfirmPropsGet() {
     if (buttonRaw.confirm === false) return;
     if (buttonRaw.confirm === true) return OperationConfirmEl.ElPopconfirm;
     if (buttonRaw.confirm?.el) return toValue(buttonRaw.confirm.el);
+    if (buttonRaw.confirm) return OperationConfirmEl.ElPopconfirm;
 
     if (!props.confirm) return;
     if (props.confirm === true) return OperationConfirmEl.ElPopconfirm;

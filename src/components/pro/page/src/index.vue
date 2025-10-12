@@ -14,10 +14,10 @@ import type {
   PageInfo,
 } from "@/components/pro/table";
 import type { ProPageEmits, ProPageProps } from "./types";
-import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
+import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch, useSlots } from "vue";
 import { ElTooltip, ElButton } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import { isEmpty, isFunction } from "@/common/utils";
+import { isEmpty, isFunction, isBoolean } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, defaultTooltipProps, lastProp } from "@/components/pro/table";
@@ -314,7 +314,7 @@ defineExpose(expose);
     >
       <template #head-right-after>
         <el-tooltip
-          v-if="(toolButton === true || toolButton?.includes('search')) && columns.length"
+          v-if="(toolButton === true || (!isBoolean(toolButton) && toolButton?.includes('search'))) && columns.length"
           content="隐藏/展开搜索"
           v-bind="tooltipProps"
         >

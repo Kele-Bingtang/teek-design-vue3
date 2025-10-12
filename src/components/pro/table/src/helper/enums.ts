@@ -22,6 +22,7 @@ export enum ToolButtonEnum {
   Export = "export",
   ColumnSetting = "columnSetting",
   BaseSetting = "baseSetting",
+  Search = "search",
 }
 
 // 导出时列配置项

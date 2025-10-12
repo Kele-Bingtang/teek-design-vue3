@@ -2,6 +2,7 @@ import type { DrawerProps } from "element-plus";
 import type { ProFormNamespace } from "@/components/pro/form";
 import type { ProDrawerProps } from "@/components/pro/drawer";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
+import type ProFormDrawer from "./index.vue";
 
 export interface ProFormDrawerProps {
   /**
@@ -28,3 +29,8 @@ export interface ProFormDrawerEmits {
    */
   cancel: [];
 }
+
+/**
+ * ProFormDrawer 组件实例
+ */
+export type ProFormDrawerInstance = InstanceType<typeof ProFormDrawer>;

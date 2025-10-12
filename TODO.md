@@ -6,6 +6,8 @@
 
 ### 优化
 
+- ProFormItem 的 FormItemColumnProps 传入泛型，为 model 的类型，当前默认是 Record<string, any>，使用没有语法提示，其他 Pro 组件同理
+
 ### Bug
 
 ### 已完成

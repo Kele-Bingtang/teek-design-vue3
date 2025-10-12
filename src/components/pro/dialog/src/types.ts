@@ -96,6 +96,10 @@ export interface ProDialogProps {
    * 全屏切换事件
    */
   onFullscreen?: (isFullscreen: boolean) => void;
+  /**
+   * 兼容 ElDialog 的属性
+   */
+  [key: string]: any;
 }
 
 export interface ProDialogEmits {
