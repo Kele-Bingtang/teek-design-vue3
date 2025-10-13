@@ -1,4 +1,6 @@
-import type { FilterRule } from "../types";
+import type { TableColumnCtx } from "element-plus";
+import type { FilterRule, TableColumn } from "../types";
+import { toRaw, toValue } from "vue";
 import { isArray, isEmpty, isFunction } from "@/common/utils";
 import { getProp, getObjectKeys } from "@/components/pro/helper";
 import { Environment } from "./enums";
@@ -156,4 +158,25 @@ export const filterData = (data: Recordable[], model: Recordable, filterRule: Re
       return rowValue === value;
     });
   });
+};
+
+/**
+ * 初始化 column 部分配置项，并移出不需要的配置项
+ */
+export const initTableColumn = (column: TableColumn) => {
+  column.filter = toValue(column.filter);
+  column.editable = toValue(column.editable);
+  column.hidden = toValue(column.hidden);
+  column.disabledHidden = toValue(column.disabledHidden);
+  column.disabledFilter = toValue(column.disabledFilter);
+  column.disabledSortable = toValue(column.disabledSortable);
+  column.isFilterOptions = toValue(column.isFilterOptions);
+  column.width = toValue(column.width);
+  column.label = toValue(column.label);
+
+  // 使用解构并排除 children, renderHeader 属性
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { children, renderHeader, ...rest } = toRaw(column);
+
+  return rest as unknown as TableColumnCtx<any>;
 };

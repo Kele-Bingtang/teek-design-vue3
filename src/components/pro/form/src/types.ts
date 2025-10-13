@@ -170,7 +170,7 @@ export namespace FormMainNamespace {
 /**
  * ProForm 表单配置项
  */
-export interface FormColumn extends FormItemColumnProps {
+export interface FormColumn<T = any> extends FormItemColumnProps<T> {
   /**
    * ElFormItem 的 prop 属性，当表单数据 model 为对象时，prop 也是 model 的 key
    */
@@ -185,7 +185,7 @@ export interface FormColumn extends FormItemColumnProps {
   defaultValue?:
     | MaybeRef<ModelBaseValueType>
     | Promise<ModelBaseValueType>
-    | ((model: Recordable, optionsMap: Map<string, Recordable>) => ModelBaseValueType | Promise<ModelBaseValueType>);
+    | ((model: T, optionsMap: Map<string, Recordable>) => ModelBaseValueType | Promise<ModelBaseValueType>);
   /**
    * 表单排序（从大到小）
    */
@@ -194,13 +194,13 @@ export interface FormColumn extends FormItemColumnProps {
    * 是否销毁表单，true 销毁，false 不销毁，类似于 v-if
    * @default false
    */
-  destroy?: MaybeRef<boolean> | ((model: Recordable) => MaybeRef<boolean>);
+  destroy?: MaybeRef<boolean> | ((model: T) => MaybeRef<boolean>);
   /**
    * 是否隐藏表单，true 隐藏，false 不隐藏，类似于 v-show
    *
    * @default false
    */
-  hidden?: MaybeRef<boolean> | ((model: Recordable) => MaybeRef<boolean>);
+  hidden?: MaybeRef<boolean> | ((model: T) => MaybeRef<boolean>);
   /**
    * 指定 Options 的 key，如果设置了则优先从缓存获取对于 key 的 Options 数据
    */

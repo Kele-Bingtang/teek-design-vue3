@@ -12,13 +12,13 @@ import type {
   PageInfo,
 } from "./types";
 import type { UseSelectState } from "./composables";
-import { ref, computed, watchEffect, onMounted, useTemplateRef, isRef, isReactive, reactive, unref } from "vue";
+import { ref, computed, watchEffect, onMounted, useTemplateRef, isRef, isReactive, reactive, unref, watch } from "vue";
 import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 import { defaultTablePageInfo, useTableApi, useTableState } from "./composables";
-import { defaultToolButton, defaultTooltipProps, Environment, TableSizeEnum } from "./helper";
+import { defaultToolButton, defaultTooltipProps, Environment, TableSizeEnum, initTableColumn } from "./helper";
 import TableMain from "./table-main.vue";
 import TableHead from "./table-head.vue";
 
@@ -186,6 +186,9 @@ const {
 watchEffect(() => (hideHead.value = finalProps.value.hideHead));
 watchEffect(() => (searchParams.value = finalProps.value.requestParams));
 watchEffect(() => (searchInitParams.value = finalProps.value.initRequestParams));
+
+// initRequestParams 改变时，searchInitParams 会改变，需要重新请求
+watch(searchInitParams, fetch);
 
 /**
  * 表格密度和样式初始化和获取
@@ -441,7 +444,7 @@ defineExpose(expose);
       </template>
 
       <template #append-column>
-        <el-table-column v-if="controlHeadColumn" :width="45" v-bind="controlHeadColumnProps">
+        <el-table-column v-if="controlHeadColumn" :width="45" v-bind="initTableColumn(controlHeadColumnProps)">
           <template #header>
             <el-button size="large" link :icon="Tools" @click="hideHead = !hideHead" />
           </template>

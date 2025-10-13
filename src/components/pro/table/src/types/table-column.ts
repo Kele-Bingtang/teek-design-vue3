@@ -9,9 +9,14 @@ import type { ElDisplayProps } from "./el-display";
 import type { OperationNamespace } from "./table-column-operation";
 
 /**
+ * 是否为 any 类型
+ */
+export type IsAny<T> = 0 extends 1 & T ? true : false;
+
+/**
  * render、插槽参数类型
  */
-export interface TableRenderParams<T extends Recordable = Recordable> extends TableScope<T> {
+export interface TableRenderParams<T extends Recordable = any> extends TableScope<T> {
   /**
    * 传入的原始值
    */
@@ -33,7 +38,7 @@ export interface TableRenderParams<T extends Recordable = Recordable> extends Ta
 /**
  * 表格行 Scope
  */
-export type TableScope<T extends Recordable = Recordable> = {
+export type TableScope<T extends Recordable = any> = {
   /**
    * 表格行索引
    */
@@ -69,9 +74,9 @@ export type TableScope<T extends Recordable = Recordable> = {
 };
 
 /**
- * 表格行 Row
+ * 表格行 Row 内置属性
  */
-export type TableRow<T = Recordable> = T & {
+export type TableRowInternal = {
   /**
    * options 字典枚举
    */
@@ -132,6 +137,12 @@ export type TableRow<T = Recordable> = T & {
    */
   _validateCellEdit: (callback?: FormValidateCallback, prop?: string) => FormValidationResult | undefined;
 };
+
+/**
+ * 表格行 Row（支持拓展类型）
+ */
+export type TableRow<T extends Recordable = any> =
+  IsAny<T> extends true ? TableRowInternal & Recordable : TableRowInternal & T;
 
 /**
  * 表格列配置

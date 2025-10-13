@@ -77,6 +77,9 @@ const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePag
 
 provide(optionsMapKey, optionsMap);
 
+// 计算初始化查询参数
+const initRequestParams = computed(() => ({ ...searchDefaultParams, ...proTableProps.value.initRequestParams }));
+
 /**
  *  页面搜索数据初始化
  */
@@ -267,6 +270,7 @@ const expose = {
     });
   },
   clearSearchParams: () => (searchParams.value = {}),
+  clearSelection: () => proTableInstance.value?.tableMainInstance?.clearSelection(),
 };
 
 defineExpose(expose);
@@ -297,7 +301,7 @@ defineExpose(expose);
       ref="proTableInstance"
       v-bind="{ ...$attrs, ...proTableProps }"
       :request-params="searchParams"
-      :init-request-params="searchDefaultParams"
+      :init-request-params="initRequestParams"
       @selection-change="handleSelectionChange"
       @size-change="handleSizeChange"
       @pagination-change="handlePaginationChange"
