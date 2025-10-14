@@ -9,7 +9,7 @@ import type ProSearch from "./index.vue";
  */
 export type ActionPosition = "left" | "right" | "block-left" | "block-center" | "block-right";
 
-export type ProSearchColumn = FormColumn & {
+export type SearchColumn = FormColumn & {
   /**
    * GridItem props
    */
@@ -20,7 +20,7 @@ export interface ProSearchProps {
   /**
    * 搜索配置列
    */
-  columns?: ProSearchColumn[];
+  columns?: SearchColumn[];
   /**
    * Action 位置，block 代表换行
    *

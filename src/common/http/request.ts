@@ -154,12 +154,12 @@ export class Request {
         if (config.responseReturn === "body") return data;
 
         // 登陆失效
-        if (data.code === ResultEnum.LOGIN) {
+        if (data.code && data.code === ResultEnum.LOGIN) {
           // 处理刷新 token 的逻辑
           if (this.handlers.refreshToken) return this.handleRefreshToken(response);
 
           // 如果没有配置刷新 token 的函数，则直接走失败逻辑
-          this.handlers.showMessage?.(data.message, "error");
+          data.message && this.handlers.showMessage?.(data.message, "error");
 
           // 执行登出操作
           this.handlers.logout && this.handlers.logout();
@@ -168,8 +168,8 @@ export class Request {
         }
 
         // 错误信息
-        if (data.code !== ResultEnum.SUCCESS) {
-          this.handlers.showMessage?.(data.message, "error");
+        if (data.code && data.code !== ResultEnum.SUCCESS) {
+          data.message && this.handlers.showMessage?.(data.message, "error");
 
           return Promise.reject(data);
         }

@@ -50,7 +50,7 @@ const finalProps = computed(() => {
     ...props,
     columns:
       isRef(props.columns) || isReactive(props.columns)
-        ? props.columns
+        ? (props.columns as FormColumn[])
         : (reactive(unref(props.columns)) as FormColumn[]),
   };
   Object.assign(propsObj, mergeProps.value);

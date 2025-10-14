@@ -11,7 +11,7 @@ type MetaNeedKey = "_fullPath" | "_dynamic";
 declare module "vue-router" {
   // 扩展路由 Meta 类型
   interface RouteMeta extends RequiredKey<MetaProps, MetaNeedKey> {
-    [key: string]: unknown;
+    [key: string]: any;
   }
 }
 

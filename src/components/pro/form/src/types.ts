@@ -104,7 +104,7 @@ export namespace FormMainNamespace {
     /**
      * 表单配置项
      */
-    columns?: FormColumn[];
+    columns?: MaybeRef<FormColumn[]>;
     /**
      * 动态 model，如果 column 发生变化，则重新渲染 model 表单数据（将不存在 column 的 prop 从 model 中去掉）
      *

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="UseProSearchDemo">
-import type { ProSearchColumn, ActionPosition } from "@/components";
+import type { SearchColumn, ActionPosition } from "@/components";
 import { ref, reactive } from "vue";
 import { ProSearch, useProSearch } from "@/components";
 
@@ -56,7 +56,7 @@ const changeResetLoading = () => {
   }, 2000);
 };
 
-const columns: ProSearchColumn[] = reactive([
+const columns: SearchColumn[] = reactive([
   {
     label: "姓名",
     prop: "name",

@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 import { isProxy, toRaw } from "vue";
 import { ElNotification } from "element-plus";
-import { isValidURL, isType, isFunction, cacheOperator } from "@/common/utils";
+import { isValidURL, isType, isFunction, cacheOperator, isArray } from "@/common/utils";
 import { serviceConfig, HOME_NAME, LAYOUT_NAME, LOGIN_URL, FORBIDDEN_NAME } from "@/common/config";
 import router from "@/router";
 import { notFoundRoutes, authRoutes, constantRoutes } from "@/router/routes";
@@ -9,7 +9,8 @@ import { translateTitle } from "@/router/helper";
 import { useRouteStore, useUserStore } from "@/pinia";
 
 // 后端获取动态路由的接口类型
-type BackendApi = () => RouterConfigRaw[] | Promise<RouterConfigRaw[]>;
+type BackendApiReturn = RouterConfigRaw[] | { [key: string]: RouterConfigRaw[] };
+type BackendApi = () => BackendApiReturn | Promise<BackendApiReturn>;
 
 export const useRouteFn = () => {
   const { cacheDynamicRoutes } = serviceConfig.router;
@@ -75,8 +76,7 @@ export const useRouteFn = () => {
   const getDynamicRoutesFromBackend = async (api: BackendApi) => {
     const routeList = await api();
 
-    if (!routeList) return [];
-    return routeList;
+    return (isArray(routeList) ? routeList : routeList.data || routeList.list) || [];
   };
 
   /**

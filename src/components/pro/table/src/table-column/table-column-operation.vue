@@ -191,8 +191,7 @@ function useOperationButtonEvent() {
 
 <template>
   <el-table-column
-    v-bind="{ ...$attrs, ...props, buttons: undefined }"
-    :fixed
+    v-bind="{ ...$attrs, ...props, buttons: undefined, el: undefined, showNumber: undefined, confirm: undefined }"
     :label="toValue(label)"
     :width="toValue(width)"
     :class-name="className ? className : '' + ns.b()"

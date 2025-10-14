@@ -78,7 +78,7 @@ export namespace OperationNamespace {
       | Confirm<OperationConfirmEl.ElMessageBox | `${OperationConfirmEl.ElMessageBox}`>;
   }
 
-  export type Props = Omit<Partial<TableColumn>, "children" | "renderCell"> & ExtraProp;
+  export type Props = Omit<TableColumn, "children" | "renderCell"> & ExtraProp;
 
   export interface Emits {
     /**

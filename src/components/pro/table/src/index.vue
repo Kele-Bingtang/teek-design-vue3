@@ -91,7 +91,7 @@ const finalProps = computed(() => {
     ...props,
     columns:
       isRef(props.columns) || isReactive(props.columns)
-        ? props.columns
+        ? (props.columns as TableColumn[])
         : (reactive(unref(props.columns)) as TableColumn[]),
   };
   Object.assign(propsObj, mergeProps.value);

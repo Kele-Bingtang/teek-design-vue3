@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UnwrapRef } from "vue";
 import type { TableInstance } from "element-plus";
-import type { ProSearchColumn, ProSearchInstance } from "@/components/pro/search";
+import type { SearchColumn, ProSearchInstance } from "@/components/pro/search";
 import type {
   ProTableInstance,
   OperationNamespace,
@@ -78,7 +78,7 @@ const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePag
 provide(optionsMapKey, optionsMap);
 
 // 计算初始化查询参数
-const initRequestParams = computed(() => ({ ...searchDefaultParams, ...proTableProps.value.initRequestParams }));
+const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...proTableProps.value.initRequestParams }));
 
 /**
  *  页面搜索数据初始化
@@ -96,7 +96,7 @@ function usePageSearchInit() {
   // 组装 ProSearch 配置项
   const searchColumns = computed(() => {
     const filterColumns = flatColumns.value.filter(item => item.search);
-    const searchColumns: ProSearchColumn[] = [];
+    const searchColumns: SearchColumn[] = [];
 
     filterColumns.forEach(async column => {
       // Table 默认查询参数初始化
@@ -109,7 +109,7 @@ function usePageSearchInit() {
       }
 
       // 组装搜索表单配置项
-      const searchColumn: ProSearchColumn = {
+      const searchColumn: SearchColumn = {
         ...column.search,
         el: column.search?.el || ((column.search?.options ?? column.options) ? "ElSelect" : "ElInput"),
         grid: {

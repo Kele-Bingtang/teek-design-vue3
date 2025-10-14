@@ -1,6 +1,5 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/function" as *;
-@use "@styles/mixins/namespace" as *;
 
 @include b(collapse-trigger) {
   width: 45px;
