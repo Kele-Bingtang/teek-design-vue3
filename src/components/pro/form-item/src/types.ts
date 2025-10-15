@@ -282,15 +282,15 @@ export interface FormItemColumnProps<T = any> {
   /**
    * 自定义 label 标题
    */
-  renderLabel?: (scope: FormItemRenderParams | Recordable) => RenderTypes;
+  renderLabel?: (scope: FormItemRenderParams) => RenderTypes;
   /**
    * 自定义 Label 内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderLabelHTML?: (scope: FormItemRenderParams | Recordable) => string;
+  renderLabelHTML?: (scope: FormItemRenderParams) => string;
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  render?: (scope: FormItemRenderParams | Recordable) => RenderTypes;
+  render?: (scope: FormItemRenderParams) => RenderTypes;
   /**
    * 是否为编辑态
    *

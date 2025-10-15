@@ -1,5 +1,5 @@
 import type { ApiResponse, PageInfo, UseTableStateData, UseTableStateOptions } from "../types";
-import { reactive, computed, toRefs, toValue, watch, unref, readonly, ref } from "vue";
+import { reactive, computed, toRefs, toValue, watch, unref, readonly, ref, onMounted } from "vue";
 import { defaultPaginationInfo } from "@/components/pro/pagination";
 import { isArray, isEmpty, isNumber, isObject } from "@/common/utils";
 
@@ -183,7 +183,9 @@ export const useTableState = <T extends Recordable = Recordable, P extends Recor
     if (request && toValue(isServerPage)) requestData();
   };
 
-  if (immediate) requestData();
+  onMounted(() => {
+    if (immediate) requestData();
+  });
 
   return {
     ...toRefs(state),

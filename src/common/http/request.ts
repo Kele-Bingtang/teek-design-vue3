@@ -136,7 +136,8 @@ export class Request {
     // 响应拦截器
     this.service.interceptors.response.use(
       (response: AxiosResponse & { config: RequestConfig }) => {
-        const { data, config, status } = response;
+        const { config, status } = response;
+        let { data } = response;
 
         // 缓存 GET 请求响应数据
         this.getMethod(config) === RequestMethodEnum.GET && this.setResponseCache(config, data);
@@ -147,7 +148,8 @@ export class Request {
         this.axiosCanceler.removePending(config);
 
         // 用户自定义响应处理
-        if (this.interceptors.onResponse) return this.interceptors.onResponse(response);
+        if (this.interceptors.onResponseProcess) return this.interceptors.onResponseProcess(response) ?? data;
+        if (this.interceptors.onResponse) data = this.interceptors.onResponse(response) ?? data;
 
         if (config.responseReturn === "raw") return response;
         if (status < 200 && status >= 400) return Promise.reject(response);

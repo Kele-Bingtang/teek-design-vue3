@@ -66,7 +66,7 @@ const elModel = computed({
 });
 
 // 插槽参数
-const renderParams = computed<Recordable>(() => {
+const renderParams = computed<FormItemRenderParams>(() => {
   return {
     value: elModel.value,
     model: model.value,

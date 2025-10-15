@@ -9,4 +9,6 @@ export interface PointTagProps {
   position?: "left" | "right";
   /** 偏移量 */
   offset?: number | string;
+  /** 内容，可根据 position 配置调整位置 */
+  text?: number | string;
 }
