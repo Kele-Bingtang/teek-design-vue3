@@ -79,7 +79,15 @@ defineExpose(expose);
     </template>
 
     <template v-if="$slots['footer']" #footer>
-      <slot name="footer" v-bind="{ handleConfirm, handleCancel }" />
+      <slot name="footer" v-bind="{ handleConfirm, handleCancel, model }" />
+    </template>
+
+    <template v-if="$slots['footer-before']" #footer-before>
+      <slot name="footer-before" v-bind="{ handleConfirm, handleCancel, model }" />
+    </template>
+
+    <template v-if="$slots['footer-after']" #footer-after>
+      <slot name="footer-after" v-bind="{ handleConfirm, handleCancel, model }" />
     </template>
 
     <ProForm

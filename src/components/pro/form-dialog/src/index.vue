@@ -69,7 +69,18 @@ defineExpose(expose);
       <slot name="dialog-footer" v-bind="{ handleConfirm, handleCancel }" />
     </template>
 
-    <template v-for="slot in Object.keys($slots).filter(key => !['footer'].includes(key))" #[slot]="scope">
+    <template v-if="$slots['dialog-footer-before']" #footer-before>
+      <slot name="dialog-footer-before" v-bind="{ handleConfirm, handleCancel, model }" />
+    </template>
+
+    <template v-if="$slots['dialog-footer-after']" #footer-after>
+      <slot name="dialog-footer-after" v-bind="{ handleConfirm, handleCancel, model }" />
+    </template>
+
+    <template
+      v-for="slot in Object.keys($slots).filter(key => !['footer', 'footer-before', 'footer-after'].includes(key))"
+      #[slot]="scope"
+    >
       <slot :name="slot" v-bind="scope" />
     </template>
 
@@ -82,10 +93,21 @@ defineExpose(expose);
       @change="handleChange"
     >
       <template v-if="$slots['form-footer']" #footer="{ handleSubmit, handleReset }">
-        <slot name="form-footer" v-bind="{ handleSubmit, handleReset }" />
+        <slot name="form-footer" v-bind="{ handleSubmit, handleReset, model }" />
       </template>
 
-      <template v-for="slot in Object.keys($slots).filter(key => !['footer'].includes(key))" #[slot]="scope">
+      <template v-if="$slots['form-footer-before']" #footer-before>
+        <slot name="form-footer-before" v-bind="{ handleConfirm, handleCancel, model }" />
+      </template>
+
+      <template v-if="$slots['form-footer-after']" #footer-after>
+        <slot name="form-footer-after" v-bind="{ handleConfirm, handleCancel, model }" />
+      </template>
+
+      <template
+        v-for="slot in Object.keys($slots).filter(key => !['footer', 'footer-before', 'footer-after'].includes(key))"
+        #[slot]="scope"
+      >
         <slot :name="slot" v-bind="scope" />
       </template>
     </ProForm>

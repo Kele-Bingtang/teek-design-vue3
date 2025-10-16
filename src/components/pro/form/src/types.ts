@@ -12,7 +12,11 @@ export type ElColProps = Partial<ColProps>;
  * ProForm 组件的命名空间类型
  */
 export namespace ProFormNamespace {
-  export interface Props extends FormMainNamespace.Props {
+  export interface Props extends Omit<FormMainNamespace.Props, "columns"> {
+    /**
+     * 表单配置项
+     */
+    columns?: MaybeRef<FormColumn[]>;
     /**
      * ElForm props
      */
@@ -104,7 +108,7 @@ export namespace FormMainNamespace {
     /**
      * 表单配置项
      */
-    columns?: MaybeRef<FormColumn[]>;
+    columns?: FormColumn[];
     /**
      * 动态 model，如果 column 发生变化，则重新渲染 model 表单数据（将不存在 column 的 prop 从 model 中去掉）
      *

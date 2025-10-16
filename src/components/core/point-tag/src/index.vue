@@ -17,14 +17,20 @@ withDefaults(defineProps<PointTagProps>(), {
 </script>
 
 <template>
-  <slot v-if="position === 'right'">
-    {{ text }}
-  </slot>
+  <template v-if="text">
+    <slot v-if="position === 'right'">{{ text }}</slot>
+    <i
+      :class="[ns.b(), ns.is(position), ns.is(type, !color)]"
+      :style="{ '--point-color': color, '--point-size': size, '--point-offset': offset }"
+    />
+    <slot v-if="position === 'left'">{{ text }}</slot>
+  </template>
+
   <i
+    v-else
     :class="[ns.b(), ns.is(position), ns.is(type, !color)]"
     :style="{ '--point-color': color, '--point-size': size, '--point-offset': offset }"
   />
-  <slot v-if="position === 'left'">{{ text }}</slot>
 </template>
 
 <style lang="scss" scoped>

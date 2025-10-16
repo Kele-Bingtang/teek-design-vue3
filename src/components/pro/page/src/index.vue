@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<ProPageProps>(), {
   headerBackground: true,
   highlightCurrentRow: true,
   showHeader: true,
+  pageScope: true,
   tooltipProps: () => defaultTooltipProps,
 });
 

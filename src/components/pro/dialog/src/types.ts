@@ -1,5 +1,13 @@
 import type { RenderTypes } from "@/components/pro/form-item";
 
+/**
+ * Render 相关函数的参数
+ */
+export type DialogRenderParams = {
+  handleConfirm: () => void;
+  handleCancel: () => void;
+};
+
 export interface ProDialogProps {
   /**
    * 顶部标题
@@ -81,9 +89,17 @@ export interface ProDialogProps {
    */
   footerTopRender?: () => RenderTypes;
   /**
+   * 自定义底部前方渲染
+   */
+  renderFooterBefore?: (scope: DialogRenderParams) => RenderTypes;
+  /**
    * 自定义底部渲染
    */
-  renderFooter?: (closeDialog: () => void) => RenderTypes;
+  renderFooter?: (scope: DialogRenderParams) => RenderTypes;
+  /**
+   * 自定义底部前方渲染
+   */
+  renderFooterAfter?: (scope: DialogRenderParams) => RenderTypes;
   /**
    * 确认按钮点击事件
    */

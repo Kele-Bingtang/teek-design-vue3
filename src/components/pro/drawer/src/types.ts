@@ -1,5 +1,13 @@
 import type { RenderTypes } from "@/components/pro/form-item";
 
+/**
+ * Render 相关函数的参数
+ */
+export type DrawerRenderParams = {
+  handleConfirm: () => void;
+  handleCancel: () => void;
+};
+
 export interface ProDrawerProps {
   /**
    * 顶部标题
@@ -61,9 +69,17 @@ export interface ProDrawerProps {
    */
   renderHeader?: (scope: any) => RenderTypes;
   /**
+   * 自定义底部前方渲染
+   */
+  renderFooterBefore?: (scope: DrawerRenderParams) => RenderTypes;
+  /**
    * 自定义底部渲染
    */
-  renderFooter?: (closeDrawer: () => void) => RenderTypes;
+  renderFooter?: (scope: DrawerRenderParams) => RenderTypes;
+  /**
+   * 自定义底部前方渲染
+   */
+  renderFooterAfter?: (scope: DrawerRenderParams) => RenderTypes;
   /**
    * 确认按钮点击事件
    */

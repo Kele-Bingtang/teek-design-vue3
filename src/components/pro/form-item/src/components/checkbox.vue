@@ -20,9 +20,9 @@ const checkboxComponent = computed(() =>
   <component
     v-for="option in options"
     :is="checkboxComponent"
-    :key="option[optionField.value]"
-    :disabled="option[optionField.disabled]"
-    :label="option[optionField.label]"
-    :value="option[optionField.value] ?? ''"
+    :key="option[optionField.value ?? 'value']"
+    :label="option[optionField.label ?? 'label']"
+    :value="option[optionField.value ?? 'value'] ?? ''"
+    :disabled="option[optionField.disabled ?? 'disabled']"
   />
 </template>
