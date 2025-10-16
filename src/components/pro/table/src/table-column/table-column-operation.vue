@@ -208,6 +208,7 @@ function useOperationButtonEvent() {
       <slot v-else-if="$slots[lastProp(prop)]" :name="lastProp(prop)" v-bind="scope" />
 
       <template v-else>
+        <slot name="operation-before" v-bind="scope" />
         <!-- 显示出来的按钮 -->
         <template v-for="button in getButtons(scope.row, scope.$index).showButtons" :key="button.text">
           <OperationButton
@@ -223,6 +224,8 @@ function useOperationButtonEvent() {
             @cancel="e => handleCancel(button, scope, e)"
           />
         </template>
+
+        <slot name="operation-after" v-bind="scope" />
 
         <!-- 隐藏的按钮 -->
         <el-dropdown v-if="getButtons(scope.row, scope.$index).showMore" trigger="click" :hide-on-click="hideOnClick">
