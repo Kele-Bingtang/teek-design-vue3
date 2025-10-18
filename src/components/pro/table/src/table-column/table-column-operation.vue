@@ -88,6 +88,7 @@ function useOperationConfirmPropsGet() {
     if (buttonRaw.confirm === false) return;
     if (buttonRaw.confirm === true) return OperationConfirmEl.ElPopconfirm;
     if (buttonRaw.confirm?.el) return toValue(buttonRaw.confirm.el);
+    if (buttonRaw.confirm) return OperationConfirmEl.ElPopconfirm;
 
     if (!props.confirm) return;
     if (props.confirm === true) return OperationConfirmEl.ElPopconfirm;
@@ -190,8 +191,7 @@ function useOperationButtonEvent() {
 
 <template>
   <el-table-column
-    v-bind="{ ...$attrs, ...props, buttons: undefined }"
-    :fixed
+    v-bind="{ ...$attrs, ...props, buttons: undefined, el: undefined, showNumber: undefined, confirm: undefined }"
     :label="toValue(label)"
     :width="toValue(width)"
     :class-name="className ? className : '' + ns.b()"
@@ -208,6 +208,7 @@ function useOperationButtonEvent() {
       <slot v-else-if="$slots[lastProp(prop)]" :name="lastProp(prop)" v-bind="scope" />
 
       <template v-else>
+        <slot name="operation-before" v-bind="scope" />
         <!-- 显示出来的按钮 -->
         <template v-for="button in getButtons(scope.row, scope.$index).showButtons" :key="button.text">
           <OperationButton
@@ -223,6 +224,8 @@ function useOperationButtonEvent() {
             @cancel="e => handleCancel(button, scope, e)"
           />
         </template>
+
+        <slot name="operation-after" v-bind="scope" />
 
         <!-- 隐藏的按钮 -->
         <el-dropdown v-if="getButtons(scope.row, scope.$index).showMore" trigger="click" :hide-on-click="hideOnClick">

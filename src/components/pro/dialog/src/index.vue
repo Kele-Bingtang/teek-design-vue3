@@ -128,10 +128,12 @@ defineExpose({ elDialogInstance, handleConfirm, handleCancel, open, close });
 
     <template v-if="showFooter" #footer>
       <div :class="ns.e('footer')" :style="footerStyle">
+        <slot name="footer-before" v-bind="{ handleConfirm, handleCancel }" />
         <slot name="footer" v-bind="{ handleConfirm, handleCancel }">
           <el-button @click="handleCancel()">{{ cancelText }}</el-button>
           <el-button type="primary" :loading="confirmLoading" @click="handleConfirm()">{{ confirmText }}</el-button>
         </slot>
+        <slot name="footer-after" v-bind="{ handleConfirm, handleCancel }" />
       </div>
     </template>
   </el-dialog>

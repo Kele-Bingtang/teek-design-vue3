@@ -36,8 +36,14 @@ export interface PageField {
  */
 export namespace ProTableNamespace {
   export interface Props
-    extends ProTableMainNamespace.Props,
-      Omit<ProTableHeadNamespace.Props, "data" | "column" | "isSelected" | "selectedList" | "selectedListIds"> {
+    extends Omit<ProTableMainNamespace.Props, "columns">,
+      Omit<ProTableHeadNamespace.Props, "data" | "columns" | "isSelected" | "selectedList" | "selectedListIds"> {
+    /**
+     * 列配置项
+     *
+     * @default '[]'
+     */
+    columns?: MaybeRef<TableColumn[]>;
     /**
      * 请求表格数据的请求
      *

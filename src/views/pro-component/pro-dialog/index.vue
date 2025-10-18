@@ -65,8 +65,14 @@ const againOpenDialog = () => {
         <el-descriptions-item label="footerTopRender">
           底部上方渲染 TSX。`() => VNode` 类型，默认 undefined
         </el-descriptions-item>
+        <el-descriptions-item label="renderFooterBefore">
+          底部渲染 TSX。`(scope: DialogRenderParams) => VNode` 类型，默认 undefined
+        </el-descriptions-item>
         <el-descriptions-item label="renderFooter">
-          底部渲染 TSX。`() => VNode` 类型，默认 undefined
+          底部渲染 TSX。`(scope: DialogRenderParams) => VNode` 类型，默认 undefined
+        </el-descriptions-item>
+        <el-descriptions-item label="renderFooterAfter">
+          底部渲染 TSX。`(scope: DialogRenderParams) => VNode` 类型，默认 undefined
         </el-descriptions-item>
         <el-descriptions-item label="onConfirm">
           点击确认按钮回调。`(closeDialog: () => void) => void` 类型，默认 undefined。其中 closeDialog
@@ -125,7 +131,9 @@ const againOpenDialog = () => {
         <el-descriptions-item label="header-title">自定义头部标题</el-descriptions-item>
         <el-descriptions-item label="fullscreen-icon">全屏切换事件</el-descriptions-item>
         <el-descriptions-item label="footer-top">全屏切换事件</el-descriptions-item>
+        <el-descriptions-item label="footer-before">自定义底部前</el-descriptions-item>
         <el-descriptions-item label="footer">自定义底部</el-descriptions-item>
+        <el-descriptions-item label="footer-after">自定义底部后</el-descriptions-item>
       </el-descriptions>
     </el-card>
   </el-space>

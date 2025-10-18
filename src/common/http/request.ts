@@ -136,7 +136,8 @@ export class Request {
     // 响应拦截器
     this.service.interceptors.response.use(
       (response: AxiosResponse & { config: RequestConfig }) => {
-        const { data, config, status } = response;
+        const { config, status } = response;
+        let { data } = response;
 
         // 缓存 GET 请求响应数据
         this.getMethod(config) === RequestMethodEnum.GET && this.setResponseCache(config, data);
@@ -147,19 +148,20 @@ export class Request {
         this.axiosCanceler.removePending(config);
 
         // 用户自定义响应处理
-        if (this.interceptors.onResponse) return this.interceptors.onResponse(response);
+        if (this.interceptors.onResponseProcess) return this.interceptors.onResponseProcess(response) ?? data;
+        if (this.interceptors.onResponse) data = this.interceptors.onResponse(response) ?? data;
 
         if (config.responseReturn === "raw") return response;
         if (status < 200 && status >= 400) return Promise.reject(response);
         if (config.responseReturn === "body") return data;
 
         // 登陆失效
-        if (data.code === ResultEnum.LOGIN) {
+        if (data.code && data.code === ResultEnum.LOGIN) {
           // 处理刷新 token 的逻辑
           if (this.handlers.refreshToken) return this.handleRefreshToken(response);
 
           // 如果没有配置刷新 token 的函数，则直接走失败逻辑
-          this.handlers.showMessage?.(data.message, "error");
+          data.message && this.handlers.showMessage?.(data.message, "error");
 
           // 执行登出操作
           this.handlers.logout && this.handlers.logout();
@@ -168,8 +170,8 @@ export class Request {
         }
 
         // 错误信息
-        if (data.code !== ResultEnum.SUCCESS) {
-          this.handlers.showMessage?.(data.message, "error");
+        if (data.code && data.code !== ResultEnum.SUCCESS) {
+          data.message && this.handlers.showMessage?.(data.message, "error");
 
           return Promise.reject(data);
         }

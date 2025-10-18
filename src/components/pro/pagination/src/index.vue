@@ -46,7 +46,7 @@ watch(
  * 改变分页大小事件
  */
 const handleSizeChange = (pageSize: number) => {
-  if (props.reset) handleCurrentChange(1);
+  if (props.reset) handleCurrentChange(1, false);
   pageModel.value.pageSize = pageSize;
   afterChange();
   emits("sizeChange", pageSize);
@@ -55,11 +55,17 @@ const handleSizeChange = (pageSize: number) => {
 /**
  * 改变分页页码事件
  */
-const handleCurrentChange = (pageNum: number) => {
+const handleCurrentChange = (pageNum: number, change = true) => {
   pageModel.value.pageNum = pageNum;
-  afterChange();
+  change && afterChange();
   emits("currentChange", pageNum);
 };
+
+watch(() => pageInfo.value.pageSize, handleSizeChange);
+watch(
+  () => pageInfo.value.pageNum,
+  newValue => handleCurrentChange(newValue)
+);
 
 /**
  * 分页改变后续操作
@@ -93,8 +99,6 @@ defineExpose({ defaultPaginationInfo });
       :page-sizes="pageInfo.pageSizes"
       :total
       v-bind="$attrs"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
     />
 
     <slot v-if="align === 'left'" name="pagination-right"><span /></slot>

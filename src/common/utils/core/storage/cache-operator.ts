@@ -1,6 +1,21 @@
 import type { TabProps } from "@/pinia";
 import { serviceConfig } from "@/common/config";
-import { localStorageProxy } from "./storage-manager";
+import { StorageManager } from "./storage-manager";
+
+// 创建项目使用的存储管理器
+const localStorageProxy = new StorageManager({
+  type: "localStorage",
+  prefix: serviceConfig.cache.cacheKeyPrefix,
+  version: __APP_INFO__.pkg.version,
+});
+
+const sessionStorageProxy = new StorageManager({
+  type: "sessionStorage",
+  prefix: serviceConfig.cache.cacheKeyPrefix,
+  version: __APP_INFO__.pkg.version,
+});
+
+export { localStorageProxy, sessionStorageProxy };
 
 class CacheOperator {
   // 标签栏的 tabNav 缓存

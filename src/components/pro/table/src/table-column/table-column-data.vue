@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { TableColumnCtx } from "element-plus";
 import type { TableScope, TableColumn, TableColumnDataNamespace, TableRenderParams } from "../types";
 import type { ProFormInstance } from "@/components/pro/form";
-import { toValue, computed, toRaw, unref } from "vue";
+import { toValue, computed, unref } from "vue";
 import { ElTableColumn, ElTooltip, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { isArray, isBoolean, isString } from "@/common/utils";
+import { isArray, isBoolean, isString, isFunction } from "@/common/utils";
 import { filterOptions, filterOptionsValue, getProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { formatCellValue, lastProp } from "../helper";
+import { formatCellValue, lastProp, initTableColumn } from "../helper";
 import TableFilter from "../plugins/table-filter.vue";
 import TableEdit from "../plugins/table-edit.vue";
 import ElDisplay from "../plugins/el-display.vue";
@@ -48,27 +47,6 @@ const registerProFormInstance = (el: InstanceType<typeof TableEdit>, scope: Reco
 
   scope.row._proFormInstance ??= {};
   if (!scope.row._proFormInstance[prop]?.elFormInstance) scope.row._proFormInstance[prop] = el.proFormInstance;
-};
-
-/**
- * 初始化 column 部分配置项，并移出不需要的配置项
- */
-const initTableColumn = (column: TableColumn) => {
-  column.filter = toValue(column.filter);
-  column.editable = toValue(column.editable);
-  column.hidden = toValue(column.hidden);
-  column.disabledHidden = toValue(column.disabledHidden);
-  column.disabledFilter = toValue(column.disabledFilter);
-  column.disabledSortable = toValue(column.disabledSortable);
-  column.isFilterOptions = toValue(column.isFilterOptions);
-  column.width = toValue(column.width);
-  column.label = toValue(column.label);
-
-  // 使用解构并排除 children, renderHeader 属性
-  // eslint-disable-next-line no-unused-vars
-  const { children, renderHeader, ...rest } = toRaw(column);
-
-  return rest as unknown as TableColumnCtx<any>;
 };
 
 /**
@@ -314,7 +292,7 @@ const handleFormChange = (model: unknown, props: TableColumn["prop"], scope: Tab
         :origin-value="getProp(scope.row, column.prop || '')"
         :display-value="getDisplayValue(scope, column)"
         :el="column.el"
-        :el-props="column.elProps"
+        :el-props="isFunction(column.elProps) ? column.elProps(scope.row) : column.elProps"
         :options="getOptions(column)"
         :option-field="column.optionField"
       >

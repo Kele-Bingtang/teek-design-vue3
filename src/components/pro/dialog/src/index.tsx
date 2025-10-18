@@ -1,6 +1,6 @@
 import type { Component, ComponentInternalInstance, AppContext, ComputedRef } from "vue";
 import type { DialogProps } from "element-plus";
-import type { ProDialogProps } from "./types";
+import type { DialogRenderParams, ProDialogProps } from "./types";
 import { render, getCurrentInstance, nextTick, ref, computed, watch, inject } from "vue";
 import { ElDialog, ElButton, ElScrollbar, ElConfigProvider } from "element-plus";
 import { addUnit, isArray } from "@/common/utils";
@@ -102,6 +102,11 @@ export const showDialog = (
   component?: Component,
   componentsProps?: { [slotName: string]: (scope?: unknown) => unknown }
 ) => {
+  const dialogRenderParams: DialogRenderParams = {
+    handleConfirm: () => handleConfirm(dialogProps),
+    handleCancel: () => handleCancel(dialogProps),
+  };
+
   const isFullscreen = ref(dialogProps.fullscreen ?? false);
   const contentHeight = ref(addUnit(dialogProps.height ?? 400));
 
@@ -187,27 +192,38 @@ export const showDialog = (
               </div>
             );
           },
-          footer: dialogProps.showFooter
-            ? () => {
-                if (dialogProps.renderFooter) return dialogProps.renderFooter(closeDialog);
-                return (
-                  <>
-                    {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
+          footer:
+            dialogProps.showFooter !== false
+              ? () => {
+                  if (dialogProps.renderFooter) return dialogProps.renderFooter(dialogRenderParams);
+                  return (
+                    <>
+                      {dialogProps.footerTopRender && <component is={dialogProps.footerTopRender} />}
 
-                    <div class={ns.e("footer")} style={footerStyle.value}>
-                      <ElButton onClick={() => handleCancel(dialogProps)}>{dialogProps.cancelText || "取消"}</ElButton>
-                      <ElButton
-                        type="primary"
-                        loading={dialogProps.confirmLoading}
-                        onClick={() => handleConfirm(dialogProps)}
-                      >
-                        {dialogProps.confirmText || "确定"}
-                      </ElButton>
-                    </div>
-                  </>
-                );
-              }
-            : undefined,
+                      <div class={ns.e("footer")} style={footerStyle.value}>
+                        {dialogProps.renderFooterBefore && (
+                          <component is={dialogProps.renderFooterBefore(dialogRenderParams)} />
+                        )}
+
+                        <ElButton onClick={() => handleCancel(dialogProps)}>
+                          {dialogProps.cancelText || "取消"}
+                        </ElButton>
+                        <ElButton
+                          type="primary"
+                          loading={dialogProps.confirmLoading}
+                          onClick={() => handleConfirm(dialogProps)}
+                        >
+                          {dialogProps.confirmText || "确定"}
+                        </ElButton>
+
+                        {dialogProps.renderFooterAfter && (
+                          <component is={dialogProps.renderFooterAfter(dialogRenderParams)} />
+                        )}
+                      </div>
+                    </>
+                  );
+                }
+              : undefined,
         }}
       </ElDialog>
     </ElConfigProvider>

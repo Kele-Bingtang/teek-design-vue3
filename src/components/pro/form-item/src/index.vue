@@ -66,7 +66,7 @@ const elModel = computed({
 });
 
 // 插槽参数
-const renderParams = computed<Recordable>(() => {
+const renderParams = computed<FormItemRenderParams>(() => {
   return {
     value: elModel.value,
     model: model.value,
@@ -78,6 +78,9 @@ const renderParams = computed<Recordable>(() => {
     column: { ...props },
   } as FormItemRenderParams;
 });
+
+// 解决外部使用插槽时全是 FormItemRenderParams 问题
+const renderParamsSlot = computed<Record<string, any>>(() => renderParams.value);
 
 watch(elModel, () => emits("change", elModel.value, model.value, renderParams.value));
 
@@ -116,9 +119,9 @@ function useFormItemInitProps() {
   const elPropsValue = computed<Recordable>(() => {
     const { optionField, elProps } = props;
     const elPropsValue = toValue(elProps) as Recordable;
-    const label = optionField.label;
-    const value = optionField.value;
-    const children = optionField.children;
+    const label = optionField.label ?? "label";
+    const value = optionField.value ?? "value";
+    const children = optionField.children ?? "children";
     const formElConst = formEl.value;
 
     if (formElConst === FormElComponentEnum.EL_TREE_SELECT) {
@@ -252,7 +255,7 @@ defineExpose(expose);
       <!-- 自定义表单组件（h、JSX）渲染-->
       <component v-if="render" :is="render(renderParams)" v-model="elModel" v-bind="elPropsValue" />
       <!-- 自定义表单组件插槽 -->
-      <slot v-else-if="$slots[prop]" :name="prop" v-bind="renderParams" />
+      <slot v-else-if="$slots[prop]" :name="prop" v-bind="renderParamsSlot" />
 
       <template v-else>
         <el-divider v-if="formEl === FormElComponentEnum.EL_DIVIDER" v-bind="elPropsValue">

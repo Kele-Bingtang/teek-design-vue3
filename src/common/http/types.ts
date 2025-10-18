@@ -94,8 +94,10 @@ export interface RequestInterceptors {
   onRequest?: (config: RequestConfig) => RequestConfig | Promise<RequestConfig>;
   // 请求错误处理
   onRequestError?: (error: any) => any;
-  // 响应处理
+  // 响应后处理，可返回新的响应数据
   onResponse?: (response: any) => any;
+  // 完全自定义响应处理
+  onResponseProcess?: (response: any) => any;
   // 响应错误处理
   onResponseError?: (error: any) => any;
 }

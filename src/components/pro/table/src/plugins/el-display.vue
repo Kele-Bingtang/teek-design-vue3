@@ -36,11 +36,6 @@ const elRenderParams = computed<ElRenderParams>(() => {
 // 获取 EL 组件信息
 const componentInfo = computed(() => tableElComponentsMap[toCamelCase(toValue(props.el)) as TableComponentEnum]);
 
-// 解析传来的 elProps
-const elPropsValue = computed(() =>
-  isFunction(props.elProps) ? props.elProps(props.originValue) : unref(props.elProps)
-);
-
 // 获取 EL 组件最终需要的 Props
 const finalElProps = computed(() => {
   const componentInfoValue = componentInfo.value || {};
@@ -48,11 +43,11 @@ const finalElProps = computed(() => {
 
   if ("is" in componentInfoValue || "renderEl" in componentInfoValue) {
     defaultProps = isFunction(componentInfoValue.props)
-      ? componentInfoValue.props({ ...elRenderParams.value, props: elPropsValue.value })
+      ? componentInfoValue.props({ ...elRenderParams.value, props: unref(props.elProps) })
       : componentInfoValue.props;
   }
 
-  return { ...defaultProps, ...elPropsValue.value };
+  return { ...defaultProps, ...unref(props.elProps) };
 });
 
 // 获取格式化后的值

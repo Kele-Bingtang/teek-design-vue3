@@ -166,7 +166,7 @@ export type ElOptionField = {
 /**
  * ProFormItem 的 props
  */
-export interface FormItemColumnProps {
+export interface FormItemColumnProps<T = any> {
   /**
    * ElFormItem 的 prop 属性，当表单数据 model 为对象时，prop 也是 model 的 key
    */
@@ -243,7 +243,12 @@ export interface FormItemColumnProps {
     | string[]
     | MaybeRef<ElOption[]>
     | Promise<ElOption[]>
-    | ((model: Recordable, optionsMap?: Map<string, Recordable>) => ElOption[] | Promise<ElOption[]>);
+    | ((
+        model: T,
+        optionsMap?: Map<string, Recordable>
+      ) =>
+        | ElOption[]
+        | Promise<ElOption[] | { data: ElOption[] } | { list: ElOption[] } | { data: { list: ElOption[] } }>);
   /**
    * 字典指定 label && value && children 的 key 值
    *
@@ -277,15 +282,15 @@ export interface FormItemColumnProps {
   /**
    * 自定义 label 标题
    */
-  renderLabel?: (scope: FormItemRenderParams | Recordable) => RenderTypes;
+  renderLabel?: (scope: FormItemRenderParams) => RenderTypes;
   /**
    * 自定义 Label 内容渲染（返回 HTML），优先级低于 render，高于插槽
    */
-  renderLabelHTML?: (scope: FormItemRenderParams | Recordable) => string;
+  renderLabelHTML?: (scope: FormItemRenderParams) => string;
   /**
    * 自定义渲染 el-form-item 下的表单组件
    */
-  render?: (scope: FormItemRenderParams | Recordable) => RenderTypes;
+  render?: (scope: FormItemRenderParams) => RenderTypes;
   /**
    * 是否为编辑态
    *

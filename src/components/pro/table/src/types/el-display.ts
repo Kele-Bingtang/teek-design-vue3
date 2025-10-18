@@ -2,6 +2,7 @@ import type { MaybeRef, MaybeRefOrGetter } from "vue";
 import type { AvatarProps, ImageProps, LinkProps, ProgressProps, TagProps } from "element-plus";
 import type { ElOption, ElOptionField } from "@/components/pro/form-item";
 import type { TableComponentEnum } from "../helper";
+import type { TableRow } from "./table-column";
 import type { OperationNamespace } from "./table-column-operation";
 
 /**
@@ -56,7 +57,7 @@ export interface ElDisplayProps {
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRef<ElProps> | ((value: any) => ElProps);
+  elProps?: MaybeRef<ElProps> | ((row: TableRow) => ElProps);
   /**
    * 指定 el 组件的 options
    */

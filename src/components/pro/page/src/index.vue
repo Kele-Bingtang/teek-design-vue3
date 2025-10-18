@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UnwrapRef } from "vue";
 import type { TableInstance } from "element-plus";
-import type { ProSearchColumn, ProSearchInstance } from "@/components/pro/search";
+import type { SearchColumn, ProSearchInstance } from "@/components/pro/search";
 import type {
   ProTableInstance,
   OperationNamespace,
@@ -14,10 +14,10 @@ import type {
   PageInfo,
 } from "@/components/pro/table";
 import type { ProPageEmits, ProPageProps } from "./types";
-import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch } from "vue";
+import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch, useSlots } from "vue";
 import { ElTooltip, ElButton } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import { isEmpty, isFunction } from "@/common/utils";
+import { isEmpty, isFunction, isBoolean } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, defaultTooltipProps, lastProp } from "@/components/pro/table";
@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<ProPageProps>(), {
   headerBackground: true,
   highlightCurrentRow: true,
   showHeader: true,
+  pageScope: true,
   tooltipProps: () => defaultTooltipProps,
 });
 
@@ -77,6 +78,9 @@ const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePag
 
 provide(optionsMapKey, optionsMap);
 
+// 计算初始化查询参数
+const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...proTableProps.value.initRequestParams }));
+
 /**
  *  页面搜索数据初始化
  */
@@ -93,7 +97,7 @@ function usePageSearchInit() {
   // 组装 ProSearch 配置项
   const searchColumns = computed(() => {
     const filterColumns = flatColumns.value.filter(item => item.search);
-    const searchColumns: ProSearchColumn[] = [];
+    const searchColumns: SearchColumn[] = [];
 
     filterColumns.forEach(async column => {
       // Table 默认查询参数初始化
@@ -106,7 +110,7 @@ function usePageSearchInit() {
       }
 
       // 组装搜索表单配置项
-      const searchColumn: ProSearchColumn = {
+      const searchColumn: SearchColumn = {
         ...column.search,
         el: column.search?.el || ((column.search?.options ?? column.options) ? "ElSelect" : "ElInput"),
         grid: {
@@ -267,6 +271,7 @@ const expose = {
     });
   },
   clearSearchParams: () => (searchParams.value = {}),
+  clearSelection: () => proTableInstance.value?.tableMainInstance?.clearSelection(),
 };
 
 defineExpose(expose);
@@ -297,7 +302,7 @@ defineExpose(expose);
       ref="proTableInstance"
       v-bind="{ ...$attrs, ...proTableProps }"
       :request-params="searchParams"
-      :init-request-params="searchDefaultParams"
+      :init-request-params="initRequestParams"
       @selection-change="handleSelectionChange"
       @size-change="handleSizeChange"
       @pagination-change="handlePaginationChange"
@@ -314,7 +319,7 @@ defineExpose(expose);
     >
       <template #head-right-after>
         <el-tooltip
-          v-if="(toolButton === true || toolButton?.includes('search')) && columns.length"
+          v-if="(toolButton === true || (!isBoolean(toolButton) && toolButton?.includes('search'))) && columns.length"
           content="隐藏/展开搜索"
           v-bind="tooltipProps"
         >

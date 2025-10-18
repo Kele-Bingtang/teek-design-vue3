@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetter } from "vue";
 import type { TableInstance } from "element-plus";
 import type { ProTableInstance, ProTableNamespace, TableColumn } from "@/components/pro/table";
-import type { ProSearchColumn, ProSearchEmits, ProSearchInstance, ProSearchProps } from "@/components/pro/search";
+import type { SearchColumn, ProSearchEmits, ProSearchInstance, ProSearchProps } from "@/components/pro/search";
 import type { BreakPoint, Responsive } from "@/components/pro/grid";
 import type ProPage from "./index.vue";
 
@@ -19,7 +19,7 @@ export interface PageColumn<T extends Recordable = any> extends TableColumn<T> {
      * 搜索字段左侧偏移列数
      */
     offset?: number;
-  } & Partial<ProSearchColumn> &
+  } & Partial<SearchColumn> &
     Partial<Record<BreakPoint, Responsive>>;
 }
 

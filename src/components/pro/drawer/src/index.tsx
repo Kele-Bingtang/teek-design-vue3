@@ -1,5 +1,5 @@
 import type { Component, ComponentInternalInstance, AppContext, ComputedRef } from "vue";
-import type { ProDrawerProps } from "./types";
+import type { DrawerRenderParams, ProDrawerProps } from "./types";
 import type { DrawerProps } from "element-plus";
 import { render, getCurrentInstance, nextTick, ref, computed, inject } from "vue";
 import { ElDrawer, ElButton, ElConfigProvider } from "element-plus";
@@ -101,6 +101,11 @@ export const showDrawer = (
   component?: Component,
   componentsProps?: { [slotName: string]: (scope?: unknown) => unknown }
 ) => {
+  const drawerRenderParams: DrawerRenderParams = {
+    handleConfirm: () => handleConfirm(drawerProps),
+    handleCancel: () => handleCancel(drawerProps),
+  };
+
   const isFullscreen = ref(false);
 
   const footerStyle = computed(() => ({
@@ -163,23 +168,32 @@ export const showDrawer = (
               </>
             );
           },
-          footer: drawerProps.showFooter
-            ? () => {
-                if (drawerProps.renderFooter) return drawerProps.renderFooter(closeDrawer);
-                return (
-                  <div class={ns.e("footer")} style={footerStyle.value}>
-                    <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
-                    <ElButton
-                      type="primary"
-                      loading={drawerProps.confirmLoading}
-                      onClick={() => handleConfirm(drawerProps)}
-                    >
-                      {drawerProps.confirmText || "确定"}
-                    </ElButton>
-                  </div>
-                );
-              }
-            : undefined,
+          footer:
+            drawerProps.showFooter !== false
+              ? () => {
+                  if (drawerProps.renderFooter) return drawerProps.renderFooter(drawerRenderParams);
+                  return (
+                    <div class={ns.e("footer")} style={footerStyle.value}>
+                      {drawerProps.renderFooterBefore && (
+                        <component is={drawerProps.renderFooterBefore(drawerRenderParams)} />
+                      )}
+
+                      <ElButton onClick={() => handleCancel(drawerProps)}>{drawerProps.cancelText || "取消"}</ElButton>
+                      <ElButton
+                        type="primary"
+                        loading={drawerProps.confirmLoading}
+                        onClick={() => handleConfirm(drawerProps)}
+                      >
+                        {drawerProps.confirmText || "确定"}
+                      </ElButton>
+
+                      {drawerProps.renderFooterBefore && (
+                        <component is={drawerProps.renderFooterBefore(drawerRenderParams)} />
+                      )}
+                    </div>
+                  );
+                }
+              : undefined,
         }}
       </ElDrawer>
     </ElConfigProvider>

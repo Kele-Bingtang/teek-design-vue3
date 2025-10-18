@@ -12,11 +12,22 @@ withDefaults(defineProps<PointTagProps>(), {
   size: 8,
   position: "left",
   offset: 4,
+  text: "",
 });
 </script>
 
 <template>
+  <template v-if="text">
+    <slot v-if="position === 'right'">{{ text }}</slot>
+    <i
+      :class="[ns.b(), ns.is(position), ns.is(type, !color)]"
+      :style="{ '--point-color': color, '--point-size': size, '--point-offset': offset }"
+    />
+    <slot v-if="position === 'left'">{{ text }}</slot>
+  </template>
+
   <i
+    v-else
     :class="[ns.b(), ns.is(position), ns.is(type, !color)]"
     :style="{ '--point-color': color, '--point-size': size, '--point-offset': offset }"
   />

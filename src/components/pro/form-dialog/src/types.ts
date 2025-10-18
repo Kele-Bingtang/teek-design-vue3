@@ -2,6 +2,7 @@ import type { DialogProps } from "element-plus";
 import type { ProFormNamespace } from "@/components/pro/form";
 import type { ProDialogProps } from "@/components/pro/dialog";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
+import type ProDialogForm from "./index.vue";
 
 export interface ProFormDialogProps {
   /**
@@ -28,3 +29,8 @@ export interface ProFormDialogEmits {
    */
   cancel: [];
 }
+
+/**
+ * ProDialogForm 组件实例
+ */
+export type ProDialogFormInstance = InstanceType<typeof ProDialogForm>;

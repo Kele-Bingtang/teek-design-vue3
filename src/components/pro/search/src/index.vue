@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BreakPoint, GridInstance } from "@/components/pro/grid";
 import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
-import type { ProSearchColumn, ProSearchEmits, ProSearchProps } from "./types";
+import type { SearchColumn, ProSearchEmits, ProSearchProps } from "./types";
 import { computed, onMounted, useTemplateRef } from "vue";
 import { ElButton, ElIcon } from "element-plus";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
@@ -144,7 +144,7 @@ const actionStyle = computed(() => {
 /**
  * 获取响应式设置
  */
-const getResponsive = (item: ProSearchColumn) => {
+const getResponsive = (item: SearchColumn) => {
   const { grid = {} } = item;
   return {
     span: grid.span,
