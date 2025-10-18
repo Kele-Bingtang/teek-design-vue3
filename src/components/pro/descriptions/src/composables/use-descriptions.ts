@@ -1,10 +1,12 @@
 import type { MaybeRef } from "vue";
 import type { RenderTypes } from "@/components/pro/form-item";
 import type { DescriptionColumn, ProDescriptionsInstance, ProDescriptionsProp, ProDescriptionsEmits } from "../types";
-import { ElConfigProvider } from "element-plus";
 import { createVNode, getCurrentInstance, nextTick, ref, render, toValue } from "vue";
+import { storeToRefs } from "pinia";
+import { ElConfigProvider } from "element-plus";
 import { isString } from "@/common/utils";
 import { useNamespace } from "@/composables";
+import { useSettingStore } from "@/pinia";
 import { filterEmpty } from "@/components/pro/helper";
 import ProDescriptions from "../index.vue";
 
@@ -19,6 +21,10 @@ export const useProDescriptions = () => {
 
   const ns = useNamespace();
   const currentInstance = getCurrentInstance();
+
+  const settingStore = useSettingStore();
+
+  const { layout } = storeToRefs(settingStore);
 
   /**
    * @param proDescriptions ProDescriptions 实例
@@ -230,7 +236,7 @@ export const useProDescriptions = () => {
       );
       const rootInstance = createVNode(
         ElConfigProvider,
-        { namespace: ns.elNamespace },
+        { namespace: ns.elNamespace, size: layout.value.elementPlusSize },
         { default: () => proDescriptionsInstance }
       );
       await nextTick();
