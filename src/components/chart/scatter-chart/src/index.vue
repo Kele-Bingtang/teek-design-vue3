@@ -57,7 +57,7 @@ const {
       grid: { top: 20, right: 20, bottom: 20, left: 20, containLabel: true },
       tooltip: props.showTooltip
         ? getTooltipStyle("item", {
-            formatter: (params: any) => {
+            formatter: (params: { value: [number, number] }) => {
               const [x, y] = params.value;
               return `X: ${x}<br/>Y: ${y}`;
             },
