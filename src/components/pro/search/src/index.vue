@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { BreakPoint, GridInstance } from "@/components/pro/grid";
-import type { FormItemColumnProps, ModelBaseValueType } from "@/components/pro/form-item";
+import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { SearchColumn, ProSearchEmits, ProSearchProps } from "./types";
 import { computed, onMounted, useTemplateRef } from "vue";
 import { ElButton, ElIcon } from "element-plus";
@@ -175,8 +175,8 @@ const reset = async () => {
   emits("reset", finalProps.value.removeNoValue ? filterEmpty(model.value) : model.value);
 };
 
-const handleChange = (value: unknown, model: ModelBaseValueType, column: FormItemColumnProps) => {
-  emits("change", value, model as Recordable, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 /**

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Component, ComponentPublicInstance } from "vue";
 import type { FormItemInstance } from "element-plus";
-import type { FormItemColumnProps, ModelBaseValueType, ProFormItemInstance } from "@/components/pro/form-item";
+import type { FormItemColumnProps, ProFormItemInstance } from "@/components/pro/form-item";
 import type { FormColumn, FormMainNamespace } from "./types";
 import { computed, shallowRef, unref, watch, toValue } from "vue";
 import { ElRow, ElCol } from "element-plus";
@@ -145,8 +145,8 @@ function useFormGetInstance() {
   return { setProFormItemInstance, getElFormItemInstance, getElInstance };
 }
 
-const handleChange = (value: unknown, model: ModelBaseValueType, column: FormItemColumnProps) => {
-  emits("change", value, model as Recordable, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 /**

@@ -1,6 +1,6 @@
 import type { MaybeRef, MaybeRefOrGetter } from "vue";
 import type { ColProps, FormInstance, FormItemProp, FormProps, FormValidateCallback, RowProps } from "element-plus";
-import type { FormItemColumnProps, ModelBaseValueType, ProFormItemEmits } from "@/components/pro/form-item";
+import type { FormItemColumnProps, BaseValueType, ProFormItemEmits } from "@/components/pro/form-item";
 import type ProForm from "./index.vue";
 import type ProFormMain from "./form-main.vue";
 
@@ -187,9 +187,9 @@ export interface FormColumn<T = any> extends FormItemColumnProps<T> {
    * 表单属性的默认值
    */
   defaultValue?:
-    | MaybeRef<ModelBaseValueType>
-    | Promise<ModelBaseValueType>
-    | ((model: T, optionsMap: Map<string, Recordable>) => ModelBaseValueType | Promise<ModelBaseValueType>);
+    | MaybeRef<BaseValueType>
+    | Promise<BaseValueType>
+    | ((model: T, optionsMap: Map<string, Recordable>) => BaseValueType | Promise<BaseValueType>);
   /**
    * 表单排序（从大到小）
    */

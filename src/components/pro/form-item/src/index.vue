@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Component } from "vue";
 import type { FormItemInstance } from "element-plus";
-import type { FormItemColumnProps, FormItemRenderParams, ModelBaseValueType, ProFormItemEmits } from "./types";
+import type { FormItemColumnProps, FormItemRenderParams, BaseValueType, ProFormItemEmits } from "./types";
 import { computed, watch, useTemplateRef, toValue, ref } from "vue";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isObject, isString } from "@/common/utils";
+import { addUnit, isFunction, isObject, isString } from "@/common/utils";
 import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 import { formELComponentsMap, FormElComponentEnum, defaultOptionField } from "./helper";
 import { useOptions } from "@/components/pro/use-options";
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   editable: true,
 });
 
-const model = defineModel<ModelBaseValueType>({ required: false });
+const model = defineModel<BaseValueType>({ required: false });
 
 const formEl = computed(() => toCamelCase(toValue(props.el)) as FormElComponentEnum);
 const labelValue = computed(() => toValue(props.label));
@@ -118,7 +118,7 @@ function useFormItemInitProps() {
   // 处理透传的 elProps
   const elPropsValue = computed<Recordable>(() => {
     const { optionField, elProps } = props;
-    const elPropsValue = toValue(elProps) as Recordable;
+    const elPropsValue = (isFunction(elProps) ? elProps(model) : toValue(elProps)) as Recordable;
     const label = optionField.label ?? "label";
     const value = optionField.value ?? "value";
     const children = optionField.children ?? "children";
