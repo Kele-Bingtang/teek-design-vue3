@@ -175,7 +175,7 @@ function useFormItemOptions() {
   const init = async () => {
     const { options, optionField } = props;
 
-    const value = await initOptions(options, [model.value]);
+    const value = await initOptions(options, { model: model.value, prop: props.prop });
 
     // el 为 select-v2 需单独处理
     if (formEl.value === FormElComponentEnum.EL_SELECT_V2) {

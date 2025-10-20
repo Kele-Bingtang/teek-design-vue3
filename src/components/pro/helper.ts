@@ -115,7 +115,7 @@ export const toCamelCase = (val?: string) => {
  */
 export const formatValue = async <T = any>(
   value: T | Promise<T> | Ref<T> | Reactive<T> | ComputedRef<T> | ((...arg: any) => Promise<T>),
-  params: unknown[] = [],
+  params: Recordable = {},
   processRef = true
 ): Promise<any> => {
   if (value === undefined) return value;
@@ -126,7 +126,7 @@ export const formatValue = async <T = any>(
   }
   if (isProxy(value)) return value;
   if (isObject(value)) return { ...value };
-  if (isFunction(value)) return await (value as any)(...params);
+  if (isFunction(value)) return await (value as any)(params);
   if (isPromise(value)) return await value;
 
   return value;

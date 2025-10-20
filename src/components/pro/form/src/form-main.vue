@@ -51,10 +51,10 @@ function useFormInit() {
     // 如果有值，则不需要赋默认值
     if (!isEmpty(value)) return;
 
-    const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, [
-      modelConst,
-      optionsMap.value,
-    ]);
+    const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, {
+      model: modelConst,
+      optionsMap: optionsMap.value,
+    });
 
     if (defaultValueConst) return setProp(modelConst, prop, defaultValueConst);
 
@@ -97,7 +97,7 @@ function useFormInit() {
 
         columns.forEach(column => {
           // 初始化枚举数据
-          initOptionsMap(column.options, column.prop);
+          initOptionsMap(column.options, column.prop, { model: model.value });
 
           // 初始化值
           initDefaultValue(column);

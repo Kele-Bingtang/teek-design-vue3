@@ -128,6 +128,28 @@ export interface FormItemRenderParams<T = Recordable> {
 }
 
 /**
+ * options 字典数据参数
+ */
+export interface OptionsParams<T = Recordable> {
+  /**
+   * 表单数据
+   */
+  model?: T;
+  /**
+   * 字典枚举数据缓存，key 为 prop，value 为 options
+   */
+  optionsMap?: Map<string, Recordable>;
+  /**
+   * 当前列配置
+   */
+  prop?: string;
+  /**
+   * 额外拓展
+   */
+  [key: string]: any;
+}
+
+/**
  * 字典数据类型
  */
 export interface ElOption {
@@ -204,7 +226,7 @@ export interface FormItemColumnProps<T = Recordable> {
   /**
    * 标签，ElFormItem 的 label 属性
    */
-  label?: MaybeRef<string | number> | ((model: T) => ElProps);
+  label?: MaybeRef<string | number> | ((model: T) => string | number);
   /**
    * 是否显示 label
    *
@@ -248,8 +270,7 @@ export interface FormItemColumnProps<T = Recordable> {
     | MaybeRef<ElOption[]>
     | Promise<ElOption[]>
     | ((
-        model: T,
-        optionsMap?: Map<string, Recordable>
+        optionsParams: OptionsParams
       ) => ElOption[] | Record<string, ElOption[]> | Promise<ElOption[] | Record<string, ElOption[]>>);
   /**
    * 字典指定 label && value && children 的 key 值
