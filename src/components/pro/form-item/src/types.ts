@@ -124,7 +124,7 @@ export interface FormItemRenderParams<T = Recordable> {
   /**
    * 当前列配置
    */
-  column: FormItemColumnProps;
+  column: FormItemColumnProps<T>;
 }
 
 /**
@@ -196,7 +196,7 @@ export type ElProps =
 /**
  * ProFormItem 的 props
  */
-export interface FormItemColumnProps<T = any> {
+export interface FormItemColumnProps<T = Recordable> {
   /**
    * ElFormItem 的 prop 属性，当表单数据 model 为对象时，prop 也是 model 的 key
    */
@@ -204,7 +204,7 @@ export interface FormItemColumnProps<T = any> {
   /**
    * 标签，ElFormItem 的 label 属性
    */
-  label?: MaybeRefOrGetter<string | number>;
+  label?: MaybeRef<string | number> | ((model: T) => ElProps);
   /**
    * 是否显示 label
    *
@@ -230,13 +230,13 @@ export interface FormItemColumnProps<T = any> {
    */
   elSlots?: {
     [slotName: string]: (
-      data: Omit<FormItemColumnProps, "options" | "label" | "elProps" | "formItemProps"> & {
+      data: Omit<FormItemColumnProps<T>, "options" | "label" | "elProps" | "formItemProps"> & {
         value: unknown;
         model: T;
         options: ElOption[];
         label: string;
-        elProps: UnwrapRef<FormItemColumnProps["elProps"]>;
-        formItemProps: UnwrapRef<FormItemColumnProps["formItemProps"]>;
+        elProps: UnwrapRef<FormItemColumnProps<T>["elProps"]>;
+        formItemProps: UnwrapRef<FormItemColumnProps<T>["formItemProps"]>;
       }
     ) => RenderTypes;
   };

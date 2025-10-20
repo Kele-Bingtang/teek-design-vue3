@@ -174,11 +174,11 @@ export namespace FormMainNamespace {
 /**
  * ProForm 表单配置项
  */
-export interface FormColumn<T = any> extends FormItemColumnProps<T> {
+export interface FormColumn<T = Recordable> extends FormItemColumnProps<T> {
   /**
    * ElFormItem 的 prop 属性，当表单数据 model 为对象时，prop 也是 model 的 key
    */
-  prop: NonNullable<FormItemColumnProps["prop"]>;
+  prop: NonNullable<FormItemColumnProps<T>["prop"]>;
   /**
    * ElCol Props
    */

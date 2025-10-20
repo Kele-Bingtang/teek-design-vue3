@@ -2,7 +2,7 @@
 import type { Component } from "vue";
 import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, FormItemRenderParams, BaseValueType, ProFormItemEmits } from "./types";
-import { computed, watch, useTemplateRef, toValue, ref } from "vue";
+import { computed, watch, useTemplateRef, toValue, ref, unref } from "vue";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
 import { addUnit, isFunction, isObject, isString } from "@/common/utils";
@@ -37,7 +37,9 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
 const model = defineModel<BaseValueType>({ required: false });
 
 const formEl = computed(() => toCamelCase(toValue(props.el)) as FormElComponentEnum);
-const labelValue = computed(() => toValue(props.label));
+const labelValue = computed(() =>
+  isFunction(props.label) ? props.label(model.value as Recordable) : unref(props.label)
+);
 const showLabelValue = computed(() => {
   if ([FormElComponentEnum.EMPTY, FormElComponentEnum.EL_DIVIDER].includes(formEl.value)) return false;
   return toValue(props.showLabel);
@@ -118,7 +120,7 @@ function useFormItemInitProps() {
   // 处理透传的 elProps
   const elPropsValue = computed<Recordable>(() => {
     const { optionField, elProps } = props;
-    const elPropsValue = (isFunction(elProps) ? elProps(model) : toValue(elProps)) as Recordable;
+    const elPropsValue = (isFunction(elProps) ? elProps(model.value as Recordable) : unref(elProps)) as Recordable;
     const label = optionField.label ?? "label";
     const value = optionField.value ?? "value";
     const children = optionField.children ?? "children";
