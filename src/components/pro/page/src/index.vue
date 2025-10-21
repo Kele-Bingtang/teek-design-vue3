@@ -79,7 +79,7 @@ const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePag
 provide(optionsMapKey, optionsMap);
 
 // 计算初始化查询参数
-const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...proTableProps.value.initRequestParams }));
+const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...props.initRequestParams }));
 
 /**
  *  页面搜索数据初始化
@@ -106,7 +106,9 @@ function usePageSearchInit() {
 
       if (!isEmpty(defaultValue)) {
         if (!isFunction(defaultValue)) setSearchParams(prop, defaultValue);
-        else setSearchParams(prop, await defaultValue(searchParams.value, optionsMap.value));
+        else {
+          setSearchParams(prop, await defaultValue({ model: searchParams.value, optionsMap: optionsMap.value, prop }));
+        }
       }
 
       // 组装搜索表单配置项

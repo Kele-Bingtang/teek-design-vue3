@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref, MaybeRef } from "vue";
-import type { ElOption, FormItemColumnProps } from "./form-item";
+import type { ElOption, FormItemColumnProps, OptionsParams } from "./form-item";
 import { inject, ref } from "vue";
 import { isArray, isFunction } from "@/common/utils";
 import { formatValue } from "./helper";
@@ -21,12 +21,16 @@ export const useOptions = () => {
   /**
    * 初始化枚举字典数据
    */
-  const initOptionsMap = async (options: FormItemColumnProps["options"], prop: string, extra: Recordable = {}) => {
+  const initOptionsMap = async (
+    options: FormItemColumnProps["options"],
+    prop: string,
+    extra: Omit<OptionsParams, "prop"> = {}
+  ) => {
     if (!options || (isArray(options) && !options.length)) return;
 
     const optionsMapConst = optionsMap.value;
 
-    // 如果当前 enumMap 存在相同的值则 return
+    // 如果当前 optionsMap 存在相同的值则 return
     if (optionsMapConst.has(prop) && (isFunction(options) || optionsMapConst.get(prop) === options)) return;
 
     // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
@@ -37,7 +41,11 @@ export const useOptions = () => {
     optionsMapConst.set(prop, value);
   };
 
-  const initOptions = async (options: FormItemColumnProps["options"], params: Recordable = {}, processRef = true) => {
+  const initOptions = async (
+    options: FormItemColumnProps["options"],
+    params: OptionsParams = {},
+    processRef = true
+  ) => {
     if (!options || (isArray(options) && !options.length)) return [];
 
     const result = await formatValue<FormItemColumnProps["options"]>(options, params, processRef);

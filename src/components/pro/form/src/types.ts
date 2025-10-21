@@ -9,6 +9,24 @@ export type ElRowProps = Partial<RowProps>;
 export type ElColProps = Partial<ColProps>;
 
 /**
+ * defaultValue 为函数的参数类型
+ */
+export interface DefaultValueParams<T = Record<string, any>> {
+  /**
+   * 表单数据
+   */
+  model: T;
+  /**
+   * 字典枚举数据缓存，key 为 prop，value 为 options
+   */
+  optionsMap: Map<string, Record<string, any>>;
+  /**
+   * 当前列配置
+   */
+  prop: string;
+}
+
+/**
  * ProForm 组件的命名空间类型
  */
 export namespace ProFormNamespace {
@@ -189,7 +207,7 @@ export interface FormColumn<T = Recordable> extends FormItemColumnProps<T> {
   defaultValue?:
     | MaybeRef<BaseValueType>
     | Promise<BaseValueType>
-    | ((model: T, optionsMap: Map<string, Recordable>) => BaseValueType | Promise<BaseValueType>);
+    | ((defaultValueParams: DefaultValueParams) => BaseValueType | Promise<BaseValueType>);
   /**
    * 表单排序（从大到小）
    */

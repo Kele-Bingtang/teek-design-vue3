@@ -90,7 +90,7 @@ export type FormElType = FormPascalCaseComponentName | FormHyphenCaseComponentNa
 export type RenderTypes = string | VNode | JSX.Element | Component;
 
 /**
- * render、插槽参数类型
+ * render 或插槽参数类型
  */
 export interface FormItemRenderParams<T = Recordable> {
   /**
@@ -128,7 +128,7 @@ export interface FormItemRenderParams<T = Recordable> {
 }
 
 /**
- * options 字典数据参数
+ * options 为函数的参数类型
  */
 export interface OptionsParams<T = Recordable> {
   /**

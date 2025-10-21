@@ -54,9 +54,10 @@ function useFormInit() {
     const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, {
       model: modelConst,
       optionsMap: optionsMap.value,
+      prop,
     });
 
-    if (defaultValueConst) return setProp(modelConst, prop, defaultValueConst);
+    if (!isEmpty(defaultValueConst)) return setProp(modelConst, prop, defaultValueConst);
 
     // 如果没有设置默认值，则判断字典里是否有 isDefault 为 Y 的枚举
     const enumData = unref(optionsMap.value.get(prop));
@@ -98,9 +99,6 @@ function useFormInit() {
         columns.forEach(column => {
           // 初始化枚举数据
           initOptionsMap(column.options, column.prop, { model: model.value });
-
-          // 初始化值
-          initDefaultValue(column);
         });
 
         // 排序表单项
