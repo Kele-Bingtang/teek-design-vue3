@@ -158,5 +158,9 @@
     "onlyBuiltDependencies": [
       "v-code-diff"
     ]
+  },
+ "engines": {
+    "node": ">= 22.13.1",
+    "pnpm": ">= 10.20.0"
   }
 }
