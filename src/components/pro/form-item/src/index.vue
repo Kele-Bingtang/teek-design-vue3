@@ -59,11 +59,7 @@ const elModel = computed({
   },
   set: val => {
     if (!isObject(model.value)) return (model.value = val);
-
-    // 修改整个 model 而不是修改 model.xxx，确保触发响应式更新(兼容手动 modelValue + @update:modelValue 方式)
-    const formModel = { ...model.value };
-    setProp(formModel, props.prop, val);
-    model.value = formModel;
+    setProp(model.value, props.prop, val);
   },
 });
 
