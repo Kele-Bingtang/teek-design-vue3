@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.2](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.1...v2.0.2) (2025-11-09)
+
+### Features
+
+- **core:** 优化组件与请求处理逻辑和 PointTag 组件新增 text 配置项 ([7046e64](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7046e6422e21747ddd02256c2b1ddddeadb3b9a3))
+- **layout:** 🚀 优化 iframe 嵌入功能并添加动态路由支持 ([88e5e7f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/88e5e7fe3bccc9f1827672d703ee4ba056618f93))
+- **pro-components:** 🚀 超级组件优化和新增部分功能 ([49599e2](https://github.com/Kele-Bingtang/teek-design-vue3/commit/49599e2fb2cf5c14543528663934ee42e129cda3))
+- **pro-components:** 🚀 增强类型支持与组件兼容性 ([2b9087a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2b9087a0c11212d3b5e4281f0b01eab52590f5d3))
+- **pro-form-item:** 支持动态标签和属性值 ([4ae35ba](https://github.com/Kele-Bingtang/teek-design-vue3/commit/4ae35ba967bc0055a7945d145470849991f3b99d))
+- **pro-form:** 🚀 增强表单项 options 的函数式参数 ([a987bf1](https://github.com/Kele-Bingtang/teek-design-vue3/commit/a987bf157d42d0c4f242159fe4e93debe71bffea))
+- **pro/form-item:** 🚀 支持动态表单组件属性与泛型类型增强 ([348589c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/348589cdbdee509493efb3cb48adfd30b10e2ec6))
+- **tab-nav:** 🚀 优化路由路径匹配逻辑 ([e2ef79e](https://github.com/Kele-Bingtang/teek-design-vue3/commit/e2ef79e82cee3c56a544b2d30a3436315e47e116))
+- **table:** 🚀 添加操作列前后插槽支持 ([5638f2d](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5638f2dcf8d3f5af2fb56f89ca68de09ead50040))
+
+### Bug Fixes
+
+- **components:** 🐞 优化 ProSearch 相关类型和引用和修复 ProDrawer 底部按钮点击事件错误问 ([68aa343](https://github.com/Kele-Bingtang/teek-design-vue3/commit/68aa343efc79fbad47cecbf011417d63a98cf107))
+- **config:** 🐞 修复线上没有开启 IFrame 监听导致 IFrame 功能失效问题 ([bbd5a48](https://github.com/Kele-Bingtang/teek-design-vue3/commit/bbd5a486f5b8e81b49ca0bed16c09370389bd644))
+- **dialog/drawer:** 🐞 优化弹框关闭逻辑和动画效果 ([c3b2944](https://github.com/Kele-Bingtang/teek-design-vue3/commit/c3b2944cda53b3a039307e770034c14489459a2b))
+- **layout:** 🐞 修复暗色菜单下嵌入布局的字体色丢失问题和头像悬停提示位置 ([7a9f93c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7a9f93c00b0806c656444347e524be65c03cd014))
+- **layout:** 🐞 优化标签页滚动逻辑并修复代码编辑器颜色问题 ([e68c842](https://github.com/Kele-Bingtang/teek-design-vue3/commit/e68c8427b7a4ab84049d599ed83c3768e23a47f8))
+- **menu:** 修复激活菜单计算逻辑 ([2635fed](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2635fed96f7594d2cf930080524402fc1a8e075e))
+- **pro:** 🐞 修复超级页面默认 el-select 问题 ([cb0e51f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/cb0e51fb300be5685846734f1e06747f6d2ad943))
+- **pro:** 🐞 修复分页触发两次事件和修复弹框按钮事件错误使用 ([58ad43c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/58ad43c1b8d2165019b158680b8b515dd2520603))
+- **types:** 🐞 修复 ProPage 使用错误插槽名和修复 ProForm 双向绑定失效问题 ([208dacc](https://github.com/Kele-Bingtang/teek-design-vue3/commit/208dacc45c0246fbdbb30786d11299c7b3407940))
+
+### Docs
+
+- 📚 更新 CHANGELOG.md 文件 ([2c28b6c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2c28b6c96b67d2cff485126ef89f8306f401afeb))
+- **TODO:** 📚 更新 2.0.2 版本计划并调整代码格式 ([cbe5f5f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/cbe5f5f81b6f9c554be717f523308a665b7bc113))
+
+### Styling
+
+- 🎨 优化工作台日程时间线图标类型 ([662330b](https://github.com/Kele-Bingtang/teek-design-vue3/commit/662330b96bfc768d58e8e2fbc279b022d2facb18))
+- **icon:** 🎨 修改 icon 格式 ([50b1cfe](https://github.com/Kele-Bingtang/teek-design-vue3/commit/50b1cfec5fff28b1357d504b2abe088482549512))
+- **stylelint:** 🎨 忽略嵌套选择器作用域根错误 ([dc1ae75](https://github.com/Kele-Bingtang/teek-design-vue3/commit/dc1ae75340797f0e2a7a6c7414a74dc9195d3a5d))
+
+### Others
+
+- 🔨 调整代码格式与类型定义优化 ([2bf0ac6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2bf0ac678d807536e1cdd2cad2240cd0d16b15c9))
+
+### Code Refactoring
+
+- **chart:** ♻️ 重构图表组合函数和修复超级页面组件查询 options 缓存失效 ([8ac3ffe](https://github.com/Kele-Bingtang/teek-design-vue3/commit/8ac3ffea27b70a0a2882137d4aa8aa8aab1fd84d))
+- **components:** ♻️ 优化表格组件注册和参数定义 ([bad14cb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/bad14cb3b43f9c039aebcae5e68db061dbb8bf3f))
+- **form:** ♻️ 优化表单选项和默认值处理逻辑以及 ProPage 重复请求问题 ([2cc4b49](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2cc4b49c197ddccb1821e24c136b70fd7722c8c3))
+- **i18n:** ♻️ 明确指定多语言消息类型 ([d0a8205](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d0a8205083cebc2ec4004f98750f6106a5d7cafc))
+- **permission:** ♻️ 重构权限切换页面 ([d3bc87b](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d3bc87bb2c6f182247052fd31bfebdf2cdb16864))
+- **storage:** ♻️ 重构存储管理器实现 ([ca74fbb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ca74fbb1b4fd03267541b151008e0ea033de577b))
+- **table:** ♻️ 优化表格列配置和类型定义 ([9fb3192](https://github.com/Kele-Bingtang/teek-design-vue3/commit/9fb3192ad89ff7064ddf46f66980c7682c1fd90f))
+
 ## [2.0.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.0...v2.0.1) (2025-08-23)
 
 ### Features

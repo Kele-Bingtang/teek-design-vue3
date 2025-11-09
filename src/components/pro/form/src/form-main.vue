@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Component, ComponentPublicInstance } from "vue";
 import type { FormItemInstance } from "element-plus";
-import type { FormItemColumnProps, ModelBaseValueType, ProFormItemInstance } from "@/components/pro/form-item";
+import type { FormItemColumnProps, ProFormItemInstance } from "@/components/pro/form-item";
 import type { FormColumn, FormMainNamespace } from "./types";
 import { computed, shallowRef, unref, watch, toValue } from "vue";
 import { ElRow, ElCol } from "element-plus";
@@ -51,12 +51,13 @@ function useFormInit() {
     // 如果有值，则不需要赋默认值
     if (!isEmpty(value)) return;
 
-    const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, [
-      modelConst,
-      optionsMap.value,
-    ]);
+    const defaultValueConst = await formatValue<FormColumn["defaultValue"]>(defaultValue, {
+      model: modelConst,
+      optionsMap: optionsMap.value,
+      prop,
+    });
 
-    if (defaultValueConst) return setProp(modelConst, prop, defaultValueConst);
+    if (!isEmpty(defaultValueConst)) return setProp(modelConst, prop, defaultValueConst);
 
     // 如果没有设置默认值，则判断字典里是否有 isDefault 为 Y 的枚举
     const enumData = unref(optionsMap.value.get(prop));
@@ -97,10 +98,7 @@ function useFormInit() {
 
         columns.forEach(column => {
           // 初始化枚举数据
-          initOptionsMap(column.options, column.prop);
-
-          // 初始化值
-          initDefaultValue(column);
+          initOptionsMap(column.options, column.prop, { model: model.value });
         });
 
         // 排序表单项
@@ -145,8 +143,8 @@ function useFormGetInstance() {
   return { setProFormItemInstance, getElFormItemInstance, getElInstance };
 }
 
-const handleChange = (value: unknown, model: ModelBaseValueType, column: FormItemColumnProps) => {
-  emits("change", value, model as Recordable, column);
+const handleChange = (value: unknown, model: Recordable, column: FormItemColumnProps) => {
+  emits("change", value, model, column);
 };
 
 /**

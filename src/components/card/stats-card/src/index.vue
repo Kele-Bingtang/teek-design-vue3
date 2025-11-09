@@ -45,7 +45,7 @@ const ns = useNamespace("stats-card");
         <slot name="title">{{ title }}</slot>
       </p>
 
-      <CountTo v-if="count" :class="ns.e('count')" :end-val="count" :duration="1" />
+      <CountTo v-if="count !== undefined" :class="ns.e('count')" :end-val="count" :duration="1" />
 
       <p v-if="description || $slots['description']" :class="ns.e('description')" :style="{ color: textColor }">
         <slot name="description">{{ description }}</slot>

@@ -67,7 +67,7 @@ export const useTabNav = () => {
   const rightMenuTop = ref(0);
 
   // 当前激活的 tab
-  const activeTab = computed(() => getTabByPath(route.meta._fullPath || route.path) || defaultTab);
+  const activeTab = computed(() => getTabByPath(route.fullPath || route.meta._fullPath || route.path) || defaultTab);
 
   const { tabNavList } = storeToRefs(layoutStore);
 

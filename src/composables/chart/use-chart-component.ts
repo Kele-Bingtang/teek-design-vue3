@@ -1,14 +1,15 @@
 import type { EChartsOption } from "echarts";
-import type { BaseChartProps, UseChartOptions } from "@/components/chart/types";
+import type { BaseChartProps, UseChartOptions } from "./types";
 import { computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { isFunction } from "@/common/utils";
 import { useChart } from "./use-chart";
 
 // 高级图表组件抽象
 interface UseChartComponentOptions<T extends BaseChartProps> {
-  /** Props响应式对象 */
-  props: T;
-  /** 图表配置生成函数 */
-  generateOptions: () => EChartsOption;
+  /** Props 响应式对象 */
+  props?: T;
+  /** 图表配置 */
+  options: EChartsOption | (() => EChartsOption);
   /** 空数据检查函数 */
   checkEmpty?: () => boolean;
   /** 自定义监听的响应式数据 */
@@ -19,15 +20,15 @@ interface UseChartComponentOptions<T extends BaseChartProps> {
   chartOptions?: UseChartOptions;
 }
 
-export function useChartComponent<T extends BaseChartProps>(options: UseChartComponentOptions<T>) {
-  const { props, generateOptions, checkEmpty, watchSources = [], onVisible, chartOptions = {} } = options;
+export function useChartComponent<T extends BaseChartProps>(useChartComponentOptions: UseChartComponentOptions<T>) {
+  const { props, options, checkEmpty, watchSources = [], onVisible, chartOptions = {} } = useChartComponentOptions;
 
   const chart = useChart(chartOptions);
   const { chartInstance, initChart, isDark, emptyStateManager } = chart;
 
   // 检查是否为空数据
   const isEmpty = computed(() => {
-    if (props.isEmpty) return true;
+    if (props?.isEmpty) return true;
     if (checkEmpty) return checkEmpty();
     return false;
   });
@@ -43,7 +44,7 @@ export function useChartComponent<T extends BaseChartProps>(options: UseChartCom
       } else {
         // 有数据时移除空状态并初始化图表
         // emptyStateManager.remove();
-        initChart(generateOptions());
+        initChart(isFunction(options) ? options() : options);
       }
     });
   };

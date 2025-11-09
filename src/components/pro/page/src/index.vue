@@ -79,7 +79,7 @@ const { flatColumns, searchParams, searchDefaultParams, searchColumns } = usePag
 provide(optionsMapKey, optionsMap);
 
 // 计算初始化查询参数
-const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...proTableProps.value.initRequestParams }));
+const initRequestParams = computed(() => ({ ...searchDefaultParams.value, ...props.initRequestParams }));
 
 /**
  *  页面搜索数据初始化
@@ -106,7 +106,9 @@ function usePageSearchInit() {
 
       if (!isEmpty(defaultValue)) {
         if (!isFunction(defaultValue)) setSearchParams(prop, defaultValue);
-        else setSearchParams(prop, await defaultValue(searchParams.value, optionsMap.value));
+        else {
+          setSearchParams(prop, await defaultValue({ model: searchParams.value, optionsMap: optionsMap.value, prop }));
+        }
       }
 
       // 组装搜索表单配置项
@@ -152,7 +154,8 @@ function usePageSearchInit() {
       }
 
       timer = setTimeout(async () => {
-        for (const column of newValue) initOptionsMap(column.search?.options ?? column.options, column.prop || "");
+        for (const column of newValue)
+          initOptionsMap(column.search?.options ?? column.options, column.search?.prop || column.prop || "");
       }, 1);
     },
     { deep: true, immediate: true }
@@ -284,6 +287,7 @@ defineExpose(expose);
       v-show="initShowSearch"
       v-model="searchParams"
       :columns="searchColumns"
+      :card
       v-bind="searchProps"
       @search="handleSearch"
       @reset="handleReset"
@@ -317,7 +321,7 @@ defineExpose(expose);
       @leave-cell-edit="handleLeaveCellEdit"
       @register="handleTableRegister"
     >
-      <template #head-right-after>
+      <template #head-tool-after>
         <el-tooltip
           v-if="(toolButton === true || (!isBoolean(toolButton) && toolButton?.includes('search'))) && columns.length"
           content="隐藏/展开搜索"
@@ -330,7 +334,7 @@ defineExpose(expose);
           />
         </el-tooltip>
 
-        <slot name="head-right-after" />
+        <slot name="head-tool-after" />
       </template>
 
       <template v-for="slot in Object.keys($slots).filter(key => !['head-right-after'].includes(key))" #[slot]="scope">

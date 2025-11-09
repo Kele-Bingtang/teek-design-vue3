@@ -17,7 +17,7 @@ withDefaults(defineProps<PointTagProps>(), {
 </script>
 
 <template>
-  <template v-if="text">
+  <template v-if="text || $slots['default']">
     <slot v-if="position === 'right'">{{ text }}</slot>
     <i
       :class="[ns.b(), ns.is(position), ns.is(type, !color)]"

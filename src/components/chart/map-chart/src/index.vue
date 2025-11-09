@@ -35,8 +35,8 @@ const isEmpty = computed(() => {
 });
 
 // 根据 geoJson 数据准备地图数据
-const prepareMapData = (geoJson: any) => {
-  return geoJson.features.map((feature: any) => ({
+const prepareMapData = (geoJson: { features: { properties: Recordable }[] }) => {
+  return geoJson.features.map(feature => ({
     name: feature.properties.name,
     value: Math.round(Math.random() * 1000),
     adcode: feature.properties.adcode,
@@ -54,7 +54,7 @@ const getThemeStyles = () => ({
 });
 
 // 构造 ECharts 配置项
-const createChartOption = (mapData: any[]) => {
+const createChartOption = (mapData: Recordable[]) => {
   const themeStyles = getThemeStyles();
 
   return {
@@ -67,7 +67,7 @@ const createChartOption = (mapData: any[]) => {
       textStyle: {
         color: themeStyles.labelColor,
       },
-      formatter: ({ data }: any) => {
+      formatter: ({ data }: { data?: Recordable }) => {
         const { name, adcode, level } = data || {};
         return `
             <div style="padding: 8px;">
@@ -82,7 +82,7 @@ const createChartOption = (mapData: any[]) => {
       map: "china",
       zoom: 1,
       show: true,
-      roam: "scale",
+      roam: false,
       scaleLimit: {
         min: 0.8,
         max: 3,
@@ -206,7 +206,7 @@ const initMap = async (): Promise<void> => {
 };
 
 // 处理地图点击事件
-const handleMapClick = (params: any) => {
+const handleMapClick = (params: Recordable) => {
   if (params.componentType === "series") {
     const regionData = {
       name: params.name,

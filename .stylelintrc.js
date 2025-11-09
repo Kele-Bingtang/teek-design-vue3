@@ -26,6 +26,7 @@ export default {
     "keyframes-name-pattern": null, // 动画帧节点样式命名规则
     "function-name-case": null, // 指定函数名称的小写或大写
     "nesting-selector-no-missing-scoping-root": null, // 去除嵌套选择器无缺失范围根报错
+    "block-no-redundant-nested-style-rules": null, // 去除不允许在块内嵌套冗余的样式规则
     // 要求或不允许 at 规则前有空行
     "at-rule-empty-line-before": [
       "always",

@@ -1,6 +1,6 @@
 import type { ShallowRef, MaybeRef } from "vue";
 import type { EChartsOption } from "echarts";
-import type { ChartThemeConfig, UseChartOptions } from "@/components/chart/types";
+import type { ChartThemeConfig, UseChartOptions } from "./types";
 import { useTemplateRef, shallowRef, watch, nextTick, onMounted, onBeforeUnmount, onUnmounted, unref } from "vue";
 import { storeToRefs } from "pinia";
 import * as echarts from "echarts";
@@ -38,8 +38,8 @@ export const useChartOps = (): ChartThemeConfig => {
 const RESIZE_DELAYS = [50, 100, 200, 350] as const;
 const RESIZE_DEBOUNCE_DELAY = 100;
 
-export function useChart(options: UseChartOptions = {}) {
-  const { initOptions, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = options;
+export function useChart(useChartOptions: UseChartOptions = {}) {
+  const { options, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = useChartOptions;
 
   const settingStore = useSettingStore();
   const { isDark, menu } = storeToRefs(settingStore);
@@ -133,10 +133,10 @@ export function useChart(options: UseChartOptions = {}) {
   };
 
   // 初始化图表
-  const initChart = (options: EChartsOption = {}, isEmpty: boolean = false) => {
+  const initChart = (initOptions: EChartsOption = {}, isEmpty: boolean = false) => {
     if (!chartInstance.value || isDestroyed) return;
 
-    const mergedOptions = { ...initOptions, ...options };
+    const mergedOptions = { ...options, ...initOptions };
 
     try {
       if (isEmpty) {

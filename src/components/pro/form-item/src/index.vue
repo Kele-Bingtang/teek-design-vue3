@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Component } from "vue";
 import type { FormItemInstance } from "element-plus";
-import type { FormItemColumnProps, FormItemRenderParams, ModelBaseValueType, ProFormItemEmits } from "./types";
-import { computed, watch, useTemplateRef, toValue, ref } from "vue";
+import type { FormItemColumnProps, FormItemRenderParams, BaseValueType, ProFormItemEmits } from "./types";
+import { computed, watch, useTemplateRef, toValue, ref, unref } from "vue";
 import { ElFormItem, ElTooltip, ElDivider, ElUpload, ElIcon } from "element-plus";
 import { QuestionFilled } from "@element-plus/icons-vue";
-import { addUnit, isObject, isString } from "@/common/utils";
+import { addUnit, isFunction, isObject, isString } from "@/common/utils";
 import { getProp, toCamelCase, setProp, filterOptions, filterOptionsValue } from "@/components/pro/helper";
 import { formELComponentsMap, FormElComponentEnum, defaultOptionField } from "./helper";
 import { useOptions } from "@/components/pro/use-options";
@@ -34,10 +34,12 @@ const props = withDefaults(defineProps<FormItemColumnProps>(), {
   editable: true,
 });
 
-const model = defineModel<ModelBaseValueType>({ required: false });
+const model = defineModel<BaseValueType>({ required: false });
 
 const formEl = computed(() => toCamelCase(toValue(props.el)) as FormElComponentEnum);
-const labelValue = computed(() => toValue(props.label));
+const labelValue = computed(() =>
+  isFunction(props.label) ? props.label(model.value as Recordable) : unref(props.label)
+);
 const showLabelValue = computed(() => {
   if ([FormElComponentEnum.EMPTY, FormElComponentEnum.EL_DIVIDER].includes(formEl.value)) return false;
   return toValue(props.showLabel);
@@ -57,11 +59,7 @@ const elModel = computed({
   },
   set: val => {
     if (!isObject(model.value)) return (model.value = val);
-
-    // 修改整个 model 而不是修改 model.xxx，确保触发响应式更新(兼容手动 modelValue + @update:modelValue 方式)
-    const formModel = { ...model.value };
-    setProp(formModel, props.prop, val);
-    model.value = formModel;
+    setProp(model.value, props.prop, val);
   },
 });
 
@@ -118,7 +116,7 @@ function useFormItemInitProps() {
   // 处理透传的 elProps
   const elPropsValue = computed<Recordable>(() => {
     const { optionField, elProps } = props;
-    const elPropsValue = toValue(elProps) as Recordable;
+    const elPropsValue = (isFunction(elProps) ? elProps(model.value as Recordable) : unref(elProps)) as Recordable;
     const label = optionField.label ?? "label";
     const value = optionField.value ?? "value";
     const children = optionField.children ?? "children";
@@ -173,7 +171,7 @@ function useFormItemOptions() {
   const init = async () => {
     const { options, optionField } = props;
 
-    const value = await initOptions(options, [model.value]);
+    const value = await initOptions(options, { model: model.value as Recordable, prop: props.prop });
 
     // el 为 select-v2 需单独处理
     if (formEl.value === FormElComponentEnum.EL_SELECT_V2) {
