@@ -3,7 +3,7 @@ import type { Component, ComponentPublicInstance } from "vue";
 import type { FormItemInstance } from "element-plus";
 import type { FormItemColumnProps, ProFormItemInstance } from "@/components/pro/form-item";
 import type { FormColumn, FormMainNamespace } from "./types";
-import { computed, shallowRef, unref, watch, toValue } from "vue";
+import { computed, shallowRef, unref, watch, toValue, reactive } from "vue";
 import { ElRow, ElCol } from "element-plus";
 import { isEmpty, isFunction } from "@/common/utils";
 import { formatValue, getProp, setProp, deleteProp, getObjectKeys } from "@/components/pro/helper";
@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<FormMainNamespace.Props>(), {
 
 const emits = defineEmits<FormMainNamespace.Emits>();
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const { optionsMap, initOptionsMap } = useOptions();
 const { availableColumns, destroyOrInit } = useFormInit();
@@ -125,7 +125,7 @@ function useFormGetInstance() {
   // 存储表单组件实例
   const proFormItemInstances = shallowRef<Record<string, ProFormItemInstance>>({});
 
-  // 获取 ProFormItem 的实例
+  // 存储 ProFormItem 的实例
   const setProFormItemInstance = (el: any, prop: string) => {
     if (el) setProp(proFormItemInstances.value, prop, el);
   };

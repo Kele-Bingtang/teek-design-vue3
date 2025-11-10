@@ -6,7 +6,7 @@ const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
   disabled: false,
 });
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const rules = {
   title: [{ required: true, message: "请输入标题" }],

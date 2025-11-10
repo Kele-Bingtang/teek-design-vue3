@@ -2,7 +2,7 @@
 import type { BreakPoint, GridInstance } from "@/components/pro/grid";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { SearchColumn, ProSearchEmits, ProSearchProps } from "./types";
-import { computed, onMounted, useTemplateRef } from "vue";
+import { computed, onMounted, useTemplateRef, reactive } from "vue";
 import { ElButton, ElIcon } from "element-plus";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { filterEmpty } from "@/components/pro/helper";
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<ProSearchProps>(), {
 const emits = defineEmits<ProSearchEmits>();
 
 // 搜索参数
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 // Grid 组件实例
 const gridInstance = useTemplateRef<GridInstance>("gridInstance");
 // 获取响应式断点

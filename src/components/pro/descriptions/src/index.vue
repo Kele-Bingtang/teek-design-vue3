@@ -53,7 +53,7 @@ const emits = defineEmits<ProDescriptionsEmits>();
 const ns = useNamespace("pro-descriptions");
 const elDescriptionsInstance = useTemplateRef<DescriptionInstance>("elDescriptionsInstance");
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const editable = ref(false);
 
