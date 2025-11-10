@@ -280,7 +280,7 @@ export interface TableColumn<T extends Recordable = any>
   /**
    * el 组件的插槽
    */
-  elSlots?: { [slotName: string]: (data: TableRenderParams) => RenderTypes };
+  elSlots?: { [slotName: string]: (data: TableRenderParams & Recordable) => RenderTypes };
   /**
    * 其他扩展
    */

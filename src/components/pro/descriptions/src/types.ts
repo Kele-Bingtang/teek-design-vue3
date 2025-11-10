@@ -139,7 +139,7 @@ export interface DescriptionColumn
    * el 组件的插槽
    */
   elSlots?: {
-    [slotName: string]: (data: { value: string; column: DescriptionColumn; data: Recordable }) => RenderTypes;
+    [slotName: string]: (data: DescriptionsRenderParams & Recordable) => RenderTypes;
   };
 }
 
