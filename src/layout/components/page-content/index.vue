@@ -14,6 +14,7 @@ defineOptions({ name: "MainContent" });
 
 const ns = useNamespace("page-content");
 
+const route = useRoute();
 const layoutStore = useLayoutStore();
 const settingStore = useSettingStore();
 
@@ -31,10 +32,26 @@ function useRefreshPage() {
    * 刷新当前页面函数
    */
   const refreshPage = (value?: boolean) => {
-    if (value !== undefined) return (isRefreshRoute.value = value);
+    const name = (route.name || route.path) as string;
+    const isKeepAlive = route.meta?.isKeepAlive;
+
+    // 自定义刷新页面状态
+    if (value !== undefined) {
+      if (value === false) name && isKeepAlive && layoutStore.removeKeepAliveName(name);
+      else name && isKeepAlive && layoutStore.addKeepAliveName(name);
+      return (isRefreshRoute.value = value);
+    }
+
+    // 如果页面被缓存，则移除缓存
+    name && isKeepAlive && layoutStore.removeKeepAliveName(name);
+
     isRefreshRoute.value = false;
 
-    nextTick(() => (isRefreshRoute.value = true));
+    nextTick(() => {
+      isRefreshRoute.value = true;
+      // 如果页面开启缓存，则重新添加回缓存列表
+      if (name && isKeepAlive) layoutStore.addKeepAliveName(name);
+    });
   };
 
   /**

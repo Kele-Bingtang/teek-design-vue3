@@ -1,15 +1,15 @@
 import type { TabProps } from "@/pinia";
-import { inject } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { mobileMaxWidthMedia, RefreshPageKey } from "@/common/config";
 import { formatTitle } from "@/router/helper";
 import { useLayoutStore } from "@/pinia";
+import { mittBus } from "@/common/utils";
 
 /**
  * 复用性较高的变量或方法
  */
 export const useCommon = () => {
-  const refreshPage = inject(RefreshPageKey, (value?: boolean) => value);
+  const refreshPage = (value?: boolean) => mittBus.emit(RefreshPageKey, value);
 
   const isMobile = useMediaQuery(mobileMaxWidthMedia);
   const layoutStore = useLayoutStore();

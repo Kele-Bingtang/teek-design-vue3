@@ -299,8 +299,13 @@ defineExpose(expose);
           :clearable
           v-bind="{ ...elPropsValue, ...placeholder }"
           :data="
-            [FormElComponentEnum.EL_TREE, FormElComponentEnum.EL_TREE_SELECT, FormElComponentEnum.Tree].includes(formEl)
-              ? enums
+            [
+              FormElComponentEnum.EL_TREE,
+              FormElComponentEnum.EL_TREE_SELECT,
+              FormElComponentEnum.EL_TRANSFER,
+              FormElComponentEnum.Tree,
+            ].includes(formEl)
+              ? enums || elPropsValue.data || []
               : elPropsValue.data || []
           "
           :options="

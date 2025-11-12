@@ -1,6 +1,6 @@
 import type { TabProps } from "@/pinia";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { ref, reactive, nextTick, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import Sortable from "sortablejs";
@@ -289,15 +289,7 @@ export const useTabNav = () => {
    */
   const refreshSelectedTab = async (tab: TabProps) => {
     if (tab.meta?.iframeSrc) refreshIFrame();
-    else {
-      layoutStore.removeKeepAliveName(tab.name);
-
-      refreshPage(false);
-      await nextTick();
-
-      layoutStore.addKeepAliveName(tab.name);
-      refreshPage(true);
-    }
+    else refreshPage();
   };
 
   /**
