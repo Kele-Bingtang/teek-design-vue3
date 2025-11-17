@@ -106,7 +106,7 @@ export const useLayoutStore = defineStore(
         tabNavList.value[index] = {
           ...tabNavList.value[index],
           ...tab,
-          meta: { ...tabNavList.value[index], ...tab.meta },
+          meta: { ...tabNavList.value[index].meta, ...tab.meta },
         };
     };
 
