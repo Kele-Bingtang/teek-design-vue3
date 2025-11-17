@@ -97,7 +97,17 @@ export const useLayoutStore = defineStore(
      */
     const updateTab = (tab: Partial<TabProps>) => {
       const index = findTabIndex(tab.path ?? "");
-      if (index !== -1) tabNavList.value[index] = { ...tabNavList.value[index], ...tab };
+
+      tab.meta ??= {};
+      if (tab.title) tab.meta.title = tab.title;
+      if (tab.icon) tab.meta.icon = tab.icon;
+
+      if (index !== -1)
+        tabNavList.value[index] = {
+          ...tabNavList.value[index],
+          ...tab,
+          meta: { ...tabNavList.value[index].meta, ...tab.meta },
+        };
     };
 
     /**

@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import type { CalendarDateType, CalendarInstance } from "element-plus";
 import type { CalendarScheduleEmits, CalendarScheduleProps, ScheduleData, ScheduleFormModel } from "./types";
-import { computed, useTemplateRef, useId } from "vue";
+import { computed, useTemplateRef, useId, reactive } from "vue";
 import { dayjs, ElMessage } from "element-plus";
 import { Plus, ArrowLeft, ArrowRight, CopyDocument, VideoCamera } from "@element-plus/icons-vue";
 import { useDialog, PointTag } from "@/components";
@@ -30,7 +30,7 @@ const calendarInstance = useTemplateRef<CalendarInstance>("calendarInstance");
 // 当前日历选择的日期
 const currentTime = defineModel<Date>({ default: () => new Date() });
 // 日程表单模型
-const scheduleModel = defineModel<ScheduleFormModel>("form", { default: () => ({}) });
+const scheduleModel = defineModel<ScheduleFormModel>("form", { default: () => reactive({}) });
 
 const { copy } = useClipboard();
 const { open } = useDialog();

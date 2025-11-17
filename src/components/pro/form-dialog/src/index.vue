@@ -2,7 +2,7 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormDialogEmits, ProFormDialogProps } from "./types";
-import { useTemplateRef } from "vue";
+import { useTemplateRef, reactive } from "vue";
 import { ProForm } from "@/components/pro/form";
 import { ProDialog } from "@/components/pro/dialog";
 
@@ -15,7 +15,7 @@ withDefaults(defineProps<ProFormDialogProps>(), {
 
 const emits = defineEmits<ProFormDialogEmits>();
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 const dialogVisible = defineModel("visible", { default: false });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");

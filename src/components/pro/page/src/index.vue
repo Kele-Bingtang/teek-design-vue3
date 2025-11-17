@@ -331,13 +331,14 @@ defineExpose(expose);
             :disabled="disabledToolButton?.includes('search')"
             :icon="Search"
             @click="initShowSearch = !initShowSearch"
+            class="head__tool-button"
           />
         </el-tooltip>
 
         <slot name="head-tool-after" />
       </template>
 
-      <template v-for="slot in Object.keys($slots).filter(key => !['head-right-after'].includes(key))" #[slot]="scope">
+      <template v-for="slot in Object.keys($slots).filter(key => !['head-tool-after'].includes(key))" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>
     </ProTable>

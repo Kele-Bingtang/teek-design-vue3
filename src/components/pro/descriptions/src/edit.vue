@@ -2,7 +2,7 @@
 import type { FormColumn, ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { EditProps, EditEmits } from "./types";
-import { computed, ref, useTemplateRef, watch, nextTick } from "vue";
+import { computed, nextTick, reactive, ref, useTemplateRef, watch } from "vue";
 import { setProp } from "@/components/pro/helper";
 import ProForm from "@/components/pro/form";
 
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<EditProps>(), {
 
 const emits = defineEmits<EditEmits>();
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");
 

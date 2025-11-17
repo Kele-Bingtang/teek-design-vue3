@@ -53,7 +53,7 @@ const emits = defineEmits<ProDescriptionsEmits>();
 const ns = useNamespace("pro-descriptions");
 const elDescriptionsInstance = useTemplateRef<DescriptionInstance>("elDescriptionsInstance");
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 
 const editable = ref(false);
 
@@ -419,7 +419,7 @@ defineExpose({
             :option-field="column.optionField"
           >
             <template v-for="(slot, key) in column.elSlots" :key="key" #[key]="data">
-              <component :is="slot" v-bind="{ value: getValue(column), column, data: descriptionsData, ...data }" />
+              <component :is="slot" v-bind="{ ...getRenderParams(column), ...data }" />
             </template>
           </ElDisplay>
 

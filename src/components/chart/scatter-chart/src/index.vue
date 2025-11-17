@@ -50,7 +50,7 @@ const {
     return !props.data?.length || props.data.every(item => item.value.every(val => val === 0));
   },
   watchSources: [() => props.data, () => props.colors, () => props.symbolSize],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     const computedColor = props.colors[0] || getCssVar(ns.cssVarNameEl("color-primary"));
 
     return {

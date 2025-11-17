@@ -1,4 +1,4 @@
-import type { VNode, ExtractPropTypes, UnwrapRef, MaybeRefOrGetter, Component, MaybeRef } from "vue";
+import type { VNode, ExtractPropTypes, MaybeRefOrGetter, Component, MaybeRef } from "vue";
 import type { JSX } from "vue/jsx-runtime";
 import type {
   FormItemProps,
@@ -251,16 +251,7 @@ export interface FormItemColumnProps<T = Recordable> {
    * 表单组件的插槽
    */
   elSlots?: {
-    [slotName: string]: (
-      data: Omit<FormItemColumnProps<T>, "options" | "label" | "elProps" | "formItemProps"> & {
-        value: unknown;
-        model: T;
-        options: ElOption[];
-        label: string;
-        elProps: UnwrapRef<FormItemColumnProps<T>["elProps"]>;
-        formItemProps: UnwrapRef<FormItemColumnProps<T>["formItemProps"]>;
-      }
-    ) => RenderTypes;
+    [slotName: string]: (data: FormItemRenderParams<T> & Recordable) => RenderTypes;
   };
   /**
    * 字典枚举数据

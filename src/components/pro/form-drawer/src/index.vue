@@ -2,7 +2,7 @@
 import type { ProFormInstance } from "@/components/pro/form";
 import type { FormItemColumnProps } from "@/components/pro/form-item";
 import type { ProFormDrawerEmits, ProFormDrawerProps } from "./types";
-import { useTemplateRef } from "vue";
+import { useTemplateRef, reactive } from "vue";
 import { ProForm } from "@/components/pro/form";
 import { ProDrawer } from "@/components/pro/drawer";
 
@@ -15,7 +15,7 @@ withDefaults(defineProps<ProFormDrawerProps>(), {
 
 const emits = defineEmits<ProFormDrawerEmits>();
 
-const model = defineModel<Recordable>({ default: () => ({}) });
+const model = defineModel<Recordable>({ default: () => reactive({}) });
 const drawerVisible = defineModel("visible", { default: false });
 
 const proFormInstance = useTemplateRef<ProFormInstance>("proFormInstance");

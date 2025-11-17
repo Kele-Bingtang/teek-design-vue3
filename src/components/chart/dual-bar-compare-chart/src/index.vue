@@ -98,7 +98,7 @@ const {
     );
   },
   watchSources: [() => props.positiveData, () => props.negativeData, () => props.xAxisData, () => props.colors],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     // 处理负向数据，确保为负值
     const processedNegativeData = props.negativeData.map(val => (val > 0 ? -val : val));
 

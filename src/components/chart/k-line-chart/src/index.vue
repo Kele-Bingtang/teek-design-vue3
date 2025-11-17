@@ -58,7 +58,7 @@ const {
     () => props.dataZoomStart,
     () => props.dataZoomEnd,
   ],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     const { upColor, downColor } = getActualColors();
 
     return {

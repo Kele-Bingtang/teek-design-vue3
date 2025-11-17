@@ -35,7 +35,7 @@ const { chartInstance, isDark, getAnimationConfig, getTooltipStyle, getLegendSty
     return !props.data?.length || props.data.every(item => item.value === 0);
   },
   watchSources: [() => props.data, () => props.centerText],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     // 根据图例位置计算环形图中心位置
     const getCenterPosition = (): [string, string] => {
       if (!props.showLegend) return ["50%", "50%"];
