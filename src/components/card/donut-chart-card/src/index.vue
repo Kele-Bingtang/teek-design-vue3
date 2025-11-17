@@ -43,7 +43,7 @@ const { chartInstance } = useChartComponent({
     () => props.currentValue,
     () => props.previousValue,
   ],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     return {
       series: [
         {

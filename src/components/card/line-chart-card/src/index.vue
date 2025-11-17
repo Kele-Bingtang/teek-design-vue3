@@ -29,7 +29,7 @@ const { chartInstance } = useChartComponent({
   },
   checkEmpty: () => !props.chartData.length || props.chartData.every(val => val === 0),
   watchSources: [() => props.chartData, () => props.color, () => props.showAreaColor],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     const computedColor = props.color || useChartOps().themeColor;
 
     return {

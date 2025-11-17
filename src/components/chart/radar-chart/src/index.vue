@@ -32,7 +32,7 @@ const { chartInstance, isDark, getAnimationConfig, getTooltipStyle, isEmpty } = 
     return !props.data?.length || props.data.every(item => item.value.every(val => val === 0));
   },
   watchSources: [() => props.data, () => props.indicator, () => props.colors],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     return {
       tooltip: props.showTooltip ? getTooltipStyle("item") : undefined,
       radar: {

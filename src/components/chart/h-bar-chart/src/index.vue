@@ -123,7 +123,7 @@ const {
     return true;
   },
   watchSources: [() => props.data, () => props.xAxisData, () => props.colors],
-  generateOptions: (): EChartsOption => {
+  options: (): EChartsOption => {
     const options: EChartsOption = {
       grid: getGridWithLegend(props.showLegend && isMultipleData.value, props.legendPosition, {
         top: 15,
