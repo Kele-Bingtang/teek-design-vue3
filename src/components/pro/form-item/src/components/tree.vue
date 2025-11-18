@@ -48,9 +48,16 @@ watch(defaultExpandAll, val => {
 });
 
 watch(isSelectAll, val => {
+  const treeInstanceConst = treeInstance.value;
   // true 全选，false 全不选
-  if (val) treeInstance.value?.setCheckedNodes(props.data);
-  else treeInstance.value?.setCheckedNodes([]);
+  if (val) {
+    treeInstanceConst?.setCheckedNodes(props.data);
+    checkedList.value =
+      props.checkBaseValueType === "nodes" ? treeInstanceConst?.getCheckedNodes() : treeInstanceConst?.getCheckedKeys();
+  } else {
+    treeInstanceConst?.setCheckedNodes([]);
+    checkedList.value = [];
+  }
   // 关闭处于全选和全不选期间的状态
   indeterminate.value = false;
 });
