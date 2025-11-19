@@ -67,6 +67,7 @@ const data: Tree[] = [
       :data="data"
       :defaultValue="treeFilterValue.departmentId"
       @change="changeTreeFilter"
+      show-more
     />
     <TreeFilter
       title="部门列表(多选)"
@@ -75,6 +76,7 @@ const data: Tree[] = [
       :data="data"
       :defaultValue="treeFilterValue1.departmentId"
       @change="changeTreeFilter1"
+      show-more
     />
     <el-card :class="[ns.e('descriptions'), 'tk-card-minimal']">
       <h2>树形筛选器 🍓🍇🍈🍉</h2>

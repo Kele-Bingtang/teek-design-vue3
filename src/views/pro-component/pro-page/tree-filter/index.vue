@@ -85,7 +85,7 @@ const downloadFile = async () => {
 
 <template>
   <div class="main-box">
-    <TreeFilter label="name" title="部门列表(单选)" :data="department" @change="changeTreeFilter" />
+    <TreeFilter label="name" title="部门列表(单选)" :data="department" @change="changeTreeFilter" show-more />
     <div class="table-box">
       <ProPage ref="proPageInstance" :data :columns>
         <!-- 表格 header 按钮 -->
