@@ -149,9 +149,9 @@ defineExpose({ treeData, treeAllData, initTreeData });
 <template>
   <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
     <slot name="title" v-bind="{ title, num: treeData.length }">
-      <div v-if="title" :class="`${ns.e('header')} `">
+      <div v-if="title" :class="ns.e('header')">
         <h4 class="title sle">{{ title }}</h4>
-        <span v-if="showNum" class="num">({{ treeData.length }}个)</span>
+        <span v-if="showNum" class="num">{{ treeData.length }}个</span>
       </div>
     </slot>
 
