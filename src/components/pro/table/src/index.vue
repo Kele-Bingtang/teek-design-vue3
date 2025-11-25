@@ -17,6 +17,7 @@ import { ElTableColumn, ElButton } from "element-plus";
 import { Tools } from "@element-plus/icons-vue";
 import { filterEmpty, setProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
+import { isFunction } from "@/common/utils";
 import { defaultTablePageInfo, useTableApi, useTableState } from "./composables";
 import { defaultToolButton, defaultTooltipProps, Environment, TableSizeEnum, initTableColumn } from "./helper";
 import TableMain from "./table-main.vue";
@@ -202,14 +203,27 @@ function useTableSize() {
   // 最终的 sizeStyle，即将 ProTable 内置的 sizeStyle 和传入的 sizeStyle 合并
   const finalSizeStyle = computed(() => {
     const { rowStyle, cellStyle, headerRowStyle, headerCellStyle } = finalProps.value;
+
+    const {
+      rowStyle: currentRowStyle,
+      cellStyle: currentCellStyle,
+      headerRowStyle: currentHeaderRowStyle,
+      headerCellStyle: currentHeaderCellStyle,
+    } = currentSizeStyle.value || {};
+
     return {
-      rowStyle: { ...rowStyle, ...currentSizeStyle.value?.rowStyle },
-      cellStyle: { ...cellStyle, ...currentSizeStyle.value?.cellStyle },
-      headerRowStyle: { ...headerRowStyle, ...currentSizeStyle.value?.headerRowStyle },
-      headerCellStyle: {
-        ...headerCellStyle,
-        ...currentSizeStyle.value?.headerCellStyle,
-        ...(!baseSetting.headerBackground && { backgroundColor: undefined }),
+      rowStyle: (data: any) => ({ ...(isFunction(rowStyle) ? rowStyle(data) : rowStyle), ...currentRowStyle }),
+      cellStyle: (data: any) => ({ ...(isFunction(cellStyle) ? cellStyle(data) : cellStyle), ...currentCellStyle }),
+      headerRowStyle: (data: any) => ({
+        ...(isFunction(headerRowStyle) ? headerRowStyle(data) : headerRowStyle),
+        ...currentHeaderRowStyle,
+      }),
+      headerCellStyle: (data: any) => {
+        return {
+          ...(isFunction(headerCellStyle) ? headerCellStyle(data) : headerCellStyle),
+          ...currentHeaderCellStyle,
+          ...(!baseSetting.headerBackground && { backgroundColor: undefined }),
+        };
       },
     };
   });
