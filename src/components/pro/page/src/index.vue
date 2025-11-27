@@ -20,8 +20,8 @@ import { Search } from "@element-plus/icons-vue";
 import { isEmpty, isFunction, isBoolean } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
-import { ProTable, defaultTooltipProps, lastProp } from "@/components/pro/table";
-import { filterEmpty, flatColumnsFn, setProp } from "@/components/pro/helper";
+import { ProTable, defaultTooltipProps } from "@/components/pro/table";
+import { filterEmpty, flatColumnsFn, setProp, lastProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProPage" });

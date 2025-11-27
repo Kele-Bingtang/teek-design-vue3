@@ -2,7 +2,7 @@ import type { InjectionKey, Ref, MaybeRef } from "vue";
 import type { ElOption, FormItemColumnProps, OptionsParams } from "./form-item";
 import { inject, ref } from "vue";
 import { isArray, isFunction } from "@/common/utils";
-import { formatValue } from "./helper";
+import { formatValue, lastProp } from "./helper";
 
 export type OptionsMapType = Map<string, MaybeRef<ElOption[]>>;
 
@@ -29,16 +29,17 @@ export const useOptions = () => {
     if (!options || (isArray(options) && !options.length)) return;
 
     const optionsMapConst = optionsMap.value;
+    const lp = lastProp(prop);
 
     // 如果当前 optionsMap 存在相同的值则 return
-    if (optionsMapConst.has(prop) && (isFunction(options) || optionsMapConst.get(prop) === options)) return;
+    if (optionsMapConst.has(lp) && (isFunction(options) || optionsMapConst.get(lp) === options)) return;
 
     // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
-    optionsMapConst.set(prop, []);
+    optionsMapConst.set(lp, []);
 
     // 处理 options 并存储到 optionsMap
-    const value = await initOptions(options, { optionsMap: optionsMapConst, prop, ...extra }, false);
-    optionsMapConst.set(prop, value);
+    const value = await initOptions(options, { optionsMap: optionsMapConst, lp, ...extra }, false);
+    optionsMapConst.set(lp, value);
   };
 
   const initOptions = async (

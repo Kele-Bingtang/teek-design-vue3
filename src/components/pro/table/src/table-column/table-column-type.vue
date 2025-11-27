@@ -4,7 +4,8 @@ import type { TableRenderParams, TableColumn, TableScope } from "../types";
 import { ref, watch, toValue, h } from "vue";
 import { ElRadio, ElTableColumn } from "element-plus";
 import { isFunction } from "@/common/utils";
-import { TableColumnTypeEnum, lastProp } from "../helper";
+import { lastProp } from "@/components/pro/helper";
+import { TableColumnTypeEnum } from "../helper";
 import TableColumnDragSort from "./table-column-drag-sort.vue";
 
 defineOptions({ name: "TableColumnType" });
