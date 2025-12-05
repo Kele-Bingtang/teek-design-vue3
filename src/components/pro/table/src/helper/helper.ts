@@ -6,19 +6,6 @@ import { getProp, getObjectKeys } from "@/components/pro/helper";
 import { Environment } from "./enums";
 
 /**
- * 处理 prop，当 prop 为多级嵌套时，返回最后一级 prop
- *
- * @param prop 当前 prop
- */
-export const lastProp = (prop: string) => {
-  if (!prop) return prop;
-
-  const propArr = prop.split(".");
-  if (propArr.length === 1) return prop;
-  return propArr[propArr.length - 1];
-};
-
-/**
  * 处理值无数据情况
  *
  * @param callValue 需要处理的值

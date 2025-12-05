@@ -117,7 +117,7 @@ export namespace ProTableNamespace {
     /**
      * ElTable 的 headerRowStyle 配置项
      */
-    headerRowStyle?: TableProps<Recordable>["cellStyle"];
+    headerRowStyle?: TableProps<Recordable>["headerRowStyle"];
     /**
      * ElTable 的 headerCellStyle 配置项
      */

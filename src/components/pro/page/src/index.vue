@@ -20,8 +20,8 @@ import { Search } from "@element-plus/icons-vue";
 import { isEmpty, isFunction, isBoolean } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
-import { ProTable, defaultTooltipProps, lastProp } from "@/components/pro/table";
-import { filterEmpty, flatColumnsFn, setProp } from "@/components/pro/helper";
+import { ProTable, defaultTooltipProps } from "@/components/pro/table";
+import { filterEmpty, flatColumnsFn, setProp, lastProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
 
 defineOptions({ name: "ProPage" });
@@ -129,8 +129,9 @@ function usePageSearchInit() {
         label: column.search?.label ?? column.label,
         beforeSearch: undefined,
         options: undefined, // proPage 已经处理 options，无需传给 ProForm 再次处理
-        optionField: column.optionField,
-        optionsProp: column.optionsProp,
+        optionField: column.search?.optionField || column.optionField,
+        optionsProp:
+          column.search?.optionsProp ?? column.optionsProp ?? (column.search?.prop && lastProp(column.search.prop)),
       };
       searchColumns.push(searchColumn);
     });

@@ -87,8 +87,8 @@ defineExpose(expose);
     <ProForm
       ref="proFormInstance"
       v-model="model"
-      :row-props="{ gutter: 0 }"
       :show-footer="false"
+      style="padding: 10px"
       v-bind="form"
       @change="handleChange"
     >

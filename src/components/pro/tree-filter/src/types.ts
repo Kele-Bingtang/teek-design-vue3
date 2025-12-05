@@ -51,17 +51,29 @@ export interface TreeFilterProps {
    */
   defaultValue?: TreeKey | TreeKey[];
   /**
-   * 是否显示 全部 选项
-   *
-   * @default true
-   */
-  enableTotal?: boolean;
-  /**
    * 是否默认选中第一个选项
    *
-   * @default true
+   * @default false
    */
   defaultFirst?: boolean;
+  /**
+   * 是否显示全部选项
+   *
+   * @default false
+   */
+  showTotal?: boolean;
+  /**
+   * 是否显示更多按钮
+   *
+   * @default false
+   */
+  showMore?: boolean;
+  /**
+   * 是否显示数量，仅显示一级节点数量
+   *
+   * @default false
+   */
+  showNum?: boolean;
   /**
    * 是否使用卡片样式
    *

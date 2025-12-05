@@ -19,8 +19,10 @@ const props = withDefaults(defineProps<TreeFilterProps>(), {
   label: "label",
   multiple: false,
   defaultValue: undefined,
-  enableTotal: true,
   defaultFirst: false,
+  showTotal: false,
+  showMore: false,
+  showNum: false,
   card: true,
 });
 
@@ -66,26 +68,21 @@ const setSelected = () => {
  * 初始化树形数据
  */
 const initTreeData = async () => {
-  const { data, requestApi, requestImmediate, transformData, id, label, enableTotal, defaultFirst } = props;
+  const { data, requestApi, transformData, id, label, showTotal, defaultFirst } = props;
 
   // 有数据就直接赋值，没有数据就执行请求函数
-  if (data.length) {
-    treeData.value = data;
-    treeAllData.value = data;
-    return;
-  }
-
-  if (requestImmediate && requestApi) {
+  if (data.length) treeData.value = treeAllData.value = data;
+  else if (requestApi) {
     const result = await requestApi(props.defaultRequestParams);
     // 兼容常用数据格式
     let data = result?.data || result?.list || result?.data?.list || result;
     data = transformData?.(data, result) || data;
 
     treeData.value = data;
-    treeAllData.value = enableTotal ? [{ [id]: "", [label]: "全部" }, ...data] : data;
+    treeAllData.value = showTotal ? [{ [id]: "", [label]: "全部" }, ...data] : data;
   }
 
-  if (defaultFirst && treeAllData.value?.length) {
+  if (defaultFirst && treeAllData.value.length) {
     nextTick(() => {
       const firstData = treeAllData.value[0];
       treeInstance.value?.setCurrentKey(firstData[id]);
@@ -96,7 +93,7 @@ const initTreeData = async () => {
 
 onBeforeMount(async () => {
   setSelected();
-  initTreeData();
+  if (props.requestImmediate) initTreeData();
 });
 
 const filterText = ref("");
@@ -108,7 +105,7 @@ watch(filterText, val => {
 /**
  * 过滤
  */
-const filterNode = (value: string, data: Recordable, node: any) => {
+const filterNode = (value: string, _: Recordable, node: any) => {
   if (!value) return true;
   let parentNode = node.parent;
   let labels = [node.label];
@@ -151,13 +148,16 @@ defineExpose({ treeData, treeAllData, initTreeData });
 
 <template>
   <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
-    <slot name="title">
-      <h4 v-if="title" :class="`${ns.e('title')} sle`">{{ title }}</h4>
+    <slot name="title" v-bind="{ title, num: treeData.length }">
+      <div v-if="title" :class="ns.e('header')">
+        <h4 class="title sle">{{ title }}</h4>
+        <span v-if="showNum" class="num">{{ treeData.length }}个</span>
+      </div>
     </slot>
 
     <div :class="ns.e('search')">
       <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
-      <el-dropdown trigger="click">
+      <el-dropdown v-if="showMore" trigger="click">
         <el-icon size="20"><More /></el-icon>
         <template #dropdown>
           <el-dropdown-menu>
@@ -172,13 +172,14 @@ defineExpose({ treeData, treeAllData, initTreeData });
       <el-tree
         ref="treeInstance"
         default-expand-all
+        :check-strictly="false"
+        :expand-on-click-node="false"
+        v-bind="$attrs"
         :node-key="id"
         :data="multiple ? treeData : treeAllData"
         :show-checkbox="multiple"
-        :check-strictly="false"
         :current-node-key="!multiple ? selected : ''"
         :highlight-current="!multiple"
-        :expand-on-click-node="false"
         :check-on-click-node="multiple"
         :props="defaultProps"
         :filter-node-method="filterNode"

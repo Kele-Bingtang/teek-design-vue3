@@ -4,9 +4,9 @@ import { toValue, ref, unref } from "vue";
 import { ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem, ElIcon } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
 import { isFunction } from "@/common/utils";
-import { toCamelCase } from "@/components/pro/helper";
+import { toCamelCase, lastProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
-import { OperationConfirmEl, OperationEl, lastProp } from "../helper";
+import { OperationConfirmEl, OperationEl } from "../helper";
 import OperationButton from "../plugins/table-column-operation-button.vue";
 
 import "../styles/table-column-operation.scss";

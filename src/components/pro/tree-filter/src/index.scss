@@ -8,12 +8,23 @@
   padding: 18px;
   margin-right: 10px;
 
-  @include e(title) {
-    margin: 0 0 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: cssVarEl(color-info-dark-2);
-    letter-spacing: 0.5px;
+  @include e(header) {
+    display: flex;
+
+    .title {
+      flex: 1;
+      margin: 0 0 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: cssVarEl(color-info-dark-2);
+      letter-spacing: 0.5px;
+    }
+
+    .num {
+      margin-left: 18px;
+      font-size: 14px;
+      color: cssVarEl(text-color-placeholder);
+    }
   }
 
   @include e(search) {

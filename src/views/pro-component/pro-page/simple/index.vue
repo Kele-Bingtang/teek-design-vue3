@@ -29,7 +29,7 @@ const columns: PageColumn[] = [
     search: {
       el: "el-input",
       beforeSearch: (searchValue, searchParams, column) => {
-        return `#${searchValue}`;
+        return searchValue ? `#${searchValue}` : undefined;
       },
     },
   },

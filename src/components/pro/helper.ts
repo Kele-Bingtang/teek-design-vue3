@@ -7,6 +7,19 @@ import { isArray, isEmpty, isFunction, isObject, isPromise } from "@/common/util
 // ============================== 超级组件公共工具类 ==============================
 
 /**
+ * 处理 prop，当 prop 为多级嵌套时，返回最后一级 prop
+ *
+ * @param prop 当前 prop
+ */
+export const lastProp = (prop: string) => {
+  if (!prop) return prop;
+
+  const propArr = prop.split(".");
+  if (propArr.length === 1) return prop;
+  return propArr[propArr.length - 1];
+};
+
+/**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */
 export const getProp = (
