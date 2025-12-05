@@ -68,11 +68,11 @@ const setSelected = () => {
  * 初始化树形数据
  */
 const initTreeData = async () => {
-  const { data, requestApi, requestImmediate, transformData, id, label, showTotal, defaultFirst } = props;
+  const { data, requestApi, transformData, id, label, showTotal, defaultFirst } = props;
 
   // 有数据就直接赋值，没有数据就执行请求函数
   if (data.length) treeData.value = treeAllData.value = data;
-  else if (requestImmediate && requestApi) {
+  else if (requestApi) {
     const result = await requestApi(props.defaultRequestParams);
     // 兼容常用数据格式
     let data = result?.data || result?.list || result?.data?.list || result;
@@ -93,7 +93,7 @@ const initTreeData = async () => {
 
 onBeforeMount(async () => {
   setSelected();
-  initTreeData();
+  if (props.requestImmediate) initTreeData();
 });
 
 const filterText = ref("");

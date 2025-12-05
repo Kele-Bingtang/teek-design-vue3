@@ -236,7 +236,9 @@ const formatValue = (value: unknown, column: DescriptionColumn) => {
   const { formatValue } = column;
 
   return (
-    formatValue?.(value, { value, column, label: toValue(column.label || ""), data: descriptionsData }) ?? value ?? "--"
+    formatValue?.(value, { value, column, label: toValue(column.label || ""), data: descriptionsData.value }) ??
+    value ??
+    "--"
   );
 };
 
