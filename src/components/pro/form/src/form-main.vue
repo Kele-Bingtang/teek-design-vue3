@@ -98,7 +98,7 @@ function useFormInit() {
 
         columns.forEach(column => {
           // 初始化枚举数据
-          initOptionsMap(column.options, column.prop, { model: model.value });
+          initOptionsMap(column.options, column.prop, column.optionCache, { model: model.value });
         });
 
         // 排序表单项

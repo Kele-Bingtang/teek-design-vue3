@@ -24,6 +24,7 @@ export const useOptions = () => {
   const initOptionsMap = async (
     options: FormItemColumnProps["options"],
     prop: string,
+    cache = true,
     extra: Omit<OptionsParams, "prop"> = {}
   ) => {
     if (!options || (isArray(options) && !options.length)) return;
@@ -32,7 +33,7 @@ export const useOptions = () => {
     const lp = lastProp(prop);
 
     // 如果当前 optionsMap 存在相同的值则 return
-    if (optionsMapConst.has(lp) && (isFunction(options) || optionsMapConst.get(lp) === options)) return;
+    if (cache && optionsMapConst.has(lp) && (isFunction(options) || optionsMapConst.get(lp) === options)) return;
 
     // 为了防止接口执行慢，导致页面下拉等枚举数据无法填充，所以预先存储为 [] 方便获取，接口返回后再二次存储
     optionsMapConst.set(lp, []);

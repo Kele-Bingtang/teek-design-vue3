@@ -115,7 +115,7 @@ function useTableInit() {
         const flatColumns = flatColumnsFn(availableColumns.value);
         for (const column of flatColumns) {
           // 异步有序执行，减少因遍历过长导致主线程卡顿
-          initOptionsMap(column.options, column.prop || "").then(() => {
+          initOptionsMap(column.options, column.prop || "", column.optionCache).then(() => {
             props.initNativeRowField && initNativeRowField(newValue as TableRow[], column, optionsMap);
           });
         }

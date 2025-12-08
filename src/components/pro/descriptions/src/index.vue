@@ -112,7 +112,7 @@ function useDescriptionsInit() {
       timer = setTimeout(() => {
         columns.forEach(column => {
           // 初始化枚举数据
-          initOptionsMap(column.options, column.prop || "");
+          initOptionsMap(column.options, column.prop || "", column.optionCache);
         });
 
         // 排序配置项
