@@ -9,8 +9,9 @@ import { useSettingStore, useRouteStore } from "@/pinia";
 import { useMenuAreaMouse, useHeaderAreaMouse } from "../use-area-mouse";
 import PageContent from "../components/page-content/index.vue";
 import CollapseTrigger from "../components/header/components/collapse-trigger/index.vue";
-import Menu from "../components/menu/index.vue";
 import HeaderRight from "../components/header/header-right.vue";
+import Refresh from "../components/header/components/refresh/index.vue";
+import Menu from "../components/menu/index.vue";
 import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
@@ -32,7 +33,7 @@ const { menuList } = useMenu();
 const activeMenu = ref("");
 const childrenMenu = ref<RouterConfig[]>([]);
 
-const { menu, logo, header } = storeToRefs(settingStore);
+const { menu, logo, header, widget } = storeToRefs(settingStore);
 
 /**
  * 头部菜单
@@ -94,6 +95,7 @@ watch(
       </div>
 
       <CollapseTrigger :class="ns.has('trigger', !childrenMenu.length)" />
+      <Refresh v-if="widget.refresh" />
 
       <Menu
         :menu-list="headerMenu"

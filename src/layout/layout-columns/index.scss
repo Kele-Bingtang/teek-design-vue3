@@ -24,6 +24,7 @@
 
     @include e(logo) {
       width: 100% !important;
+      margin-bottom: 10px;
 
       img {
         width: 45%;

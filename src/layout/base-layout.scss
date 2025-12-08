@@ -111,10 +111,6 @@
       &:not(.no-collapse) {
         width: calc(cssVar(layout-collapse-aside-width) - 1px);
       }
-
-      img {
-        margin: 0;
-      }
     }
 
     @include joins(layout-aside) {

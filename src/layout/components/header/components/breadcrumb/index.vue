@@ -26,7 +26,7 @@ const showHome = computed(() => {
   <el-breadcrumb
     v-if="breadcrumbConfig.hideOnlyOne ? breadcrumbList.length !== 2 : true"
     :class="ns.b()"
-    class="flx-align-center"
+    class="customize flx-align-center"
     :separator-icon="ArrowRight"
   >
     <transition-group name="breadcrumb">

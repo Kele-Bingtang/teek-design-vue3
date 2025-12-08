@@ -9,13 +9,13 @@ import enUS from "./locales/en-US";
 const messages = {
   [LanguageEnum.ZhCn]: zhCN,
   [LanguageEnum.EnUs]: enUS,
-};
+} as I18nOptions["messages"];
 
 // 多语言选项
 export const languageOptions = [
   { value: LanguageEnum.ZhCn, label: "简体中文" },
   { value: LanguageEnum.EnUs, label: "English" },
-] as I18nOptions["messages"];
+];
 
 /**
  * 获取默认语言
