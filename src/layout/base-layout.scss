@@ -52,7 +52,7 @@
     /* 子级高亮，父级也高亮 */
     > .is-sub.is-active > .#{$el-namespace}-sub-menu__title {
       font-weight: cssVar(layout-aside-text-active-weight);
-      color: cssVar(color-primary);
+      color: cssVar(layout-aside-text-active-color);
     }
 
     :where(.#{$el-namespace}-menu-item, .#{$el-namespace}-sub-menu) {
@@ -70,14 +70,14 @@
       }
     }
 
-    // 菜单右侧箭头
+    /* 菜单右侧箭头 */
     @include el-joins(sub-menu__icon-arrow) {
       width: cssVar(layout-aside-arrow-size);
       font-size: cssVar(layout-aside-arrow-size);
     }
   }
 
-  // 菜单圆润风格
+  /* 菜单圆润风格 */
   @include is(round) {
     .el-menu:not(.el-menu--horizontal) {
       @include el-joins(menu-item, sub-menu__title) {
@@ -123,6 +123,16 @@
       @include el-joins(menu--collapse) {
         > .is-active {
           background-color: cssVar(layout-aside-bg-active-color);
+        }
+      }
+
+      /* 菜单圆润风格 */
+      @include is(round) {
+        .el-menu:not(.el-menu--horizontal) {
+          @include el-joins(menu-item, sub-menu__title) {
+            width: 100%;
+            margin-left: 0;
+          }
         }
       }
     }
