@@ -229,6 +229,12 @@ export interface FormColumn<T = Recordable> extends FormItemColumnProps<T> {
    */
   optionsProp?: string;
   /**
+   * 是否缓存字典数据
+   *
+   * @default true
+   */
+  optionCache?: boolean;
+  /**
    * 其他拓展
    */
   [key: string]: any;

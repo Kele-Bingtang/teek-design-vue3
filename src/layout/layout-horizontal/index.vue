@@ -5,8 +5,9 @@ import { serviceConfig, HOME_URL } from "@/common/config";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import PageContent from "../components/page-content/index.vue";
-import Menu from "../components/menu/index.vue";
 import HeaderRight from "../components/header/header-right.vue";
+import Refresh from "../components/header/components/refresh/index.vue";
+import Menu from "../components/menu/index.vue";
 import TabNav from "../components/tab-nav/index.vue";
 
 import "./index.scss";
@@ -19,7 +20,7 @@ const router = useRouter();
 const settingStore = useSettingStore();
 const { topStyle, staticClass } = useHeaderAreaMouse();
 
-const { logo, header, menu } = storeToRefs(settingStore);
+const { logo, header, menu, widget } = storeToRefs(settingStore);
 </script>
 
 <template>
@@ -30,6 +31,8 @@ const { logo, header, menu } = storeToRefs(settingStore);
           <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
           <span>{{ serviceConfig.layout.name }}</span>
         </div>
+
+        <Refresh v-if="widget.refresh" />
 
         <Menu
           mode="horizontal"

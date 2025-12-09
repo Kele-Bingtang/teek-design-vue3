@@ -76,6 +76,12 @@ export interface DescriptionColumn
    */
   optionsProp?: string;
   /**
+   * 是否缓存字典数据
+   *
+   * @default true
+   */
+  optionCache?: boolean;
+  /**
    * 字典指定 label && value && children 的 key 值
    *
    * @default '{ label: "label", value: "value", children: "children", disabled: "disabled" }'

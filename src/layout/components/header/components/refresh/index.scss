@@ -1,6 +1,5 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/function" as *;
-@use "@styles/mixins/namespace" as *;
 
 @include b(refresh) {
   width: 45px;
@@ -11,6 +10,6 @@
   transition: background-color cssVar(transition-duration);
 
   &:hover {
-    background-color: cssVar(gray-200);
+    background-color: cssVar(layout-header-bg-hover-color);
   }
 }

@@ -10,6 +10,6 @@
   transition: background-color cssVar(transition-duration);
 
   &:hover {
-    background-color: cssVar(gray-200);
+    background-color: cssVar(layout-header-bg-hover-color);
   }
 }

@@ -25,11 +25,18 @@ const { isMobile } = useCommon();
 
 <style lang="scss" scoped>
 @use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(header-left) {
   height: 100%;
   padding-right: 15px;
   overflow: hidden;
   white-space: nowrap;
+
+  > div:not(.customize) {
+    &:hover {
+      background-color: cssVar(layout-header-bg-hover-color);
+    }
+  }
 }
 </style>
