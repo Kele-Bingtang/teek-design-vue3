@@ -39,7 +39,7 @@ export type TableElType = TablePascalCaseComponentName | TableHyphenCaseComponen
 /**
  * el 组件 Props
  */
-export type ElProps = LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable;
+export type TableElProps = LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable;
 
 export interface ElDisplayProps<T extends Recordable = any> {
   /**
@@ -57,7 +57,7 @@ export interface ElDisplayProps<T extends Recordable = any> {
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRef<ElProps> | ((row: TableRow<T>) => ElProps);
+  elProps?: MaybeRef<TableElProps> | ((row: TableRow<T>) => TableElProps);
   /**
    * 指定 el 组件的 options
    */

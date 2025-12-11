@@ -86,6 +86,7 @@ export default {
     TreeFilter: "Pro TreeFilter",
     ProSteps: "Pro Steps",
     SimpleProSteps: "Simple ProSteps",
+    ProTabs: "Pro Tabs",
     ProTransfer: "Pro Transfer",
     SimpleProTransfer: "Simple ProTransfer",
 

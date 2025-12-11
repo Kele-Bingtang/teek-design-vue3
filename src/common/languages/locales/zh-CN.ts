@@ -86,6 +86,7 @@ export default {
     TreeFilter: "树形筛选",
     ProSteps: "超级步骤条",
     SimpleProSteps: "简单 ProSteps",
+    ProTabs: "超级标签页",
     ProTransfer: "超级穿梭框",
     SimpleProTransfer: "简单 ProTransfer",
 

@@ -188,7 +188,7 @@ export type ElOptionField = {
 /**
  * el 组件的 props
  */
-export type ElProps =
+export type FormElProps =
   | InputProps
   | InputNumberProps
   | ExtractPropTypes<SelectProps>
@@ -246,7 +246,7 @@ export interface FormItemColumnProps<T = Recordable> {
   /**
    * 表单组件的 Props，即会透传到表单组件
    */
-  elProps?: MaybeRefOrGetter<ElProps> | ((model: T) => ElProps);
+  elProps?: MaybeRefOrGetter<FormElProps> | ((model: T) => FormElProps);
   /**
    * 表单组件的插槽
    */
