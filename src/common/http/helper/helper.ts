@@ -49,14 +49,14 @@ export const processContentType = (config: RequestConfig) => {
 };
 
 /**
- * 获取参数处理器
+ * 获取参数序列化器
  *
  * brackets: ids[]=1&ids[]=2&ids[]=3
  * comma: ids=1,2,3
  * indices: ids[0]=1&ids[1]=2&ids[2]=3
  * repeat: ids=1&ids=2&ids=3
  */
-export const getParamsProcessor = (paramsType: RequestConfig["paramsType"]) => {
+export const getParamsSerializer = (paramsType: RequestConfig["paramsType"]) => {
   switch (paramsType) {
     case "brackets": {
       return (params: any) => qs.stringify(params, { arrayFormat: "brackets" });

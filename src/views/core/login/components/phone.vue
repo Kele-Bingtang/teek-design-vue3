@@ -4,7 +4,7 @@ import { ref, reactive, inject, useTemplateRef } from "vue";
 import { ElMessage } from "element-plus";
 import { Phone, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { useVerifyCode } from "../verifyCode";
+import { useVerifyCode } from "../use-verify-code";
 import { phoneRules } from "../rules";
 
 const ns = useNamespace("login-form");
@@ -15,7 +15,7 @@ const ruleForm = reactive({
   verifyCode: "",
 });
 const ruleFormRef = useTemplateRef<FormInstance>("ruleFormRef");
-const { isDisabled, text } = useVerifyCode();
+const { isDisabled, text, start, end } = useVerifyCode();
 
 const login = async () => {
   loading.value = true;
@@ -38,7 +38,7 @@ const login = async () => {
 const switchLoginMode = inject("switchLoginMode") as (mode: string) => void;
 
 const onBack = () => {
-  useVerifyCode().end();
+  end();
   switchLoginMode("login");
 };
 </script>
@@ -58,7 +58,7 @@ const onBack = () => {
           :prefix-icon="WarnTriangleFilled"
           @keydown.enter="login"
         />
-        <el-button :disabled="isDisabled" @click="useVerifyCode().start(ruleFormRef, 'phone')">
+        <el-button :disabled="isDisabled" @click="start(ruleFormRef, 'phone')">
           {{ text.length > 0 ? text + " 秒后重新获取" : "获取验证码" }}
         </el-button>
       </div>
