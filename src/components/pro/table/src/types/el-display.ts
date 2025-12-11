@@ -41,7 +41,7 @@ export type TableElType = TablePascalCaseComponentName | TableHyphenCaseComponen
  */
 export type ElProps = LinkProps | TagProps | ProgressProps | ImageProps | AvatarProps | Recordable;
 
-export interface ElDisplayProps {
+export interface ElDisplayProps<T extends Recordable = any> {
   /**
    * 没有经过格式化的原始数据
    */
@@ -57,7 +57,7 @@ export interface ElDisplayProps {
   /**
    * 指定 el 组件的 Props，即会透传到 el 组件
    */
-  elProps?: MaybeRef<ElProps> | ((row: TableRow) => ElProps);
+  elProps?: MaybeRef<ElProps> | ((row: TableRow<T>) => ElProps);
   /**
    * 指定 el 组件的 options
    */

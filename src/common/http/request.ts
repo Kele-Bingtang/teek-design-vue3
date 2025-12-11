@@ -10,7 +10,7 @@ import axios from "axios";
 import { RequestMethodEnum, ResultEnum } from "./http-enum";
 import { showFullScreenLoading, tryHideFullScreenLoading } from "./service-loading";
 import { checkStatus } from "./check-status";
-import { AxiosCanceler, CacheManager, getParamsProcessor, processContentType, RetryHandler } from "./helper";
+import { AxiosCanceler, CacheManager, getParamsSerializer, processContentType, RetryHandler } from "./helper";
 
 const defaultOptions: RequestConfigOptions = {
   // 默认地址请求地址
@@ -117,9 +117,8 @@ export class Request {
         // 处理 ContentType
         config.contentType && this.getMethod(config) === RequestMethodEnum.POST && processContentType(config);
         // 处理 get 请求的参数
-        if (this.getMethod(config) === RequestMethodEnum.GET) {
-          const paramsProcessor = getParamsProcessor(config.paramsType);
-          config.params = paramsProcessor(config.params);
+        if (config.paramsType && this.getMethod(config) === RequestMethodEnum.GET) {
+          config.paramsSerializer = getParamsSerializer(config.paramsType);
         }
 
         return config;

@@ -149,7 +149,7 @@ export type TableRow<T extends Recordable = any> =
  */
 export interface TableColumn<T extends Recordable = any>
   extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
-    Omit<ElDisplayProps, "originValue" | "displayValue" | "options" | "optionField">,
+    Omit<ElDisplayProps<T>, "originValue" | "displayValue" | "options" | "optionField">,
     Omit<OperationNamespace.ExtraProp, "el"> {
   /**
    * 表头宽度
