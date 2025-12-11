@@ -4,7 +4,7 @@ import { ref, reactive, inject, useTemplateRef } from "vue";
 import { ElMessage } from "element-plus";
 import { Phone, WarnTriangleFilled, CircleClose, UserFilled } from "@element-plus/icons-vue";
 import { useNamespace } from "@/composables";
-import { useVerifyCode } from "../verifyCode";
+import { useVerifyCode } from "../use-verify-code";
 import { phoneRules } from "../rules";
 
 const ns = useNamespace("login-form");
