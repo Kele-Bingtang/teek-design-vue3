@@ -1,7 +1,7 @@
-import BaseConfigSwitch from "./base-config-switch/index.vue";
-import BrowserTitleSwitch from "./browser-title-switch/index.vue";
-import GlobalThemeSwitch from "./global-theme-switch/index.vue";
-import LayoutModeSwitch from "./layout-mode-switch/index.vue";
-import MenuThemeSwitch from "./menu-theme-switch/index.vue";
+import BaseConfig from "./base-config/index.vue";
+import BrowserTitle from "./browser-title/index.vue";
+import GlobalTheme from "./global-theme/index.vue";
+import LayoutMode from "./layout-mode/index.vue";
+import MenuTheme from "./menu-theme/index.vue";
 
-export { BaseConfigSwitch, BrowserTitleSwitch, GlobalThemeSwitch, LayoutModeSwitch, MenuThemeSwitch };
+export { BaseConfig, BrowserTitle, GlobalTheme, LayoutMode, MenuTheme };

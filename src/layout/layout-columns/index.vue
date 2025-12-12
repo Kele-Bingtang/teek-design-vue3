@@ -88,7 +88,13 @@ const changeMenuItem = (item: RouterConfig) => {
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
   >
     <div v-if="menu.enabled" :class="ns.e('aside')" class="flx-column">
       <div :class="[ns.e('logo'), ns.join('layout-logo')]" class="flx-center" @click="router.push(HOME_URL)">

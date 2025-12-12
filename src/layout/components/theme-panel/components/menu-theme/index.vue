@@ -6,12 +6,13 @@ import { CircleCheckFilled } from "@element-plus/icons-vue";
 import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums";
 import lightTheme from "@/common/assets/images/menu-theme/light.png";
 import darkTheme from "@/common/assets/images/menu-theme/dark.png";
+import blueTheme from "@/common/assets/images/menu-theme/blue.png";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
-defineOptions({ name: "MenuThemeSwitch" });
+defineOptions({ name: "MenuTheme" });
 
-const ns = useNamespace("menu-theme-switch");
+const ns = useNamespace("menu-theme");
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
@@ -27,6 +28,11 @@ const menuThemeModeList = computed(() => [
     name: t("_setting.menu.themeSelect.dark"),
     theme: MenuThemeEnum.Dark,
     img: darkTheme,
+  },
+  {
+    name: t("_setting.menu.themeSelect.blue"),
+    theme: MenuThemeEnum.Blue,
+    img: blueTheme,
   },
 ]);
 

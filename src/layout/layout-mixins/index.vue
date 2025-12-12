@@ -81,7 +81,13 @@ watch(
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
   >
     <el-header
       v-if="header.enabled"
@@ -110,7 +116,7 @@ watch(
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(menu.theme)]" :style="asideStyle">
+      <el-aside v-if="childrenMenu.length" :class="ns.join('layout-aside')" :style="asideStyle">
         <Menu
           :menu-list="childrenMenu"
           :class="[ns.join('layout-menu'), ns.e('aside-menu'), ns.is(menu.style)]"

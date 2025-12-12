@@ -24,7 +24,10 @@ const { logo, header, menu, widget } = storeToRefs(settingStore);
 </script>
 
 <template>
-  <el-container direction="vertical" :class="[ns.join('layout'), ns.b(), staticClass]">
+  <el-container
+    direction="vertical"
+    :class="[ns.b(), ns.join('layout'), ns.join(`menu-theme-${menu.theme}`), staticClass]"
+  >
     <div :class="ns.join('auto-top')" :style="topStyle">
       <el-header v-if="header.enabled" :class="ns.join('layout-header')" class="flx-align-center-between">
         <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">

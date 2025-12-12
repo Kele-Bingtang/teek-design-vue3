@@ -28,13 +28,16 @@ const isCollapse = computed(() => menu.value.collapsed);
 </script>
 
 <template>
-  <el-container :class="[ns.join('layout'), ns.b(), ns.is('collapse', isCollapse), ns.is('expand', !isCollapse)]">
-    <el-aside
-      v-if="menu.enabled"
-      :class="[ns.join('layout-aside'), ns.is(menu.theme)]"
-      class="flx-column"
-      :style="asideStyle"
-    >
+  <el-container
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
+  >
+    <el-aside v-if="menu.enabled" :class="ns.join('layout-aside')" class="flx-column" :style="asideStyle">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>

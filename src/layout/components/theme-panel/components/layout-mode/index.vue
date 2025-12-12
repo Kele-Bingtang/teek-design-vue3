@@ -6,9 +6,9 @@ import { LayoutModeEnum } from "@/common/enums";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
-defineOptions({ name: "LayoutModeSwitch" });
+defineOptions({ name: "LayoutMode" });
 
-const ns = useNamespace("layout-mode-switch");
+const ns = useNamespace("layout-mode");
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
