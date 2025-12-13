@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.0.3](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.2...v2.0.3) (2025-12-13)
+## [2.1.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.2...v2.1.0) (2025-12-13)
 
 ### Features
 
@@ -29,10 +29,6 @@ All notable changes to this project will be documented in this file. See [standa
 - **table:** 🐞 调整超级表格表头背景色样式，修复透明问题 ([523e4fe](https://github.com/Kele-Bingtang/teek-design-vue3/commit/523e4fe032b92ee524d9ed3d30015c7079135929))
 - **tree-filter:** 🐞 修复树形筛选器样式和数量显示问题 ([dcc616e](https://github.com/Kele-Bingtang/teek-design-vue3/commit/dcc616ed7029f10ca60a1604d7f36943d9e5a270))
 
-### Others
-
-- **package:** 🔨 修改 node 要求版本号 ([5327a18](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5327a184815ceb7c771d384f927cb34d21fada7b))
-
 ### Code Refactoring
 
 - **components:** ♻️ 使用 reactive 初始化 model 默认值 ([9676896](https://github.com/Kele-Bingtang/teek-design-vue3/commit/9676896f4c2b0222a0bbfbc6546ede88dd83338a))
@@ -40,6 +36,11 @@ All notable changes to this project will be documented in this file. See [standa
 - **layout:** ♻️ 重构布局组件和样式，修复菜单 popper 时菜单主题未生效问题 ([7859fa3](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7859fa332bc5d3e8956afcefbc941528f8a7ef97))
 - **login:** 重构验证码逻辑文件命名以及相关导入路径 ([ea08f38](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ea08f388ec28b43ef94fd9b62456ce463358b0a1))
 - **pro:** ♻️ 优化描述组件插槽渲染参数和修复 ProPage 的搜索按钮样式 ([5d8ce1f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5d8ce1ff2de8053352e58cc2ed421ce6448c0c3d))
+
+### Others
+
+- **package:** 🔨 修改 node 要求版本号 ([5327a18](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5327a184815ceb7c771d384f927cb34d21fada7b))
+- **release:** 2.0.3 ([2631cca](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2631cca1e98d329910f75144c1507d38c13bd999))
 
 ## [2.0.2](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.1...v2.0.2) (2025-11-09)
 
