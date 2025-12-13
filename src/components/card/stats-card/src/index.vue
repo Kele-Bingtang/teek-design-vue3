@@ -11,7 +11,7 @@ defineOptions({ name: "StatsCard" });
 withDefaults(defineProps<StatsCardProps>(), {
   icon: "",
   title: "",
-  count: 0,
+  count: undefined,
   description: "",
   iconColor: "",
   iconBgColor: "",
