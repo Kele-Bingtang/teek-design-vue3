@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { CircleCheckFilled } from "@element-plus/icons-vue";
-import { LayoutModeEnum, MenuThemeEnum } from "@/common/enums";
+import { MenuThemeEnum } from "@/common/enums";
 import lightTheme from "@/common/assets/images/menu-theme/light.png";
 import darkTheme from "@/common/assets/images/menu-theme/dark.png";
 import blueTheme from "@/common/assets/images/menu-theme/blue.png";
@@ -16,7 +16,7 @@ const ns = useNamespace("menu-theme");
 const settingStore = useSettingStore();
 const { t } = useI18n();
 
-const { layout, menu, isDark } = storeToRefs(settingStore);
+const { menu, isDark } = storeToRefs(settingStore);
 
 const menuThemeModeList = computed(() => [
   {
@@ -36,15 +36,11 @@ const menuThemeModeList = computed(() => [
   },
 ]);
 
-const isDisable = computed(
-  () => [LayoutModeEnum.Horizontal, LayoutModeEnum.Columns].includes(layout.value.layoutMode) || isDark.value
-);
-
 /**
  * 切换菜单主题
  */
 const switchMenuTheme = (theme: MenuThemeEnum) => {
-  if (isDisable.value) return;
+  if (isDark.value) return;
   settingStore.$patch({ menu: { theme } });
 };
 </script>
@@ -55,7 +51,7 @@ const switchMenuTheme = (theme: MenuThemeEnum) => {
       <div
         :class="[ns.e('box'), ns.is('active', item.theme === menu.theme)]"
         @click="switchMenuTheme(item.theme)"
-        :style="{ cursor: isDisable ? 'not-allowed' : 'pointer' }"
+        :style="{ cursor: isDark ? 'not-allowed' : 'pointer' }"
       >
         <img :src="item.img" />
       </div>

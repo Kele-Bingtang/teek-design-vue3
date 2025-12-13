@@ -145,8 +145,8 @@ const changeMenuItem = (item: RouterConfig) => {
       <el-scrollbar v-if="menuItem?.length">
         <Menu
           :menu-list="menuItem"
-          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
-          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(`style-${menu.style}`)]"
+          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
         />
       </el-scrollbar>
     </el-aside>

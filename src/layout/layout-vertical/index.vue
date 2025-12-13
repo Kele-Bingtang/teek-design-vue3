@@ -55,8 +55,8 @@ const handleClickOutSide = () => {
       </div>
 
       <Menu
-        :class="[ns.join('layout-menu'), ns.is(menu.style)]"
-        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+        :class="[ns.join('layout-menu'), ns.is(`style-${menu.style}`)]"
+        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
       />
     </el-aside>
 

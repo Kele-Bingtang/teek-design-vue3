@@ -43,12 +43,12 @@ const isCollapse = computed(() => menu.value.collapsed);
         <span v-show="!isCollapse">{{ serviceConfig.layout.name }}</span>
       </div>
       <Menu
-        :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
-        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+        :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(`style-${menu.style}`)]"
+        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
       />
 
       <!-- 菜单底部 -->
-      <div :class="[ns.e('menu-footer'), ns.is('collapse', isCollapse)]" class="flx-column gap-10">
+      <div :class="ns.e('menu-footer')" class="flx-column gap-10">
         <UserAvatar placement="right" />
 
         <el-tooltip placement="right" :content="isCollapse ? '菜单展开' : '菜单折叠'" :disabled="!isCollapse">

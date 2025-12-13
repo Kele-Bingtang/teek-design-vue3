@@ -43,7 +43,7 @@
     border: none !important;
 
     /* 非激活图标样式 */
-    > li:not(.is-active) {
+    > li:not(:hover, .is-active) {
       .#{$el-namespace}-icon,
       .svg-icon {
         color: cssVar(layout-aside-icon-color);
@@ -79,7 +79,7 @@
   }
 
   /* 菜单圆润风格 */
-  @include is(round) {
+  @include is(style-round) {
     .el-menu:not(.el-menu--horizontal) {
       @include el-joins(menu-item, sub-menu__title) {
         width: calc(100% - 16px);
@@ -128,7 +128,7 @@
       }
 
       /* 菜单圆润风格 */
-      @include is(round) {
+      @include is(style-round) {
         .el-menu:not(.el-menu--horizontal) {
           @include el-joins(menu-item, sub-menu__title) {
             width: 100%;
@@ -186,13 +186,13 @@
   @include joins(layout-menu) {
     flex: 1;
 
-    @include is(center) {
+    @include is(align-center) {
       @include el-joins(menu--horizontal) {
         justify-content: center;
       }
     }
 
-    @include is(end) {
+    @include is(align-end) {
       @include el-joins(menu--horizontal) {
         justify-content: end;
       }
