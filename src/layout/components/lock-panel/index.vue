@@ -209,10 +209,11 @@ onUnmounted(() => {
             <el-form-item prop="password">
               <el-input
                 v-model="formData.password"
+                ref="lockInputInstance"
                 type="password"
                 :placeholder="$t('_lockScreen.inputPlaceholder')"
                 :show-password="true"
-                ref="lockInputInstance"
+                autocomplete="new-password"
                 @keyup.enter="handleLock(formInstance)"
               >
                 <template #suffix>
@@ -245,10 +246,11 @@ onUnmounted(() => {
           <el-form-item prop="password">
             <el-input
               v-model="unlockForm.password"
+              ref="unlockInputInstance"
               type="password"
               :placeholder="$t('_lockScreen.unInputPlaceholder')"
               :show-password="true"
-              ref="unlockInputInstance"
+              autocomplete="new-password"
             >
               <template #suffix>
                 <el-icon class="cursor-pointer" @click="handleUnlock(unlockFormInstance)">

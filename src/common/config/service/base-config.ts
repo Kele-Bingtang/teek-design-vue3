@@ -36,6 +36,15 @@ export const defaultServiceConfig: ServiceConfig = {
       env: [],
     },
     themePanelTriggerPosition: ThemePanelTriggerPositionEnum.Header,
+    globalAlert: {
+      enabled: true,
+      text: "Teek Design Vue3 祝您圣诞快乐，愿节日的欢乐与祝福如雪花般纷至沓来！",
+      startDate: "2025-12-25",
+      endDate: "2025-12-25",
+      type: "primary",
+      closable: true,
+      showIcon: false,
+    },
   },
   theme: {
     // 默认与 css var 一致，在这里配置一份，方便生成 1 - 9 的基础色

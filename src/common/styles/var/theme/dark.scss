@@ -9,9 +9,9 @@
 // 自定义全局暗色样式
 :root.dark {
   // === 基本色 ===
-  --#{$teek-namespace}-color: var(--#{$teek-namespace}-text-gray-800); // 主要文本色
-  --#{$teek-namespace}-light: var(--#{$teek-namespace}-gray-300); // 浅色背景
-  --#{$teek-namespace}-dark: var(--#{$teek-namespace}-gray-800); // 深色文本/元素
+  --#{$teek-namespace}-color: #000000;
+  --#{$teek-namespace}-light: #1a1b21;
+  --#{$teek-namespace}-dark: #272a34;
 
   // 轻量文本色
   --#{$teek-namespace}-text-muted: var(--#{$teek-namespace}-color-info-muted);

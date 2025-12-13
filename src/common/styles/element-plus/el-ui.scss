@@ -145,7 +145,6 @@
 // 处理移动端组件兼容性
 @media screen and (max-width: $device-phone) {
   .#{$el-namespace}-message-box,
-  .#{$el-namespace}-message,
   .#{$el-namespace}-dialog {
     width: calc(100% - 24px) !important;
   }
@@ -255,10 +254,6 @@
 @media screen and (max-width: $device-ipad-pro) {
   .#{$el-namespace}-table-fixed-column--right {
     padding-right: 0 !important;
-
-    .#{$el-namespace}-button {
-      margin: 5px 10px 5px 0 !important;
-    }
   }
 }
 

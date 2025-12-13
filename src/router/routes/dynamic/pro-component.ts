@@ -6,27 +6,21 @@ const proComponents: RouterConfigRaw = {
   meta: {
     title: "超级组件",
     icon: Film,
-    tagText: "Core",
-    tagProps: {
-      type: "primary",
-    },
+    tagText: "Hot",
+    tagProps: { type: "danger" },
   },
   children: [
     {
       path: "/pro-table",
       redirect: "/pro-table/simple",
       name: "ProTable",
-      meta: {
-        title: "超级表格",
-      },
+      meta: { title: "超级表格" },
       children: [
         {
           path: "simple",
           component: () => import("@/views/pro/pro-table/simple/index.vue"),
           name: "SimpleProTable",
-          meta: {
-            title: "简单 ProTable",
-          },
+          meta: { title: "简单 ProTable" },
         },
         {
           path: "advanced",
@@ -73,9 +67,7 @@ const proComponents: RouterConfigRaw = {
       path: "/pro-form",
       redirect: "/pro-form/simple",
       name: "ProForm",
-      meta: {
-        title: "超级表单",
-      },
+      meta: { title: "超级表单" },
       children: [
         {
           path: "simple",
@@ -249,9 +241,7 @@ const proComponents: RouterConfigRaw = {
         notClickBread: true,
         title: "超级标签页",
         tagText: "New",
-        tagProps: {
-          type: "danger",
-        },
+        tagProps: { type: "danger" },
       },
     },
     // {

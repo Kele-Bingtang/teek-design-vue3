@@ -37,6 +37,7 @@ export const useSettingStore = defineStore(
       elementPlusSize: layoutConfig.elementPlusSize,
       watermark: layoutConfig.watermark,
       themePanelTriggerPosition: layoutConfig.themePanelTriggerPosition,
+      globalAlertEnabled: layoutConfig.globalAlert?.enabled ?? false,
     });
 
     const theme = reactive({

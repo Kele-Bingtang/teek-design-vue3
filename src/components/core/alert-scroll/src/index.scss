@@ -1,0 +1,101 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+$border-radius: calc(cssVar(radius) / 2 + 2px);
+$types: (
+  primary: primary,
+  success: success,
+  warning: warning,
+  danger: danger,
+  error: error,
+  info: info,
+  secondary: secondary,
+);
+
+@include b(alert-scroll) {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-size: 0.875rem;
+  border: 1px solid;
+  border-radius: $border-radius;
+
+  @include is(vertical) {
+    justify-content: center;
+  }
+
+  // 动态生成类型样式
+  @each $type, $color in $types {
+    @include is($type) {
+      color: color-mix(in oklch, cssVar(color-#{$type}) 90%, transparent);
+      border-color: color-mix(in oklch, cssVar(color-#{$type}) 50%, transparent);
+    }
+  }
+
+  @include e(content) {
+    display: inline-block;
+    padding: 0 2.25rem;
+    white-space: nowrap;
+    transition: opacity 0.6s ease;
+
+    a {
+      color: cssVar(color-danger);
+
+      &:hover {
+        color: color-mix(in oklch, cssVar(color-danger) 80%, transparent);
+        text-decoration: underline;
+      }
+    }
+
+    &.opacity-0 {
+      opacity: 0;
+    }
+
+    &.opacity-100 {
+      opacity: 1;
+    }
+
+    .text-span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .icon-text {
+      margin-right: 5px;
+    }
+  }
+
+  @include e(icon) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 100%;
+    background-color: cssVar(bg-color);
+  }
+
+  @include e(close) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 100%;
+    cursor: pointer;
+    background-color: cssVar(bg-color);
+  }
+
+  .icon-notice,
+  .icon-close {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
