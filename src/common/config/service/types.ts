@@ -84,6 +84,23 @@ export interface LayoutConfig {
   };
   /** 主题面板触发按钮位置 */
   themePanelTriggerPosition: ThemePanelTriggerPositionEnum;
+  /** 全局提示配置 */
+  globalAlert?: {
+    /** 是否启用提示，默认为 true */
+    enabled?: boolean;
+    /** 开始时间，默认当天 */
+    startDate?: string;
+    /** 结束时间，默认为 startDate */
+    endDate?: string;
+    /** 提示文本 */
+    text?: string;
+    /** 类型，默认 primary */
+    type?: "primary" | "success" | "warning" | "danger" | "error" | "info" | "secondary";
+    /** 是否可以关闭，默认 false */
+    closable?: boolean;
+    /** 是否显示类型图标，默认 false */
+    showIcon?: boolean;
+  };
 }
 
 export interface ThemeConfig {

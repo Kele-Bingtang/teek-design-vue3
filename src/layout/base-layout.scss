@@ -5,6 +5,7 @@
 @include joins(layout-menu, layout-menu-popper) {
   --#{$el-namespace}-menu-bg-color: var(--#{$teek-namespace}-layout-aside-bg-color);
   --#{$el-namespace}-menu-text-color: var(--#{$teek-namespace}-layout-aside-text-color);
+  --#{$el-namespace}-menu-hover-text-color: var(--#{$teek-namespace}-layout-aside-text-hover-color);
   --#{$el-namespace}-menu-active-color: var(--#{$teek-namespace}-layout-aside-text-active-color);
   --#{$el-namespace}-menu-hover-bg-color: var(--#{$teek-namespace}-layout-aside-bg-hover-color);
   --#{$el-namespace}-menu-item-height: var(--#{$teek-namespace}-layout-aside-item-height);
@@ -42,7 +43,7 @@
     border: none !important;
 
     /* 非激活图标样式 */
-    > li:not(.is-active) {
+    > li:not(:hover, .is-active) {
       .#{$el-namespace}-icon,
       .svg-icon {
         color: cssVar(layout-aside-icon-color);
@@ -78,7 +79,7 @@
   }
 
   /* 菜单圆润风格 */
-  @include is(round) {
+  @include is(style-round) {
     .el-menu:not(.el-menu--horizontal) {
       @include el-joins(menu-item, sub-menu__title) {
         width: calc(100% - 16px);
@@ -99,14 +100,14 @@
   width: 100%;
   height: 100%;
 
-  @include is(expand) {
+  @include is(menu-expand) {
     @include joins(layout-aside) {
       width: cssVar(layout-expand-aside-width);
       transition-duration: 0.3s;
     }
   }
 
-  @include is(collapse) {
+  @include is(menu-collapse) {
     @include joins(layout-logo) {
       &:not(.no-collapse) {
         width: calc(cssVar(layout-collapse-aside-width) - 1px);
@@ -127,7 +128,7 @@
       }
 
       /* 菜单圆润风格 */
-      @include is(round) {
+      @include is(style-round) {
         .el-menu:not(.el-menu--horizontal) {
           @include el-joins(menu-item, sub-menu__title) {
             width: 100%;
@@ -185,13 +186,13 @@
   @include joins(layout-menu) {
     flex: 1;
 
-    @include is(center) {
+    @include is(align-center) {
       @include el-joins(menu--horizontal) {
         justify-content: center;
       }
     }
 
-    @include is(end) {
+    @include is(align-end) {
       @include el-joins(menu--horizontal) {
         justify-content: end;
       }

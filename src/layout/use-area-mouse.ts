@@ -174,8 +174,8 @@ export const useHeaderAreaMouse = () => {
 
     // 滚动隐藏模式
     if (header.value.showMode === HeaderShowModeEnum.ScrollHidden) {
-      onMounted(() => {
-        // 初始化监听滚动的元素
+      // 初始化滚动的元素
+      nextTick(() => {
         if (!pageContentDom.value) pageContentDom.value = document.querySelector(".page-content");
       });
 

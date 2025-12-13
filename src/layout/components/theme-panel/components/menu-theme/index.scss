@@ -2,7 +2,7 @@
 @use "@styles/mixins/function" as *;
 @use "@styles/mixins/namespace" as *;
 
-@include b(menu-theme-switch) {
+@include b(menu-theme) {
   @include e(item) {
     position: relative;
     width: calc(100% / 3 - 10px);

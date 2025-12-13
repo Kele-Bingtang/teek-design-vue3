@@ -2,7 +2,7 @@
 @use "@styles/mixins/namespace" as *;
 @use "@styles/mixins/function" as *;
 
-@include b(global-theme-select) {
+@include b(global-theme) {
   @include e(theme-item) {
     position: relative;
     width: calc(100% / 3 - 10px);

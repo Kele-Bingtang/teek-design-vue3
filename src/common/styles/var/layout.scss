@@ -35,7 +35,7 @@
   --#{$teek-namespace}-layout-aside-bg-active-color: var(--#{$el-namespace}-color-primary-light-9);
   --#{$teek-namespace}-layout-aside-bg-hover-color: var(--#{$el-namespace}-color-primary-light-9);
   --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-gray-700);
+  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-gray-800);
   --#{$teek-namespace}-layout-aside-text-active-color: var(--#{$teek-namespace}-color-primary);
   --#{$teek-namespace}-layout-aside-text-hover-color: var(--#{$teek-namespace}-color-primary);
   --#{$teek-namespace}-layout-aside-icon-color: var(--#{$teek-namespace}-text-gray-700);
@@ -51,6 +51,9 @@
   // columns 布局侧边栏
   --#{$teek-namespace}-layout-columns-aside-width: 72px;
   --#{$teek-namespace}-layout-columns-aside-item-height: 72px;
+
+  // iframe 嵌入布局侧边栏
+  --#{$teek-namespace}-layout-iframe-aside-line: 1px solid var(--#{$teek-namespace}-border-color);
 
   // 内容区
   --#{$teek-namespace}-layout-page-bg-color: var(--#{$teek-namespace}-bg-color-page);
@@ -74,27 +77,4 @@
   --#{$teek-namespace}-layout-aside-text-color: var(--#{$el-namespace}-text-color-regular);
   --#{$teek-namespace}-layout-aside-icon-color: var(--#{$el-namespace}-text-color-regular);
   --#{$teek-namespace}-layout-aside-text-active-weight: 400;
-}
-
-// 菜单单独深色模式变量（与中性深色模式变量一致）
-.#{$teek-namespace}-layout-aside.is-dark {
-  --#{$el-namespace}-color-primary: #6d94e6;
-  --#{$teek-namespace}-color-primary: var(--#{$el-namespace}-color-primary);
-
-  // 侧边栏
-  --#{$teek-namespace}-layout-aside-bg-color: #1c1e23;
-  --#{$teek-namespace}-layout-aside-bg-active-color: #2a2b31;
-  --#{$teek-namespace}-layout-aside-bg-hover-color: #2a2b31;
-  --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-layout-aside-text-color: #cacbcc;
-  --#{$teek-namespace}-layout-aside-text-active-color: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-layout-aside-text-hover-color: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-layout-aside-icon-color: #cacbcc;
-  --#{$teek-namespace}-layout-aside-icon-active-color: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-layout-aside-line: 1px solid #2c2e32;
-  --#{$teek-namespace}-layout-logo-title-color: #cacbcc;
-  --#{$teek-namespace}-layout-aside-text-active-weight: 400;
-  --#{$teek-namespace}-border-color: #2c2e32;
-
-  color: #cacbcc;
 }

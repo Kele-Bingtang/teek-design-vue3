@@ -32,7 +32,7 @@
       scrollbar-width: none;
     }
 
-    @include is(collapse) {
+    @include is(menu-collapse) {
       @include joins(layout-aside) {
         width: 0 !important;
       }

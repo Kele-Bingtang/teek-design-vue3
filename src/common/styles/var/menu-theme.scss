@@ -1,0 +1,115 @@
+@use "../mixins/namespace" as *;
+
+%dark-theme-aside {
+  // 顶部左侧面包屑
+  --#{$teek-namespace}-layout-logo-title-color: #cacbcc;
+
+  // 侧边栏
+  --#{$teek-namespace}-layout-aside-bg-color: #1c1e23;
+  --#{$teek-namespace}-layout-aside-bg-active-color: #2a2b31;
+  --#{$teek-namespace}-layout-aside-bg-hover-color: #2a2b31;
+  --#{$teek-namespace}-layout-aside-left-bg-color: #6d94e6;
+  --#{$teek-namespace}-layout-aside-text-color: #cacbcc;
+  --#{$teek-namespace}-layout-aside-text-active-color: #6d94e6;
+  --#{$teek-namespace}-layout-aside-text-hover-color: #6d94e6;
+  --#{$teek-namespace}-layout-aside-icon-color: #cacbcc;
+  --#{$teek-namespace}-layout-aside-icon-active-color: #6d94e6;
+  --#{$teek-namespace}-layout-aside-line: 1px solid #2c2e32;
+  --#{$teek-namespace}-layout-aside-text-active-weight: 400;
+  --#{$teek-namespace}-layout-iframe-aside-line: 1px solid #2c2e32;
+}
+
+// 菜单蓝色主题变量包装复用
+%blue-theme-aside {
+  // 顶部左侧面包屑
+  --#{$teek-namespace}-layout-logo-title-color: #ffffff;
+
+  // 侧边栏
+  --#{$teek-namespace}-layout-aside-bg-color: #2b3a74;
+  --#{$teek-namespace}-layout-aside-bg-active-color: #395ae3;
+  --#{$teek-namespace}-layout-aside-bg-hover-color: #395ae3;
+  --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$el-namespace}-color-primary-light-7);
+  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-gray-300);
+  --#{$teek-namespace}-layout-aside-text-active-color: #ffffff;
+  --#{$teek-namespace}-layout-aside-text-hover-color: #ffffff;
+  --#{$teek-namespace}-layout-aside-icon-color: #ffffff;
+  --#{$teek-namespace}-layout-aside-icon-active-color: #ffffff;
+  --#{$teek-namespace}-layout-aside-line: 1px solid var(--#{$teek-namespace}-text-gray-600);
+  --#{$teek-namespace}-layout-aside-text-active-weight: 400;
+  --#{$teek-namespace}-layout-iframe-aside-line: 1px solid var(--#{$el-namespace}-color-primary-light-3);
+}
+
+// 菜单深色模式变量，与中性深色模式变量一致（在浅色/深色模式生效，切换深色模式不会覆盖变量）
+.#{$teek-namespace}-layout.#{$teek-namespace}-menu-theme-dark {
+  // 侧边栏生效的布局
+  &.#{$teek-namespace}-vertical-layout,
+  &.#{$teek-namespace}-horizontal-layout,
+  &.#{$teek-namespace}-mixins-layout,
+  &.#{$teek-namespace}-iframe-layout,
+  &.#{$teek-namespace}-columns-layout {
+    @extend %dark-theme-aside;
+  }
+
+  // 顶部栏生效的布局
+  &.#{$teek-namespace}-classic-layout,
+  &.#{$teek-namespace}-horizontal-layout,
+  &.#{$teek-namespace}-mixins-layout {
+    // 顶部栏
+    --#{$teek-namespace}-layout-header-bg-color: #1c1e23;
+    --#{$teek-namespace}-layout-header-text-color: #cacbcc;
+    --#{$teek-namespace}-layout-header-bg-hover-color: #2a2b31;
+    --#{$teek-namespace}-global-search-input-border-color: #303236;
+
+    // 顶部左侧面包屑
+    --#{$teek-namespace}-layout-header-breadcrumb-link-color: #7a7b81;
+    --#{$teek-namespace}-layout-header-breadcrumb-text-color: #cacbcc;
+    --#{$teek-namespace}-layout-logo-title-color: #cacbcc;
+  }
+}
+
+// 菜单 popper 时菜单深蓝色主题变量
+.#{$teek-namespace}-layout-menu-popper.is-theme-dark {
+  @extend %dark-theme-aside;
+}
+
+// 非深色模式（仅在浅色模式生效，切换深色模式会覆盖变量）
+:root:not(.dark) {
+  .#{$teek-namespace}-layout {
+    // 菜单深色主题变量（该菜单主题期望在浅色/深色模式都生效，因此已移出去，参考上方）
+    // #{$teek-namespace}-menu-theme-dark .#{$teek-namespace}-layout-aside,
+    // .#{$teek-namespace}-layout-menu-popper.is-theme-dark {
+    // }
+
+    // 菜单深蓝色主题变量
+    &.#{$teek-namespace}-menu-theme-blue {
+      // 侧边栏生效的布局
+      &.#{$teek-namespace}-vertical-layout,
+      &.#{$teek-namespace}-horizontal-layout,
+      &.#{$teek-namespace}-mixins-layout,
+      &.#{$teek-namespace}-iframe-layout,
+      &.#{$teek-namespace}-columns-layout {
+        @extend %blue-theme-aside;
+      }
+
+      // 顶部栏生效的布局
+      &.#{$teek-namespace}-classic-layout,
+      &.#{$teek-namespace}-horizontal-layout,
+      &.#{$teek-namespace}-mixins-layout {
+        // 顶部栏
+        --#{$teek-namespace}-layout-header-bg-color: #2b3a74;
+        --#{$teek-namespace}-layout-header-text-color: #ffffff;
+        --#{$teek-namespace}-layout-header-bg-hover-color: var(--#{$el-namespace}-color-primary-light-1);
+
+        // 顶部左侧面包屑
+        --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-gray-300);
+        --#{$teek-namespace}-layout-header-breadcrumb-text-color: var(--#{$teek-namespace}-text-gray-400);
+        --#{$teek-namespace}-layout-logo-title-color: #ffffff;
+      }
+    }
+  }
+
+  // 菜单 popper 时菜单深蓝色主题变量
+  .#{$teek-namespace}-layout-menu-popper.is-theme-blue {
+    @extend %blue-theme-aside;
+  }
+}

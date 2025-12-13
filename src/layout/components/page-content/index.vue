@@ -7,6 +7,7 @@ import { getUrlParams, mittBus } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useLayoutStore, useSettingStore } from "@/pinia";
 import Maximize from "./components/maximize.vue";
+import AlertScroll from "./components/alert-scroll.vue";
 import Loading from "../loading/index.vue";
 import FrameLayout from "../iframe/index.vue";
 
@@ -80,6 +81,8 @@ watchEffect(() => {
 <template>
   <Maximize v-if="layout.maximize" />
   <el-main :class="ns.b()" class="page-content" v-bind="$attrs">
+    <AlertScroll v-if="layout.globalAlertEnabled" />
+
     <router-view v-slot="{ Component, route }">
       <Loading v-if="transition.loading" route />
 

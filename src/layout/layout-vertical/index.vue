@@ -40,22 +40,23 @@ const handleClickOutSide = () => {
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
   >
-    <el-aside
-      v-if="menu.enabled"
-      :class="[ns.join('layout-aside'), ns.is(menu.theme)]"
-      class="flx-column"
-      :style="asideStyle"
-    >
+    <el-aside v-if="menu.enabled" :class="ns.join('layout-aside')" class="flx-column" :style="asideStyle">
       <div :class="ns.join('layout-logo')" class="flx-center" @click="router.push(HOME_URL)">
         <img v-if="logo.enable" :src="serviceConfig.logo.source" alt="logo" />
         <span v-show="!menu.collapsed">{{ serviceConfig.layout.name }}</span>
       </div>
 
       <Menu
-        :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
-        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+        :class="[ns.join('layout-menu'), ns.is(`style-${menu.style}`)]"
+        :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
       />
     </el-aside>
 

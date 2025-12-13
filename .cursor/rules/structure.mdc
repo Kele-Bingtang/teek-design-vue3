@@ -1,10 +1,7 @@
 ---
-description: 
-globs: 
-alwaysApply: true
----
----
 description: 组件结构规范
+globs:
+alwaysApply: true
 priority: 999
 ---
 
@@ -24,7 +21,7 @@ priority: 999
 
 1. 所有文件请使用 `kebab-case` 风格，如 `pro-table.vue`、`use-table.ts`、`pro-table.scss`
 2. 引入组件的命名为 `Camel-Case`，如 `import ProTable from "pro-table.vue"`
-2. TypeScript 接口和类型用 PascalCase，统一放在同级目录 `types.ts` 或 `types/xx.ts` 文件中，且组件里的 Typescript 类型移到类型文件里，如 `ProTableProps`、`ProTableEmits`
+3. TypeScript 接口和类型用 PascalCase，统一放在同级目录 `types.ts` 或 `types/xx.ts` 文件中，且组件里的 Typescript 类型移到类型文件里，如 `ProTableProps`、`ProTableEmits`
 
 ## TypeScript 使用
 

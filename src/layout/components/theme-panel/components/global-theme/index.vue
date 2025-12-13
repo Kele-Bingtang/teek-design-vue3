@@ -9,9 +9,9 @@ import lightTheme from "@/common/assets/images/system-theme/light.png";
 import darkTheme from "@/common/assets/images/system-theme/dark.png";
 import systemTheme from "@/common/assets/images/system-theme/system.png";
 
-defineOptions({ name: "GlobalThemeSwitch" });
+defineOptions({ name: "GlobalTheme" });
 
-const ns = useNamespace("global-theme-select");
+const ns = useNamespace("global-theme");
 
 const { changeGlobalTheme, changePrimaryColor, changeGreyOrWeak } = useTheme();
 const settingStore = useSettingStore();

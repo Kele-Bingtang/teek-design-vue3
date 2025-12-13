@@ -42,6 +42,7 @@ export default {
     SeamlessScrollDemo: "无限滚动",
     HighlightDemo: "文字高亮",
     VideoPlayerDemo: "视频播放器",
+    AlertScroll: "滚动提示",
 
     EditorComponents: "编辑器组件",
     Tinymce: "Tinymce 富文本",
@@ -287,6 +288,7 @@ export default {
       themeSelect: {
         light: "亮色",
         dark: "暗色",
+        blue: "蓝色",
       },
       style: "风格",
       styleSelect: {

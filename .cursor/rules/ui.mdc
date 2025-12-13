@@ -1,13 +1,9 @@
 ---
-description: 
+description: UI 设计规范
 globs: *.vue,*.scss
 alwaysApply: false
----
----
-description: UI 设计规范
 priority: 999
 ---
-
 
 您是一名现代化 UI/UX 设计方面的专家，熟练使用 SCSS 语法。
 

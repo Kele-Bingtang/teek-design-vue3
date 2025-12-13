@@ -5,7 +5,8 @@
   @include e(menu-footer) {
     width: 100%;
     padding: 16px 0 8px;
-    border-top: 1px solid cssVar(border-color);
+    color: cssVar(layout-aside-text-color);
+    border-top: cssVar(layout-iframe-aside-line);
 
     .name {
       font-size: 14px;
@@ -34,11 +35,13 @@
         background-color: cssVar(layout-aside-bg-hover-color);
       }
     }
+  }
 
-    // 菜单折叠时
-    @include is(collapse) {
+  // 菜单折叠时
+  @include is(menu-collapse) {
+    @include joins(iframe-layout__menu-footer) {
       > * {
-        padding: 0;
+        padding: 10px 0;
       }
 
       .name {

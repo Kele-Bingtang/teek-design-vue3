@@ -28,7 +28,13 @@ const { menu, logo, header } = storeToRefs(settingStore);
 <template>
   <!-- 布局：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧 -->
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
   >
     <el-header
       v-if="header.enabled"
@@ -50,10 +56,10 @@ const { menu, logo, header } = storeToRefs(settingStore);
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="menu.enabled" :class="[ns.join('layout-aside'), ns.is(menu.theme)]" :style="asideStyle">
+      <el-aside v-if="menu.enabled" :class="ns.join('layout-aside')" :style="asideStyle">
         <Menu
-          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(menu.style)]"
-          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+          :class="[ns.join('layout-menu'), ns.b('menu'), ns.is(`style-${menu.style}`)]"
+          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
         />
       </el-aside>
 

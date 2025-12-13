@@ -5,9 +5,9 @@ import { TitleModeEnum } from "@/common/enums";
 import { useNamespace, useBrowserTitle } from "@/composables";
 import { useSettingStore } from "@/pinia";
 
-defineOptions({ name: "BrowserTitleSwitch" });
+defineOptions({ name: "BrowserTitle" });
 
-const ns = useNamespace("browser-title-switch");
+const ns = useNamespace("browser-title");
 
 const { t } = useI18n();
 

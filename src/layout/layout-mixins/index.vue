@@ -81,7 +81,13 @@ watch(
 
 <template>
   <el-container
-    :class="[ns.join('layout'), ns.b(), ns.is('collapse', menu.collapsed), ns.is('expand', !menu.collapsed)]"
+    :class="[
+      ns.b(),
+      ns.join('layout'),
+      ns.join(`menu-theme-${menu.theme}`),
+      ns.is('menu-collapse', menu.collapsed),
+      ns.is('menu-expand', !menu.collapsed),
+    ]"
   >
     <el-header
       v-if="header.enabled"
@@ -102,7 +108,7 @@ watch(
         :active-menu="activeMenu"
         mode="horizontal"
         :is-collapse="false"
-        :class="[ns.join('layout-menu'), ns.e('header-menu'), ns.is(header.menuAlign)]"
+        :class="[ns.join('layout-menu'), ns.e('header-menu'), ns.is(`align-${header.menuAlign}`)]"
         :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')}`"
       />
 
@@ -110,11 +116,11 @@ watch(
     </el-header>
 
     <el-container :class="ns.e('content')">
-      <el-aside v-if="childrenMenu.length" :class="[ns.join('layout-aside'), ns.is(menu.theme)]" :style="asideStyle">
+      <el-aside v-if="childrenMenu.length" :class="ns.join('layout-aside')" :style="asideStyle">
         <Menu
           :menu-list="childrenMenu"
-          :class="[ns.join('layout-menu'), ns.e('aside-menu'), ns.is(menu.style)]"
-          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(menu.style)}`"
+          :class="[ns.join('layout-menu'), ns.e('aside-menu'), ns.is(`style-${menu.style}`)]"
+          :popper-class="`${ns.join('layout-menu-popper')} ${ns.b('menu-popper')} ${ns.is(`theme-${menu.theme}`)} ${ns.is(`style-${menu.style}`)}`"
         />
       </el-aside>
 

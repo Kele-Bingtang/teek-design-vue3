@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.2...v2.1.0) (2025-12-13)
+
+### Features
+
+- **core:** 🚀 添加全局滚动提示组件及配置支持 ([2de62eb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2de62ebd08de3af59551629dc905f359952707c0))
+- **layout:** 🚀 新增蓝色菜单主题并优化样式结构 ([397f609](https://github.com/Kele-Bingtang/teek-design-vue3/commit/397f60925f5d20a05e318e65ac5333941802c552))
+- **pro:** 🚀 添加 optionCache 配置项以控制字典数据缓存行为 ([7b85eff](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7b85eff5bbb245c0fbf6bcf237b351e3945b8324))
+- **pro:** 🚀 添加 ProTabs 超级标签页组件并重构路由结构 ([cd0f067](https://github.com/Kele-Bingtang/teek-design-vue3/commit/cd0f06767265d81926a3c896698eacfaae1b9e49))
+- **table:** 🚀 超级表格l行、单元格样式支持动态样式函数配置 ([67673fb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/67673fb42663638bfdc41b55eea82456e3f9c3c3))
+- **tree-filter:** 🚀 增强树形筛选器组件功能和样式 ([54ee0cc](https://github.com/Kele-Bingtang/teek-design-vue3/commit/54ee0ccfd8ad46bc29eed594c7ab2862cd7dd325))
+- **tree-filter:** 🚀 支持动态请求参数并优化数据获取逻辑 ([76d15bb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/76d15bbdddcd07914b412b992b5ed1ea0a524238))
+- **types:** 🚀 为超级描述列表和超级表格组件添加泛型支持，优化 axios 的 paramsType 逻辑 ([727d00c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/727d00c4385ede0187a3141b74f6e3c458234ecc))
+- **utils:** 🚀 添加字符串简化函数并优化分栏布局样式 ([655a561](https://github.com/Kele-Bingtang/teek-design-vue3/commit/655a561ba4500641828e134bc7d9601465c4d2d4))
+
+### Bug Fixes
+
+- **chart:** 🐞 修复 Chart 渲染失效问题和 tab 修改失效问题 ([a8234f5](https://github.com/Kele-Bingtang/teek-design-vue3/commit/a8234f5310f22d349c0cfe889e4a7f580c09ee8c))
+- **layout:** 🐞 优化布局组件和样式配置 ([fef4d02](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fef4d020ce674b462f3eb87cc82f8210cfdfd58d))
+- **layout:** 修复标签页元数据合并逻辑 ([7e502d1](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7e502d15c59065352f92549d63d0463a70530b8b))
+- **layout:** 修复标签页元数据合并问题 ([805002f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/805002fbd453bdc89c9cce87c70b63d06f11c46a))
+- **login:** 修复验证码倒计时不显示及返回登录页未重置的问题 ([271e7c6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/271e7c636bcb94495b1cdcd363b3379bbdad0bdf))
+- **pro-form:** 🐞 优化表单布局和树组件全选逻辑 ([5f10de0](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5f10de024693d4d92ca522a2e614679d7c308de0))
+- **pro:** 🐞 修复 options 缓存的 key 没有处理多级嵌套 prop 问题 ([f6eabff](https://github.com/Kele-Bingtang/teek-design-vue3/commit/f6eabff59f95fb53eceae2ff9b357eec98a45ebb))
+- **pro:** 🐞 修复超级组件属性传递和数据处理逻辑 ([8c47622](https://github.com/Kele-Bingtang/teek-design-vue3/commit/8c47622d4d0808a736a42e5aefacdbcfcf340520))
+- **table:** 🐞 调整超级表格表头背景色样式，修复透明问题 ([523e4fe](https://github.com/Kele-Bingtang/teek-design-vue3/commit/523e4fe032b92ee524d9ed3d30015c7079135929))
+- **tree-filter:** 🐞 修复树形筛选器样式和数量显示问题 ([dcc616e](https://github.com/Kele-Bingtang/teek-design-vue3/commit/dcc616ed7029f10ca60a1604d7f36943d9e5a270))
+
+### Code Refactoring
+
+- **components:** ♻️ 使用 reactive 初始化 model 默认值 ([9676896](https://github.com/Kele-Bingtang/teek-design-vue3/commit/9676896f4c2b0222a0bbfbc6546ede88dd83338a))
+- **core:** ♻️ 优化页面刷新逻辑和组件功能，修复标签页右键刷新失效问题 ([caafb6e](https://github.com/Kele-Bingtang/teek-design-vue3/commit/caafb6e7e050ade078d49a90f065bfa3f4e0b427))
+- **layout:** ♻️ 重构布局组件和样式，修复菜单 popper 时菜单主题未生效问题 ([7859fa3](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7859fa332bc5d3e8956afcefbc941528f8a7ef97))
+- **login:** 重构验证码逻辑文件命名以及相关导入路径 ([ea08f38](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ea08f388ec28b43ef94fd9b62456ce463358b0a1))
+- **pro:** ♻️ 优化描述组件插槽渲染参数和修复 ProPage 的搜索按钮样式 ([5d8ce1f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5d8ce1ff2de8053352e58cc2ed421ce6448c0c3d))
+
+### Others
+
+- **package:** 🔨 修改 node 要求版本号 ([5327a18](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5327a184815ceb7c771d384f927cb34d21fada7b))
+- **release:** 2.0.3 ([2631cca](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2631cca1e98d329910f75144c1507d38c13bd999))
+
 ## [2.0.2](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.1...v2.0.2) (2025-11-09)
 
 ### Features

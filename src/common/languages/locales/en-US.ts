@@ -42,6 +42,7 @@ export default {
     SeamlessScrollDemo: "Seamless Scroll",
     HighlightDemo: "Text Highlight",
     VideoPlayerDemo: "Video Player",
+    AlertScroll: "Alert Scroll",
 
     EditorComponents: "Editor Components",
     Tinymce: "Tinymce",
@@ -285,6 +286,7 @@ export default {
       themeSelect: {
         light: "Light",
         dark: "Dark",
+        blue: "Blue",
       },
       collapse: "Collapse menu",
       accordion: "Menu accordion",

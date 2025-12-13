@@ -1,10 +1,7 @@
 ---
-description: 
-globs: 
-alwaysApply: true
----
----
 description: 代码编写规范
+globs:
+alwaysApply: true
 priority: 999
 ---
 

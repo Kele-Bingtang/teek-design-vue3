@@ -35,8 +35,9 @@ export enum GlobalThemeEnum {
 
 // 菜单主题
 export enum MenuThemeEnum {
-  Dark = "dark",
   Light = "light",
+  Dark = "dark",
+  Blue = "blue",
 }
 
 // 菜单风格

@@ -92,6 +92,12 @@ const pageRoutes: RouterConfigRaw = {
       component: () => import("@/views/page/qr-code/index.vue"),
       meta: { title: "二维码", icon: Star },
     },
+    {
+      path: "alert-scroll",
+      name: "AlertScroll",
+      component: () => import("@/views/page/alert-scroll/index.vue"),
+      meta: { title: "滚动提示", icon: Star, tagText: "New", tagProps: { type: "danger" } },
+    },
   ],
 };
 

@@ -1,6 +1,6 @@
 @use "@styles/mixins/bem" as *;
 
-@include b(browser-title-switch) {
+@include b(browser-title) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;

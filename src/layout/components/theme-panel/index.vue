@@ -7,13 +7,7 @@ import { LOGIN_URL, OpenThemePanelKey } from "@/common/config";
 import { mittBus } from "@/common/utils";
 import { useCommon, useNamespace, useTheme } from "@/composables";
 import { useSettingStore, useUserStore } from "@/pinia";
-import {
-  LayoutModeSwitch,
-  MenuThemeSwitch,
-  GlobalThemeSwitch,
-  BaseConfigSwitch,
-  BrowserTitleSwitch,
-} from "./components";
+import { LayoutMode, MenuTheme, GlobalTheme, BaseConfig, BrowserTitle } from "./components";
 
 import "./index.scss";
 import router from "@/router";
@@ -74,26 +68,26 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
       <div>
         <h3>{{ $t("_setting.layout.layoutMode") }}</h3>
 
-        <LayoutModeSwitch />
+        <LayoutMode />
       </div>
     </template>
 
     <!-- 菜单主题切换 -->
     <h3>{{ $t("_setting.menu.theme") }}</h3>
 
-    <MenuThemeSwitch />
+    <MenuTheme />
 
     <!-- 全局主题 -->
     <h3>{{ $t("_setting.theme.label") }}</h3>
 
-    <GlobalThemeSwitch />
+    <GlobalTheme />
 
-    <BaseConfigSwitch />
+    <BaseConfig />
 
     <!-- 标题设置 -->
     <h3>{{ $t("_setting.layout.titleMode") }}</h3>
 
-    <BrowserTitleSwitch />
+    <BrowserTitle />
 
     <template #footer>
       <el-button plain type="primary" :icon="Refresh" @click="resetSetting">

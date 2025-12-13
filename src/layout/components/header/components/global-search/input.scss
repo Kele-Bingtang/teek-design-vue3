@@ -16,7 +16,7 @@
     height: 34px;
     padding: 0 10px;
     cursor: pointer;
-    border: 1px solid cssVar(border-dashed-color);
+    border: 1px solid cssVarWithDefault(global-search-input-border-color, cssVar(border-dashed-color));
     border-radius: calc(cssVar(radius) / 2 + 2px);
   }
 

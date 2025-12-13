@@ -62,13 +62,6 @@
       @include is(active) {
         font-weight: 700;
         background-color: cssVar(layout-aside-bg-active-color);
-
-        .title {
-          color: cssVarEl(layout-aside-text-active-color);
-        }
-        :where(.#{$el-namespace}-icon, .#{$teek-namespace}-icon, .svg-icon) {
-          color: cssVarEl(layout-aside-text-active-color);
-        }
       }
 
       @include no(title) {
