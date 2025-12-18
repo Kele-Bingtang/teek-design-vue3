@@ -4,7 +4,7 @@ import type { ProSearchExpose, ProSearchOnEmits, ProSearchProps } from "../index
 import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProSearch from "../index.vue";
 
 export const useProSearch = () => {
@@ -13,7 +13,7 @@ export const useProSearch = () => {
 
   const ns = useNamespace();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const layoutSize = computed(() => useSettingStore().layout.elementPlusSize);
 
   const currentInstance = getCurrentInstance();
 

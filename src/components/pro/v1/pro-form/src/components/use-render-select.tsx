@@ -9,7 +9,7 @@ export const useRenderSelect = () => {
         return (
           <ElOptionGroup label={col[fieldNames.label]} key={col[fieldNames.value]}>
             {{
-              default: () => col.options.map(option => renderSelectOptionItem(option, fieldNames)),
+              default: () => col.options.map((option: any) => renderSelectOptionItem(option, fieldNames)),
             }}
           </ElOptionGroup>
         );

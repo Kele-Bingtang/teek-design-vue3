@@ -5,7 +5,7 @@ import type { ProTableOnEmits, ProTableProps } from "../index.vue";
 import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, render, unref, computed } from "vue";
 import { ElConfigProvider, type TableInstance } from "element-plus";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProTable from "../index.vue";
 
 export const useProTable = () => {
@@ -20,7 +20,7 @@ export const useProTable = () => {
 
   const ns = useNamespace();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const layoutSize = computed(() => useSettingStore().layout.elementPlusSize);
 
   const currentInstance = getCurrentInstance();
 

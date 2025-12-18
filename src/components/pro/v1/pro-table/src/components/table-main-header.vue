@@ -174,10 +174,18 @@ const changeStyle = (style: CSSProperties) => {
             <el-button :disabled="disabledButton?.includes('size')" :icon="Coin" circle />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="large" :disabled="customTableSize === 'large'">Large</el-dropdown-item>
-                <el-dropdown-item command="default" :disabled="customTableSize === 'default'">Default</el-dropdown-item>
-                <el-dropdown-item command="small" :disabled="customTableSize === 'small'">Small</el-dropdown-item>
-                <el-dropdown-item command="mini" :disabled="customTableSize === 'mini'">Mini</el-dropdown-item>
+                <el-dropdown-item command="large" :disabled="customTableSize === TableSizeEnum.Large">
+                  Large
+                </el-dropdown-item>
+                <el-dropdown-item command="default" :disabled="customTableSize === TableSizeEnum.Default">
+                  Default
+                </el-dropdown-item>
+                <el-dropdown-item command="small" :disabled="customTableSize === TableSizeEnum.Small">
+                  Small
+                </el-dropdown-item>
+                <el-dropdown-item command="mini" :disabled="customTableSize === TableSizeEnum.Mini">
+                  Mini
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

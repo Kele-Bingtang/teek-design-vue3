@@ -6,7 +6,7 @@ import { createVNode, getCurrentInstance, isRef, isShallow, nextTick, ref, rende
 import { ElConfigProvider } from "element-plus";
 import { isObject } from "@/common/utils";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import ProForm from "../index.vue";
 
 export const useProForm = () => {
@@ -18,7 +18,7 @@ export const useProForm = () => {
 
   const ns = useNamespace();
 
-  const layoutSize = computed(() => useLayoutStore().layoutSize);
+  const layoutSize = computed(() => useSettingStore().layout.elementPlusSize);
 
   const currentInstance = getCurrentInstance();
 
@@ -107,7 +107,7 @@ export const useProForm = () => {
             } else prev[next] = value;
           }
           return prev;
-        }, {}) as T;
+        }, {} as Recordable) as T;
       } else return model as T;
     },
 

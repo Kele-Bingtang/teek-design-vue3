@@ -6,9 +6,11 @@ import { computed, onMounted, ref, shallowRef, unref } from "vue";
 import { ElFormItem, ElButton, ElIcon } from "element-plus";
 import { Delete, Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue";
 import { isEmpty, isObject, isString } from "@/common/utils";
-import { setProp } from "@/components/pro/v1/pro-form";
-import { Grid, GridItem, ProForm, ProFormItem, useProForm } from "@/components";
 import { useNamespace } from "@/composables";
+import { setProp } from "@/components/pro/v1/pro-form";
+import { Grid, GridItem } from "@/components";
+import { ProForm, ProFormItem } from "../../pro-form";
+import { useProForm } from "../../pro-form";
 
 defineOptions({ name: "ProSearch" });
 
@@ -73,7 +75,7 @@ export type ProSearchOnEmits = keyOnPrefix<ProSearchEmits>;
 const emits = defineEmits<ProSearchEmits>();
 
 const { formRegister, formMethods, formElState } = useProForm();
-const { getElFormExpose, getFormData, getFormExpose } = formMethods;
+const { getElFormInstance, getFormData, getFormExpose } = formMethods;
 
 const schemaForm = computed(() =>
   props.schema
@@ -188,8 +190,8 @@ const filterModel = async () => {
 };
 
 const search = async () => {
-  const elFormExpose = await getElFormExpose();
-  await elFormExpose?.validate(async isValid => {
+  const elFormInstance = await getElFormInstance();
+  await elFormInstance?.validate(async isValid => {
     if (isValid) {
       const model = await filterModel();
       emits("search", model);
@@ -198,8 +200,8 @@ const search = async () => {
 };
 
 const reset = async () => {
-  const elFormExpose = await getElFormExpose();
-  elFormExpose?.resetFields();
+  const elFormInstance = await getElFormInstance();
+  elFormInstance?.resetFields();
   const model = await filterModel();
   emits("reset", model);
 };
@@ -263,7 +265,7 @@ const delSchema = (prop: string) => {
 };
 
 const defaultExpose = {
-  getElFormExpose,
+  getElFormInstance,
   getFormExpose,
   getFormData,
   toggleCollapsed,
