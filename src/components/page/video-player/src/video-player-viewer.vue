@@ -6,7 +6,7 @@ import { ElOverlay, ElConfigProvider } from "element-plus";
 import { Close } from "@element-plus/icons-vue";
 import { Icon } from "@/components";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 import VideoPlayer from "./index.vue";
 
 defineOptions({ name: "VideoPlayerViewer" });
@@ -20,9 +20,9 @@ const props = withDefaults(defineProps<VideoPlayerViewerProps>(), {
   id: "",
 });
 
-const layoutStore = useLayoutStore();
+const settingStore = useSettingStore();
 
-const layoutSize = computed(() => layoutStore.layoutSize);
+const layoutSize = computed(() => settingStore.layout.elementPlusSize);
 const id = computed(() => props.id || useId());
 
 const visible = defineModel({ default: false });

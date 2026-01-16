@@ -3,7 +3,7 @@ import type { ImageViewerProps } from "element-plus";
 import { computed } from "vue";
 import { ElImageViewer, ElConfigProvider } from "element-plus";
 import { useNamespace } from "@/composables";
-import { useLayoutStore } from "@/pinia";
+import { useSettingStore } from "@/pinia";
 
 defineOptions({ name: "ImageViewer" });
 
@@ -16,14 +16,15 @@ const props = withDefaults(defineProps<Partial<ImageViewerProps>>(), {
   teleported: false,
   zoomRate: 1.2,
   minScale: 0.2,
-  maxScale: 0.2,
+  maxScale: 7,
   closeOnPressEscape: true,
   showProgress: false,
 });
 
 const ns = useNamespace();
+const settingStore = useSettingStore();
 
-const layoutSize = computed(() => useLayoutStore().layoutSize);
+const layoutSize = computed(() => settingStore.layout.elementPlusSize);
 
 const visible = defineModel({ default: false });
 
