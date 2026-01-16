@@ -1,4 +1,5 @@
 import type { Component } from "vue";
+import type { PascalCaseComponentName } from "../interface";
 import {
   ElCascader,
   ElCheckbox,
@@ -22,12 +23,11 @@ import {
   ElTreeSelect,
   ElUpload,
 } from "element-plus";
-import type { PascalCaseComponentName } from "../interface";
-import Tree from "../components/tree.vue";
-import CheckBoxSelect from "../components/checkbox-select.vue";
 import WangEditor from "@/components/editor/wang-editor/index";
 import Tinymce from "@/components/editor/tinymce/index";
 import IconPicker from "@/components/page/icon-picker/index";
+import Tree from "../components/tree.vue";
+import CheckBoxSelect from "../components/checkbox-select.vue";
 
 const componentMap: Record<PascalCaseComponentName, Component> = {
   ElInput,

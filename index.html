@@ -8,6 +8,11 @@
   </head>
   <body>
     <div id="app"></div>
+    <script type="module">
+      // 注入环境变量到全局变量中
+      window.__TEEK_ENV__ = import.meta.env ?? {};
+    </script>
+    <script type="module" src="/envConfig.js"></script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

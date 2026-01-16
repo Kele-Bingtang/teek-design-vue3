@@ -219,7 +219,7 @@ const getDefaultSlot = (rootEl: string) => {
   }
 
   // 虚拟列表
-  if (rootEl === ComponentNameEnum.EL_SELECT_V2 && slots.default) return ({ item }) => slots.default(item);
+  if (rootEl === ComponentNameEnum.EL_SELECT_V2 && slots.default) return ({ item }: any) => slots.default(item);
 };
 
 defineExpose({

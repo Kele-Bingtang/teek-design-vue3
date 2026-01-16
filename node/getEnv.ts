@@ -27,16 +27,11 @@ export function wrapperEnv(envConf: Recordable): ImportMetaEnv {
 
   for (const envName of Object.keys(envConf)) {
     let realName = envConf[envName].replace(/\\n/g, "\n");
+    // 将 true 和 false 字符串转换为布尔值
     realName = realName === "true" ? true : realName === "false" ? false : realName;
 
+    // 指定变量名进行类型转换
     if (envName === "VITE_PORT") realName = Number(realName);
-    if (envName === "VITE_PROXY") {
-      try {
-        realName = JSON.parse(realName);
-      } catch (error) {
-        console.warn(error);
-      }
-    }
     ret[envName] = realName;
     process.env[envName] = realName;
   }
@@ -49,7 +44,7 @@ export function wrapperEnv(envConf: Recordable): ImportMetaEnv {
  * @param match 前缀
  * @param confFiles 文件列表
  */
-export function getEnvConfig(match = "VITE_", confFiles = [".env", ".env.production"]) {
+export function getEnvConfig(match = "VITE_", confFiles = [".env", ".env.production", ".env.sit", ".env.uat"]) {
   let envConfig = {};
   confFiles.forEach(item => {
     try {

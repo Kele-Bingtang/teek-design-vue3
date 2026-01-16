@@ -31,5 +31,10 @@ export interface ImageViewerProps {
    * @default false
    */
   teleported?: boolean;
+  /**
+   * v-model 绑定是否显示图片预览
+   *
+   * @default false
+   */
   modelValue?: boolean;
 }
