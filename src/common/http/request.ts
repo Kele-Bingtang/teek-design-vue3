@@ -5,6 +5,7 @@ import type {
   RequestInterceptors,
   GlobalHandlers,
   RequestInstanceConfig,
+  RequestParamsConfig,
 } from "./types";
 import axios from "axios";
 import { RequestMethodEnum, ResultEnum } from "./http-enum";
@@ -70,24 +71,24 @@ export class Request {
   }
 
   // ============================== 常用请求方法封装 ==============================
-  get<T>(url: string, params?: object, config: Partial<RequestConfig> = {}): Promise<T> {
+  get<T>(url: string, params?: object, config: Partial<RequestParamsConfig> = {}): Promise<T> {
     return this.service.get(url, { params, ...config });
   }
-  post<T>(url: string, params?: object | string, config: Partial<RequestConfig> = {}): Promise<T> {
+  post<T>(url: string, params?: object | string, config: Partial<RequestParamsConfig> = {}): Promise<T> {
     return this.service.post(url, params, config);
   }
-  put<T>(url: string, params?: object | string, config: Partial<RequestConfig> = {}): Promise<T> {
+  put<T>(url: string, params?: object | string, config: Partial<RequestParamsConfig> = {}): Promise<T> {
     return this.service.put(url, params, config);
   }
-  delete<T>(url: string, params?: any, config: Partial<RequestConfig> = {}): Promise<T> {
+  delete<T>(url: string, params?: any, config: Partial<RequestParamsConfig> = {}): Promise<T> {
     return this.service.delete(url, { params, ...config });
   }
-  download(url: string, params?: object, config: Partial<RequestConfig> = {}): Promise<BlobPart> {
+  download(url: string, params?: object, config: Partial<RequestParamsConfig> = {}): Promise<BlobPart> {
     return this.service.post(url, params, { ...config, responseType: "blob" });
   }
 
   // ============================== 全部方法请求封装 ==============================
-  request<T, R = any>(config: Partial<RequestConfig<R>>): Promise<T> {
+  request<T, R = any>(config: Partial<RequestParamsConfig<R>>): Promise<T> {
     return this.service(config) as unknown as Promise<T>;
   }
 

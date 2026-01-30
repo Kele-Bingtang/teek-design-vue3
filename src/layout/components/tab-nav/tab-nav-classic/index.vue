@@ -217,7 +217,7 @@ onMounted(() => {
             :class="ns.em('tab', 'icon')"
           />
           <span class="dot" v-else-if="tabNav.showDot || !tab.meta.icon" />
-          <span>{{ getTitle(tab) }}</span>
+          <span>{{ tab.title || getTitle(tab) }}</span>
           <Icon class="icon-close" v-if="tab.close && tabNavList.length !== 1" @click.prevent.stop="closeTab(tab)">
             <Close />
           </Icon>

@@ -159,7 +159,7 @@ onMounted(() => {
                 :icon="tab.meta.icon"
                 :class="ns.em('content', 'icon')"
               />
-              <span>{{ getTitle(tab) }}</span>
+              <span>{{ tab.title || getTitle(tab) }}</span>
             </div>
           </template>
         </el-tab-pane>

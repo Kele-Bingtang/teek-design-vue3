@@ -139,10 +139,10 @@ export const useSettingStore = defineStore(
           theme.globalThemeMode === GlobalThemeEnum.System
             ? isDark.value
               ? theme.defaultDarkMode
-              : theme.globalThemeMode
+              : GlobalThemeEnum.Light
             : theme.globalThemeMode;
         // 返回对应主题模式的主题色，如果主题色不存在，则默认返回 Light 主题色，如果仍然不存在，则返回空
-        return theme.primaryColor[defaultMode] ?? theme.primaryColor[GlobalThemeEnum.Light] ?? "";
+        return theme.primaryColor[defaultMode] || theme.primaryColor[GlobalThemeEnum.Light] || "";
       },
       set: value => {
         theme.primaryColor[

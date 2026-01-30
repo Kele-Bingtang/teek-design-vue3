@@ -42,9 +42,9 @@ export const useRouteFn = () => {
       // 前端控制模式
       if (isFrontendMode) routeList = authRoutes || [];
       // 后端控制模式
-      else if (isBackendMode) routeList = api ? await getDynamicRoutesFromBackend(api) : [];
+      else if (isBackendMode) routeList = (await getDynamicRoutesFromBackend(api)) || [];
       // 前后端控制模式
-      else if (isMixedMode) routeList = [...authRoutes, ...(api ? await getDynamicRoutesFromBackend(api) : [])];
+      else if (isMixedMode) routeList = [...authRoutes, ...((await getDynamicRoutesFromBackend(api)) || [])];
     }
 
     if (routeList.length) {
@@ -75,8 +75,8 @@ export const useRouteFn = () => {
   /**
    * 从后台接口获取动态路由
    */
-  const getDynamicRoutesFromBackend = async (api: BackendApi) => {
-    const routeList = await api();
+  const getDynamicRoutesFromBackend = async (api?: BackendApi) => {
+    const routeList = api ? await api() : [];
 
     return (isArray(routeList) ? routeList : routeList.data || routeList.list) || [];
   };
