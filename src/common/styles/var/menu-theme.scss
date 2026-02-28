@@ -99,6 +99,7 @@
         --#{$teek-namespace}-layout-header-bg-color: #2b3a74;
         --#{$teek-namespace}-layout-header-text-color: #ffffff;
         --#{$teek-namespace}-layout-header-bg-hover-color: var(--#{$el-namespace}-color-primary-light-1);
+        --#{$teek-namespace}-global-search-input-border-color: var(--#{$teek-namespace}-color-secondary);
 
         // 顶部左侧面包屑
         --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-gray-300);

@@ -7,9 +7,9 @@ import { Edit, Delete, Check } from "@element-plus/icons-vue";
 import { ProPage } from "@/components";
 import { tableData } from "@/mock/pro-component/pro-table";
 
-defineOptions({ name: "Test" });
+defineOptions({ name: "SimpleProPage" });
 
-const getTicketList = (searchParams: Recordable) => {
+const getDataList = (searchParams: Recordable) => {
   console.log("搜索参数 ", searchParams);
 
   return new Promise(resolve => {
@@ -143,7 +143,7 @@ const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) =>
 <template>
   <ProPage
     :columns
-    :request-api="getTicketList"
+    :request-api="getDataList"
     page-scope
     card
     :search-props="{
