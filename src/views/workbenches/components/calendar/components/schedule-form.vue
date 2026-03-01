@@ -72,6 +72,7 @@ const columns: FormColumn[] = [
     v-model="model"
     :columns
     :rules="rules"
+    :row-props="{ gutter: 0 }"
     :col-props="{ span: 24 }"
     :show-footer="false"
     :disabled="disabled"

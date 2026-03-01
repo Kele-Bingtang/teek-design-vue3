@@ -86,6 +86,7 @@ export function deepClone<T>(obj: T, hash = new WeakMap()): T {
 
   return obj;
 }
+
 /**
  * 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  */

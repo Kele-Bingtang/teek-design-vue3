@@ -1,4 +1,4 @@
-import type { InternalAxiosRequestConfig } from "axios";
+import type { InternalAxiosRequestConfig, AxiosRequestConfig } from "axios";
 
 /**
  * Axios 额外请求配置
@@ -55,6 +55,11 @@ export interface InternalRequestConfig {
  * 扩展的 Axios 请求配置
  */
 export type RequestConfig<D = any> = InternalRequestConfig & InternalAxiosRequestConfig<D>;
+
+/**
+ * 扩展的 Axios 请求参数配置
+ */
+export type RequestParamsConfig<D = any> = InternalRequestConfig & AxiosRequestConfig<D>;
 
 /**
  * 请求实例配置

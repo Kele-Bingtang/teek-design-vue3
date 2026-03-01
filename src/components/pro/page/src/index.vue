@@ -16,13 +16,14 @@ import type {
 import type { ProPageEmits, ProPageProps } from "./types";
 import { ref, computed, watchEffect, useTemplateRef, provide, toValue, unref, watch, useSlots } from "vue";
 import { ElTooltip, ElButton } from "element-plus";
-import { Search } from "@element-plus/icons-vue";
+import { Delete, Edit, Plus, Search } from "@element-plus/icons-vue";
 import { isEmpty, isFunction, isBoolean } from "@/common/utils";
 import { useOptions, optionsMapKey } from "@/components/pro/use-options";
 import { ProSearch } from "@/components/pro/search";
 import { ProTable, defaultTooltipProps } from "@/components/pro/table";
 import { filterEmpty, flatColumnsFn, setProp, lastProp } from "@/components/pro/helper";
 import { useNamespace } from "@/composables";
+import FeedbackForm from "./feedback-form.vue";
 
 defineOptions({ name: "ProPage" });
 
@@ -48,6 +49,7 @@ const emits = defineEmits<ProPageEmits>();
 const ns = useNamespace("pro-page");
 const proSearchInstance = useTemplateRef<ProSearchInstance>("proSearchInstance");
 const proTableInstance = useTemplateRef<ProTableInstance>("proTableInstance");
+const feedbackFormInstance = useTemplateRef<typeof FeedbackForm>("feedbackFormInstance");
 
 const slots = useSlots();
 
@@ -59,13 +61,55 @@ const searchSlots = computed(() =>
 
 // 获取 ProTable 配置项
 const proTableProps = computed(() => {
-  const { columns, ...rest } = props;
+  const { columns, exportFile, feedbackFormProps, ...rest } = props;
+
+  // 如果 feedbackFormProps 配置了 API，则开启对应的按钮
+  const operationIndex = columns.findIndex(item => item.prop === (rest.operationProp || "operation"));
+  if (operationIndex >= 0 && !toValue(columns[operationIndex].buttons)?.some(item => item.code === "native_edit")) {
+    columns[operationIndex].buttons ??= [];
+    toValue(columns[operationIndex].buttons)?.unshift(
+      {
+        text: "编辑",
+        code: "native_edit",
+        elProps: {
+          type: "primary",
+          size: "small",
+          disabled: feedbackFormProps?.disableEdit,
+        },
+        show: feedbackFormProps?.editApi ? true : !!feedbackFormProps?.useEdit,
+        el: "el-link",
+        icon: Edit,
+        onClick: ({ row }) => feedbackFormInstance.value?.handleEdit(row),
+      },
+      {
+        text: "删除",
+        code: "native_delete",
+        elProps: {
+          type: "danger",
+          size: "small",
+          disabled: feedbackFormProps?.disableRemove,
+        },
+        confirm: {
+          props: { title: "你确定删除吗?" },
+        },
+        show: feedbackFormProps?.removeApi ? true : !!feedbackFormProps?.useRemove,
+        el: "el-link",
+        icon: Delete,
+        onConfirm: ({ row }) => feedbackFormInstance.value?.handleRemove(row),
+      }
+    );
+  }
 
   return {
     columns,
     ...filterEmpty(rest),
     searchProps: undefined,
     initShowSearch: undefined,
+    exportProps: {
+      // 加强 ProTable 的 exportFile 函数，支持传入搜索参数
+      exportFile: exportFile ? (data: Record<string, any>[]) => exportFile?.(data, searchParams.value) : undefined,
+      ...rest.exportProps,
+    },
   };
 });
 
@@ -343,10 +387,77 @@ defineExpose(expose);
         <slot name="head-tool-after" />
       </template>
 
-      <template v-for="slot in Object.keys($slots).filter(key => !['head-tool-after'].includes(key))" #[slot]="scope">
+      <!-- 拓展 ProTable 顶栏左侧按钮，适配 FeedbackForm 的 API -->
+      <template #head-left="{ selectedListIds, selectedList, isSelected }">
+        <slot name="head-left" v-bind="{ selectedListIds, selectedList, isSelected }">
+          <slot name="head-left-before" v-bind="{ selectedListIds, selectedList, isSelected }" />
+
+          <slot name="add" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
+            <el-button
+              v-if="feedbackFormProps?.addApi ? true : feedbackFormProps?.useAdd"
+              type="primary"
+              :icon="Plus"
+              @click="feedbackFormInstance?.handleAdd()"
+              :disabled="feedbackFormProps?.disableAdd"
+            >
+              新增
+            </el-button>
+          </slot>
+          <slot name="removeBatch" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
+            <el-button
+              v-if="feedbackFormProps?.removeBatchApi ? true : feedbackFormProps?.useRemoveBatch"
+              type="danger"
+              :icon="Delete"
+              plain
+              @click="
+                feedbackFormInstance?.handleRemoveBatch(selectedListIds, selectedList, () => {
+                  proTableInstance?.tableMainInstance?.clearSelection();
+                })
+              "
+              :disabled="feedbackFormProps?.disableRemoveBatch || !isSelected"
+            >
+              批量删除
+            </el-button>
+          </slot>
+        </slot>
+
+        <slot name="head-left-after" v-bind="{ selectedListIds, selectedList, isSelected }" />
+      </template>
+
+      <template v-if="$slots['operation-before']" #operation-before="scope">
+        <slot name="operation-before" v-bind="{ ...scope, feedbackFormInstance }" />
+      </template>
+
+      <template v-if="$slots['operation-after']" #operation-after="scope">
+        <slot name="operation-after" v-bind="{ ...scope, feedbackFormInstance }" />
+      </template>
+
+      <template
+        v-for="slot in Object.keys($slots).filter(
+          key => !['head-tool-after', 'head-left', 'operation-before', 'operation-after'].includes(key)
+        )"
+        #[slot]="scope"
+      >
         <slot :name="slot" v-bind="scope" />
       </template>
     </ProTable>
+
+    <!-- FeedbackForm 组件 -->
+    <FeedbackForm
+      ref="feedbackFormInstance"
+      v-if="feedbackFormProps"
+      v-bind="{
+        ...feedbackFormProps,
+        afterConfirm: (status, result) => {
+          result && handleSearch(searchParams);
+          feedbackFormProps?.afterConfirm && feedbackFormProps.afterConfirm(status, result);
+        },
+      }"
+    >
+      <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+        <slot :name="slot" v-bind="scope" />
+      </template>
+    </FeedbackForm>
   </div>
 </template>
 

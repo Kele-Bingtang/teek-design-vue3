@@ -74,6 +74,7 @@ export default {
     CreateProSearch: "Create ProSearch",
     ProPage: "Pro Page",
     SimpleProPage: "Simple ProPage",
+    CURDProPage: "CURD ProPage",
     AdvancedProPage: "Advanced ProPage",
     CreateProPage: "Create ProPage",
     ProTreePage: "Pro TreePage",

@@ -6,7 +6,8 @@ const editorRoutes: RouterConfigRaw = {
   meta: {
     title: "编辑器组件",
     icon: Edit,
-    pointTag: true,
+    tagText: "Hot",
+    tagProps: { type: "danger" },
   },
   children: [
     {

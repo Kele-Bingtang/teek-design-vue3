@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.0...v2.1.1) (2026-03-01)
+
+### Features
+
+- **build:** 🚀 支持线上修改配置环境变量内容，添加 SIT 和 UAT 环境构建支持 ([5bc0d58](https://github.com/Kele-Bingtang/teek-design-vue3/commit/5bc0d58bf5c5c0d1ef5014c18f01b04226c93cee))
+- **http:** 🚀 更新请求配置类型定义并优化路由获取逻辑 ([71f0b6f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/71f0b6ff7973991a0818b08e89cd70fd34498104))
+- **pro-page:** 🚀 ProPage 组件添加 CURD 弹框、抽屉表单功能 ([fd9ae53](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fd9ae53426826ef7b084f1e07b84af1b158491e1))
+
+### Bug Fixes
+
+- **card:** 🐞 将统计卡片计数默认值设为 undefined ([d4a1f28](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d4a1f28457370ac3e46c03a64b6148f702c2ef69))
+- **form:** 🐞 修复首页 Dialog 使用表单组件因存在间距导致出现滚动条问题 ([3aa1fdd](https://github.com/Kele-Bingtang/teek-design-vue3/commit/3aa1fddae4bc19212208b1f43bdf009372a094bc))
+- **image-viewer:** 🐞 修复图片查看器缩放比例限制 ([bedaa04](https://github.com/Kele-Bingtang/teek-design-vue3/commit/bedaa040cd2d9c49dba92164087337199f510259))
+- **pro-form:** 🐞 修复 v1 超级组件部分问题 ([351eee6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/351eee61f8681dff02bdd1ce7f6949c1e79f7fb9))
+
+### Code Refactoring
+
+- **feedback-form:** ♻️ 优化反馈表单组件的类型定义和默认值设置 ([ee57b3f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ee57b3ff5db29429426ca2cf4931a61a4af423b0))
+
 ## [2.1.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.0.2...v2.1.0) (2025-12-13)
 
 ### Features

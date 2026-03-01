@@ -168,6 +168,12 @@ const proComponents: RouterConfigRaw = {
           meta: { title: () => "进阶 ProPage" },
         },
         {
+          path: "curd",
+          name: "CURDProPage",
+          component: () => import("@/views/pro/pro-page/curd/index.vue"),
+          meta: { title: () => "CURD ProPage", tagText: "v2.1.1" },
+        },
+        {
           path: "create",
           component: () => import("@/views/pro/pro-page/create/index.vue"),
           name: "CreateProPage",

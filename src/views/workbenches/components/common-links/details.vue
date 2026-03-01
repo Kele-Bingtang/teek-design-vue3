@@ -154,6 +154,7 @@ defineExpose({
         :columns="columns"
         v-model="form"
         :rules="rules"
+        :row-props="{ gutter: 0 }"
         :col-props="{ span: 24 }"
         :show-footer="false"
       >
