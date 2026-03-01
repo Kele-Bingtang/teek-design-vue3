@@ -8,7 +8,11 @@ import { deepClone, isArray, isFunction } from "@/common/utils";
 import { ProFormDialog } from "@/components/pro/form-dialog";
 import { ProFormDrawer } from "@/components/pro/form-drawer";
 
-const props = defineProps<FeedbackFormProps>();
+const props = withDefaults(defineProps<FeedbackFormProps>(), {
+  type: "dialog",
+  id: "id",
+  cache: false,
+});
 
 const model = ref<Record<string, any>>({});
 const feedbackFormVisible = ref(false);
@@ -26,7 +30,7 @@ const typeProps = computed(() => {
 
 // 组装主键 id & ProForm 不过滤的 keys
 const notCleanModelKeys = computed(() => {
-  const ids = Array.isArray(props.id) ? props.id : [props.id || "id"];
+  const ids = Array.isArray(props.id) ? props.id : [props.id];
 
   const { form } = props;
   return form?.notCleanModelKeys?.length ? [...form.notCleanModelKeys, ...ids] : ids;
@@ -64,7 +68,7 @@ const newColumn = computed(() => {
  * 触发新增事件
  */
 const handleAdd = async (row?: any) => {
-  const { cache, id = "id", clickAdd } = props;
+  const { cache, id, clickAdd } = props;
 
   status.value = "add";
   proFormTypeInstance.value?.proFormInstance?.elFormInstance?.resetFields();
@@ -316,9 +320,9 @@ defineExpose({ handleAdd, handleEdit, handleRemove, handleRemoveBatch });
     @confirm="handleConfirm(model, status)"
     @cancel="feedbackFormVisible = false"
     v-bind="
-      type === 'dialog'
-        ? { dialog: { destroyOnClose: true, ...typeProps } }
-        : { drawer: { destroyOnClose: true, ...typeProps } }
+      type === 'drawer'
+        ? { drawer: { destroyOnClose: true, ...typeProps } }
+        : { dialog: { destroyOnClose: true, ...typeProps } }
     "
   >
     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
