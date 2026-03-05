@@ -168,11 +168,11 @@
     width: calc(cssVar(layout-expand-aside-width) - 1px);
     height: cssVar(layout-header-height);
     overflow: hidden;
+    color: cssVar(layout-logo-title-color);
     cursor: pointer;
 
     span {
       font-size: 20px;
-      color: cssVar(layout-logo-title-color);
       white-space: nowrap;
     }
 

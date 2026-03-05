@@ -109,7 +109,7 @@ export interface FeedbackFormProps {
   /**
    * dialog 或 drawer 类型弹窗的属性
    */
-  typeProps?: {
+  feedbackProps?: {
     /**
      * 弹窗标题，为字符串或函数
      */

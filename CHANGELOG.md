@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.1.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.0...v2.1.1) (2026-03-01)
+## [2.1.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.0...v2.1.1) (2026-03-01)
 
 ### Features
 

@@ -20,12 +20,16 @@ const status = ref<FeedbackStatus>("");
 
 const proFormTypeInstance = useTemplateRef<ProFormDialogInstance | ProFormDrawerInstance>("proFormTypeInstance");
 
-const typeProps = computed(() => {
-  const { typeProps } = props;
+const feedbackProps = computed(() => {
+  const { feedbackProps } = props;
 
-  const title = isFunction(typeProps?.title) ? typeProps.title(model.value, status.value) : typeProps?.title;
-  const height = isFunction(typeProps?.height) ? typeProps.height(model.value, status.value) : typeProps?.height;
-  return { ...typeProps, title, height };
+  const title = isFunction(feedbackProps?.title)
+    ? feedbackProps.title(model.value, status.value)
+    : feedbackProps?.title;
+  const height = isFunction(feedbackProps?.height)
+    ? feedbackProps.height(model.value, status.value)
+    : feedbackProps?.height;
+  return { ...feedbackProps, title, height };
 });
 
 // 组装主键 id & ProForm 不过滤的 keys
@@ -321,8 +325,8 @@ defineExpose({ handleAdd, handleEdit, handleRemove, handleRemoveBatch });
     @cancel="feedbackFormVisible = false"
     v-bind="
       type === 'drawer'
-        ? { drawer: { destroyOnClose: true, ...typeProps } }
-        : { dialog: { destroyOnClose: true, ...typeProps } }
+        ? { drawer: { destroyOnClose: true, ...feedbackProps } }
+        : { dialog: { destroyOnClose: true, ...feedbackProps } }
     "
   >
     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
