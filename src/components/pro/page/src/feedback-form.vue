@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<FeedbackFormProps>(), {
   cache: false,
 });
 
-const model = ref<Record<string, any>>({});
+const model = ref<Recordable>({});
 const feedbackFormVisible = ref(false);
 const status = ref<FeedbackStatus>("");
 
@@ -71,27 +71,34 @@ const newColumn = computed(() => {
 /**
  * 触发新增事件
  */
-const handleAdd = async (row?: any) => {
+const handleAdd = async <T extends Recordable = any>(row?: T) => {
   const { cache, id, clickAdd } = props;
 
   status.value = "add";
   proFormTypeInstance.value?.proFormInstance?.elFormInstance?.resetFields();
   // 过滤掉 Event 类型
   if (row && !(row instanceof Event)) model.value = deepClone(row);
+  // 如果不缓存，则清空 model
   else if (!cache) model.value = {};
+  // 删除主键 id
   else if (isArray(id)) {
     id.forEach(key => {
       delete model.value[key];
     });
   } else id && delete model.value[id];
-  clickAdd && (model.value = (await clickAdd(model.value)) ?? model.value);
+
+  const result = await clickAdd?.(model.value);
+  // 返回值为 false，则不显示表单
+  if (result === false) return;
+  model.value = result ?? model.value;
+
   feedbackFormVisible.value = true;
 };
 
 /**
  * 触发编辑事件
  */
-const handleEdit = async (row: any) => {
+const handleEdit = async <T extends Recordable = any>(row: T) => {
   // 过滤掉 Event 类型
   if (row instanceof Event) return;
 
@@ -100,18 +107,19 @@ const handleEdit = async (row: any) => {
   status.value = "edit";
   proFormTypeInstance.value?.proFormInstance?.elFormInstance?.resetFields();
   if (!(row instanceof Event)) model.value = deepClone(row);
-  clickEdit && (model.value = (await clickEdit(model.value)) ?? model.value);
+
+  const result = await clickEdit?.(model.value);
+  // 返回值为 false，则不显示表单
+  if (result === false) return;
+  model.value = result ?? model.value;
+
   feedbackFormVisible.value = true;
 };
 
 /**
  * 点击保存事件
  */
-const handleConfirm = (data: any, status: FeedbackStatus) => {
-  const { beforeConfirm } = props;
-
-  beforeConfirm && beforeConfirm(status);
-
+const handleConfirm = <T extends Recordable = any>(data: T, status: FeedbackStatus) => {
   // _enum 是 ProTable 内置的属性，专门存储字典数据，不需要发送给后台
   delete data._options;
 
@@ -122,28 +130,28 @@ const handleConfirm = (data: any, status: FeedbackStatus) => {
 /**
  * 执行新增事件
  */
-const handleDoAdd = (data: any) => {
+const handleDoAdd = <T extends Recordable = any>(data: T) => {
   const elFormInstance = proFormTypeInstance.value?.proFormInstance?.elFormInstance;
 
   elFormInstance?.validate(async valid => {
     if (valid) {
       const {
-        beforeAdd,
+        cache,
+        addApi,
         apiFilterKeys,
         addFilterKeys,
-        addApi,
         apiCarryParams,
         addCarryParams,
-        afterAdd,
-        cache,
+        onAdd,
         afterConfirm,
+        requestFailed,
       } = props;
-
-      data = (beforeAdd && (await beforeAdd(data))) || data;
 
       // 删除 Add 不允许传输的数据
       const filterParams = [...(apiFilterKeys || []), ...(addFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
+
+      if (onAdd) return onAdd(data);
 
       // 执行新增接口
       executeApi(
@@ -151,13 +159,15 @@ const handleDoAdd = (data: any) => {
         { ...apiCarryParams, ...addCarryParams, ...data },
         "添加成功！",
         "添加失败！",
-        async res => {
-          afterAdd && (await afterAdd({ ...addCarryParams, data }, res));
+        async () => {
           if (!cache) model.value = {};
           feedbackFormVisible.value = false;
-          afterConfirm && afterConfirm(status.value, true);
+          afterConfirm?.(status.value, true);
         },
-        () => afterConfirm && afterConfirm(status.value, false)
+        err => {
+          afterConfirm?.(status.value, false);
+          requestFailed?.(err, model.value);
+        }
       );
     }
   });
@@ -166,42 +176,43 @@ const handleDoAdd = (data: any) => {
 /**
  * 执行编辑事件
  */
-const handleDoEdit = (data: any) => {
+const handleDoEdit = <T extends Recordable = any>(data: T) => {
   const elFormInstance = proFormTypeInstance.value?.proFormInstance?.elFormInstance;
 
   elFormInstance?.validate(async valid => {
     if (valid) {
       const {
-        beforeEdit,
+        cache,
+        editApi,
         apiFilterKeys,
         editFilterKeys,
-        editApi,
         apiCarryParams,
         editCarryParams,
-        afterEdit,
-        cache,
+        onEdit,
+        requestFailed,
         afterConfirm,
       } = props;
-
-      data = (beforeEdit && (await beforeEdit(data))) || data;
 
       // 删除 Update 不允许传输的数据
       const filterParams = [...(apiFilterKeys || []), ...(editFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
+
+      if (onEdit) return onEdit?.(data);
 
       executeApi(
         editApi,
         { ...apiCarryParams, ...editCarryParams, ...data },
         "编辑成功！",
         "编辑失败！",
-        async res => {
-          afterEdit && (await afterEdit({ ...editCarryParams, data }, res));
+        async () => {
           if (!cache) model.value = {};
           feedbackFormVisible.value = false;
-
-          afterConfirm && afterConfirm(status.value, res);
+          afterConfirm?.(status.value, true);
         },
-        () => afterConfirm && afterConfirm(status.value, false)
+        err => {
+          afterConfirm?.(status.value, false);
+          requestFailed?.(err, model.value);
+        }
       );
     }
   });
@@ -210,31 +221,28 @@ const handleDoEdit = (data: any) => {
 /**
  * 执行删除事件
  */
-const handleRemove = async (row: any) => {
-  let data = deepClone(row);
-
-  // _enum 是 ProTable 内置的属性，专门存储字典数据，不需要发送给后台
-  delete data._enum;
-
+const handleRemove = async <T extends Recordable = any>(row: T, fallback: (result: any) => void) => {
   const {
-    beforeConfirm,
-    beforeRemove,
+    cache,
+    removeApi,
     apiFilterKeys,
     removeFilterKeys,
-    removeApi,
     apiCarryParams,
     removeCarryParams,
-    afterRemove,
-    cache,
+    onRemove,
     afterConfirm,
+    requestFailed,
   } = props;
 
-  beforeConfirm && beforeConfirm("remove");
-  data = (beforeRemove && (await beforeRemove(data))) || data;
+  const data = deepClone(row);
+  // _enum 是 ProTable 内置的属性，专门存储字典数据，不需要发送给后台
+  delete data._enum;
 
   // 删除 Remove 不允许传输的数据
   const filterParams = [...(apiFilterKeys || []), ...(removeFilterKeys || [])];
   filterParams.forEach(item => delete data[item]);
+
+  if (onRemove) return onRemove(data);
 
   executeApi(
     removeApi,
@@ -242,39 +250,46 @@ const handleRemove = async (row: any) => {
     "删除成功！",
     "删除失败！",
     async res => {
-      afterRemove && (await afterRemove(model, res));
       if (!cache) model.value = {};
-      afterConfirm && afterConfirm(status.value, res);
+      afterConfirm?.(status.value, true);
+      fallback(res);
     },
-    () => afterConfirm && afterConfirm(status.value, false)
+    err => {
+      afterConfirm?.(status.value, false);
+      requestFailed?.(err, model.value);
+    }
   );
 };
 
 /**
  * 执行批量删除事件
  */
-const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, fallback: () => void) => {
+const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, fallback: (result: any) => void) => {
+  const { clickRemoveBatch } = props;
+
+  let data = { idList: selectedListIds, dataList: selectedList };
+
+  const result = await clickRemoveBatch?.(data);
+  if (result === false) return;
+  data = result ?? data;
+
   ElMessageBox.confirm(`删除所选信息?`, "温馨提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
     draggable: true,
   }).then(async () => {
-    let data = { idList: selectedListIds, dataList: selectedList };
-
     const {
-      beforeConfirm,
-      beforeRemoveBatch,
+      cache,
       removeBatchApi,
       apiCarryParams,
       removeBatchCarryParams,
-      afterRemoveBatch,
-      cache,
+      onRemoveBatch,
+      requestFailed,
       afterConfirm,
     } = props;
 
-    beforeConfirm && beforeConfirm("deleteBatch");
-    data = (beforeRemoveBatch && (await beforeRemoveBatch(data))) || data;
+    if (onRemoveBatch) return onRemoveBatch(data);
 
     executeApi(
       removeBatchApi,
@@ -282,19 +297,20 @@ const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, f
       "删除成功！",
       "删除失败！",
       async res => {
-        afterRemoveBatch && (await afterRemoveBatch(model, res));
         if (!cache) model.value = {};
-        afterConfirm && afterConfirm(status.value, res);
-        fallback();
+        fallback(res);
       },
-      () => afterConfirm && afterConfirm(status.value, false)
+      err => {
+        afterConfirm?.(status.value, false);
+        requestFailed?.(err, model.value);
+      }
     );
   });
 };
 
 const executeApi = (
   api: undefined | ((params: any) => Promise<any>),
-  params: any,
+  params: Recordable,
   success: string,
   failure: string,
   successCallBack?: (res: any) => void,

@@ -65,7 +65,12 @@ const proTableProps = computed(() => {
 
   // 如果 feedbackFormProps 配置了 API，则开启对应的按钮
   const operationIndex = columns.findIndex(item => item.prop === (rest.operationProp || "operation"));
-  if (operationIndex >= 0 && !toValue(columns[operationIndex].buttons)?.some(item => item.code === "native_edit")) {
+  if (
+    operationIndex >= 0 &&
+    !toValue(columns[operationIndex].buttons)?.some(
+      item => item.code === "native_edit" || item.code === "native_delete"
+    )
+  ) {
     columns[operationIndex].buttons ??= [];
     toValue(columns[operationIndex].buttons)?.unshift(
       {
@@ -95,6 +100,7 @@ const proTableProps = computed(() => {
         show: feedbackFormProps?.removeApi ? true : !!feedbackFormProps?.useRemove,
         el: "el-link",
         icon: Delete,
+        onClick: ({ row }) => feedbackFormInstance.value?.clickRemove(row),
         onConfirm: ({ row }) => feedbackFormInstance.value?.handleRemove(row),
       }
     );
