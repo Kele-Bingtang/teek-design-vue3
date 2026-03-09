@@ -191,11 +191,11 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 点击新增按钮回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开新增弹窗
    */
-  clickAdd?: (model: T) => any | Promise<any> | false | undefined;
+  clickAdd?: (model: T) => Promise<any> | false | undefined;
   /**
    * 点击编辑按钮回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开编辑弹窗
    */
-  clickEdit?: (model: T) => any | Promise<any> | false | undefined;
+  clickEdit?: (model: T) => Promise<any> | false | undefined;
   /**
    * 点击删除按钮回调
    */
@@ -203,25 +203,25 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 点击批量删除按回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开批量删除弹窗
    */
-  clickRemoveBatch?: (data: T) => any | Promise<any> | false | undefined;
+  clickRemoveBatch?: (data: T) => Promise<any> | false | undefined;
   /**
-   * 新增点击保存按钮回调，将自定义新增逻辑，覆盖 addApi 逻辑，当两者同时存在时，onAdd 优先级高
+   * 新增点击保存按钮回调，将自定义新增逻辑，覆盖 addApi 逻辑，当两者同时存在时，onAdd 优先级高，返回 false 代表继续执行 addApi
    */
-  onAdd?: (model: T) => void;
+  onAdd?: (model: T) => undefined | false;
   /**
-   * 编辑点击保存按钮回调，将自定义新增逻辑，覆盖 editApi 逻辑，当两者同时存在时，onEdit 优先级高
+   * 编辑点击保存按钮回调，将自定义新增逻辑，覆盖 editApi 逻辑，当两者同时存在时，onEdit 优先级高，返回 false 代表继续执行 editApi
    */
-  onEdit?: (model: T) => void;
+  onEdit?: (model: T) => undefined | false;
   /**
-   * 删除点击保存按钮回调，将自定义新增逻辑，覆盖removeApi 逻辑，当两者同时存在时，onRemove 优先级高）
+   * 删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeApi 逻辑，当两者同时存在时，onRemove 优先级高，返回 false 代表继续执行 removeApi
    */
-  onRemove?: (model: T) => void;
+  onRemove?: (model: T) => undefined | false;
   /**
-   * 批量删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeBatchApi 逻辑，当两者同时存在时，onRemoveBatch 优先级高）
+   * 批量删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeBatchApi 逻辑，当两者同时存在时，onRemoveBatch 优先级高，返回 false 代表继续执行 removeBatchApi
    */
-  onRemoveBatch?: (model: T) => void;
+  onRemoveBatch?: (model: T) => undefined | false;
   /**
-   * 操作完成后的回调
+   * add、edit、remove、removeBatch 任意操作完成后的回调
    */
   afterConfirm?: (status: string, result: boolean) => void;
   /**

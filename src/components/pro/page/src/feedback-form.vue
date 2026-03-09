@@ -151,7 +151,9 @@ const handleDoAdd = <T extends Recordable = any>(data: T) => {
       const filterParams = [...(apiFilterKeys || []), ...(addFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
 
-      if (onAdd) return onAdd(data);
+      const result = onAdd?.(data);
+      // 返回 false 则继续往下执行
+      if (result !== false) return;
 
       // 执行新增接口
       executeApi(
@@ -197,7 +199,9 @@ const handleDoEdit = <T extends Recordable = any>(data: T) => {
       const filterParams = [...(apiFilterKeys || []), ...(editFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
 
-      if (onEdit) return onEdit?.(data);
+      const result = onEdit?.(data);
+      // 返回 false 则继续往下执行
+      if (result !== false) return;
 
       executeApi(
         editApi,
@@ -242,7 +246,9 @@ const handleRemove = async <T extends Recordable = any>(row: T, fallback: (resul
   const filterParams = [...(apiFilterKeys || []), ...(removeFilterKeys || [])];
   filterParams.forEach(item => delete data[item]);
 
-  if (onRemove) return onRemove(data);
+  const result = onRemove?.(data);
+  // 返回 false 则继续往下执行
+  if (result !== false) return;
 
   executeApi(
     removeApi,
@@ -289,7 +295,9 @@ const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, f
       afterConfirm,
     } = props;
 
-    if (onRemoveBatch) return onRemoveBatch(data);
+    const result = onRemoveBatch?.(data);
+    // 返回 false 则继续往下执行
+    if (result !== false) return;
 
     executeApi(
       removeBatchApi,
@@ -298,6 +306,7 @@ const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, f
       "删除失败！",
       async res => {
         if (!cache) model.value = {};
+        afterConfirm?.(status.value, true);
         fallback(res);
       },
       err => {
