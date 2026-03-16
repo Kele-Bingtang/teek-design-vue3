@@ -94,7 +94,6 @@ const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
       border
       highlight-current-row
       :header-cell-style="{
-        background: '#fafafa',
         'text-align': 'center',
       }"
       :loading="loading"
@@ -136,7 +135,6 @@ const tableStatusFilter = (status: string): "success" | "info" | "danger" => {
           border
           highlight-current-row
           :header-cell-style="{
-            background: '#fafafa',
             'text-align': 'center',
           }"
           v-loading="loading"

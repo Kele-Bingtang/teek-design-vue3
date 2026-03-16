@@ -5,34 +5,10 @@
 :root {
   // 按钮粗度
   --#{$el-namespace}-font-weight-primary: 400 !important;
-  --#{$el-namespace}-component-height: 34px !important;
-  --#{$el-namespace}-component-size: var(--#{$el-namespace}-component-height) !important;
 
   // 边框、按钮圆角
   --#{$el-namespace}-border-radius-base: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
   --#{$el-namespace}-card-border-radius: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
-}
-
-// 修改 el-button 高度
-.#{$el-namespace}-button--default {
-  height: var(--#{$el-namespace}-component-height) !important;
-}
-
-// 修改 el-select 高度
-.#{$el-namespace}-select--default {
-  .#{$el-namespace}-select__wrapper {
-    min-height: var(--#{$el-namespace}-component-height) !important;
-  }
-}
-
-// 修改 el-pagination 大小
-.#{$el-namespace}-pagination--default {
-  --#{$el-namespace}-pagination-button-width: 32px !important;
-  --#{$el-namespace}-pagination-button-height: var(--#{$el-namespace}-pagination-button-width) !important;
-
-  @media (max-width: $device-ipad-pro) {
-    --#{$el-namespace}-pagination-button-width: 28px !important;
-  }
 }
 
 // 修改 el-checkbox-button 和 el-radio-button 高度
@@ -181,8 +157,8 @@
 .#{$el-namespace}-tag {
   font-weight: 600;
 
-  &--default {
-    height: 26px !important;
+  &.#{$el-namespace}-tag--default {
+    height: 26px;
   }
 }
 
@@ -346,7 +322,6 @@
 
     .#{$el-namespace}-tree-node {
       .#{$el-namespace}-tree-node__content {
-        height: var(--#{$el-namespace}-component-height) !important;
         border-radius: 6px !important;
 
         &:hover {
@@ -358,9 +333,22 @@
 }
 
 // 修改 el-descriptions 样式
-.#{$el-namespace}-descriptions {
-  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(
-    var(--#{$teek-namespace}-gray-200-rgb),
-    0.6
-  ) !important;
+div.#{$el-namespace}-descriptions {
+  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+}
+
+// 优化 el-table 表头字体色和背景色样式
+div.#{$el-namespace}-table {
+  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-800);
+  --#{$el-namespace}-table-header-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+
+  thead.is-group {
+    --#{$el-namespace}-fill-color-light: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6); // 多级表头背景色
+  }
+}
+
+html.dark {
+  div.#{$el-namespace}-table {
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-900);
+  }
 }

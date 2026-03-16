@@ -93,7 +93,7 @@ export type FeedbackStatus = "" | "edit" | "add" | "read";
 
 export type FeedbackForm = FeedbackFormProps;
 
-export interface FeedbackFormProps {
+export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * feedbackForm 类型，dialog 或 drawer
    *
@@ -109,15 +109,15 @@ export interface FeedbackFormProps {
   /**
    * dialog 或 drawer 类型弹窗的属性
    */
-  typeProps?: {
+  feedbackProps?: {
     /**
      * 弹窗标题，为字符串或函数
      */
-    title: string | ((model: Record<string, any>, status: FeedbackStatus) => string);
+    title: string | ((model: T, status: FeedbackStatus) => string);
     /**
      * 弹窗高度，为字符串、数字或函数
      */
-    height?: string | number | ((model: Record<string, any>, status: FeedbackStatus) => string | number);
+    height?: string | number | ((model: T, status: FeedbackStatus) => string | number);
     [key: string]: any;
   } & (Omit<ProFormDialogProps["dialog"], "title" | "height"> | Omit<ProFormDrawerProps["drawer"], "title" | "height">);
   /**
@@ -133,105 +133,97 @@ export interface FeedbackFormProps {
    */
   cache?: boolean;
   /**
-   * 新增保存时触发的回调
+   * 新增 API 请求
    */
-  addApi?: (params: any) => Promise<any>;
+  addApi?: (params: T) => Promise<any>;
   /**
-   * 新增时额外添加参数
+   * 调用 addApi 时额外传入的参数
    */
-  addCarryParams?: Record<string, any>;
+  addCarryParams?: Recordable;
   /**
-   * 新增时需要过滤掉的参数名
+   * 调用 addApi 时过滤掉的参数
    */
   addFilterKeys?: string[];
   /**
-   * 编辑保存时触发的回调
+   * 编辑 API 请求
    */
-  editApi?: (params: any) => Promise<any>;
+  editApi?: (params: T) => Promise<any>;
   /**
-   * 编辑时额外添加参数
+   * 调用 editApi 时额外传入的参数
    */
-  editCarryParams?: Record<string, any>;
+  editCarryParams?: Recordable;
   /**
-   * 编辑时需要过滤掉的参数名
+   * 调用 editApi 时过滤掉的参数
    */
   editFilterKeys?: string[];
   /**
-   * 删除保存时触发的回调
+   * 删除 API 请求
    */
-  removeApi?: (params: any) => Promise<any>;
+  removeApi?: (params: T) => Promise<any>;
   /**
-   * 删除时额外添加的参数
+   * 调用 removeApi 时额外传入的参数
    */
-  removeCarryParams?: Record<string, any>;
+  removeCarryParams?: Recordable;
   /**
-   * 删除时需要过滤掉的参数名
+   * 调用 removeApi 时过滤掉的参数
    */
   removeFilterKeys?: string[];
   /**
-   * 批量删除保存时触发的回调
+   * 批量删除 API 请求
    */
-  removeBatchApi?: (params: any) => Promise<any>;
+  removeBatchApi?: (params: T) => Promise<any>;
   /**
-   * 批量删除时额外添加的参数
+   * 调用 removeBatchApi 时额外传入的参数
    */
-  removeBatchCarryParams?: Record<string, any>;
+  removeBatchCarryParams?: Recordable;
   /**
-   * 所有接口保存时统一需要过滤掉的参数名
+   * 调用所有 API 接口时额外传入的参数
    */
   apiFilterKeys?: string[];
   /**
-   * 所有接口保存时统一额外添加的参数
+   * 调用所有 API 接口时过滤掉的参数
    */
-  apiCarryParams?: Record<string, any>;
+  apiCarryParams?: Recordable;
   /**
-   * 点击新增按钮时触发的回调
+   * 请求失败回调
    */
-  clickAdd?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  requestFailed?: (error: any, model: T) => void;
   /**
-   * 新增时点击保存按钮时触发的回调，在 addApi 触发前
+   * 点击新增按钮回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开新增弹窗
    */
-  beforeAdd?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  clickAdd?: (model: T) => Promise<any> | false | undefined;
   /**
-   * 新增时点击保存按钮时触发的回调，在 addApi 触发后
+   * 点击编辑按钮回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开编辑弹窗
    */
-  afterAdd?: (model: Record<string, any>, result: any) => void;
+  clickEdit?: (model: T) => Promise<any> | false | undefined;
   /**
-   * 点击编辑按钮时触发的回调
+   * 点击删除按钮回调
    */
-  clickEdit?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  clickRemove?: (model: T) => void;
   /**
-   * 编辑时点击保存按钮时触发的回调，在 editApi 触发前
+   * 点击批量删除按回调，可以返回一个对象覆盖表单数据，也可以传入 false 取消打开批量删除弹窗
    */
-  beforeEdit?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  clickRemoveBatch?: (data: T) => Promise<any> | false | undefined;
   /**
-   * 编辑时点击保存按钮时触发的回调，在 editApi 触发后
+   * 新增点击保存按钮回调，将自定义新增逻辑，覆盖 addApi 逻辑，当两者同时存在时，onAdd 优先级高，返回 false 代表继续执行 addApi
    */
-  afterEdit?: (model: Record<string, any>, result: any) => void;
+  onAdd?: (model: T) => undefined | false;
   /**
-   * 删除时点击保存按钮时触发的回调，在 removeApi 触发前
+   * 编辑点击保存按钮回调，将自定义新增逻辑，覆盖 editApi 逻辑，当两者同时存在时，onEdit 优先级高，返回 false 代表继续执行 editApi
    */
-  beforeRemove?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  onEdit?: (model: T) => undefined | false;
   /**
-   * 删除时点击保存按钮时触发的回调，在 removeApi 触发后
+   * 删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeApi 逻辑，当两者同时存在时，onRemove 优先级高，返回 false 代表继续执行 removeApi
    */
-  afterRemove?: (model: Record<string, any>, result: any) => void;
+  onRemove?: (model: T) => undefined | false;
   /**
-   * 批量删除时点击保存按钮时触发的回调，在 removeBatchApi 触发前
+   * 批量删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeBatchApi 逻辑，当两者同时存在时，onRemoveBatch 优先级高，返回 false 代表继续执行 removeBatchApi
    */
-  beforeRemoveBatch?: (model: Record<string, any>) => undefined | Promise<any> | any;
+  onRemoveBatch?: (model: T) => undefined | false;
   /**
-   * 批量删除时点击保存按钮时触发的回调，在 removeBatchApi 触发后
+   * add、edit、remove、removeBatch 任意操作完成后的回调
    */
-  afterRemoveBatch?: (model: Record<string, any>, result: any) => void;
-  /**
-   * 点击保存按钮时触发的回调，在 addApi、editApi、removeApi、removeBatchApi 触发前
-   */
-  beforeConfirm?: (status: string) => void;
-  /**
-   * 点击保存按钮时触发的回调，在 addApi、editApi、removeApi、removeBatchApi 触发后
-   */
-  afterConfirm?: (status: string, result: any) => void;
+  afterConfirm?: (status: string, result: boolean) => void;
   /**
    * 禁用新增按钮
    *

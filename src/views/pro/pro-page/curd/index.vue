@@ -65,7 +65,7 @@ const feedbackFormProps: FeedbackFormProps = {
     columns: formColumns,
   },
   type: feedbackType, // 不写 type 默认为 dialog
-  typeProps: {
+  feedbackProps: {
     title: (_, status) => (status === "add" ? "新增" : "编辑"),
     width: "45%",
     height: 450,

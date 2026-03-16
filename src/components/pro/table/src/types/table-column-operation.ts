@@ -176,15 +176,15 @@ export namespace OperationNamespace {
      */
     confirm?: Props["confirm"];
     /**
-     * 点击当前按钮时触发，可与PlusTable的事件 `clickAction` 同时触发； * 操作需要二次确认时：PlusTable的事件 `clickAction`会在确认时触发，而当前的onClick是在点击时触发
+     * 点击当前按钮时触发，可与 buttonClick 同时触发；操作需要二次确认时：buttonClick 会在确认时触发，而 onClick 是在点击时触发
      */
     onClick?: (params: ButtonsCallBackParams) => void;
     /**
-     * 操作需要二次确认时，点击确认时触发
+     * 操作需要二次确认时，点击确认时触发，可与 buttonConfirm 同时触发
      */
     onConfirm?: (params: ButtonsCallBackParams) => void;
     /**
-     * 操作需要二次确认时，点击取消时触发， 可与PlusTable的事件 `clickActionConfirmCancel` 同时触发
+     * 操作需要二次确认时，点击取消时触发，可与 buttonCancel 同时触发
      */
     onCancel?: (params: ButtonsCallBackParams) => void;
   }

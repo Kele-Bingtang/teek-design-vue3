@@ -222,7 +222,7 @@ function useTableSize() {
         return {
           ...(isFunction(headerCellStyle) ? headerCellStyle(data) : headerCellStyle),
           ...currentHeaderCellStyle,
-          ...(!baseSetting.headerBackground && { backgroundColor: undefined }),
+          ...(!baseSetting.headerBackground && { backgroundColor: "transparent" }),
         };
       },
     };

@@ -133,7 +133,6 @@ const rowDrop2 = () => {
 <style lang="scss" scoped>
 .drag-table-container {
   padding: 10px 12px;
-  background-color: #ffffff;
 
   p {
     margin: 16px 0;

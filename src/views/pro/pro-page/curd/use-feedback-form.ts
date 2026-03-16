@@ -1,9 +1,14 @@
 import type { FeedbackFormColumn } from "@/components/pro/page";
 import type { FormRules } from "element-plus";
 
+interface Result {
+  code: number;
+  message: string;
+}
+
 export const addUser = async (data: Recordable) => {
   console.log("addUser", data);
-  return new Promise(resolve => {
+  return new Promise<Result>(resolve => {
     setTimeout(() => {
       resolve({ code: 200, message: "添加成功！" });
     }, 1000);
@@ -12,7 +17,7 @@ export const addUser = async (data: Recordable) => {
 
 export const editUser = async (data: Recordable) => {
   console.log("editUser", data);
-  return new Promise(resolve => {
+  return new Promise<Result>(resolve => {
     setTimeout(() => {
       resolve({ code: 200, message: "修改成功！" });
     }, 1000);
@@ -21,7 +26,7 @@ export const editUser = async (data: Recordable) => {
 
 export const removeUser = async (data: Recordable) => {
   console.log("removeUser", data);
-  return new Promise(resolve => {
+  return new Promise<Result>(resolve => {
     setTimeout(() => {
       resolve({ code: 200, message: "删除成功！" });
     }, 1000);
@@ -30,7 +35,7 @@ export const removeUser = async (data: Recordable) => {
 
 export const removeBatch = async (data: Recordable) => {
   console.log("removeBatch", data);
-  return new Promise(resolve => {
+  return new Promise<Result>(resolve => {
     setTimeout(() => {
       resolve({ code: 200, message: "批量删除成功！" });
     }, 1000);

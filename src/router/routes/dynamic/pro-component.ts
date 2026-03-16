@@ -153,6 +153,7 @@ const proComponents: RouterConfigRaw = {
       meta: {
         notClickBread: true,
         title: "超级页面",
+        pointTag: true,
       },
       children: [
         {

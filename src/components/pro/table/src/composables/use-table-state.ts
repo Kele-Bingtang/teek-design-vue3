@@ -210,8 +210,14 @@ const responseAdapter = <T>(response: unknown): ApiResponse<T> => {
   // 数据
   let data: T[] | undefined;
 
+  // 接口返回的预设字段
+  // 列表数据
   const dataFields = ["records", "data", "list", "items", "result"];
+  // 总条数
+  const totalFields = ["total", "count"];
+  // 当前页码
   const pageNumFields = ["current", "page", "pageNum"];
+  // 每页大小
   const pageSizeFields = ["size", "pageSize", "limit"];
 
   data = extractField(res, dataFields, undefined, value => isArray(value));
@@ -222,7 +228,7 @@ const responseAdapter = <T>(response: unknown): ApiResponse<T> => {
   }
 
   // 总数
-  const total = extractField(res, dataFields, data?.length ?? 0, value => isNumber(value));
+  const total = extractField(res, totalFields, data?.length ?? 0, value => isNumber(value));
   // 当前页码
   const pageNum = extractField(res, pageNumFields, undefined, value => isNumber(value));
   // 当前页数
@@ -244,6 +250,8 @@ function extractField<T>(
   defaultValue: T,
   condition?: (field: unknown) => boolean
 ): T {
-  for (const field of fields) if (field in obj && condition?.(obj[field])) return obj[field] as T;
+  for (const field of fields) {
+    if (field in obj && condition?.(obj[field])) return obj[field] as T;
+  }
   return defaultValue;
 }
