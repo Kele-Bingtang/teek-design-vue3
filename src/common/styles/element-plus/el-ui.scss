@@ -333,9 +333,22 @@
 }
 
 // 修改 el-descriptions 样式
-.#{$el-namespace}-descriptions {
-  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(
-    var(--#{$teek-namespace}-gray-200-rgb),
-    0.6
-  ) !important;
+div.#{$el-namespace}-descriptions {
+  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+}
+
+// 优化 el-table 表头字体色和背景色样式
+div.#{$el-namespace}-table {
+  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-800);
+  --#{$el-namespace}-table-header-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+
+  thead.is-group {
+    --#{$el-namespace}-fill-color-light: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6); // 多级表头背景色
+  }
+}
+
+html.dark {
+  div.#{$el-namespace}-table {
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-900);
+  }
 }

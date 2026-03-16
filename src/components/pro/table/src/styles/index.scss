@@ -3,13 +3,18 @@
 
 @include b(pro-table) {
   @include el-joins(table) {
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-800);
+    --#{$el-namespace}-table-header-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+
+    thead.is-group {
+      --#{$el-namespace}-fill-color-light: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6); // 多级表头背景色
+    }
+
     // 修复 safari 浏览器表格错位
     table {
       width: 100%;
 
       thead {
-        color: var(--#{$teek-namespace}-text-gray-700);
-
         th {
           font-size: 15px;
 
@@ -22,8 +27,16 @@
 
       tbody {
         // 单元格字体颜色
-        // color: var(--#{$teek-namespace}-text-gray-800);
+        // --#{$el-namespace}-table-text-color: var(--#{$teek-namespace}-text-gray-800);
       }
+    }
+  }
+}
+
+html.dark {
+  @include b(pro-table) {
+    @include el-joins(table) {
+      --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-900);
     }
   }
 }
