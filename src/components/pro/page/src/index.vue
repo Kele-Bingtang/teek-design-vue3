@@ -100,7 +100,7 @@ const proTableProps = computed(() => {
         show: feedbackFormProps?.removeApi ? true : !!feedbackFormProps?.useRemove,
         el: "el-link",
         icon: Delete,
-        onClick: ({ row }) => feedbackFormInstance.value?.clickRemove(row),
+        onClick: ({ row }) => feedbackFormInstance.value?.clickRemove?.(row),
         onConfirm: ({ row }) => feedbackFormInstance.value?.handleRemove(row),
       }
     );
