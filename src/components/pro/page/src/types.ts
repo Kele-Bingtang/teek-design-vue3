@@ -207,19 +207,19 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 新增点击保存按钮回调，将自定义新增逻辑，覆盖 addApi 逻辑，当两者同时存在时，onAdd 优先级高，返回 false 代表继续执行 addApi
    */
-  onAdd?: (model: T) => undefined | false;
+  onAdd?: (model: T) => undefined | false | Promise<undefined | false>;
   /**
    * 编辑点击保存按钮回调，将自定义新增逻辑，覆盖 editApi 逻辑，当两者同时存在时，onEdit 优先级高，返回 false 代表继续执行 editApi
    */
-  onEdit?: (model: T) => undefined | false;
+  onEdit?: (model: T) => undefined | false | Promise<undefined | false>;
   /**
    * 删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeApi 逻辑，当两者同时存在时，onRemove 优先级高，返回 false 代表继续执行 removeApi
    */
-  onRemove?: (model: T) => undefined | false;
+  onRemove?: (model: T) => undefined | false | Promise<undefined | false>;
   /**
    * 批量删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeBatchApi 逻辑，当两者同时存在时，onRemoveBatch 优先级高，返回 false 代表继续执行 removeBatchApi
    */
-  onRemoveBatch?: (model: T) => undefined | false;
+  onRemoveBatch?: (model: T) => undefined | false | Promise<undefined | false>;
   /**
    * add、edit、remove、removeBatch 任意操作完成后的回调
    */

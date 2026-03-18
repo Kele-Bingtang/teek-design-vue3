@@ -16,7 +16,6 @@ import {
   Lock,
   Unlock,
 } from "@element-plus/icons-vue";
-import { openRouteInNewWindow } from "@/common/utils";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../../use-tab-nav";
 
@@ -34,6 +33,7 @@ const {
   closeRightTab,
   closeOthersTabs,
   closeAllTabs,
+  openRouteInNewWindow,
 } = useTabNav();
 
 const settingStore = useSettingStore();

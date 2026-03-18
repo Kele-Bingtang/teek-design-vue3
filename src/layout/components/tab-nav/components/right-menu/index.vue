@@ -16,7 +16,6 @@ import {
   Lock,
   Unlock,
 } from "@element-plus/icons-vue";
-import { openRouteInNewWindow } from "@/common/utils";
 import { useNamespace } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../../use-tab-nav";
@@ -30,6 +29,7 @@ const {
   tabNavList,
   refreshSelectedTab,
   toggleFixed,
+  openRouteInNewWindow,
   closeTab,
   closeLeftTab,
   closeRightTab,

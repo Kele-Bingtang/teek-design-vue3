@@ -6,10 +6,10 @@ export function getUrlParams(): URLSearchParams {
 }
 
 /**
- * 新窗口打开URL。
+ * 新窗口打开 URL
  *
- * @param url - 需要打开的网址。
- * @param options - 打开窗口的选项。
+ * @param url - 需要打开的网址
+ * @param options - 打开窗口的选项
  */
 export function openWindow(
   url: string,
@@ -32,7 +32,7 @@ export function openWindow(
 /**
  * 在新窗口中打开路由
  */
-export function openRouteInNewWindow(path: string) {
+export function openPathInNewWindow(path: string) {
   const { hash, origin } = location;
   const fullPath = path.startsWith("/") ? path : `/${path}`;
   const url = `${origin}${hash ? "/#" : ""}${fullPath}`;

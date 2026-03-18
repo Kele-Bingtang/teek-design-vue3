@@ -151,7 +151,7 @@ const handleDoAdd = <T extends Recordable = any>(data: T) => {
       const filterParams = [...(apiFilterKeys || []), ...(addFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
 
-      const result = onAdd?.(data);
+      const result = await onAdd?.(data);
       // 返回 false 则继续往下执行
       if (result !== false) return;
 
@@ -246,7 +246,7 @@ const handleRemove = async <T extends Recordable = any>(row: T, fallback: (resul
   const filterParams = [...(apiFilterKeys || []), ...(removeFilterKeys || [])];
   filterParams.forEach(item => delete data[item]);
 
-  const result = onRemove?.(data);
+  const result = await onRemove?.(data);
   // 返回 false 则继续往下执行
   if (result !== false) return;
 
@@ -295,7 +295,7 @@ const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, f
       afterConfirm,
     } = props;
 
-    const result = onRemoveBatch?.(data);
+    const result = await onRemoveBatch?.(data);
     // 返回 false 则继续往下执行
     if (result !== false) return;
 

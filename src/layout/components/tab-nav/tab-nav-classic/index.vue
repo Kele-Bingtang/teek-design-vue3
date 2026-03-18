@@ -4,7 +4,7 @@ import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
 import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
-import { isString, openRouteInNewWindow } from "@/common/utils";
+import { isString } from "@/common/utils";
 import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
@@ -43,6 +43,7 @@ const {
   tabsDragSort,
   initAffixTabs,
   addTabByRoute,
+  openRouteInNewWindow,
   openRightMenu,
   closeTab,
 } = useTabNav();
