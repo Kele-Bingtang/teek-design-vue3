@@ -4,6 +4,7 @@ import { useSettingStore } from "@/pinia";
 import SimpleTabNav from "./tab-nav-simple/index.vue";
 import ClassicTabNav from "./tab-nav-classic/index.vue";
 import ElTabNav from "./tab-nav-element/index.vue";
+import StorageTabNav from "./tab-nav-storage/index.vue";
 
 defineOptions({ name: "TabNav" });
 
@@ -15,6 +16,7 @@ const TabNavComponents: Record<string, Component> = {
   [TabNavElementModeEnum.Simple]: SimpleTabNav,
   [TabNavElementModeEnum.Classic]: ClassicTabNav,
   [TabNavElementModeEnum.Element]: ElTabNav,
+  [TabNavElementModeEnum.Storage]: StorageTabNav,
 };
 </script>
 

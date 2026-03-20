@@ -323,6 +323,7 @@ export default {
         simple: "简洁",
         classic: "经典",
         element: "元素",
+        storage: "收纳模式",
       },
       draggable: "启动拖拽排序",
       middleClickToClose: "点击鼠标中键关闭标签页",

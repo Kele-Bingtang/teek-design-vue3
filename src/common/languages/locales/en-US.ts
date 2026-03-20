@@ -321,6 +321,7 @@ export default {
         simple: "Simple",
         classic: "Classic",
         element: "Element",
+        storage: "Storage",
       },
       draggable: "Enable drag sorting",
       middleClickToClose: "Middle-click to close tab",
