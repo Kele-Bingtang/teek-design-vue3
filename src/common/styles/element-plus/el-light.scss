@@ -1,5 +1,12 @@
 @use "../mixins/namespace" as *;
 
+// 组件尺寸高度
+$component-size: (
+  "large": 40px,
+  "default": 34px,
+  "small": 28px,
+);
+
 // 自定义 ElementPlus 亮色主题
 @forward "element-plus/theme-chalk/src/common/var.scss" with (
   $colors: (
@@ -27,11 +34,12 @@
   $messagebox: (
     "border-radius": "10px",
   ),
-  $common-component-size: (
-    "large": 40px,
-    "default": 34px,
-    "small": 28px,
-  )
+  $common-component-size: $component-size
+);
+
+// form-item label 高度
+@forward "element-plus/theme-chalk/src/form.scss" with (
+  $form-item-line-height: $component-size
 );
 
 @use "element-plus/theme-chalk/src/index.scss" as *;
