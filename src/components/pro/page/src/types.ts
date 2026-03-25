@@ -229,39 +229,39 @@ export interface FeedbackFormProps<T extends Recordable = any> {
    *
    * @default false
    */
-  disableAdd?: boolean;
+  disableAdd?: boolean | ((param: { selectedListIds: any; selectedList: any; isSelected: any }) => boolean);
   /**
    * 禁用编辑按钮
    *
    * @default false
    */
-  disableEdit?: boolean;
+  disableEdit?: boolean | ((row: T) => boolean);
   /**
    * 禁用删除按钮
    *
    * @default false
    */
-  disableRemove?: boolean;
+  disableRemove?: boolean | ((row: T) => boolean);
   /**
    * 禁用批量删除按钮
    *
    * @default false
    */
-  disableRemoveBatch?: boolean;
+  disableRemoveBatch?: boolean | ((param: { selectedListIds: any; selectedList: any; isSelected: any }) => boolean);
   /**
    * 是否使用新增功能，如果 addApi 存在则默认为 true，否则默认为 false
    */
-  useAdd?: boolean;
+  useAdd?: boolean | ((row: T) => boolean);
   /**
    * 是否使用编辑功能，如果 editApi 存在则默认为 true，否则默认为 false
    */
-  useEdit?: boolean;
+  useEdit?: boolean | ((row: T) => boolean);
   /**
    * 是否使用删除功能，如果 removeApi 存在则默认为 true，否则默认为 false
    */
-  useRemove?: boolean;
+  useRemove?: boolean | ((row: T) => boolean);
   /**
    * 是否使用批量删除功能，如果 removeBatchApi 存在则默认为 true，否则默认为 false
    */
-  useRemoveBatch?: boolean;
+  useRemoveBatch?: boolean | ((row: T) => boolean);
 }

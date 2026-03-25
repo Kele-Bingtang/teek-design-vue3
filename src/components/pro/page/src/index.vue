@@ -76,12 +76,12 @@ const proTableProps = computed(() => {
       {
         text: "编辑",
         code: "native_edit",
-        elProps: {
+        elProps: row => ({
           type: "primary",
           size: "small",
-          disabled: feedbackFormProps?.disableEdit,
-        },
-        show: feedbackFormProps?.editApi ? true : !!feedbackFormProps?.useEdit,
+          disabled: executeIfFunctionOrReturn(feedbackFormProps?.disableEdit, row),
+        }),
+        show: row => (feedbackFormProps?.editApi ? true : executeIfFunctionOrReturn(feedbackFormProps?.useEdit, row)),
         el: "el-link",
         icon: Edit,
         onClick: ({ row }) => feedbackFormInstance.value?.handleEdit(row),
@@ -89,15 +89,16 @@ const proTableProps = computed(() => {
       {
         text: "删除",
         code: "native_delete",
-        elProps: {
+        elProps: row => ({
           type: "danger",
           size: "small",
-          disabled: feedbackFormProps?.disableRemove,
-        },
+          disabled: executeIfFunctionOrReturn(feedbackFormProps?.disableRemove, row),
+        }),
         confirm: {
           props: { title: "你确定删除吗?" },
         },
-        show: feedbackFormProps?.removeApi ? true : !!feedbackFormProps?.useRemove,
+        show: row =>
+          feedbackFormProps?.removeApi ? true : executeIfFunctionOrReturn(feedbackFormProps?.useRemove, row),
         el: "el-link",
         icon: Delete,
         onClick: ({ row }) => feedbackFormInstance.value?.clickRemove?.(row),
@@ -311,6 +312,17 @@ const handleLeaveCellEdit = (row: TableRow, column: TableColumn) => {
   emits("leaveCellEdit", row, column);
 };
 
+/**
+ * 判断是否为函数，是则调用，否则直接返回
+ */
+const executeIfFunctionOrReturn = <T,>(
+  target: boolean | undefined | ((params: T) => boolean | undefined),
+  params: T
+): any => {
+  if (target && isFunction(target)) return target(params);
+  return !!target;
+};
+
 const expose = {
   searchParams,
   searchDefaultParams,
@@ -400,18 +412,32 @@ defineExpose(expose);
 
           <slot name="add" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
             <el-button
-              v-if="feedbackFormProps?.addApi ? true : feedbackFormProps?.useAdd"
+              v-if="
+                feedbackFormProps?.addApi
+                  ? true
+                  : executeIfFunctionOrReturn(feedbackFormProps?.useAdd, { selectedListIds, selectedList, isSelected })
+              "
               type="primary"
               :icon="Plus"
               @click="feedbackFormInstance?.handleAdd()"
-              :disabled="feedbackFormProps?.disableAdd"
+              :disabled="
+                executeIfFunctionOrReturn(feedbackFormProps?.disableAdd, { selectedListIds, selectedList, isSelected })
+              "
             >
               新增
             </el-button>
           </slot>
           <slot name="removeBatch" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
             <el-button
-              v-if="feedbackFormProps?.removeBatchApi ? true : feedbackFormProps?.useRemoveBatch"
+              v-if="
+                feedbackFormProps?.removeBatchApi
+                  ? true
+                  : executeIfFunctionOrReturn(feedbackFormProps?.useRemoveBatch, {
+                      selectedListIds,
+                      selectedList,
+                      isSelected,
+                    })
+              "
               type="danger"
               :icon="Delete"
               plain
@@ -420,7 +446,13 @@ defineExpose(expose);
                   proTableInstance?.tableMainInstance?.clearSelection();
                 })
               "
-              :disabled="feedbackFormProps?.disableRemoveBatch || !isSelected"
+              :disabled="
+                executeIfFunctionOrReturn(feedbackFormProps?.disableRemoveBatch, {
+                  selectedListIds,
+                  selectedList,
+                  isSelected,
+                }) || !isSelected
+              "
             >
               批量删除
             </el-button>
