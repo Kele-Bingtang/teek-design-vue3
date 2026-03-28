@@ -198,6 +198,10 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
     border: none;
     border-radius: $border-radius;
   }
+
+  .w-e-text-placeholder {
+    line-height: normal;
+  }
 }
 
 .dark {

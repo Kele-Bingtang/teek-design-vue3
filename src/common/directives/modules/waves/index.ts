@@ -37,8 +37,7 @@ const waves: Directive = {
       target.appendChild(ripple);
 
       // 计算位置
-      let top = 0,
-        left = 0;
+      let top: number, left: number;
       if (opts.type === "center") {
         top = rect.height / 2 - ripple.offsetHeight / 2;
         left = rect.width / 2 - ripple.offsetWidth / 2;

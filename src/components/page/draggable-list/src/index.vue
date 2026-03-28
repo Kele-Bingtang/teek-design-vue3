@@ -26,8 +26,9 @@ const group = ref("drag_list");
 const handleEnd = (e: Event, type: string) => {
   const srcClassName = (e.srcElement || (e.target as any)).classList[0];
   const targetClassName = (e as any).to.classList[0];
-  let src = "";
-  let target = "";
+  let src: string;
+  let target: string;
+
   if (srcClassName === targetClassName) {
     if (type === "left") {
       src = "left";

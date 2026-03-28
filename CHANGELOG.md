@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.1...v2.2.0) (2026-03-28)
+
+### Features
+
+- **pro-page:** 🚀 超级页面 ProPage 部分配置支持接收当前行数据进行处理 ([d47bae4](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d47bae4e385bc598678a9018b1334768a1c188f2))
+- **tab-nav:** 🚀添加收纳标签页模式切换 ([fdbf012](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fdbf012939b2dbce309662089190642c5ec77098))
+- **trigger:** 🚀 add 新增标签收纳功能 ([818dd3a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/818dd3aeb6767cbfd41768ce45e8eba67fe558e4))
+
+### Bug Fixes
+
+- **form:** 🐞 优化表单 Label 高度不适配表单组件问题 ([13a0627](https://github.com/Kele-Bingtang/teek-design-vue3/commit/13a06276611b651e52d4e07dd3d735dbe861e5ad))
+- **pinia:** 🐞 修复新版 pinia-plugin-persistedstate 导致缓存失效问题 ([42099c6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/42099c648cf03520cfbce84babfbd59c294c47be))
+- **storage:** 🐞 修复自定义存储 getItem 方法的空值处理 ([6457504](https://github.com/Kele-Bingtang/teek-design-vue3/commit/645750461f30cd6b18584856bba7526b1d02abb6))
+- **utils:** 🐞 修复标签页新窗口打开路由404问题和反馈表单异步处理 ([ca6eef3](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ca6eef36684fe50efc4afc6613b8c41c02aff477))
+
+### Code Refactoring
+
+- **feedback-form:** ♻️ 优化反馈表单组件类型安全和功能实现 ([c6b5341](https://github.com/Kele-Bingtang/teek-design-vue3/commit/c6b5341112297cfccce2a439538af31f1d98a9e0))
+- **feedback-form:** ♻️ add、edit、remove、removeBatch 回调支持返回 false 和类型优化 ([d11fe40](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d11fe4056d8a7ff92b9f6b0c335adea8a69dc843))
+- **style:** ♻️ 调整过渡动画距离并添加 EP 表格表头全局样式 ([69a5284](https://github.com/Kele-Bingtang/teek-design-vue3/commit/69a52846253fa8ff044f412ef4d5522c46303645))
+- **styles:** ♻️ 重构 Element Plus 样式配置和组件属性命名 ([ef2b183](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ef2b1836a3e6af8aae4f15e6bce59d9752a1d35b))
+
+### Others
+
+- **deps:** 🔨 更新项目依赖包版本为最新版 ([4053204](https://github.com/Kele-Bingtang/teek-design-vue3/commit/4053204b86472a15fc462baed807a40bd7a168a6))
+
 ## [2.1.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.0...v2.1.1) (2026-03-01)
 
 ### Features

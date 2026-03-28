@@ -251,39 +251,6 @@ const proComponents: RouterConfigRaw = {
         tagProps: { type: "danger" },
       },
     },
-    // {
-    //   path: "/pro-steps",
-    //   name: "ProSteps",
-    //   meta: {
-    //     notClickBread: true,
-    //     title: "超级步骤条",
-    //   },
-    //   children: [
-    //     {
-    //       path: "simple",
-    //       name: "SimpleProSteps",
-    //       component: () => import("@/views/pro/pro-steps/index.vue"),
-    //       meta: { title: () => "简单 ProSteps"},
-    //     },
-    //   ],
-    // },
-    // {
-    //   path: "/pro-transfer",
-    //   name: "ProTransfer",
-    //   meta: {
-    //     notClickBread: true,
-    //     title: "超级穿梭框",
-    //
-    //   },
-    //   children: [
-    //     {
-    //       path: "simple",
-    //       name: "SimpleProTransfer",
-    //       component: () => import("@/views/pro/pro-transfer/index.vue"),
-    //       meta: { title: () => "简单 ProTransfer"},
-    //     },
-    //   ],
-    // },
   ],
 };
 

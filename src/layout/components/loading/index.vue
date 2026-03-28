@@ -20,11 +20,10 @@ const isFirstLoad = ref(!props.route);
 const routeLoading = ref(false);
 
 // 监听路由导航事件，控制加载状态
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to, _from) => {
   if (props.route && !loadedPaths.has(to.path)) {
     routeLoading.value = true;
   }
-  next();
 });
 
 router.afterEach(to => {

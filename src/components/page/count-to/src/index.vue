@@ -74,7 +74,7 @@ function useInitCountUp() {
    * @param val 值
    */
   const getValue = (val: number) => {
-    let res = 0;
+    let res;
     if (props.simplify) {
       const { endVal, unitText: u } = transformValue(val);
       unitText.value = u;

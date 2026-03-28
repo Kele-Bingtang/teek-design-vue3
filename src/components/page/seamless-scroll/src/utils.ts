@@ -89,7 +89,6 @@ export function copyObj() {
         // 如果是深复制且copy是一个对象或数组则需要递归直到copy成为一个基本数据类型为止
         if (deep && copy && (typeof copy === "object" || copyIsArray)) {
           if (copyIsArray) {
-            copyIsArray = false;
             // 如果目标对象存在name属性且是一个数组
             // 则使用目标对象的name属性，否则重新创建一个数组，用于复制
             clone = src && Array.isArray(src) ? src : [];

@@ -16,7 +16,10 @@ export * from "./stores/websocket";
  * 自定义存储逻辑
  */
 const customStorage = {
-  getItem: (key: string) => JSON.stringify(localStorageProxy.getItem(key, false)),
+  getItem: (key: string) => {
+    const item = localStorageProxy.getItem(key, false);
+    return item ? JSON.stringify(item) : null;
+  },
   setItem: (key: string, value: string) => localStorageProxy.setItem(key, JSON.parse(value), false),
 };
 

@@ -1,0 +1,30 @@
+@use "@styles/mixins/bem" as *;
+@use "@styles/mixins/function" as *;
+
+@include b(storage-tabs-nav) {
+  position: relative;
+  width: 100%;
+  padding: 0 10px;
+  background-color: cssVar(layout-tab-bg-color);
+
+  @include b(classic-tabs-nav) {
+    align-items: flex-start;
+    height: auto;
+    white-space: normal;
+    background-color: transparent;
+
+    @include e(tab) {
+      margin-bottom: 8px;
+    }
+
+    @include e(scroll) {
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    @include e(scroll-body) {
+      position: relative;
+      white-space: normal;
+    }
+  }
+}

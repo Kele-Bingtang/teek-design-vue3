@@ -13,6 +13,7 @@ export enum TabNavElementModeEnum {
   Simple = "simple",
   Classic = "classic",
   Element = "element",
+  Storage = "storage",
 }
 
 // 顶栏显示模式
