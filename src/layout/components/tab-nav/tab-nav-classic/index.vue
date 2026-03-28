@@ -3,14 +3,13 @@ import type { TabProps } from "@/pinia";
 import { ref, onMounted, watch, nextTick, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 import { ElButton } from "element-plus";
-import { Close, ArrowLeft, ArrowRight, FolderOpened } from "@element-plus/icons-vue";
+import { Close, ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { isString } from "@/common/utils";
 import { useNamespace, useCommon } from "@/composables";
 import { useSettingStore } from "@/pinia";
 import { useTabNav } from "../use-tab-nav";
 import MoreButton from "../components/more-button/index.vue";
 import RightMenu from "../components/right-menu/index.vue";
-import { TabNavElementModeEnum } from "@/common/enums";
 
 import "./index.scss";
 
@@ -170,15 +169,6 @@ const handleTouchMove = (event: TouchEvent) => {
   startX = touch.clientX;
 };
 
-/* 📂 切换收纳模式 */
-const toggleStorageMode = () => {
-  const newMode =
-    tabNav.value.elementMode === TabNavElementModeEnum.Storage
-      ? TabNavElementModeEnum.Classic
-      : TabNavElementModeEnum.Storage;
-  settingStore.$patch({ tabNav: { elementMode: newMode } });
-};
-
 onMounted(() => {
   tabNav.value.draggable && tabsDragSort(`.${ns.e("scroll-body")}`, `.${ns.e("tab")}`);
   initAffixTabs();
@@ -241,19 +231,6 @@ onMounted(() => {
         <Icon><ArrowRight /></Icon>
       </el-button>
     </div>
-
-    <!-- /* 🗂️ 收纳模式切换按钮 */ -->
-    <el-button
-      v-show="tabNav.showMore"
-      text
-      size="small"
-      :class="ns.e('storage-btn')"
-      :type="tabNav.elementMode === TabNavElementModeEnum.Storage ? 'primary' : ''"
-      @click="toggleStorageMode"
-    >
-      <Icon><FolderOpened /></Icon>
-      <span>{{ tabNav.elementMode === TabNavElementModeEnum.Storage ? "列表" : "收纳" }}</span>
-    </el-button>
 
     <MoreButton v-show="tabNav.showMore" />
 

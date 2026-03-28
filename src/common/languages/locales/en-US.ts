@@ -184,6 +184,7 @@ export default {
     closeOthers: "Close Others",
     closeAll: "Close All",
     more: "More",
+    storageBin: "Tab Bin",
   },
   _headerBar: {
     search: "Search",
@@ -364,6 +365,7 @@ export default {
       language: "Enable language switch",
       theme: "Enable theme switch",
       lockScreen: "Enable lock screen",
+      searchIcon: "Switch Search icon",
     },
     shortcutKey: {
       label: "Shortcut keys",
@@ -371,7 +373,6 @@ export default {
       search: "Global search",
       logout: "Logout",
       lockScreen: "Lock screen",
-      searchIcon: "Search icon",
     },
   },
   _search: {

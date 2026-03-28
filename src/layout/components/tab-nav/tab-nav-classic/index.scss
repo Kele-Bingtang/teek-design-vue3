@@ -125,20 +125,4 @@ $btn-width: 28px;
       }
     }
   }
-
-  /* 📂 收纳模式切换按钮 */
-  @include e(storage-btn) {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    height: 26px;
-    padding: 0 8px;
-    margin-right: 5px;
-    font-size: 12px;
-    border-radius: calc(cssVar(radius) / 2);
-
-    .icon {
-      font-size: 14px;
-    }
-  }
 }

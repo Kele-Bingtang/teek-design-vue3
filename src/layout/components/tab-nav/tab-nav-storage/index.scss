@@ -1,227 +1,30 @@
-/* 🗂️ 收纳模式标签页样式 - 抽屉式展示 🏷️gl.baimu.live */
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/function" as *;
 
 @include b(storage-tabs-nav) {
   position: relative;
-  display: flex;
-  justify-content: flex-end;
   width: 100%;
-  height: cssVar(layout-tab-height);
-  min-height: cssVar(layout-tab-height);
   padding: 0 10px;
   background-color: cssVar(layout-tab-bg-color);
-  border-bottom: cssVar(layout-tab-line);
 
-  /* 🏷️ 查看标签页按钮容器 */
-  @include e(trigger) {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-right: auto;
-  }
+  @include b(classic-tabs-nav) {
+    align-items: flex-start;
+    height: auto;
+    white-space: normal;
+    background-color: transparent;
 
-  /* 🏷️ 查看标签页按钮 */
-  @include e(trigger-btn) {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    padding: 6px 12px;
-    font-size: cssVar(layout-tab-text-size);
-    border-radius: calc(cssVar(radius) / 2);
-
-    .icon {
-      font-size: 14px;
-    }
-  }
-
-  /* 🏷️ 标签数量 */
-  @include e(count) {
-    font-size: 12px;
-    opacity: 0.8;
-  }
-
-  /* 🏷️ 高斯模糊遮罩层 */
-  @include e(backdrop) {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    background-color: rgb(0 0 0 / 30%);
-
-    /* ☀️ 高斯模糊效果 */
-    backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-  }
-
-  /* 🏷️ 下拉式标签页容器 */
-  @include e(dropdown) {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 10px;
-    left: 10px;
-    z-index: 9999;
-    width: auto;
-    max-height: 400px;
-    padding: 16px;
-    overflow-y: auto;
-    background-color: cssVar(bg-color);
-    border: 1px solid cssVar(border-color-light);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
-  }
-
-  /* 🏷️ 标签卡片列表 - 网格布局 */
-  @include e(card-list) {
-    display: grid;
-
-    /* ☀️ 自适应网格，最小宽度 200px */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  /* 🏷️ 标签卡片 */
-  @include e(card) {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 12px 20px;
-    cursor: pointer;
-    background-color: cssVar(bg-color);
-    border: 1px solid cssVar(border-color-light);
-    border-radius: 50px;
-    box-shadow: 0 2px 8px rgb(30 165 189 / 47.3%);
-    transition: all cssVar(transition-duration) ease;
-
-    &:hover {
-      border-color: cssVar(color-primary-light-5);
-      box-shadow: 0 4px 16px rgb(58 98 184 / 67.1%);
-      transform: translateY(-2px);
-
-      @include e(card-close) {
-        opacity: 1;
-      }
+    @include e(tab) {
+      margin-bottom: 8px;
     }
 
-    /* ☀️ 激活状态 */
-    @include is(active) {
-      background-color: cssVar(color-primary-light-9);
-      border-color: cssVar(color-primary);
-      box-shadow: 0 4px 16px rgb(0 0 0 / 28.8%);
-
-      @include e(card-icon) {
-        color: cssVar(color-primary);
-      }
-
-      @include e(card-title) {
-        font-weight: 500;
-        color: cssVar(color-primary);
-      }
-
-      .dot {
-        background-color: cssVar(color-primary);
-      }
-    }
-  }
-
-  /* 🏷️ 标签卡片图标 */
-  @include e(card-icon) {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    color: cssVar(text-color-secondary);
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      background-color: cssVar(text-color-placeholder);
-      border-radius: 50%;
-      transition: background-color cssVar(transition-duration) ease;
-    }
-  }
-
-  /* 🏷️ 标签卡片标题 */
-  @include e(card-title) {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 13px;
-    color: cssVar(text-color-regular);
-    white-space: nowrap;
-    transition: color cssVar(transition-duration) ease;
-  }
-
-  /* 🏷️ 标签卡片关闭按钮 */
-  @include e(card-close) {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-    color: cssVar(text-color-secondary);
-    border-radius: 50%;
-    opacity: 0;
-    transition: all cssVar(transition-duration) ease;
-
-    &:hover {
-      color: cssVar(color-danger);
-      background-color: cssVar(color-danger-light-9);
-    }
-  }
-
-  /* 🏷️ 空状态 */
-  @include e(empty) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    font-size: 14px;
-    color: cssVar(text-color-placeholder);
-  }
-
-  /* 🏷️ 收纳模式切换按钮 */
-  @include e(storage-btn) {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    height: 26px;
-    padding: 0 8px;
-    margin-left: 5px;
-    font-size: 12px;
-    border-radius: calc(cssVar(radius) / 2);
-
-    .icon {
-      font-size: 14px;
-    }
-  }
-}
-
-/* 🌆 暗色模式适配 */
-html.dark {
-  @include b(storage-tabs-nav) {
-    @include e(backdrop) {
-      background-color: rgb(0 0 0 / 50%);
+    @include e(scroll) {
+      max-height: 300px;
+      overflow: auto;
     }
 
-    @include e(dropdown) {
-      box-shadow: 0 8px 24px rgb(0 0 0 / 30%);
-    }
-
-    @include e(card) {
-      box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
-
-      &:hover {
-        box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
-      }
-
-      @include is(active) {
-        box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
-      }
+    @include e(scroll-body) {
+      position: relative;
+      white-space: normal;
     }
   }
 }

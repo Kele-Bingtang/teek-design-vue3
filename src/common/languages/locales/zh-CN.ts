@@ -185,6 +185,7 @@ export default {
     closeOthers: "关闭其他标签页",
     closeAll: "关闭全部标签页",
     more: "更多",
+    storageBin: "标签收纳容器",
   },
   _headerBar: {
     search: "搜索",
@@ -323,7 +324,7 @@ export default {
         simple: "简洁",
         classic: "经典",
         element: "元素",
-        storage: "收纳模式",
+        storage: "收纳",
       },
       draggable: "启动拖拽排序",
       middleClickToClose: "点击鼠标中键关闭标签页",

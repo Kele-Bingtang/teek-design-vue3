@@ -268,7 +268,7 @@ export const useTabNav = () => {
     if (left > maxLeft) rightMenuLeft.value = maxLeft;
     else rightMenuLeft.value = left;
 
-    rightMenuTop.value = e.offsetY + 12;
+    rightMenuTop.value = e.layerY + 4;
     rightMenuVisible.value = true;
     rightMenuActiveTab.value = tab;
   };

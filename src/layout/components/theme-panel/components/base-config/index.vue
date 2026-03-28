@@ -38,7 +38,7 @@ const tabNavElementModeOptions = computed(() => [
   { value: TabNavElementModeEnum.Simple, label: t("_setting.tabNav.modeSelect.simple") },
   { value: TabNavElementModeEnum.Classic, label: t("_setting.tabNav.modeSelect.classic") },
   { value: TabNavElementModeEnum.Element, label: t("_setting.tabNav.modeSelect.element") },
-  { value: TabNavElementModeEnum.Storage, label: t("_setting.tabNav.modeSelect.storage") || "收纳模式" },
+  { value: TabNavElementModeEnum.Storage, label: t("_setting.tabNav.modeSelect.storage") },
 ]);
 
 /**
