@@ -8,14 +8,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 - **pro-page:** 🚀 超级页面 ProPage 部分配置支持接收当前行数据进行处理 ([d47bae4](https://github.com/Kele-Bingtang/teek-design-vue3/commit/d47bae4e385bc598678a9018b1334768a1c188f2))
 - **tab-nav:** 🚀添加收纳标签页模式切换 ([fdbf012](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fdbf012939b2dbce309662089190642c5ec77098))
-- **trigger:** add 新增标签收纳功能 ([818dd3a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/818dd3aeb6767cbfd41768ce45e8eba67fe558e4))
+- **trigger:** 🚀 add 新增标签收纳功能 ([818dd3a](https://github.com/Kele-Bingtang/teek-design-vue3/commit/818dd3aeb6767cbfd41768ce45e8eba67fe558e4))
 
 ### Bug Fixes
 
 - **form:** 🐞 优化表单 Label 高度不适配表单组件问题 ([13a0627](https://github.com/Kele-Bingtang/teek-design-vue3/commit/13a06276611b651e52d4e07dd3d735dbe861e5ad))
 - **pinia:** 🐞 修复新版 pinia-plugin-persistedstate 导致缓存失效问题 ([42099c6](https://github.com/Kele-Bingtang/teek-design-vue3/commit/42099c648cf03520cfbce84babfbd59c294c47be))
 - **storage:** 🐞 修复自定义存储 getItem 方法的空值处理 ([6457504](https://github.com/Kele-Bingtang/teek-design-vue3/commit/645750461f30cd6b18584856bba7526b1d02abb6))
-- **utils:** 修复标签页新窗口打开路由404问题和反馈表单异步处理 ([ca6eef3](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ca6eef36684fe50efc4afc6613b8c41c02aff477))
+- **utils:** 🐞 修复标签页新窗口打开路由404问题和反馈表单异步处理 ([ca6eef3](https://github.com/Kele-Bingtang/teek-design-vue3/commit/ca6eef36684fe50efc4afc6613b8c41c02aff477))
 
 ### Code Refactoring
 
@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Others
 
-- **deps:** 更新项目依赖包版本为最新版 ([4053204](https://github.com/Kele-Bingtang/teek-design-vue3/commit/4053204b86472a15fc462baed807a40bd7a168a6))
+- **deps:** 🔨 更新项目依赖包版本为最新版 ([4053204](https://github.com/Kele-Bingtang/teek-design-vue3/commit/4053204b86472a15fc462baed807a40bd7a168a6))
 
 ## [2.1.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.0...v2.1.1) (2026-03-01)
 
