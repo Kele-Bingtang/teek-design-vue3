@@ -134,7 +134,7 @@ const handleAddSchedule = () => {
 const handleClickSchedule = (schedule: ScheduleData) => {
   emits("open", schedule, "edit");
 
-  const formModel = {
+  const formModel = ref({
     title: schedule.title,
     date: dayjs(currentTime.value).format("YYYY-MM-DD"),
     time: [schedule.startTime, schedule.endTime],
@@ -142,14 +142,14 @@ const handleClickSchedule = (schedule: ScheduleData) => {
     appointed: schedule.appointed,
     createUser: schedule.createUser,
     createTime: schedule.createTime,
-  };
+  });
 
   open({
     title: "查看日程",
     width: 550,
     height: 380,
     showFooter: false,
-    render: () => <ScheduleForm v-model={formModel} disabled={true} />,
+    render: () => <ScheduleForm v-model={formModel.value} disabled={true} />,
   });
 };
 

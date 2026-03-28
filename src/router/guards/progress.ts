@@ -6,9 +6,8 @@ export function createProgressGuard(router: Router) {
   /**
    * 路由跳转开始
    */
-  router.beforeEach((_to, _from, next) => {
+  router.beforeEach((_to, _from) => {
     serviceConfig.transition.progress && NProgress.start();
-    next();
   });
 
   /**

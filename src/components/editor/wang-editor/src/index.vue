@@ -151,7 +151,7 @@ const handlePaste = (editor: IDomEditor, event: ClipboardEvent) => {
 
 onMounted(() => {
   try {
-    Boot.registerModule(attachmentModule);
+    Boot.registerModule((attachmentModule as { default: typeof attachmentModule }).default);
   } catch {
     /* empty */
   }

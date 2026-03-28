@@ -49,7 +49,7 @@ const handleSort = ({ prop, order }: any) => {
 const multiSort = (data: Recordable[], sortSameArr: number[], orderArray: SortOrder[]) => {
   if (orderArray.length === 0) return 0;
   let flag = false; // cell 值是否与上一行相同的标志，用来记录上下限
-  let preVal = ""; // 上次遍历 prop 对应的 val
+  let preVal; // 上次遍历 prop 对应的 val
   const sort = orderArray[0]; // sort 是本次排序列和对应的排序顺序：{order: ,prop: }
   orderArray.shift();
   const sortOrder = sort.order;
@@ -74,9 +74,9 @@ const multiSort = (data: Recordable[], sortSameArr: number[], orderArray: SortOr
       }
     }
   }
+
   if (newSortSameArr.length === 1) {
     newSortSameArr.push(sortSameArr[1]);
-    flag = false;
     multiSort(data, newSortSameArr, orderArray);
   }
 };

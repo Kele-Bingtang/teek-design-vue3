@@ -24,13 +24,6 @@ export * from "./pro/table";
 export * from "./pro/tabs";
 export * from "./pro/tree-filter";
 
-// export * from "./pro/v1/pro-form";
-// export * from "./pro/v1/pro-table";
-// export * from "./pro/v1/pro-search";
-
-export * from "./pro/v1/pro-steps";
-export * from "./pro/v1/pro-transfer";
-
 export * from "./editor/code-mirror";
 export * from "./editor/tinymce";
 export * from "./editor/wang-editor";
