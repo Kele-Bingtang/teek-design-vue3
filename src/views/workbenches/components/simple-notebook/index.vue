@@ -45,7 +45,7 @@ const handleViewDone = () => {
 };
 
 const handleClear = () => {
-  content.value = [];
+  content.value = content.value.filter(item => !item.isDone);
 };
 
 const handleFlag = (item: NotebookItem) => {

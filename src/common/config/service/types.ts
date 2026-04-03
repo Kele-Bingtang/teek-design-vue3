@@ -57,14 +57,7 @@ export interface LayoutConfig {
   watermark: boolean;
   /** El 组件尺寸 */
   elementPlusSize: ElementPlusSizeEnum;
-  /**
-   * 这是路由和菜单呼应可能产生的问题而需要配置：alwaysShowRoot 为 false 情况（确保您了解路由的配置规则，如果不了解，前往 router/router-config 查看）
-   * true：存在多个二级路由，但是只有一个二级路由 hideInMenu 为 false，举例：有 5 个二级路由，但是有 4 个二级路由 hideInMenu: true，则需要开启 true，确保菜单只渲染剩下的路由
-   *
-   * 为 true 的场景较少见，如果真的遇到，则开启为 true，否则不建议开启，虽然 true 能无需后顾之忧，但是会多重复一次过滤递归，即消耗点性能
-   *
-   * 如果看不懂这个配置没关系，当您配置路由时遇到为 true 的场景时，自然懂得
-   */
+  /** 当一级路由下有多个二级路由，且所有二级路由或者只有一个二级路由不是 hideInMenu: true 且需要将该唯一 hideInMenu 不为 true 路由成为一级菜单，那么需要将该配置项改为 true */
   moreRouteChildrenHideInMenuThenOnlyOne: boolean;
   /** 布局的 el-toolTip 风格 */
   tooltipEffect: "light" | "dark" | ((isDark: boolean) => "light" | "dark");

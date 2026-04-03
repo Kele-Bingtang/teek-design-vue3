@@ -21,6 +21,18 @@ const pageRoutes: RouterConfigRaw = {
       meta: { title: "图标选择", icon: Star },
     },
     {
+      path: "tooltip",
+      name: "TooltipDemo",
+      component: () => import("@/views/page/tooltip/index.vue"),
+      meta: { title: "文字溢出提示", icon: Star, tagText: "New" },
+    },
+    {
+      path: "alert-scroll",
+      name: "AlertScrollDemo",
+      component: () => import("@/views/page/alert-scroll/index.vue"),
+      meta: { title: "滚动提示", icon: Star },
+    },
+    {
       path: "highlight",
       name: "HighlightDemo",
       component: () => import("@/views/page/highlight/index.vue"),
@@ -91,12 +103,6 @@ const pageRoutes: RouterConfigRaw = {
       name: "QrCodeDemo",
       component: () => import("@/views/page/qr-code/index.vue"),
       meta: { title: "二维码", icon: Star },
-    },
-    {
-      path: "alert-scroll",
-      name: "AlertScroll",
-      component: () => import("@/views/page/alert-scroll/index.vue"),
-      meta: { title: "滚动提示", icon: Star, tagText: "New", tagProps: { type: "danger" } },
     },
   ],
 };

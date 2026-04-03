@@ -6,7 +6,6 @@ const websocketRoutes: RouterConfigRaw = {
   meta: {
     title: "Websocket",
     icon: Discount,
-    tagText: "New",
   },
   children: [
     {

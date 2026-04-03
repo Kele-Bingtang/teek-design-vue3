@@ -157,6 +157,7 @@
     display: flex;
     align-items: center;
     padding-top: 10px;
+    color: cssVar(gray-700);
     border-top: 1px solid cssVar(border-color);
 
     > div {
@@ -198,13 +199,13 @@
   @include b(global-search) {
     @include el-joins(input) {
       @include el-joins(input__wrapper) {
-        background-color: #252526;
-        border: 1px solid #4c4d50;
+        background-color: cssVar(bg-color);
+        border: 1px solid cssVar(gray-400);
       }
 
       .search-keydown {
-        background-color: #252526;
-        border: 1px solid #4c4d50;
+        background-color: cssVar(bg-color);
+        border: 1px solid cssVar(gray-400);
       }
     }
 
@@ -214,7 +215,7 @@
     }
 
     @include el-joins(dialog) {
-      background-color: #252526;
+      background-color: cssVar(bg-color);
     }
 
     @include e(search-item) {
@@ -229,9 +230,8 @@
 
     .dialog-footer {
       > div {
-        color: cssVar(gray-600);
-
         i {
+          color: cssVar(text-gray-700);
           background-color: cssVar(gray-100);
         }
 

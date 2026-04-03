@@ -1,7 +1,7 @@
 import { LOGIN_URL, LOGIN_NAME, REDIRECT_NAME } from "@/common/config";
 
 /**
- * 默认全屏路由
+ * 全屏路由，在这注册路由属于全屏路由，不加入到布局组件里
  */
 export const fullRoutes: RouterConfigRaw[] = [
   {

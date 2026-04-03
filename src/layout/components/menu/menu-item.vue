@@ -46,7 +46,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
     <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
     <template #title>
       <span v-if="!menuItem.meta.useTooltip">{{ getTitle(menuItem) }}</span>
-      <Tooltip v-else :offset="-10" :try="1">
+      <Tooltip v-else :offset="-10">
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
@@ -72,7 +72,7 @@ const handleMenuClick = (menuItem: RouterConfig) => {
     <template #title>
       <Icon v-if="menuItem.meta.icon" :icon="menuItem.meta.icon" :class="`${ns.elNamespace}-icon`" />
       <span v-if="!menuItem.meta.useTooltip">{{ getTitle(menuItem) }}</span>
-      <Tooltip v-else :offset="-10" :try="1">
+      <Tooltip v-else :offset="-10">
         <span>{{ getTitle(menuItem) }}</span>
       </Tooltip>
       <el-tag
