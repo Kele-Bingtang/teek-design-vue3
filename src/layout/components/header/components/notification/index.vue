@@ -165,7 +165,7 @@ const toDetail = () => {
 
                   <div :class="ns.e('info')" class="flx-1">
                     <div class="flx-align-center-between">
-                      <Tooltip :line="1" :try="1">
+                      <Tooltip :line="1">
                         <span class="title">{{ data.title }}</span>
                       </Tooltip>
                       <div v-if="data.tag?.length" class="flx" style="gap: 2px">
@@ -175,7 +175,7 @@ const toDetail = () => {
                       </div>
                     </div>
 
-                    <Tooltip v-if="data.description" :line="2" :try="1">
+                    <Tooltip v-if="data.description" :line="2">
                       <span class="desc">{{ data.description }}</span>
                     </Tooltip>
 

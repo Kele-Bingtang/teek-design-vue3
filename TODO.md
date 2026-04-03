@@ -1,10 +1,12 @@
 # TODO
 
-## 2.0.2 版本
+## 2.2.1 版本
 
 ### 特性
 
 ### 优化
+
+- moreRouteChildrenHideInMenuThenOnlyOne 优化，直接完善改功能并去掉该配置项
 
 ### Bug
 

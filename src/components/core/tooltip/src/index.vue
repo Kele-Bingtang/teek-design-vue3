@@ -6,27 +6,25 @@
  -->
 <script setup lang="ts">
 import type { CSSProperties } from "vue";
-import { ref, computed, onMounted, onBeforeUnmount, watch, useTemplateRef, useAttrs } from "vue";
+import type { TooltipProps } from "./types";
+import { ref, computed, onMounted, onBeforeUnmount, useTemplateRef, useAttrs } from "vue";
 import { storeToRefs } from "pinia";
 import { ElTooltip } from "element-plus";
 import { useResizeObserver } from "@vueuse/core";
 import { useSettingStore } from "@/pinia";
 import { serviceConfig } from "@/common/config";
 import { isFunction } from "@/common/utils";
-import type { TooltipProps } from "./types";
 
 defineOptions({ name: "Tooltip" });
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   line: 1,
   realTime: false,
-  maxTry: 3,
 });
 
 const containerInstance = useTemplateRef<HTMLElement>("containerInstance"); // 容器引用
 const showTip = ref(false); // 是否显示tooltip
 const contentText = ref(""); // 文本内容
-const tryCount = ref(0); // 当前尝试次数
 
 const attrs = useAttrs();
 
@@ -70,47 +68,23 @@ const checkOverflow = () => {
     showTip.value = container.scrollWidth > container.offsetWidth;
   } else {
     /// 多行检测：精确比较内容高度与容器高度
-    const computedStyle = getComputedStyle(container);
-    const lineHeightStr = computedStyle.lineHeight;
-    let lineHeight: number;
-
-    // 处理 line-height 为 normal 的情况（使用默认 1.2 倍）
-    if (lineHeightStr === "normal") {
-      const fontSize = parseFloat(computedStyle.fontSize);
-      lineHeight = fontSize * 1.2;
-    } else lineHeight = parseFloat(lineHeightStr);
-
-    // 计算最大允许高度（考虑整数像素边界问题）
-    const maxHeight = Math.ceil(lineHeight * props.line);
-    const scrollHeight = Math.ceil(container.scrollHeight);
-
-    // 精确判断：内容高度必须严格超过最大允许高度（临界点处理）
-    showTip.value = scrollHeight > maxHeight + 1;
+    // 使用 +1 容忍度防止亚像素渲染导致的误判
+    showTip.value = container.scrollHeight > container.clientHeight + 1;
   }
-
-  // 更新尝试次数
-  if (!props.realTime && props.maxTry > 0 && !showTip.value) tryCount.value++;
 };
 
 /**
  * 处理鼠标悬停事件
  */
 const handleMouseOver = () => {
-  if (!props.realTime && props.maxTry > 0 && tryCount.value < props.maxTry) checkOverflow();
+  if (!props.realTime) {
+    // 确保在浏览器完成重绘（元素可见）后再计算
+    requestAnimationFrame(checkOverflow);
+  }
 };
 
 /**
- * 当realTime或maxTry变化时重置尝试次数
- */
-watch(
-  () => [props.realTime, props.maxTry],
-  () => {
-    tryCount.value = 0;
-  }
-);
-
-/**
- * 使用 ResizeObserver 监听尺寸变化
+ * 使用 ResizeObserver 监听尺寸变化，当容器尺寸变化时重新检查是否溢出
  */
 useResizeObserver(containerInstance, () => {
   if (props.realTime) checkOverflow();
@@ -121,16 +95,25 @@ onMounted(() => {
   checkOverflow();
 
   // 非实时模式下添加鼠标事件
-  if (!props.realTime && props.maxTry > 0) {
+  if (!props.realTime) {
     containerInstance.value?.addEventListener("mouseover", handleMouseOver);
   }
 });
 
 onBeforeUnmount(() => {
   // 清除事件监听
-  if (!props.realTime && props.maxTry > 0) {
+  if (!props.realTime) {
     containerInstance.value?.removeEventListener("mouseover", handleMouseOver);
   }
+});
+
+defineExpose({
+  /**
+   * 手动强制刷新检测，适用于父级元素刚变为可见，或内容刚异步更新完毕的场景
+   */
+  refresh: () => {
+    requestAnimationFrame(checkOverflow);
+  },
 });
 </script>
 

@@ -42,7 +42,8 @@ export default {
     SeamlessScrollDemo: "Seamless Scroll",
     HighlightDemo: "Text Highlight",
     VideoPlayerDemo: "Video Player",
-    AlertScroll: "Alert Scroll",
+    AlertScrollDemo: "Alert Scroll",
+    TooltipDemo: "Text Tooltip",
 
     EditorComponents: "Editor Components",
     Tinymce: "Tinymce",
