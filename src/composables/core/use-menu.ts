@@ -48,9 +48,9 @@ export const useMenu = () => {
      *
      * 如果您确保您的路由不会出现：多个子路由且只有一个 hideInMenu 不为 true，可以只过滤一次提升性能
      */
-    if (serviceConfig.layout.moreRouteChildrenHideInMenuThenOnlyOne)
+    if (serviceConfig.layout.moreRouteChildrenHideInMenuThenOnlyOne) {
       return formatRoutesToMenu(formatRoutesToMenu(routes));
-    else return formatRoutesToMenu(routes);
+    } else return formatRoutesToMenu(routes);
   };
 
   watch(

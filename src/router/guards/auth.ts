@@ -1,4 +1,5 @@
 import type { Router } from "vue-router";
+import { ElNotification } from "element-plus";
 import { serviceConfig, LOGIN_URL } from "@/common/config";
 import { useRouteFn } from "@/composables";
 import { useRouteStore, useUserStore } from "@/pinia";
@@ -43,10 +44,15 @@ export const createAuthGuard = (router: Router) => {
         const userInfo = await userStore.getUserInfo();
         await initDynamicRoutes(userInfo.roles);
         return { ...to, replace: true };
-      } catch (error) {
+      } catch (error: any) {
         userStore.clearPermission();
         console.log("Auth Router: ", error);
-        return { path: LOGIN_URL, replace: true };
+
+        ElNotification.error({
+          title: "Auth Router",
+          message: "路由跳转失败，错误信息：" + error?.message,
+          duration: 3000,
+        });
       }
     }
   });
