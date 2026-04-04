@@ -6,8 +6,6 @@
 
 ### 优化
 
-- moreRouteChildrenHideInMenuThenOnlyOne 优化，直接完善改功能并去掉该配置项
-
 ### Bug
 
 ### 已完成
