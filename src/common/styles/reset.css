@@ -35,23 +35,10 @@ body {
     Arial,
     sans-serif;
 
-  /* 渲染优化 */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-kerning: normal;
-  font-feature-settings: "kern", "liga", "clig", "calt";
-
-  /* 中文优化 */
+  /* 移动端文字比例优化 */
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  hanging-punctuation: first allow-end last allow-end;
-
-  /* 性能优化 */
-  will-change: scroll-position;
-  contain: layout style;
-  backface-visibility: hidden;
 }
 
 html {
