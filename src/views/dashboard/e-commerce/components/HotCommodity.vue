@@ -92,12 +92,12 @@ const weeklyList = [
         .title {
           font-size: 14px;
           font-weight: 500;
-          color: cssVar(gray-800);
+          color: cssVar(text-color-800);
         }
 
         .subtitle {
           font-size: 14px;
-          color: cssVar(gray-600);
+          color: cssVar(text-color-600);
         }
       }
 

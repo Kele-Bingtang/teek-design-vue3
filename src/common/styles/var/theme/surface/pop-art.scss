@@ -1,0 +1,21 @@
+// 波普艺术：高饱和互补色，鲜艳、对比强烈，富有活力与艺术感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="pop-art"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fffcf0;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1a1a1a;
+  --#{$teek-namespace}-surface-bg-color-box-light: #ffffff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #2d2d2d;
+  --#{$teek-namespace}-surface-text-color-light: #ea0c7e;
+  --#{$teek-namespace}-surface-text-color-dark: #ff6bc9;
+  --#{$teek-namespace}-border-color-light: #ffeb3b;
+  --#{$teek-namespace}-border-color-dark: #ea0c7e;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #ea0c7e;
+}
+
+:root[surface="pop-art"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #ff6bc9;
+}

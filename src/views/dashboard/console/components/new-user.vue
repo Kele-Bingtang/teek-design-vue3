@@ -105,7 +105,7 @@ const addAnimation = () => {
         <el-radio-button value="今年" label="今年"></el-radio-button>
       </el-radio-group>
     </div>
-    <el-table class="table" :data="tableData" size="large">
+    <el-table class="table" :data="tableData" size="large" :header-cell-style="{ background: 'transparent' }">
       <template #default>
         <el-table-column label="头像" prop="avatar" width="150px">
           <template #default="scope">

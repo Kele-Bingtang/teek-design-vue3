@@ -11,11 +11,11 @@
   @include e(box) {
     height: 55px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px 0 cssVar(gray-400);
+    box-shadow: 0 2px 8px 0 cssVar(text-color-400);
     transition: box-shadow cssVar(transition-duration-fast);
 
     &:hover {
-      box-shadow: 0 2px 8px 0 cssVar(gray-600);
+      box-shadow: 0 2px 8px 0 cssVar(text-color-600);
     }
 
     img {

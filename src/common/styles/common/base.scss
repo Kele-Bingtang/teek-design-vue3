@@ -1,10 +1,10 @@
 @use "../mixins/namespace" as *;
 
 body {
-  color: var(--#{$teek-namespace}-text-gray-800);
+  color: var(--#{$teek-namespace}-text-color-800);
 
   // 全局背景色同步（开启解决全弄适白色背景问题）
-  background-color: var(--#{$teek-namespace}-bg-color-page);
+  background-color: var(--#{$teek-namespace}-surface-bg-color-page);
 }
 
 h1,
@@ -12,10 +12,10 @@ h2,
 h3,
 h4,
 h5 {
-  color: var(--#{$teek-namespace}-text-gray-800);
+  color: var(--#{$teek-namespace}-text-color-800);
 }
 
-// 主题色悬停样式
+// 品牌色悬停样式
 .primary-color-hover:hover {
   color: var(--#{$el-namespace}-color-primary);
 }

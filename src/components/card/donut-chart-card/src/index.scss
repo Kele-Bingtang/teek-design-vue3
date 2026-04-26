@@ -8,7 +8,7 @@
   padding: 20px;
   overflow: hidden;
   color: #303133;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(surface-bg-color-box);
   border-radius: cssVar(radius);
   transition: 0.3s;
 
@@ -31,7 +31,7 @@
       font-size: 20px;
       font-weight: 500;
       line-height: 1.2;
-      color: cssVar(text-gray-900);
+      color: cssVar(text-color-900);
     }
 
     .value {
@@ -40,7 +40,7 @@
       font-size: 20px;
       font-weight: 500;
       line-height: 1.2;
-      color: cssVar(text-gray-900);
+      color: cssVar(text-color-900);
     }
 
     .percentage {

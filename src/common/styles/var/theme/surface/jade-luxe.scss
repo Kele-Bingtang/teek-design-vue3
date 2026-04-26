@@ -1,0 +1,21 @@
+// 翡翠奢华：浓郁翡翠绿与金色点缀，高级、奢华、东方韵味
+@use "../../../mixins/namespace" as *;
+
+:root[surface="jade-luxe"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f0fdf4;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #022c22;
+  --#{$teek-namespace}-surface-bg-color-box-light: #f7fee7;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #064e3b;
+  --#{$teek-namespace}-surface-text-color-light: #065f46;
+  --#{$teek-namespace}-surface-text-color-dark: #a7f3d0;
+  --#{$teek-namespace}-border-color-light: #a7f3d0;
+  --#{$teek-namespace}-border-color-dark: #34d399;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #059669;
+}
+
+:root[surface="jade-luxe"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #10b981;
+}

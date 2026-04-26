@@ -36,7 +36,7 @@
 
         &:hover {
           color: cssVar(color-primary);
-          background-color: cssVar(gray-200);
+          background-color: cssVar(text-color-200);
         }
       }
     }
@@ -97,7 +97,7 @@
           gap: 6px;
           font-size: 14px;
           font-weight: 600;
-          color: cssVar(text-gray-800);
+          color: cssVar(text-color-800);
 
           &:hover {
             color: cssVar(color-primary);
@@ -106,7 +106,7 @@
 
         .location {
           font-size: 14px;
-          color: cssVar(text-gray-500);
+          color: cssVar(text-color-500);
         }
       }
     }

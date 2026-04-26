@@ -1,0 +1,37 @@
+// 黑客终端：经典黑底绿字，极客、技术、复古
+@use "../../../mixins/namespace" as *;
+
+:root[surface="hacker-terminal"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #0a0a0a;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #000000;
+  --#{$teek-namespace}-surface-bg-color-box-light: #111111;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #0a0a0a;
+  --#{$teek-namespace}-surface-text-color-light: #00ff00;
+  --#{$teek-namespace}-surface-text-color-dark: #aaffaa;
+  --#{$teek-namespace}-border-color-light: #002200;
+  --#{$teek-namespace}-border-color-dark: #005500;
+  --#{$teek-namespace}-border-accent-color-light: #00ff00;
+  --#{$teek-namespace}-border-accent-color-dark: #aaffaa;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #00ff00;
+  --#{$teek-namespace}-color-info: #00aa00;
+  --#{$teek-namespace}-color-secondary: #00aa00;
+  --#{$teek-namespace}-layout-aside-bg-hover-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-color-primary) 10%,
+    transparent
+  );
+  --#{$teek-namespace}-layout-aside-bg-active-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-color-primary) 10%,
+    transparent
+  );
+}
+
+:root[surface="hacker-terminal"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #aaffaa;
+  --#{$teek-namespace}-color-info: #aaffaa;
+  --#{$teek-namespace}-color-secondary: #aaffaa;
+}

@@ -60,15 +60,11 @@
   color: var(--#{$teek-namespace}-color-warning) !important;
 }
 
-.#{$teek-namespace}-text-muted {
-  color: var(--#{$teek-namespace}-text-muted) !important;
-}
-
 // 灰度文本原子类
 @for $i from 1 through 9 {
   $level: $i * 100;
-  .#{$teek-namespace}-text-gray-#{$level} {
-    color: var(--#{$teek-namespace}-text-gray-#{$level}) !important;
+  .#{$teek-namespace}-text-color-#{$level} {
+    color: var(--#{$teek-namespace}-text-color-#{$level}) !important;
   }
 }
 

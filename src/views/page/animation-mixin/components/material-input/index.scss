@@ -40,7 +40,7 @@ $index-has-icon: 30px;
     border-radius: 0;
 
     &::placeholder {
-      color: cssVar(gray-400);
+      color: cssVar(text-color-400);
     }
   }
 
@@ -54,7 +54,7 @@ $index-has-icon: 30px;
       @extend %base-bar-pseudo;
 
       width: 50%;
-      background: cssVar(gray-300);
+      background: cssVar(text-color-300);
     }
 
     &::before {
@@ -74,7 +74,7 @@ $index-has-icon: 30px;
     left: 0;
     font-size: $font-size-small;
     font-weight: $font-weight-normal;
-    color: cssVar(gray-400);
+    color: cssVar(text-color-400);
     pointer-events: none;
     transition: $transition;
   }
@@ -89,7 +89,7 @@ $index-has-icon: 30px;
       font-size: $font-size-base;
       font-weight: $font-weight-normal;
       line-height: $font-size-base;
-      color: cssVar(gray-600);
+      color: cssVar(text-color-600);
       pointer-events: none;
     }
 

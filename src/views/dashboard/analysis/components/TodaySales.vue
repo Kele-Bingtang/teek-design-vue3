@@ -12,28 +12,28 @@ const salesData = ref([
     value: 999,
     change: "+10%",
     icon: "&#xe7d9",
-    class: ns.join("bg-primary"),
+    iconClass: ns.join("bg-primary"),
   },
   {
     label: "总订单量",
     value: 300,
     change: "+15%",
     icon: "&#xe70f",
-    class: ns.join("bg-warning"),
+    iconClass: ns.join("bg-warning"),
   },
   {
     label: "产品销售量",
     value: 56,
     change: "-5%",
     icon: "&#xe712",
-    class: ns.join("bg-error"),
+    iconClass: ns.join("bg-error"),
   },
   {
     label: "新客户数",
     value: 68,
     change: "+8%",
     icon: "&#xe77f",
-    class: ns.join("bg-success"),
+    iconClass: ns.join("bg-success"),
   },
 ]);
 </script>
@@ -54,7 +54,7 @@ const salesData = ref([
       <el-row :gutter="20">
         <el-col :span="6" :xs="24" v-for="(item, index) in salesData" :key="index">
           <div :class="['sales-card']">
-            <Icon class="icon-teek" :icon="item.icon"></Icon>
+            <Icon class="icon-teek" :icon="item.icon" :class="item.iconClass"></Icon>
             <h2>
               <CountTo class="number box-title" :endVal="item.value" :duration="1" separator=""></CountTo>
             </h2>
@@ -84,9 +84,9 @@ const salesData = ref([
     justify-content: center;
     min-width: 66px;
     padding: 6px 0;
-    color: cssVar(gray-600);
+    color: cssVar(text-color-600);
     cursor: pointer;
-    border: 1px solid cssVar(border-dashed-color);
+    border: 1px solid cssVar(border-color);
     border-radius: 6px;
     transition: all 0.3s;
 
@@ -125,7 +125,6 @@ const salesData = ref([
         line-height: 48px;
         color: cssVarEl(color-primary);
         text-align: center;
-        background-color: cssVarEl(color-primary-light-9);
         border-radius: 10px;
       }
 
@@ -133,38 +132,20 @@ const salesData = ref([
         margin-top: 26px;
         font-size: 26px;
         font-weight: 400;
-        color: cssVar(text-gray-900) !important;
+        color: cssVar(text-color-900) !important;
       }
 
       p {
         margin-top: 6px;
         font-size: 16px;
-        color: cssVar(text-gray-700) !important;
+        color: cssVar(text-color-700) !important;
       }
 
       small {
         display: block;
         margin-top: 5px;
         font-size: 12px;
-        color: cssVar(text-gray-600) !important;
-      }
-    }
-  }
-}
-
-// 暗黑模式降低颜色强度
-.dark {
-  .today-sales {
-    .sales-summary {
-      .sales-card {
-        .icon-teek {
-          &.red,
-          &.yellow,
-          &.green,
-          &.purple {
-            background-color: #222222 !important;
-          }
-        }
+        color: cssVar(text-color-600) !important;
       }
     }
   }

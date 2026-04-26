@@ -1,0 +1,21 @@
+// 冷钢工业：冷调金属灰，工业、精确、冷静的现代感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="steel-cool"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f1f5f9;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1e293b;
+  --#{$teek-namespace}-surface-bg-color-box-light: #ffffff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #334155;
+  --#{$teek-namespace}-surface-text-color-light: #475569;
+  --#{$teek-namespace}-surface-text-color-dark: #cbd5e1;
+  --#{$teek-namespace}-border-color-light: #cbd5e1;
+  --#{$teek-namespace}-border-color-dark: #4b5563;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #4b5563;
+}
+
+:root[surface="steel-cool"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #9ca3af;
+}

@@ -1,0 +1,21 @@
+// 黄昏地平线：从暖橙到深紫的暮色渐变，浪漫、层次丰富
+@use "../../../mixins/namespace" as *;
+
+:root[surface="dusk-horizon"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fef3e6;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1e1b4b;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fff8f0;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #312e81;
+  --#{$teek-namespace}-surface-text-color-light: #7c3aed;
+  --#{$teek-namespace}-surface-text-color-dark: #c7d2fe;
+  --#{$teek-namespace}-border-color-light: #fed7aa;
+  --#{$teek-namespace}-border-color-dark: #8b5cf6;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #7c3aed;
+}
+
+:root[surface="dusk-horizon"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #a78bfa;
+}

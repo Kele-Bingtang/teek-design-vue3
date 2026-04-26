@@ -1,0 +1,21 @@
+// 丁香薄雾：极淡雅的灰紫色，朦胧、柔和、宁静，营造高级的清新感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="lilac-mist"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #faf8ff;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #13111c;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fdfbff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #1f1d2b;
+  --#{$teek-namespace}-surface-text-color-light: #6d5c7e;
+  --#{$teek-namespace}-surface-text-color-dark: #e2d9eb;
+  --#{$teek-namespace}-border-color-light: #e2d9eb;
+  --#{$teek-namespace}-border-color-dark: #3c3852;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #b39ddb;
+}
+
+:root[surface="lilac-mist"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #d1c4e9;
+}

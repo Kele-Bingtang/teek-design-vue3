@@ -1,6 +1,5 @@
 /* 主题变量系统 */
-@forward "./theme/light"; // 亮色主题
-@forward "./theme/dark"; // 暗色主题
+@forward "./theme/index";
 @forward "atomic"; // 基于主题的原子样式
 @forward "card"; // 卡片样式
 @forward "layout"; // 布局主题

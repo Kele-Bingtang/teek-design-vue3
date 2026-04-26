@@ -13,6 +13,7 @@ const dataList = reactive([
     duration: 1000,
     num: 9120,
     change: "+20%",
+    iconClass: `${ns.join("bg-primary")}`,
   },
   {
     des: "在线访客数",
@@ -21,6 +22,7 @@ const dataList = reactive([
     duration: 1000,
     num: 182,
     change: "+10%",
+    iconClass: `${ns.join("bg-success")}`,
   },
   {
     des: "点击量",
@@ -29,6 +31,7 @@ const dataList = reactive([
     duration: 1000,
     num: 9520,
     change: "-12%",
+    iconClass: `${ns.join("bg-warning")}`,
   },
   {
     des: "新用户",
@@ -37,6 +40,7 @@ const dataList = reactive([
     duration: 1000,
     num: 156,
     change: "+30%",
+    iconClass: `${ns.join("bg-danger")}`,
   },
 ]);
 </script>
@@ -58,7 +62,7 @@ const dataList = reactive([
             {{ item.change }}
           </span>
         </div>
-        <Icon class="icon-teek" :icon="item.icon"></Icon>
+        <Icon class="icon-teek" :icon="item.icon" :class="item.iconClass"></Icon>
       </div>
     </el-col>
   </el-row>
@@ -94,9 +98,7 @@ const dataList = reactive([
       overflow: hidden;
       font-size: 22px;
       line-height: $icon-size;
-      color: cssVarEl(color-primary) !important;
       text-align: center;
-      background-color: cssVarEl(color-primary-light-9);
       border-radius: 12px;
     }
 
@@ -122,7 +124,7 @@ const dataList = reactive([
       .change-text {
         display: block;
         font-size: 13px;
-        color: cssVar(text-gray-600);
+        color: cssVar(text-color-600);
       }
 
       .change {
@@ -130,16 +132,6 @@ const dataList = reactive([
         margin-left: 5px;
         font-size: 13px;
         font-weight: bold;
-      }
-    }
-  }
-}
-
-.dark {
-  .card-list {
-    .tk-card-minimal {
-      .icon-teek {
-        background-color: #232323 !important;
       }
     }
   }

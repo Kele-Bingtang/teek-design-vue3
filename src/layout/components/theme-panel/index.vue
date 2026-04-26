@@ -19,13 +19,14 @@ const ns = useNamespace("theme-panel");
 const { t } = useI18n();
 const userStore = useUserStore();
 const settingStore = useSettingStore();
-const { changeGlobalTheme } = useTheme();
+const { changeGlobalTheme, changeThemeSurface } = useTheme();
 
 const { isMobile } = useCommon();
 
 const resetSetting = () => {
   settingStore.$reset();
   changeGlobalTheme();
+  changeThemeSurface();
 };
 
 /**

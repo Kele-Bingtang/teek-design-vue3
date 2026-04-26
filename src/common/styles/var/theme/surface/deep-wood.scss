@@ -1,0 +1,21 @@
+// 深林：墨绿与棕褐，沉稳、隐秘、自然的幽深森林感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="deep-wood"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f0f2e9;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1a1f0f;
+  --#{$teek-namespace}-surface-bg-color-box-light: #f9faf4;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #2a3317;
+  --#{$teek-namespace}-surface-text-color-light: #365314;
+  --#{$teek-namespace}-surface-text-color-dark: #bbd87e;
+  --#{$teek-namespace}-border-color-light: #c4d8a9;
+  --#{$teek-namespace}-border-color-dark: #4d7c0f;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #166534;
+}
+
+:root[surface="deep-wood"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #4d7c0f;
+}

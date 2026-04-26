@@ -5,9 +5,9 @@
 :root {
   // 亮色主题滚动条变量
   --#{$teek-namespace}-scrollbar-width: 8px;
-  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-gray-100);
-  --#{$teek-namespace}-scrollbar-thumb-color: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.4);
-  --#{$teek-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$teek-namespace}-gray-500-rgb), 0.8);
+  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-text-color-100);
+  --#{$teek-namespace}-scrollbar-thumb-color: var(--#{$teek-namespace}-text-color-400);
+  --#{$teek-namespace}-scrollbar-thumb-hover-color: var(--#{$teek-namespace}-text-color-400);
   --#{$teek-namespace}-scrollbar-border-radius: 4px;
   --#{$teek-namespace}-transition-duration: 0.3s;
   --#{$teek-namespace}-scrollbar-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -15,9 +15,9 @@
 
 :root.dark {
   // 暗色主题滚动条变量
-  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-gray-800);
-  --#{$teek-namespace}-scrollbar-thumb-color: rgb(var(--#{$teek-namespace}-gray-500-rgb), 0.5);
-  --#{$teek-namespace}-scrollbar-thumb-hover-color: rgb(var(--#{$teek-namespace}-gray-400-rgb), 0.8);
+  --#{$teek-namespace}-scrollbar-track-color: var(--#{$teek-namespace}-text-color-800);
+  --#{$teek-namespace}-scrollbar-thumb-color: var(--#{$teek-namespace}-text-color-500);
+  --#{$teek-namespace}-scrollbar-thumb-hover-color: var(--#{$teek-namespace}-text-color-500);
 }
 
 /* ===== 统一滚动条样式 ===== */

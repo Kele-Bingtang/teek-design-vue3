@@ -71,11 +71,11 @@ const handleMore = () => {
 
     &:hover {
       color: cssVar("color-primary");
-      background-color: cssVar("gray-200");
+      background-color: cssVar("text-color-200");
 
       .#{$el-namespace}-tag {
         color: cssVar("color-primary");
-        background-color: cssVar("gray-300");
+        background-color: cssVar("text-color-300");
       }
     }
 
@@ -83,7 +83,7 @@ const handleMore = () => {
       font-size: 16px;
       font-style: italic;
       font-weight: 600;
-      color: cssVar("text-gray-400");
+      color: cssVar("text-color-400");
       border-radius: 8px 0;
 
       &.index-1,
@@ -104,7 +104,7 @@ const handleMore = () => {
 
     .time {
       font-size: 12px;
-      color: cssVar("text-gray-600");
+      color: cssVar("text-color-600");
     }
   }
 }

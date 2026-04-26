@@ -1,0 +1,21 @@
+// 石板专业：经典、稳重、中性的深石板灰色，强调可靠与专业
+@use "../../../mixins/namespace" as *;
+
+:root[surface="slate-pro"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f8fafc;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1f2937;
+  --#{$teek-namespace}-surface-bg-color-box-light: #ffffff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #374151;
+  --#{$teek-namespace}-surface-text-color-light: #4b5563;
+  --#{$teek-namespace}-surface-text-color-dark: #d1d5db;
+  --#{$teek-namespace}-border-color-light: #e5e7eb;
+  --#{$teek-namespace}-border-color-dark: #4b5563;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #4b5563;
+}
+
+:root[surface="slate-pro"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #9ca3af;
+}

@@ -14,34 +14,34 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
 /* 富文本组件样式 */
 @include b(wang-editor) {
   /* 激活颜色 */
-  --w-e-toolbar-active-color: var(--#{$teek-namespace}-gray-900);
+  --w-e-toolbar-active-color: var(--#{$teek-namespace}-text-color-900);
 
   /* 激活背景颜色 */
-  --w-e-toolbar-active-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.4);
+  --w-e-toolbar-active-bg-color: var(--#{$teek-namespace}-text-color-200);
 
   /* 表格选中时候的边框颜色 */
   --w-e-textarea-selected-border-color: var(--#{$teek-namespace}-color-primary);
 
   /* 表格头背景颜色 */
-  --w-e-textarea-slight-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.4);
+  --w-e-textarea-slight-bg-color: var(--#{$teek-namespace}-text-color-100);
 
   // 工具栏背景颜色
-  --w-e-toolbar-bg-color: var(--#{$teek-namespace}-bg-color);
+  --w-e-toolbar-bg-color: var(--#{$teek-namespace}-surface-bg-color-box);
 
   // 输入区域背景颜色
-  --w-e-textarea-bg-color: var(--#{$teek-namespace}-bg-color);
+  --w-e-textarea-bg-color: var(--#{$teek-namespace}-surface-bg-color-box);
 
   // 工具栏文字颜色
-  --w-e-toolbar-color: var(--#{$teek-namespace}-text-gray-800);
+  --w-e-toolbar-color: var(--#{$teek-namespace}-text-color-800);
 
   // 弹窗边框颜色
-  --w-e-toolbar-border-color: var(--#{$teek-namespace}-border-dashed-color);
+  --w-e-toolbar-border-color: var(--#{$teek-namespace}-text-color-300);
 
   // 分割线颜色
-  --w-e-textarea-border-color: var(--#{$teek-namespace}-border-dashed-color);
+  --w-e-textarea-border-color: var(--#{$teek-namespace}-text-color-300);
 
   // 链接输入框边框颜色
-  --w-e-modal-button-border-color: var(--#{$teek-namespace}-border-dashed-color);
+  --w-e-modal-button-border-color: var(--#{$teek-namespace}-text-color-400);
 
   // 按钮背景颜色
   --w-e-modal-button-bg-color: var(--#{$teek-namespace}-color);
@@ -49,7 +49,7 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
   z-index: 1100;
   width: 100%;
   height: 100%;
-  border: 1px solid cssVar(gray-300);
+  border: 1px solid cssVar(text-color-300);
   border-radius: $border-radius;
 
   /* 富文本组件禁用样式 */
@@ -58,7 +58,7 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
   }
 
   @include e(toolbar) {
-    border-bottom: 1px solid cssVar(gray-300);
+    border-bottom: 1px solid cssVar(text-color-300);
   }
 
   .w-e-bar {
@@ -83,11 +83,11 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
     border-radius: $border-radius;
 
     &:hover {
-      background-color: cssVar(gray-200);
+      background-color: cssVar(text-color-200);
     }
 
     &.selected {
-      background-color: cssVar(gray-200);
+      background-color: cssVar(text-color-200);
 
       /** 隐藏勾选图标 */
       svg {
@@ -101,7 +101,7 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
     border-radius: $border-radius;
 
     &:hover {
-      background-color: cssVar(gray-200);
+      background-color: cssVar(text-color-200);
     }
   }
 
@@ -140,7 +140,7 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
     /* 代码块 */
     pre > code {
       padding: 0.6rem 1rem;
-      background-color: cssVar(gray-100);
+      background-color: cssVar(text-color-100);
       border-radius: $border-radius;
     }
 
@@ -156,8 +156,8 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
 
     /* 引用 */
     blockquote {
-      background-color: rgb(cssVar(gray-300-rgb), 0.25);
-      border-left: 4px solid cssVar(gray-300);
+      background-color: cssVar(text-color-100);
+      border-left: 4px solid cssVar(text-color-300);
     }
 
     /* 图片样式调整 */
@@ -210,15 +210,15 @@ $border-radius: calc(cssVar(radius) / 2 + 2px);
     .w-e-select-list ul li {
       &.selected,
       &:hover {
-        background-color: cssVar(gray-200);
+        background-color: cssVar(text-color-200);
       }
     }
 
     /* 代码块 */
     .w-e-text-container [data-slate-editor] pre > code {
       text-shadow: none !important;
-      background-color: cssVar(gray-200) !important;
-      border: 1px solid cssVar(border-dashed-color) !important;
+      background-color: cssVar(text-color-200) !important;
+      border: 1px solid cssVar(border-color) !important;
     }
   }
 }

@@ -84,7 +84,7 @@ const list = reactive([
 
       .user {
         font-weight: 500;
-        color: cssVar(text-gray-800);
+        color: cssVar(text-color-800);
       }
 
       .type {

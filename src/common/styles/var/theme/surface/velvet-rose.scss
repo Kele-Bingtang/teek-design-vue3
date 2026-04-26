@@ -1,0 +1,18 @@
+// 丝绒玫瑰：深邃优雅的玫瑰紫红色，如丝绒般奢华、浪漫、富有复古韵味
+@use "../../../mixins/namespace" as *;
+
+:root[surface="velvet-rose"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fdf1f7;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #3a0a1f;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fff8fb;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #4a152f;
+  --#{$teek-namespace}-surface-text-color-light: #9d1457;
+  --#{$teek-namespace}-surface-text-color-dark: #f0c7d9;
+  --#{$teek-namespace}-border-color-light: #f0d1e3;
+  --#{$teek-namespace}-border-color-dark: rgb(108 58 85 / 70%);
+  --#{$teek-namespace}-color-primary: #ad1457;
+}
+
+:root[surface="velvet-rose"].dark {
+  --#{$teek-namespace}-color-primary: #e91e63;
+}

@@ -1,0 +1,23 @@
+// 森林苔藓：自然绿色，护眼，适合长时间工作
+@use "../../../mixins/namespace" as *;
+
+:root[surface="forest-moss"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f2fce2;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #142108;
+  --#{$teek-namespace}-surface-bg-color-box-light: #f9ffe5;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #1f2e12;
+  --#{$teek-namespace}-surface-text-color-light: #365314;
+  --#{$teek-namespace}-surface-text-color-dark: #dcfce7;
+  --#{$teek-namespace}-border-color-light: #d4e8c9;
+  --#{$teek-namespace}-border-color-dark: #365314;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #2e7d32;
+  --#{$teek-namespace}-color-secondary: #0b9e40;
+}
+
+:root[surface="forest-moss"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #4caf50;
+  --#{$teek-namespace}-color-secondary: #4cd890;
+}

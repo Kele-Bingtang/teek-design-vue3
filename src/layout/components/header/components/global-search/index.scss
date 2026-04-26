@@ -25,14 +25,14 @@
     height: 48px;
 
     @include el-joins(input__wrapper) {
-      background-color: rgb(cssVar(gray-200-rgb), 0.8);
-      border: 1px solid cssVar(border-dashed-color);
+      background-color: cssVar(surface-bg-color-page);
+      border: 1px solid cssVar(border-color);
       border-radius: calc(cssVar(radius) / 2 + 2px);
       box-shadow: none;
     }
 
     @include el-joins(input__inner) {
-      color: cssVar(gray-600);
+      color: cssVar(text-color-600);
     }
 
     .search-keydown {
@@ -40,7 +40,7 @@
       align-items: center;
       height: 20px;
       padding: 0 4px;
-      color: cssVar(gray-500);
+      color: cssVar(text-color-500);
       background-color: cssVar(bg-color-page);
       border-radius: 4px;
 
@@ -61,7 +61,7 @@
 
   @include e(search-list) {
     width: 100%;
-    background: cssVar(bg-color);
+    background: cssVar(surface-bg-color-box);
   }
 
   @include e(search-item) {
@@ -84,8 +84,8 @@
       margin-top: 8px;
       font-size: 15px;
       font-weight: 400;
-      color: cssVar(gray-700);
-      background: cssVar(gray-100);
+      color: cssVar(text-color-700);
+      background: cssVar(text-color-100);
       border-radius: calc(cssVar(radius) / 2 + 2px);
 
       @include is(highlighted) {
@@ -102,14 +102,14 @@
   @include e(search-history) {
     .title {
       font-size: 13px;
-      color: cssVar(gray-600);
+      color: cssVar(text-color-600);
     }
   }
 
   @include e(history-list) {
     width: 100%;
     margin-top: 5px;
-    background: cssVar(bg-color);
+    background: cssVar(surface-bg-color-box);
   }
 
   @include e(history-item) {
@@ -121,9 +121,9 @@
     margin-top: 8px;
     font-size: 15px;
     font-weight: 400;
-    color: cssVar(gray-800);
+    color: cssVar(text-color-800);
     cursor: pointer;
-    background: cssVar(gray-100);
+    background: cssVar(text-color-100);
     border-radius: calc(cssVar(radius) / 2 + 2px);
 
     @include is(highlighted) {
@@ -140,7 +140,7 @@
       height: 20px;
       font-size: 15px;
       line-height: 20px;
-      color: cssVar(gray-500);
+      color: cssVar(text-color-500);
       text-align: center;
       user-select: none;
       border-radius: 50%;
@@ -157,7 +157,7 @@
     display: flex;
     align-items: center;
     padding-top: 10px;
-    color: cssVar(gray-700);
+    color: cssVar(text-color-700);
     border-top: 1px solid cssVar(border-color);
 
     > div {
@@ -176,11 +176,11 @@
         padding: 3px;
         margin-right: 8px;
         font-size: 14px;
-        color: cssVar(gray-500);
+        color: cssVar(text-color-500);
         background: cssVar(bg-color-page);
-        border: 1px solid cssVar(border-dashed-color);
+        border: 1px solid cssVar(border-color);
         border-radius: 3px;
-        box-shadow: 0 2px 0 cssVar(border-dashed-color);
+        box-shadow: 0 2px 0 cssVar(border-color);
 
         &:last-of-type {
           margin-right: 6px;
@@ -199,13 +199,13 @@
   @include b(global-search) {
     @include el-joins(input) {
       @include el-joins(input__wrapper) {
-        background-color: cssVar(bg-color);
-        border: 1px solid cssVar(gray-400);
+        background-color: cssVar(surface-bg-color-box);
+        border: 1px solid cssVar(text-color-400);
       }
 
       .search-keydown {
-        background-color: cssVar(bg-color);
-        border: 1px solid cssVar(gray-400);
+        background-color: cssVar(surface-bg-color-box);
+        border: 1px solid cssVar(text-color-400);
       }
     }
 
@@ -215,7 +215,7 @@
     }
 
     @include el-joins(dialog) {
-      background-color: cssVar(bg-color);
+      background-color: cssVar(surface-bg-color-box);
     }
 
     @include e(search-item) {
@@ -231,8 +231,8 @@
     .dialog-footer {
       > div {
         i {
-          color: cssVar(text-gray-700);
-          background-color: cssVar(gray-100);
+          color: cssVar(text-color-700);
+          background-color: cssVar(text-color-100);
         }
 
         span {

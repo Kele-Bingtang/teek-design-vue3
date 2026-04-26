@@ -19,7 +19,7 @@ const handleBannerClick = () => {};
     class="banner"
     height="13.3rem"
     :title="`欢迎回来 ${userInfo.username}`"
-    :backgroundColor="ns.cssVarEl('color-primary-light-9')"
+    :backgroundColor="ns.cssVar('surface-bg-color-page')"
     :titleColor="ns.cssVar('gray-900')"
     :decoration="false"
     :meteorConfig="{
@@ -71,12 +71,12 @@ const handleBannerClick = () => {};
 
       &:first-of-type {
         padding-right: 30px;
-        border-right: 1px solid cssVar(gray-300);
+        border-right: 1px solid cssVar(text-color-300);
       }
 
       .title {
         font-size: 30px;
-        color: cssVar(gray-900) !important;
+        color: cssVar(text-color-900) !important;
 
         i {
           position: relative;
@@ -89,7 +89,7 @@ const handleBannerClick = () => {};
       .subtitle {
         margin-top: 4px;
         font-size: 14px;
-        color: cssVar(gray-700) !important;
+        color: cssVar(text-color-700) !important;
       }
     }
   }

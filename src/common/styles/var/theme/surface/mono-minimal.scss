@@ -1,0 +1,33 @@
+// 极简单色：纯粹的黑白灰，无彩色干扰，极致专注
+@use "../../../mixins/namespace" as *;
+
+:root[surface="mono-minimal"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #ffffff;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #000000;
+  --#{$teek-namespace}-surface-bg-color-box-light: #f9fafb;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #111111;
+  --#{$teek-namespace}-surface-text-color-light: #111827;
+  --#{$teek-namespace}-surface-text-color-dark: #f3f4f6;
+  --#{$teek-namespace}-border-color-light: #e5e7eb;
+  --#{$teek-namespace}-border-color-dark: #374151;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #4b5563;
+  --#{$teek-namespace}-color-success: #059669;
+  --#{$teek-namespace}-color-warning: #d97706;
+  --#{$teek-namespace}-color-danger: #dc2626;
+  --#{$teek-namespace}-color-error: #dc2626;
+  --#{$teek-namespace}-color-info: #6b7280;
+  --#{$teek-namespace}-color-secondary: #6b7280;
+}
+
+:root[surface="mono-minimal"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #9ca3af;
+  --#{$teek-namespace}-color-success: #10b981;
+  --#{$teek-namespace}-color-warning: #f59e0b;
+  --#{$teek-namespace}-color-danger: #ef4444;
+  --#{$teek-namespace}-color-error: #ef4444;
+  --#{$teek-namespace}-color-info: #9ca3af;
+  --#{$teek-namespace}-color-secondary: #9ca3af;
+}

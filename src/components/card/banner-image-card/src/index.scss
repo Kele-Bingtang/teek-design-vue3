@@ -4,7 +4,7 @@
 
 @include b(banner-image-card) {
   padding-bottom: 1.5rem;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(surface-bg-color-box);
   border-radius: calc(cssVar(radius) + 2px) !important;
 
   @include e(content) {
@@ -30,13 +30,13 @@
       margin-bottom: 8px;
       font-size: 18px;
       font-weight: 600;
-      color: cssVar(text-gray-800);
+      color: cssVar(text-color-800);
     }
 
     @include m(description) {
       margin: 0;
       font-size: 14px;
-      color: cssVar(text-gray-600);
+      color: cssVar(text-color-600);
     }
   }
 
@@ -61,7 +61,7 @@
       }
 
       @include is(cancel) {
-        border: 1px solid cssVar(gray-300);
+        border: 1px solid cssVar(text-color-300);
       }
     }
   }

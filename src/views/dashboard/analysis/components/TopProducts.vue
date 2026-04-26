@@ -49,7 +49,7 @@ const getColor = (percentage: number) => {
       <span class="title">热门产品</span>
     </div>
     <div class="card-body no-padding">
-      <el-table :data="products" style="width: 100%" size="large">
+      <el-table :data="products" style="width: 100%" size="large" :header-cell-style="{ background: 'transparent' }">
         <el-table-column prop="name" label="产品名称" width="200" />
         <el-table-column prop="popularity" label="销量">
           <template #default="scope">

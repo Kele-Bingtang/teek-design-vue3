@@ -13,7 +13,7 @@
       .title {
         font-size: 18px;
         font-weight: 500;
-        color: cssVar(gray-900);
+        color: cssVar(text-color-900);
 
         i {
           margin-left: 10px;
@@ -22,7 +22,7 @@
 
       .subtitle {
         font-size: 14px;
-        color: cssVar(gray-500);
+        color: cssVar(text-color-500);
       }
     }
   }

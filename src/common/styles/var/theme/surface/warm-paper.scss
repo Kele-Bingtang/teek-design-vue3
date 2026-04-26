@@ -1,0 +1,21 @@
+// 暖纸：仿旧纸张的暖色调，温暖、复古、舒适
+@use "../../../mixins/namespace" as *;
+
+:root[surface="warm-paper"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fef7e6;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #292524;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fffdf5;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #44403c;
+  --#{$teek-namespace}-surface-text-color-light: #5a3e1b;
+  --#{$teek-namespace}-surface-text-color-dark: #e7d6b9;
+  --#{$teek-namespace}-border-color-light: #e7d9c1;
+  --#{$teek-namespace}-border-color-dark: #a27a22;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #b45309;
+}
+
+:root[surface="warm-paper"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #f59e0b;
+}

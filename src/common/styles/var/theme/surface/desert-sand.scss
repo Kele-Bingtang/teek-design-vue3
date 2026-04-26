@@ -1,0 +1,21 @@
+// 荒漠流沙：中性大地色，极简、高级、专业
+@use "../../../mixins/namespace" as *;
+
+:root[surface="desert-sand"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f7f7f5;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #262626;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fefefe;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #404040;
+  --#{$teek-namespace}-surface-text-color-light: #525252;
+  --#{$teek-namespace}-surface-text-color-dark: #d4d4d4;
+  --#{$teek-namespace}-border-color-light: #d6d3d1;
+  --#{$teek-namespace}-border-color-dark: #737373;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #ca8a04;
+}
+
+:root[surface="desert-sand"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #eab308;
+}

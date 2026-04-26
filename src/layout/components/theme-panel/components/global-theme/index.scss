@@ -12,11 +12,11 @@
   @include e(box) {
     height: 55px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px 0 cssVar(gray-400);
+    box-shadow: 0 2px 8px 0 cssVar(text-color-400);
     transition: box-shadow cssVar(transition-duration-fast);
 
     &:hover {
-      box-shadow: 0 2px 8px 0 cssVar(gray-600);
+      box-shadow: 0 2px 8px 0 cssVar(text-color-600);
     }
 
     img {
@@ -56,6 +56,32 @@
 
     @include el-joins(select) {
       width: 40%;
+    }
+  }
+
+  @include e(item-two) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 48%;
+    }
+
+    span {
+      font-size: 14px;
+    }
+
+    :deep(.#{$el-namespace}-color-picker) {
+      width: 26px;
+      height: 26px;
+
+      .#{$el-namespace}-color-picker__trigger {
+        padding: 1px;
+      }
     }
   }
 }

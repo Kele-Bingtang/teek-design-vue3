@@ -1,0 +1,21 @@
+// 午夜薰衣草：深紫罗兰与柔和薰衣草色，神秘、优雅、舒缓
+@use "../../../mixins/namespace" as *;
+
+:root[surface="midnight-lavender"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f5f3ff;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1e1b4b;
+  --#{$teek-namespace}-surface-bg-color-box-light: #faf8ff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #312e81;
+  --#{$teek-namespace}-surface-text-color-light: #5b21b6;
+  --#{$teek-namespace}-surface-text-color-dark: #ddd6fe;
+  --#{$teek-namespace}-border-color-light: #ddd6fe;
+  --#{$teek-namespace}-border-color-dark: #7c3aed;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #8b5cf6;
+}
+
+:root[surface="midnight-lavender"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #a78bfa;
+}

@@ -1,0 +1,21 @@
+// 深空：深邃蓝黑与紫色点缀，专业、沉浸的夜间模式
+@use "../../../mixins/namespace" as *;
+
+:root[surface="deep-space"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #0f172a;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #020617;
+  --#{$teek-namespace}-surface-bg-color-box-light: #1e293b;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #0f172a;
+  --#{$teek-namespace}-surface-text-color-light: #cbd5e1;
+  --#{$teek-namespace}-surface-text-color-dark: #f1f5f9;
+  --#{$teek-namespace}-border-color-light: #334155;
+  --#{$teek-namespace}-border-color-dark: #475569;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #6366f1;
+}
+
+:root[surface="deep-space"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #818cf8;
+}

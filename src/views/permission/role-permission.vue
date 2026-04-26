@@ -252,7 +252,7 @@ const generateTree = (routes: RouterConfig[], checkedKeys: TreeKey[]) => {
             :check-strictly="checkStrictly"
             show-checkbox
             node-key="path"
-            class="permission-tree"
+            style="width: 100%"
           />
         </el-form-item>
       </el-form>

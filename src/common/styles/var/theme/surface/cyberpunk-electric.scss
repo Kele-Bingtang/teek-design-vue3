@@ -1,0 +1,27 @@
+// 赛博朋克-霓虹：高饱和霓虹色与深色背景，强烈的数字未来感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="cyberpunk-electric"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #0a0a0f;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #000010;
+  --#{$teek-namespace}-surface-bg-color-box-light: #151522;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #1a1a2e;
+  --#{$teek-namespace}-surface-text-color-light: #00f3ff;
+  --#{$teek-namespace}-surface-text-color-dark: #ff00ff;
+  --#{$teek-namespace}-border-color-light: #28004d;
+  --#{$teek-namespace}-border-color-dark: #00494d;
+  --#{$teek-namespace}-border-accent-color-light: #9d00ff;
+  --#{$teek-namespace}-border-accent-color-dark: #00f3ff;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #9d00ff;
+  --#{$teek-namespace}-color-info: #00d4ff;
+  --#{$teek-namespace}-color-secondary: #00d4ff;
+}
+
+:root[surface="cyberpunk-electric"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #c77dff;
+  --#{$teek-namespace}-color-info: #00f3ff;
+  --#{$teek-namespace}-color-secondary: #00f3ff;
+}

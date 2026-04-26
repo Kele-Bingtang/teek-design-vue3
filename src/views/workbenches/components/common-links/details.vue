@@ -207,7 +207,7 @@ defineExpose({
     width: 300px;
     padding: 10px;
     cursor: pointer;
-    background-color: cssVar(gray-100);
+    background-color: cssVar(text-color-100);
     border-radius: 8px;
     transition: all cssVar(transition-duration-fast) cssVar(easing);
 
@@ -232,14 +232,14 @@ defineExpose({
 
     .desc {
       font-size: 12px;
-      color: cssVar(gray-500);
+      color: cssVar(text-color-500);
     }
   }
 
   @include e(icon) {
     width: 36px;
     height: 36px;
-    background-color: cssVar(gray-200);
+    background-color: cssVar(text-color-200);
     border-radius: 50%;
   }
 

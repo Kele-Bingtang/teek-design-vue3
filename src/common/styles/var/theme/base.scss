@@ -1,0 +1,136 @@
+@use "../../mixins/namespace" as *;
+
+// Teek 品牌：中性、干净、普适的现代品牌风格，作为应用的基础默认主题
+:root {
+  --#{$teek-namespace}-surface-bg-color-page-light: #f6f8fc;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #17191d;
+  --#{$teek-namespace}-surface-bg-color-box-light: #ffffff;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #1c1e23;
+  --#{$teek-namespace}-surface-text-color-light: #2d3748;
+  --#{$teek-namespace}-surface-text-color-dark: #f5f5f5;
+  --#{$teek-namespace}-border-color-light: #e2e8f0;
+  --#{$teek-namespace}-border-color-dark: #2c2e32;
+
+  // 边框色，基于基准色 border-color 计算浅边框色和深边框色
+  --#{$teek-namespace}-border-accent-color-light: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-border-color-light) 70%,
+    var(--#{$teek-namespace}-surface-text-color-light)
+  );
+  --#{$teek-namespace}-border-accent-color-dark: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-border-color-dark) 70%,
+    var(--#{$teek-namespace}-surface-text-color-dark)
+  );
+  --#{$teek-namespace}-border-dashed-color-light: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-border-color-light) 40%,
+    var(--#{$teek-namespace}-surface-bg-color-box-light)
+  );
+  --#{$teek-namespace}-border-dashed-color-dark: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-border-color-dark) 40%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
+}
+
+:root {
+  // 基础背景色
+  --#{$teek-namespace}-surface-bg-color-page: var(--#{$teek-namespace}-surface-bg-color-page-light);
+  --#{$teek-namespace}-surface-bg-color-box: var(--#{$teek-namespace}-surface-bg-color-box-light);
+  --#{$teek-namespace}-surface-text-color: var(--#{$teek-namespace}-surface-text-color-light);
+
+  // 边框色
+  --#{$teek-namespace}-border-color: var(--#{$teek-namespace}-border-color-light);
+  --#{$teek-namespace}-border-accent-color: var(--#{$teek-namespace}-border-accent-color-light);
+  --#{$teek-namespace}-border-dashed-color: var(--#{$teek-namespace}-border-dashed-color-light);
+
+  // 灰度色，适用于背景色 | 悬停色 | 文本色
+  --#{$teek-namespace}-text-color-900: var(--#{$teek-namespace}-surface-text-color);
+  --#{$teek-namespace}-text-color-800: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 88%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-700: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 76%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-600: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 62%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-500: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 46%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-400: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 22%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-300: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 14%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-200: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 8%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-text-color-100: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 4%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+
+  // 悬停色
+  --#{$teek-namespace}-card-bg-hover-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 7%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$teek-namespace}-card-bg-active-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color) 7%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+
+  // 功能背景色
+  --#{$teek-namespace}-bg-primary: color-mix(in srgb, var(--#{$teek-namespace}-color-primary) 10%, transparent);
+  --#{$teek-namespace}-bg-success: color-mix(in srgb, var(--#{$teek-namespace}-color-success) 10%, transparent);
+  --#{$teek-namespace}-bg-warning: color-mix(in srgb, var(--#{$teek-namespace}-color-warning) 10%, transparent);
+  --#{$teek-namespace}-bg-danger: color-mix(in srgb, var(--#{$teek-namespace}-color-danger) 10%, transparent);
+  --#{$teek-namespace}-bg-error: color-mix(in srgb, var(--#{$teek-namespace}-color-error) 10%, transparent);
+  --#{$teek-namespace}-bg-info: color-mix(in srgb, var(--#{$teek-namespace}-color-info) 10%, transparent);
+  --#{$teek-namespace}-bg-secondary: color-mix(in srgb, var(--#{$teek-namespace}-color-secondary) 10%, transparent);
+
+  // 阴影色
+  --#{$teek-namespace}-shadow-color: color-mix(in srgb, var(--#{$teek-namespace}-surface-text-color) 8%, transparent);
+  --#{$teek-namespace}-box-shadow-xs: 0 0.1rem 0.75rem 0.25rem var(--#{$teek-namespace}-shadow-color);
+  --#{$teek-namespace}-box-shadow-sm: 0 0.1rem 1rem 0.25rem var(--#{$teek-namespace}-shadow-color);
+  --#{$teek-namespace}-box-shadow-md: 0 0.5rem 1.5rem 0.5rem var(--#{$teek-namespace}-shadow-color);
+  --#{$teek-namespace}-box-shadow-lg: 0 1rem 2rem 1rem var(--#{$teek-namespace}-shadow-color);
+
+  // 动画
+  --#{$teek-namespace}-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --#{$teek-namespace}-transition-duration-fast: var(--#{$el-namespace}-transition-duration-fast);
+  --#{$teek-namespace}-transition-duration: var(--#{$el-namespace}-transition-duration);
+}
+
+// 深色
+:root.dark {
+  // 基础背景色
+  --#{$teek-namespace}-surface-bg-color-page: var(--#{$teek-namespace}-surface-bg-color-page-dark);
+  --#{$teek-namespace}-surface-bg-color-box: var(--#{$teek-namespace}-surface-bg-color-box-dark);
+  --#{$teek-namespace}-surface-text-color: var(--#{$teek-namespace}-surface-text-color-dark);
+
+  // 边框色
+  --#{$teek-namespace}-border-color: var(--#{$teek-namespace}-border-color-dark);
+  --#{$teek-namespace}-border-accent-color: var(--#{$teek-namespace}-border-accent-color-dark);
+  --#{$teek-namespace}-border-dashed-color: var(--#{$teek-namespace}-border-dashed-color-dark);
+}

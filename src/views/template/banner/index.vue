@@ -24,8 +24,8 @@ const presetBanners = {
   marketing: {
     title: "限时优惠活动",
     subtitle: "精选商品 48 小时闪购，最高享受 7 折优惠，数量有限！",
-    titleColor: ns.cssVar("gray-900"),
-    subtitleColor: ns.cssVar("gray-900"),
+    titleColor: ns.cssVar("text-color-900"),
+    subtitleColor: ns.cssVar("text-color-900"),
     backgroundColor: `rgb(${ns.cssVar("color-success-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {
@@ -38,8 +38,8 @@ const presetBanners = {
   info: {
     title: "服务到期提醒",
     subtitle: "您的高级服务将在 7 天后到期，请及时续费以继续享受完整功能。",
-    titleColor: ns.cssVar("gray-900"),
-    subtitleColor: ns.cssVar("gray-900"),
+    titleColor: ns.cssVar("text-color-900"),
+    subtitleColor: ns.cssVar("text-color-900"),
     backgroundColor: `rgb(${ns.cssVar("color-primary-rgb")}, 0.1)`,
     meteorConfig: { enabled: true, count: 15 },
     buttonConfig: {

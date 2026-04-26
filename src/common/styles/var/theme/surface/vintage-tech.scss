@@ -1,0 +1,23 @@
+// 复古科技：琥珀色/橙色，怀旧终端感
+@use "../../../mixins/namespace" as *;
+
+:root[surface="vintage-tech"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fef9c3;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #1c1917;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fffde7;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #292524;
+  --#{$teek-namespace}-surface-text-color-light: #713f12;
+  --#{$teek-namespace}-surface-text-color-dark: #fde68a;
+  --#{$teek-namespace}-border-color-light: #fde68a;
+  --#{$teek-namespace}-border-color-dark: #92400e;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #d97706;
+  --#{$teek-namespace}-color-secondary: #e68a00;
+}
+
+:root[surface="vintage-tech"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #fbbf24;
+  --#{$teek-namespace}-color-secondary: #f5d76e;
+}

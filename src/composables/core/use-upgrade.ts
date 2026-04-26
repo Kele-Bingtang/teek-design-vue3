@@ -85,7 +85,7 @@ export const useUpgrade = async () => {
 
   // 系统升级公告
   const message = [
-    `<p style="color: ${ns.cssVar("gray-text-800")}; padding-bottom: 5px;">`,
+    `<p style="color: ${ns.cssVar("text-color-800")}; padding-bottom: 5px;">`,
     normalizeFrontendVersion > normalizeOldVersion
       ? `系统已升级至 ${currentVersion} 版本，此次更新带来了以下改进：`
       : `系统已降级至 ${currentVersion} 版本，此次降级的原因如下：`,

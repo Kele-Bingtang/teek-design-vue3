@@ -2,15 +2,6 @@
 
 // 优化 Element Plus 组件库默认样式
 
-:root {
-  // 按钮粗度
-  --#{$el-namespace}-font-weight-primary: 400 !important;
-
-  // 边框、按钮圆角
-  --#{$el-namespace}-border-radius-base: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
-  --#{$el-namespace}-card-border-radius: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
-}
-
 // 修改 el-checkbox-button 和 el-radio-button 高度
 .#{$el-namespace}-checkbox-button--default .#{$el-namespace}-checkbox-button__inner,
 .#{$el-namespace}-radio-button--default .#{$el-namespace}-radio-button__inner {
@@ -25,7 +16,7 @@
 
 // 修改全屏 loading 背景色
 // .#{$el-namespace}-loading-mask {
-//   background-color: var(--#{$teek-namespace}-bg-color) !important  ;
+//   background-color: var(--#{$teek-namespace}-surface-bg-color-box) !important  ;
 // }
 
 .#{$el-namespace}-popover {
@@ -86,7 +77,7 @@
 
 // el-message 样式优化
 .#{$el-namespace}-message {
-  background-color: var(--#{$teek-namespace}-bg-color) !important;
+  background-color: var(--#{$teek-namespace}-surface-bg-color-box) !important;
 }
 
 // 修改 el-dropdown 样式
@@ -98,8 +89,8 @@
     // 修改鼠标悬停和选中样式
     // &:not(.is-disabled):hover,
     // &:not(.is-disabled):focus {
-    //   color: var(--#{$teek-namespace}-text-gray-900) !important;
-    //   background-color: var(--#{$teek-namespace}-gray-200) !important;
+    //   color: var(--#{$teek-namespace}-text-color-900) !important;
+    //   background-color: var(--#{$teek-namespace}-text-color-200) !important;
     // }
   }
 }
@@ -156,10 +147,6 @@
 // 修改 el-tag 样式
 .#{$el-namespace}-tag {
   font-weight: 600;
-
-  &.#{$el-namespace}-tag--default {
-    height: 26px;
-  }
 }
 
 .#{$el-namespace}-checkbox-group {
@@ -207,13 +194,13 @@
 .#{$el-namespace}-dialog__headerbtn .#{$el-namespace}-dialog__close {
   width: 26px;
   height: 26px;
-  color: var(--#{$teek-namespace}-text-gray-500);
+  color: var(--#{$teek-namespace}-text-color-500);
   border-radius: 6px !important;
   transition: all 0.3s !important;
 
   &:hover {
-    color: var(--#{$teek-namespace}-text-gray-800) !important;
-    background-color: var(--#{$teek-namespace}-gray-200) !important;
+    color: var(--#{$teek-namespace}-text-color-800) !important;
+    background-color: var(--#{$teek-namespace}-text-color-200) !important;
   }
 }
 
@@ -292,19 +279,17 @@
     padding: 5px !important;
 
     .#{$el-namespace}-select-dropdown__item {
-      height: 34px !important;
-      line-height: 34px !important;
       border-radius: 6px !important;
 
       &.is-selected {
         margin-bottom: 4px !important;
         font-weight: 400 !important;
-        color: var(--#{$teek-namespace}-text-gray-900) !important;
-        background-color: var(--#{$teek-namespace}-gray-200) !important;
+        color: var(--#{$teek-namespace}-text-color-900) !important;
+        background-color: var(--#{$teek-namespace}-text-color-200) !important;
       }
 
       &:hover {
-        background-color: var(--#{$teek-namespace}-gray-200) !important;
+        background-color: var(--#{$teek-namespace}-text-color-200) !important;
       }
     }
 
@@ -325,7 +310,7 @@
         border-radius: 6px !important;
 
         &:hover {
-          background-color: var(--#{$teek-namespace}-gray-200) !important;
+          background-color: var(--#{$teek-namespace}-text-color-200) !important;
         }
       }
     }
@@ -334,21 +319,35 @@
 
 // 修改 el-descriptions 样式
 div.#{$el-namespace}-descriptions {
-  --#{$el-namespace}-descriptions-item-bordered-label-background: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+  --#{$el-namespace}-descriptions-item-bordered-label-background: var(--#{$teek-namespace}-text-color-100);
 }
 
 // 优化 el-table 表头字体色和背景色样式
 div.#{$el-namespace}-table {
-  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-800);
-  --#{$el-namespace}-table-header-bg-color: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6);
+  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-800);
+  --#{$el-namespace}-table-header-bg-color: var(--#{$teek-namespace}-text-color-100);
+  --#{$el-namespace}-table-border-color: var(--#{$teek-namespace}-border-color);
+  --#{$el-namespace}-table-tr-bg-color: var(--#{$teek-namespace}-surface-bg-color-box);
+  --#{$el-namespace}-table-fixed-left-column: var(--#{$teek-namespace}-surface-bg-color-box);
+  --#{$el-namespace}-table-fixed-right-column: var(--#{$teek-namespace}-surface-bg-color-box);
+  --#{$el-namespace}-table-row-hover-bg-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-bg-color-page) 82%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
+  --#{$el-namespace}-table-current-row-bg-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-color-primary) 7%,
+    var(--#{$teek-namespace}-surface-bg-color-box)
+  );
 
   thead.is-group {
-    --#{$el-namespace}-fill-color-light: rgb(var(--#{$teek-namespace}-gray-200-rgb), 0.6); // 多级表头背景色
+    --#{$el-namespace}-fill-color-light: var(--#{$teek-namespace}-text-color-100); // 多级表头背景色
   }
 }
 
 html.dark {
   div.#{$el-namespace}-table {
-    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-gray-900);
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-900);
   }
 }

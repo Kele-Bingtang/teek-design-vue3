@@ -5,7 +5,7 @@
   position: relative;
   overflow: hidden;
   color: #303133;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(surface-bg-color-box);
   border-radius: cssVar(radius);
   transition: 0.3s;
 
@@ -22,13 +22,13 @@
         font-size: 24px;
         font-weight: 500;
         line-height: 1.2;
-        color: cssVar(text-gray-900);
+        color: cssVar(text-color-900);
       }
 
       .label {
         margin: 4px 0 0;
         font-size: 14px;
-        color: cssVar(text-gray-600);
+        color: cssVar(text-color-600);
       }
     }
 
@@ -52,7 +52,7 @@
       right: 20px;
       bottom: 20px;
       font-size: 12px;
-      color: cssVar(text-gray-600);
+      color: cssVar(text-color-600);
     }
   }
 

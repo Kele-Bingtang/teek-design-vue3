@@ -8,7 +8,7 @@
   justify-content: center;
   height: 8rem;
   padding: 0 20px;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(surface-bg-color-box);
   border-radius: calc(cssVar(radius) + 4px);
 
   @include e(info) {
@@ -23,7 +23,7 @@
         justify-content: center;
         width: 46px;
         height: 46px;
-        background-color: cssVar(gray-300);
+        background-color: cssVar(text-color-300);
       }
     }
 
@@ -33,12 +33,12 @@
         margin-block-end: 4px;
         font-size: 1.5rem;
         font-weight: 600;
-        color: cssVar(gray-900);
+        color: cssVar(text-color-900);
       }
 
       .title {
         font-size: 0.875rem;
-        color: cssVar(gray-600);
+        color: cssVar(text-color-600);
       }
     }
   }

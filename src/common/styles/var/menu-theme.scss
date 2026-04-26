@@ -2,21 +2,41 @@
 
 %dark-theme-aside {
   // 顶部左侧面包屑
-  --#{$teek-namespace}-layout-logo-title-color: #cacbcc;
+  --#{$teek-namespace}-layout-logo-title-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
 
   // 侧边栏
-  --#{$teek-namespace}-layout-aside-bg-color: #1c1e23;
-  --#{$teek-namespace}-layout-aside-bg-active-color: #2a2b31;
-  --#{$teek-namespace}-layout-aside-bg-hover-color: #2a2b31;
+  --#{$teek-namespace}-layout-aside-bg-color: var(--#{$teek-namespace}-surface-bg-color-box-dark);
+  --#{$teek-namespace}-layout-aside-bg-active-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color-dark) 8%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
+  --#{$teek-namespace}-layout-aside-bg-hover-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color-dark) 8%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
   --#{$teek-namespace}-layout-aside-left-bg-color: #6d94e6;
-  --#{$teek-namespace}-layout-aside-text-color: #cacbcc;
+  --#{$teek-namespace}-layout-aside-text-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
   --#{$teek-namespace}-layout-aside-text-active-color: #6d94e6;
   --#{$teek-namespace}-layout-aside-text-hover-color: #6d94e6;
-  --#{$teek-namespace}-layout-aside-icon-color: #cacbcc;
+  --#{$teek-namespace}-layout-aside-icon-color: color-mix(
+    in srgb,
+    var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+    var(--#{$teek-namespace}-surface-bg-color-box-dark)
+  );
   --#{$teek-namespace}-layout-aside-icon-active-color: #6d94e6;
-  --#{$teek-namespace}-layout-aside-line: 1px solid #2c2e32;
+  --#{$teek-namespace}-layout-aside-line: 1px solid var(--#{$teek-namespace}-border-color-dark);
   --#{$teek-namespace}-layout-aside-text-active-weight: 400;
-  --#{$teek-namespace}-layout-iframe-aside-line: 1px solid #2c2e32;
+  --#{$teek-namespace}-layout-iframe-aside-line: 1px solid var(--#{$teek-namespace}-border-color-dark);
 }
 
 // 菜单蓝色主题变量包装复用
@@ -29,12 +49,12 @@
   --#{$teek-namespace}-layout-aside-bg-active-color: #395ae3;
   --#{$teek-namespace}-layout-aside-bg-hover-color: #395ae3;
   --#{$teek-namespace}-layout-aside-left-bg-color: var(--#{$el-namespace}-color-primary-light-7);
-  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-gray-300);
+  --#{$teek-namespace}-layout-aside-text-color: var(--#{$teek-namespace}-text-color-300);
   --#{$teek-namespace}-layout-aside-text-active-color: #ffffff;
   --#{$teek-namespace}-layout-aside-text-hover-color: #ffffff;
   --#{$teek-namespace}-layout-aside-icon-color: #ffffff;
   --#{$teek-namespace}-layout-aside-icon-active-color: #ffffff;
-  --#{$teek-namespace}-layout-aside-line: 1px solid var(--#{$teek-namespace}-text-gray-600);
+  --#{$teek-namespace}-layout-aside-line: 1px solid var(--#{$teek-namespace}-text-color-600);
   --#{$teek-namespace}-layout-aside-text-active-weight: 400;
   --#{$teek-namespace}-layout-iframe-aside-line: 1px solid var(--#{$el-namespace}-color-primary-light-3);
 }
@@ -55,15 +75,35 @@
   &.#{$teek-namespace}-horizontal-layout,
   &.#{$teek-namespace}-mixins-layout {
     // 顶部栏
-    --#{$teek-namespace}-layout-header-bg-color: #1c1e23;
-    --#{$teek-namespace}-layout-header-text-color: #cacbcc;
-    --#{$teek-namespace}-layout-header-bg-hover-color: #2a2b31;
-    --#{$teek-namespace}-global-search-input-border-color: #303236;
+    --#{$teek-namespace}-layout-header-bg-color: var(--#{$teek-namespace}-surface-bg-color-box-dark);
+    --#{$teek-namespace}-layout-header-text-color: color-mix(
+      in srgb,
+      var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+      var(--#{$teek-namespace}-surface-bg-color-box-dark)
+    );
+    --#{$teek-namespace}-layout-header-bg-hover-color: color-mix(
+      in srgb,
+      var(--#{$teek-namespace}-surface-text-color-dark) 8%,
+      var(--#{$teek-namespace}-surface-bg-color-box-dark)
+    );
+    --#{$teek-namespace}-global-search-input-border-color: var(--#{$teek-namespace}-border-color-dark);
 
     // 顶部左侧面包屑
-    --#{$teek-namespace}-layout-header-breadcrumb-link-color: #7a7b81;
-    --#{$teek-namespace}-layout-header-breadcrumb-text-color: #cacbcc;
-    --#{$teek-namespace}-layout-logo-title-color: #cacbcc;
+    --#{$teek-namespace}-layout-header-breadcrumb-link-color: color-mix(
+      in srgb,
+      var(--tk-surface-text-color) 46%,
+      var(--tk-surface-bg-color-box)
+    );
+    --#{$teek-namespace}-layout-header-breadcrumb-text-color: color-mix(
+      in srgb,
+      var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+      var(--#{$teek-namespace}-surface-bg-color-box-dark)
+    );
+    --#{$teek-namespace}-layout-logo-title-color: color-mix(
+      in srgb,
+      var(--#{$teek-namespace}-surface-text-color-dark) 88%,
+      var(--#{$teek-namespace}-surface-bg-color-box-dark)
+    );
   }
 }
 
@@ -102,8 +142,8 @@
         --#{$teek-namespace}-global-search-input-border-color: var(--#{$teek-namespace}-color-secondary);
 
         // 顶部左侧面包屑
-        --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-gray-300);
-        --#{$teek-namespace}-layout-header-breadcrumb-text-color: var(--#{$teek-namespace}-text-gray-400);
+        --#{$teek-namespace}-layout-header-breadcrumb-link-color: var(--#{$teek-namespace}-text-color-300);
+        --#{$teek-namespace}-layout-header-breadcrumb-text-color: var(--#{$teek-namespace}-text-color-400);
         --#{$teek-namespace}-layout-logo-title-color: #ffffff;
       }
     }

@@ -14,11 +14,11 @@
       transition: color cssVar(transition-duration);
 
       &:hover {
-        color: cssVar(gray-900);
+        color: cssVar(text-color-900);
       }
 
       &:not(.is-active) {
-        color: cssVar(gray-700);
+        color: cssVar(text-color-700);
       }
     }
   }
@@ -34,7 +34,7 @@
       transition: background-color cssVar(transition-duration);
 
       &:hover {
-        background-color: rgb(cssVar(gray-200-rgb), 0.7);
+        background-color: cssVar(card-bg-hover-color);
       }
     }
   }
@@ -55,19 +55,19 @@
       font-size: 14px;
       font-weight: 500;
       line-height: 22px;
-      color: cssVar(gray-900);
+      color: cssVar(text-color-900);
     }
 
     .desc {
       margin-bottom: 5px;
       font-size: 12px;
-      color: cssVar(gray-700);
+      color: cssVar(text-color-700);
     }
 
     .date {
       margin-top: 5px;
       font-size: 12px;
-      color: cssVar(gray-500);
+      color: cssVar(text-color-500);
     }
   }
 
@@ -78,6 +78,6 @@
     justify-content: center;
     height: 260px;
     line-height: 45px;
-    color: cssVar(gray-500);
+    color: cssVar(text-color-500);
   }
 }

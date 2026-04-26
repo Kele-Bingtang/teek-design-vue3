@@ -43,8 +43,8 @@ const themeColor = computed(() => {
   if (theme === "success") return ns.cssVarEl("color-success");
   if (theme === "red") return ns.cssVarEl("color-red");
   if (theme === "error") return ns.cssVarEl("color-error");
-  if (theme === "grey") return ns.cssVar("text-gray-600");
-  if (theme === "grey-light") return ns.cssVar("text-gray-400");
+  if (theme === "grey") return ns.cssVar("text-color-600");
+  if (theme === "grey-light") return ns.cssVar("text-color-400");
 
   // 自行添加更多主题颜色
   return "";

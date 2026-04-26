@@ -1,0 +1,21 @@
+// 糖果棉花糖：柔和明亮的马卡龙色，童趣、活泼、欢乐
+@use "../../../mixins/namespace" as *;
+
+:root[surface="candy-floss"] {
+  --#{$teek-namespace}-surface-bg-color-page-light: #fdf2f8;
+  --#{$teek-namespace}-surface-bg-color-page-dark: #4c1d95;
+  --#{$teek-namespace}-surface-bg-color-box-light: #fff8fc;
+  --#{$teek-namespace}-surface-bg-color-box-dark: #5b21b6;
+  --#{$teek-namespace}-surface-text-color-light: #9d174d;
+  --#{$teek-namespace}-surface-text-color-dark: #f0abfc;
+  --#{$teek-namespace}-border-color-light: #fbcfe8;
+  --#{$teek-namespace}-border-color-dark: #d946ef;
+
+  // 功能色
+  --#{$teek-namespace}-color-primary: #ec4899;
+}
+
+:root[surface="candy-floss"].dark {
+  // 功能色
+  --#{$teek-namespace}-color-primary: #f472b6;
+}

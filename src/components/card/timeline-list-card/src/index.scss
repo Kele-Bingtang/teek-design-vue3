@@ -6,7 +6,7 @@
   $card-padding: 20px;
 
   padding: $card-padding;
-  background-color: cssVar(bg-color);
+  background-color: cssVar(surface-bg-color-box);
   border-radius: cssVar(radius);
 
   @include el-joins(scrollbar) {
@@ -20,12 +20,12 @@
     @include m(title) {
       font-size: 18px;
       font-weight: 500;
-      color: cssVar(gray-900);
+      color: cssVar(text-color-900);
     }
 
     @include m(subtitle) {
       font-size: 14px;
-      color: cssVar(gray-500);
+      color: cssVar(text-color-500);
     }
   }
 
