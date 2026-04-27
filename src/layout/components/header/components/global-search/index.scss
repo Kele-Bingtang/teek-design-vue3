@@ -41,7 +41,7 @@
       height: 20px;
       padding: 0 4px;
       color: cssVar(text-color-500);
-      background-color: cssVar(bg-color-page);
+      background-color: cssVar(surface-bg-color-page);
       border-radius: 4px;
 
       i {
@@ -177,7 +177,7 @@
         margin-right: 8px;
         font-size: 14px;
         color: cssVar(text-color-500);
-        background: cssVar(bg-color-page);
+        background: cssVar(surface-bg-color-page);
         border: 1px solid cssVar(border-color);
         border-radius: 3px;
         box-shadow: 0 2px 0 cssVar(border-color);
