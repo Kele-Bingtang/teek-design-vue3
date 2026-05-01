@@ -18,7 +18,7 @@ $btn-width: 28px;
   @include is(simple) {
     @include e(tab, true) {
       .icon-close:hover {
-        background-color: cssVar(text-color-300);
+        background-color: cssVar(gray-color-300);
       }
 
       @include is(active) {
@@ -35,7 +35,7 @@ $btn-width: 28px;
     @include e(tab, true) {
       .icon-close:hover {
         color: #ffffff;
-        background-color: cssVar(text-color-500);
+        background-color: cssVar(gray-color-500);
       }
 
       @include is(active) {
@@ -76,7 +76,7 @@ $btn-width: 28px;
     color: cssVar(layout-tab-text-color);
     cursor: pointer;
     background-color: cssVar(layout-tab-item-bg-color);
-    border: 1px solid cssVar(border-color);
+    border: 1px solid cssVar(surface-border-color);
     border-radius: calc(cssVar(radius) / 2.5 + 2px);
 
     &:hover {
@@ -91,7 +91,7 @@ $btn-width: 28px;
       width: cssVar(layout-tab-dot-size);
       height: cssVar(layout-tab-dot-size);
       margin-right: 7px;
-      background-color: cssVar(text-color-300);
+      background-color: cssVar(gray-color-300);
       border-radius: 50%;
       transition: background cssVar(transition-duration) ease;
     }
@@ -121,7 +121,7 @@ $btn-width: 28px;
       border: none;
 
       &:hover {
-        background-color: cssVar(text-color-200);
+        background-color: cssVar(gray-color-200);
       }
     }
   }

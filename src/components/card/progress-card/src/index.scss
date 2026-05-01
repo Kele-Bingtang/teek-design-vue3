@@ -23,7 +23,7 @@
         justify-content: center;
         width: 46px;
         height: 46px;
-        background-color: cssVar(text-color-300);
+        background-color: cssVar(gray-color-300);
       }
     }
 
@@ -33,12 +33,12 @@
         margin-block-end: 4px;
         font-size: 1.5rem;
         font-weight: 600;
-        color: cssVar(text-color-900);
+        color: cssVar(gray-color-900);
       }
 
       .title {
         font-size: 0.875rem;
-        color: cssVar(text-color-600);
+        color: cssVar(gray-color-600);
       }
     }
   }

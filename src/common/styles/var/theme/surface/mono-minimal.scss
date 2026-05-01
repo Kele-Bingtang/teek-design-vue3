@@ -6,10 +6,10 @@
   --#{$teek-namespace}-surface-bg-color-page-dark: #000000;
   --#{$teek-namespace}-surface-bg-color-box-light: #f9fafb;
   --#{$teek-namespace}-surface-bg-color-box-dark: #111111;
-  --#{$teek-namespace}-surface-text-color-light: #111827;
-  --#{$teek-namespace}-surface-text-color-dark: #f3f4f6;
-  --#{$teek-namespace}-border-color-light: #e5e7eb;
-  --#{$teek-namespace}-border-color-dark: #374151;
+  --#{$teek-namespace}-surface-gray-color-light: #111827;
+  --#{$teek-namespace}-surface-gray-color-dark: #f3f4f6;
+  --#{$teek-namespace}-surface-border-color-light: #e5e7eb;
+  --#{$teek-namespace}-surface-border-color-dark: #374151;
 
   // 功能色
   --#{$teek-namespace}-color-primary: #4b5563;
@@ -19,6 +19,16 @@
   --#{$teek-namespace}-color-error: #dc2626;
   --#{$teek-namespace}-color-info: #6b7280;
   --#{$teek-namespace}-color-secondary: #6b7280;
+
+  // Chart 颜色
+  --#{$teek-namespace}-surface-chart-color-1: var(--#{$teek-namespace}-color-primary);
+  --#{$teek-namespace}-surface-chart-color-2: #9ca3af;
+  --#{$teek-namespace}-surface-chart-color-3: #111827;
+  --#{$teek-namespace}-surface-chart-color-4: #d1d5db;
+  --#{$teek-namespace}-surface-chart-color-5: #374151;
+  --#{$teek-namespace}-surface-chart-color-6: #6b7280;
+  --#{$teek-namespace}-surface-chart-color-7: #4b5563;
+  --#{$teek-namespace}-surface-chart-color-8: #1f2937;
 }
 
 :root[surface="mono-minimal"].dark {

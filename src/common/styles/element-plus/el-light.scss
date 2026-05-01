@@ -49,14 +49,14 @@ $component-size: (
 :root {
   $bg-color-page: var(--#{$teek-namespace}-surface-bg-color-page);
   $bg-color-box: var(--#{$teek-namespace}-surface-bg-color-box);
-  $border-color: var(--#{$teek-namespace}-border-color);
+  $border-color: var(--#{$teek-namespace}-surface-border-color);
 
   // 文字色
-  --#{$el-namespace}-text-color-primary: var(--#{$teek-namespace}-text-color-900) !important;
-  --#{$el-namespace}-text-color-regular: var(--#{$teek-namespace}-text-color-800) !important;
-  --#{$el-namespace}-text-color-secondary: var(--#{$teek-namespace}-text-color-600) !important;
-  --#{$el-namespace}-text-color-placeholder: var(--#{$teek-namespace}-text-color-500) !important;
-  --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-text-color-400) !important;
+  --#{$el-namespace}-text-color-primary: var(--#{$teek-namespace}-gray-color-900) !important;
+  --#{$el-namespace}-text-color-regular: var(--#{$teek-namespace}-gray-color-800) !important;
+  --#{$el-namespace}-text-color-secondary: var(--#{$teek-namespace}-gray-color-600) !important;
+  --#{$el-namespace}-text-color-placeholder: var(--#{$teek-namespace}-gray-color-500) !important;
+  --#{$el-namespace}-text-color-disabled: var(--#{$teek-namespace}-gray-color-400) !important;
 
   // 背景色
   --#{$el-namespace}-bg-color: #{$bg-color-box} !important;
@@ -80,12 +80,12 @@ $component-size: (
   --#{$el-namespace}-border-color-dark: color-mix(
     in srgb,
     #{$border-color} 88%,
-    var(--#{$teek-namespace}-text-color-300)
+    var(--#{$teek-namespace}-gray-color-300)
   ) !important;
   --#{$el-namespace}-border-color-darker: color-mix(
     in srgb,
     #{$border-color} 78%,
-    var(--#{$teek-namespace}-text-color-400)
+    var(--#{$teek-namespace}-gray-color-400)
   ) !important;
 
   // 按钮粗度

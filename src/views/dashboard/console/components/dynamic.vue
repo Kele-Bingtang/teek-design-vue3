@@ -76,7 +76,7 @@ const list = reactive([
       height: 70px;
       overflow: hidden;
       line-height: 70px;
-      border-bottom: 1px solid cssVar(border-color);
+      border-bottom: 1px solid cssVar(surface-border-color);
 
       span {
         font-size: 13px;
@@ -84,7 +84,7 @@ const list = reactive([
 
       .user {
         font-weight: 500;
-        color: cssVar(text-color-800);
+        color: cssVar(gray-color-800);
       }
 
       .type {

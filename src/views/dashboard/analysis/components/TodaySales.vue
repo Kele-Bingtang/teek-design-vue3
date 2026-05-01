@@ -84,9 +84,9 @@ const salesData = ref([
     justify-content: center;
     min-width: 66px;
     padding: 6px 0;
-    color: cssVar(text-color-600);
+    color: cssVar(gray-color-600);
     cursor: pointer;
-    border: 1px solid cssVar(border-color);
+    border: 1px solid cssVar(surface-border-color);
     border-radius: 6px;
     transition: all 0.3s;
 
@@ -115,7 +115,7 @@ const salesData = ref([
       height: 220px;
       padding: 0 20px;
       overflow: hidden;
-      border: 1px solid cssVar(border-color) !important;
+      border: 1px solid cssVar(surface-border-color) !important;
       border-radius: calc(cssVar(radius) / 2 + 4px) !important;
 
       .icon-teek {
@@ -132,20 +132,20 @@ const salesData = ref([
         margin-top: 26px;
         font-size: 26px;
         font-weight: 400;
-        color: cssVar(text-color-900) !important;
+        color: cssVar(gray-color-900) !important;
       }
 
       p {
         margin-top: 6px;
         font-size: 16px;
-        color: cssVar(text-color-700) !important;
+        color: cssVar(gray-color-700) !important;
       }
 
       small {
         display: block;
         margin-top: 5px;
         font-size: 12px;
-        color: cssVar(text-color-600) !important;
+        color: cssVar(gray-color-600) !important;
       }
     }
   }

@@ -27,27 +27,27 @@
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    color: cssVar(text-color-900);
+    color: cssVar(gray-color-900);
   }
 
   @include e(count) {
     margin: 0;
     font-size: 28px;
     font-weight: 500;
-    color: cssVar(text-color-900);
+    color: cssVar(gray-color-900);
   }
 
   @include e(description) {
     margin: 4px 0 0;
     font-size: 14px;
-    color: cssVar(text-color-600);
+    color: cssVar(gray-color-600);
     opacity: 0.9;
   }
 
   @include e(arrow) {
     i {
       font-size: 18px;
-      color: cssVar(text-color-600);
+      color: cssVar(gray-color-600);
     }
   }
 }

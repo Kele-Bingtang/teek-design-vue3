@@ -173,7 +173,6 @@ const handleSwitchRole = (role: string) => {
     padding: 16px;
     border-radius: 12px;
     box-shadow: cssVar(surface-box-shadow-lg);
-    transition: all 0.3s ease;
 
     &.active {
       background-color: var(--el-color-primary-light-8);
@@ -187,14 +186,14 @@ const handleSwitchRole = (role: string) => {
     .card-description {
       margin: 10px 0;
       font-size: 14px;
-      color: cssVar(text-color-700);
+      color: cssVar(gray-color-700);
     }
 
     .user-info {
       display: flex;
       flex-direction: column;
       font-size: 15px;
-      color: cssVar(text-color-800);
+      color: cssVar(gray-color-800);
     }
 
     .action {

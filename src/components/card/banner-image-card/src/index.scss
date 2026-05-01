@@ -30,13 +30,13 @@
       margin-bottom: 8px;
       font-size: 18px;
       font-weight: 600;
-      color: cssVar(text-color-800);
+      color: cssVar(gray-color-800);
     }
 
     @include m(description) {
       margin: 0;
       font-size: 14px;
-      color: cssVar(text-color-600);
+      color: cssVar(gray-color-600);
     }
   }
 
@@ -61,7 +61,7 @@
       }
 
       @include is(cancel) {
-        border: 1px solid cssVar(text-color-300);
+        border: 1px solid cssVar(gray-color-300);
       }
     }
   }

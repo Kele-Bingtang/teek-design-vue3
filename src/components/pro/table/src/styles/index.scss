@@ -3,11 +3,11 @@
 
 @include b(pro-table) {
   @include el-joins(table) {
-    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-800);
-    --#{$el-namespace}-table-header-bg-color: var(--#{$teek-namespace}-text-color-100);
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-gray-color-800);
+    --#{$el-namespace}-table-header-bg-color: var(--#{$teek-namespace}-gray-color-100);
 
     thead.is-group {
-      --#{$el-namespace}-fill-color-light: var(--#{$teek-namespace}-text-color-100); // 多级表头背景色
+      --#{$el-namespace}-fill-color-light: var(--#{$teek-namespace}-gray-color-100); // 多级表头背景色
     }
 
     // 修复 safari 浏览器表格错位
@@ -27,7 +27,7 @@
 
       tbody {
         // 单元格字体颜色
-        // --#{$el-namespace}-table-text-color: var(--#{$teek-namespace}-text-color-800);
+        // --#{$el-namespace}-table-text-color: var(--#{$teek-namespace}-gray-color-800);
       }
     }
   }
@@ -36,7 +36,7 @@
 html.dark {
   @include b(pro-table) {
     @include el-joins(table) {
-      --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-900);
+      --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-gray-color-900);
     }
   }
 }

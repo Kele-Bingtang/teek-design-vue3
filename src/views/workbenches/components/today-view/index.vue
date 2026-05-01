@@ -79,11 +79,11 @@ const handleMore = () => {
 
     &:hover {
       color: cssVar("color-primary");
-      background-color: cssVar("text-color-200");
+      background-color: cssVar("gray-color-200");
 
       .#{$el-namespace}-tag {
         color: cssVar("color-primary");
-        background-color: cssVar("text-color-300");
+        background-color: cssVar("gray-color-300");
       }
     }
 
@@ -98,14 +98,14 @@ const handleMore = () => {
 
     .time {
       font-size: 12px;
-      color: cssVar("text-color-600");
+      color: cssVar("gray-color-600");
     }
 
     @include has(read) {
-      color: cssVar("text-color-500");
+      color: cssVar("gray-color-500");
 
       .#{$el-namespace}-tag {
-        color: cssVar("text-color-500");
+        color: cssVar("gray-color-500");
       }
     }
   }

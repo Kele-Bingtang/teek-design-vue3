@@ -35,12 +35,12 @@ const exitMaximize = () => {
   width: 52px;
   height: 52px;
   cursor: pointer;
-  background-color: cssVar(text-color-600);
+  background-color: cssVar(gray-color-600);
   border-radius: 50%;
   opacity: 0.7;
 
   &:hover {
-    background-color: cssVar(text-color-700);
+    background-color: cssVar(gray-color-700);
   }
 
   .close-icon {

@@ -83,7 +83,6 @@ const dataList = reactive([
     height: 140px;
     padding: 0 18px;
     list-style: none;
-    transition: all 0.3s ease;
 
     $icon-size: 52px;
 
@@ -124,7 +123,7 @@ const dataList = reactive([
       .change-text {
         display: block;
         font-size: 13px;
-        color: cssVar(text-color-600);
+        color: cssVar(gray-color-600);
       }
 
       .change {

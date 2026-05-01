@@ -11,7 +11,7 @@
 .#{$el-namespace}-pagination.is-background .btn-next,
 .#{$el-namespace}-pagination.is-background .btn-prev,
 .#{$el-namespace}-pagination.is-background .#{$el-namespace}-pager li {
-  border-radius: 6px;
+  border-radius: var(--#{$el-namespace}-border-radius-base);
 }
 
 // 修改全屏 loading 背景色
@@ -24,7 +24,7 @@
 }
 
 .#{$el-namespace}-popper {
-  border-radius: calc(var(--#{$teek-namespace}-radius) / 3 + 2px) !important;
+  border-radius: var(--#{$el-namespace}-border-radius-base) !important;
 }
 
 .#{$el-namespace}-popper.clear-radius {
@@ -89,8 +89,8 @@
     // 修改鼠标悬停和选中样式
     // &:not(.is-disabled):hover,
     // &:not(.is-disabled):focus {
-    //   color: var(--#{$teek-namespace}-text-color-900) !important;
-    //   background-color: var(--#{$teek-namespace}-text-color-200) !important;
+    //   color: var(--#{$teek-namespace}-gray-color-900) !important;
+    //   background-color: var(--#{$teek-namespace}-gray-color-200) !important;
     // }
   }
 }
@@ -194,13 +194,13 @@
 .#{$el-namespace}-dialog__headerbtn .#{$el-namespace}-dialog__close {
   width: 26px;
   height: 26px;
-  color: var(--#{$teek-namespace}-text-color-500);
-  border-radius: 6px !important;
+  color: var(--#{$teek-namespace}-gray-color-500);
+  border-radius: var(--#{$el-namespace}-border-radius-base) !important;
   transition: all 0.3s !important;
 
   &:hover {
-    color: var(--#{$teek-namespace}-text-color-800) !important;
-    background-color: var(--#{$teek-namespace}-text-color-200) !important;
+    color: var(--#{$teek-namespace}-gray-color-800) !important;
+    background-color: var(--#{$teek-namespace}-gray-color-200) !important;
   }
 }
 
@@ -279,17 +279,16 @@
     padding: 5px !important;
 
     .#{$el-namespace}-select-dropdown__item {
-      border-radius: 6px !important;
+      border-radius: var(--#{$el-namespace}-border-radius-base) !important;
 
       &.is-selected {
         margin-bottom: 4px !important;
         font-weight: 400 !important;
-        color: var(--#{$teek-namespace}-text-color-900) !important;
-        background-color: var(--#{$teek-namespace}-text-color-200) !important;
+        background-color: var(--#{$teek-namespace}-gray-color-200) !important;
       }
 
       &:hover {
-        background-color: var(--#{$teek-namespace}-text-color-200) !important;
+        background-color: var(--#{$teek-namespace}-gray-color-200) !important;
       }
     }
 
@@ -307,10 +306,10 @@
 
     .#{$el-namespace}-tree-node {
       .#{$el-namespace}-tree-node__content {
-        border-radius: 6px !important;
+        border-radius: var(--#{$el-namespace}-border-radius-base) !important;
 
         &:hover {
-          background-color: var(--#{$teek-namespace}-text-color-200) !important;
+          background-color: var(--#{$teek-namespace}-gray-color-200) !important;
         }
       }
     }
@@ -319,14 +318,14 @@
 
 // 修改 el-descriptions 样式
 div.#{$el-namespace}-descriptions {
-  --#{$el-namespace}-descriptions-item-bordered-label-background: var(--#{$teek-namespace}-text-color-100);
+  --#{$el-namespace}-descriptions-item-bordered-label-background: var(--#{$teek-namespace}-gray-color-100);
 }
 
 // 优化 el-table 表头字体色和背景色样式
 div.#{$el-namespace}-table {
-  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-800);
-  --#{$el-namespace}-table-header-bg-color: var(--#{$teek-namespace}-text-color-100);
-  --#{$el-namespace}-table-border-color: var(--#{$teek-namespace}-border-color);
+  --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-gray-color-800);
+  --#{$el-namespace}-table-header-bg-color: var(--#{$teek-namespace}-gray-color-100);
+  --#{$el-namespace}-table-border-color: var(--#{$teek-namespace}-surface-border-color);
   --#{$el-namespace}-table-tr-bg-color: var(--#{$teek-namespace}-surface-bg-color-box);
   --#{$el-namespace}-table-fixed-left-column: var(--#{$teek-namespace}-surface-bg-color-box);
   --#{$el-namespace}-table-fixed-right-column: var(--#{$teek-namespace}-surface-bg-color-box);
@@ -342,12 +341,12 @@ div.#{$el-namespace}-table {
   );
 
   thead.is-group {
-    --#{$el-namespace}-fill-color-light: var(--#{$teek-namespace}-text-color-100); // 多级表头背景色
+    --#{$el-namespace}-fill-color-light: var(--#{$teek-namespace}-gray-color-100); // 多级表头背景色
   }
 }
 
 html.dark {
   div.#{$el-namespace}-table {
-    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-text-color-900);
+    --#{$el-namespace}-table-header-text-color: var(--#{$teek-namespace}-gray-color-900);
   }
 }

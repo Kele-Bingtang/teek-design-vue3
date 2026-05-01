@@ -26,13 +26,13 @@
 
     @include el-joins(input__wrapper) {
       background-color: cssVar(surface-bg-color-page);
-      border: 1px solid cssVar(border-color);
+      border: 1px solid cssVar(surface-border-color);
       border-radius: calc(cssVar(radius) / 2 + 2px);
       box-shadow: none;
     }
 
     @include el-joins(input__inner) {
-      color: cssVar(text-color-600);
+      color: cssVar(gray-color-600);
     }
 
     .search-keydown {
@@ -40,7 +40,7 @@
       align-items: center;
       height: 20px;
       padding: 0 4px;
-      color: cssVar(text-color-500);
+      color: cssVar(gray-color-500);
       background-color: cssVar(surface-bg-color-page);
       border-radius: 4px;
 
@@ -84,8 +84,8 @@
       margin-top: 8px;
       font-size: 15px;
       font-weight: 400;
-      color: cssVar(text-color-700);
-      background: cssVar(text-color-100);
+      color: cssVar(gray-color-700);
+      background: cssVar(gray-color-100);
       border-radius: calc(cssVar(radius) / 2 + 2px);
 
       @include is(highlighted) {
@@ -102,7 +102,7 @@
   @include e(search-history) {
     .title {
       font-size: 13px;
-      color: cssVar(text-color-600);
+      color: cssVar(gray-color-600);
     }
   }
 
@@ -121,9 +121,9 @@
     margin-top: 8px;
     font-size: 15px;
     font-weight: 400;
-    color: cssVar(text-color-800);
+    color: cssVar(gray-color-800);
     cursor: pointer;
-    background: cssVar(text-color-100);
+    background: cssVar(gray-color-100);
     border-radius: calc(cssVar(radius) / 2 + 2px);
 
     @include is(highlighted) {
@@ -140,7 +140,7 @@
       height: 20px;
       font-size: 15px;
       line-height: 20px;
-      color: cssVar(text-color-500);
+      color: cssVar(gray-color-500);
       text-align: center;
       user-select: none;
       border-radius: 50%;
@@ -157,8 +157,8 @@
     display: flex;
     align-items: center;
     padding-top: 10px;
-    color: cssVar(text-color-700);
-    border-top: 1px solid cssVar(border-color);
+    color: cssVar(gray-color-700);
+    border-top: 1px solid cssVar(surface-border-color);
 
     > div {
       display: flex;
@@ -176,11 +176,11 @@
         padding: 3px;
         margin-right: 8px;
         font-size: 14px;
-        color: cssVar(text-color-500);
+        color: cssVar(gray-color-500);
         background: cssVar(surface-bg-color-page);
-        border: 1px solid cssVar(border-color);
+        border: 1px solid cssVar(surface-border-color);
         border-radius: 3px;
-        box-shadow: 0 2px 0 cssVar(border-color);
+        box-shadow: 0 2px 0 cssVar(surface-border-color);
 
         &:last-of-type {
           margin-right: 6px;
@@ -200,12 +200,12 @@
     @include el-joins(input) {
       @include el-joins(input__wrapper) {
         background-color: cssVar(surface-bg-color-box);
-        border: 1px solid cssVar(text-color-400);
+        border: 1px solid cssVar(gray-color-400);
       }
 
       .search-keydown {
         background-color: cssVar(surface-bg-color-box);
-        border: 1px solid cssVar(text-color-400);
+        border: 1px solid cssVar(gray-color-400);
       }
     }
 
@@ -231,8 +231,8 @@
     .dialog-footer {
       > div {
         i {
-          color: cssVar(text-color-700);
-          background-color: cssVar(text-color-100);
+          color: cssVar(gray-color-700);
+          background-color: cssVar(gray-color-100);
         }
 
         span {

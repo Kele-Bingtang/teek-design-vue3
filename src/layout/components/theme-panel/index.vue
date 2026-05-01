@@ -57,7 +57,7 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
 <template>
   <el-drawer
     v-model="drawerVisible"
-    :size="360"
+    :size="400"
     :lock-scroll="false"
     :with-header="false"
     close-on-click-modal

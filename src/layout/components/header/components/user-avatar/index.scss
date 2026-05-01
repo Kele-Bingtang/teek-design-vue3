@@ -25,13 +25,13 @@
     .name {
       font-size: 14px;
       font-weight: 500;
-      color: cssVar(text-color-800);
+      color: cssVar(gray-color-800);
     }
 
     .email {
       margin-top: 3px;
       font-size: 12px;
-      color: cssVar(text-color-500);
+      color: cssVar(gray-color-500);
     }
   }
 
@@ -47,19 +47,19 @@
       border-radius: 6px;
 
       &:hover {
-        background-color: cssVar(text-color-200);
+        background-color: cssVar(gray-color-200);
       }
 
       .icon {
         display: block;
         width: 25px;
         font-size: 16px;
-        color: var(text-color-800);
+        color: var(gray-color-800);
       }
 
       .label {
         font-size: 14px;
-        color: cssVar(text-color-800);
+        color: cssVar(gray-color-800);
       }
     }
   }

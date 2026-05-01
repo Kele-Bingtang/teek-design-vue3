@@ -2,7 +2,7 @@
 @use "@styles/mixins/function" as *;
 
 @include b(user-info) {
-  color: cssVar(text-color-700);
+  color: cssVar(gray-color-700);
 
   @include e(head) {
     text-align: center;
@@ -17,7 +17,7 @@
       margin-top: 20px;
       margin-bottom: 0;
       font-size: 22px;
-      color: cssVar(text-color-800);
+      color: cssVar(gray-color-800);
     }
 
     @include m(desc) {
@@ -47,7 +47,7 @@
       margin-bottom: 10px;
       font-size: 15px;
       font-weight: 500;
-      color: cssVar(text-color-800);
+      color: cssVar(gray-color-800);
     }
 
     span {
@@ -57,7 +57,7 @@
       font-size: 12px;
       text-wrap: wrap;
       background: cssVar(surface-bg-color-box);
-      border: 1px solid cssVar(border-color);
+      border: 1px solid cssVar(surface-border-color);
       border-radius: 2px;
     }
   }

@@ -101,11 +101,11 @@ const handleMore = () => {
 
     &:hover {
       color: cssVar("color-primary");
-      background-color: cssVar("text-color-200");
+      background-color: cssVar("gray-color-200");
 
       .#{$el-namespace}-tag {
         color: cssVar("color-primary");
-        background-color: cssVar("text-color-300");
+        background-color: cssVar("gray-color-300");
       }
     }
 
@@ -115,10 +115,10 @@ const handleMore = () => {
     }
 
     @include has(read) {
-      color: cssVar("text-color-500");
+      color: cssVar("gray-color-500");
 
       .#{$el-namespace}-tag {
-        color: cssVar("text-color-500");
+        color: cssVar("gray-color-500");
       }
     }
   }

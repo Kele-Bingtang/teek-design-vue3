@@ -33,31 +33,31 @@ const globalThemeModeList = [
  * 主题外观选项
  */
 const surfaceOptions = [
-  { value: "teek-brand", label: "Teek Brand", labelZh: "Teek 品牌" }, // 默认品牌主题
-  { value: "cloud-white", label: "Cloud White", labelZh: "云端洁白" }, // 纯净、普适
-  { value: "mono-minimal", label: "Mono Minimal", labelZh: "极简单色" }, // 经典黑白灰
-  { value: "slate-pro", label: "Slate Pro", labelZh: "石板专业" }, // 专业、中性
-  { value: "steel-cool", label: "Steel Cool", labelZh: "冷钢工业" }, // 现代、工业
-  { value: "ocean-breeze", label: "Ocean Breeze", labelZh: "海洋微风" }, // 清新、自然
-  { value: "forest-moss", label: "Forest Moss", labelZh: "森林苔藓" }, // 护眼、自然
-  { value: "sunset-dune", label: "Sunset Dune", labelZh: "日落沙丘" }, // 温暖、舒适
-  { value: "warm-paper", label: "Warm Paper", labelZh: "暖色纸张" }, // 复古、舒适
-  { value: "lilac-mist", label: "Lilac Mist", labelZh: "丁香薄雾" }, // 柔和、淡雅
-  { value: "velvet-rose", label: "Velvet Rose", labelZh: "丝绒玫瑰" }, // 深沉、优雅
-  { value: "berry-sweet", label: "Berry Sweet", labelZh: "浆果甜美" }, // 友好、女性
-  { value: "nord-aurora", label: "Nord Aurora", labelZh: "北极光" }, // 冷静、专注
-  { value: "deep-space", label: "Deep Space", labelZh: "深空" }, // 沉浸、夜间
-  { value: "vintage-tech", label: "Vintage Tech", labelZh: "复古科技" }, // 怀旧、独特
-  { value: "deep-wood", label: "Deep Wood", labelZh: "深邃木纹" }, // 沉稳、自然
-  { value: "midnight-lavender", label: "Midnight Lavender", labelZh: "午夜薰衣草" }, // 神秘、优雅
-  { value: "jade-luxe", label: "Jade Luxe", labelZh: "翡翠奢华" }, // 高级、东方
-  { value: "desert-sand", label: "Desert Sand", labelZh: "荒漠流沙" }, // 极简、中性
-  { value: "dusk-horizon", label: "Dusk Horizon", labelZh: "黄昏地平" }, // 浪漫、艺术
-  { value: "obsidian-glass", label: "Obsidian Glass", labelZh: "黑曜石玻" }, // 现代、科技
-  { value: "candy-floss", label: "Candy Floss", labelZh: "糖果棉花糖" }, // 活泼、童趣
-  { value: "pop-art", label: "Pop Art", labelZh: "波普艺术" }, // 鲜艳、艺术
-  { value: "cyberpunk-electric", label: "Cyberpunk Electric", labelZh: "赛博霓红" }, // 高饱和、未来
-  { value: "hacker-terminal", label: "Hacker Terminal", labelZh: "黑客终端" }, // 极客、技术
+  { value: "teek-brand", labelKey: "_setting.theme.surfaceSelect.teekBrand", color: "#395ae3" }, // 默认品牌主题
+  { value: "cloud-white", labelKey: "_setting.theme.surfaceSelect.cloudWhite", color: "#f8fafc" }, // 纯净、普适
+  { value: "mono-minimal", labelKey: "_setting.theme.surfaceSelect.monoMinimal", color: "#4b5563" }, // 经典黑白灰
+  { value: "slate-pro", labelKey: "_setting.theme.surfaceSelect.slatePro", color: "#4b5563" }, // 专业、中性
+  { value: "steel-cool", labelKey: "_setting.theme.surfaceSelect.steelCool", color: "#4b5563" }, // 现代、工业
+  { value: "ocean-breeze", labelKey: "_setting.theme.surfaceSelect.oceanBreeze", color: "#0ea5e9" }, // 清新、自然
+  { value: "forest-moss", labelKey: "_setting.theme.surfaceSelect.forestMoss", color: "#2e7d32" }, // 护眼、自然
+  { value: "sunset-dune", labelKey: "_setting.theme.surfaceSelect.sunsetDune", color: "#c44536" }, // 温暖、舒适
+  { value: "warm-paper", labelKey: "_setting.theme.surfaceSelect.warmPaper", color: "#b45309" }, // 复古、舒适
+  { value: "lilac-mist", labelKey: "_setting.theme.surfaceSelect.lilacMist", color: "#b39ddb" }, // 柔和、淡雅
+  { value: "velvet-rose", labelKey: "_setting.theme.surfaceSelect.velvetRose", color: "#ad1457" }, // 深沉、优雅
+  { value: "berry-sweet", labelKey: "_setting.theme.surfaceSelect.berrySweet", color: "#db2777" }, // 友好、女性
+  { value: "nord-aurora", labelKey: "_setting.theme.surfaceSelect.nordAurora", color: "#5e81ac" }, // 冷静、专注
+  { value: "deep-space", labelKey: "_setting.theme.surfaceSelect.deepSpace", color: "#6366f1" }, // 沉浸、夜间
+  { value: "vintage-tech", labelKey: "_setting.theme.surfaceSelect.vintageTech", color: "#d97706" }, // 怀旧、独特
+  { value: "deep-wood", labelKey: "_setting.theme.surfaceSelect.deepWood", color: "#166534" }, // 沉稳、自然
+  { value: "midnight-lavender", labelKey: "_setting.theme.surfaceSelect.midnightLavender", color: "#8b5cf6" }, // 神秘、优雅
+  { value: "jade-luxe", labelKey: "_setting.theme.surfaceSelect.jadeLuxe", color: "#059669" }, // 高级、东方
+  { value: "desert-sand", labelKey: "_setting.theme.surfaceSelect.desertSand", color: "#ca8a04" }, // 极简、中性
+  { value: "dusk-horizon", labelKey: "_setting.theme.surfaceSelect.duskHorizon", color: "#7c3aed" }, // 浪漫、艺术
+  { value: "obsidian-glass", labelKey: "_setting.theme.surfaceSelect.obsidianGlass", color: "#06b6d4" }, // 现代、科技
+  { value: "candy-floss", labelKey: "_setting.theme.surfaceSelect.candyFloss", color: "#ec4899" }, // 活泼、童趣
+  { value: "pop-art", labelKey: "_setting.theme.surfaceSelect.popArt", color: "#ea0c7e" }, // 鲜艳、艺术
+  { value: "cyberpunk-electric", labelKey: "_setting.theme.surfaceSelect.cyberpunkElectric", color: "#9d00ff" }, // 高饱和、未来
+  { value: "hacker-terminal", labelKey: "_setting.theme.surfaceSelect.hackerTerminal", color: "#00ff00" }, // 极客、技术
 ];
 
 /**
@@ -75,21 +75,29 @@ const functionalColorOptions: { type: any; labelKey: string; storeKey: string }[
 ];
 
 // 预定义主题颜色
-const colorList = computed(() => [theme.value.primaryColor, ...(serviceConfig.theme.presetsColor ?? [])]);
+const colorList = computed(() => [
+  theme.value.primaryColor,
+  theme.value.successColor,
+  theme.value.warningColor,
+  theme.value.dangerColor,
+  theme.value.errorColor,
+  theme.value.infoColor,
+  ...(serviceConfig.theme.presetsColor ?? []),
+]);
 
 /**
  * 圆角选项
  */
 const radiusOptions = [
-  { value: "0", label: "0" },
-  { value: "0.25", label: "0.25" },
-  { value: "0.5", label: "0.5" },
-  { value: "0.75", label: "0.75" },
-  { value: "1", label: "1" },
-  { value: "1.25", label: "1.25" },
-  { value: "1.5", label: "1.5" },
-  { value: "1.75", label: "1.75" },
-  { value: "2", label: "2" },
+  { value: 0, label: "None" },
+  { value: 0.25, label: "Small" },
+  { value: 0.5, label: "Medium" },
+  { value: 0.75, label: "Large" },
+  { value: 1, label: "Round" },
+  { value: 1.25, label: "Round Small" },
+  { value: 1.5, label: "Round Medium" },
+  { value: 1.75, label: "Round Large" },
+  { value: 2, label: "Round Plus" },
 ];
 </script>
 
@@ -113,7 +121,37 @@ const radiusOptions = [
     <div :class="ns.e('item')">
       <span>主题外观</span>
       <el-select v-model="theme.surface" placeholder="Select" @change="changeThemeSurface">
-        <el-option v-for="item in surfaceOptions" :key="item.value" :label="item.labelZh" :value="item.value" />
+        <el-option v-for="item in surfaceOptions" :key="item.value" :label="$t(item.labelKey)" :value="item.value">
+          <div class="flx-align-center">
+            <span
+              :style="{
+                display: 'inline-block',
+                backgroundColor: item.color,
+                width: '16px',
+                height: '16px',
+                borderRadius: '50%',
+                marginRight: '8px',
+              }"
+            />
+            <span>{{ $t(item.labelKey) }}</span>
+          </div>
+        </el-option>
+
+        <template #label>
+          <div class="flx-align-center">
+            <span
+              :style="{
+                display: 'inline-block',
+                backgroundColor: surfaceOptions.find(item => item.value === theme.surface)?.color,
+                width: '16px',
+                height: '16px',
+                borderRadius: '50%',
+                marginRight: '8px',
+              }"
+            />
+            <span>{{ $t(surfaceOptions.find(item => item.value === theme.surface)?.labelKey ?? "") }}</span>
+          </div>
+        </template>
       </el-select>
     </div>
 

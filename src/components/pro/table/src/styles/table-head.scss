@@ -15,13 +15,13 @@
     .head__tool-button {
       width: 32px;
       margin-left: 0;
-      color: cssVar(text-color-700);
+      color: cssVar(gray-color-700);
       outline: none;
-      background-color: cssVar(text-color-200);
+      background-color: cssVar(gray-color-200);
       border: none;
 
       &:hover {
-        background-color: cssVar(text-color-300);
+        background-color: cssVar(gray-color-300);
       }
     }
   }

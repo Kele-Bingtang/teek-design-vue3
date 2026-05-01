@@ -95,7 +95,7 @@ const revenueData = ref([
           span {
             &:first-of-type {
               font-size: 16px;
-              color: cssVar(text-color-800);
+              color: cssVar(gray-color-800);
             }
 
             &:last-of-type {

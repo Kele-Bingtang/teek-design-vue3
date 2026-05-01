@@ -28,7 +28,7 @@
   }
 
   .#{$el-namespace}-message__content {
-    color: var(--#{$teek-namespace}-text-color-900) !important;
+    color: var(--#{$teek-namespace}-gray-color-900) !important;
     pointer-events: all !important;
     background-image: initial !important;
   }
@@ -41,7 +41,7 @@
       color 0.2s;
 
     &:hover {
-      background-color: var(--#{$teek-namespace}-text-color-200);
+      background-color: var(--#{$teek-namespace}-gray-color-200);
     }
   }
 }
@@ -50,7 +50,7 @@ html.dark {
   .antd-message {
     .#{$el-namespace}-message__closeBtn {
       &:hover {
-        background-color: var(--#{$teek-namespace}-text-color-400);
+        background-color: var(--#{$teek-namespace}-gray-color-400);
       }
     }
   }
