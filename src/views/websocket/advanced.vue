@@ -325,14 +325,14 @@ onUnmounted(() => {
     padding: 10px;
     overflow-y: auto;
     background-color: cssVarEl(fill-color-light);
-    border: 1px solid cssVarEl(border-color);
+    border: 1px solid cssVarEl(surface-border-color);
     border-radius: 4px;
   }
 
   .message-item {
     padding: 5px 0;
     font-family: monospace;
-    border-bottom: 1px solid cssVarEl(border-color);
+    border-bottom: 1px solid cssVarEl(surface-border-color);
 
     &:last-child {
       border-bottom: none;

@@ -1,7 +1,5 @@
 import { storeToRefs } from "pinia";
-import { getLightColor, getDarkColor, setCssVar, getCssVar } from "@/common/utils";
-import { serviceConfig } from "@/common/config";
-import { GlobalThemeEnum } from "@/common/enums";
+import { getLightColor, getDarkColor, setCssVar, getCssVar, removeCssVar } from "@/common/utils";
 import { useSettingStore } from "@/pinia";
 import { useNamespace } from "@/composables";
 
@@ -12,8 +10,7 @@ export const useTheme = () => {
   const ns = useNamespace();
   const settingStore = useSettingStore();
 
-  const { isDark, theme: themeConfig, primaryColor } = storeToRefs(settingStore);
-  const { System } = GlobalThemeEnum;
+  const { isDark, theme: themeConfig } = storeToRefs(settingStore);
 
   /**
    * 禁用过渡效果
@@ -36,33 +33,22 @@ export const useTheme = () => {
   /**
    * 修改全局主题
    */
-  const changeGlobalTheme = (theme = themeConfig.value.globalThemeMode) => {
+  const changeGlobalTheme = (
+    theme = themeConfig.value.globalThemeMode,
+    changeFunctionalColor = themeConfig.value.functionalColorStrictly
+  ) => {
     // 临时禁用过渡效果
     disableTransitions();
 
-    const { globalThemeClassName } = serviceConfig.theme;
-    const { globalThemeMode, defaultDarkMode } = themeConfig.value;
+    const { globalThemeMode } = themeConfig.value;
 
     if (theme !== globalThemeMode) settingStore.$patch({ theme: { globalThemeMode: theme } });
 
-    const currentThemeClassName = globalThemeClassName[theme];
-    const el = document.documentElement;
-
-    // 删除所有主题 class，然后添加切换后的主题 class
-    Object.values(globalThemeClassName).forEach(item => item && el.classList.remove(item));
-    currentThemeClassName && el.classList.add(currentThemeClassName);
-
     // 兼容 ElementPlus 暗黑模式 class
-    isDark.value ? el.classList.add("dark") : el.classList.remove("dark");
+    isDark.value ? document.documentElement.classList.add("dark") : document.documentElement.classList.remove("dark");
 
-    // 暗黑模式的跟随系统默认为 defaultDarkMode 指定的主题
-    theme === System &&
-      isDark.value &&
-      globalThemeClassName[defaultDarkMode] &&
-      el.classList.add(globalThemeClassName[defaultDarkMode]);
-
-    // 获取主题切换后的主题色
-    if (primaryColor.value) changePrimaryColor(primaryColor.value, el);
+    if (changeFunctionalColor) changeAllFunctionalColor();
+    else deriveFunctionalColor(themeConfig.value.primaryColor, "primary");
 
     // 使用 requestAnimationFrame 确保在下一帧恢复过渡效果
     requestAnimationFrame(() => {
@@ -73,45 +59,102 @@ export const useTheme = () => {
   };
 
   /**
-   * 修改主题颜色
+   * 修改主题外观
    */
-  const changePrimaryColor = (color = primaryColor.value, el = document.documentElement) => {
-    const primaryColor = themeConfig.value.primaryColor;
-    const globalThemeMode = themeConfig.value.globalThemeMode;
-    const defaultColor = primaryColor[globalThemeMode];
+  const changeThemeSurface = (
+    surface = themeConfig.value.surface,
+    changeFunctionalColor = themeConfig.value.functionalColorStrictly
+  ) => {
+    disableTransitions();
 
-    if (defaultColor && color !== defaultColor) {
-      primaryColor[globalThemeMode] = color;
-      settingStore.$patch({ theme: { primaryColor } });
-    }
+    document.documentElement.setAttribute("surface", surface);
+    if (surface !== themeConfig.value.surface) settingStore.$patch({ theme: { surface } });
 
-    // el-color-primary = tk-color-primary，因此只需要改 tk-color-primary 的颜色
-    const pc = getCssVar(ns.cssVarName(`color-primary`), el);
-    if (pc && color !== pc) setCssVar(ns.cssVarName(`color-primary`), color, el);
+    if (changeFunctionalColor) changeAllFunctionalColor();
+    else deriveFunctionalColor(themeConfig.value.primaryColor, "primary");
 
-    color && deriveColorByPrimary(color, el);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        enableTransitions();
+      });
+    });
   };
 
   /**
-   * 基于主题色衍生其他颜色
+   * 修改所有功能色
    */
-  const deriveColorByPrimary = (color = primaryColor.value, el = document.documentElement) => {
+  const changeAllFunctionalColor = (reset = false, el = document.documentElement) => {
+    const { primaryColor, successColor, warningColor, dangerColor, errorColor, infoColor } = themeConfig.value;
+
+    changeFunctionalColor(reset ? primaryColor : "", "primary", el);
+    changeFunctionalColor(reset ? successColor : "", "success", el);
+    changeFunctionalColor(reset ? warningColor : "", "warning", el);
+    changeFunctionalColor(reset ? dangerColor : "", "danger", el);
+    changeFunctionalColor(reset ? errorColor : "", "error", el);
+    changeFunctionalColor(reset ? infoColor : "", "info", el);
+  };
+
+  /**
+   * 修改功能色
+   */
+  const changeFunctionalColor = (
+    color: string,
+    type: "primary" | "success" | "warning" | "danger" | "error" | "info" | "secondary" = "primary",
+    el = document.documentElement
+  ) => {
+    // 定义颜色类型与 Store 字段、CSS 变量名的映射关系
+    const colorConfig: Record<string, { storeKey: keyof typeof themeConfig.value; cssVarName: string }> = {
+      primary: { storeKey: "primaryColor", cssVarName: ns.cssVarName(`color-primary`) },
+      success: { storeKey: "successColor", cssVarName: ns.cssVarName(`color-success`) },
+      warning: { storeKey: "warningColor", cssVarName: ns.cssVarName(`color-warning`) },
+      danger: { storeKey: "dangerColor", cssVarName: ns.cssVarName(`color-danger`) },
+      error: { storeKey: "errorColor", cssVarName: ns.cssVarName(`color-error`) },
+      info: { storeKey: "infoColor", cssVarName: ns.cssVarName(`color-info`) },
+    };
+    const config = colorConfig[type];
+    if (!config) return;
+
+    const { storeKey, cssVarName } = config;
+
+    removeCssVar([cssVarName], el);
+    // 获取当前颜色：优先使用传入的 color，其次从 CSS 变量获取，最后默认为空
+    const cssColor = getCssVar(cssVarName, el);
+    const changeColor = color || cssColor || "";
+
+    // 尝试更新 Store
+    if (changeColor !== themeConfig.value[storeKey]) settingStore.$patch({ theme: { [storeKey]: changeColor } });
+
+    // 尝试更新 CSS 变量
+    if (changeColor !== cssColor) setCssVar(cssVarName, changeColor, el);
+
+    // 特殊处理：如果是主色，需要衍生其他色阶
+    if (type === "primary") deriveFunctionalColor(changeColor, "primary", el);
+  };
+
+  /**
+   * 基于主色衍生其他颜色
+   */
+  const deriveFunctionalColor = (
+    color: string,
+    type: "primary" | "success" | "warning" | "danger" | "error" | "info" | "secondary" = "primary",
+    el = document.documentElement
+  ) => {
     // 颜色加深或变浅
     for (let i = 1; i <= 9; i++) {
       setCssVar(
-        ns.cssVarNameEl(`color-primary-light-${i}`),
+        ns.cssVarNameEl(`color-${type}-light-${i}`),
         isDark.value ? `${getDarkColor(color, i / 10)}` : `${getLightColor(color, i / 10)}`,
         el
       );
     }
     for (let i = 1; i <= 9; i++) {
-      setCssVar(ns.cssVarNameEl(`color-primary-dark-${i}`), `${getDarkColor(color, i / 10)}`, el);
+      setCssVar(ns.cssVarNameEl(`color-${type}-dark-${i}`), `${getDarkColor(color, i / 10)}`, el);
     }
 
     // 生成更淡的颜色
     // for (let i = 1; i < 16; i++) {
     //   const itemColor = colorBlend(color, "#ffffff", i / 16);
-    //   if (itemColor) setCssVar(ns.cssVarNameEl(`color-primary-lighter-${i}`), itemColor, el);
+    //   if (itemColor) setCssVar(ns.cssVarNameEl(`color-${type}-lighter-${i}`), itemColor, el);
     // }
   };
 
@@ -129,7 +172,9 @@ export const useTheme = () => {
 
   // 初始化主题配置
   const initTheme = () => {
-    changeGlobalTheme();
+    changeGlobalTheme(themeConfig.value.globalThemeMode, false);
+    changeThemeSurface(themeConfig.value.surface, false);
+    changeAllFunctionalColor(true);
 
     if (themeConfig.value.greyMode) changeGreyOrWeak(true, "greyMode");
     if (themeConfig.value.weakMode) changeGreyOrWeak(true, "weakMode");
@@ -137,8 +182,9 @@ export const useTheme = () => {
 
   return {
     initTheme,
-    changePrimaryColor,
+    changeFunctionalColor,
     changeGreyOrWeak,
     changeGlobalTheme,
+    changeThemeSurface,
   };
 };

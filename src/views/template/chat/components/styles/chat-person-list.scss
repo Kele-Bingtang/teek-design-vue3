@@ -7,7 +7,7 @@
   flex-direction: column;
   width: 360px;
   padding: 20px;
-  border-right: 1px solid cssVarEl(border-color);
+  border-right: 1px solid cssVarEl(surface-border-color);
 
   @include e(header) {
     padding-bottom: 20px;

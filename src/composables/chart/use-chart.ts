@@ -20,16 +20,17 @@ export const useChartOps = (): ChartThemeConfig => {
     /** 字体颜色 */
     fontColor: "#999",
     /** 主题颜色 */
-    themeColor: getCssVar(ns.cssVarNameEl("color-primary-light-1")),
+    themeColor: getCssVar(ns.cssVarName("surface-chart-color-1")),
     /** 颜色组 */
     colors: [
-      getCssVar(ns.cssVarNameEl("color-primary-light-1")),
-      "#4ABEFF",
-      "#EDF2FF",
-      "#14DEBA",
-      "#FFAF20",
-      "#FA8A6C",
-      "#FFAF20",
+      getCssVar(ns.cssVarName("surface-chart-color-1")),
+      getCssVar(ns.cssVarName("surface-chart-color-2")),
+      getCssVar(ns.cssVarName("surface-chart-color-3")),
+      getCssVar(ns.cssVarName("surface-chart-color-4")),
+      getCssVar(ns.cssVarName("surface-chart-color-5")),
+      getCssVar(ns.cssVarName("surface-chart-color-6")),
+      getCssVar(ns.cssVarName("surface-chart-color-7")),
+      getCssVar(ns.cssVarName("surface-chart-color-8")),
     ],
   };
 };
@@ -42,7 +43,7 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
   const { options, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = useChartOptions;
 
   const settingStore = useSettingStore();
-  const { isDark, menu } = storeToRefs(settingStore);
+  const { isDark, menu, theme } = storeToRefs(settingStore);
 
   const chartInstance = useTemplateRef<HTMLElement>(instanceName);
   const chart = shallowRef<echarts.ECharts | null>(null);
@@ -93,29 +94,49 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
     threshold
   );
 
-  // 收缩菜单时，重新计算图表大小
-  watch(
-    () => menu.value.collapsed,
-    () => multiDelayResize(RESIZE_DELAYS)
-  );
-
+  // 收缩菜单时，重新计算图表大小（仅在图表存在时监听）
+  let menuOpenStopHandle: (() => void) | null = null;
   // 主题变化时重新设置图表选项
-  if (autoTheme) {
-    watch(isDark, () => {
-      // 更新空状态样式
-      // emptyStateManager.updateStyle();
+  let themeStopHandle: (() => void) | null = null;
 
-      if (chart.value && !isDestroyed) {
-        // 使用 requestAnimationFrame 优化主题更新
-        requestAnimationFrame(() => {
+  const setupWatcher = () => {
+    // 收缩菜单时，重新计算图表大小
+    menuOpenStopHandle = watch(
+      () => menu.value.collapsed,
+      () => multiDelayResize(RESIZE_DELAYS)
+    );
+
+    // 主题变化时重新设置图表选项
+    if (autoTheme) {
+      themeStopHandle = watch(
+        () => [isDark.value, theme.value],
+        () => {
+          // 更新空状态样式
+          emptyStateManager.updateStyle();
+
           if (chart.value && !isDestroyed) {
-            const currentOptions = chart.value.getOption();
-            if (currentOptions) updateChart(currentOptions as EChartsOption);
+            // 使用 requestAnimationFrame 优化主题更新
+            requestAnimationFrame(() => {
+              if (chart.value && !isDestroyed) {
+                const currentOptions = chart.value.getOption();
+                if (currentOptions) updateChart(currentOptions as EChartsOption);
+              }
+            });
           }
-        });
-      }
-    });
-  }
+        },
+        {
+          deep: true,
+        }
+      );
+    }
+  };
+
+  const cleanupWatchers = () => {
+    menuOpenStopHandle?.();
+    menuOpenStopHandle = null;
+    themeStopHandle?.();
+    themeStopHandle = null;
+  };
 
   // 检查容器是否可见
   const isContainerVisible = (element: HTMLElement): boolean => {
@@ -125,7 +146,10 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
 
   // 图表初始化核心逻辑
   const performChartInit = (options: EChartsOption) => {
-    if (!chart.value && chartInstance.value && !isDestroyed) chart.value = echarts.init(chartInstance.value);
+    if (!chart.value && chartInstance.value && !isDestroyed) {
+      chart.value = echarts.init(chartInstance.value);
+      setupWatcher();
+    }
     if (chart.value && !isDestroyed) {
       chart.value.setOption(options);
       pendingOptions = null;
@@ -142,11 +166,11 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
       if (isEmpty) {
         // 处理空数据情况 - 显示自定义空状态div
         if (chart.value) chart.value.clear();
-        // emptyStateManager.create();
+        emptyStateManager.create();
         return;
       }
       // 有数据时移除空状态
-      // else emptyStateManager.remove();
+      else emptyStateManager.remove();
 
       if (isContainerVisible(chartInstance.value)) {
         // 容器可见，正常初始化
@@ -195,8 +219,9 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
       }
     }
 
-    // 清理空状态
-    // emptyStateManager.remove();
+    // 清理所有监听器和资源
+    cleanupWatchers();
+    emptyStateManager.remove();
     clearTimers();
     cleanIntersectionObserver();
     pendingOptions = null;

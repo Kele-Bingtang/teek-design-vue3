@@ -49,7 +49,7 @@ const statsCards = [
     iconSize: 20,
     iconBgColor: ns.cssVar("color-secondary"),
     textColor: ns.cssVar("color-secondary"),
-    backgroundColor: ns.cssVar("bg-neutral"),
+    backgroundColor: ns.cssVar("bg-secondary"),
     showArrow: false,
   },
   {

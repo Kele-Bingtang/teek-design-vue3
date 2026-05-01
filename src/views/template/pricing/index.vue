@@ -164,7 +164,7 @@ const pricingPlans = ref<PricingPlan[]>([
       .notice-text {
         font-size: 14px;
         font-style: italic;
-        color: var(--art-gray-600);
+        color: cssVarEl(gray-color-600);
       }
     }
   }
@@ -205,7 +205,7 @@ const pricingPlans = ref<PricingPlan[]>([
         h3 {
           margin-bottom: 10px;
           font-size: 1.3rem;
-          color: cssVar(text-gray-900) !important;
+          color: cssVar(gray-color-900) !important;
         }
 
         .description {
@@ -216,8 +216,8 @@ const pricingPlans = ref<PricingPlan[]>([
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 14px;
-          color: cssVar(text-gray-600);
-          border-bottom: 1px solid cssVar(border-color);
+          color: cssVar(gray-color-600);
+          border-bottom: 1px solid cssVar(surface-border-color);
           -webkit-box-orient: vertical;
         }
 
@@ -232,7 +232,7 @@ const pricingPlans = ref<PricingPlan[]>([
           .period {
             margin-left: 10px;
             font-size: 14px;
-            color: cssVar(text-gray-600);
+            color: cssVar(gray-color-600);
           }
         }
       }

@@ -153,7 +153,7 @@ const handleFlag = (item: NotebookItem) => {
       cursor: pointer;
 
       &:hover {
-        background-color: cssVar("gray-100");
+        background-color: cssVar("gray-color-100");
       }
     }
 

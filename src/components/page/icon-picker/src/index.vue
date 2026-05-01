@@ -167,7 +167,7 @@ const fullscreenChange = (isFullscreen: boolean) => {
                 height: `calc(${iconSize} + 10px)`,
                 lineHeight: `calc(${iconSize} + 10px)`,
                 border: `1px solid  ${ns.cssVarEl('border-color')}`,
-                backgroundColor: `${icon === modelValue ? ns.cssVar('gray-200') : ''}`,
+                backgroundColor: `${icon === modelValue ? ns.cssVar('gray-color-200') : ''}`,
               }"
               :class="ns.e('icon')"
               @click="iconSelect(icon)"

@@ -38,11 +38,17 @@ $fade-easing: cubic-bezier(0.4, 0, 0.6, 1); // 淡入淡出专用的缓动函数
     $distance-y: $distance;
   }
 
-  @at-root &-enter-active,
-    &-leave-active {
+  @at-root &-enter-active {
     transition:
       opacity $duration $easing,
       transform $duration $easing;
+    will-change: opacity, transform;
+  }
+
+  @at-root &-leave-active {
+    transition:
+      opacity calc($duration * 0.8) $easing,
+      transform calc($duration * 0.8) $easing;
     will-change: opacity, transform;
   }
 

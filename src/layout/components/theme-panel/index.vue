@@ -19,13 +19,14 @@ const ns = useNamespace("theme-panel");
 const { t } = useI18n();
 const userStore = useUserStore();
 const settingStore = useSettingStore();
-const { changeGlobalTheme } = useTheme();
+const { changeGlobalTheme, changeThemeSurface } = useTheme();
 
 const { isMobile } = useCommon();
 
 const resetSetting = () => {
   settingStore.$reset();
   changeGlobalTheme();
+  changeThemeSurface();
 };
 
 /**
@@ -56,7 +57,7 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
 <template>
   <el-drawer
     v-model="drawerVisible"
-    :size="360"
+    :size="400"
     :lock-scroll="false"
     :with-header="false"
     close-on-click-modal

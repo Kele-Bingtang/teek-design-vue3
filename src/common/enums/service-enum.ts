@@ -27,10 +27,7 @@ export enum HeaderShowModeEnum {
 // 系统主题
 export enum GlobalThemeEnum {
   Light = "light",
-  DarkBlue = "darkBlue",
-  DarkDeep = "darkDeep",
-  DarkMidnight = "darkMidnight",
-  DarkNeutral = "darkNeutral",
+  Dark = "dark",
   System = "system",
 }
 
@@ -103,4 +100,32 @@ export enum HeaderMenuAlignEnum {
 export enum ThemePanelTriggerPositionEnum {
   Header = "header",
   Fixed = "fixed",
+}
+
+// 主题外观枚举
+export enum ThemeSurfaceEnum {
+  TeekBrand = "teek-brand",
+  CloudWhite = "cloud-white",
+  MonoMinimal = "mono-minimal",
+  SlatePro = "slate-pro",
+  SteelCool = "steel-cool",
+  OceanBreeze = "ocean-breeze",
+  ForestMoss = "forest-moss",
+  SunsetDune = "sunset-dune",
+  WarmPaper = "warm-paper",
+  LilacMist = "lilac-mist",
+  BerrySweet = "berry-sweet",
+  NordAurora = "nord-aurora",
+  DeepSpace = "deep-space",
+  VintageTech = "vintage-tech",
+  DeepWood = "deep-wood",
+  MidnightLavender = "midnight-lavender",
+  JadeLuxe = "jade-luxe",
+  DesertSand = "desert-sand",
+  DuskHorizon = "dusk-horizon",
+  ObsidianGlass = "obsidian-glass",
+  CandyFloss = "candy-floss",
+  PopArt = "pop-art",
+  CyberpunkElectric = "cyberpunk-electric",
+  HackerTerminal = "hacker-terminal",
 }

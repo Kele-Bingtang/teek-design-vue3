@@ -61,7 +61,11 @@ export const closeDrawer = () => {
 
   removeWithTransition(overlayEl, () => {
     const vm = document.querySelector(`#${blockClass}-${id--}`);
-    vm && getFatherDom().removeChild(vm);
+
+    if (vm) {
+      getFatherDom().removeChild(vm);
+      render(null, vm);
+    }
 
     if (!document.querySelector(`.${blockClass}-overlay`)) {
       document.body.classList.remove(`${ns.elNamespace}-popup-parent--hidden`);

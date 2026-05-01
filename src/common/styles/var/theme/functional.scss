@@ -1,0 +1,24 @@
+// 功能色
+@use "../../mixins/namespace" as *;
+
+// 浅色
+:root {
+  --#{$teek-namespace}-color-primary: #395ae3;
+  --#{$teek-namespace}-color-success: #0b9e40;
+  --#{$teek-namespace}-color-warning: #e68a00;
+  --#{$teek-namespace}-color-danger: #d93126;
+  --#{$teek-namespace}-color-error: #dd5c27;
+  --#{$teek-namespace}-color-info: #5c667a;
+  --#{$teek-namespace}-color-secondary: #0091ff;
+}
+
+// 深色
+:root.dark {
+  --#{$teek-namespace}-color-primary: #6d94e6;
+  --#{$teek-namespace}-color-success: #4cd890;
+  --#{$teek-namespace}-color-warning: #eab308;
+  --#{$teek-namespace}-color-danger: #e85454;
+  --#{$teek-namespace}-color-error: #ff7e5f;
+  --#{$teek-namespace}-color-info: #a3adbb;
+  --#{$teek-namespace}-color-secondary: #449de0;
+}

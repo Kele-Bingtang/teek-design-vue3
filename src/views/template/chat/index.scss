@@ -5,8 +5,8 @@
 @include b(chat) {
   display: flex;
   height: 100%;
-  background-color: cssVar(bg-color);
-  border: 1px solid cssVar(border-color);
+  background-color: cssVar(surface-bg-color-box);
+  border: 1px solid cssVar(surface-border-color);
   border-radius: 10px;
 
   @include e(modal) {

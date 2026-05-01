@@ -8,7 +8,7 @@
   height: 100vh;
   min-height: 550px;
   padding: 30px;
-  background-color: cssVarEl(bg-color);
+  background-color: cssVarEl(surface-bg-color);
   background-image: url("@/common/assets/images/login/login_bg.svg");
   background-size: cover;
 
@@ -47,7 +47,7 @@
       max-height: 100%;
       padding: 50px 40px 45px;
       overflow: auto;
-      background-color: cssVarEl(bg-color);
+      background-color: cssVarEl(surface-bg-color);
       border-radius: 10px;
       box-shadow: 5px 5px 15px rgb(161 161 161 / 20%);
 

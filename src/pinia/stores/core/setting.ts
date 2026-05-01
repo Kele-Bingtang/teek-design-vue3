@@ -42,11 +42,17 @@ export const useSettingStore = defineStore(
 
     const theme = reactive({
       primaryColor: themeConfig.primaryColor,
-      globalThemeMode: themeConfig.globalThemeMode || GlobalThemeEnum.System,
-      defaultDarkMode: themeConfig.defaultDarkMode,
+      successColor: themeConfig.successColor,
+      warningColor: themeConfig.warningColor,
+      dangerColor: themeConfig.dangerColor,
+      errorColor: themeConfig.errorColor,
+      infoColor: themeConfig.infoColor,
+      globalThemeMode: themeConfig.globalThemeMode,
       radius: themeConfig.radius,
       weakMode: themeConfig.weakMode,
       greyMode: themeConfig.greyMode,
+      surface: themeConfig.surface,
+      functionalColorStrictly: themeConfig.functionalColorStrictly,
     });
 
     const header = reactive({
@@ -133,24 +139,6 @@ export const useSettingStore = defineStore(
       return theme.globalThemeMode.startsWith("dark");
     });
 
-    const primaryColor = computed({
-      get: () => {
-        const defaultMode =
-          theme.globalThemeMode === GlobalThemeEnum.System
-            ? isDark.value
-              ? theme.defaultDarkMode
-              : GlobalThemeEnum.Light
-            : theme.globalThemeMode;
-        // 返回对应主题模式的主题色，如果主题色不存在，则默认返回 Light 主题色，如果仍然不存在，则返回空
-        return theme.primaryColor[defaultMode] || theme.primaryColor[GlobalThemeEnum.Light] || "";
-      },
-      set: value => {
-        theme.primaryColor[
-          theme.globalThemeMode === GlobalThemeEnum.System ? theme.defaultDarkMode : theme.globalThemeMode
-        ] = value;
-      },
-    });
-
     /**
      * 打开侧边菜单
      */
@@ -186,7 +174,6 @@ export const useSettingStore = defineStore(
       shortcutKey,
 
       isDark,
-      primaryColor,
 
       expandSideMenu,
       collapseSideMenu,

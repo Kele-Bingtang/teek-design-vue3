@@ -77,7 +77,7 @@ const list = reactive([
       justify-content: center;
       height: 70px;
       overflow: hidden;
-      border-bottom: 1px solid cssVar(border-color);
+      border-bottom: 1px solid cssVar(surface-border-color);
 
       p {
         font-size: 13px;

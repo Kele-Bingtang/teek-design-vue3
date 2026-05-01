@@ -91,10 +91,10 @@ const getStockStatus = (stock: number) => {
 
 // 根据库存获取状态类名
 const getStockClass = (stock: number) => {
-  if (stock === 0) return "out-of-stock";
-  if (stock < 20) return "low-stock";
-  if (stock < 50) return "medium-stock";
-  return "in-stock";
+  if (stock === 0) return ns.join("bg-error");
+  if (stock < 20) return ns.join("bg-warning");
+  if (stock < 50) return ns.join("bg-info");
+  return ns.join("bg-success");
 };
 
 onMounted(() => {
@@ -118,7 +118,7 @@ const addAnimation = () => {
       <p class="subtitle">本月销售情况</p>
     </div>
     <div class="table">
-      <el-table :data="tableData" size="large" height="300px">
+      <el-table :data="tableData" size="large" height="300px" :header-cell-style="{ background: 'transparent' }">
         <template #default>
           <el-table-column label="产品" prop="product" width="220px">
             <template #default="scope">
@@ -197,26 +197,6 @@ const addAnimation = () => {
     font-size: 12px;
     font-weight: 500;
     border-radius: 4px;
-  }
-
-  .in-stock {
-    color: rgb(cssVar(color-success));
-    background-color: rgb(cssVar(color-success-rgb), 0.1);
-  }
-
-  .medium-stock {
-    color: rgb(cssVar(color-info));
-    background-color: rgb(cssVar(color-info-rgb), 0.1);
-  }
-
-  .low-stock {
-    color: rgb(cssVar(color-warning));
-    background-color: rgb(cssVar(color-warning-rgb), 0.1);
-  }
-
-  .out-of-stock {
-    color: rgb(cssVar(color-error));
-    background-color: rgb(cssVar(color-error-rgb), 0.1);
   }
 }
 </style>
