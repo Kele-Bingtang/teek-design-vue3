@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.2.0...v2.2.1) (2026-05-05)
+
+### Bug Fixes
+
+- **editor:** 🐞 修复 WangEditor 注册附件插件失败问题 ([84c9227](https://github.com/Kele-Bingtang/teek-design-vue3/commit/84c92275cb14d370afbcae96d82c04b5df9123ad))
+- **router:** í° 优化路由守卫中的错误处理机制 ([cf73de5](https://github.com/Kele-Bingtang/teek-design-vue3/commit/cf73de5f916e3cccf689628fa224254bca8151b1))
+- **style:** 🐞 修复背景色 CSS 变量名错误问题 ([fcaa8eb](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fcaa8eb96e4e91b49d3b93a9e3f86f78901e7756))
+
+### Docs
+
+- **changelog:** 📚 更新变更日志表情符号和分类标记 ([2aaa508](https://github.com/Kele-Bingtang/teek-design-vue3/commit/2aaa508c9bfc6b276cb175fe32c664f8b5cd2097))
+
+### Code Refactoring
+
+- **components:** 🚀优化文字溢出提示组件和全局搜索组件文字白化问题 ([e099d8c](https://github.com/Kele-Bingtang/teek-design-vue3/commit/e099d8cff3cefda0ee06fee0be2579cb632be305))
+- **styles:** ♻️ 优化暗色主题下的表单背景样式 ([6a7d162](https://github.com/Kele-Bingtang/teek-design-vue3/commit/6a7d1628e92a722be9a3aadb541cd00441dea706))
+- **styles:** ♻️ 优化过渡动画样式和全局样式重置 ([c814a29](https://github.com/Kele-Bingtang/teek-design-vue3/commit/c814a29caf629dd2ed891e566f6c55d424c3a2da))
+- **theme:** ♻️ 更新主题配置和样式系统 ([7bb364f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/7bb364f8cd45c026c223469baf3c72f69fba618c))
+- **theme:** ♻️ 重构主题配置和图表颜色系统 ([fc06e3f](https://github.com/Kele-Bingtang/teek-design-vue3/commit/fc06e3f606c74a91532bf4e83047bf0708055843))
+- **theme:** ♻️ 重构主题配置系统并优化样式变量结构 ([4090de1](https://github.com/Kele-Bingtang/teek-design-vue3/commit/4090de19d69b5ff642d99c6e66f6dc99477d71bd))
+
 ## [2.2.0](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.1.1...v2.2.0) (2026-03-28)
 
 ### Features

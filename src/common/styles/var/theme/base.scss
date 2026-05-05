@@ -11,16 +11,6 @@
   --#{$teek-namespace}-surface-border-color-light: #e2e8f0;
   --#{$teek-namespace}-surface-border-color-dark: #2c2e32;
 
-  // Chart 颜色
-  --#{$teek-namespace}-surface-chart-color-1: var(--#{$teek-namespace}-color-primary);
-  --#{$teek-namespace}-surface-chart-color-2: #10b981;
-  --#{$teek-namespace}-surface-chart-color-3: #f59e0b;
-  --#{$teek-namespace}-surface-chart-color-4: #8b5cf6;
-  --#{$teek-namespace}-surface-chart-color-5: #ef4444;
-  --#{$teek-namespace}-surface-chart-color-6: #0ea5e9;
-  --#{$teek-namespace}-surface-chart-color-7: #6b7280;
-  --#{$teek-namespace}-surface-chart-color-8: #d97706;
-
   // 边框色，基于基准色 border-color 计算浅边框色和深边框色
   --#{$teek-namespace}-border-accent-color-light: color-mix(
     in srgb,

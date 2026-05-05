@@ -57,10 +57,9 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
 <template>
   <el-drawer
     v-model="drawerVisible"
-    :size="400"
+    :size="360"
     :lock-scroll="false"
-    :with-header="false"
-    close-on-click-modal
+    :with-header="isMobile"
     :class="ns.b()"
     :modal-class="ns.b('modal')"
   >
@@ -91,13 +90,15 @@ mittBus.on(OpenThemePanelKey, () => (drawerVisible.value = true));
     <BrowserTitle />
 
     <template #footer>
-      <el-button plain type="primary" :icon="Refresh" @click="resetSetting">
-        {{ $t("_setting.resetSetting") }}
-      </el-button>
+      <div class="flx-justify-between">
+        <el-button plain type="primary" :icon="Refresh" @click="resetSetting">
+          {{ $t("_setting.resetSetting") }}
+        </el-button>
 
-      <el-button plain @click="clearSettingCache">
-        {{ $t("_setting.clearSettingCache") }}
-      </el-button>
+        <el-button plain @click="clearSettingCache">
+          {{ $t("_setting.clearSettingCache") }}
+        </el-button>
+      </div>
     </template>
   </el-drawer>
 </template>
