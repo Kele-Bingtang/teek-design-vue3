@@ -43,7 +43,7 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
   const { options, initDelay = 0, threshold = 0.1, autoTheme = true, instanceName = "chartInstance" } = useChartOptions;
 
   const settingStore = useSettingStore();
-  const { isDark, menu, theme } = storeToRefs(settingStore);
+  const { isDark, menu } = storeToRefs(settingStore);
 
   const chartInstance = useTemplateRef<HTMLElement>(instanceName);
   const chart = shallowRef<echarts.ECharts | null>(null);
@@ -108,26 +108,20 @@ export function useChart(useChartOptions: UseChartOptions = {}) {
 
     // 主题变化时重新设置图表选项
     if (autoTheme) {
-      themeStopHandle = watch(
-        () => [isDark.value, theme.value],
-        () => {
-          // 更新空状态样式
-          emptyStateManager.updateStyle();
+      themeStopHandle = watch(isDark, () => {
+        // 更新空状态样式
+        emptyStateManager.updateStyle();
 
-          if (chart.value && !isDestroyed) {
-            // 使用 requestAnimationFrame 优化主题更新
-            requestAnimationFrame(() => {
-              if (chart.value && !isDestroyed) {
-                const currentOptions = chart.value.getOption();
-                if (currentOptions) updateChart(currentOptions as EChartsOption);
-              }
-            });
-          }
-        },
-        {
-          deep: true,
+        if (chart.value && !isDestroyed) {
+          // 使用 requestAnimationFrame 优化主题更新
+          requestAnimationFrame(() => {
+            if (chart.value && !isDestroyed) {
+              const currentOptions = chart.value.getOption();
+              if (currentOptions) updateChart(currentOptions as EChartsOption);
+            }
+          });
         }
-      );
+      });
     }
   };
 

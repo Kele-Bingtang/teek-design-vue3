@@ -120,7 +120,7 @@ const radiusOptions = [
 
     <div :class="ns.e('item')">
       <span>主题外观</span>
-      <el-select v-model="theme.surface" placeholder="Select" @change="changeThemeSurface">
+      <el-select v-model="theme.surface" placeholder="Select" @change="changeThemeSurface" style="width: 50%">
         <el-option v-for="item in surfaceOptions" :key="item.value" :label="$t(item.labelKey)" :value="item.value">
           <div class="flx-align-center">
             <span
@@ -185,7 +185,7 @@ const radiusOptions = [
 
     <div :class="ns.e('item')">
       <span>{{ $t("_setting.theme.radius") }}</span>
-      <el-select v-model="theme.radius" placeholder="Select">
+      <el-select v-model="theme.radius" placeholder="Select" style="width: 50%">
         <el-option v-for="item in radiusOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
