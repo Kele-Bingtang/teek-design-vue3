@@ -1,5 +1,5 @@
 import type { CSSProperties } from "vue";
-import type { ElTooltipProps } from "element-plus";
+import type { UseTooltipProps } from "element-plus";
 import type { TableColumn } from "./table-column";
 import type { ExportProps } from "./table-export";
 import type { OptionsMapType } from "@/components/pro/use-options";
@@ -104,6 +104,12 @@ export interface BaseSetting {
    */
   showHeader?: boolean;
   /**
+   * 是否开启表头列宽高拖拽
+   *
+   * @default false
+   */
+  headerResize?: boolean;
+  /**
    * 是否开启禁用边框选择
    *
    * @default false
@@ -133,6 +139,12 @@ export interface BaseSetting {
    * @default false
    */
   disabledShowHeader?: boolean;
+  /**
+   * 是否开启禁用表头列宽高拖拽
+   *
+   * @default false
+   */
+  disabledHeaderResize?: boolean;
 }
 
 /**
@@ -185,7 +197,7 @@ export namespace ProTableHeadNamespace {
     /**
      * ElTable Props
      */
-    tooltipProps?: Partial<ElTooltipProps>;
+    tooltipProps?: Partial<UseTooltipProps>;
     /**
      * 表格列配置
      */
@@ -227,5 +239,9 @@ export namespace ProTableHeadNamespace {
      * 密度选择事件
      */
     sizeChange: [size: TableSizeEnum, sizeStyle: SizeStyle];
+    /**
+     * 全屏事件
+     */
+    fullscreen: [];
   }
 }

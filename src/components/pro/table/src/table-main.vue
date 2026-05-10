@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TableInstance } from "element-plus";
 import type { OperationNamespace, ProTableMainNamespace, TableScope, TableColumn, TableRow } from "./types";
-import { toValue, ref, computed, watch, watchEffect, useTemplateRef } from "vue";
+import { toValue, ref, computed, watch, watchEffect, useTemplateRef, onMounted } from "vue";
 import { ElTable, vLoading } from "element-plus";
 import { isEmpty } from "@/common/utils";
 import Pagination from "@/components/pro/pagination";
@@ -11,7 +11,13 @@ import { useNamespace } from "@/composables";
 import TableColumnData from "./table-column/table-column-data.vue";
 import TableColumnOperation from "./table-column/table-column-operation.vue";
 import TableColumnType from "./table-column/table-column-type.vue";
-import { defaultTablePageInfo, useSelection, useTableCellEdit, useTableFormInstance } from "./composables";
+import {
+  defaultTablePageInfo,
+  useHeaderHeightResize,
+  useSelection,
+  useTableCellEdit,
+  useTableFormInstance,
+} from "./composables";
 import { filterData, initModel, isServer, initNativeRowField } from "./helper";
 
 import "./styles/table-main.scss";
@@ -34,6 +40,7 @@ const props = withDefaults(defineProps<ProTableMainNamespace.Props>(), {
   radioProps: () => ({}),
   preventCellEditClass: () => [],
   initNativeRowField: false,
+  headerResize: false,
 });
 
 const emits = defineEmits<ProTableMainNamespace.Emits>();
@@ -60,6 +67,7 @@ const { availableColumns } = useTableInit();
 const { handleClickCell, handleDoubleClickCell, handleSelectionChange, handleRadioChange } = useTableEvent();
 const { getOperationProps, handleButtonClick, handleButtonConfirm, handleButtonCancel } = useTableOperation();
 const { filterTableData, handleFilter, handleFilterClear, handleFilterReset } = useTableFiler();
+const { start: startHeaderHeightResize, stop: stopHeaderHeightResize } = useHeaderHeightResize(elTableInstance);
 
 // 表格选择
 const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
@@ -292,6 +300,19 @@ const handlePaginationChange = () => emits("paginationChange", pageInfo.value);
  */
 const clearSelection = () => elTableInstance.value?.clearSelection();
 
+// 表格表头列调整大小
+watch(
+  () => props.headerResize,
+  value => {
+    if (value) startHeaderHeightResize();
+    else stopHeaderHeightResize();
+  }
+);
+
+onMounted(() => {
+  props.headerResize && setTimeout(startHeaderHeightResize);
+});
+
 const expose = {
   optionsMap,
   elTableInstance,
@@ -311,10 +332,10 @@ defineExpose(expose);
   <el-table
     ref="elTableInstance"
     show-overflow-tooltip
-    v-bind="$attrs"
+    v-bind="headerResize ? { ...$attrs, border: true } : $attrs"
+    :class="[ns.b(), { [ns.join('header--resize')]: !$attrs.border && headerResize }]"
     :data="tableData"
     :row-key
-    :class="ns.b()"
     @selection-change="handleSelectionChange"
     @cell-click="handleClickCell"
     @cell-dblclick="handleDoubleClickCell"

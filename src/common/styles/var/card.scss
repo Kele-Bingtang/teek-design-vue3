@@ -243,6 +243,7 @@
 }
 
 // 极简卡片（默认卡片）
+.#{$teek-namespace}-card,
 .#{$teek-namespace}-card-minimal {
   @extend %card-base;
   @include card-border("base");

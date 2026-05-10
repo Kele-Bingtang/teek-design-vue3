@@ -1,5 +1,6 @@
 @use "@styles/mixins/bem" as *;
 
 @include b(pro-search) {
-  padding: 18px 18px 0 !important;
+  padding: 18px 18px 0;
+  overflow: unset;
 }

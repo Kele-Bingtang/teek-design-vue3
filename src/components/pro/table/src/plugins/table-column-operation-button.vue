@@ -25,6 +25,21 @@ const defaultMessage = "确定执行本次操作?";
 const icon = computed(() => toRaw(props.icon));
 const confirmElValue = computed(() => toCamelCase(toValue(props.confirmEl)));
 
+// 修改 elProps 默认值
+const finalElProps = computed(() => {
+  const { el, elProps } = props;
+
+  if (el === OperationEl.ElLink) {
+    return {
+      underline: "never",
+      ...elProps,
+      href: "javascript:;",
+    };
+  }
+
+  return elProps;
+});
+
 const handleButtonClick = (event: MouseEvent) => {
   emits("click", event);
 
@@ -61,7 +76,7 @@ const handleCancel = (event: MouseEvent) => {
         @cancel="handleCancel"
       >
         <template #reference>
-          <el-icon size="16" v-bind="elProps" @click="handleButtonClick">
+          <el-icon size="16" v-bind="finalElProps" @click="handleButtonClick">
             <component v-if="icon" :is="icon" />
           </el-icon>
         </template>
@@ -69,7 +84,7 @@ const handleCancel = (event: MouseEvent) => {
     </span>
 
     <!-- 普通图标按钮 -->
-    <el-icon v-else size="16" v-bind="elProps" @click="handleButtonClick">
+    <el-icon v-else size="16" v-bind="finalElProps" @click="handleButtonClick">
       <component v-if="icon" :is="icon" />
     </el-icon>
   </el-tooltip>
@@ -90,7 +105,7 @@ const handleCancel = (event: MouseEvent) => {
           :is="el === OperationEl.ElButton ? ElButton : ElLink"
           size="small"
           :href="el === OperationEl.ElLink ? 'javascript:;' : undefined"
-          v-bind="elProps"
+          v-bind="finalElProps"
           @click="handleButtonClick"
         >
           {{ text }}
@@ -103,8 +118,7 @@ const handleCancel = (event: MouseEvent) => {
       v-else
       :is="el === OperationEl.ElButton ? ElButton : ElLink"
       size="small"
-      :href="el === OperationEl.ElLink ? 'javascript:;' : undefined"
-      v-bind="elProps"
+      v-bind="finalElProps"
       @click="handleButtonClick"
     >
       {{ text }}

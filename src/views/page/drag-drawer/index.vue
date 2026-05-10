@@ -21,6 +21,10 @@ const handleResize = (event: any) => {
 <template>
   <el-space fill :class="ns.b()">
     <el-card shadow="never" class="tk-card-minimal">
+      Element Plus v2.11.0 版本的抽屉组件(ElDrawer)已经支持拖拽大小功能，传入 resizable
+      配置项即可开启，因此本功能不再维护。
+    </el-card>
+    <el-card shadow="never" class="tk-card-minimal">
       <div :class="ns.e('header')">
         <el-switch
           v-model="placement"

@@ -36,7 +36,8 @@ export interface PageField {
  */
 export namespace ProTableNamespace {
   export interface Props
-    extends Omit<ProTableMainNamespace.Props, "columns">,
+    extends
+      Omit<ProTableMainNamespace.Props, "columns">,
       Omit<ProTableHeadNamespace.Props, "data" | "columns" | "isSelected" | "selectedList" | "selectedListIds"> {
     /**
      * 列配置项

@@ -20,7 +20,7 @@ import type {
   CheckboxGroupProps,
   RadioProps,
   TimePickerDefaultProps,
-  ElTooltipProps,
+  UseTooltipProps,
 } from "element-plus";
 import type { TreeProps } from "element-plus/es/components/tree-v2/src/types";
 import type { SelectProps } from "element-plus/es/components/select/src/select";
@@ -288,7 +288,7 @@ export interface FormItemColumnProps<T = Recordable> {
         icon?: Component; // ElTooTip 绑定的元素图标
         render?: () => RenderTypes; // 自定义 ElTooTip 绑定的元素，将会覆盖图标，传入 ElTooTip 的 default 插槽里
         contentRender?: () => RenderTypes; // 自定义 ElTooTip 的内容，传入 ElTooTip 的 content 插槽里
-      } & Partial<ElTooltipProps>);
+      } & Partial<UseTooltipProps>);
   /**
    * 表单绑定的值格式，场景：select 下拉 value 为 "1"，而 value 值是 1 导致无法匹配，可以设置为 valueFormat: "string" 解决
    */

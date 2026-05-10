@@ -147,6 +147,7 @@ const handleButtonCancel = (params: OperationNamespace.ButtonsCallBackParams) =>
     page-scope
     card
     init-native-row-field
+    header-resize
     editable="click"
     :operation-props="{
       buttons: buttons,
