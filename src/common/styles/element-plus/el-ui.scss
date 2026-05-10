@@ -316,6 +316,13 @@
   }
 }
 
+// 优化 el-color-picker 样式
+.#{$el-namespace}-color-picker {
+  &__color {
+    border-radius: 4px;
+  }
+}
+
 // 修改 el-descriptions 样式
 div.#{$el-namespace}-descriptions {
   --#{$el-namespace}-descriptions-item-bordered-label-background: var(--#{$teek-namespace}-gray-color-100);

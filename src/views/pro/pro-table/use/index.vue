@@ -215,6 +215,6 @@ const columns = reactive<TableColumn<ResUserList>[]>([
       </el-space>
     </el-card>
 
-    <ProTable :columns :requestApi="getTicketList" page-scope @register="tableRegister" />
+    <ProTable :columns :requestApi="getTicketList" page-scope @register="tableRegister" card />
   </el-space>
 </template>

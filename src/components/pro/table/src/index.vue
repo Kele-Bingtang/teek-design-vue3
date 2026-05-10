@@ -78,6 +78,7 @@ const props = withDefaults(defineProps<ProTableNamespace.Props>(), {
   radioProps: () => ({}),
   preventCellEditClass: () => [],
   initNativeRowField: false,
+  headerResize: false,
 });
 
 const emits = defineEmits<ProTableNamespace.Emits>();

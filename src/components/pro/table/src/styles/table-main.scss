@@ -1,9 +1,31 @@
 @use "@styles/mixins/bem" as *;
 @use "@styles/mixins/namespace" as *;
+@use "@styles/mixins/function" as *;
 
 @include b(table-main) {
   @include e(empty) {
     margin: 16px 0;
     line-height: 30px;
+  }
+
+  &.#{$teek-namespace}-header--resize {
+    @include el-joins(table__cell) {
+      border-right: none;
+    }
+
+    @include el-joins(table__header) {
+      thead .cell::after {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        z-index: 10;
+        height: 1rem;
+        line-height: 1rem;
+        cursor: col-resize;
+        content: "";
+        border-right: cssVarEl(table-border);
+        transform: translateY(-50%);
+      }
+    }
   }
 }
