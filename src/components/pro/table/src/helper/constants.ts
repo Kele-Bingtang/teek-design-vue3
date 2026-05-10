@@ -1,9 +1,16 @@
-import type { ElTooltipProps } from "element-plus";
+import type { UseTooltipProps } from "element-plus";
 import type { ToolButtonEnum } from "./enums";
 
-export const defaultToolButton: `${ToolButtonEnum}`[] = ["refresh", "size", "export", "columnSetting", "baseSetting"];
+export const defaultToolButton: `${ToolButtonEnum}`[] = [
+  "refresh",
+  "size",
+  "fullscreen",
+  "export",
+  "columnSetting",
+  "baseSetting",
+];
 
-export const defaultTooltipProps: Partial<ElTooltipProps> = {
+export const defaultTooltipProps: Partial<UseTooltipProps> = {
   placement: "top",
   effect: "light",
 };

@@ -86,6 +86,8 @@ const emits = defineEmits<ProTableNamespace.Emits>();
 const ns = useNamespace("pro-table");
 
 const hideHead = ref(false);
+// 表格是否全屏
+const isFullscreen = ref(false);
 
 // 最终的 props
 const finalProps = computed(() => {
@@ -252,6 +254,7 @@ function useTableBaseSetting() {
     showHeader: finalProps.value.showHeader,
     headerBackground: finalProps.value.headerBackground,
     highlightCurrentRow: finalProps.value.highlightCurrentRow,
+    headerResize: finalProps.value.headerResize,
     ...finalProps.value.baseSetting,
   });
 
@@ -374,6 +377,11 @@ function useTableEmits() {
 const tableHeadInstance = useTemplateRef<ProTableHeadInstance>("tableHeadInstance");
 const tableMainInstance = useTemplateRef<ProTableMainInstance>("tableMainInstance");
 
+const handleFullscreen = () => {
+  isFullscreen.value = !isFullscreen.value;
+  emits("fullscreen");
+};
+
 onMounted(() => {
   // 注册实例
   emits("register", tableMainInstance.value?.$parent || null, tableMainInstance.value?.elTableInstance || null);
@@ -405,7 +413,7 @@ defineExpose(expose);
 </script>
 
 <template>
-  <div :class="[ns.b(), { [ns.join('card-minimal')]: card }]">
+  <div :class="[ns.b(), { [ns.join('card-minimal')]: card, [ns.join('element-fullscreen')]: isFullscreen }]">
     <!-- 表格头部 -->
     <TableHead
       v-if="!hideHead"
@@ -428,6 +436,7 @@ defineExpose(expose);
       :options-map="tableMainInstance?.optionsMap"
       @refresh="handleRefresh"
       @size-change="handleSizeChange"
+      @fullscreen="handleFullscreen"
     >
       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />

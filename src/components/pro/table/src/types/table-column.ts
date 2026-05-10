@@ -148,7 +148,8 @@ export type TableRow<T extends Recordable = any> =
  * 表格列配置
  */
 export interface TableColumn<T extends Recordable = any>
-  extends Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
+  extends
+    Partial<Omit<TableColumnCtx<T>, "children" | "renderCell" | "renderHeader" | "width" | "label">>,
     Omit<ElDisplayProps<T>, "originValue" | "displayValue" | "options" | "optionField">,
     Omit<OperationNamespace.ExtraProp, "el"> {
   /**

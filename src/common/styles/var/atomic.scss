@@ -92,3 +92,14 @@
 .#{$teek-namespace}-shadow-lg {
   box-shadow: var(--#{$teek-namespace}-box-shadow-lg) !important;
 }
+
+// 全屏元素
+.#{$teek-namespace}-element-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--#{$teek-namespace}-surface-bg-color-box);
+}

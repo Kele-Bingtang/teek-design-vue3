@@ -19,6 +19,7 @@ export enum TableSizeEnum {
 export enum ToolButtonEnum {
   Refresh = "refresh",
   Size = "size",
+  Fullscreen = "fullscreen",
   Export = "export",
   ColumnSetting = "columnSetting",
   BaseSetting = "baseSetting",

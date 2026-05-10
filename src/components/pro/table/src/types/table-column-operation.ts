@@ -2,7 +2,7 @@ import type { AppContext, Component, MaybeRef, MaybeRefOrGetter } from "vue";
 import type {
   ButtonProps,
   ElMessageBoxOptions,
-  ElTooltipProps,
+  UseTooltipProps,
   IconProps,
   LinkProps,
   PopconfirmProps,
@@ -78,7 +78,7 @@ export namespace OperationNamespace {
       | Confirm<OperationConfirmEl.ElMessageBox | `${OperationConfirmEl.ElMessageBox}`>;
   }
 
-  export type Props = Omit<TableColumn, "children" | "renderCell"> & ExtraProp;
+  export type Props = TableColumn & ExtraProp;
 
   export interface Emits {
     /**
@@ -166,7 +166,7 @@ export namespace OperationNamespace {
     /**
      * ElTooltip 组件的 props， type 为 icon 时生效
      */
-    tooltipProps?: Partial<ElTooltipProps>;
+    tooltipProps?: Partial<UseTooltipProps>;
     /**
      * 按钮显示的逻辑 默认 true 显示，不需要显示给 false
      */
@@ -249,9 +249,9 @@ export interface OperationButtonProps {
    */
   icon?: Component;
   /**
-   * ElTooltipProps props
+   * UseTooltipProps props
    */
-  tooltipProps?: Partial<ElTooltipProps>;
+  tooltipProps?: Partial<UseTooltipProps>;
   /**
    * 二次确认组件
    */
