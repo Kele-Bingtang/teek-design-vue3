@@ -9,6 +9,19 @@
   }
 
   &.#{$teek-namespace}-header--resize {
+    &::before,
+    &::after {
+      content: none;
+    }
+
+    @include el-joins("table__inner-wrapper::before", "table__inner-wrapper::after") {
+      content: none;
+    }
+
+    @include el-joins(table__border-left-patch) {
+      display: none;
+    }
+
     @include el-joins(table__cell) {
       border-right: none;
     }
