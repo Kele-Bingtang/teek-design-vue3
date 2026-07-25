@@ -6,7 +6,7 @@
  */
 
 const envConfig = {
-  // VITE_API_URL: "", // 接口请求地址
+  VITE_API_URL: "", // 接口请求地址
   // VITE_ROUTE_ACCESS_MODE: "", // 路由权限模式，可选 "frontend" | "backend" | "mixed" | "mixed-hide-frontend"
   // VITE_FILE_ORIGIN_URL: "", // 图片、 附件域名前缀
   // VITE_DPS_BACK_PATH: "", // DPS 后端接口前缀
