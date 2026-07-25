@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.2.1...v2.2.2) (2026-07-25)
+
+### Features
+
+- **pro-table:** 🚀 新增表格表头列宽拖拽调整功能 ([63547a0](https://github.com/Kele-Bingtang/teek-design-vue3/commit/63547a05ff340a4ddbe784bc17b4698205e22773))
+- **table:** 🚀 添加表格全屏功能和优化操作按钮 ([33907bc](https://github.com/Kele-Bingtang/teek-design-vue3/commit/33907bc044416be5113439d00bf34351be550487))
+
+### Bug Fixes
+
+- **index:** 🐞 修复环境变量注入顺序错误导致失效问题 ([f82a489](https://github.com/Kele-Bingtang/teek-design-vue3/commit/f82a4898ebb91d807a16edc7fb6a1ba8f65f40d6))
+- **watermark:** 🐞 修复水印层级显示问题 ([352475b](https://github.com/Kele-Bingtang/teek-design-vue3/commit/352475b58cee30061a2456bc31248fb3cad612e4))
+
+### Styling
+
+- **table:** 🎨 移除表格头部调整大小时的边框显示 ([8284d04](https://github.com/Kele-Bingtang/teek-design-vue3/commit/8284d042f03c77ce8c635027a1f5d4c439c7d90f))
+
 ## [2.2.1](https://github.com/Kele-Bingtang/teek-design-vue3/compare/v2.2.0...v2.2.1) (2026-05-05)
 
 ### Bug Fixes
