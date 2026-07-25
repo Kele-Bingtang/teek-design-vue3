@@ -151,19 +151,20 @@ export const filterData = (data: Recordable[], model: Recordable, filterRule: Re
  * 初始化 column 部分配置项，并移出不需要的配置项
  */
 export const initTableColumn = (column: TableColumn) => {
-  column.filter = toValue(column.filter);
-  column.editable = toValue(column.editable);
-  column.hidden = toValue(column.hidden);
-  column.disabledHidden = toValue(column.disabledHidden);
-  column.disabledFilter = toValue(column.disabledFilter);
-  column.disabledSortable = toValue(column.disabledSortable);
-  column.isFilterOptions = toValue(column.isFilterOptions);
-  column.width = toValue(column.width);
-  column.label = toValue(column.label);
+  const toValueColumn = {
+    filter: toValue(column.filter),
+    editable: toValue(column.editable),
+    hidden: toValue(column.hidden),
+    disabledHidden: toValue(column.disabledHidden),
+    disabledFilter: toValue(column.disabledFilter),
+    disabledSortable: toValue(column.disabledSortable),
+    isFilterOptions: toValue(column.isFilterOptions),
+    width: toValue(column.width),
+    label: toValue(column.label),
+  };
 
   // 使用解构并排除 children, renderHeader 属性
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { children, renderHeader, ...rest } = toRaw(column);
-
+  const { children, renderHeader, ...rest } = { ...toRaw(column), ...toValueColumn };
   return rest as unknown as TableColumnCtx<any>;
 };
