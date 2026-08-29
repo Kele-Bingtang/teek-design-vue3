@@ -135,41 +135,35 @@ const handleDoAdd = <T extends Recordable = any>(data: T) => {
 
   elFormInstance?.validate(async valid => {
     if (valid) {
-      const {
-        cache,
-        addApi,
-        apiFilterKeys,
-        addFilterKeys,
-        apiCarryParams,
-        addCarryParams,
-        onAdd,
-        afterConfirm,
-        requestFailed,
-      } = props;
+      const { cache, addApi, apiFilterKeys, addFilterKeys, addCarryParams, onAdd, afterConfirm, requestFailed } = props;
 
       // 删除 Add 不允许传输的数据
       const filterParams = [...(apiFilterKeys || []), ...(addFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
 
-      const result = await onAdd?.(data);
+      const successCallBack = () => {
+        if (!cache) model.value = {};
+        feedbackFormVisible.value = false;
+        afterConfirm?.(status.value, true);
+      };
+
+      const failureCallBack = (err: any) => {
+        afterConfirm?.(status.value, false);
+        requestFailed?.(err, model.value);
+      };
+
+      const result = await onAdd?.(data, successCallBack, failureCallBack);
       // 返回 false 则继续往下执行
       if (result !== false) return;
 
       // 执行新增接口
       executeApi(
         addApi,
-        { ...apiCarryParams, ...addCarryParams, ...data },
+        { ...getCarryParams(addCarryParams, data), ...data },
         "添加成功！",
         "添加失败！",
-        async () => {
-          if (!cache) model.value = {};
-          feedbackFormVisible.value = false;
-          afterConfirm?.(status.value, true);
-        },
-        err => {
-          afterConfirm?.(status.value, false);
-          requestFailed?.(err, model.value);
-        }
+        successCallBack,
+        failureCallBack
       );
     }
   });
@@ -183,40 +177,34 @@ const handleDoEdit = <T extends Recordable = any>(data: T) => {
 
   elFormInstance?.validate(async valid => {
     if (valid) {
-      const {
-        cache,
-        editApi,
-        apiFilterKeys,
-        editFilterKeys,
-        apiCarryParams,
-        editCarryParams,
-        onEdit,
-        requestFailed,
-        afterConfirm,
-      } = props;
+      const { editApi, apiFilterKeys, editFilterKeys, editCarryParams, onEdit, requestFailed, afterConfirm } = props;
 
       // 删除 Update 不允许传输的数据
       const filterParams = [...(apiFilterKeys || []), ...(editFilterKeys || [])];
       filterParams.forEach(item => delete data[item]);
 
-      const result = onEdit?.(data);
+      const successCallBack = () => {
+        model.value = {};
+        feedbackFormVisible.value = false;
+        afterConfirm?.(status.value, true);
+      };
+
+      const failureCallBack = (err: any) => {
+        afterConfirm?.(status.value, false);
+        requestFailed?.(err, model.value);
+      };
+
+      const result = onEdit?.(data, successCallBack, failureCallBack);
       // 返回 false 则继续往下执行
       if (result !== false) return;
 
       executeApi(
         editApi,
-        { ...apiCarryParams, ...editCarryParams, ...data },
+        { ...getCarryParams(editCarryParams, data), ...data },
         "编辑成功！",
         "编辑失败！",
-        async () => {
-          if (!cache) model.value = {};
-          feedbackFormVisible.value = false;
-          afterConfirm?.(status.value, true);
-        },
-        err => {
-          afterConfirm?.(status.value, false);
-          requestFailed?.(err, model.value);
-        }
+        successCallBack,
+        failureCallBack
       );
     }
   });
@@ -226,17 +214,8 @@ const handleDoEdit = <T extends Recordable = any>(data: T) => {
  * 执行删除事件
  */
 const handleRemove = async <T extends Recordable = any>(row: T, fallback: (result: any) => void) => {
-  const {
-    cache,
-    removeApi,
-    apiFilterKeys,
-    removeFilterKeys,
-    apiCarryParams,
-    removeCarryParams,
-    onRemove,
-    afterConfirm,
-    requestFailed,
-  } = props;
+  const { removeApi, apiFilterKeys, removeFilterKeys, removeCarryParams, onRemove, afterConfirm, requestFailed } =
+    props;
 
   const data = deepClone(row);
   // _enum 是 ProTable 内置的属性，专门存储字典数据，不需要发送给后台
@@ -246,24 +225,27 @@ const handleRemove = async <T extends Recordable = any>(row: T, fallback: (resul
   const filterParams = [...(apiFilterKeys || []), ...(removeFilterKeys || [])];
   filterParams.forEach(item => delete data[item]);
 
-  const result = await onRemove?.(data);
+  const successCallBack = () => {
+    feedbackFormVisible.value = false;
+    afterConfirm?.(status.value, true);
+  };
+
+  const failureCallBack = (err: any) => {
+    afterConfirm?.(status.value, false);
+    requestFailed?.(err, model.value);
+  };
+
+  const result = await onRemove?.(data, successCallBack, failureCallBack);
   // 返回 false 则继续往下执行
   if (result !== false) return;
 
   executeApi(
     removeApi,
-    { ...apiCarryParams, ...removeCarryParams, ...data },
+    { ...getCarryParams(removeCarryParams, data), ...data },
     "删除成功！",
     "删除失败！",
-    async res => {
-      if (!cache) model.value = {};
-      afterConfirm?.(status.value, true);
-      fallback(res);
-    },
-    err => {
-      afterConfirm?.(status.value, false);
-      requestFailed?.(err, model.value);
-    }
+    successCallBack,
+    failureCallBack
   );
 };
 
@@ -285,36 +267,48 @@ const handleRemoveBatch = async (selectedListIds: string[], selectedList: any, f
     type: "warning",
     draggable: true,
   }).then(async () => {
-    const {
-      cache,
-      removeBatchApi,
-      apiCarryParams,
-      removeBatchCarryParams,
-      onRemoveBatch,
-      requestFailed,
-      afterConfirm,
-    } = props;
+    const { removeBatchApi, removeBatchCarryParams, onRemoveBatch, requestFailed, afterConfirm } = props;
 
-    const result = await onRemoveBatch?.(data);
+    const successCallBack = (res: any) => {
+      afterConfirm?.(status.value, true);
+      fallback(res);
+    };
+
+    const failureCallBack = (err: any) => {
+      afterConfirm?.(status.value, false);
+      requestFailed?.(err, model.value);
+    };
+
+    const result = await onRemoveBatch?.(data, successCallBack, failureCallBack);
+
     // 返回 false 则继续往下执行
     if (result !== false) return;
 
     executeApi(
       removeBatchApi,
-      { ...apiCarryParams, ...removeBatchCarryParams, ...data },
+      { ...getCarryParams(removeBatchCarryParams, data), ...data },
       "删除成功！",
       "删除失败！",
-      async res => {
-        if (!cache) model.value = {};
-        afterConfirm?.(status.value, true);
-        fallback(res);
-      },
-      err => {
-        afterConfirm?.(status.value, false);
-        requestFailed?.(err, model.value);
-      }
+      successCallBack,
+      failureCallBack
     );
   });
+};
+
+/**
+ * 获取请求携带的参数
+ */
+const getCarryParams = (extraCarryParams: Recordable | undefined | ((data: Recordable) => Recordable), data: any) => {
+  const { apiCarryParams } = props;
+  let carryParams = {};
+
+  if (isFunction(apiCarryParams)) carryParams = { ...carryParams, ...apiCarryParams(data) };
+  else carryParams = { ...carryParams, ...apiCarryParams };
+
+  if (isFunction(extraCarryParams)) carryParams = { ...carryParams, ...extraCarryParams(data) };
+  else carryParams = { ...carryParams, ...extraCarryParams };
+
+  return carryParams;
 };
 
 const executeApi = (
@@ -322,8 +316,8 @@ const executeApi = (
   params: Recordable,
   success: string,
   failure: string,
-  successCallBack?: (res: any) => void,
-  failureCallBack?: (res: any) => void
+  successCallBack: (res: any) => void,
+  failureCallBack: (res: any) => void
 ) => {
   if (!api) return ElMessage.warning({ message: `${failure}没有提供对应接口`, plain: true });
   api(params)

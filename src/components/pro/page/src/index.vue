@@ -81,7 +81,10 @@ const proTableProps = computed(() => {
           size: "small",
           disabled: executeIfFunctionOrReturn(feedbackFormProps?.disableEdit, row),
         }),
-        show: row => (feedbackFormProps?.editApi ? true : executeIfFunctionOrReturn(feedbackFormProps?.useEdit, row)),
+        show: row =>
+          feedbackFormProps?.editApi ||
+          feedbackFormProps?.onEdit ||
+          executeIfFunctionOrReturn(feedbackFormProps?.useEdit, row),
         el: "el-link",
         icon: Edit,
         onClick: ({ row }) => feedbackFormInstance.value?.handleEdit(row),
@@ -98,7 +101,9 @@ const proTableProps = computed(() => {
           props: { title: "你确定删除吗?" },
         },
         show: row =>
-          feedbackFormProps?.removeApi ? true : executeIfFunctionOrReturn(feedbackFormProps?.useRemove, row),
+          feedbackFormProps?.removeApi ||
+          feedbackFormProps?.onRemove ||
+          executeIfFunctionOrReturn(feedbackFormProps?.useRemove, row),
         el: "el-link",
         icon: Delete,
         onClick: ({ row }) => feedbackFormInstance.value?.clickRemove?.(row),
@@ -371,6 +376,7 @@ defineExpose(expose);
 
     <ProTable
       ref="proTableInstance"
+      class="flx-column"
       v-bind="{ ...$attrs, ...proTableProps }"
       :request-params="searchParams"
       :init-request-params="initRequestParams"
@@ -413,9 +419,9 @@ defineExpose(expose);
           <slot name="add" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
             <el-button
               v-if="
-                feedbackFormProps?.addApi
-                  ? true
-                  : executeIfFunctionOrReturn(feedbackFormProps?.useAdd, { selectedListIds, selectedList, isSelected })
+                feedbackFormProps?.addApi ||
+                feedbackFormProps?.onAdd ||
+                executeIfFunctionOrReturn(feedbackFormProps?.useAdd, { selectedListIds, selectedList, isSelected })
               "
               type="primary"
               :icon="Plus"
@@ -430,13 +436,13 @@ defineExpose(expose);
           <slot name="removeBatch" v-bind="{ selectedListIds, selectedList, isSelected, feedbackFormInstance }">
             <el-button
               v-if="
-                feedbackFormProps?.removeBatchApi
-                  ? true
-                  : executeIfFunctionOrReturn(feedbackFormProps?.useRemoveBatch, {
-                      selectedListIds,
-                      selectedList,
-                      isSelected,
-                    })
+                feedbackFormProps?.removeBatchApi ||
+                feedbackFormProps?.onRemoveBatch ||
+                executeIfFunctionOrReturn(feedbackFormProps?.useRemoveBatch, {
+                  selectedListIds,
+                  selectedList,
+                  isSelected,
+                })
               "
               type="danger"
               :icon="Delete"

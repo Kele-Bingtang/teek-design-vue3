@@ -71,7 +71,7 @@ const handleCancel = (event: MouseEvent) => {
       <el-popconfirm
         trigger="click"
         :title="defaultMessage"
-        v-bind="confirmProps"
+        v-bind="{ disabled: finalElProps?.disabled, ...confirmProps }"
         @confirm="handleConfirm"
         @cancel="handleCancel"
       >
@@ -96,7 +96,7 @@ const handleCancel = (event: MouseEvent) => {
       v-if="confirmElValue === OperationConfirmEl.ElPopconfirm"
       trigger="click"
       :title="defaultMessage"
-      v-bind="confirmProps"
+      v-bind="{ disabled: finalElProps?.disabled, ...confirmProps }"
       @confirm="handleConfirm"
       @cancel="handleCancel"
     >

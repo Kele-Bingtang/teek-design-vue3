@@ -63,7 +63,7 @@ const { menu, logo, header } = storeToRefs(settingStore);
         />
       </el-aside>
 
-      <div class="flx-1">
+      <div class="flx-1 flx-column">
         <TabNav :class="ns.join('auto-top')" :style="heightStyle" />
         <PageContent :style="rightContentStyle" />
       </div>

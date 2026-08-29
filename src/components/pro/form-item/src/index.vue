@@ -262,6 +262,10 @@ defineExpose(expose);
           </span>
         </el-divider>
 
+        <el-text v-else-if="formEl === FormElComponentEnum.EL_TEXT" v-bind="elPropsValue" :style="{ width: withValue }">
+          {{ elModel }}
+        </el-text>
+
         <el-upload
           v-else-if="formEl === FormElComponentEnum.EL_UPLOAD"
           ref="elInstance"

@@ -139,7 +139,7 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 调用 addApi 时额外传入的参数
    */
-  addCarryParams?: Recordable;
+  addCarryParams?: Recordable | ((model: T) => Recordable);
   /**
    * 调用 addApi 时过滤掉的参数
    */
@@ -151,7 +151,7 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 调用 editApi 时额外传入的参数
    */
-  editCarryParams?: Recordable;
+  editCarryParams?: Recordable | ((data: T) => Recordable);
   /**
    * 调用 editApi 时过滤掉的参数
    */
@@ -163,7 +163,7 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 调用 removeApi 时额外传入的参数
    */
-  removeCarryParams?: Recordable;
+  removeCarryParams?: Recordable | ((data: T) => Recordable);
   /**
    * 调用 removeApi 时过滤掉的参数
    */
@@ -175,7 +175,7 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 调用 removeBatchApi 时额外传入的参数
    */
-  removeBatchCarryParams?: Recordable;
+  removeBatchCarryParams?: Recordable | ((data: T) => Recordable);
   /**
    * 调用所有 API 接口时额外传入的参数
    */
@@ -183,7 +183,7 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 调用所有 API 接口时过滤掉的参数
    */
-  apiCarryParams?: Recordable;
+  apiCarryParams?: Recordable | ((data: T) => Recordable);
   /**
    * 请求失败回调
    */
@@ -207,19 +207,35 @@ export interface FeedbackFormProps<T extends Recordable = any> {
   /**
    * 新增点击保存按钮回调，将自定义新增逻辑，覆盖 addApi 逻辑，当两者同时存在时，onAdd 优先级高，返回 false 代表继续执行 addApi
    */
-  onAdd?: (model: T) => undefined | false | Promise<undefined | false>;
+  onAdd?: (
+    model: T,
+    successCallBack: () => void,
+    failureCallBack: (res: any) => void
+  ) => undefined | false | Promise<undefined | false>;
   /**
    * 编辑点击保存按钮回调，将自定义新增逻辑，覆盖 editApi 逻辑，当两者同时存在时，onEdit 优先级高，返回 false 代表继续执行 editApi
    */
-  onEdit?: (model: T) => undefined | false | Promise<undefined | false>;
+  onEdit?: (
+    model: T,
+    successCallBack: () => void,
+    failureCallBack: (res: any) => void
+  ) => undefined | false | Promise<undefined | false>;
   /**
    * 删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeApi 逻辑，当两者同时存在时，onRemove 优先级高，返回 false 代表继续执行 removeApi
    */
-  onRemove?: (model: T) => undefined | false | Promise<undefined | false>;
+  onRemove?: (
+    model: T,
+    successCallBack: (res: any) => void,
+    failureCallBack: (res: any) => void
+  ) => undefined | false | Promise<undefined | false>;
   /**
    * 批量删除点击保存按钮回调，将自定义新增逻辑，覆盖 removeBatchApi 逻辑，当两者同时存在时，onRemoveBatch 优先级高，返回 false 代表继续执行 removeBatchApi
    */
-  onRemoveBatch?: (model: T) => undefined | false | Promise<undefined | false>;
+  onRemoveBatch?: (
+    model: T,
+    successCallBack: (res: any) => void,
+    failureCallBack: (res: any) => void
+  ) => undefined | false | Promise<undefined | false>;
   /**
    * add、edit、remove、removeBatch 任意操作完成后的回调
    */
